@@ -2,12 +2,16 @@
 <html lang="en">
  <head>
      <link rel="stylesheet" href="//aui-cdn.atlassian.com/aui-adg/5.9.12/css/aui.min.css" media="all">
-  	 <script type="text/javascript" src="https://cdn.rawgit.com/rcgcoder/jiraformalreports/e20b4e2a/jquery-3.3.1.min.js"></script>
-	 <script type="text/javascript" src="https://cdn.rawgit.com/sdecima/javascript-detect-element-resize/master/jquery.resize.js"></script>
+  	 <script type="text/javascript" src="https://cdn.rawgit.com/rcgcoder/jiraformalreports/2f01650a/src/libs/jquery-3.3.1.min.js"></script>
+	 <script type="text/javascript" src="https://cdn.rawgit.com/rcgcoder/jiraformalreports/2f01650a/src/libs/zip.js"></script>
+	 <script type="text/javascript" src="https://cdn.rawgit.com/rcgcoder/jiraformalreports/2f01650a/src/libs/zip-ext.js"></script>
+	 
 <!--  	 <script type="text/javascript" src="https://cdn.rawgit.com/rcgcoder/jiraformalreports/6f5cb157/src/rcglibs/RCGutils.js"></script>
 -->	 <script type="text/javascript" src="js/UnZipApp.js"></script>
 	 <script type="text/javascript">
 
+	 
+	 https://github.com/rcgcoder/jiraformalreports/archive/master.zip
 window.onload = function() {
 //	alert("Fully Locaded");
 	var sUrl=document.url;
@@ -20,7 +24,7 @@ window.onload = function() {
  <body>
      <section id="content" class="ac-content">
          <div class="aui-page-header">
-             <div class="aui-page-header-main">
+             <div id="FR_Main_DIV" class="aui-page-header-main">
                  <h1>Hello World</h1>
 				 <span id="testjquery" class="testjquery"> probando probando </span>
              </div>
@@ -34,26 +38,42 @@ window.onload = function() {
                  return decodeURIComponent(codedParam);
              };
 
-             var baseUrl = getUrlParam('xdm_e') + getUrlParam('cp');
-             var options = document.getElementById('connect-loader').getAttribute('data-options');
+			 var vXdm=getUrlParameter('xdm_e');
+			 var vCp=getUrlParameter('cp');
+			 if ((typeof vXdm!=="undefined")&&
+				(typeof vCp!=="undefined")){
+				 var baseUrl =  vXdm+vCp; 
+				 var options = document.getElementById('connect-loader').getAttribute('data-options');
 
-             var script = document.createElement("script");
-             script.src = baseUrl + '/atlassian-connect/all.js';
+				 var script = document.createElement("script");
+				 script.src = baseUrl + '/atlassian-connect/all.js';
 
-             if(options) {
-                 script.setAttribute('data-options', options);
-             }
+				 if(options) {
+					 script.setAttribute('data-options', options);
+				 }
 
-             document.getElementsByTagName("head")[0].appendChild(script);
-             
-			 var actFR=actFormalReport;
-			 alert("Test:" + $("#testjquery").text());
-			 setTimeout(function(){
-				undefined.getValor();
-				alert("Tiene que estar Cargado");
-			 },25000);
+				 document.getElementsByTagName("head")[0].appendChild(script);
+				 
+				 var actFR=actFormalReport;
+				 var objJason = JSON.parse(name);
+				 var api=objJason.api;
+				 var projectKey=objJason.options.productContext["project.key"];
+				 actFR.projectKey=projectKey;
+				 actFR.urlBase=baseUrl;
+				 actFR.jBody=jQuery(document.body);
+		     } else {
+				var sUrl=document.url;
+				var sProjectKey=getUrlParameter("idProject");
+				var urlBase=getUrlParameter("urlBase");
+				var actFR=actFormalReport;
+				actFR.projectKey=sProjectKey;
+				actFR.urlBase=urlBase;
+				actFR.jBody=jQuery(document.body);
+			 }
+			 actFR.show();
          })();
      </script>
 
  </body>
+</html>
 </html>

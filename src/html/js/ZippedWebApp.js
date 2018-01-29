@@ -33,7 +33,7 @@ class ZipModel{
 	}
 		
 	getEntries(file, onend) {
-		zip.createReader(new zip.Data64URIReader(file), function(zipReader) {
+		zip.createReader(new zip.BlobReader(file), function(zipReader) {
 			zipReader.getEntries(onend);
 		}, onerror);
 	}

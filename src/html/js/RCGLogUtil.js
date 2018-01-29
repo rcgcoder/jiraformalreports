@@ -25,7 +25,7 @@ class LoggerFactory{
 	   var self=this;
 	   var sPID=getProcessPid();
 	   if (isUndefined(self.loggers[sPID])){
-		   var newLogger=new LogUtils();
+		   var newLogger=new RCGLogUtils();
 		   newLogger.pid=sPID;
 		   self.loggers[sPID]=newLogger;
 	   }

@@ -13,20 +13,40 @@ function loadjscssfile(filename, filetype){
     if (typeof fileref!="undefined")
         document.getElementsByTagName("head")[0].appendChild(fileref)
 }
+var nTotalJSFilesToLoad=0;
 var nContJSFilesLoading=0;
-function reloadJSFiles(callback){
-		log("Recargando Ficheros Javascripts");
+function reloadJSFile(jsFile, callback){
+	log("Reloading Javascript or CSS file:"+jsFile);
+	nTotalJSFilesToLoad++;
+	nContJSFilesLoading++;
+	log("Loading File "+jsFile+" "+nContJSFilesLoading+" / "+nTotalJSFilesToLoad);
+	loadjscssfile(jsFile,"js");
+	var fncCheckLoadJSFile=function(){
+		if (nContJSFilesLoading==0){
+			log("All files reloaded");
+			callback();
+		} else {
+			log("Waiting form reload... "+nContJSFilesLoading+" files remain of "+nTotalJSFilesToLoad);
+			setTimeout(fncCheckLoadJSFile,1000);
+		}
+	}
+	fncChekLoadJSFile();
+}
+
+
+function reloadJSFiles(arrJSFiles, callback){
+		log("Reloading Javascripts and CSS files");
 		for (var i=0;i<arrJSFiles.length;i++){
 			nContJSFilesLoading++;
-			log("Cargando el fichero "+arrJSFiles[i]+" "+nContJSFilesLoading+" de "+arrJSFiles.length);
+			log("Loading File "+arrJSFiles[i]+" "+nContJSFilesLoading+" / "+arrJSFiles.length);
 			loadjscssfile(arrJSFiles[i],"js");
 		}
 		var fncChekLoadJSFiles=function(){
 			if (nContJSFilesLoading==0){
-				log("Ficheros JS actualizados");
+				log("All files reloaded");
 				callback();
 			} else {
-				log("Esperando que se recarguen los "+nContJSFilesLoading+" ficheros Javascript que faltan");
+				log("Waiting form reload... "+nContJSFilesLoading+" files remain");
 				setTimeout(fncChekLoadJSFiles,1000);
 			}
 		}

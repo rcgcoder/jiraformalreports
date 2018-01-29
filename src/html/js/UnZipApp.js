@@ -1,0 +1,5 @@
+/*
+Class for download a Zip File with a lot of js files.
+.... extract files to persistent 
+.... load all files to memory
+*/

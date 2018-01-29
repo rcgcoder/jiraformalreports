@@ -2,7 +2,7 @@
      "name": "Hello World",
      "description": "Atlassian Connect app",
      "key": "com.example.myapp",
-     "baseUrl": "https://c8e68a50.ngrok.io",
+     "baseUrl": "https://rawgit.com",
      "vendor": {
          "name": "Example, Inc.",
          "url": "http://example.com"
@@ -14,7 +14,7 @@
      "modules": {
          "generalPages": [
              {
-                 "url": "/jiraplugin/helloworld.html",
+                 "url": "/rcgcoder/jiraformalreports/master/src/cloudPlugin/atlassian-connect.json",
                  "key": "hello-world",
                  "location": "system.top.navigation.bar",
                  "name": {

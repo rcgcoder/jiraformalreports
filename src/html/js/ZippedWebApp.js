@@ -5,7 +5,7 @@ Class for download a Zip File with a lot of js files.
 */
 
 
-var workerScriptsPath = 'js/libs/zip';
+var workerScriptsPath = 'https://rawgit.com/rcgcoder/jiraformalreports/master/src/libs/zip';
 zip.workerScripts = {
 		  deflater: [workerScriptsPath+'/z-worker.js', workerScriptsPath+'/deflate.js'],
 		  inflater: [workerScriptsPath+'/z-worker.js', workerScriptsPath+'/inflate.js']
@@ -14,8 +14,9 @@ class ZipModel{
 	constructor(){
 		this.URL = window.webkitURL || window.mozURL || window.URL;
 	}
+		
 	getEntries(file, onend) {
-		zip.createReader(new zip.BlobReader(file), function(zipReader) {
+		zip.createReader(new zip.Data64URIReader(file), function(zipReader) {
 			zipReader.getEntries(onend);
 		}, onerror);
 	}

@@ -4,7 +4,8 @@ Class for download a Zip File with a lot of js files.
 .... load all files to memory
 */
 
-var workerScriptsPath = 'src/libs/zip';
+
+var workerScriptsPath = 'js/libs/zip';
 zip.workerScripts = {
 		  deflater: [workerScriptsPath+'/z-worker.js', workerScriptsPath+'/deflate.js'],
 		  inflater: [workerScriptsPath+'/z-worker.js', workerScriptsPath+'/inflate.js']

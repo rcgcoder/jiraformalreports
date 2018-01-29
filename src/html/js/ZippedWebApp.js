@@ -18,6 +18,7 @@ class ZipModel{
 	}
 	
 	downloadAndGetEntries(urlZipFile,onend){
+		window.document.domain="https://github.com";
 		var xhr = new XMLHttpRequest();
 		xhr.open('GET', urlZipFile, true);
 		xhr.responseType = 'blob';

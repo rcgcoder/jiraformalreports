@@ -35,7 +35,7 @@ class LoggerFactory{
 	}
 }
 
-class LogUtils{
+class RCGLogUtils{
     constructor() {
     	var self=this;
     	self.logToBuffer=false;
@@ -111,5 +111,5 @@ class LogUtils{
 	}
 }
 var loggerFactory=new LoggerFactory(); 	
-var logUtils=LogUtils();
+var logUtils=new RCGLogUtils();
 var log=logUtils.log;

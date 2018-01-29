@@ -1,5 +1,7 @@
 var process;
-if (typeof requiere!=="undefined"){
+var bInNodeJS=false;
+if (typeof require!=="undefined"){
+	bInNodeJS=true;
 	'use strict';
 	process = require('process');
 } else {
@@ -113,3 +115,7 @@ class RCGLogUtils{
 var loggerFactory=new LoggerFactory(); 	
 var logUtils=new RCGLogUtils();
 var log=logUtils.log;
+if (bInNodeJS){
+	global.loggerFactory=new LoggerFactory(); 	
+	module.exports=RCGLogUtils;
+}

@@ -1,8 +1,11 @@
-if (typeof require!==undefined){
+var bInNodeJS=false;
+if (typeof require!=="undefined"){
+	bInNodeJS=true;
 	'use strict';
 	var shell = require('shelljs' );
 	var StackUtils=require("./StackUtils.js");
 }
+
 function clone(srcObj){
 	var result={};
 	var arrProperties=Object.getOwnPropertyNames(srcObj);
@@ -101,54 +104,56 @@ function fncVacia(){
 function fncEmpty(){
 }
 
-class BaseUtils{
+class RCGBaseUtils{
 }
 
-if (isUndefined(global.getUrlParameter)){
-	global.getUrlParameter=getUrlParameter;
-}
-if (isUndefined(global.objEquals)){
-	global.objEquals=objEquals;
-}
-
-if (isUndefined(global.clone)){
-	global.clone=clone;
-}
-if (isUndefined(global.isUndefined)){
-	global.isUndefined=isUndefined;
-}
-if (isUndefined(global.isDefined)){
-	global.isDefined=isDefined;
-}
-if (isUndefined(global.isMethod)){
-	global.isMethod=isMethod;
-}
-if (isUndefined(global.isObject)){
-	global.isObject=isObject;
-}
-if (isUndefined(global.isString)){
-	global.isString=isString;
+if (bInNodeJS) { // the global parameters has to be created explicity
+	if (isUndefined(global.getUrlParameter)){
+		global.getUrlParameter=getUrlParameter;
+	}
+	if (isUndefined(global.objEquals)){
+		global.objEquals=objEquals;
+	}
 	
+	if (isUndefined(global.clone)){
+		global.clone=clone;
+	}
+	if (isUndefined(global.isUndefined)){
+		global.isUndefined=isUndefined;
+	}
+	if (isUndefined(global.isDefined)){
+		global.isDefined=isDefined;
+	}
+	if (isUndefined(global.isMethod)){
+		global.isMethod=isMethod;
+	}
+	if (isUndefined(global.isObject)){
+		global.isObject=isObject;
+	}
+	if (isUndefined(global.isString)){
+		global.isString=isString;
+		
+	}
+	if (isUndefined(global.isArray)){
+		global.isArray=isArray;
+	}
+	
+	if (isUndefined(global.undefinedValue)){
+		global.undefinedValue=undefinedValue;
+	}
+	if (isUndefined(global.fncEmpty)){
+		global.fncEmpty=fncEmpty;
+	}
+	if (isUndefined(global.fncVacia)){
+		global.fncVacia=fncVacia;
+	}
+	if (isUndefined(global.getFunctionName)){
+		var stackUtils=new StackUtils();
+		global.getFunctionName=stackUtils.getStackFunctionName;
+	}
+	if (isUndefined(global.executeSystemCommand)){
+		global.executeSystemCommand=executeSystemCommand;
+	}
+	module.exports=RCGBaseUtils;
 }
-if (isUndefined(global.isArray)){
-	global.isArray=isArray;
-}
-
-if (isUndefined(global.undefinedValue)){
-	global.undefinedValue=undefinedValue;
-}
-if (isUndefined(global.fncEmpty)){
-	global.fncEmpty=fncEmpty;
-}
-if (isUndefined(global.fncVacia)){
-	global.fncVacia=fncVacia;
-}
-if (isUndefined(global.getFunctionName)){
-	var stackUtils=new StackUtils();
-	global.getFunctionName=stackUtils.getStackFunctionName;
-}
-if (isUndefined(global.executeSystemCommand)){
-	global.executeSystemCommand=executeSystemCommand;
-}
-
 

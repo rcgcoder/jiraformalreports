@@ -6,6 +6,9 @@ if (typeof require!=="undefined"){
 	var StackUtils=require("./StackUtils.js");
 }
 
+function isInNodeJS(){
+	return bInNodeJS;
+}
 function clone(srcObj){
 	var result={};
 	var arrProperties=Object.getOwnPropertyNames(srcObj);
@@ -153,6 +156,9 @@ if (bInNodeJS) { // the global parameters has to be created explicity
 	}
 	if (isUndefined(global.executeSystemCommand)){
 		global.executeSystemCommand=executeSystemCommand;
+	}
+	if (isUndefined(global.isInNodeJS)){
+		global.isInNodeJS=isInNodeJS;
 	}
 	module.exports=RCGBaseUtils;
 }

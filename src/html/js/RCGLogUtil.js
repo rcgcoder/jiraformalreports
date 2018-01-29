@@ -1,7 +1,5 @@
 var process;
-var bInNodeJS=false;
-if (typeof require!=="undefined"){
-	bInNodeJS=true;
+if (isInNodeJS()){
 	'use strict';
 	process = require('process');
 } else {

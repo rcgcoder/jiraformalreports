@@ -18,6 +18,7 @@ class ZipModel{
 	}
 	
 	downloadAndGetEntries(urlZipFile,onend){
+		var self=this;
 		var xhr = new XMLHttpRequest();
 		xhr.open('GET', urlZipFile, true);
 		xhr.responseType = 'blob';
@@ -25,7 +26,7 @@ class ZipModel{
 		  if (this.status == 200) {
 		    var myBlob = this.response;
 		    // myBlob is now the blob that the object URL pointed to.
-		    this.getEntries(myBlob,onend);
+		    self.getEntries(myBlob,onend);
 		  }
 		};
 		xhr.send();	

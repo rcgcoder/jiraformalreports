@@ -4,15 +4,31 @@ Class for download a Zip File with a lot of js files.
 .... load all files to memory
 */
 
-
+zip.useWebWorkers=false;
+/*
 var workerScriptsPath = 'https://rawgit.com/rcgcoder/jiraformalreports/master/src/libs/zip';
 zip.workerScripts = {
 		  deflater: [workerScriptsPath+'/z-worker.js', workerScriptsPath+'/deflate.js'],
 		  inflater: [workerScriptsPath+'/z-worker.js', workerScriptsPath+'/inflate.js']
 		};
+*/
 class ZipModel{
 	constructor(){
 		this.URL = window.webkitURL || window.mozURL || window.URL;
+	}
+	
+	downloadAndGetEntries(urlZipFile,onend){
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', urlZipFile, true);
+		xhr.responseType = 'blob';
+		xhr.onload = function(e) {
+		  if (this.status == 200) {
+		    var myBlob = this.response;
+		    // myBlob is now the blob that the object URL pointed to.
+		    this.getEntries(myBlob,onend);
+		  }
+		};
+		xhr.send();	
 	}
 		
 	getEntries(file, onend) {
@@ -106,7 +122,7 @@ class ZippedApp{
 			} else {
 				var sZipUrl=arrZips[iZip];
 				log("Download Zip File:"+sZipUrl);
-				model.getEntries(sZipUrl, function(entries) {
+				model.downloadAndGetEntries(sZipUrl, function(entries) {
 					entries.forEach(function(entry) {
 						log("Entry read:"+entry.filename);
 /*						var li = document.createElement("li");

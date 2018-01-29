@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+     <link rel="stylesheet" href="//aui-cdn.atlassian.com/aui-adg/5.9.12/css/aui.min.css" media="all">
+  	 <script type="text/javascript" src="https://cdn.rawgit.com/rcgcoder/jiraformalreports/e20b4e2a/jquery-3.3.1.min.js"></script>
+	 <script type="text/javascript" src="https://cdn.rawgit.com/sdecima/javascript-detect-element-resize/master/jquery.resize.js"></script>
+	 <script type="text/javascript" src="https://cdn.rawgit.com/rcgcoder/jiraformalreports/6f5cb157/src/rcglibs/RCGutils.js"></script>
+	 <script type="text/javascript" src="http://192.168.100.100/jiraplugin/js/formalReports.js"></script>
+	 <script type="text/javascript">
+
+window.onload = function() {
+//	alert("Fully Locaded");
+	var sUrl=document.url;
+	var sProjectKey=getUrlParameter("idProject");
+	var myIframe=$(".module");
+//	alert(myIframe.valorundefined);
+}
+	  </script>
+</head>
+ <body>
+     <section id="content" class="ac-content">
+         <div class="aui-page-header">
+             <div class="aui-page-header-main">
+                 <h1>Hello World</h1>
+				 <span id="testjquery" class="testjquery"> probando probando </span>
+             </div>
+         </div>
+     </section>
+
+     <script id="connect-loader" data-options="sizeToParent:true;">
+         (function() {
+             var getUrlParam = function (param) {
+                 var codedParam = (new RegExp(param + '=([^&]*)')).exec(window.location.search)[1];
+                 return decodeURIComponent(codedParam);
+             };
+
+             var baseUrl = getUrlParam('xdm_e') + getUrlParam('cp');
+             var options = document.getElementById('connect-loader').getAttribute('data-options');
+
+             var script = document.createElement("script");
+             script.src = baseUrl + '/atlassian-connect/all.js';
+
+             if(options) {
+                 script.setAttribute('data-options', options);
+             }
+
+             document.getElementsByTagName("head")[0].appendChild(script);
+             
+			 var actFR=actFormalReport;
+			 alert("Test:" + $("#testjquery").text());
+			 setTimeout(function(){
+				undefined.getValor();
+				alert("Tiene que estar Cargado");
+			 },25000);
+         })();
+     </script>
+
+ </body>
+</html>

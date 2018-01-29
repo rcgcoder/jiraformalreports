@@ -15,16 +15,23 @@ zip.workerScripts = {
 class ZipModel{
 	constructor(){
 		this.URL = window.webkitURL || window.mozURL || window.URL;
+		this.md5="";
+		this.ZipFile="";
+		this.ZipData="";
 	}
 	
 	downloadAndGetEntries(urlZipFile,onend){
 		var self=this;
+		self.ZipFile=urlZipFile;
 		var xhr = new XMLHttpRequest();
 		xhr.open('GET', urlZipFile, true);
 		xhr.responseType = 'blob';
 		xhr.onload = function(e) {
 		  if (this.status == 200) {
 		    var myBlob = this.response;
+		    self.ZipData=myBlob;
+		    var md5=SparkMD5.ArrayBuffer.hash(myBlob);
+		    self.md5=md5;
 		    // myBlob is now the blob that the object URL pointed to.
 		    self.getEntries(myBlob,onend);
 		  }

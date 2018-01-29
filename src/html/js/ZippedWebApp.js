@@ -75,6 +75,7 @@ class ZippedApp{
 		self.requestFileSystem = window.webkitRequestFileSystem 
 								|| window.mozRequestFileSystem 
 								|| window.requestFileSystem;
+		self.storage="";
 	}
 	onerror(message) {
 		alert(message);
@@ -96,7 +97,7 @@ class ZippedApp{
 				}, create);
 			});
 	}
-	deploy(theZips,bFileSystem,callback){
+	deploy(theZips,callback,storage){
 		log("Deploying WebApp");
 		var arrZips;
 		if (!isArray(theZips)){
@@ -105,6 +106,7 @@ class ZippedApp{
 			arrZips=theZips;
 		}
 		var model=new ZipModel();
+		model.storage=storage;
 /*		function download(entry, li, a) {
 			model.getEntryFile(entry
 								, creationMethodInput.value

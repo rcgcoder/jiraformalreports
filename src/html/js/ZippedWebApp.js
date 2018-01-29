@@ -3,6 +3,12 @@ Class for download a Zip File with a lot of js files.
 .... extract files to persistent 
 .... load all files to memory
 */
+
+var workerScriptsPath = 'src/libs/zip';
+zip.workerScripts = {
+		  deflater: [workerScriptsPath+'/z-worker.js', workerScriptsPath+'/deflate.js'],
+		  inflater: [workerScriptsPath+'/z-worker.js', workerScriptsPath+'/inflate.js']
+		};
 class ZipModel{
 	constructor(){
 		this.URL = window.webkitURL || window.mozURL || window.URL;

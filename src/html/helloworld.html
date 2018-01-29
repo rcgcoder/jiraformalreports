@@ -7,18 +7,30 @@
 	 <script type="text/javascript" src="https://cdn.rawgit.com/rcgcoder/jiraformalreports/2f01650a/src/libs/zip-ext.js"></script>
 	 
 <!--  	 <script type="text/javascript" src="https://cdn.rawgit.com/rcgcoder/jiraformalreports/6f5cb157/src/rcglibs/RCGutils.js"></script>
--->	 <script type="text/javascript" src="js/UnZipApp.js"></script>
+-->	 <script type="text/javascript" src="js/ZippedWebApp.js"></script>
 	 <script type="text/javascript">
+	 	function getUrlParameter(sParam) {
+		    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+		        sURLVariables = sPageURL.split('&'),
+		        sParameterName,
+		        i;
 
+		    for (i = 0; i < sURLVariables.length; i++) {
+		        sParameterName = sURLVariables[i].split('=');
+		        if (sParameterName[0] === sParam) {
+		            return sParameterName[1] === undefined ? true : sParameterName[1];
+		        }
+		    }
+		};
 	 
-	 https://github.com/rcgcoder/jiraformalreports/archive/master.zip
-window.onload = function() {
-//	alert("Fully Locaded");
-	var sUrl=document.url;
-	var sProjectKey=getUrlParameter("idProject");
-	var myIframe=$(".module");
-//	alert(myIframe.valorundefined);
-}
+		//	 https://github.com/rcgcoder/jiraformalreports/archive/master.zip
+		window.onload = function() {
+		//	alert("Fully Locaded");
+			var sUrl=document.url;
+			var sProjectKey=getUrlParameter("idProject");
+			var myIframe=$(".module");
+		//	alert(myIframe.valorundefined);
+		}
 	  </script>
 </head>
  <body>
@@ -33,11 +45,7 @@ window.onload = function() {
 
      <script id="connect-loader" data-options="sizeToParent:true;">
          (function() {
-             var getUrlParam = function (param) {
-                 var codedParam = (new RegExp(param + '=([^&]*)')).exec(window.location.search)[1];
-                 return decodeURIComponent(codedParam);
-             };
-
+        	 var appParameters={};
 			 var vXdm=getUrlParameter('xdm_e');
 			 var vCp=getUrlParameter('cp');
 			 if ((typeof vXdm!=="undefined")&&
@@ -54,23 +62,22 @@ window.onload = function() {
 
 				 document.getElementsByTagName("head")[0].appendChild(script);
 				 
-				 var actFR=actFormalReport;
 				 var objJason = JSON.parse(name);
 				 var api=objJason.api;
 				 var projectKey=objJason.options.productContext["project.key"];
-				 actFR.projectKey=projectKey;
-				 actFR.urlBase=baseUrl;
-				 actFR.jBody=jQuery(document.body);
+				 appParameters["ProjectKey"]=projectKey;
+				 appParameters["urlBase"]=baseUrl;
+				 appParameters["jBody"]=jQuery(document.body);
 		     } else {
 				var sUrl=document.url;
 				var sProjectKey=getUrlParameter("idProject");
 				var urlBase=getUrlParameter("urlBase");
-				var actFR=actFormalReport;
-				actFR.projectKey=sProjectKey;
-				actFR.urlBase=urlBase;
-				actFR.jBody=jQuery(document.body);
+				appParameters["ProjectKey"]=sProjectKey;
+			    appParameters["urlBase"]=urlBase;
+				appParameters["jBody"]=jQuery(document.body);
 			 }
-			 actFR.show();
+			 var zipApp=new ZippedApp();
+			 zipApp.run(zipApp);
          })();
      </script>
 

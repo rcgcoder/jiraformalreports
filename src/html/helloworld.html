@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
  <head>
-     <link rel="stylesheet" href="//aui-cdn.atlassian.com/aui-adg/5.9.12/css/aui.min.css" media="all">
-  	 <script type="text/javascript" src="https://cdn.rawgit.com/rcgcoder/jiraformalreports/2f01650a/src/libs/jquery-3.3.1.min.js"></script>
+<!--     <link rel="stylesheet" href="//aui-cdn.atlassian.com/aui-adg/5.9.12/css/aui.min.css" media="all">
+-->  	 <script type="text/javascript" src="https://cdn.rawgit.com/rcgcoder/jiraformalreports/2f01650a/src/libs/jquery-3.3.1.min.js"></script>
 	 <script type="text/javascript" src="https://cdn.rawgit.com/rcgcoder/jiraformalreports/2f01650a/src/libs/zip.js"></script>
 	 <script type="text/javascript" src="https://cdn.rawgit.com/rcgcoder/jiraformalreports/2f01650a/src/libs/zip-ext.js"></script>
 	 
@@ -25,7 +25,7 @@
 		        }
 		    }
 		};
-	 
+/*	 
 		//	 https://github.com/rcgcoder/jiraformalreports/archive/master.zip
 		window.onload = function() {
 		//	alert("Fully Locaded");
@@ -34,7 +34,7 @@
 			var myIframe=$(".module");
 		//	alert(myIframe.valorundefined);
 		}
-	  </script>
+*/	  </script>
 </head>
  <body>
      <section id="content" class="ac-content">
@@ -80,7 +80,9 @@
 				appParameters["jBody"]=jQuery(document.body);
 			 }
 			 var zipApp=new ZippedApp();
-			 zipApp.run(zipApp);
+			 zipApp.deploy("https://github.com/rcgcoder/jiraformalreports/archive/master.zip",true,function(){
+				 alert("App Deployed");
+			 });
          })();
      </script>
 

@@ -2,22 +2,7 @@
 <html lang="en">
  <head>
      <link rel="stylesheet" href="//aui-cdn.atlassian.com/aui-adg/5.9.12/css/aui.min.css" media="all">
-  
-	 <script type="text/javascript" src="https://cdn.rawgit.com/rcgcoder/jiraformalreports/2f01650a/src/libs/jquery-3.3.1.min.js"></script>
-	 <script type="text/javascript" src="js/libs/zip/zip.js"></script>
-	 <script type="text/javascript" src="js/libs/zip/zip-ext.js"></script>
-	 <script type="text/javascript" src="js/libs/zip/zip-fs.js"></script>
-	 <script type="text/javascript" src="js/libs/spark-md5.min.js"></script>
-	 <script type="text/javascript" src="js/libs/persist-all-min.js"></script>
-<!--  	 <script type="text/javascript" src="https://rawgit.com/rcgcoder/jiraformalreports/master/src/libs/zip/inflate.js"></script>
-	 <script type="text/javascript" src="https://rawgit.com/rcgcoder/jiraformalreports/master/src/libs/zip/deflate.js"></script>
--->
-<!--  	 <script type="text/javascript" src="https://cdn.rawgit.com/rcgcoder/jiraformalreports/6f5cb157/src/rcglibs/RCGutils.js"></script>
--->	 
-	 <script type="text/javascript" src="js/RCGBaseUtils.js"></script>
-	 <script type="text/javascript" src="js/RCGLogUtil.js"></script>
-	 <script type="text/javascript" src="js/RCGGitHub.js"></script>
-	 <script type="text/javascript" src="js/ZippedWebApp.js"></script>
+	 <script type="text/javascript" src="js/libs/rcglibs/RCGZippedWebApp.js"></script>
 	 <script type="text/javascript">
 	 
 	 	function getUrlParameter(sParam) {
@@ -33,16 +18,7 @@
 		        }
 		    }
 		};
-/*	 
-		//	 https://github.com/rcgcoder/jiraformalreports/archive/master.zip
-		window.onload = function() {
-		//	alert("Fully Locaded");
-			var sUrl=document.url;
-			var sProjectKey=getUrlParameter("idProject");
-			var myIframe=$(".module");
-		//	alert(myIframe.valorundefined);
-		}
-*/	  </script>
+	  </script>
 </head>
  <body> 
      <section id="content" class="ac-content">
@@ -87,7 +63,7 @@
 			    appParameters["urlBase"]=urlBase;
 				appParameters["jBody"]=jQuery(document.body);
 			 }
-			 var zipApp=new ZippedApp();
+			 var zipApp=new RCGZippedApp();
 			 zipApp.useGitHub("rcgcoder","jiraformalreports");
 			 zipApp.setHtmlContainer("");
 			 zipApp.run();			 

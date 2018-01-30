@@ -160,6 +160,24 @@ class ZippedApp{
 	}
 }
 /*
+ * 
+
+	 <script type="text/javascript" src="https://cdn.rawgit.com/rcgcoder/jiraformalreports/2f01650a/src/libs/jquery-3.3.1.min.js"></script>
+	 <script type="text/javascript" src="js/libs/zip/zip.js"></script>
+	 <script type="text/javascript" src="js/libs/zip/zip-ext.js"></script>
+	 <script type="text/javascript" src="js/libs/zip/zip-fs.js"></script>
+	 <script type="text/javascript" src="js/libs/spark-md5.min.js"></script>
+	 <script type="text/javascript" src="js/libs/persist-all-min.js"></script>
+<!--  	 <script type="text/javascript" src="https://rawgit.com/rcgcoder/jiraformalreports/master/src/libs/zip/inflate.js"></script>
+	 <script type="text/javascript" src="https://rawgit.com/rcgcoder/jiraformalreports/master/src/libs/zip/deflate.js"></script>
+-->
+<!--  	 <script type="text/javascript" src="https://cdn.rawgit.com/rcgcoder/jiraformalreports/6f5cb157/src/rcglibs/RCGutils.js"></script>
+-->	 
+	 <script type="text/javascript" src="js/RCGBaseUtils.js"></script>
+	 <script type="text/javascript" src="js/RCGLogUtil.js"></script>
+	 <script type="text/javascript" src="js/RCGGitHub.js"></script>
+
+
 run(theZips,bFileSystem){
 }
 

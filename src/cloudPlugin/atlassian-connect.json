@@ -14,7 +14,7 @@
      "modules": {
          "generalPages": [
              {
-                 "url": "/rcgcoder/jiraformalreports/master/src/cloudPlugin/atlassian-connect.json",
+                 "url": "/rcgcoder/jiraformalreports/master/html/helloworld.html",
                  "key": "hello-world",
                  "location": "system.top.navigation.bar",
                  "name": {

@@ -4,7 +4,11 @@ Class for download a Zip File with a lot of js files.
 .... load all files to memory
 */
 
-zip.useWebWorkers=false;
+/*
+ * First it´s load the other javascript libs.....
+ * 
+ */
+
 /*
 var workerScriptsPath = 'https://rawgit.com/rcgcoder/jiraformalreports/master/src/libs/zip';
 zip.workerScripts = {
@@ -13,6 +17,7 @@ zip.workerScripts = {
 		};
 */
 class ZipModel{
+	//zip.useWebWorkers=false;
 	constructor(){
 		this.URL = window.webkitURL || window.mozURL || window.URL;
 		this.md5="";
@@ -67,15 +72,49 @@ class ZipModel{
 	}
 }
 
-class ZippedApp{
+class RCGZippedApp{
 	constructor(){
 		var self=this;
+		self.githubRepository="";
+		self.htmlContainerId="";
+		
 		self.urlBase="";
-		log("ZippedApp Created");
+		console.log("ZippedApp Created");
 		self.requestFileSystem = window.webkitRequestFileSystem 
 								|| window.mozRequestFileSystem 
 								|| window.requestFileSystem;
 		self.storage="";
+	}
+	useGitHub(sRepository){
+		this.githubRepository=sRepository;
+	}
+	setHtmlContainerID(sHtmlElementId){
+		self.htmlContainerId=sHtmlElementId;
+	}
+	getGitHubCommits(callback){
+		var self=this;
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', "https://api.github.com/repos/"+self.githubRepository+"/commits/master", true);
+		xhr.responseType = 'json';
+		xhr.onload = function(e) {
+		  if (this.status == 200) {
+			console.log(xhr.getResponseHeader());
+		    var objJSON = this.response;
+		  }
+		};
+		xhr.send();	
+		
+	}
+	processGitHubCommits(jsonCommits){
+		console.log("JSON:"+JSON.stringify(jsonCommits));
+	}
+	run(){
+		var self=this;
+		if (self.githubRepository!=""){
+			self.getGitHubCommits(function(jsonCommits){
+				self.processGitHubCommits(jsonCommits);
+			});
+		}
 	}
 	onerror(message) {
 		alert(message);

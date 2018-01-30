@@ -1,11 +1,11 @@
 {
-     "name": "Hello World",
-     "description": "Atlassian Connect app",
-     "key": "com.example.myapp",
+     "name": "Formal Reports",
+     "description": "Jira Formal Reports Plugin",
+     "key": "com.rcgcoder.jiraformalreports",
      "baseUrl": "https://cdn.rawgit.com",
      "vendor": {
-         "name": "Example, Inc.",
-         "url": "http://example.com"
+         "name": "RCG Coder",
+         "url": "https://www.github.com/rcgcoder"
      },
      "authentication": {
          "type": "none"

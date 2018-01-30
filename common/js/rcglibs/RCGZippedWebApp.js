@@ -204,4 +204,40 @@ run(theZips,bFileSystem){
 
 
 })(this);
+
+
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', "https://api.github.com/repos/rcgcoder/jiraformalreports/commits/master", true);
+		xhr.responseType = 'json';
+		xhr.onload = function(e) {
+		  if (this.status == 200) {
+		    var myBlob = this.response;
+		    self.ZipData=myBlob;
+		    var md5=SparkMD5.ArrayBuffer.hash(myBlob);
+		    self.md5=md5;
+		    // myBlob is now the blob that the object URL pointed to.
+		    self.getEntries(myBlob,onend);
+		  }
+		};
+		xhr.send();	
+
+	 
+	 
+	 
+	 
+	 	var storage;
+	
+		function loadPersistentStorage() {
+		   // load persistent store after the DOM has loaded
+		   Persist.remove('cookie');
+		   Persist.remove('gears');
+		   Persist.remove('flash');
+		   Persist.remove('globalstorage');
+		   Persist.remove('ie');
+		   storage = new Persist.Store('JiraFormalReports');
+		}
+
+
+
 */
+

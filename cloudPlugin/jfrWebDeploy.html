@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
  <head>
-<!--     <link rel="stylesheet" href="//aui-cdn.atlassian.com/aui-adg/5.9.12/css/aui.min.css" media="all">
--->  	 <script type="text/javascript" src="https://cdn.rawgit.com/rcgcoder/jiraformalreports/2f01650a/src/libs/jquery-3.3.1.min.js"></script>
+     <link rel="stylesheet" href="//aui-cdn.atlassian.com/aui-adg/5.9.12/css/aui.min.css" media="all">
+  
+	 <script type="text/javascript" src="https://cdn.rawgit.com/rcgcoder/jiraformalreports/2f01650a/src/libs/jquery-3.3.1.min.js"></script>
 	 <script type="text/javascript" src="js/libs/zip/zip.js"></script>
 	 <script type="text/javascript" src="js/libs/zip/zip-ext.js"></script>
 	 <script type="text/javascript" src="js/libs/zip/zip-fs.js"></script>
@@ -15,19 +16,10 @@
 -->	 
 	 <script type="text/javascript" src="js/RCGBaseUtils.js"></script>
 	 <script type="text/javascript" src="js/RCGLogUtil.js"></script>
+	 <script type="text/javascript" src="js/RCGGitHub.js"></script>
 	 <script type="text/javascript" src="js/ZippedWebApp.js"></script>
 	 <script type="text/javascript">
-	 	var storage;
-	
-		function loadPersistentStorage() {
-		   // load persistent store after the DOM has loaded
-		   Persist.remove('cookie');
-		   Persist.remove('gears');
-		   Persist.remove('flash');
-		   Persist.remove('globalstorage');
-		   Persist.remove('ie');
-		   storage = new Persist.Store('JiraFormalReports');
-		}
+	 
 	 	function getUrlParameter(sParam) {
 		    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
 		        sURLVariables = sPageURL.split('&'),
@@ -52,12 +44,12 @@
 		}
 */	  </script>
 </head>
- <body onload='loadPersistentStorage();'> 
+ <body> 
      <section id="content" class="ac-content">
          <div class="aui-page-header">
-             <div id="FR_Main_DIV" class="aui-page-header-main">
-                 <h1>Hello World</h1>
-				 <span id="testjquery" class="testjquery"> probando probando </span>
+             <div id="JFR_Main_DIV" class="aui-page-header-main">
+                 <h1>Jira Formal Reports Plugin</h1>
+				 <span id="jfrSpan" class="jfrSpan"> Loading Plugin..... </span>
              </div>
          </div>
      </section>
@@ -96,8 +88,9 @@
 				appParameters["jBody"]=jQuery(document.body);
 			 }
 			 var zipApp=new ZippedApp();
-			 zipApp.deploy("https://rawgit.com/rcgcoder/jiraformalreports/master/ZippedWebApp/jiraformalreports-master.zip",true,function(){
-				 alert("App Deployed");
+			 zipApp.useGitHub("rcgcoder","jiraformalreports");
+			 zipApp.setHtmlContainer("");
+			 zipApp.run();			 
 			 });
          })();
      </script>

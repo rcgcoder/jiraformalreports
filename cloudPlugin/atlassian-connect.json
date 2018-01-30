@@ -14,11 +14,11 @@
      "modules": {
          "generalPages": [
              {
-                 "url": "/rcgcoder/jiraformalreports/366bee4e/src/html/helloworld.html",
-                 "key": "hello-world",
+                 "url": "/rcgcoder/jiraformalreports/366bee4e/cloudPlugin/jfrWebDeploy.html",
+                 "key": "JiraFormalReportPlugin",
                  "location": "system.top.navigation.bar",
                  "name": {
-                     "value": "Greeting"
+                     "value": "Formal Reports"
                  }
              }
          ]

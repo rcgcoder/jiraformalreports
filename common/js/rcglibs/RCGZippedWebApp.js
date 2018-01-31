@@ -133,6 +133,19 @@ class GitHub{
 		self.pushCallback(self.processLastCommit);
 		self.apiCall("https://api.github.com/repos/"+self.repository+"/commits/master");
 	}
+	processLastCommitsOfFile(response){
+		var self=this;
+		self.lastCommit=response;
+		var sCommitLongId=self.lastCommit.sha;
+		var sCommitShortId=sCommitLongId.substring(0,8);
+		self.commitId=sCommitShortId;
+		self.app.popCallback([self.commitId]);
+	}
+	getLastCommitsOfFile(sRelativePath){
+		var self=this;
+		self.pushCallback(self.processLastCommitOfFile);
+		self.apiCall("https://api.github.com/repos/"+self.repository+"/commits?path="+sRelativePath);
+	}
 	processZipBall(){
 		
 	}
@@ -226,7 +239,7 @@ class RCGZippedApp{
 			if (self.github!=""){
 				sCommitId=self.github.commitId;
 			}
-			if ((typeof sVersion!=="undefined")&&(sVersion==sCommitId)){
+			if ((sVersion!=null)&&(sVersion==sCommitId)){
 				var jsSRC=self.storage.get(sRelativePath);
 				self.importScript(jsSRC);
 				return true;
@@ -286,15 +299,15 @@ class RCGZippedApp{
 	}
 	extendFromObject(srcObj){
 		var result=this;
-		var arrProperties=Object.getOwnPropertyNames(srcObj);
+		var arrProperties=Object.getOwnPropertyNames(srcObj.__proto__).concat(Object.getOwnPropertyNames(srcObj));
 		for (var i=0;i<arrProperties.length;i++){
 			var vPropName=arrProperties[i];
 			if (vPropName!=="constructor"){
 				var vPropValue=srcObj[vPropName];
 				//if (isMethod(vPropValue)){
-					if (isUndefined(result[vPropName])){
+					//if (typeof (result[vPropName])==="undefined"){
 						result[vPropName]=vPropValue;
-					}
+					//}
 				//}
 			}
 		}

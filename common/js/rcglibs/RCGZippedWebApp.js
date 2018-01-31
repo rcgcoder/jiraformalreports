@@ -16,6 +16,8 @@ zip.workerScripts = {
 		  inflater: [workerScriptsPath+'/z-worker.js', workerScriptsPath+'/inflate.js']
 		};
 */
+
+
 class CallManager{
 	constructor(obj){
 		var self=this;
@@ -278,12 +280,29 @@ class RCGZippedApp{
 		self.pushCallback(self.loadPersistentStorage);
 		self.loadRemoteFile("common/js/libs/persist-all-min.js");
 	}
+	extendFromObject(srcObj){
+		var result=this;
+		var arrProperties=Object.getOwnPropertyNames(srcObj);
+		for (var i=0;i<arrProperties.length;i++){
+			var vPropName=arrProperties[i];
+			//if (vPropName!=="constructor"){
+				var vPropValue=srcObj[vPropName];
+				//if (isMethod(vPropValue)){
+					if (isUndefined(result[vPropName])){
+						result[vPropName]=vPropValue;
+					}
+				//}
+			//}
+		}
+	}
 	startApplication(){
 		var self=this;
 		self.pushCallback(function(){
-			var urlAux=urlObject();
+			var webapp=new ZipWebApp();
+			self.extendFromObject(webapp);
+			self.run();
 		});
-		self.loadRemoteFile("common/js/libs/urlobject.js");
+		self.loadRemoteFile("common/js/ZipWebApp.js");
 	}
 	run(){
 		var self=this;

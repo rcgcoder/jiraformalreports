@@ -16,104 +16,281 @@ zip.workerScripts = {
 		  inflater: [workerScriptsPath+'/z-worker.js', workerScriptsPath+'/inflate.js']
 		};
 */
-class ZipModel{
-	//zip.useWebWorkers=false;
-	constructor(){
-		this.URL = window.webkitURL || window.mozURL || window.URL;
-		this.md5="";
-		this.ZipFile="";
-		this.ZipData="";
-	}
-	
-	downloadAndGetEntries(urlZipFile,onend){
+class CallManager{
+	constructor(obj){
 		var self=this;
-		self.ZipFile=urlZipFile;
+		self.stackCallsbacks=[];
+		self.object="";
+		self.extendObject(obj);
+	}
+	pushCallback(method){
+		var self=this;
+		self.stackCallsbacks.push(method);
+	}
+	popCallback(aArgs){
+		var self=this;
+		if (self.stackCallsbacks.length>0){
+			var method=self.stackCallsbacks.pop();
+			var obj=self.object;
+			if (obj==""){
+				obj=self;
+			}
+			var fncApply=function(){
+				method.apply(obj,aArgs);
+			}
+			setTimeout(fncApply);
+		}
+	}
+	extendObject(obj){
+		var self=this;
+		self.object=obj;
+		obj.callManager=self;
+		obj.pushCallback=function(method){obj.callManager.pushCallback(method)}; 
+		obj.popCallback=function(aArgs){obj.callManager.popCallback(aArgs)}; 
+	}
+}
+
+class GitHub{
+	constructor(){
+		var self=this;
+		self.repository="";
+		self.app="";
+		self.arrCommits="";
+		self.lastCommit="";
+		self.commitId="";
+		var cmAux=new CallManager(self);
+	}
+	loadError(oError){
+	    throw new URIError("The file " + oError.target.src + " is not accessible.");
+	}
+	apiCall(sTargetUrl,sPage,sType,callback){
+		var self=this;
+		var sUrl=sTargetUrl;
+		if ((sPage!="")&&(typeof sPage!=="undefined")){
+			sUrl+="?page="+sPage
+		}
 		var xhr = new XMLHttpRequest();
-		xhr.open('GET', urlZipFile, true);
-		xhr.responseType = 'blob';
+		xhr.open('GET', sUrl, true);
+		xhr.responseType = 'json';
+		if (typeof sType!=="undefined"){
+			xhr.responseType=sType;
+		}
+		xhr.onerror=self.loadError;
 		xhr.onload = function(e) {
-		  if (this.status == 200) {
-		    var myBlob = this.response;
-		    self.ZipData=myBlob;
-		    var md5=SparkMD5.ArrayBuffer.hash(myBlob);
-		    self.md5=md5;
-		    // myBlob is now the blob that the object URL pointed to.
-		    self.getEntries(myBlob,onend);
+		  var nRemaining=xhr.getResponseHeader("X-RateLimit-Remaining");
+		  console.log("Remaining GitHub Pets:"+nRemaining);
+		  if (this.status == 302) {
+			  var ghLink=xhr.getResponseHeader("Location");
+			  self.apiCall(ghLink);
+		  } else if (this.status == 200) {
+			  self.popCallback([this.response,xhr]);
+		  } else {
+			  self.loadError({target:{src:sUrl}});			  
 		  }
 		};
 		xhr.send();	
 	}
-		
-	getEntries(file, onend) {
-		zip.createReader(new zip.BlobReader(file), function(zipReader) {
-			zipReader.getEntries(onend);
-		}, onerror);
+	processCommitsPage(response,xhr){
+	   var self=this;
+	   self.arrCommits = self.arrCommits.concat(response);
+	   ghLink=xhr.getResponseHeader("Links");
+	   if ((ghLink!="")&&(ghLink!=null)){
+		  var arrLinks=ghLink.split(",");
+		  var nextLink=arrLinks[0];
+		  arrLinks=nextLink.split(";");
+		  if (arrLinks[1]==' rel="next"'){
+			  arrLinks=arrLinks[0].split('>');
+			  arrLinks=arrLinks[0].split('=');
+			  var nextPage=arrLinks[1];
+			  self.pushCallback(self.processCommitsPage);
+			  self.apiCall("https://api.github.com/repos/"+self.repository+"/commits",nextPage);
+		  } else {
+			  self.app.popCallback([self.arrCommits]);
+		  }
+	   } else {
+		  self.app.popCallback([self.arrCommits]);
+	   }
 	}
-	getEntryFile(entry, creationMethod, onend, onprogress) {
-		var writer, zipFileEntry;
-
-		function getData() {
-			entry.getData(writer, function(blob) {
-				var blobURL = creationMethod == "Blob" ? URL.createObjectURL(blob) : zipFileEntry.toURL();
-				onend(blobURL);
-			}, onprogress);
-		}
-
-		if (creationMethod == "Blob") {
-			writer = new zip.BlobWriter();
-			getData();
-		} else {
-			createTempFile(function(fileEntry) {
-				zipFileEntry = fileEntry;
-				writer = new zip.FileWriter(zipFileEntry);
-				getData();
-			});
-		}
+	getCommits(){
+		var self=this;
+		var iPage=0;
+		self.arrCommits=[];
+		self.pushCallback(self.processCommitsPage);
+		self.apiCall("https://api.github.com/repos/"+self.repository+"/commits");
+	}
+	processLastCommit(response){
+		var self=this;
+		self.lastCommit=response;
+		var sCommitLongId=self.lastCommit.sha;
+		var sCommitShortId=sCommitLongId.substring(0,8);
+		self.commitId=sCommitShortId;
+		self.app.popCallback([self.commitId]);
+	}
+	updateLastCommit(){
+		var self=this;
+		self.pushCallback(self.processLastCommit);
+		self.apiCall("https://api.github.com/repos/"+self.repository+"/commits/master");
+	}
+	processZipBall(){
+		
+	}
+	getZipApp(){
+		var self=this;
+		self.pushCallback(self.processZipBall);
+		self.apiCall("https://api.github.com/repos/"+self.repository+"/zipball/master");
 	}
 }
 
 class RCGZippedApp{
 	constructor(){
 		var self=this;
-		self.githubRepository="";
+		self.rootPath="https://cdn.rawgit.com";
+		self.github="";
 		self.htmlContainerId="";
-		
 		self.urlBase="";
+		var cmAux=new CallManager(self);
 		console.log("ZippedApp Created");
 		self.requestFileSystem = window.webkitRequestFileSystem 
 								|| window.mozRequestFileSystem 
 								|| window.requestFileSystem;
 		self.storage="";
+		self.loadedFiles={"common/rcglibs/RCGZippedWebApp.js":true};
+		
 	}
 	useGitHub(sRepository){
-		this.githubRepository=sRepository;
+		var self=this;
+		self.github=new GitHub();
+		self.github.app=this;
+		self.github.repository=sRepository;
 	}
 	setHtmlContainerID(sHtmlElementId){
 		self.htmlContainerId=sHtmlElementId;
 	}
-	getGitHubCommits(callback){
+	
+	
+	composeUrl(sRelativePath){
+		var self=this;
+		var sUrl=self.rootPath;
+		if (self.github!=""){
+			if (self.github!=""){
+				sUrl+="/"+self.github.repository;
+			}
+			if (self.commitId!=""){
+				sUrl+="/"+self.github.commitId;
+			}
+		}
+		if (sRelativePath!=""){
+			sUrl+="/"+sRelativePath;
+		}
+		return sUrl;
+	}
+
+	downloadScript(sUrl){
 		var self=this;
 		var xhr = new XMLHttpRequest();
-		xhr.open('GET', "https://api.github.com/repos/"+self.githubRepository+"/commits/master", true);
-		xhr.responseType = 'json';
+		xhr.open('GET', sUrl, true);
+		xhr.onerror=self.loadError;
 		xhr.onload = function(e) {
 		  if (this.status == 200) {
-			console.log(xhr.getResponseHeader());
-		    var objJSON = this.response;
+			  var sResponseText=this.responseText;
+			  self.popCallback([sResponseText,xhr]);
+		  } else {
+			  self.loadError({target:{src:sUrl}});			  
 		  }
 		};
 		xhr.send();	
-		
+
 	}
-	processGitHubCommits(jsonCommits){
-		console.log("JSON:"+JSON.stringify(jsonCommits));
+	importScript(sJS) {
+		var self=this;
+		var oHead=(document.head || document.getElementsByTagName("head")[0]);
+	    var oScript = document.createElement("script");
+	    oScript.type = "text\/javascript";
+	    oScript.onerror = self.loadError;
+/*	    oScript.onload = function(){
+	    	self.popCallback();
+	    }
+*/	    oHead.appendChild(oScript);
+	    oScript.innerHTML = sJS;
+    	self.popCallback([sJS]);
+	    
+	};	
+	
+	loadFileFromStorage(sRelativePath){
+		var self=this;
+		if (self.storage!=""){
+			var sVersion=self.storage.get(sRelativePath+'-version');
+			if (sVersion==self.commitId){
+				var jsSRC=self.storage.get(sRelativePath);
+				self.importScript(jsSRC);
+				return true;
+			}
+		}
+		return false;
+	}
+	saveFileToStorage(sRelativePath,sContent){
+		var self=this;
+		if (self.storage!=""){
+			self.storage.set(sRelativePath+'-version',self.commitId);
+			self.storage.set(sRelativePath,sContent);
+			self.storage.save();
+		}
+	}
+	
+	loadRemoteFile(sRelativePath){
+		var self=this;
+		if (self.loadFileFromStorage(sRelativePath)){
+			return;
+		}
+		var nPos=sRelativePath.lastIndexOf(".");
+		var sExt=sRelativePath.substring(nPos+1,sRelativePath.length).toLowerCase();
+		var sUrl=self.composeUrl(sRelativePath);
+		
+	    if (sExt=="js"){ //if filename is a external JavaScript file
+	    	self.pushCallback(function(sContent){
+	    		self.saveFileToStorage(sRelativePath,sContent);
+	    		self.popCallback();
+	    	})
+	    	self.pushCallback(self.importScript);
+	    	self.downloadScript(sUrl);
+	    } else if (sExt=="css"){ //if filename is an external CSS file
+	        var fileref=document.createElement("link");
+	        fileref.setAttribute("rel", "stylesheet");
+	        fileref.setAttribute("type", "text/css");
+	        fileref.setAttribute("href", sUrl);
+	        document.getElementsByTagName("head")[0].appendChild(fileref);
+	    }
+	}
+	loadPersistentStorage() {
+		var self=this;
+		// load persistent store after the DOM has loaded
+		Persist.remove('cookie');
+		Persist.remove('gears');
+		Persist.remove('flash');
+		Persist.remove('globalstorage');
+		Persist.remove('ie');
+		self.storage = new Persist.Store('JiraFormalReports');
+		self.popCallback();
+	}
+	
+	startPersistence(){
+		var self=this;
+		self.pushCallback(self.loadPersistentStorage);
+		self.loadRemoteFile("common/js/libs/persist-all-min.js");
+	}
+	startApplication(){
+		var self=this;
+		self.pushCallback(function(){
+			var urlAux=urlObject();
+		});
+		self.loadRemoteFile("common/js/libs/urlobject.js");
 	}
 	run(){
 		var self=this;
-		if (self.githubRepository!=""){
-			self.getGitHubCommits(function(jsonCommits){
-				self.processGitHubCommits(jsonCommits);
-			});
+		self.pushCallback(self.startApplication);
+		self.pushCallback(self.startPersistence);
+		if (self.github!=""){
+			self.github.updateLastCommit();
 		}
 	}
 	onerror(message) {
@@ -194,10 +371,64 @@ class RCGZippedApp{
 		}
 		fncLoadZip(0);
 	}
-	run(){
+}
+
+class ZipModel{
+	//zip.useWebWorkers=false;
+	constructor(){
+		this.URL = window.webkitURL || window.mozURL || window.URL;
+		this.md5="";
+		this.ZipFile="";
+		this.ZipData="";
+	}
+	
+	downloadAndGetEntries(urlZipFile,onend){
+		var self=this;
+		self.ZipFile=urlZipFile;
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', urlZipFile, true);
+		xhr.responseType = 'blob';
+		xhr.onload = function(e) {
+		  if (this.status == 200) {
+		    var myBlob = this.response;
+		    self.ZipData=myBlob;
+		    var md5=SparkMD5.ArrayBuffer.hash(myBlob);
+		    self.md5=md5;
+		    // myBlob is now the blob that the object URL pointed to.
+		    self.getEntries(myBlob,onend);
+		  }
+		};
+		xhr.send();	
+	}
 		
+	getEntries(file, onend) {
+		zip.createReader(new zip.BlobReader(file), function(zipReader) {
+			zipReader.getEntries(onend);
+		}, onerror);
+	}
+	getEntryFile(entry, creationMethod, onend, onprogress) {
+		var writer, zipFileEntry;
+
+		function getData() {
+			entry.getData(writer, function(blob) {
+				var blobURL = creationMethod == "Blob" ? URL.createObjectURL(blob) : zipFileEntry.toURL();
+				onend(blobURL);
+			}, onprogress);
+		}
+
+		if (creationMethod == "Blob") {
+			writer = new zip.BlobWriter();
+			getData();
+		} else {
+			createTempFile(function(fileEntry) {
+				zipFileEntry = fileEntry;
+				writer = new zip.FileWriter(zipFileEntry);
+				getData();
+			});
+		}
 	}
 }
+
 /*
  * 
 

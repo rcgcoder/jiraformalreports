@@ -285,14 +285,14 @@ class RCGZippedApp{
 		var arrProperties=Object.getOwnPropertyNames(srcObj);
 		for (var i=0;i<arrProperties.length;i++){
 			var vPropName=arrProperties[i];
-			//if (vPropName!=="constructor"){
+			if (vPropName!=="constructor"){
 				var vPropValue=srcObj[vPropName];
 				//if (isMethod(vPropValue)){
 					if (isUndefined(result[vPropName])){
 						result[vPropName]=vPropValue;
 					}
 				//}
-			//}
+			}
 		}
 	}
 	startApplication(){

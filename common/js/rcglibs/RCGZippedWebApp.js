@@ -222,7 +222,11 @@ class RCGZippedApp{
 		var self=this;
 		if (self.storage!=""){
 			var sVersion=self.storage.get(sRelativePath+'-version');
-			if (sVersion==self.commitId){
+			var sCommitId="";
+			if (self.github!=""){
+				sCommitId=self.github.commitId;
+			}
+			if ((typeof sVersion!=="undefined")&&(sVersion==sCommitId)){
 				var jsSRC=self.storage.get(sRelativePath);
 				self.importScript(jsSRC);
 				return true;

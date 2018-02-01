@@ -386,8 +386,8 @@ class RCGZippedApp{
 			} else { // deploy whole zip
 	*/			var zipUrl=self.composeUrl(self.zipAppFile);
 				var arrFiles=["js/libs/jquery-3.3.1.min.js",
-							  "js/libs/zip.js",
-							  "js/libs/zip-ext.js"];
+							  "js/libs/zip/zip.js",
+							  "js/libs/zip/zip-ext.js"];
 				
 				self.pushCallback(function(){
 					self.deploy(zipUrl,function(){

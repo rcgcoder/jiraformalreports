@@ -682,8 +682,15 @@ class ZipModel{
 
 		function getData() {
 			entry.getData(writer, function(blob) {
-				var blobURL = creationMethod == "Blob" ? URL.createObjectURL(blob) : zipFileEntry.toURL();
-				onend(blobURL);
+				var result;
+				if (creationMethod == "BlobUrl") {
+					result=URL.createObjectURL(blob);
+				} else if (creationMethod == "Blob") {
+						result=blob;
+				} else {
+					result=zipFileEntry.toURL();
+				}
+				onend(result);
 			}, onprogress);
 		}
 

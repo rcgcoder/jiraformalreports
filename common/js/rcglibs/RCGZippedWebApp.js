@@ -248,8 +248,8 @@ class RCGZippedApp{
 			&&(self.github!="")
 			&&(contentType.isCacheable)
 			){ // only saves if github is configured and storage engine is working and content is cacheable
-			self.storage.set('#GITCOMMIT#'+sRelativePath,self.github.commitId);
-			self.storage.set('#GITFORMAT#'+sRelativePath,JSON.stringify(contentType));
+			contentType.commitId=self.github.commitId;
+			self.storage.set('#FILEINFO#'+sRelativePath,JSON.stringify(contentType));
 			var sStringContent="";
 			if (contentType.isText){
 				sStringContent=sContent;
@@ -339,17 +339,19 @@ class RCGZippedApp{
 			return self.popCallback([false,sRelativePath]);
 		}
 		
-		var sVersion=self.storage.get('#GITCOMMIT#'+sRelativePath);
-/*		if (sVersion==null){ // there is not a file on storage (¿download independent or download whole zip?
+		var sContentType=self.storage.get('#FILEINFO#'+sRelativePath);
+		//var sVersion=self.storage.get('#GITCOMMIT#'+sRelativePath);
+/*		if (sContentType==null){ // there is not a file on storage (¿download independent or download whole zip?
 			self.popCallback([false]);
 			return;
 		}*/
+
+		var jsonContentType=JSON.parse(sContentType);
+		var sVersion=jsonContentType.commitId;
 		
 		if ((sVersion!=null)&&(sCommitId==sVersion)){ // if stored file version == github version are the same.... use the storage version
 			console.log("Loading from storage the File:"+sRelativePath);
 			var sFileContent=self.storage.get(sRelativePath);
-			var sContentType=self.storage.get('#GITFORMAT#'+sRelativePath);
-			var jsonContentType=JSON.parse(sContentType);
 			self.pushCallback(function(sRelativePath,fileContents){
 					self.popCallback([true,sRelativePath,fileContents]);
 			});

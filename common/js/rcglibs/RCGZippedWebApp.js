@@ -408,14 +408,15 @@ class RCGZippedApp{
 	}
 	loadRemoteFileIteration(arrRelativePaths,iFile){
 		var self=this;
-		if (iFile>=arrRelativePaths.length){
-			return self.popCallback([iFile-1]);
+		var iFileAux=iFile;
+		if (iFileAux>=arrRelativePaths.length){
+			return self.popCallback([iFileAux-1]);
 		}
 		self.pushCallback(function(){
-			self.loadRemoteFileIteration(arrRelativePaths,iFile++);
+			self.loadRemoteFileIteration(arrRelativePaths,(iFileAux+1));
 		})
 		self.pushCallback(self.loadFileFromNetwork);
-		self.loadFileFromStorage(arrRelativePaths[iFile]);
+		self.loadFileFromStorage(arrRelativePaths[iFileAux]);
 	}
 	loadRemoteFiles(arrRelativePaths){
 		var self=this;

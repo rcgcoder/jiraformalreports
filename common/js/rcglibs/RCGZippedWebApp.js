@@ -603,7 +603,7 @@ class RCGZippedApp{
 						var sFile=entry.filename;
 						var sImportPath;
 						var bWillSave=false;
-						for (i=0;(!bWillSave) && (i<self.zipImportPaths.length);i++){
+						for (var i=0;(!bWillSave) && (i<self.zipImportPaths.length);i++){
 							sImportPath=self.zipImportPaths[i];
 							if (sFile.substring(0,sImportPath.lenght)==sImportPaht){
 								console.log("Entry "+entry.filename + " will be saved");

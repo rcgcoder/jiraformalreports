@@ -471,7 +471,7 @@ class RCGZippedApp{
 	deploy(theZips,callback,storage){
 		console.log("Deploying WebApp");
 		var arrZips;
-		if (!isArray(theZips)){
+		if (!Array.isArray(theZips)){
 			arrZips=[theZips];
 		} else {
 			arrZips=theZips;

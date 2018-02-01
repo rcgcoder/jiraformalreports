@@ -62,8 +62,12 @@
 			    appParameters["urlBase"]=urlBase;
 			 }
 			 var zipApp=new RCGZippedApp();
+			 zipApp.rootPath="https://cdn.rawgit.com";
+			 zipApp.prependPath="common";
 			 zipApp.useGitHub("rcgcoder/jiraformalreports");			 
 //			 zipApp.useGitHub("nodejs/node");
+
+			 zipApp.zipAppFile="../ZippedWebApp/jiraformalreports.zip";
 			 zipApp.setHtmlContainerID("JFR_Main_DIV");
 			 zipApp.run();			 
          })();

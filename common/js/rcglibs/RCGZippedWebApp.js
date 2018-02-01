@@ -27,18 +27,24 @@ class CallManager{
 	}
 	pushCallback(method){
 		var self=this;
+		if (typeof method==="undefined"){
+			console.log("you are pushing an undefined callback... be carefull");
+		}
 		self.stackCallsbacks.push(method);
 	}
 	popCallback(aArgs){
 		var self=this;
 		if (self.stackCallsbacks.length>0){
-			var method=self.stackCallsbacks.pop();
+			var theMethod=self.stackCallsbacks.pop();
 			var obj=self.object;
 			if (obj==""){
 				obj=self;
 			}
+			if (typeof theMethod==="undefined"){
+				console.log("¿undefined?");
+			}
 			var fncApply=function(){
-				method.apply(obj,aArgs);
+				theMethod.apply(obj,aArgs);
 			}
 			setTimeout(fncApply);
 		}
@@ -135,41 +141,36 @@ class GitHub{
 	}
 	processLastCommitsOfFile(response){
 		var self=this;
-		self.lastCommit=response;
-		var sCommitLongId=self.lastCommit.sha;
+		var arrCommits=response;
+		var lastCommit=arrCommits[0];
+		var sCommitLongId=lastCommit.sha;
 		var sCommitShortId=sCommitLongId.substring(0,8);
-		self.commitId=sCommitShortId;
-		self.app.popCallback([self.commitId]);
+		self.app.popCallback([sCommitShortId]);
 	}
 	getLastCommitsOfFile(sRelativePath){
 		var self=this;
-		self.pushCallback(self.processLastCommitOfFile);
+		self.pushCallback(self.processLastCommitsOfFile);
 		self.apiCall("https://api.github.com/repos/"+self.repository+"/commits?path="+sRelativePath);
-	}
-	processZipBall(){
-		
-	}
-	getZipApp(){
-		var self=this;
-		self.pushCallback(self.processZipBall);
-		self.apiCall("https://api.github.com/repos/"+self.repository+"/zipball/master");
 	}
 }
 
 class RCGZippedApp{
 	constructor(){
 		var self=this;
-		self.rootPath="https://cdn.rawgit.com";
+		self.rootPath="";
+		self.prependPath="";
 		self.github="";
 		self.htmlContainerId="";
 		self.urlBase="";
+		self.zipAppFile="";
+		self.zipLastCommitId="";
 		var cmAux=new CallManager(self);
 		console.log("ZippedApp Created");
 		self.requestFileSystem = window.webkitRequestFileSystem 
 								|| window.mozRequestFileSystem 
 								|| window.requestFileSystem;
 		self.storage="";
-		self.loadedFiles={"common/rcglibs/RCGZippedWebApp.js":true};
+		self.loadedFiles={"rcglibs/RCGZippedWebApp.js":true};
 		
 	}
 	useGitHub(sRepository){
@@ -194,21 +195,87 @@ class RCGZippedApp{
 				sUrl+="/"+self.github.commitId;
 			}
 		}
+		if (self.prependPath){
+			sUrl+="/"+self.prependPath;
+		}
 		if (sRelativePath!=""){
 			sUrl+="/"+sRelativePath;
 		}
 		return sUrl;
 	}
-
-	downloadScript(sUrl){
+	getContentType(xhr){
+		var result={
+			isText:false,
+			isJS:false,
+			isCSS:false,
+			isHTML:false,
+			isJSON:false,
+			isSVG:false,
+			isCacheable:true
+		}
+		var arrContentTypes=xhr.getResponseHeader("content-type").split(";");
+		for (var i=0;i<arrContentTypes.length;i++){
+			if (arrContentTypes[i]=="application/javascript"){
+				result.isText=true;
+				result.isJS=true;
+				return result;
+			} else if (arrContentTypes[i]=="text/html"){
+				result.isText=true;
+				result.isHTML=true;
+				return result;
+			} else if (arrContentTypes[i]=="text/css"){
+				result.isText=true;
+				result.isCSS=true;
+				return result;
+			} else if (arrContentTypes[i]=="application/json"){
+				result.isText=true;
+				result.isJSON=true;
+				result.isCacheable=false;
+				return result;
+			} else if (arrContentTypes[i]=="image/svg+xml"){
+				result.isText=false;
+				result.isSVG=true;
+				return result;
+			} else if (arrContentTypes[i]=="application/octet-stream"){
+				return result;
+			}
+		}
+		return result;
+	}
+	saveFileToStorage(sRelativePath,sContent,contentType){
+		var self=this;
+		if ((self.storage!="")
+			&&(self.github!="")
+			&&(contentType.isCacheable)
+			){ // only saves if github is configured and storage engine is working and content is cacheable
+			self.storage.set('#GITCOMMIT#'+sRelativePath,self.commitId);
+			self.storage.set('#GITFORMAT#'+sRelativePath,JSON.stringify(contentType));
+			var sStringContent="";
+			if (contentType.isText){
+				sStringContent=sContent;
+			} else {
+				sStringContent="stringyfied content";
+			}
+			self.storage.set(sRelativePath,sStringContent);
+			self.storage.save();
+		}
+	}
+	downloadFile(sUrl,sRelativePath){
 		var self=this;
 		var xhr = new XMLHttpRequest();
 		xhr.open('GET', sUrl, true);
 		xhr.onerror=self.loadError;
 		xhr.onload = function(e) {
 		  if (this.status == 200) {
-			  var sResponseText=this.responseText;
-			  self.popCallback([sResponseText,xhr]);
+			  var ct=self.getContentType(xhr);
+			  var response="";
+			  if (ct.isText){
+				  response=this.responseText;
+			  } else {
+				  response=this.response;
+			  }
+			  self.saveFileToStorage(sRelativePath,response,ct);
+			  self.popCallback([response,xhr,ct,sRelativePath]);
 		  } else {
 			  self.loadError({target:{src:sUrl}});			  
 		  }
@@ -216,7 +283,13 @@ class RCGZippedApp{
 		xhr.send();	
 
 	}
-	importScript(sJS) {
+	
+	addStyleString(cssContent) {
+	    var node = document.createElement('style');
+	    node.innerHTML = cssContent;
+	    document.body.appendChild(node);
+	}
+	addJavascriptString(jsContent){
 		var self=this;
 		var oHead=(document.head || document.getElementsByTagName("head")[0]);
 	    var oScript = document.createElement("script");
@@ -226,59 +299,98 @@ class RCGZippedApp{
 	    	self.popCallback();
 	    }
 */	    oHead.appendChild(oScript);
-	    oScript.innerHTML = sJS;
-    	self.popCallback([sJS]);
-	    
-	};	
-	
-	loadFileFromStorage(sRelativePath){
-		var self=this;
-		if (self.storage!=""){
-			var sVersion=self.storage.get(sRelativePath+'-version');
-			var sCommitId="";
-			if (self.github!=""){
-				sCommitId=self.github.commitId;
-			}
-			if ((sVersion!=null)&&(sVersion==sCommitId)){
-				var jsSRC=self.storage.get(sRelativePath);
-				self.importScript(jsSRC);
-				return true;
-			}
-		}
-		return false;
+	    oScript.innerHTML = jsContent;
 	}
-	saveFileToStorage(sRelativePath,sContent){
+	processFile(sFileContent,xhr,contentType,sRelativePath){
 		var self=this;
-		if (self.storage!=""){
-			self.storage.set(sRelativePath+'-version',self.commitId);
-			self.storage.set(sRelativePath,sContent);
-			self.storage.save();
-		}
+	    if (contentType.isJS){ //if filename is a external JavaScript file
+	    	self.addJavascriptString(sFileContent);
+	    } else if (contentType.isCSS){ //if filename is an external CSS file
+	    	self.addStyleString(sFileContent);
+	    }
+	    self.popCallback([sRelativePath,sFileContent]);
 	}
-	
-	loadRemoteFile(sRelativePath){
+	loadFileFromNetwork(bLoadedFromStorage,sRelativePath,fileContent){
 		var self=this;
-		if (self.loadFileFromStorage(sRelativePath)){
-			return;
+		if (bLoadedFromStorage) {
+			self.popCallback([sRelativePath,fileContent]);
 		}
 		var nPos=sRelativePath.lastIndexOf(".");
 		var sExt=sRelativePath.substring(nPos+1,sRelativePath.length).toLowerCase();
 		var sUrl=self.composeUrl(sRelativePath);
+		self.pushCallback(self.processFile);
+    	self.downloadFile(sUrl,sRelativePath);
+	}
+	
 		
-	    if (sExt=="js"){ //if filename is a external JavaScript file
-	    	self.pushCallback(function(sContent){
-	    		self.saveFileToStorage(sRelativePath,sContent);
-	    		self.popCallback();
-	    	})
-	    	self.pushCallback(self.importScript);
-	    	self.downloadScript(sUrl);
-	    } else if (sExt=="css"){ //if filename is an external CSS file
-	        var fileref=document.createElement("link");
-	        fileref.setAttribute("rel", "stylesheet");
-	        fileref.setAttribute("type", "text/css");
-	        fileref.setAttribute("href", sUrl);
-	        document.getElementsByTagName("head")[0].appendChild(fileref);
-	    }
+	loadFileFromStorage(sRelativePath){
+		var self=this;
+		if ((self.storage=="")||(self.github=="")){ // if there is not storage initialized or github is not used
+			return self.popCallback([false,sRelativePath]);
+		}
+		// now there is storage and github
+		
+		// get the last commit id
+		var sCommitId=self.github.commitId;
+		if (sCommitId==""){ // imposible case.... all the repositories has one or more commits
+			return self.popCallback([false,sRelativePath]);
+		}
+		
+		var sVersion=self.storage.get('#GITCOMMIT#'+sRelativePath);
+/*		if (sVersion==null){ // there is not a file on storage (¿download independent or download whole zip?
+			self.popCallback([false]);
+			return;
+		}*/
+		
+		if ((sVersion!=null)&&(sCommitId==sVersion)){ // if stored file version == github version are the same.... use the storage version
+			console.log("Loading from storage the File:"+sRelativePath);
+			var sFileContent=self.storage.get(sRelativePath);
+			var sContentType=self.storage.get('#GITFORMAT#'+sRelativePath);
+			var jsonContentType=JSON.parse(sContentType);
+			self.pushCallback(function(sRelativePath,fileContents){
+					self.popCallback([true,sRelativePath,fileContents]);
+			});
+			return self.processFileDownload(sFileContent,undefined,jsonContentType,sRelativePath);
+		}
+		
+		// now, it's necesary to download the file.... but ¿it´s posible to download a whole zip?
+		if (self.zipAppFile=="") { // there is not zip file configured.... not possible to download zip
+			return self.popCallback([false,sRelativePath]);
+		}
+		
+		if ((self.zipLastCommitId!="")&&(self.zipLastCommitId!=sCommitId)) {
+			// the last commitId of the zip file differs over the last commit in the repository..
+			// the zip file is unusuable
+			return self.popCallback([false,sRelativePath]);
+		} else if (self.zipLastCommitId!=""){ // then lastCommit of Zip is not the repository lastCommit.. 
+			return self.popCallback([false,sRelativePath]);
+		}
+		
+		/* status at this point
+		self.zipAppFile!="";
+		self.zipLastCommitId=="";
+		*/
+		// now .... get last commit id of the file
+		
+		var sGitHubRelativePath=self.zipAppFile;
+		if (self.prependPath!=""){
+			sGitHubRelativePath=self.prependPath+"/"+sGitHubRelativePath;
+		}
+		self.pushCallback(function(sFileCommitId){
+			self.zipLastCommitId=sFileCommitId;
+			if (self.zipLastCommitId==sCommitId){ // deploy whole zip
+				return self.popCallback([false,sRelativePath]);
+			} else { // deploy only the file
+				return self.popCallback([false,sRelativePath]);
+			}
+		});
+		self.github.getLastCommitsOfFile(sGitHubRelativePath);
+	}
+	
+	loadRemoteFile(sRelativePath){
+		var self=this;
+		self.pushCallback(self.loadFileFromNetwork);
+		self.loadFileFromStorage(sRelativePath);
 	}
 	loadPersistentStorage() {
 		var self=this;
@@ -295,7 +407,7 @@ class RCGZippedApp{
 	startPersistence(){
 		var self=this;
 		self.pushCallback(self.loadPersistentStorage);
-		self.loadRemoteFile("common/js/libs/persist-all-min.js");
+		self.loadRemoteFile("js/libs/persist-all-min.js");
 	}
 	extendFromObject(srcObj){
 		var result=this;
@@ -319,7 +431,7 @@ class RCGZippedApp{
 			self.extendFromObject(webapp);
 			self.run();
 		});
-		self.loadRemoteFile("common/js/ZipWebApp.js");
+		self.loadRemoteFile("js/ZipWebApp.js");
 	}
 	run(){
 		var self=this;

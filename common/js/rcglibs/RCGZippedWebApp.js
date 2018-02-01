@@ -541,6 +541,7 @@ class RCGZippedApp{
 				var reader = new FileReader();
 				reader.onload = function(e) {
 					  var text = reader.result;
+					  self.saveFileToStorage(params.relativePath,text,params.type);
 					  self.saveZipEntries(arrEntries,iAct+1);
 				}		
 				reader.readAsText(blobUrl);

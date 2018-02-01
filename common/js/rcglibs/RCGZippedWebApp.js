@@ -384,17 +384,16 @@ class RCGZippedApp{
 /*			if (self.zipLastCommitId!=sCommitId){ // deploy only the file
 				return self.popCallback([false,sRelativePath]);
 			} else { // deploy whole zip
-	*/			var zipUrl=self.composeUrl(self.zipAppFile);
+	*/			
 				var arrFiles=["js/libs/jquery-3.3.1.min.js",
 							  "js/libs/zip/zip.js",
 							  "js/libs/zip/zip-ext.js"];
 				
 				self.pushCallback(function(){
-					self.deploy(zipUrl,function(){
-						alert("Deployed");
-						return self.popCallback();
-					});
+					alert("Deployed");
+					return self.popCallback();
 				});
+				self.pushCallback(self.deploy);
 				self.loadRemoteFiles(arrFiles);
 //			}
 		});
@@ -493,6 +492,7 @@ class RCGZippedApp{
 	deploy(theZips,storage){
 		var self=this;
 		console.log("Deploying Zip WebApp");
+		var zipUrl=self.composeUrl(self.zipAppFile);
 		var arrZips;
 		if (!Array.isArray(theZips)){
 			arrZips=[theZips];

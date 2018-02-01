@@ -403,6 +403,7 @@ class RCGZippedApp{
 		self.pushCallback(self.loadFileFromNetwork);
 		self.loadFileFromStorage(sRelativePath);
 	}
+	loadRemoteFileIteration
 	loadRemoteFile(arrRelativePaths){
 		var self=this;
 		var iFile=0;

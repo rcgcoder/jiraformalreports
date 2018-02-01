@@ -346,16 +346,18 @@ class RCGZippedApp{
 			return;
 		}*/
 
-		var jsonContentType=JSON.parse(sContentType);
-		var sVersion=jsonContentType.commitId;
 		
-		if ((sVersion!=null)&&(sCommitId==sVersion)){ // if stored file version == github version are the same.... use the storage version
-			console.log("Loading from storage the File:"+sRelativePath);
-			var sFileContent=self.storage.get(sRelativePath);
-			self.pushCallback(function(sRelativePath,fileContents){
-					self.popCallback([true,sRelativePath,fileContents]);
-			});
-			return self.processFile(sFileContent,undefined,jsonContentType,sRelativePath);
+		if (sContentType!=null) {
+			var jsonContentType=JSON.parse(sContentType);
+			var sVersion=jsonContentType.commitId;
+			if (sCommitId==sVersion){ // if stored file version == github version are the same.... use the storage version
+				console.log("Loading from storage the File:"+sRelativePath);
+				var sFileContent=self.storage.get(sRelativePath);
+				self.pushCallback(function(sRelativePath,fileContents){
+						self.popCallback([true,sRelativePath,fileContents]);
+				});
+				return self.processFile(sFileContent,undefined,jsonContentType,sRelativePath);
+			}
 		}
 		
 		// now, it's necesary to download the file.... but ¿it´s posible to download a whole zip?
@@ -491,15 +493,15 @@ class RCGZippedApp{
 				}, create);
 			});
 	}
-	deploy(theZips,storage){
+	deploy(){
 		var self=this;
 		console.log("Deploying Zip WebApp");
 		var zipUrl=self.composeUrl(self.zipAppFile);
 		var arrZips;
-		if (!Array.isArray(theZips)){
-			arrZips=[theZips];
+		if (!Array.isArray(zipUrl)){
+			arrZips=[zipUrl];
 		} else {
-			arrZips=theZips;
+			arrZips=zipUrl;
 		}
 		var model=new ZipModel();
 		model.storage=storage;

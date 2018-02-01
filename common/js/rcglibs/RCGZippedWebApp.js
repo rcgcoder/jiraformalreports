@@ -605,7 +605,8 @@ class RCGZippedApp{
 						var bWillSave=false;
 						for (var i=0;(!bWillSave) && (i<self.zipImportPaths.length);i++){
 							sImportPath=self.zipImportPaths[i];
-							if (sFile.substring(0,sImportPath.length)==sImportPaht){
+							var sPrefix=sFile.substring(0,sImportPath.length);
+							if (sPrefix==sImportPath){
 								console.log("Entry "+entry.filename + " will be saved");
 								bWillSave=true;
 								var jsonContent=self.getContentTypeFromExtension(sFile);

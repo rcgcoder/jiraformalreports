@@ -550,7 +550,7 @@ class RCGZippedApp{
 				, fncSaveBlob
 				, fncProgress);
 	}
-	deploy(){
+	deploy(){ 
 		var self=this;
 		console.log("Deploying Zip WebApp");
 		zip.useWebWorkers=true;

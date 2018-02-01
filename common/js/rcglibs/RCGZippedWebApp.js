@@ -381,15 +381,15 @@ class RCGZippedApp{
 		}
 		self.pushCallback(function(sFileCommitId){
 			self.zipLastCommitId=sFileCommitId;
-			if (self.zipLastCommitId!=sCommitId){ // deploy only the file
+/*			if (self.zipLastCommitId!=sCommitId){ // deploy only the file
 				return self.popCallback([false,sRelativePath]);
 			} else { // deploy whole zip
-				var zipUrl=self.composeUrl(self.zipAppFile);
+	*/			var zipUrl=self.composeUrl(self.zipAppFile);
 				return self.deploy(zipUrl,function(){
 					alert("Deployed");
 				},true);
 				return self.popCallback([false,sRelativePath]);
-			}
+//			}
 		});
 		self.github.getLastCommitsOfFile(sGitHubRelativePath);
 	}

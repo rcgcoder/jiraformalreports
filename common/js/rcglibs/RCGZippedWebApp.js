@@ -538,9 +538,13 @@ class RCGZippedApp{
 		var entry=params.entry;
 		var fncSaveBlob=function (blobUrl){
 			if (params.type.isText){
-				reader.readAsText(blb);
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					  var text = reader.result;
+					  self.saveZipEntries(arrEntries,iAct+1);
+				}		
+				reader.readAsText(blobUrl);
 			}
-			self.saveZipEntries(arrEntries,iAct+1);
 		}
 		var fncProgress=function(current, total) {
 			console.log(current + "/" + total + "   " + Math.round((current/total)*100)+"%");

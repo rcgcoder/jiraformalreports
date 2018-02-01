@@ -385,6 +385,10 @@ class RCGZippedApp{
 				return self.popCallback([false,sRelativePath]);
 			} else { // deploy whole zip
 	*/			var zipUrl=self.composeUrl(self.zipAppFile);
+				var arrFiles=["js/libs/jquery-3.3.1.min.js",
+					 "js/libs/zip.js",
+					 "js/libs/zip-ext.js"];
+
 				return self.deploy(zipUrl,function(){
 					alert("Deployed");
 				},true);
@@ -398,6 +402,17 @@ class RCGZippedApp{
 		var self=this;
 		self.pushCallback(self.loadFileFromNetwork);
 		self.loadFileFromStorage(sRelativePath);
+	}
+	loadRemoteFile(arrRelativePaths){
+		var self=this;
+		var iFile=0;
+		var fncLoadRemoteFile=function(iFile){
+			if (iFile>=arrRelativePaths.length){
+				return self.popCallback();
+			} 
+			self.pushCallback(self.loadFileFromNetwork);
+			self.loadFileFromStorage(arrRelativePaths[iFile]);
+		}
 	}
 	loadPersistentStorage() {
 		var self=this;

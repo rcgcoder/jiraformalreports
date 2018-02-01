@@ -469,7 +469,7 @@ class RCGZippedApp{
 			});
 	}
 	deploy(theZips,callback,storage){
-		log("Deploying WebApp");
+		console.log("Deploying WebApp");
 		var arrZips;
 		if (!isArray(theZips)){
 			arrZips=[theZips];
@@ -502,10 +502,10 @@ class RCGZippedApp{
 				callback();
 			} else {
 				var sZipUrl=arrZips[iZip];
-				log("Download Zip File:"+sZipUrl);
+				console.log("Download Zip File:"+sZipUrl);
 				model.downloadAndGetEntries(sZipUrl, function(entries) {
 					entries.forEach(function(entry) {
-						log("Entry read:"+entry.filename);
+						console.log("Entry read:"+entry.filename);
 /*						var li = document.createElement("li");
 						var a = document.createElement("a");
 						a.textContent = entry.filename;

@@ -314,7 +314,8 @@ class RCGZippedApp{
 		var self=this;
 		if (bLoadedFromStorage) {
 			console.log(sRelativePath+" loaded from persistent storage");
-			self.popCallback([sRelativePath,fileContent]);
+			return self.popCallback([sRelativePath,fileContent]);
+			
 		}
 		console.log(sRelativePath+" loaded from network");
 		var nPos=sRelativePath.lastIndexOf(".");
@@ -352,7 +353,7 @@ class RCGZippedApp{
 			self.pushCallback(function(sRelativePath,fileContents){
 					self.popCallback([true,sRelativePath,fileContents]);
 			});
-			return self.processFileDownload(sFileContent,undefined,jsonContentType,sRelativePath);
+			return self.processFile(sFileContent,undefined,jsonContentType,sRelativePath);
 		}
 		
 		// now, it's necesary to download the file.... but ¿it´s posible to download a whole zip?

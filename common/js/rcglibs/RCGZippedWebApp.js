@@ -386,13 +386,16 @@ class RCGZippedApp{
 			} else { // deploy whole zip
 	*/			var zipUrl=self.composeUrl(self.zipAppFile);
 				var arrFiles=["js/libs/jquery-3.3.1.min.js",
-					 "js/libs/zip.js",
-					 "js/libs/zip-ext.js"];
-
-				return self.deploy(zipUrl,function(){
-					alert("Deployed");
-				},true);
-				return self.popCallback([false,sRelativePath]);
+							  "js/libs/zip.js",
+							  "js/libs/zip-ext.js"];
+				
+				self.pushCallback(function(){
+					self.deploy(zipUrl,function(){
+						alert("Deployed");
+						return self.popCallback();
+					});
+				});
+				self.loadRemoteFiles(arrFiles);
 //			}
 		});
 		self.github.getLastCommitsOfFile(sGitHubRelativePath);
@@ -403,17 +406,20 @@ class RCGZippedApp{
 		self.pushCallback(self.loadFileFromNetwork);
 		self.loadFileFromStorage(sRelativePath);
 	}
-	loadRemoteFileIteration
-	loadRemoteFile(arrRelativePaths){
+	loadRemoteFileIteration(arrRelativePaths,iFile){
 		var self=this;
-		var iFile=0;
-		var fncLoadRemoteFile=function(iFile){
-			if (iFile>=arrRelativePaths.length){
-				return self.popCallback();
-			} 
-			self.pushCallback(self.loadFileFromNetwork);
-			self.loadFileFromStorage(arrRelativePaths[iFile]);
+		if (iFile>=arrRelativePaths.length){
+			return self.popCallback(iFile-1);
 		}
+		self.pushCallback(function(){
+			self.loadRemoteFileIteration(arrRelativePaths,iFile++);
+		})
+		self.pushCallback(self.loadFileFromNetwork);
+		self.loadFileFromStorage(arrRelativePaths[iFile]);
+	}
+	loadRemoteFiles(arrRelativePaths){
+		var self=this;
+		self.loadRemoteFileIteration(arrRelativePaths,0);
 	}
 	loadPersistentStorage() {
 		var self=this;
@@ -426,7 +432,6 @@ class RCGZippedApp{
 		self.storage = new Persist.Store('JiraFormalReports');
 		self.popCallback();
 	}
-	
 	startPersistence(){
 		var self=this;
 		self.pushCallback(self.loadPersistentStorage);
@@ -484,8 +489,9 @@ class RCGZippedApp{
 				}, create);
 			});
 	}
-	deploy(theZips,callback,storage){
-		console.log("Deploying WebApp");
+	deploy(theZips,storage){
+		var self=this;
+		console.log("Deploying Zip WebApp");
 		var arrZips;
 		if (!Array.isArray(theZips)){
 			arrZips=[theZips];
@@ -515,7 +521,7 @@ class RCGZippedApp{
 		}
 */		var fncLoadZip=function(iZip){
 			if (iZip>=arrZips.length){
-				callback();
+				self.popCallback();
 			} else {
 				var sZipUrl=arrZips[iZip];
 				console.log("Download Zip File:"+sZipUrl);

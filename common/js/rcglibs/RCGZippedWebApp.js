@@ -313,8 +313,10 @@ class RCGZippedApp{
 	loadFileFromNetwork(bLoadedFromStorage,sRelativePath,fileContent){
 		var self=this;
 		if (bLoadedFromStorage) {
+			console.log(sRelativePath+" loaded from persistent storage");
 			self.popCallback([sRelativePath,fileContent]);
 		}
+		console.log(sRelativePath+" loaded from network");
 		var nPos=sRelativePath.lastIndexOf(".");
 		var sExt=sRelativePath.substring(nPos+1,sRelativePath.length).toLowerCase();
 		var sUrl=self.composeUrl(sRelativePath);

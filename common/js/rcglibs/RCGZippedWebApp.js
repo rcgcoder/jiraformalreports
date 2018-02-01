@@ -409,7 +409,7 @@ class RCGZippedApp{
 	loadRemoteFileIteration(arrRelativePaths,iFile){
 		var self=this;
 		if (iFile>=arrRelativePaths.length){
-			return self.popCallback(iFile-1);
+			return self.popCallback([iFile-1]);
 		}
 		self.pushCallback(function(){
 			self.loadRemoteFileIteration(arrRelativePaths,iFile++);

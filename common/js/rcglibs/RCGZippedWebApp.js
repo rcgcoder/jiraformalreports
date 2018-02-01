@@ -429,7 +429,7 @@ class RCGZippedApp{
 				
 				self.pushCallback(function(){
 					alert("Deployed");
-					loadFileFromStorage(sRelativePath);
+					self.loadFileFromStorage(sRelativePath);
 				});
 				self.pushCallback(self.deploy);
 				self.loadRemoteFiles(arrFiles);

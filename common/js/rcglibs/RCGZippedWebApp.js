@@ -248,7 +248,7 @@ class RCGZippedApp{
 			&&(self.github!="")
 			&&(contentType.isCacheable)
 			){ // only saves if github is configured and storage engine is working and content is cacheable
-			self.storage.set('#GITCOMMIT#'+sRelativePath,self.commitId);
+			self.storage.set('#GITCOMMIT#'+sRelativePath,self.github.commitId);
 			self.storage.set('#GITFORMAT#'+sRelativePath,JSON.stringify(contentType));
 			var sStringContent="";
 			if (contentType.isText){

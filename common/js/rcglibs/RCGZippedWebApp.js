@@ -9,13 +9,6 @@ Class for download a Zip File with a lot of js files.
  * 
  */
 
-/*
-var workerScriptsPath = 'https://rawgit.com/rcgcoder/jiraformalreports/master/src/libs/zip';
-zip.workerScripts = {
-		  deflater: [workerScriptsPath+'/z-worker.js', workerScriptsPath+'/deflate.js'],
-		  inflater: [workerScriptsPath+'/z-worker.js', workerScriptsPath+'/inflate.js']
-		};
-*/
 
 
 class CallManager{
@@ -216,8 +209,8 @@ class RCGZippedApp{
 			isCacheable:true,
 			commitId:""
 		}
-		var nPos=sRelativePath.lastIndexOf(".");
-		var sExt=sRelativePath.substring(nPos+1,sRelativePath.length).toLowerCase();
+		var nPos=fileName.lastIndexOf(".");
+		var sExt=fileName.substring(nPos+1,fileName.length).toLowerCase();
 		if (sExt=="js"){
 			result.isText=true;
 			result.isJS=true;
@@ -560,7 +553,13 @@ class RCGZippedApp{
 	deploy(){
 		var self=this;
 		console.log("Deploying Zip WebApp");
-		zip.useWebWorkers=false;
+		zip.useWebWorkers=true;
+		zip.workerScriptsPath = 'js/libs/zip/';
+		/*zip.workerScripts = {
+				  deflater: [workerScriptsPath+'/z-worker.js', workerScriptsPath+'/deflate.js'],
+				  inflater: [workerScriptsPath+'/z-worker.js', workerScriptsPath+'/inflate.js']
+				};
+		*/
 		var zipUrl=self.composeUrl(self.zipAppFile);
 		var arrZips;
 		if (!Array.isArray(zipUrl)){
@@ -606,12 +605,13 @@ class RCGZippedApp{
 						for (var i=0;(!bWillSave) && (i<self.zipImportPaths.length);i++){
 							sImportPath=self.zipImportPaths[i];
 							var sPrefix=sFile.substring(0,sImportPath.length);
-							if (sPrefix==sImportPath){
-								console.log("Entry "+entry.filename + " will be saved");
+							var sLastChar=sFile.substring(sFile.length-1);
+							var sRelativePath=sFile.substring(sPrefix.length);
+							if ((sPrefix.length!=sFile.length)&&(sPrefix==sImportPath)&&(sLastChar!="/")){
+								console.log("Entry "+entry.filename + " will be saved as "+sRelativePath);
 								bWillSave=true;
 								var jsonContent=self.getContentTypeFromExtension(sFile);
 								jsonContent.commitId=self.github.commitId;
-								var sRelativePath=sFile.substring(sImportPath.lenght,sFile.length);
 								arrFilesToSave.push({
 													model:model,
 													entry:entry,

@@ -164,6 +164,7 @@ class RCGZippedApp{
 		self.urlBase="";
 		self.zipAppFile="";
 		self.zipLastCommitId="";
+		self.zipImportPaths=[];
 		var cmAux=new CallManager(self);
 		console.log("ZippedApp Created");
 		self.requestFileSystem = window.webkitRequestFileSystem 
@@ -203,6 +204,47 @@ class RCGZippedApp{
 		}
 		return sUrl;
 	}
+
+	getContentTypeFromExtension(fileName){
+		var result={
+			isText:false,
+			isJS:false,
+			isCSS:false,
+			isHTML:false,
+			isJSON:false,
+			isSVG:false,
+			isCacheable:true,
+			commitId:""
+		}
+		var nPos=sRelativePath.lastIndexOf(".");
+		var sExt=sRelativePath.substring(nPos+1,sRelativePath.length).toLowerCase();
+		if (sExt=="js"){
+			result.isText=true;
+			result.isJS=true;
+			return result;
+		} else if (sExt=="html"){
+			result.isText=true;
+			result.isHTML=true;
+			return result;
+		} else if (sExt=="css"){
+			result.isText=true;
+			result.isCSS=true;
+			return result;
+		} else if (sExt=="json"){
+			result.isText=true;
+			result.isJSON=true;
+			result.isCacheable=false;
+			return result;
+		} else if (sExt=="svg"){
+			result.isText=false;
+			result.isSVG=true;
+			return result;
+		} else {
+			return result;
+		}
+		return result;
+	}
+	
 	getContentType(xhr){
 		var result={
 			isText:false,
@@ -211,7 +253,8 @@ class RCGZippedApp{
 			isHTML:false,
 			isJSON:false,
 			isSVG:false,
-			isCacheable:true
+			isCacheable:true,
+			commitId:""
 		}
 		var arrContentTypes=xhr.getResponseHeader("content-type").split(";");
 		for (var i=0;i<arrContentTypes.length;i++){
@@ -318,8 +361,6 @@ class RCGZippedApp{
 			
 		}
 		console.log(sRelativePath+" loaded from network");
-		var nPos=sRelativePath.lastIndexOf(".");
-		var sExt=sRelativePath.substring(nPos+1,sRelativePath.length).toLowerCase();
 		var sUrl=self.composeUrl(sRelativePath);
 		self.pushCallback(self.processFile);
     	self.downloadFile(sUrl,sRelativePath);
@@ -395,7 +436,7 @@ class RCGZippedApp{
 				
 				self.pushCallback(function(){
 					alert("Deployed");
-					return self.popCallback();
+					loadFileFromStorage(sRelativePath);
 				});
 				self.pushCallback(self.deploy);
 				self.loadRemoteFiles(arrFiles);
@@ -493,9 +534,33 @@ class RCGZippedApp{
 				}, create);
 			});
 	}
+	saveZipEntries(arrEntries,iEntry){
+		var self=this;
+		var iAct=iEntry;
+		if (iAct>=arrEntries.length){
+			return self.popCallback();
+		} 
+		var params=arrEntries[iAct];
+		var model=params.model;
+		var entry=params.entry;
+		var fncSaveBlob=function (blobUrl){
+			if (params.type.isText){
+				reader.readAsText(blb);
+			}
+			self.saveZipEntries(arrEntries,iAct+1);
+		}
+		var fncProgress=function(current, total) {
+			console.log(current + "/" + total + "   " + Math.round((current/total)*100)+"%");
+		}
+		model.getEntryFile(entry
+				, "Blob"
+				, fncSaveBlob
+				, fncProgress);
+	}
 	deploy(){
 		var self=this;
 		console.log("Deploying Zip WebApp");
+		zip.useWebWorkers=false;
 		var zipUrl=self.composeUrl(self.zipAppFile);
 		var arrZips;
 		if (!Array.isArray(zipUrl)){
@@ -504,7 +569,8 @@ class RCGZippedApp{
 			arrZips=zipUrl;
 		}
 		var model=new ZipModel();
-		model.storage=storage;
+		
+//		model.storage=storage;
 /*		function download(entry, li, a) {
 			model.getEntryFile(entry
 								, creationMethodInput.value
@@ -524,15 +590,35 @@ class RCGZippedApp{
 				li.appendChild(unzipProgress);
 			});
 		}
-*/		var fncLoadZip=function(iZip){
+*/		
+		var arrFilesToSave=[];
+		var fncLoadZip=function(iZip){
 			if (iZip>=arrZips.length){
-				self.popCallback();
+				self.saveZipEntries(arrFilesToSave,0);
 			} else {
 				var sZipUrl=arrZips[iZip];
 				console.log("Download Zip File:"+sZipUrl);
-				model.downloadAndGetEntries(sZipUrl, function(entries) {
+				model.downloadAndGetEntries(sZipUrl,function(entries) {
 					entries.forEach(function(entry) {
-						console.log("Entry read:"+entry.filename);
+						var sFile=entry.filename;
+						var sImportPath;
+						var bWillSave=false;
+						for (i=0;(!bWillSave) && (i<self.zipImportPaths.length);i++){
+							sImportPath=self.zipImportPaths[i];
+							if (sFile.substring(0,sImportPath.lenght)==sImportPaht){
+								console.log("Entry "+entry.filename + " will be saved");
+								bWillSave=true;
+								var jsonContent=self.getContentTypeFromExtension(sFile);
+								jsonContent.commitId=self.github.commitId;
+								var sRelativePath=sFile.substring(sImportPath.lenght,sFile.length);
+								arrFilesToSave.push({
+													model:model,
+													entry:entry,
+													type:jsonContent,
+													relativePath:sRelativePath
+													});
+							}
+						}
 /*						var li = document.createElement("li");
 						var a = document.createElement("a");
 						a.textContent = entry.filename;

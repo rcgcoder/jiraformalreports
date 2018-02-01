@@ -547,8 +547,6 @@ class ZipModel{
 		  if (this.status == 200) {
 		    var myBlob = this.response;
 		    self.ZipData=myBlob;
-		    var md5=SparkMD5.ArrayBuffer.hash(myBlob);
-		    self.md5=md5;
 		    // myBlob is now the blob that the object URL pointed to.
 		    self.getEntries(myBlob,onend);
 		  }

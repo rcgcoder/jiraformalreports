@@ -176,6 +176,9 @@ class RCGZippedApp{
 	setHtmlContainerID(sHtmlElementId){
 		self.htmlContainerId=sHtmlElementId;
 	}
+	getHtmlContainerID(){
+		return self.htmlContainerId;
+	}
 	
 	
 	composeUrl(sRelativePath){

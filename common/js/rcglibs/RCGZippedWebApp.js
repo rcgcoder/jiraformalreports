@@ -290,15 +290,15 @@ class RCGZippedApp{
 			if (contentType.isText){
 				sStringContent=content;
 			} else {
-				var arr = new Uint8Array([content]);
+				var u8Arr = new Uint8Array(content);
 				/*for (var xi=0;xi<16;xi++){
 					log("u8a["+xi+"]:"+arr[xi]);
 				}*/
-				var sB64=fromByteArray(arr);
+				var sB64=fromByteArray(u8Arr);
 				/*for (var xi=0;xi<16;xi++){
 					log("b64["+xi+"]:"+sB64[xi]);
 				}*/
-				log("B64: " + sB64.length);
+				console.log("B64: " + sB64.length);
 				sStringContent=sB64;
 			}
 			self.storage.set(sRelativePath,sStringContent);

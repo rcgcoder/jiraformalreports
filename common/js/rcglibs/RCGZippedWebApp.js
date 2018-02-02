@@ -278,7 +278,7 @@ class RCGZippedApp{
 		}
 		return result;
 	}
-	saveFileToStorage(sRelativePath,sContent,contentType){
+	saveFileToStorage(sRelativePath,content,contentType){
 		var self=this;
 		if ((self.storage!="")
 			&&(self.github!="")
@@ -286,13 +286,13 @@ class RCGZippedApp{
 			){ // only saves if github is configured and storage engine is working and content is cacheable
 			contentType.commitId=self.github.commitId;
 			self.storage.set('#FILEINFO#'+sRelativePath,JSON.stringify(contentType));
-			var sStringContent="";
+/*			var sStringContent="";
 			if (contentType.isText){
 				sStringContent=sContent;
 			} else {
 				sStringContent="stringyfied content";
 			}
-			self.storage.set(sRelativePath,sStringContent);
+*/			self.storage.set(sRelativePath,content);
 			self.storage.save();
 		}
 	}

@@ -183,7 +183,7 @@ class RCGZippedApp{
 	
 	composeUrl(sRelativePath){
 		var self=this;
-		var sUrl=self.rootPath;
+		var sUrl=self.rootPath; 
 		if (self.github!=""){
 			if (self.github!=""){
 				sUrl+="/"+self.github.repository;

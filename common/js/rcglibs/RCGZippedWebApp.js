@@ -362,9 +362,9 @@ class RCGZippedApp{
 		var self=this;
 		var auxContent=content;
 	    if (contentType.isJS){ //if filename is a external JavaScript file
-	    	self.addJavascriptString(sFileContent);
+	    	self.addJavascriptString(content);
 	    } else if (contentType.isCSS){ //if filename is an external CSS file
-	    	self.addStyleString(sFileContent);
+	    	self.addStyleString(content);
 	    } else if (contentType.isIMG){
 	    	auxContent='data:image/bmp;base64,'+auxContent;
 	    }

@@ -433,7 +433,6 @@ class RCGZippedApp{
 			} else { // deploy whole zip
 	*/			
 				var arrFiles=["js/libs/jquery-3.3.1.min.js",
-					  		  "js/libs/zip/b64.js",
 							  "js/libs/zip/zip.js",
 							  "js/libs/zip/zip-ext.js"
 							  ];

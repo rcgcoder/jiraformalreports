@@ -209,6 +209,7 @@ class RCGZippedApp{
 			isHTML:false,
 			isJSON:false,
 			isSVG:false,
+			isIMG:false,
 			isCacheable:true,
 			commitId:""
 		}
@@ -234,6 +235,10 @@ class RCGZippedApp{
 		} else if (sExt=="svg"){
 			result.isText=false;
 			result.isSVG=true;
+			return result;
+		} else if (sExt=="jpg"){
+			result.isText=false;
+			result.isIMG=true;
 			return result;
 		} else {
 			return result;
@@ -431,10 +436,9 @@ class RCGZippedApp{
 		}
 		self.pushCallback(function(sFileCommitId){
 			self.zipLastCommitId=sFileCommitId;
-/*			if (self.zipLastCommitId!=sCommitId){ // deploy only the file
+			if (self.zipLastCommitId!=sCommitId){ // deploy only the file
 				return self.popCallback([false,sRelativePath]);
-			} else { // deploy whole zip
-	*/			
+			} else { // deploy whole zip			
 				var arrFiles=["js/libs/jquery-3.3.1.min.js",
 							  "js/libs/zip/zip.js",
 							  "js/libs/zip/zip-ext.js"
@@ -446,7 +450,7 @@ class RCGZippedApp{
 				});
 				self.pushCallback(self.deploy);
 				self.loadRemoteFiles(arrFiles);
-//			}
+			}
 		});
 		self.github.getLastCommitsOfFile(sGitHubRelativePath);
 	}
@@ -591,28 +595,6 @@ class RCGZippedApp{
 			arrZips=zipUrl;
 		}
 		var model=new ZipModel();
-		
-//		model.storage=storage;
-/*		function download(entry, li, a) {
-			model.getEntryFile(entry
-								, creationMethodInput.value
-								, function(blobURL) {
-				var clickEvent = document.createEvent("MouseEvent");
-				if (unzipProgress.parentNode)
-					unzipProgress.parentNode.removeChild(unzipProgress);
-				unzipProgress.value = 0;
-				unzipProgress.max = 0;
-				clickEvent.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-				a.href = blobURL;
-				a.download = entry.filename;
-				a.dispatchEvent(clickEvent);
-			}, function(current, total) {
-				unzipProgress.value = current;
-				unzipProgress.max = total;
-				li.appendChild(unzipProgress);
-			});
-		}
-*/		
 		var arrFilesToSave=[];
 		var fncLoadZip=function(iZip){
 			if (iZip>=arrZips.length){
@@ -643,19 +625,6 @@ class RCGZippedApp{
 													});
 							}
 						}
-/*						var li = document.createElement("li");
-						var a = document.createElement("a");
-						a.textContent = entry.filename;
-						a.href = "#";
-						a.addEventListener("click", function(event) {
-							if (!a.download) {
-								download(entry, li, a);
-								event.preventDefault();
-								return false;
-							}
-						}, false);
-						li.appendChild(a);
-						fileList.appendChild(li);*/
 					});
 					fncLoadZip(iZip+1);
 				});
@@ -725,104 +694,3 @@ class ZipModel{
 		}
 	}
 }
-
-/*
- * 
-
-	 <script type="text/javascript" src="https://cdn.rawgit.com/rcgcoder/jiraformalreports/2f01650a/src/libs/jquery-3.3.1.min.js"></script>
-	 <script type="text/javascript" src="js/libs/zip/zip.js"></script>
-	 <script type="text/javascript" src="js/libs/zip/zip-ext.js"></script>
-	 <script type="text/javascript" src="js/libs/zip/zip-fs.js"></script>
-	 <script type="text/javascript" src="js/libs/spark-md5.min.js"></script>
-	 <script type="text/javascript" src="js/libs/persist-all-min.js"></script>
-<!--  	 <script type="text/javascript" src="https://rawgit.com/rcgcoder/jiraformalreports/master/src/libs/zip/inflate.js"></script>
-	 <script type="text/javascript" src="https://rawgit.com/rcgcoder/jiraformalreports/master/src/libs/zip/deflate.js"></script>
--->
-<!--  	 <script type="text/javascript" src="https://cdn.rawgit.com/rcgcoder/jiraformalreports/6f5cb157/src/rcglibs/RCGutils.js"></script>
--->	 
-	 <script type="text/javascript" src="js/RCGBaseUtils.js"></script>
-	 <script type="text/javascript" src="js/RCGLogUtil.js"></script>
-	 <script type="text/javascript" src="js/RCGGitHub.js"></script>
-
-
-run(theZips,bFileSystem){
-}
-
-
-(function(obj) {
-
-
-
-	(function() {
-		var fileInput = document.getElementById("file-input");
-		var unzipProgress = document.createElement("progress");
-		var fileList = document.getElementById("file-list");
-		var creationMethodInput = document.getElementById("creation-method-input");
-
-
-		if (typeof requestFileSystem == "undefined")
-			creationMethodInput.options.length = 1;
-		fileInput.addEventListener('change', function() {
-			fileInput.disabled = true;
-			model.getEntries(fileInput.files[0], function(entries) {
-				fileList.innerHTML = "";
-				entries.forEach(function(entry) {
-					var li = document.createElement("li");
-					var a = document.createElement("a");
-					a.textContent = entry.filename;
-					a.href = "#";
-					a.addEventListener("click", function(event) {
-						if (!a.download) {
-							download(entry, li, a);
-							event.preventDefault();
-							return false;
-						}
-					}, false);
-					li.appendChild(a);
-					fileList.appendChild(li);
-				});
-			});
-		}, false);
-	})();
-
-
-
-
-})(this);
-
-
-		var xhr = new XMLHttpRequest();
-		xhr.open('GET', "https://api.github.com/repos/rcgcoder/jiraformalreports/commits/master", true);
-		xhr.responseType = 'json';
-		xhr.onload = function(e) {
-		  if (this.status == 200) {
-		    var myBlob = this.response;
-		    self.ZipData=myBlob;
-		    var md5=SparkMD5.ArrayBuffer.hash(myBlob);
-		    self.md5=md5;
-		    // myBlob is now the blob that the object URL pointed to.
-		    self.getEntries(myBlob,onend);
-		  }
-		};
-		xhr.send();	
-
-	 
-	 
-	 
-	 
-	 	var storage;
-	
-		function loadPersistentStorage() {
-		   // load persistent store after the DOM has loaded
-		   Persist.remove('cookie');
-		   Persist.remove('gears');
-		   Persist.remove('flash');
-		   Persist.remove('globalstorage');
-		   Persist.remove('ie');
-		   storage = new Persist.Store('JiraFormalReports');
-		}
-
-
-
-*/
-

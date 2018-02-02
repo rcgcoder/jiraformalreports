@@ -315,7 +315,9 @@ class RCGZippedApp{
 			}
 			self.storage.set(sRelativePath,sStringContent);
 			self.storage.save();
+			return sStringContent;
 		}
+		return "";
 	}
 	downloadFile(sUrl,sRelativePath){
 		var self=this;
@@ -327,14 +329,15 @@ class RCGZippedApp{
 		  if (this.status == 200) {
 			  var ct=self.getContentType(xhr);
 			  var response="";
-			  var arr=new Uint8Array(this.response);
-			  response = String.fromCharCode.apply(null,arr);
-			  if (!ct.isText){
-				  var b64=fromByteArray(response);
-				  response=b64;
+			  var toSave="";
+			  if (ct.isText){
+				  var arr=new Uint8Array(this.response);
+				  toSave = String.fromCharCode.apply(null,arr);
+			  } else {
+				  toSave = this.response;
 			  }
-			  self.saveFileToStorage(sRelativePath,response,ct);
-			  self.popCallback([response,xhr,ct,sRelativePath]);
+			  var sResult=self.saveFileToStorage(sRelativePath,toSave,ct);
+			  self.popCallback([sResult,xhr,ct,sRelativePath]);
 		  } else {
 			  self.loadError({target:{src:sUrl}});			  
 		  }

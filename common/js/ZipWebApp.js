@@ -14,6 +14,6 @@ class ZipWebApp{
 			image.src = 'data:image/bmp;base64,'+content;
 		});
 		self.loadRemoteFile("img/reports2.jpg");
-		alert("Running ZipWebApp");
+		alert("Running ZipWebApp ");
 	}
 }

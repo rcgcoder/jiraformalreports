@@ -132,7 +132,7 @@ class GitHub{
 		self.pushCallback(self.processLastCommit);
 		self.apiCall("https://api.github.com/repos/"+self.repository+"/commits/master");
 	}
-	processLastCommitsOfFile(response){
+	processLastCommitOfFile(response){
 		var self=this;
 		var arrCommits=response;
 		var lastCommit=arrCommits[0];
@@ -140,9 +140,9 @@ class GitHub{
 		var sCommitShortId=sCommitLongId.substring(0,8);
 		self.app.popCallback([sCommitShortId]);
 	}
-	getLastCommitsOfFile(sRelativePath){
+	getLastCommitOfFile(sRelativePath){
 		var self=this;
-		self.pushCallback(self.processLastCommitsOfFile);
+		self.pushCallback(self.processLastCommitOfFile);
 		self.apiCall("https://api.github.com/repos/"+self.repository+"/commits?path="+sRelativePath);
 	}
 }
@@ -441,11 +441,12 @@ class RCGZippedApp{
 		*/
 		// now .... get last commit id of the file
 		
-		var sGitHubRelativePath=self.zipAppFile;
-		if (self.prependPath!=""){
-			sGitHubRelativePath=self.prependPath+"/"+sGitHubRelativePath;
+		var arrGitHubRelativePath=self.zipAppFile;
+		if (!Array.isArray(sGitHubRelativePath)){
+			arrGitHubRelativePath=[arrGitHubRelativePath];
 		}
-		self.pushCallback(function(sFileCommitId){
+		
+		var fncCallbackLastCommitOfFile=function(sFileCommitId){
 			self.zipLastCommitId=sFileCommitId;
 			if (self.zipLastCommitId!=sCommitId){ // deploy only the file
 				return self.popCallback([false,sRelativePath]);
@@ -461,8 +462,14 @@ class RCGZippedApp{
 				self.pushCallback(self.deploy);
 				self.loadRemoteFiles(arrFiles);
 			}
-		});
-		self.github.getLastCommitsOfFile(sGitHubRelativePath);
+			
+		}
+		
+		if (self.prependPath!=""){
+			sGitHubRelativePath=self.prependPath+"/"+sGitHubRelativePath;
+		}
+		self.pushCallback(fncCallbackLastCommitOfFile);
+		self.github.getLastCommitsOfFile(arrGitHubRelativePath);
 	}
 	
 	loadRemoteFile(sRelativePath){

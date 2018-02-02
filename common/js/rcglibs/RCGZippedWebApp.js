@@ -322,6 +322,7 @@ class RCGZippedApp{
 		var xhr = new XMLHttpRequest();
 		xhr.open('GET', sUrl, true);
 		xhr.onerror=self.loadError;
+		xhr.responseType = 'arraybuffer';
 		xhr.onload = function(e) {
 		  if (this.status == 200) {
 			  var ct=self.getContentType(xhr);
@@ -329,7 +330,10 @@ class RCGZippedApp{
 			  if (ct.isText){
 				  response=this.responseText;
 			  } else {
-				  response=this.response;
+				  response=new Uint8Array(this.response);
+				  var raw = String.fromCharCode.apply(null,arr);
+				  var b64=btoa(raw);
+				  response=b64;
 			  }
 			  self.saveFileToStorage(sRelativePath,response,ct);
 			  self.popCallback([response,xhr,ct,sRelativePath]);

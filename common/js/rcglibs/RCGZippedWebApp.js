@@ -55,6 +55,7 @@ class GitHub{
 	constructor(){
 		var self=this;
 		self.repository="";
+		self.branch="";
 		self.app="";
 		self.arrCommits="";
 		self.lastCommit="";
@@ -167,11 +168,14 @@ class RCGZippedApp{
 		self.loadedFiles={"rcglibs/RCGZippedWebApp.js":true};
 		
 	}
-	useGitHub(sRepository){
+	useGitHub(sRepository,branch){
 		var self=this;
 		self.github=new GitHub();
 		self.github.app=this;
 		self.github.repository=sRepository;
+		if (typeof branch!=="undefined"){
+			self.github.branch=branch;
+		}
 	}
 	setHtmlContainerID(sHtmlElementId){
 		self.htmlContainerId=sHtmlElementId;

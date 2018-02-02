@@ -484,7 +484,7 @@ class RCGZippedApp{
 	startPersistence(){
 		var self=this;
 		var arrFiles=["js/libs/persist-all-min.js",
-	  		  		  "js/libs/zip/b64.js"
+	  		  		  "js/libs/b64.js"
 			  		  ];
 		self.pushCallback(self.loadPersistentStorage);
 		self.loadRemoteFiles(arrFiles);

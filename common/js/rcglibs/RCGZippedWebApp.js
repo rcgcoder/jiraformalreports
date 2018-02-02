@@ -449,12 +449,11 @@ class RCGZippedApp{
 				return self.popCallback([false,sRelativePath]);
 			} else { // deploy whole zip			
 				var arrFiles=["js/libs/jquery-3.3.1.min.js",
-							  "js/libs/zip/zip.js",
-							  "js/libs/zip/zip-ext.js"
+							  "js/libs/zip/zip.js"
+//							  ,"js/libs/zip/zip-ext.js"
 							  ];
 				
 				self.pushCallback(function(){
-					alert("Deployed");
 					self.loadFileFromStorage(sRelativePath);
 				});
 				self.pushCallback(self.deploy);

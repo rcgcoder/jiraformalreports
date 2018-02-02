@@ -327,12 +327,10 @@ class RCGZippedApp{
 		  if (this.status == 200) {
 			  var ct=self.getContentType(xhr);
 			  var response="";
-			  if (ct.isText){
-				  response=this.responseText;
-			  } else {
-				  response=new Uint8Array(this.response);
-				  var raw = String.fromCharCode.apply(null,arr);
-				  var b64=btoa(raw);
+			  var arr=new Uint8Array(this.response);
+			  response = String.fromCharCode.apply(null,arr);
+			  if (!ct.isText){
+				  var b64=btoa(response);
 				  response=b64;
 			  }
 			  self.saveFileToStorage(sRelativePath,response,ct);

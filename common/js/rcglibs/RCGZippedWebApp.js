@@ -288,9 +288,9 @@ class RCGZippedApp{
 			self.storage.set('#FILEINFO#'+sRelativePath,JSON.stringify(contentType));
 			var sStringContent="";
 			if (contentType.isText){
-				sStringContent=sContent;
+				sStringContent=content;
 			} else {
-				var arr = new Uint8Array([blob]);
+				var arr = new Uint8Array([content]);
 				/*for (var xi=0;xi<16;xi++){
 					log("u8a["+xi+"]:"+arr[xi]);
 				}*/

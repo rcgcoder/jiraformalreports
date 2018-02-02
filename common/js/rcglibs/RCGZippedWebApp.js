@@ -598,11 +598,37 @@ class RCGZippedApp{
 				};
 		*/
 		var zipUrl=self.composeUrl(self.zipAppFile);
-		var arrZips;
+		var arrZips=[];
+		// prepare arrays
+		var objZip;
+		var imports=self.zipImportPaths;
 		if (!Array.isArray(zipUrl)){
-			arrZips=[zipUrl];
+			objZip={url:zipUrl,imports:[]};
+			arrZips.push(objZip);
+			if (!Array.isArray(imports)){
+				objZip.imports.push(imports);
+			} else {
+				objZip.imports=imports;
+			}
 		} else {
-			arrZips=zipUrl;
+			for (var j=0;j<zipUrl.length;j++){
+				objZip={url:zipUrl[j],imports:[]}
+				arrZips.push(objZip);
+				if ((!Array.isArray(imports))&&(j==0)){
+					objZip.imports.push(imports);
+				} else if (j>=imports.length){
+					//	do nothing	
+				} else {
+					if (j<imports.length){
+						var subImport=imports[j];
+						if (!Array.isArray(subImport)){
+							objZip.imports.push(subImport);
+						} else {
+							objZip.imports=subImport;
+						}
+					}
+				}
+			}
 		}
 		var model=new ZipModel();
 		var arrFilesToSave=[];
@@ -610,30 +636,45 @@ class RCGZippedApp{
 			if (iZip>=arrZips.length){
 				self.saveZipEntries(arrFilesToSave,0);
 			} else {
-				var sZipUrl=arrZips[iZip];
+				var objZip=arrZips[iZip];
+				var sZipUrl=objZip.url;
 				console.log("Download Zip File:"+sZipUrl);
 				model.downloadAndGetEntries(sZipUrl,function(entries) {
 					entries.forEach(function(entry) {
 						var sFile=entry.filename;
 						var sImportPath;
-						var bWillSave=false;
-						for (var i=0;(!bWillSave) && (i<self.zipImportPaths.length);i++){
-							sImportPath=self.zipImportPaths[i];
-							var sPrefix=sFile.substring(0,sImportPath.length);
+						var bWillNotSave=true;
+						var bContinue=true;
+						var sRelativePath="";
+						for (var i=0;(bContinue)&&(bWillNotSave) && ((objZip.imports.length==0)||(i<objZip.imports.length));i++){
+							var sPrefix="";
 							var sLastChar=sFile.substring(sFile.length-1);
-							var sRelativePath=sFile.substring(sPrefix.length);
-							if ((sPrefix.length!=sFile.length)&&(sPrefix==sImportPath)&&(sLastChar!="/")){
+							if (sLastChar=="/") {
+								bContinue=false;
+							} else if (objZip.imports.length==0){
+								sRelativePath=entry.filename;
 								console.log("Entry "+entry.filename + " will be saved as "+sRelativePath);
-								bWillSave=true;
-								var jsonContent=self.getContentTypeFromExtension(sFile);
-								jsonContent.commitId=self.github.commitId;
-								arrFilesToSave.push({
-													model:model,
-													entry:entry,
-													type:jsonContent,
-													relativePath:sRelativePath
-													});
+								bWillNotSave=false;
+							} else {
+								sImportPath=objZip.imports[i];
+								var sPrefix=sFile.substring(0,sImportPath.length);
+								sRelativePath=sFile.substring(sPrefix.length);
+								if ((sPrefix.length!=sFile.length)
+									  &&(sPrefix==sImportPath)){
+									console.log("Entry "+entry.filename + " will be saved as "+sRelativePath);
+									bWillNotSave=false;
+								}
 							}
+						}
+						if (!bWillNotSave){
+							var jsonContent=self.getContentTypeFromExtension(sFile);
+							jsonContent.commitId=self.github.commitId;
+							arrFilesToSave.push({
+												model:model,
+												entry:entry,
+												type:jsonContent,
+												relativePath:sRelativePath
+												});
 						}
 					});
 					fncLoadZip(iZip+1);

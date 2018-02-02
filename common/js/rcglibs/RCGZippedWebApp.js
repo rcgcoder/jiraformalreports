@@ -280,6 +280,10 @@ class RCGZippedApp{
 				result.isText=false;
 				result.isSVG=true;
 				return result;
+			} else if (arrContentTypes[i]=="image/jpeg"){
+				result.isText=false;
+				result.isIMG=true;
+				return result;
 			} else if (arrContentTypes[i]=="application/octet-stream"){
 				return result;
 			}
@@ -354,14 +358,17 @@ class RCGZippedApp{
 */	    oHead.appendChild(oScript);
 	    oScript.innerHTML = jsContent;
 	}
-	processFile(sFileContent,xhr,contentType,sRelativePath){
+	processFile(content,xhr,contentType,sRelativePath){
 		var self=this;
+		var auxContent=content;
 	    if (contentType.isJS){ //if filename is a external JavaScript file
 	    	self.addJavascriptString(sFileContent);
 	    } else if (contentType.isCSS){ //if filename is an external CSS file
 	    	self.addStyleString(sFileContent);
+	    } else if (contentType.isIMG){
+	    	auxContent='data:image/bmp;base64,'+auxContent;
 	    }
-	    self.popCallback([sRelativePath,sFileContent]);
+	    self.popCallback([sRelativePath,auxContent]);
 	}
 	loadFileFromNetwork(bLoadedFromStorage,sRelativePath,fileContent){
 		var self=this;

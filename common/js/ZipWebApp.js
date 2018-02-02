@@ -11,7 +11,7 @@ class ZipWebApp{
 /*			var jqContainer=$("#"+self.getHtmlContainerID());
 			var jqImage=$("#jrfSplash");*/
 			var image=document.getElementById("jrfSplash");
-			image.src = 'data:image/bmp;base64,'+content;
+			image.src = content;
 		});
 		self.loadRemoteFile("img/reports2.jpg");
 		alert("Running ZipWebApp ");

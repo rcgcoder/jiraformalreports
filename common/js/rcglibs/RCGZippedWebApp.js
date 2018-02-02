@@ -286,13 +286,22 @@ class RCGZippedApp{
 			){ // only saves if github is configured and storage engine is working and content is cacheable
 			contentType.commitId=self.github.commitId;
 			self.storage.set('#FILEINFO#'+sRelativePath,JSON.stringify(contentType));
-/*			var sStringContent="";
+			var sStringContent="";
 			if (contentType.isText){
 				sStringContent=sContent;
 			} else {
-				sStringContent="stringyfied content";
+				var arr = new Uint8Array([blob]);
+				/*for (var xi=0;xi<16;xi++){
+					log("u8a["+xi+"]:"+arr[xi]);
+				}*/
+				var sB64=fromByteArray(arr);
+				/*for (var xi=0;xi<16;xi++){
+					log("b64["+xi+"]:"+sB64[xi]);
+				}*/
+				log("B64: " + sB64.length);
+				sStringContent=sB64;
 			}
-*/			self.storage.set(sRelativePath,content);
+			self.storage.set(sRelativePath,sStringContent);
 			self.storage.save();
 		}
 	}
@@ -424,8 +433,10 @@ class RCGZippedApp{
 			} else { // deploy whole zip
 	*/			
 				var arrFiles=["js/libs/jquery-3.3.1.min.js",
+					  		  "js/libs/zip/b64.js",
 							  "js/libs/zip/zip.js",
-							  "js/libs/zip/zip-ext.js"];
+							  "js/libs/zip/zip-ext.js"
+							  ];
 				
 				self.pushCallback(function(){
 					alert("Deployed");
@@ -472,8 +483,11 @@ class RCGZippedApp{
 	}
 	startPersistence(){
 		var self=this;
+		var arrFiles=["js/libs/persist-all-min.js",
+	  		  		  "js/libs/zip/b64.js"
+			  		  ];
 		self.pushCallback(self.loadPersistentStorage);
-		self.loadRemoteFile("js/libs/persist-all-min.js");
+		self.loadRemoteFiles(arrFiles);
 	}
 	extendFromObject(srcObj){
 		var result=this;
@@ -536,15 +550,17 @@ class RCGZippedApp{
 		var params=arrEntries[iAct];
 		var model=params.model;
 		var entry=params.entry;
-		var fncSaveBlob=function (blobUrl){
+		var fncSaveBlob=function (blob){
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				  var content = reader.result;
+				  self.saveFileToStorage(params.relativePath,content,params.type);
+				  self.saveZipEntries(arrEntries,iAct+1);
+			}		
 			if (params.type.isText){
-				var reader = new FileReader();
-				reader.onload = function(e) {
-					  var text = reader.result;
-					  self.saveFileToStorage(params.relativePath,text,params.type);
-					  self.saveZipEntries(arrEntries,iAct+1);
-				}		
-				reader.readAsText(blobUrl);
+				reader.readAsText(blob);
+			} else {
+				reader.readAsArrayBuffer(blob);
 			}
 		}
 		var fncProgress=function(current, total) {

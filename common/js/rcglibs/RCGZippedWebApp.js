@@ -182,18 +182,15 @@ class GitHub{
 	}
 	updateDeployZipCommits(deployZips,iFile){
 		var self=this;
-		if (iFile<deployZips.length){
+		if (iFile>=deployZips.length){
 			self.app.popCallback();
-		}
-		if (iFile<deployZips.length){
+		} else {
 			self.pushCallback(function(sCommitId,sCommitDate){
 				deployZips[iFile].commitId=sCommitId;
 				deployZips[iFile].commitDate=sCommitDate;
 				self.updateDeployZipCommits(deployZips,iFile+1);
 			});
 			self.getLastCommitOfFile(deployZips[iFile].relativePath);
-		} else {
-			self.app.popCallback();
 		}
 	}
 	getLastCommitOfDeploys(deployZips){

@@ -228,7 +228,7 @@ class RCGZippedApp{
 	}
 	addDeployZip(relativePath,arrImportPaths){
 		var objDeploy=new ZipDeploy(relativePath,"");
-		if (typeof arrImportPaths!=undefined){
+		if (typeof arrImportPaths!=="undefined"){
 			if (!Array.isArray(arrImportPaths)){
 				objDeploy.imports.push(arrImportPaths);
 			} else {

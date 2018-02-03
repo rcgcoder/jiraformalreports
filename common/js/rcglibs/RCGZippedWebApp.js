@@ -609,7 +609,7 @@ class RCGZippedApp{
 				theDeploy.deployedDate=deployInfo.deployedDate;
 			}
 		}
-		self.pushCallback(self.checkForDeploys);
+		self.pushCallback(function(){self.checkForDeploys();});
 		self.github.getLastCommitOfDeploys(self.DeployZips);
 	}
 	loadPersistentStorage() {

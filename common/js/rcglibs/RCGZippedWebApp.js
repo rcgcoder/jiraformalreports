@@ -622,7 +622,7 @@ class RCGZippedApp{
 		self.pushCallback(self.startApplication);
 		self.pushCallback(self.startPersistence);
 		if (self.github!=""){
-			self.updateLastCommit();
+			self.github.updateLastCommit();
 		}
 	}
 	onerror(message) {

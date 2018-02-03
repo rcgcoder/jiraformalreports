@@ -146,7 +146,7 @@ class GitHub{
 		var sCommitLongId=self.lastCommit.sha;
 		var sCommitShortId=sCommitLongId.substring(0,8);
 		self.commitId=sCommitShortId;
-		self.commitDate=self.lastCommit.author.date;
+		self.commitDate=(new Date(self.lastCommit.commit.author.date)).getTime();
 		self.app.popCallback([self.commitId,self.commitDate]);
 	}
 	updateLastCommit(){
@@ -566,12 +566,12 @@ class RCGZippedApp{
 			var theDeploy=self.DeployZips[i];
 			var zipUrl=self.composeUrl(theDeploy.relativePath);
 			theDeploy.url=zipUrl;
-		}
-		var sDeployInfo=self.storage.get('#FILEINFO#'+sRelativePath);
-		if (sDeployInfo!=null) {
-			var deployInfo=JSON.parse(sDeployInfo);
-			theDeploy.deployedCommitId=deployInfo.deployedCommitId;
-			theDeploy.deployedDate=deployInfo.deployedDate;
+			var sDeployInfo=self.storage.get('#FILEINFO#'+theDeploy.relativePath);
+			if (sDeployInfo!=null) {
+				var deployInfo=JSON.parse(sDeployInfo);
+				theDeploy.deployedCommitId=deployInfo.deployedCommitId;
+				theDeploy.deployedDate=deployInfo.deployedDate;
+			}
 		}
 	}
 	loadPersistentStorage() {

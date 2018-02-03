@@ -172,7 +172,7 @@ class GitHub{
 		var lastCommit=arrCommits[0];
 		var sCommitLongId=lastCommit.sha;
 		var sCommitShortId=sCommitLongId.substring(0,8);
-		var sCommitDate=lastCommit.author.date;
+		var sCommitDate=(new Date(lastCommit.commit.author.date)).getTime();
 		self.app.popCallback([sCommitShortId,sCommitDate]);
 	}
 	getLastCommitOfFile(sRelativePath){

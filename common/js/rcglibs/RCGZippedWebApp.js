@@ -687,6 +687,9 @@ class RCGZippedApp{
 	saveZipEntries(arrEntries,iEntry){
 		var self=this;
 		var iAct=iEntry;
+		if (typeof iEntry==="undefined"){
+			iAct=0;
+		}
 		if (iAct>=arrEntries.length){
 			return self.popCallback();
 		} 

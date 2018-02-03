@@ -208,6 +208,7 @@ class RCGZippedApp{
 		self.urlBase="";
 		self.DeployZips=[];
 		self.lastDeployInfo="";
+		self.localStorageMaxSize=200*1024*1024; // 200 MBytes by default
 		var cmAux=new CallManager(self);
 		console.log("ZippedApp Created");
 		self.requestFileSystem = window.webkitRequestFileSystem 
@@ -620,7 +621,11 @@ class RCGZippedApp{
 		Persist.remove('flash');
 		Persist.remove('globalstorage');
 		Persist.remove('ie');
-		self.storage = new Persist.Store('JiraFormalReports');
+		self.storage = new Persist.Store('JiraFormalReports',
+							{
+							defer:true,
+							size:self.localStorageMaxSize
+							}); 
 		self.popCallback();
 	}
 	startPersistence(){

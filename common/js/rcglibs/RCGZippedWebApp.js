@@ -736,7 +736,7 @@ class RCGZippedApp{
 				  inflater: [workerScriptsPath+'/z-worker.js', workerScriptsPath+'/inflate.js']
 				};
 		*/
-		var zipUrl=deployInfo.url;
+		var sZipUrl=deployInfo.url;
 		// prepare arrays
 		var model=new ZipModel();
 		self.pushCallback(self.saveZipEntries);

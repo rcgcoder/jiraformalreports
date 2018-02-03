@@ -581,7 +581,9 @@ class RCGZippedApp{
 			   (theDeploy.commitDate>tLastDeploy)){ // new release
 				// needs to be deployed
 				bNotUpdate=false;
-				self.pushCallback(self.checkForDeploys(iZip+1));
+				self.pushCallback(function(){
+					self.checkForDeploys(iZip+1);
+				});
 				self.deploy(theDeploy);
 			} else {
 				iZip++;

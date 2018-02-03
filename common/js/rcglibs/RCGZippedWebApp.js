@@ -717,6 +717,18 @@ class RCGZippedApp{
 	deploy(deployInfo){ 
 		var self=this;
 		console.log("Deploying Zip:"+deployInfo.relativePath);
+		if (typeof zip==="undefined"){
+			console.log("Zip engine is not running.... loading");
+			var arrFiles=["js/libs/jquery-3.3.1.min.js",
+				  "js/libs/zip/zip.js"
+//				  ,"js/libs/zip/zip-ext.js"
+				  ];
+			self.pushCallback(function(){
+				self.deploy(deployInfo);
+			});
+			self.loadRemoteFiles(arrFiles);
+			return;
+		}
 		zip.useWebWorkers=true;
 		zip.workerScriptsPath = 'js/libs/zip/';
 		/*zip.workerScripts = {

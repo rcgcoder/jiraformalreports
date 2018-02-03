@@ -128,12 +128,17 @@ class GitHub{
 		  self.app.popCallback([self.arrCommits]);
 	   }
 	}
-	getCommits(){
+	getCommits(fromDate){
 		var self=this;
 		var iPage=0;
 		self.arrCommits=[];
-		self.pushCallback(self.processCommitsPage);
-		self.apiCall("https://api.github.com/repos/"+self.repository+"/commits");
+		if (typeof fromDate==="undefined"){
+			self.pushCallback(self.processCommitsPage);
+			self.apiCall("https://api.github.com/repos/"+self.repository+"/commits");
+		} else {
+			self.pushCallback(self.processCommitsPage);
+			self.apiCall("https://api.github.com/search/commits?q=repo:rcgcoder/jiraformalreports+committer-date:>2018-02-02",'Accept:  application/vnd.github.cloak-preview');
+		}
 	}
 	processLastCommit(response){
 		var self=this;
@@ -567,8 +572,6 @@ class RCGZippedApp{
 			theDeploy.deployedCommitId=deployInfo.deployedCommitId;
 			theDeploy.deployedDate=deployInfo.deployedDate;
 		}
-		
-		
 	}
 	loadPersistentStorage() {
 		var self=this;
@@ -619,7 +622,7 @@ class RCGZippedApp{
 		self.pushCallback(self.startApplication);
 		self.pushCallback(self.startPersistence);
 		if (self.github!=""){
-			self.updateLastCommit(){
+			self.updateLastCommit();
 		}
 	}
 	onerror(message) {

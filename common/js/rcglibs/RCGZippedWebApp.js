@@ -573,6 +573,7 @@ class RCGZippedApp{
 				theDeploy.deployedDate=deployInfo.deployedDate;
 			}
 		}
+		self.github.getLastCommitOfDeploys(self.DeployZips);
 	}
 	loadPersistentStorage() {
 		var self=this;

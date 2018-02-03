@@ -66,9 +66,8 @@
 			 zipApp.prependPath="common";
 			 zipApp.useGitHub("rcgcoder/jiraformalreports","development");
 //			 zipApp.useGitHub("nodejs/node");
-		 	 zipApp.zipImportPaths=[["jiraformalreports-master/common/"],[]];
-			 zipApp.zipAppFile=["../ZippedWebApp/jiraformalreports.zip",
-				 				"../ZippedWebApp/aui-flat-pack.zip"];
+			 zipApp.addDeployZip("../ZippedWebApp/jiraformalreports.zip","jiraformalreports-master/common/");
+			 zipApp.addDeployZip("../ZippedWebApp/aui-flat-pack.zip");
 			 zipApp.setHtmlContainerID("JFR_Main_DIV");
 			 zipApp.run();			 
          })();

@@ -51,6 +51,20 @@ class CallManager{
 	}
 }
 
+class ZipDeploy{
+	constructor(relativePath,zipUrl){
+		var self=this;
+		self.relativePath=relativePath;
+		self.url=zipUrl;
+		self.imports=[];
+		self.commitId="";
+		self.commitDate="";
+		self.deployedCommitId="";
+		self.saveDate="";
+	}
+}
+
+
 class GitHub{
 	constructor(){
 		var self=this;
@@ -59,6 +73,7 @@ class GitHub{
 		self.app="";
 		self.arrCommits="";
 		self.lastCommit="";
+		self.lastCommitDate="";
 		self.commitId="";
 		var cmAux=new CallManager(self);
 	}
@@ -126,12 +141,25 @@ class GitHub{
 		var sCommitLongId=self.lastCommit.sha;
 		var sCommitShortId=sCommitLongId.substring(0,8);
 		self.commitId=sCommitShortId;
-		self.app.popCallback([self.commitId]);
+		self.commitDate=self.lastCommit.author.date;
+		self.app.popCallback([self.commitId,self.commitDate]);
 	}
 	updateLastCommit(){
 		var self=this;
 		self.pushCallback(self.processLastCommit);
 		self.apiCall("https://api.github.com/repos/"+self.repository+"/commits/master");
+	}
+	updateAllCommits(deployZips){
+		var self=this;
+		if (typeof relativePaths!="undefined"){
+			self.pushCallback(function(arrCommits){
+				self.app.popCallback([self.commitId,arrCommits]);
+			});
+			self.pushCallback(function(){
+				self.getLastCommitOfFiles(relativePaths);
+			});
+		}
+		self.updateLastCommit();
 	}
 	processLastCommitOfFile(response){
 		var self=this;
@@ -139,12 +167,32 @@ class GitHub{
 		var lastCommit=arrCommits[0];
 		var sCommitLongId=lastCommit.sha;
 		var sCommitShortId=sCommitLongId.substring(0,8);
-		self.app.popCallback([sCommitShortId]);
+		var sCommitDate=lastCommit.author.date;
+		self.app.popCallback([sCommitShortId,sCommitDate]);
 	}
 	getLastCommitOfFile(sRelativePath){
 		var self=this;
 		self.pushCallback(self.processLastCommitOfFile);
 		self.apiCall("https://api.github.com/repos/"+self.repository+"/commits?path="+sRelativePath);
+	}
+	updateDeployZipCommits(deployZips,iFile){
+		var self=this;
+		if (iFile<deployZips.length){
+			self.app.popCallback();
+		}
+		if (iFile<deployZips.length){
+			self.pushCallback(function(sCommitId,sCommitDate){
+				deployZips[iFile].commitId=sCommitId;
+				deployZips[iFile].commitDate=sCommitDate;
+				self.updateDeployZipCommits(deployZips,iFile+1);
+			});
+			self.getLastCommitOfFile(deployZips[iFile].relativePath);
+		} else {
+			self.app.popCallback();
+		}
+	}
+	getLastCommitOfDeploys(deployZips){
+		this.updateDeployZipCommits(deployZips,0);
 	}
 }
 
@@ -156,9 +204,7 @@ class RCGZippedApp{
 		self.github="";
 		self.htmlContainerId="";
 		self.urlBase="";
-		self.zipAppFile="";
-		self.zipLastCommitId="";
-		self.zipImportPaths=[];
+		self.DeployZips=[];
 		var cmAux=new CallManager(self);
 		console.log("ZippedApp Created");
 		self.requestFileSystem = window.webkitRequestFileSystem 
@@ -175,6 +221,16 @@ class RCGZippedApp{
 		self.github.repository=sRepository;
 		if (typeof branch!=="undefined"){
 			self.github.branch=branch;
+		}
+	}
+	addDeployZip(relativePath,arrImportPaths){
+		var objDeploy=new ZipDeploy(relativePath,"");
+		if (typeof arrImportPaths!=undefined){
+			if (!Array.isArray(arrImportPaths)){
+				objDeploy.imports.push(arrImportPaths);
+			} else {
+				objDeploy.imports=arrImportPaths;
+			}
 		}
 	}
 	setHtmlContainerID(sHtmlElementId){
@@ -316,6 +372,7 @@ class RCGZippedApp{
 			&&(contentType.isCacheable)
 			){ // only saves if github is configured and storage engine is working and content is cacheable
 			contentType.commitId=self.github.commitId;
+			contentType.saveDate=(new Date()).getTime();
 			self.storage.set('#FILEINFO#'+sRelativePath,JSON.stringify(contentType));
 			self.storage.set(sRelativePath,sStringContent);
 			self.storage.save();
@@ -497,6 +554,22 @@ class RCGZippedApp{
 		var self=this;
 		self.loadRemoteFileIteration(arrRelativePaths,0);
 	}
+	updateDeployZips(){
+		var self=this;
+		for (var i=0;i<self.DeployZips.length;i++){
+			var theDeploy=self.DeployZips[i];
+			var zipUrl=self.composeUrl(theDeploy.relativePath);
+			theDeploy.url=zipUrl;
+		}
+		var sDeployInfo=self.storage.get('#FILEINFO#'+sRelativePath);
+		if (sDeployInfo!=null) {
+			var deployInfo=JSON.parse(sDeployInfo);
+			theDeploy.deployedCommitId=deployInfo.deployedCommitId;
+			theDeploy.deployedDate=deployInfo.deployedDate;
+		}
+		
+		
+	}
 	loadPersistentStorage() {
 		var self=this;
 		// load persistent store after the DOM has loaded
@@ -513,6 +586,7 @@ class RCGZippedApp{
 		var arrFiles=["js/libs/persist-all-min.js",
 	  		  		  "js/libs/b64.js"
 			  		  ];
+		self.pushCallback(self.updateDeployZips)
 		self.pushCallback(self.loadPersistentStorage);
 		self.loadRemoteFiles(arrFiles);
 	}
@@ -545,7 +619,7 @@ class RCGZippedApp{
 		self.pushCallback(self.startApplication);
 		self.pushCallback(self.startPersistence);
 		if (self.github!=""){
-			self.github.updateLastCommit();
+			self.updateLastCommit(){
 		}
 	}
 	onerror(message) {

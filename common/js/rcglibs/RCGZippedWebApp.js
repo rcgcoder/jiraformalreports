@@ -207,6 +207,7 @@ class RCGZippedApp{
 		self.htmlContainerId="";
 		self.urlBase="";
 		self.DeployZips=[];
+		self.lastDeployInfo="";
 		var cmAux=new CallManager(self);
 		console.log("ZippedApp Created");
 		self.requestFileSystem = window.webkitRequestFileSystem 
@@ -374,7 +375,9 @@ class RCGZippedApp{
 			&&(self.github!="")
 			&&(contentType.isCacheable)
 			){ // only saves if github is configured and storage engine is working and content is cacheable
-			contentType.commitId=self.github.commitId;
+			/*contentType.commitId=self.github.commitId;
+			contentType.commitDate=
+			*/
 			contentType.saveDate=(new Date()).getTime();
 			self.storage.set('#FILEINFO#'+sRelativePath,JSON.stringify(contentType));
 			self.storage.set(sRelativePath,sStringContent);
@@ -557,8 +560,42 @@ class RCGZippedApp{
 		var self=this;
 		self.loadRemoteFileIteration(arrRelativePaths,0);
 	}
+	checkForDeploys(iFile){
+		var self=this;
+		var tLastDeploy=0;
+		if (self.lastDeployInfo!=""){
+			tLastDeploy=self.lastDeployInfo.date;
+		}
+		var iZip=0;
+		if (typeof iFile!=="undefined"){
+			iZip=iFile;
+		}
+		if (iZip>=self.DeployZips.length){
+			return self.popCallback();
+		}
+		var bNotUpdate=true;
+		while (bNotUpdate){
+			var theDeploy=self.DeployZips[iZip];
+			if ((theDeploy.saveDate=="")  // never deployed
+				||
+			   (theDeploy.commitDate>tLastDeploy)){ // new release
+				// needs to be deployed
+				bNotUpdate=false;
+				self.pushCallback(self.checkForDeploys(iZip+1));
+				self.deploy(theDeploy);
+			} else {
+				iZip++;
+			}
+		}
+	}
 	updateDeployZips(){
 		var self=this;
+		var sTotalDeployInfo=self.storage.get('#FILEINFO#'+"LastDeployInfo");
+		var oTotalDeployInfo="";
+		if (sTotalDeployInfo!=null){
+			oTotalDeployInfo=JSON.parse(sTotalDeployInfo);
+		}
+		self.lastDeployInfo=oTotalDeployInfo;
 		for (var i=0;i<self.DeployZips.length;i++){
 			var theDeploy=self.DeployZips[i];
 			var zipUrl=self.composeUrl(theDeploy.relativePath);
@@ -570,6 +607,7 @@ class RCGZippedApp{
 				theDeploy.deployedDate=deployInfo.deployedDate;
 			}
 		}
+		self.pushCallback(self.checkForDeploys);
 		self.github.getLastCommitOfDeploys(self.DeployZips);
 	}
 	loadPersistentStorage() {
@@ -674,9 +712,9 @@ class RCGZippedApp{
 				, fncSaveBlob
 				, fncProgress);
 	}
-	deploy(){ 
+	deploy(deployInfo){ 
 		var self=this;
-		console.log("Deploying Zip WebApp");
+		console.log("Deploying Zip:"+deployInfo.relativePath);
 		zip.useWebWorkers=true;
 		zip.workerScriptsPath = 'js/libs/zip/';
 		/*zip.workerScripts = {
@@ -684,91 +722,53 @@ class RCGZippedApp{
 				  inflater: [workerScriptsPath+'/z-worker.js', workerScriptsPath+'/inflate.js']
 				};
 		*/
-		var zipUrl=self.composeUrl(self.zipAppFile);
-		var arrZips=[];
+		var zipUrl=deployInfo.url;
 		// prepare arrays
-		var objZip;
-		var imports=self.zipImportPaths;
-		if (!Array.isArray(zipUrl)){
-			objZip={url:zipUrl,imports:[]};
-			arrZips.push(objZip);
-			if (!Array.isArray(imports)){
-				objZip.imports.push(imports);
-			} else {
-				objZip.imports=imports;
-			}
-		} else {
-			for (var j=0;j<zipUrl.length;j++){
-				objZip={url:zipUrl[j],imports:[]}
-				arrZips.push(objZip);
-				if ((!Array.isArray(imports))&&(j==0)){
-					objZip.imports.push(imports);
-				} else if (j>=imports.length){
-					//	do nothing	
-				} else {
-					if (j<imports.length){
-						var subImport=imports[j];
-						if (!Array.isArray(subImport)){
-							objZip.imports.push(subImport);
-						} else {
-							objZip.imports=subImport;
+		var model=new ZipModel();
+		self.pushCallback(self.saveZipEntries);
+		console.log("Download Zip File:"+sZipUrl);
+		model.downloadAndGetEntries(sZipUrl,function(entries) {
+			var arrFilesToSave=[];
+			entries.forEach(function(entry) {
+				var sFile=entry.filename;
+				var sImportPath;
+				var bWillNotSave=true;
+				var bContinue=true;
+				var sRelativePath="";
+				for (var i=0;(bContinue)&&(bWillNotSave) && ((objZip.imports.length==0)||(i<objZip.imports.length));i++){
+					var sPrefix="";
+					var sLastChar=sFile.substring(sFile.length-1);
+					if (sLastChar=="/") {
+						bContinue=false;
+					} else if (objZip.imports.length==0){
+						sRelativePath=entry.filename;
+						console.log("Entry "+entry.filename + " will be saved as "+sRelativePath);
+						bWillNotSave=false;
+					} else {
+						sImportPath=objZip.imports[i];
+						var sPrefix=sFile.substring(0,sImportPath.length);
+						sRelativePath=sFile.substring(sPrefix.length);
+						if ((sPrefix.length!=sFile.length)
+							  &&(sPrefix==sImportPath)){
+							console.log("Entry "+entry.filename + " will be saved as "+sRelativePath);
+							bWillNotSave=false;
 						}
 					}
 				}
-			}
-		}
-		var model=new ZipModel();
-		var arrFilesToSave=[];
-		var fncLoadZip=function(iZip){
-			if (iZip>=arrZips.length){
-				self.saveZipEntries(arrFilesToSave,0);
-			} else {
-				var objZip=arrZips[iZip];
-				var sZipUrl=objZip.url;
-				console.log("Download Zip File:"+sZipUrl);
-				model.downloadAndGetEntries(sZipUrl,function(entries) {
-					entries.forEach(function(entry) {
-						var sFile=entry.filename;
-						var sImportPath;
-						var bWillNotSave=true;
-						var bContinue=true;
-						var sRelativePath="";
-						for (var i=0;(bContinue)&&(bWillNotSave) && ((objZip.imports.length==0)||(i<objZip.imports.length));i++){
-							var sPrefix="";
-							var sLastChar=sFile.substring(sFile.length-1);
-							if (sLastChar=="/") {
-								bContinue=false;
-							} else if (objZip.imports.length==0){
-								sRelativePath=entry.filename;
-								console.log("Entry "+entry.filename + " will be saved as "+sRelativePath);
-								bWillNotSave=false;
-							} else {
-								sImportPath=objZip.imports[i];
-								var sPrefix=sFile.substring(0,sImportPath.length);
-								sRelativePath=sFile.substring(sPrefix.length);
-								if ((sPrefix.length!=sFile.length)
-									  &&(sPrefix==sImportPath)){
-									console.log("Entry "+entry.filename + " will be saved as "+sRelativePath);
-									bWillNotSave=false;
-								}
-							}
-						}
-						if (!bWillNotSave){
-							var jsonContent=self.getContentTypeFromExtension(sFile);
-							jsonContent.commitId=self.github.commitId;
-							arrFilesToSave.push({
-												model:model,
-												entry:entry,
-												type:jsonContent,
-												relativePath:sRelativePath
-												});
-						}
-					});
-					fncLoadZip(iZip+1);
-				});
-			}
-		}
-		fncLoadZip(0);
+				if (!bWillNotSave){
+					var jsonContent=self.getContentTypeFromExtension(sFile);
+					jsonContent.commitId=deployInfo.commitId;
+					jsonContent.commitDate=deployInfo.commitDate;
+					arrFilesToSave.push({
+										model:model,
+										entry:entry,
+										type:jsonContent,
+										relativePath:sRelativePath
+										});
+				}
+			});
+			self.popCallback([arrFilesToSave]);
+		});
 	}
 }
 

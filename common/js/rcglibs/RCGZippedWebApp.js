@@ -237,6 +237,7 @@ class RCGZippedApp{
 				objDeploy.imports=arrImportPaths;
 			}
 		}
+		self.DeployZips.push(objDeploy);
 	}
 	setHtmlContainerID(sHtmlElementId){
 		self.htmlContainerId=sHtmlElementId;

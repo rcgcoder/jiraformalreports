@@ -749,17 +749,19 @@ class RCGZippedApp{
 				var bWillNotSave=true;
 				var bContinue=true;
 				var sRelativePath="";
-				for (var i=0;(bContinue)&&(bWillNotSave) && ((objZip.imports.length==0)||(i<objZip.imports.length));i++){
+				for (var i=0;(bContinue)&&(bWillNotSave) && 
+							 ((deployInfo.imports.length==0)||(i<deployInfo.imports.length))
+							 ;i++){
 					var sPrefix="";
 					var sLastChar=sFile.substring(sFile.length-1);
 					if (sLastChar=="/") {
 						bContinue=false;
-					} else if (objZip.imports.length==0){
+					} else if (deployInfo.imports.length==0){
 						sRelativePath=entry.filename;
 						console.log("Entry "+entry.filename + " will be saved as "+sRelativePath);
 						bWillNotSave=false;
 					} else {
-						sImportPath=objZip.imports[i];
+						sImportPath=deployInfo.imports[i];
 						var sPrefix=sFile.substring(0,sImportPath.length);
 						sRelativePath=sFile.substring(sPrefix.length);
 						if ((sPrefix.length!=sFile.length)

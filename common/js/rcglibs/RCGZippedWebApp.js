@@ -611,7 +611,7 @@ class RCGZippedApp{
 			var theDeploy=self.DeployZips[iZip];
 			if ((theDeploy.deployedDate=="")  // never deployed
 				||
-			   (theDeploy.commitDate>tLastDeploy)){ // new release
+			   (theDeploy.commitDate>theDeploy.deployedDate)){ // new release
 				// needs to be deployed
 				bNotUpdate=false;
 				self.pushCallback(function(){

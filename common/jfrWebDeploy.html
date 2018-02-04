@@ -114,7 +114,7 @@
 			 var sZipWebAppClass="js/rcglibs/RCGZippedWebApp.js";
 			 getLastCommit(sRepo,function(sCommitId){
 				 commitId=sCommitId;
-				 var sUrlJs=rootPath+"/"+sRepo+"/"+commitId+"/common/rcglibs/RCGZippedWebApp.js";
+				 var sUrlJs=rootPath+"/"+sRepo+"/"+commitId+"/common/js/rcglibs/RCGZippedWebApp.js";
 				 getJavaScriptFile(sUrlJs,function(jsContent){
 					 loadJavaScriptFile(jsContent,function(){
 						 var zipApp=new RCGZippedApp();

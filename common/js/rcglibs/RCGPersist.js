@@ -56,12 +56,19 @@ function InitializeFileSystem(initCallBack,quota){
 	
 	var theNavigator=navigator;
 	var theStorage=theNavigator.webkitPersistentStorage || theNavigator.PersistentStorage || theNavigator.persistentStorage;
-	theStorage.requestQuota(iQuota, function(grantedBytes) {
-	  console.log("Quota granted:"+grantedBytes);
-	  window.webkitRequestFileSystem(PERSISTENT, grantedBytes, onInitFs, fsErrorHandler);
-	}, function(e) {
-	  console.log('Error', e);
-	});
+	var requestFS=window.webkitRequestFileSystem || window.requestFileSystem;
+	if (typeof theStorage!=="undefined") {
+		theStorage.requestQuota(iQuota, 
+			function(grantedBytes) {
+			  console.log("Quota granted:"+grantedBytes);
+			  requestFS(PERSISTENT, grantedBytes, onInitFs, fsErrorHandler);
+			}, 
+			function(e) {
+			  console.log('Error', e);
+			});
+	} else {
+		requestFS(PERSISTENT, grantedBytes, onInitFs, fsErrorHandler);
+	}
 	filesystem.ReadFile=function(filename,cbExistsAndLoaded,cbNotExists){
 		var newName=filename.split("/");
 		newName=newName[newName.length-1];

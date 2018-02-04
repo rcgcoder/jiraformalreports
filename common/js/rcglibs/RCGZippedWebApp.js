@@ -144,6 +144,7 @@ class GitHub{
 		xhr.send();	
 	}
 	processAuthStep2(oAuth){
+		var self=this;
 		var xhr = new XMLHttpRequest();
 		var sUrl= "https://github.com/login/oauth/access_token?client_id="+github_client_id+
 						"&state="+oAuth.status

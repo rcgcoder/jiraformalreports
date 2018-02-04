@@ -618,6 +618,7 @@ class RCGZippedApp{
 			});
 			self.deploy(theDeploy);
 		} else {
+			console.log("the deploy: "+ theDeploy.relativePath+ " is up to date");
 			self.checkForDeploys(iZip+1);
 		}
 	}

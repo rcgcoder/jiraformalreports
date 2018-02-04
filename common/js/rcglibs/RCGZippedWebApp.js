@@ -126,7 +126,7 @@ class GitHub{
 			 setTimeout(function(){
 				 console.log(ghLogin);
 				 top.window.location.href=ghLogin;
-			 });
+			 },3000);
 //			 window.location.replace(ghLogin);
 		     return;
 		  }

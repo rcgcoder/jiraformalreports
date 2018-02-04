@@ -3,6 +3,10 @@ var filesystem={};
 var compression_mode = 1;
 var my_lzma = LZMA; /// lzma_worker.js creates a global LZMA object. We store it as a new variable just to match simple_demo.html.
 */
+function replaceAll(str, find, replace) {
+	  return str.replace(new RegExp(find, 'g'), replace);
+	}
+
 /**
  * @param initCallBack
  * @param quota
@@ -70,8 +74,7 @@ function InitializeFileSystem(initCallBack,quota){
 		window.requestFileSystem(window.PERSISTENT, iQuota, onInitFs, fsErrorHandler);
 	}
 	filesystem.ReadFile=function(filename,cbExistsAndLoaded,cbNotExists){
-		var newName=filename.split("/");
-		newName=newName[newName.length-1];
+		var newName=replaceAll(filename,"/","_DIR_");
 		filesystem.error_callback=cbNotExists;
 		this.fs.root.getFile(newName, {create: false}, function(fileEntry) {
 				fileEntry.file(function(file) {
@@ -141,11 +144,13 @@ function InitializeFileSystem(initCallBack,quota){
 	}
 	
 	filesystem.SaveFile=function (filename,theString,endWriteCallback,errorCallback) {
-		this.fs.root.getFile(filename, {create: true},
+		
+		var newName=replaceAll(filename,"/","_DIR_");
+		this.fs.root.getFile(newName, {create: true},
 										function(DatFile) {
 											DatFile.isFile=true;
-											DatFile.name=filename;
-											DatFile.fullPath = '/'+filename;
+											DatFile.name=newName;
+											DatFile.fullPath = '/'+newName;
 											DatFile.createWriter(
 												function(DatContent) {
 													DatContent.onwriteend = function(e) {
@@ -203,6 +208,7 @@ function InitializeFileSystem(initCallBack,quota){
 											});
 		}
 	filesystem.RemoveFile=function(filename){
-		localstorage.root.getFile(filename, {create: false}, function(DatFile) { DatFile.remove(function() {}); })
+		var newName=replaceAll(filename,"/","_DIR_");
+		localstorage.root.getFile(newName, {create: false}, function(DatFile) { DatFile.remove(function() {}); })
 	}
 }

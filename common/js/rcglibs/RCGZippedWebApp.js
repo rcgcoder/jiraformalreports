@@ -123,9 +123,10 @@ class GitHub{
 			 var ghLogin="https://github.com/login/oauth/authorize?client_id="+github_client_id+"&state="+oAuth.status;
 			 self.app.storage.save('#githubAuth#',JSON.stringify(oAuth));
 //			 +"&redirect_uri=https://cdn.rawgit.com/rcgcoder/jiraformalreports/"+self.lastCommit+"/common/jfrWebDeploy.html";
-			 console.log(ghLogin);
-			 alert(ghLogin);
-			 top.window.location.href=ghLogin;
+			 setTimeout(function(){
+				 console.log(ghLogin);
+				 top.window.location.href=ghLogin;
+			 });
 //			 window.location.replace(ghLogin);
 		     return;
 		  }

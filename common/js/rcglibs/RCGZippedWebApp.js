@@ -85,17 +85,26 @@ class GitHub{
 	loadError(oError){
 	    throw new URIError("The file " + oError.target.src + " is not accessible.");
 	}
-	apiCall(sTargetUrl,sPage,sType,callback){
+	apiCall(sTargetUrl,sPage,sType,callback,arrHeaders){
 		var self=this;
 		var sUrl=sTargetUrl;
 		if ((sPage!="")&&(typeof sPage!=="undefined")){
-			sUrl+="?page="+sPage
+			if (sUrl.indexOf("?")>0){
+				sUrl+="&page="+sPage
+			} else {
+				sUrl+="?page="+sPage
+			}
 		}
 		var xhr = new XMLHttpRequest();
 		xhr.open('GET', sUrl, true);
 		xhr.responseType = 'json';
 		if (typeof sType!=="undefined"){
 			xhr.responseType=sType;
+		}
+		if (typeof arrHeaders!=="undefined"){
+			for (var i=0;i<arrHeaders.length;i++){
+				xhr.setRequestHeader(arrHeaders[i].key, arrHeaders[i].value);
+			}
 		}
 		xhr.onerror=self.loadError;
 		xhr.onload = function(e) {
@@ -105,15 +114,19 @@ class GitHub{
 			  var ghLink=xhr.getResponseHeader("Location");
 			  self.apiCall(ghLink);
 		  } else if (this.status == 200) {
-			  self.popCallback([this.response,xhr]);
+			  self.popCallback([this.response,xhr,sTargetUrl,arrHeaders]);
 		  } else {
 			  self.loadError({target:{src:sUrl}});			  
 		  }
 		};
 		xhr.send();	
 	}
-	processCommitsPage(response,xhr){
+	processCommitsPage(response,xhr,url,arrHeaders){
 	   var self=this;
+	   var sUrl=url;
+	   if (typeof sUrl==="undefined"){
+		   sUrl="https://api.github.com/repos/"+self.repository+"/commits";
+	   }
 	   self.arrCommits = self.arrCommits.concat(response);
 	   ghLink=xhr.getResponseHeader("Links");
 	   if ((ghLink!="")&&(ghLink!=null)){
@@ -125,7 +138,7 @@ class GitHub{
 			  arrLinks=arrLinks[0].split('=');
 			  var nextPage=arrLinks[1];
 			  self.pushCallback(self.processCommitsPage);
-			  self.apiCall("https://api.github.com/repos/"+self.repository+"/commits",nextPage);
+			  self.apiCall(sUrl,nextPage,undefined,undefined,arrHeaders);
 		  } else {
 			  self.app.popCallback([self.arrCommits]);
 		  }
@@ -142,7 +155,11 @@ class GitHub{
 			self.apiCall("https://api.github.com/repos/"+self.repository+"/commits");
 		} else {
 			self.pushCallback(self.processCommitsPage);
-			self.apiCall("https://api.github.com/search/commits?q=repo:rcgcoder/jiraformalreports+committer-date:>2018-02-02",'Accept:  application/vnd.github.cloak-preview');
+			var arrHeaders=[
+				{key:"Accept",value:"application/vnd.github.cloak-preview"}
+				]
+			var sDate = new Date(1331209044000).toISOString();
+			self.apiCall("https://api.github.com/search/commits?q=repo:rcgcoder/jiraformalreports+committer-date:>"+sDate,arrHeaders);
 		}
 	}
 	processLastCommit(response){
@@ -622,6 +639,24 @@ class RCGZippedApp{
 			self.checkForDeploys(iZip+1);
 		}
 	}
+	updateFilesFromCommits(){
+		var self=this;
+		var minZipCommitDate;
+		for (var i=0;i<self.DeployZips.length;i++){
+			var theDeploy=self.DeployZips[i];
+			if (i==0){
+				minZipCommitDate=theDeploy.commitDate;
+			} else if (minZipCommitDate>theDeploy.commitDate){
+				minZipCommitDate=theDeploy.commitDate;
+			}
+		}
+		self.pushCallback(function(arrCommits){
+			console.log("Test");
+		});
+		self.github.getCommits(minZipCommitDate);
+
+		
+	}
 	updateDeployZips(){
 		var self=this;
 		var sTotalDeployInfo=self.storage.get('#FILEINFO#'+"LastDeployInfo");
@@ -641,7 +676,8 @@ class RCGZippedApp{
 				theDeploy.deployedDate=deployInfo.deployedDate;
 			}
 		}
-		self.pushCallback(function(){self.checkForDeploys();});
+		self.pushCallback(self.updateFilesFromCommits);
+		self.pushCallback(self.checkForDeploys);
 		self.github.getLastCommitOfDeploys(self.DeployZips);
 	}
 	loadPersistentStorage() {

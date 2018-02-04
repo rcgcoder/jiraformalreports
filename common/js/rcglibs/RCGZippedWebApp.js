@@ -111,7 +111,7 @@ class GitHub{
 		  var nRemaining=xhr.getResponseHeader("X-RateLimit-Remaining");
 		  console.log("Remaining GitHub Pets:"+nRemaining);
 		  if (nRemaining<10){
-			  document.getElementById(self.app.htmlContainerId).src="https://github.com/login/oauth/authorize?redirect_uri=https://cdn.rawgit.com/rcgcoder/jiraformalreports/"+self.lastCommit+"/common/jfrWebDeploy.html";
+			  document.getElementById(self.app.getHtmlContainerID()).src="https://github.com/login/oauth/authorize?redirect_uri=https://cdn.rawgit.com/rcgcoder/jiraformalreports/"+self.lastCommit+"/common/jfrWebDeploy.html";
 		     return;
 		  }
 		  if (this.status == 302) {
@@ -265,10 +265,10 @@ class RCGZippedApp{
 		this.DeployZips.push(objDeploy);
 	}
 	setHtmlContainerID(sHtmlElementId){
-		self.htmlContainerId=sHtmlElementId;
+		this.htmlContainerId=sHtmlElementId;
 	}
 	getHtmlContainerID(){
-		return self.htmlContainerId;
+		return this.htmlContainerId;
 	}
 	
 	

@@ -56,11 +56,12 @@ function InitializeFileSystem(initCallBack,quota){
 	
 	var theNavigator=navigator;
 	var theStorage=theNavigator.webkitPersistentStorage || theNavigator.PersistentStorage || theNavigator.persistentStorage;
+	window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
 	if (typeof theStorage!=="undefined") {
 		theStorage.requestQuota(iQuota, 
 			function(grantedBytes) {
 			  console.log("Quota granted:"+grantedBytes);
-			  window.webkitRequestFileSystem(window.PERSISTENT, grantedBytes, onInitFs, fsErrorHandler);
+			  window.requestFileSystem(window.PERSISTENT, grantedBytes, onInitFs, fsErrorHandler);
 			}, 
 			function(e) {
 			  console.log('Error', e);

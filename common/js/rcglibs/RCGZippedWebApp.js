@@ -114,6 +114,8 @@ class GitHub{
 //			 var element=document.getElementById("JFR_GITHUB_LOGIN");
 //			 element.src=
 			 var ghLogin="https://github.com/login/oauth/authorize?client_id=48bd1b81df5309a30f85&redirect_uri=https://cdn.rawgit.com/rcgcoder/jiraformalreports/"+self.lastCommit+"/common/jfrWebDeploy.html";
+			 console.log(ghLogin);
+			 alert(ghLogin);
 			 window.location.replace(ghLogin);
 		     return;
 		  }

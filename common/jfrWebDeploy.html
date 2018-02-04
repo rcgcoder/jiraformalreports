@@ -80,6 +80,7 @@
         	 var appParameters={};
 			 var vXdm=getUrlParameter('xdm_e');
 			 var vCp=getUrlParameter('cp');
+			 var github_class="github.js";
 			 if ((typeof vXdm!=="undefined")&&
 				(typeof vCp!=="undefined")){
 				 var baseUrl =  vXdm+vCp; 
@@ -104,6 +105,7 @@
 				var urlBase=getUrlParameter("urlBase");
 				appParameters["ProjectKey"]=sProjectKey;
 			    appParameters["urlBase"]=urlBase;
+			    github_class="github_cloud.js";
 			 }
 
 			 var githubCode=getUrlParameter("code");
@@ -111,28 +113,33 @@
 			 var sRepo="rcgcoder/jiraformalreports";
 			 var commitId="";
 			 var sZipWebAppClass="js/rcglibs/RCGZippedWebApp.js";
+			 
+			 
+			 
 			 getLastCommit(sRepo,function(sCommitId){
 				 commitId=sCommitId;
-				 var sUrlJs=rootPath+"/"+sRepo+"/"+commitId+"/common/js/rcglibs/RCGZippedWebApp.js";
+				 var sUrlJs=rootPath+"/"+sRepo+"/"+commitId+"/common/js/"+github_class;
 				 getJavaScriptFile(sUrlJs,function(jsContent){
 					 loadJavaScriptFile(jsContent,function(){
-						 var zipApp=new RCGZippedApp();
-//						 zipApp.localStorageMaxSize=200*1024*1024;
-						 zipApp.rootPath=rootPath;
-						 zipApp.prependPath="common";
-						 zipApp.useGitHub(sRepo,"master",githubCode);
-						 zipApp.github.commitId=commitId;
-			 			 zipApp.addDeployZip("ZippedWebApp/jiraformalreports.zip","jiraformalreports-master/common/");
-						 zipApp.addDeployZip("ZippedWebApp/aui-flat-pack.zip");
-						 zipApp.setHtmlContainerID("JFR_Main_DIV");
-						 zipApp.run();
+						console.log("Loaded:"+github_class);	
+						 var sUrlJs=rootPath+"/"+sRepo+"/"+commitId+"/common/js/rcglibs/RCGZippedWebApp.js";
+						 getJavaScriptFile(sUrlJs,function(jsContent){
+							 loadJavaScriptFile(jsContent,function(){
+								 var zipApp=new RCGZippedApp();
+//								 zipApp.localStorageMaxSize=200*1024*1024;
+								 zipApp.rootPath=rootPath;
+								 zipApp.prependPath="common";
+								 zipApp.useGitHub(sRepo,"master",githubCode);
+								 zipApp.github.commitId=commitId;
+					 			 zipApp.addDeployZip("ZippedWebApp/jiraformalreports.zip","jiraformalreports-master/common/");
+								 zipApp.addDeployZip("ZippedWebApp/aui-flat-pack.zip");
+								 zipApp.setHtmlContainerID("JFR_Main_DIV");
+								 zipApp.run();
+							 });
+						 });
 					 });
 				 });
 			 });		
-			 
-					
-					
-
          })();
      </script>
  </body>

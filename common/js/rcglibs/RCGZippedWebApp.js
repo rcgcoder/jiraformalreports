@@ -421,7 +421,7 @@ class RCGZippedApp{
 				  self.popCallback([sContent,xhr,ct,sRelativePath]);
 			  })
 			  ct.commitId=self.github.commitId;
-			  ct.commitDate=self.github.lastCommitDate;
+			  ct.commitDate=self.github.commitDate;
 			  ct.saveDate=(new Date()).getTime();
 			  var sResult=self.saveFileToStorage(sRelativePath,toSave,ct);
 		  } else {

@@ -412,8 +412,10 @@ class RCGZippedApp{
 			  } else {
 				  toSave = this.response;
 			  }
+			  self.pushCallback(function(sContent){
+				  self.popCallback([sResult,xhr,ct,sRelativePath]);
+			  })
 			  var sResult=self.saveFileToStorage(sRelativePath,toSave,ct);
-			  self.popCallback([sResult,xhr,ct,sRelativePath]);
 		  } else {
 			  self.loadError({target:{src:sUrl}});			  
 		  }

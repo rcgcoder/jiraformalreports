@@ -44,10 +44,10 @@ function InitializeFileSystem(initCallBack,quota){
 	  if (typeof filesystem.error_callback!=="undefined"){
 		  filesystem.error_callback();
 	  }
-	  log('Error in filesystem initialization');
+	  console.log('Error in filesystem initialization');
 	}
 	var onInitFs=function(fs) {
-		log('File system ' + fs.name +" is opened.");
+		console.log('File system ' + fs.name +" is opened.");
 		filesystem.fs=fs;
 		filesystem.status="OK";
 		filesystem.statusMSG="INITIALIZED";
@@ -78,7 +78,7 @@ function InitializeFileSystem(initCallBack,quota){
 						// The file exists and is readable
 						if (false) {
 							var sReaded = LZString.decompress(reader.content);
-							log("Archive sizes, compressed:"+reader.content.length+" uncompressed:"+sReaded.length);
+							console.log("Archive sizes, compressed:"+reader.content.length+" uncompressed:"+sReaded.length);
 							cbExistsAndLoaded(sReaded);
 						} else if (true){
 							var lastPerc=0.0;

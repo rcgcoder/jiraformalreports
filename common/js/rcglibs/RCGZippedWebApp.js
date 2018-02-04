@@ -784,7 +784,7 @@ class RCGZippedApp{
 		var model=new ZipModel();
 		self.pushCallback(function(){
 			deployInfo.deployedCommitId=deployInfo.commitId;
-			deployInfo.deployedDate=self.commitDate;
+			deployInfo.deployedDate=deployInfo.commitDate;
 			self.storage.set('#FILEINFO#'+deployInfo.relativePath,JSON.stringify(deployInfo));
 			self.popCallback();
 		});

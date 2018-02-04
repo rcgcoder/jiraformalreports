@@ -390,7 +390,9 @@ class RCGZippedApp{
 						function(e){
 							self.popCallback([""]);
 						});
+			return sStringContent;
 		}
+		self.popCallback([sStringContent]);
 		return sStringContent;
 	}
 	downloadFile(sUrl,sRelativePath){
@@ -713,8 +715,10 @@ class RCGZippedApp{
 			var reader = new FileReader();
 			reader.onload = function(e) {
 				  var content = reader.result;
+				  self.pushCallback(function (){
+					  self.saveZipEntries(arrEntries,iAct+1);  
+				  });
 				  self.saveFileToStorage(params.relativePath,content,params.type);
-				  self.saveZipEntries(arrEntries,iAct+1);
 			}		
 			if (params.type.isText){
 				reader.readAsText(blob);

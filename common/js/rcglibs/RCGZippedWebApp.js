@@ -593,37 +593,29 @@ class RCGZippedApp{
 	}
 	updateDeployZips(){
 		var self=this;
-		self.pushCallback(function(sTotalDeployInfo){
-			var oTotalDeployInfo="";
-			if ((sTotalDeployInfo!=null)&&(sTotalDeployInfo!="")&&(typeof sTotalDeployInfo!=="undefined")){
-				oTotalDeployInfo=JSON.parse(sTotalDeployInfo);
+		var sTotalDeployInfo=self.storage.get('#FILEINFO#'+"LastDeployInfo");
+		var oTotalDeployInfo="";
+		if ((sTotalDeployInfo!=null)&&(sTotalDeployInfo!="")&&(typeof sTotalDeployInfo!=="undefined")){
+			oTotalDeployInfo=JSON.parse(sTotalDeployInfo);
+		}
+		self.lastDeployInfo=oTotalDeployInfo;
+		for (var i=0;i<self.DeployZips.length;i++){
+			var theDeploy=self.DeployZips[i];
+			var zipUrl=self.composeUrl(theDeploy.relativePath);
+			theDeploy.url=zipUrl;
+			var sDeployInfo=self.storage.get('#FILEINFO#'+theDeploy.relativePath);
+			if (sDeployInfo!=null) {
+				var deployInfo=JSON.parse(sDeployInfo);
+				theDeploy.deployedCommitId=deployInfo.deployedCommitId;
+				theDeploy.deployedDate=deployInfo.deployedDate;
 			}
-			self.lastDeployInfo=oTotalDeployInfo;
-			for (var i=0;i<self.DeployZips.length;i++){
-				var theDeploy=self.DeployZips[i];
-				var zipUrl=self.composeUrl(theDeploy.relativePath);
-				theDeploy.url=zipUrl;
-				var sDeployInfo=self.storage.get('#FILEINFO#'+theDeploy.relativePath);
-				if (sDeployInfo!=null) {
-					var deployInfo=JSON.parse(sDeployInfo);
-					theDeploy.deployedCommitId=deployInfo.deployedCommitId;
-					theDeploy.deployedDate=deployInfo.deployedDate;
-				}
-			}
-			self.pushCallback(function(){self.checkForDeploys();});
-			self.github.getLastCommitOfDeploys(self.DeployZips);
-		});
-		//var sTotalDeployInfo=self.storage.get('#FILEINFO#'+"LastDeployInfo");
-		filesystem.ReadFile('#FILEINFO#'+"LastDeployInfo",function(fileContent){
-					self.popCallback([fileContent]);
-				}, function(param){
-					console.log("Not Exists")
-					self.popCallback([""]);
-				});
+		}
+		self.pushCallback(function(){self.checkForDeploys();});
+		self.github.getLastCommitOfDeploys(self.DeployZips);
 	}
 	loadPersistentStorage() {
 		var self=this;
-/*		// load persistent store after the DOM has loaded
+		// load persistent store after the DOM has loaded
 		Persist.remove('cookie');
 		Persist.remove('gears');
 		Persist.remove('flash');
@@ -634,12 +626,11 @@ class RCGZippedApp{
 							defer:true,
 							size:self.localStorageMaxSize
 							});
-							*/ 
 		InitializeFileSystem(function(){self.popCallback();},self.localStorageMaxSize);
 	}
 	startPersistence(){
 		var self=this;
-		var arrFiles=[//"js/libs/persist-all-min.js",
+		var arrFiles=["js/libs/persist-all-min.js",
 					  "js/rcglibs/RCGPersist.js",
 	  		  		  "js/libs/b64.js"
 			  		  ];

@@ -18,6 +18,25 @@
 		        }
 		    }
 		};
+		function getLastCommit(repo,callback){
+	  		 var xhr = new XMLHttpRequest();
+			 var sRepoUrl="https://api.github.com/repos/"+repo+"/commits/master";
+			 xhr.open('GET', sRepoUrl, true);
+			 xhr.responseType = 'json';
+		     xhr.onerror=function(){alert("Error getting last commit");
+			 xhr.onload = function(e) {
+				  if (this.status == 200) {
+						var lastCommit=this.response;
+						var sCommitLongId=lastCommit.sha;
+						var sCommitShortId=sCommitLongId.substring(0,8);
+						commitId=sCommitShortId;
+						callback(commitId);
+				  } else {
+					  self.loadError({target:{src:sUrl}});			  
+				  }
+			 };
+			 xhr.send();
+		 };
 		
 	  </script>
 </head>

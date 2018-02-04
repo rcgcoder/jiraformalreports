@@ -607,20 +607,18 @@ class RCGZippedApp{
 			return self.popCallback();
 		}
 		var bNotUpdate=true;
-		while (bNotUpdate){
-			var theDeploy=self.DeployZips[iZip];
-			if ((theDeploy.deployedDate=="")  // never deployed
-				||
-			   (theDeploy.commitDate>theDeploy.deployedDate)){ // new release
-				// needs to be deployed
-				bNotUpdate=false;
-				self.pushCallback(function(){
-					self.checkForDeploys(iZip+1);
-				});
-				self.deploy(theDeploy);
-			} else {
-				iZip++;
-			}
+		var theDeploy=self.DeployZips[iZip];
+		if ((theDeploy.deployedDate=="")  // never deployed
+			||
+		   (theDeploy.commitDate>theDeploy.deployedDate)){ // new release
+			// needs to be deployed
+			bNotUpdate=false;
+			self.pushCallback(function(){
+				self.checkForDeploys(iZip+1);
+			});
+			self.deploy(theDeploy);
+		} else {
+			self.checkForDeploys(iZip+1);
 		}
 	}
 	updateDeployZips(){

@@ -821,14 +821,24 @@ class RCGZippedApp{
 				}
 				if (!bWillNotSave){
 					var jsonContent=self.getContentTypeFromExtension(sFile);
-					jsonContent.commitId=deployInfo.commitId;
-					jsonContent.commitDate=deployInfo.commitDate;
-					arrFilesToSave.push({
-										model:model,
-										entry:entry,
-										type:jsonContent,
-										relativePath:sRelativePath
-										});
+					var sContentSaved=self.storage.get('#FILEINFO#'+sFile);
+					var oContentSaved="";
+					if (sContentSaved!=null){
+						oContentSaved=JSON.parse(sContentSaved);
+					}
+					if ((oContentSaved=="") || 
+						(oContentSaved.saveDate<deployInfo.commitDate)){
+						jsonContent.commitId=deployInfo.commitId;
+						jsonContent.commitDate=deployInfo.commitDate;
+						arrFilesToSave.push({
+											model:model,
+											entry:entry,
+											type:jsonContent,
+											relativePath:sRelativePath
+											});
+					} else {
+						console.log(sFile+" saved is newer");
+					}
 				}
 			});
 			self.popCallback([arrFilesToSave]);

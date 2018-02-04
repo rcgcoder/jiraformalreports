@@ -381,8 +381,15 @@ class RCGZippedApp{
 			*/
 			contentType.saveDate=(new Date()).getTime();
 			self.storage.set('#FILEINFO#'+sRelativePath,JSON.stringify(contentType));
-			self.storage.set(sRelativePath,sStringContent);
+			//self.storage.set(sRelativePath,sStringContent);
 			self.storage.save();
+			filesystem.SaveFile(sRelativePath,sStringContent,
+						function(e){
+							self.popCallback([sStringContent]);
+						},
+						function(e){
+							self.popCallback([""]);
+						});
 		}
 		return sStringContent;
 	}

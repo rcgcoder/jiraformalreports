@@ -629,7 +629,7 @@ class RCGZippedApp{
 		var oTotalDeployInfo="";
 		if ((sTotalDeployInfo!=null)&&(sTotalDeployInfo!="")&&(typeof sTotalDeployInfo!=="undefined")){
 			oTotalDeployInfo=JSON.parse(sTotalDeployInfo);
-		}
+		} 
 		self.lastDeployInfo=oTotalDeployInfo;
 		for (var i=0;i<self.DeployZips.length;i++){
 			var theDeploy=self.DeployZips[i];
@@ -782,6 +782,11 @@ class RCGZippedApp{
 		var sZipUrl=deployInfo.url;
 		// prepare arrays
 		var model=new ZipModel();
+		self.pushCallback(function(){
+			deployInfo.deployedCommitId=deployInfo.commitId;
+			deployInfo.saveDate=self.commitDate;
+			self.storage.set('#FILEINFO#'+theDeploy.relativePath,JSON.stringify(deployInfo));
+		});
 		self.pushCallback(self.saveZipEntries);
 		console.log("Download Zip File:"+sZipUrl);
 		model.downloadAndGetEntries(sZipUrl,function(entries) {

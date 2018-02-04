@@ -109,7 +109,7 @@ class GitHub{
 		xhr.onerror=self.loadError;
 		xhr.onload = function(e) {
 		  var nRemaining=xhr.getResponseHeader("X-RateLimit-Remaining");
-		  console.log("Remaining GitHub Pets:"+nRemaining);
+		  console.log("Remaining GitHub Pets:"+nRemaining+" test");
 /*		  if (nRemaining<10){
 //			 var element=document.getElementById("JFR_GITHUB_LOGIN");
 //			 element.src=

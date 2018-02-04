@@ -615,7 +615,7 @@ class RCGZippedApp{
 	}
 	loadPersistentStorage() {
 		var self=this;
-		// load persistent store after the DOM has loaded
+/*		// load persistent store after the DOM has loaded
 		Persist.remove('cookie');
 		Persist.remove('gears');
 		Persist.remove('flash');
@@ -625,12 +625,14 @@ class RCGZippedApp{
 							{
 							defer:true,
 							size:self.localStorageMaxSize
-							}); 
-		self.popCallback();
+							});
+							*/ 
+		InitializeFileSystem(function(){self.popCallback();},self.localStorageMaxSize);
 	}
 	startPersistence(){
 		var self=this;
-		var arrFiles=["js/libs/persist-all-min.js",
+		var arrFiles=[//"js/libs/persist-all-min.js",
+					  "js/rcglibs/RCGPersist.js",
 	  		  		  "js/libs/b64.js"
 			  		  ];
 		self.pushCallback(self.updateDeployZips)

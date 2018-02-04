@@ -491,11 +491,21 @@ class RCGZippedApp{
 			var sVersion=jsonContentType.commitId;
 			if (sCommitId==sVersion){ // if stored file version == github version are the same.... use the storage version
 				console.log("Loading from storage the File:"+sRelativePath);
-				var sFileContent=self.storage.get(sRelativePath);
-				self.pushCallback(function(sRelativePath,fileContents){
-						self.popCallback([true,sRelativePath,fileContents]);
+
+				self.pushCallback(function(sFileContent){
+					var sFileContent=self.storage.get(sRelativePath);
+					self.pushCallback(function(sRelativePath,fileContents){
+							self.popCallback([true,sRelativePath,fileContents]);
+					});
+					return self.processFile(sFileContent,undefined,jsonContentType,sRelativePath);
 				});
-				return self.processFile(sFileContent,undefined,jsonContentType,sRelativePath);
+				filesystem.ReadFile(sRelativePath,sStringContent,
+						function(e){
+							self.popCallback([sStringContent]);
+						},
+						function(e){
+							self.popCallback([""]);
+						});
 			}
 		}
 		

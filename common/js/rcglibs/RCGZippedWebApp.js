@@ -785,7 +785,7 @@ class RCGZippedApp{
 		self.pushCallback(function(){
 			deployInfo.deployedCommitId=deployInfo.commitId;
 			deployInfo.saveDate=self.commitDate;
-			self.storage.set('#FILEINFO#'+theDeploy.relativePath,JSON.stringify(deployInfo));
+			self.storage.set('#FILEINFO#'+deployInfo.relativePath,JSON.stringify(deployInfo));
 		});
 		self.pushCallback(self.saveZipEntries);
 		console.log("Download Zip File:"+sZipUrl);

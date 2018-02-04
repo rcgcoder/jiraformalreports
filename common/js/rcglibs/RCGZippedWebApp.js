@@ -113,7 +113,7 @@ class GitHub{
 		  if (nRemaining<10){
 //			 var element=document.getElementById("JFR_GITHUB_LOGIN");
 //			 element.src=
-			 window.location="https://github.com/login/oauth/authorize?redirect_uri=https://cdn.rawgit.com/rcgcoder/jiraformalreports/"+self.lastCommit+"/common/jfrWebDeploy.html";
+			 window.location="https://github.com/login/oauth/authorize?client_id=rcgcoder&redirect_uri=https://cdn.rawgit.com/rcgcoder/jiraformalreports/"+self.lastCommit+"/common/jfrWebDeploy.html";
 		     return;
 		  }
 		  if (this.status == 302) {

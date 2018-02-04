@@ -17,6 +17,7 @@ class CallManager{
 		self.stackCallsbacks=[];
 		self.object="";
 		self.extendObject(obj);
+		self.asyncPops=false;
 	}
 	pushCallback(method){
 		var self=this;
@@ -39,7 +40,11 @@ class CallManager{
 			var fncApply=function(){
 				theMethod.apply(obj,aArgs);
 			}
-			setTimeout(fncApply);
+			if (self.asyncPops) {
+				setTimeout(fncApply);
+			} else {
+				fncApply();
+			}
 		}
 	}
 	extendObject(obj){

@@ -420,6 +420,9 @@ class RCGZippedApp{
 			  self.pushCallback(function(sContent){
 				  self.popCallback([sContent,xhr,ct,sRelativePath]);
 			  })
+			  ct.commitId=self.github.commitId;
+			  ct.commitDate=self.github.lastCommitDate;
+			  ct.saveDate=(new Date()).getTime();
 			  var sResult=self.saveFileToStorage(sRelativePath,toSave,ct);
 		  } else {
 			  console.log("Error downloading "+sRelativePath);

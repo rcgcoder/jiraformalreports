@@ -110,6 +110,10 @@ class GitHub{
 		xhr.onload = function(e) {
 		  var nRemaining=xhr.getResponseHeader("X-RateLimit-Remaining");
 		  console.log("Remaining GitHub Pets:"+nRemaining);
+		  if (nRemaining<10){
+		     $("#"+self.app.htmlContainerId).attr("src","https://github.com/login/oauth/authorize?redirect_uri=https://cdn.rawgit.com/rcgcoder/jiraformalreports/"+self.lastCommit+"/common/jfrWebDeploy.html");
+		     return;
+		  }
 		  if (this.status == 302) {
 			  var ghLink=xhr.getResponseHeader("Location");
 			  self.apiCall(ghLink);

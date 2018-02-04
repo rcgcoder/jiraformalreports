@@ -71,11 +71,11 @@ class ZipDeploy{
 
 
 class GitHub{
-	constructor(){
+	constructor(app){
 		var self=this;
 		self.repository="";
 		self.branch="";
-		self.app="";
+		self.app=app;
 		self.arrCommits="";
 		self.lastCommit="";
 		self.lastCommitDate="";
@@ -190,7 +190,7 @@ class GitHub{
 		if (iFile>=deployZips.length){
 			self.app.popCallback();
 		} else {
-			self.pushCallback(function(sCommitId,sCommitDate){
+			self.app.pushCallback(function(sCommitId,sCommitDate){
 				deployZips[iFile].commitId=sCommitId;
 				deployZips[iFile].commitDate=sCommitDate;
 				self.updateDeployZipCommits(deployZips,iFile+1);
@@ -225,8 +225,7 @@ class RCGZippedApp{
 	}
 	useGitHub(sRepository,branch){
 		var self=this;
-		self.github=new GitHub();
-		self.github.app=this;
+		self.github=new GitHub(self);
 		self.github.repository=sRepository;
 		if (typeof branch!=="undefined"){
 			self.github.branch=branch;

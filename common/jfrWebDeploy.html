@@ -37,7 +37,7 @@
 				  }
 			 };
 			 xhr.send();
-		 }
+		 };
 	     function getJavaScriptFile(sUrl,callback){
 				var xhr = new XMLHttpRequest();
 				xhr.open('GET', sUrl, true);
@@ -52,7 +52,7 @@
 				  }
 				};
 				xhr.send();
-		 }	
+		 };
 	     function loadJavaScriptFile(jsContent,callback){
 				var oHead=(document.head || document.getElementsByTagName("head")[0]);
 				var oScript = document.createElement("script");
@@ -61,8 +61,7 @@
     			oHead.appendChild(oScript);
 				oScript.innerHTML = jsContent;
 				callback();
-		 }	
-
+		 };
 	  </script>
 </head>
  <body> 

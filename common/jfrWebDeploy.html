@@ -5,7 +5,6 @@
 	 <script type="text/javascript" src="js/rcglibs/RCGZippedWebApp.js"></script>
 -->	 
 	 <script type="text/javascript">
-	 	console.log("common base functions");
 	 	function getUrlParameter(sParam) {
 		    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
 		        sURLVariables = sPageURL.split('&'),
@@ -20,50 +19,6 @@
 		    }
 		};
 		
-		function getLastCommit(repo,callback){
-	  		 var xhr = new XMLHttpRequest();
-			 var sRepoUrl="https://api.github.com/repos/"+repo+"/commits/master";
-			 xhr.open('GET', sRepoUrl, true);
-			 xhr.responseType = 'json';
-		     xhr.onerror=function(){alert("Error getting last commit");
-			 xhr.onload = function(e) {
-				  if (this.status == 200) {
-						var lastCommit=this.response;
-						var sCommitLongId=lastCommit.sha;
-						var sCommitShortId=sCommitLongId.substring(0,8);
-						commitId=sCommitShortId;
-						callback(commitId);
-				  } else {
-					  self.loadError({target:{src:sUrl}});			  
-				  }
-			 };
-			 xhr.send();
-		 };
-	     function getJavaScriptFile(sUrl,callback){
-				var xhr = new XMLHttpRequest();
-				xhr.open('GET', sUrl, true);
-				xhr.onerror=function(){console.log("Error getting:"+ sUrl);};
-				xhr.onload = function(e) {
-				  if (this.status == 200) {
-					  console.log("Downloaded "+sUrl);
-					  var ct=self.getContentType(xhr);
-					  callback(this.responseText);
-				  } else {
-					  console.log("Error downloading "+sUrl);
-				  }
-				};
-				xhr.send();
-		 };
-	     function loadJavaScriptFile(jsContent,callback){
-				var oHead=(document.head || document.getElementsByTagName("head")[0]);
-				var oScript = document.createElement("script");
-				oScript.type = "text\/javascript";
-				oScript.onerror = function(){console.log("Error applying javascrip");};
-    			oHead.appendChild(oScript);
-				oScript.innerHTML = jsContent;
-				callback();
-		 };
-	 	console.log("End loading common base functions");
 	  </script>
 </head>
  <body> 

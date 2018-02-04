@@ -159,6 +159,7 @@ class GitHub{
 				{key:"Accept",value:"application/vnd.github.cloak-preview"}
 				];
 			var sDate = new Date(fromDate).toISOString();
+			sDate=sDate.substring(0,sDate.length-5);
 			self.apiCall("https://api.github.com/search/commits?q=repo:rcgcoder/jiraformalreports+committer-date:"+encodeURI(">")+sDate,undefined,undefined,undefined,arrHeaders);
 		}
 	}

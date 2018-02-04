@@ -65,7 +65,7 @@ class ZipDeploy{
 		self.commitId="";
 		self.commitDate="";
 		self.deployedCommitId="";
-		self.saveDate="";
+		self.deployedDate="";
 	}
 }
 
@@ -609,7 +609,7 @@ class RCGZippedApp{
 		var bNotUpdate=true;
 		while (bNotUpdate){
 			var theDeploy=self.DeployZips[iZip];
-			if ((theDeploy.saveDate=="")  // never deployed
+			if ((theDeploy.deployedDate=="")  // never deployed
 				||
 			   (theDeploy.commitDate>tLastDeploy)){ // new release
 				// needs to be deployed
@@ -784,7 +784,7 @@ class RCGZippedApp{
 		var model=new ZipModel();
 		self.pushCallback(function(){
 			deployInfo.deployedCommitId=deployInfo.commitId;
-			deployInfo.saveDate=self.commitDate;
+			deployInfo.deployedDate=self.commitDate;
 			self.storage.set('#FILEINFO#'+deployInfo.relativePath,JSON.stringify(deployInfo));
 			self.popCallback();
 		});

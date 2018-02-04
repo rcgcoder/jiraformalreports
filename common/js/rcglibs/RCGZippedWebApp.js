@@ -748,7 +748,7 @@ class RCGZippedApp{
 			}
 		}
 		var fncProgress=function(current, total) {
-			console.log(current + "/" + total + "   " + Math.round((current/total)*100)+"%");
+//			console.log(current + "/" + total + "   " + Math.round((current/total)*100)+"%");
 		}
 		model.getEntryFile(entry
 				, "Blob"

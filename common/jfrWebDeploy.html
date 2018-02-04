@@ -102,13 +102,20 @@
 				 appParameters["urlBase"]=baseUrl;
 				 appParameters["urlFull"]=baseUrl+"/plugins/servlet/ac/com.rcgcoder.jiraformalreports/JiraFormalReportPlugin";
 //				 github_class="github_cloud.js";
-		     } else {
+		     } else if (typeof getUrlParameter("urlBase")!=="undefined"){
 				var sUrl=document.url;
 				var sProjectKey=getUrlParameter("idProject");
 				var urlBase=getUrlParameter("urlBase");
 				appParameters["ProjectKey"]=sProjectKey;
 			    appParameters["urlBase"]=urlBase;
 				appParameters["urlFull"]=urlBase;
+		     } else {
+				var sUrl=document.URL;
+				var sProjectKey=getUrlParameter("idProject");
+				var urlBase=getUrlParameter("urlBase");
+				appParameters["ProjectKey"]="";
+			    appParameters["urlBase"]="";
+				appParameters["urlFull"]=sUrl;
 			 }
 
 			 var githubCode=getUrlParameter("code");

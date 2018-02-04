@@ -127,7 +127,7 @@ class GitHub{
 	   if (typeof sUrl==="undefined"){
 		   sUrl="https://api.github.com/repos/"+self.repository+"/commits";
 	   }
-	   self.arrCommits = self.arrCommits.concat(response);
+	   self.arrCommits = self.arrCommits.concat(response.items);
 	   var ghLink=xhr.getResponseHeader("Links");
 	   if ((ghLink!="")&&(ghLink!=null)){
 		  var arrLinks=ghLink.split(",");

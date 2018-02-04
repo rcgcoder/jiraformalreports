@@ -506,7 +506,7 @@ class RCGZippedApp{
 					});
 					return self.processFile(sFileContent,undefined,jsonContentType,sRelativePath);
 				});
-				filesystem.ReadFile(sRelativePath,sStringContent,
+				return filesystem.ReadFile(sRelativePath,sStringContent,
 						function(e){
 							self.popCallback([sStringContent]);
 						},
@@ -515,7 +515,8 @@ class RCGZippedApp{
 						});
 			}
 		}
-		
+		return self.popCallback([false,sRelativePath]);
+/*		
 		// now, it's necesary to download the file.... but ¿it´s posible to download a whole zip?
 		if (self.zipAppFile=="") { // there is not zip file configured.... not possible to download zip
 			return self.popCallback([false,sRelativePath]);
@@ -529,10 +530,10 @@ class RCGZippedApp{
 			return self.popCallback([false,sRelativePath]);
 		}
 		
-		/* status at this point
-		self.zipAppFile!="";
-		self.zipLastCommitId=="";
-		*/
+		// status at this point
+		// self.zipAppFile!="";
+		// self.zipLastCommitId=="";
+		
 		// now .... get last commit id of the file
 		
 		var arrGitHubRelativePath=self.zipAppFile;
@@ -564,6 +565,7 @@ class RCGZippedApp{
 		}
 		self.pushCallback(fncCallbackLastCommitOfFile);
 		self.github.getLastCommitsOfFile(arrGitHubRelativePath);
+		*/
 	}
 	
 	loadRemoteFile(sRelativePath){

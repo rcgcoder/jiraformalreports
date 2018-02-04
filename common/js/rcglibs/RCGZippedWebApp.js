@@ -821,7 +821,7 @@ class RCGZippedApp{
 				}
 				if (!bWillNotSave){
 					var jsonContent=self.getContentTypeFromExtension(sFile);
-					var sContentSaved=self.storage.get('#FILEINFO#'+sFile);
+					var sContentSaved=self.storage.get('#FILEINFO#'+sRelativePath);
 					var oContentSaved="";
 					if (sContentSaved!=null){
 						oContentSaved=JSON.parse(sContentSaved);
@@ -838,7 +838,7 @@ class RCGZippedApp{
 											relativePath:sRelativePath
 											});
 					} else {
-						console.log(sFile+" saved is newer");
+						console.log(sRelativePath+" saved is newer");
 					}
 				}
 			});

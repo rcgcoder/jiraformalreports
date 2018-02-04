@@ -374,7 +374,7 @@ class RCGZippedApp{
 			/*for (var xi=0;xi<16;xi++){
 				log("b64["+xi+"]:"+sB64[xi]);
 			}*/
-			console.log("B64: " + sB64.length);
+			//console.log("B64: " + sB64.length);
 			sStringContent=sB64;
 		}
 		if ((self.storage!="")

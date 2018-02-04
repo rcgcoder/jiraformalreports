@@ -154,7 +154,7 @@ function InitializeFileSystem(initCallBack,quota){
 											DatFile.createWriter(
 												function(DatContent) {
 													DatContent.onwriteend = function(e) {
-														console.log('Write completed.');
+//														console.log('Write completed.');
 														endWriteCallback(e);
 													};			
 													DatContent.onerror = function(e) {
@@ -186,8 +186,8 @@ function InitializeFileSystem(initCallBack,quota){
 																		/*for (var xi=0;xi<16;xi++){
 																			log("b64["+xi+"]:"+sB64[xi]);
 																		}*/
-																		console.log("B64: " + sB64.length);
-																		console.log("======");
+//																		console.log("B64: " + sB64.length);
+//																		console.log("======");
 																		sB64="#COMPRESSED#"+sB64;
 																		theBlob = new Blob([sB64], {type: "text/plain"});
 																		DatContent.write(theBlob);

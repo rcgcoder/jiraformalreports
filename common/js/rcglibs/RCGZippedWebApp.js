@@ -111,8 +111,16 @@ class GitHub{
 		  var nRemaining=xhr.getResponseHeader("X-RateLimit-Remaining");
 		  console.log("Remaining GitHub Pets:"+nRemaining);
 		  if (nRemaining<10){
-			  document.getElementById(self.app.getHtmlContainerID()).src="https://github.com/login/oauth/authorize?redirect_uri=https://cdn.rawgit.com/rcgcoder/jiraformalreports/"+self.lastCommit+"/common/jfrWebDeploy.html";
-		     return;
+			 var element=document.getElementById(self.app.getHtmlContainerID());
+				var xhr2 = new XMLHttpRequest();
+				var sUrl2="https://github.com/login/oauth/authorize?redirect_uri=https://cdn.rawgit.com/rcgcoder/jiraformalreports/"+self.lastCommit+"/common/jfrWebDeploy.html";
+				xhr2.open('GET', sUrl2, true);
+				xhr.onerror=self.loadError;
+				xhr.onload = function(e) {
+					console.log("Test Login github");
+				}
+				xhr.send();	
+				return;
 		  }
 		  if (this.status == 302) {
 			  var ghLink=xhr.getResponseHeader("Location");

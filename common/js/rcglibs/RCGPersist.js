@@ -55,7 +55,7 @@ function InitializeFileSystem(initCallBack,quota){
 	}
 	
 	var theNavigator=navigator;
-	var theStorage=theNavigator.webkitPersistentStorage;
+	var theStorage=theNavigator.webkitPersistentStorage || theNavigator.PersistentStorage || theNavigator.persistentStorage;
 	theStorage.requestQuota(iQuota, function(grantedBytes) {
 	  console.log("Quota granted:"+grantedBytes);
 	  window.webkitRequestFileSystem(PERSISTENT, grantedBytes, onInitFs, fsErrorHandler);

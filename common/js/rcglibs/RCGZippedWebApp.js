@@ -510,8 +510,8 @@ class RCGZippedApp{
 					});
 					return self.processFile(sFileContent,undefined,jsonContentType,sRelativePath);
 				});
-				return filesystem.ReadFile(sRelativePath,sStringContent,
-						function(e){
+				return filesystem.ReadFile(sRelativePath,
+						function(sStringContent){
 							self.popCallback([sStringContent]);
 						},
 						function(e){

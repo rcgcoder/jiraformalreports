@@ -80,6 +80,8 @@ class GitHub{
 		self.lastCommit="";
 		self.lastCommitDate="";
 		self.commitId="";
+		self.ghCode="";
+		self.ghStateString="_ungues"
 		var cmAux=new CallManager(self);
 	}
 	loadError(oError){
@@ -251,12 +253,15 @@ class RCGZippedApp{
 		self.loadedFiles={"rcglibs/RCGZippedWebApp.js":true};
 		
 	}
-	useGitHub(sRepository,branch){
+	useGitHub(sRepository,branch,code){
 		var self=this;
 		self.github=new GitHub(self);
 		self.github.repository=sRepository;
 		if (typeof branch!=="undefined"){
 			self.github.branch=branch;
+		}
+		if (typeof code!=="undefined"){
+			self.github.ghCode=code;
 		}
 	}
 	addDeployZip(relativePath,arrImportPaths){

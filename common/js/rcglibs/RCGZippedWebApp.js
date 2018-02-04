@@ -408,6 +408,7 @@ class RCGZippedApp{
 		xhr.responseType = 'arraybuffer';
 		xhr.onload = function(e) {
 		  if (this.status == 200) {
+			  console.log("Downloaded "+sRelativePath);
 			  var ct=self.getContentType(xhr);
 			  var response="";
 			  var toSave="";
@@ -422,6 +423,7 @@ class RCGZippedApp{
 			  })
 			  var sResult=self.saveFileToStorage(sRelativePath,toSave,ct);
 		  } else {
+			  console.log("Error downloading "+sRelativePath);
 			  self.loadError({target:{src:sUrl}});			  
 		  }
 		};

@@ -81,8 +81,9 @@
 			 var vXdm=getUrlParameter('xdm_e');
 			 var vCp=getUrlParameter('cp');
 			 var github_class="github.js";
-			 if ((typeof vXdm!=="undefined")&&
-				(typeof vCp!=="undefined")){
+			 var isCloud=((typeof vXdm!=="undefined")&&
+						(typeof vCp!=="undefined"));
+			 if (isCloud){
 				 var baseUrl =  vXdm+vCp; 
 				 var options = document.getElementById('connect-loader').getAttribute('data-options');
 
@@ -99,13 +100,15 @@
 				 var projectKey=objJason.options.productContext["project.key"];
 				 appParameters["ProjectKey"]=projectKey;
 				 appParameters["urlBase"]=baseUrl;
-				 github_class="github_cloud.js";
+				 appParameters["urlFull"]=baseUrl+"/plugins/servlet/ac/com.rcgcoder.jiraformalreports/JiraFormalReportPlugin";
+//				 github_class="github_cloud.js";
 		     } else {
 				var sUrl=document.url;
 				var sProjectKey=getUrlParameter("idProject");
 				var urlBase=getUrlParameter("urlBase");
 				appParameters["ProjectKey"]=sProjectKey;
 			    appParameters["urlBase"]=urlBase;
+				appParameters["urlFull"]=urlBase;
 			 }
 
 			 var githubCode=getUrlParameter("code");
@@ -130,6 +133,9 @@
 								 zipApp.rootPath=rootPath;
 								 zipApp.prependPath="common";
 								 zipApp.useGitHub(sRepo,"master",githubCode);
+								 zipApp.isCloud=isCloud;
+								 zipApp.urlBase=appParameters["urlBase"];
+								 zipApp.urlFull=appParameters["urlFull"];
 								 zipApp.github.commitId=commitId;
 					 			 zipApp.addDeployZip("ZippedWebApp/jiraformalreports.zip","jiraformalreports-master/common/");
 								 zipApp.addDeployZip("ZippedWebApp/aui-flat-pack.zip");

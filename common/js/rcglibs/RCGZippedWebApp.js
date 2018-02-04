@@ -81,6 +81,7 @@ class GitHub{
 		self.lastCommitDate="";
 		self.commitId="";
 		self.ghCode="";
+		self.headerAuth="";
 		self.ghStateString="_ungues"
 		var cmAux=new CallManager(self);
 	}
@@ -115,11 +116,17 @@ class GitHub{
 		  if (nRemaining<10){
 //			 var element=document.getElementById("JFR_GITHUB_LOGIN");
 //			 element.src=
-			 var ghLogin="https://github.com/login/oauth/authorize?client_id="+github_client_id;
+			 var oAuth={};
+			 oAuth.status=Math.random().toString(36);
+			 oAuth.urlReturn=self.app.urlFull;
+			 oAuth.nextstep=2;
+			 var ghLogin="https://github.com/login/oauth/authorize?client_id="+github_client_id+"&state="+oAuth.status;
+			 self.app.storage.save('#githubAuth#',JSON.stringify(oAuth));
 //			 +"&redirect_uri=https://cdn.rawgit.com/rcgcoder/jiraformalreports/"+self.lastCommit+"/common/jfrWebDeploy.html";
 			 console.log(ghLogin);
 			 alert(ghLogin);
-			 window.location.replace(ghLogin);
+			 top.window.location.href=ghLogin;
+//			 window.location.replace(ghLogin);
 		     return;
 		  }
 		  if (this.status == 302) {
@@ -132,6 +139,30 @@ class GitHub{
 		  }
 		};
 		xhr.send();	
+	}
+	processAuthStep2(oAuth){
+		var xhr = new XMLHttpRequest();
+		var sUrl= "https://github.com/login/oauth/access_token?client_id="+github_client_id+
+						"&state="+oAuth.status
+						"&client_secret="+github_client_secret
+						"&code="+oAuth.code;
+		oAuth.nextstep=3;
+		self.app.storage.save('#githubAuth#',JSON.stringify(oAuth));
+		xhr.open('POST',sUrl , true);
+		xhr.responseType = 'json';
+		xhr.onerror=function(){console.log("Error getting:"+ sUrl);};
+		xhr.onload = function(e) {
+		  if (this.status == 200) {
+			  var oToken=this.response;
+			  oAuth.token=oToken.access_token;
+			  self.app.storage.save('#githubAuth#',JSON.stringify(oAuth));
+			  top.window.location.href=oAuth.urlFull;
+			  return;
+		  } else {
+			  console.log("Error downloading "+sUrl);
+		  }
+		};
+		xhr.send();
 	}
 	processCommitsPage(response,xhr,url,arrHeaders){
 	   var self=this;
@@ -240,7 +271,9 @@ class RCGZippedApp{
 		self.prependPath="";
 		self.github="";
 		self.htmlContainerId="";
+		self.isCloud=false;
 		self.urlBase="";
+		self.urlFull="";
 		self.DeployZips=[];
 		self.lastDeployInfo="";
 		self.localStorageMaxSize=200*1024*1024; // 200 MBytes by default
@@ -710,14 +743,27 @@ class RCGZippedApp{
 							defer:true,
 							size:self.localStorageMaxSize
 							});
-		InitializeFileSystem(function(){self.popCallback();},self.localStorageMaxSize);
+		var sGitHubAuth=self.storage.get('#githubAuth#');
+		if ((self.github!="") && (sGitHubAuth!=null)&&(sGitHubAuth!="")){
+			var oAuth=JSON.parse(sGitHubAuth);
+			// there is not nextstep==1
+			if (oAuth.nextstep==2) {
+				oAuth.code=self.github.ghCode;
+				self.github.processAuthStep2(oAuth);
+			} else if (oAuth.nextstep==3) {
+				self.github.headerAuth=oAuth.token;
+				self.storage.set('#githubAuth#','');
+				InitializeFileSystem(function(){self.popCallback();},self.localStorageMaxSize);
+			}
+		} else {
+			InitializeFileSystem(function(){self.popCallback();},self.localStorageMaxSize);
+		}
 	}
 	startPersistence(){
 		var self=this;
 		var arrFiles=["js/libs/persist-all-min.js",
 					  "js/rcglibs/RCGPersist.js",
 	  		  		  "js/libs/b64.js",
-					  "js/gitHub.js"
 			  		  ];
 		self.pushCallback(self.updateDeployZips)
 		self.pushCallback(self.loadPersistentStorage);

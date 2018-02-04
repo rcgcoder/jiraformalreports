@@ -1,7 +1,8 @@
 var filesystem={};
+/*
 var compression_mode = 1;
 var my_lzma = LZMA; /// lzma_worker.js creates a global LZMA object. We store it as a new variable just to match simple_demo.html.
-
+*/
 /**
  * @param initCallBack
  * @param quota

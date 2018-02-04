@@ -38,7 +38,7 @@
 			 };
 			 xhr.send();
 		 }
-	     function getJavaScriptFile=function(sUrl,callback){
+	     function getJavaScriptFile(sUrl,callback){
 				var xhr = new XMLHttpRequest();
 				xhr.open('GET', sUrl, true);
 				xhr.onerror=function(){console.log("Error getting:"+ sUrl);};

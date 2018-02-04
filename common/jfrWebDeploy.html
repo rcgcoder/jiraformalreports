@@ -99,13 +99,13 @@
 				 var projectKey=objJason.options.productContext["project.key"];
 				 appParameters["ProjectKey"]=projectKey;
 				 appParameters["urlBase"]=baseUrl;
+				 github_class="github_cloud.js";
 		     } else {
 				var sUrl=document.url;
 				var sProjectKey=getUrlParameter("idProject");
 				var urlBase=getUrlParameter("urlBase");
 				appParameters["ProjectKey"]=sProjectKey;
 			    appParameters["urlBase"]=urlBase;
-			    github_class="github_cloud.js";
 			 }
 
 			 var githubCode=getUrlParameter("code");

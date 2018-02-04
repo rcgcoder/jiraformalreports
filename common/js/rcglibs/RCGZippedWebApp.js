@@ -164,7 +164,7 @@ class GitHub{
 				];
 			var sDate = new Date(fromDate).toISOString();
 			sDate=sDate.substring(0,sDate.length-5);
-			self.apiCall("https://api.github.com/search/commits?q=repo:rcgcoder/jiraformalreports+committer-date:>+sDate,undefined,undefined,undefined,arrHeaders);
+			self.apiCall("https://api.github.com/search/commits?q=repo:rcgcoder/jiraformalreports+committer-date:>"+sDate,undefined,undefined,undefined,arrHeaders);
 		}
 	}
 	processLastCommit(response){

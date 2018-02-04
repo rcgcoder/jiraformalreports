@@ -57,7 +57,7 @@
 				var oHead=(document.head || document.getElementsByTagName("head")[0]);
 				var oScript = document.createElement("script");
 				oScript.type = "text\/javascript";
-				oScript.onerror = function(){console.log("Error applying javascrip");});
+				oScript.onerror = function(){console.log("Error applying javascrip");};
     			oHead.appendChild(oScript);
 				oScript.innerHTML = jsContent;
 				callback();

@@ -44,7 +44,6 @@
 				xhr.onload = function(e) {
 				  if (this.status == 200) {
 					  console.log("Downloaded "+sUrl);
-					  var ct=self.getContentType(xhr);
 					  callback(this.responseText);
 				  } else {
 					  console.log("Error downloading "+sUrl);

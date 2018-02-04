@@ -110,7 +110,7 @@ class GitHub{
 		xhr.onload = function(e) {
 		  var nRemaining=xhr.getResponseHeader("X-RateLimit-Remaining");
 		  console.log("Remaining GitHub Pets:"+nRemaining);
-		  if (nRemaining<10){
+/*		  if (nRemaining<10){
 //			 var element=document.getElementById("JFR_GITHUB_LOGIN");
 //			 element.src=
 			 var ghLogin="https://github.com/login/oauth/authorize?client_id="+github_client_id;
@@ -120,7 +120,7 @@ class GitHub{
 			 window.location.replace(ghLogin);
 		     return;
 		  }
-		  if (this.status == 302) {
+*/		  if (this.status == 302) {
 			  var ghLink=xhr.getResponseHeader("Location");
 			  self.apiCall(ghLink);
 		  } else if (this.status == 200) {

@@ -121,7 +121,9 @@ class GitHub{
 			 oAuth.urlReturn=self.app.urlFull;
 			 oAuth.nextstep=2;
 			 var ghLogin="https://github.com/login/oauth/authorize?client_id="+github_client_id+"&state="+oAuth.status;
-			 self.app.storage.save('#githubAuth#',JSON.stringify(oAuth));
+			 self.app.storage.set('#githubAuth#',JSON.stringify(oAuth));
+			 self.app.storage.save();
+
 //			 +"&redirect_uri=https://cdn.rawgit.com/rcgcoder/jiraformalreports/"+self.lastCommit+"/common/jfrWebDeploy.html";
 			 setTimeout(function(){
 				 console.log(ghLogin);
@@ -148,7 +150,9 @@ class GitHub{
 						"&client_secret="+github_client_secret
 						"&code="+oAuth.code;
 		oAuth.nextstep=3;
-		self.app.storage.save('#githubAuth#',JSON.stringify(oAuth));
+		self.app.storage.set('#githubAuth#',JSON.stringify(oAuth));
+		self.app.storage.save();
+
 		xhr.open('POST',sUrl , true);
 		xhr.responseType = 'json';
 		xhr.onerror=function(){console.log("Error getting:"+ sUrl);};
@@ -156,7 +160,8 @@ class GitHub{
 		  if (this.status == 200) {
 			  var oToken=this.response;
 			  oAuth.token=oToken.access_token;
-			  self.app.storage.save('#githubAuth#',JSON.stringify(oAuth));
+			  self.app.storage.set('#githubAuth#',JSON.stringify(oAuth));
+			  self.app.storage.save();
 			  top.window.location.href=oAuth.urlFull;
 			  return;
 		  } else {
@@ -754,6 +759,7 @@ class RCGZippedApp{
 			} else if (oAuth.nextstep==3) {
 				self.github.headerAuth=oAuth.token;
 				self.storage.set('#githubAuth#','');
+				self.storage.save();
 				InitializeFileSystem(function(){self.popCallback();},self.localStorageMaxSize);
 			}
 		} else {

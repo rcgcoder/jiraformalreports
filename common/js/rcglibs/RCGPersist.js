@@ -67,7 +67,7 @@ function InitializeFileSystem(initCallBack,quota){
 			  console.log('Error', e);
 			});
 	} else {
-		requestFS(window.PERSISTENT, grantedBytes, onInitFs, fsErrorHandler);
+		requestFS(window.PERSISTENT, iQuota, onInitFs, fsErrorHandler);
 	}
 	filesystem.ReadFile=function(filename,cbExistsAndLoaded,cbNotExists){
 		var newName=filename.split("/");

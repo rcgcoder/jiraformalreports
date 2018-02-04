@@ -661,6 +661,7 @@ class RCGZippedApp{
 		self.pushCallback(function(arrCommits){
 			console.log("Test");
 		});
+		console.log("GetCommits");
 		self.github.getCommits(minZipCommitDate);
 
 		

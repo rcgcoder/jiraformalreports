@@ -157,9 +157,9 @@ class GitHub{
 			self.pushCallback(self.processCommitsPage);
 			var arrHeaders=[
 				{key:"Accept",value:"application/vnd.github.cloak-preview"}
-				]
-			var sDate = new Date(1331209044000).toISOString();
-			self.apiCall("https://api.github.com/search/commits?q=repo:rcgcoder/jiraformalreports+committer-date:\>"+sDate,undefined,undefined,undefined,arrHeaders);
+				];
+			var sDate = new Date(fromDate).toISOString();
+			self.apiCall("https://api.github.com/search/commits?q=repo:rcgcoder/jiraformalreports+committer-date:"+escape(encodeURI(">"))+sDate,undefined,undefined,undefined,arrHeaders);
 		}
 	}
 	processLastCommit(response){

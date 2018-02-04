@@ -806,7 +806,7 @@ class RCGZippedApp{
 						bContinue=false;
 					} else if (deployInfo.imports.length==0){
 						sRelativePath=entry.filename;
-						console.log("Entry "+entry.filename + " will be saved as "+sRelativePath);
+//						console.log("Entry "+entry.filename + " will be saved as "+sRelativePath);
 						bWillNotSave=false;
 					} else {
 						sImportPath=deployInfo.imports[i];
@@ -814,7 +814,7 @@ class RCGZippedApp{
 						sRelativePath=sFile.substring(sPrefix.length);
 						if ((sPrefix.length!=sFile.length)
 							  &&(sPrefix==sImportPath)){
-							console.log("Entry "+entry.filename + " will be saved as "+sRelativePath);
+//							console.log("Entry "+entry.filename + " will be saved as "+sRelativePath);
 							bWillNotSave=false;
 						}
 					}
@@ -828,6 +828,7 @@ class RCGZippedApp{
 					}
 					if ((oContentSaved=="") || 
 						(oContentSaved.saveDate<deployInfo.commitDate)){
+						console.log("Entry "+entry.filename + " will be saved as "+sRelativePath);
 						jsonContent.commitId=deployInfo.commitId;
 						jsonContent.commitDate=deployInfo.commitDate;
 						arrFilesToSave.push({

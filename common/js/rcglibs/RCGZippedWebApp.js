@@ -688,7 +688,7 @@ class RCGZippedApp{
 				theDeploy.deployedDate=deployInfo.deployedDate;
 			}
 		}
-		self.pushCallback(self.updateFilesFromCommits);
+//		self.pushCallback(self.updateFilesFromCommits);
 		self.pushCallback(self.checkForDeploys);
 		self.github.getLastCommitOfDeploys(self.DeployZips);
 	}

@@ -746,8 +746,10 @@ class RCGZippedApp{
 		var self=this;
 		self.pushCallback(self.startApplication);
 		self.pushCallback(self.startPersistence);
-		if (self.github!=""){
+		if ((self.github!="")&&((self.github.commitId=="")||(self.github.commitDate==""))){
 			self.github.updateLastCommit();
+		} else {
+			self.popCallback();
 		}
 	}
 	onerror(message) {

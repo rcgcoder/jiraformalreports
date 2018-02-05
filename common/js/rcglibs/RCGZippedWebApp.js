@@ -113,25 +113,6 @@ class GitHub{
 		xhr.onload = function(e) {
 		  var nRemaining=xhr.getResponseHeader("X-RateLimit-Remaining");
 		  console.log("Remaining GitHub Pets:"+nRemaining+" test");
-		  if (nRemaining<10){
-//			 var element=document.getElementById("JFR_GITHUB_LOGIN");
-//			 element.src=
-			 var oAuth={};
-			 oAuth.status=Math.random().toString(36);
-			 oAuth.urlReturn=self.app.urlFull;
-			 oAuth.nextstep=2;
-			 var ghLogin="https://github.com/login/oauth/authorize?client_id="+github_client_id+"&state="+oAuth.status;
-			 self.app.storage.set('#githubAuth#',JSON.stringify(oAuth));
-			 self.app.storage.save();
-
-//			 +"&redirect_uri=https://cdn.rawgit.com/rcgcoder/jiraformalreports/"+self.lastCommit+"/common/jfrWebDeploy.html";
-			 setTimeout(function(){
-				 console.log(ghLogin);
-				 top.window.location.href=ghLogin;
-			 },3000);
-//			 window.location.replace(ghLogin);
-		     return;
-		  }
 		  if (this.status == 302) {
 			  var ghLink=xhr.getResponseHeader("Location");
 			  self.apiCall(ghLink);
@@ -142,34 +123,6 @@ class GitHub{
 		  }
 		};
 		xhr.send();	
-	}
-	processAuthStep2(oAuth){
-		var self=this;
-		var xhr = new XMLHttpRequest();
-		var sUrl= "https://github.com/login/oauth/access_token?client_id="+github_client_id+
-						"&state="+oAuth.status
-						"&client_secret="+github_client_secret
-						"&code="+oAuth.code;
-		oAuth.nextstep=3;
-		self.app.storage.set('#githubAuth#',JSON.stringify(oAuth));
-		self.app.storage.save();
-
-		xhr.open('POST',sUrl , true);
-		xhr.responseType = 'json';
-		xhr.onerror=function(){console.log("Error getting:"+ sUrl);};
-		xhr.onload = function(e) {
-		  if (this.status == 200) {
-			  var oToken=this.response;
-			  oAuth.token=oToken.access_token;
-			  self.app.storage.set('#githubAuth#',JSON.stringify(oAuth));
-			  self.app.storage.save();
-			  top.window.location.href=oAuth.urlFull;
-			  return;
-		  } else {
-			  console.log("Error downloading "+sUrl);
-		  }
-		};
-		xhr.send();
 	}
 	processCommitsPage(response,xhr,url,arrHeaders){
 	   var self=this;
@@ -283,6 +236,8 @@ class RCGZippedApp{
 		self.urlFull="";
 		self.DeployZips=[];
 		self.lastDeployInfo="";
+		self.mainJs="";
+		self.mainClass="";
 		self.localStorageMaxSize=200*1024*1024; // 200 MBytes by default
 		var cmAux=new CallManager(self);
 		console.log("ZippedApp Created");
@@ -750,22 +705,7 @@ class RCGZippedApp{
 							defer:true,
 							size:self.localStorageMaxSize
 							});
-		var sGitHubAuth=self.storage.get('#githubAuth#');
-		if ((self.github!="") && (sGitHubAuth!=null)&&(sGitHubAuth!="")){
-			var oAuth=JSON.parse(sGitHubAuth);
-			// there is not nextstep==1
-			if (oAuth.nextstep==2) {
-				oAuth.code=self.github.ghCode;
-				self.github.processAuthStep2(oAuth);
-			} else if (oAuth.nextstep==3) {
-				self.github.headerAuth=oAuth.token;
-				self.storage.set('#githubAuth#','');
-				self.storage.save();
-				InitializeFileSystem(function(){self.popCallback();},self.localStorageMaxSize);
-			}
-		} else {
-			InitializeFileSystem(function(){self.popCallback();},self.localStorageMaxSize);
-		}
+		InitializeFileSystem(function(){self.popCallback();},self.localStorageMaxSize);
 	}
 	startPersistence(){
 		var self=this;
@@ -795,11 +735,12 @@ class RCGZippedApp{
 	startApplication(){
 		var self=this;
 		self.pushCallback(function(){
-			var webapp=new ZipWebApp();
+			var webapp = new window[self.mainClass]();
+			//var webapp=new ZipWebApp();
 			self.extendFromObject(webapp);
 			self.run();
 		});
-		self.loadRemoteFile("js/ZipWebApp.js");
+		self.loadRemoteFile(self.mainJs);
 	}
 	run(){
 		var self=this;

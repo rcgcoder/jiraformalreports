@@ -29,10 +29,10 @@
 						var lastCommit=this.response;
 						var sCommitLongId=lastCommit.sha;
 						var sCommitShortId=sCommitLongId.substring(0,8);
-						commitId=sCommitShortId;
-						callback(commitId);
+						var sCommitDate=(new Date(lastCommit.commit.author.date)).getTime();
+						callback(sCommitShortId,sCommitDate);
 				  } else {
-					  self.loadError({target:{src:sUrl}});			  
+					  console.log("Error getting last commit");			  
 				  }
 			 };
 			 xhr.send();
@@ -56,10 +56,11 @@
 				var oScript = document.createElement("script");
 				oScript.type = "text\/javascript";
 				oScript.onerror = function(){console.log("Error applying javascrip");};
-   			oHead.appendChild(oScript);
+   				oHead.appendChild(oScript);
 				oScript.innerHTML = jsContent;
 				callback();
 		 };
+		 
 		
 	  </script>
 </head>
@@ -80,7 +81,6 @@
         	 var appParameters={};
 			 var vXdm=getUrlParameter('xdm_e');
 			 var vCp=getUrlParameter('cp');
-			 var github_class="github.js";
 			 var isCloud=((typeof vXdm!=="undefined")&&
 						(typeof vCp!=="undefined"));
 			 if (isCloud){
@@ -122,35 +122,36 @@
 			 var rootPath="https://cdn.rawgit.com";
 			 var sRepo="rcgcoder/jiraformalreports";
 			 var commitId="";
-			 var sZipWebAppClass="js/rcglibs/RCGZippedWebApp.js";
-			 
-			 
-			 
-			 getLastCommit(sRepo,function(sCommitId){
+			 var commitDate="";
+			 var sRCGZipWebAppClass="js/rcglibs/RCGZippedWebApp.js";
+			 var appMainJs="js/ZipWebApp.js";
+			 var appMainClass="ZipWebApp";
+			 var commitId="";
+			 var commitDate="";
+			 var fncEngineStart=function(){
+				 	var zipApp=new RCGZippedApp();
+					//zipApp.localStorageMaxSize=200*1024*1024;
+					 zipApp.rootPath=rootPath;
+					 zipApp.useGitHub(sRepo,"master");
+					 zipApp.prependPath="common";
+					 zipApp.isCloud=isCloud;
+					 zipApp.urlBase=appParameters["urlBase"];
+					 zipApp.urlFull=appParameters["urlFull"];
+					 zipApp.mainJs=appMainJs;
+					 zipApp.mainClass=appMainClass;
+					 zipApp.github.commitId=commitId;
+					 zipApp.github.commitDate=commitDate;
+		 			 zipApp.addDeployZip("ZippedWebApp/jiraformalreports.zip","jiraformalreports-master/common/");
+					 zipApp.addDeployZip("ZippedWebApp/aui-flat-pack.zip");
+					 zipApp.setHtmlContainerID("JFR_Main_DIV");
+					 zipApp.run();
+			 }
+			 getLastCommit(sRepo,function(sCommitId,tCommitDate){
 				 commitId=sCommitId;
-				 var sUrlJs=rootPath+"/"+sRepo+"/"+commitId+"/common/js/"+github_class;
+				 commitDate=tCommitDate;
+				 var sUrlJs=rootPath+"/"+sRepo+"/"+commitId+"/common/"+sRCGZipWebAppClass;
 				 getJavaScriptFile(sUrlJs,function(jsContent){
-					 loadJavaScriptFile(jsContent,function(){
-						console.log("Loaded:"+github_class);	
-						 var sUrlJs=rootPath+"/"+sRepo+"/"+commitId+"/common/js/rcglibs/RCGZippedWebApp.js";
-						 getJavaScriptFile(sUrlJs,function(jsContent){
-							 loadJavaScriptFile(jsContent,function(){
-								 var zipApp=new RCGZippedApp();
-//								 zipApp.localStorageMaxSize=200*1024*1024;
-								 zipApp.rootPath=rootPath;
-								 zipApp.prependPath="common";
-								 zipApp.useGitHub(sRepo,"master",githubCode);
-								 zipApp.isCloud=isCloud;
-								 zipApp.urlBase=appParameters["urlBase"];
-								 zipApp.urlFull=appParameters["urlFull"];
-								 zipApp.github.commitId=commitId;
-					 			 zipApp.addDeployZip("ZippedWebApp/jiraformalreports.zip","jiraformalreports-master/common/");
-								 zipApp.addDeployZip("ZippedWebApp/aui-flat-pack.zip");
-								 zipApp.setHtmlContainerID("JFR_Main_DIV");
-								 zipApp.run();
-							 });
-						 });
-					 });
+					 loadJavaScriptFile(jsContent,fncEngineStart);
 				 });
 			 });		
          })();

@@ -14,7 +14,7 @@
      "modules": {
          "generalPages": [
              {
-                 "url": "/rcgcoder/jiraformalreports/a1fab70d/common/jfrWebDeploy.html",
+                 "url": "/rcgcoder/jiraformalreports/4a996a3e/common/jfrWebDeploy.html",
                  "key": "JiraFormalReportPlugin",
                  "location": "system.top.navigation.bar",
                  "name": {

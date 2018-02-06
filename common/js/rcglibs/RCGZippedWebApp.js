@@ -145,7 +145,7 @@ class CallManager{
 			var self=this;
 			var cm=self.callManager;
 			var theObj=newObj;
-			if (typeof newObj===undefined){
+			if (typeof newObj==="undefined"){
 				theObj=self;
 			}
 			if (cm.object!=theObj){

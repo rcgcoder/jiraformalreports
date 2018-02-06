@@ -73,12 +73,12 @@ class CallManager{
 		var newId=(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
 		return newId;
 	}
-	runSteps(aArgs){
+	runSteps(aArgs,forkId,bJumpLast){
 		var self=this;
-		if ((self.method==null)||(self.method=="")||(typeof self.method==="undefined")){
-			self.popCallback(aArgs);
-		} else {
+		if (!((self.method==null)||(self.method=="")||(typeof self.method==="undefined"))){
 			self.callMethod(aArgs);
+		} else {
+			self.nextStep(aArgs);
 		}
 	}
 	addFork(method,obj){

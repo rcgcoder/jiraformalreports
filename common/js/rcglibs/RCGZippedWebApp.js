@@ -10,41 +10,131 @@ Class for download a Zip File with a lot of js files.
  */
 
 
-
 class CallManager{
-	constructor(obj){
+	constructor(){
 		var self=this;
+		self.parent="";
+		self.forkId="";
+		self.actStep=0;
+		self.steps=[];
+		self.forks=[];
+		self.progressMin=0;
+		self.progressMax=0;
+		self.progress=0;
+		self.method="";
 		self.stackCallsbacks=[];
 		self.object="";
-		self.extendObject(obj);
+		//self.extendObject(obj);
 		self.asyncPops=false;
 	}
-	pushCallback(method){
+	searchForFork(forkId){
+		if (typeof forkId==="undefined") return self;
+		if (self.forkId==forkId) return self;
+		if (self.steps.length==0) return "";
+		if (self.actStep>=self.steps.length) return "";
+		var bForkLocated=false;
+		var theFork="";
+		for (var i=0;(theFork=="") &&(i<self.forks.length);i++){
+			theFork=self.forks[i].searchForFork(forkId);
+		}
+		return theFork;
+	}
+	getDeepStep(forkId){
+		var self=this;
+		if (self.steps.length==0) return self;
+		if (self.actStep>=self.steps.length) return self;
+		var stepRunning=self.steps[self.actStep];
+		if (typeof forkId!=="undefined"){
+			var theFork=self.searchForFork(forkId);
+			if (theFork!=""){
+				return theFork.getDeepStep();
+			}
+		} 
+		return stepRunning.getDeepStep();
+	}
+	newSubManager(method,obj){
+		var self=this;
+		var theObj=obj;
+		if (typeof theObj==="undefined"){
+			theObj=self.object;
+		}
+		var cm=new CallManager();
+		cm.object=theObj;
+		cm.forkId=self.forkId;
+		cm.method=method;
+		return cm;
+	}
+	addStep(method,forkId,obj){
+		var self=this;
+		cm=self.newSubManager(method,obj);
+		self.steps.push(cm);
+	}
+	newForkId(){
+		var newId=(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
+		return newId;
+	}
+	addFork(method,obj){
+		var self=this;
+		cm=self.newSubManager(method,obj);
+		cm.forkId=self.newForkId();
+		self.forks.push(cm);
+		return cm;
+	}
+	pushCallback(method,forkId,obj){
 		var self=this;
 		if (typeof method==="undefined"){
-			console.log("you are pushing an undefined callback... be carefull");
+			console.log("you are pushing an undefined callback... be carefull.... it´s maybe a big bug");
 		}
-		self.stackCallsbacks.push(method);
+		var ds=self.getDeepStep(forkId);
+		var cm=ds.newSubManager(method,obj);
+		ds.stackCallsbacks.push(cm);
 	}
-	popCallback(aArgs){
+	callMethod(aArgs){
 		var self=this;
-		if (self.stackCallsbacks.length>0){
-			var theMethod=self.stackCallsbacks.pop();
-			var obj=self.object;
-			if (obj==""){
-				obj=self;
-			}
-			if (typeof theMethod==="undefined"){
-				console.log("¿undefined?");
-			}
-			var fncApply=function(){
-				theMethod.apply(obj,aArgs);
-			}
-			if (self.asyncPops) {
-				setTimeout(fncApply);
-			} else {
-				fncApply();
-			}
+		var obj=self.object;
+		var theMethod=self.method;
+		if (typeof theMethod==="undefined"){
+			console.log("¿undefined?.... this will be a Big Crash!!!");
+		}
+
+		var context=obj;
+		if (obj==""){
+			context=window;
+		}
+		if (typeof theMethod==="string"){
+			theMethod=context[theMethod];
+		}
+		var fncApply=function(){
+			theMethod.apply(context,aArgs);
+		}
+		if (self.asyncPops) {
+			setTimeout(fncApply);
+		} else {
+			fncApply();
+		}
+	}
+	popParentCallback(aArgs,forkId){
+		var self=this;
+		var stepParent=self.parent;
+		if (stepParent=="") return;
+		if (stepParent.actStep>=stepParent.steps.length){
+			return stepParent.popParentCallback(aArgs,forkId);
+		}
+		stepParent.actStep++;
+		if (stepParent.actStep>=stepParent.steps.length){
+			return stepParent.popParentCallback(aArgs,forkId);
+		}
+        var nextStep=stepParent.steps[stepParent.actStep];
+        nextStep.callMethod(aArgs);
+	}
+	popCallback(aArgs,forkId){
+		var self=this;
+		var ds=self.getDeepStep(forkId);
+		if (ds.stackCallsbacks.length>0){
+			var theCallback=ds.stackCallsbacks.pop();
+			theCallback.callMethod(aArgs);
+		} else { // there is not callbacks to pop..... let´s go to parent next step.
+			ds.popParentCallback(aArgs,forkId);
 		}
 	}
 	extendObject(obj){
@@ -55,6 +145,7 @@ class CallManager{
 		obj.popCallback=function(aArgs){obj.callManager.popCallback(aArgs)}; 
 	}
 }
+var callManager=new CallManager();
 
 class ZipDeploy{
 	constructor(relativePath,zipUrl){
@@ -82,8 +173,8 @@ class GitHub{
 		self.commitId="";
 		self.ghCode="";
 		self.headerAuth="";
-		self.ghStateString="_ungues"
-		var cmAux=new CallManager(self);
+		self.ghStateString="_ungues";
+		callManager.extendObject(self);
 	}
 	loadError(oError){
 	    throw new URIError("The file " + oError.target.src + " is not accessible.");
@@ -239,7 +330,7 @@ class RCGZippedApp{
 		self.mainJs="";
 		self.mainClass="";
 		self.localStorageMaxSize=200*1024*1024; // 200 MBytes by default
-		var cmAux=new CallManager(self);
+		callManager.extendObject(self);
 		console.log("ZippedApp Created");
 		self.requestFileSystem = window.webkitRequestFileSystem 
 								|| window.mozRequestFileSystem 

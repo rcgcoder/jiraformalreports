@@ -141,8 +141,28 @@ class CallManager{
 		var self=this;
 		self.object=obj;
 		obj.callManager=self;
-		obj.pushCallback=function(method){obj.callManager.pushCallback(method)}; 
-		obj.popCallback=function(aArgs){obj.callManager.popCallback(aArgs)}; 
+		var newPushCallBack=function(method,forkId,newObj){
+			var self=this;
+			var cm=self.callManager;
+			var theObj=newObj;
+			if (typeof newObj===undefined){
+				theObj=self;
+			}
+			if (cm.object!=theObj){
+				var antObj=cm.object;
+				var changeObjectCallback=function(aArgs){
+					cm.object=antObj;
+					cm.popCallback(aArgs);
+				}
+				obj.callManager.pushCallback(changeObjectCallback,forkId);
+			}
+			cm.object=theObj;
+			obj.callManager.pushCallback(method,forkId,theObj);
+		};
+		obj.pushCallback=newPushCallBack; 
+		obj.popCallback=function(aArgs){
+			obj.callManager.popCallback(aArgs);
+		}; 
 	}
 }
 var callManager=new CallManager();

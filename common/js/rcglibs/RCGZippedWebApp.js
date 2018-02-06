@@ -74,7 +74,8 @@ class CallManager{
 		return newId;
 	}
 	runSteps(aArgs){
-		callMethod(aArgs);
+		var self=this;
+		self.callMethod(aArgs);
 	}
 	addFork(method,obj){
 		var self=this;

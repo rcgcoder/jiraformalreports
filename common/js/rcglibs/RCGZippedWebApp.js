@@ -158,7 +158,7 @@ class CallManager{
 					cm.object=antObj;
 					cm.popCallback(aArgs);
 				}
-				obj.callManager.pushCallback(changeObjectCallback,forkId);
+				obj.callManager.pushCallback(changeObjectCallback,forkId,"");
 			}
 			cm.object=theObj;
 			obj.callManager.pushCallback(method,forkId,theObj);

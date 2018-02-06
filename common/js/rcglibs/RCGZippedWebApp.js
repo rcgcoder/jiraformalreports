@@ -66,7 +66,7 @@ class CallManager{
 	}
 	addStep(method,forkId,obj){
 		var self=this;
-		cm=self.newSubManager(method,obj);
+		var cm=self.newSubManager(method,obj);
 		self.steps.push(cm);
 	}
 	newForkId(){

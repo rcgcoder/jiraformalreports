@@ -15,7 +15,7 @@ class CallManager{
 		var self=this;
 		self.parent="";
 		self.forkId="";
-		self.actStep=0;
+		self.actStep=-1;
 		self.steps=[];
 		self.forks=[];
 		self.progressMin=0;
@@ -121,32 +121,33 @@ class CallManager{
 			fncApply();
 		}
 	}
-	popParentCallback(aArgs,forkId){
+	nextStep(aArgs,forkId,bJumpLast){
 		var self=this;
-		var stepParent=self.parent;
-		if (stepParent=="") return;
-		if (stepParent.actStep>=stepParent.steps.length){
-			return stepParent.popParentCallback(aArgs,forkId);
+		if ((self.steps.length>0)&&((self.steps.length-1)>self.actStep)){
+			self.actStep++;
+			var cm=self.steps[self.actStep];
+			if ((typeof bJumpLast!=="undefined")&&(bJumpLast)){
+				self.nextStep(aArgs,forkId,false);
+			} else {
+				cm.callMethod(aArgs);
+			}
+		} else {
+			if (self.parent!="") return self.parent.nextStep(aArgs,forkId,bJumpLast);
 		}
-		stepParent.actStep++;
-		if (stepParent.actStep>=stepParent.steps.length){
-			return stepParent.popParentCallback(aArgs,forkId);
-		}
-        var nextStep=stepParent.steps[stepParent.actStep];
-        nextStep.callMethod(aArgs);
 	}
 	popCallback(aArgs,forkId,bJumpLast){
 		var self=this;
 		var ds=self.getDeepStep(forkId);
-		if ((typeof bJumpLast!=="undefined")&&(bJumpLast)){
-			ds.stackCallsbacks.pop();
-			return self.popCallback(aArgs,forkId,false);
-		}
 		if (ds.stackCallsbacks.length>0){
-			var theCallback=ds.stackCallsbacks.pop();
-			theCallback.callMethod(aArgs);
-		} else { // there is not callbacks to pop..... let´s go to parent next step.
-			ds.popParentCallback(aArgs,forkId);
+			if ((typeof bJumpLast!=="undefined")&&(bJumpLast)){
+				ds.stackCallsbacks.pop();
+				return self.popCallback(aArgs,forkId,false);
+			} else {
+				var theCallback=ds.stackCallsbacks.pop();
+				theCallback.callMethod(aArgs);
+			}
+		} else { // there is not callbacks to pop..... let´s go to next step.
+			self.nextStep(aArgs,forkId,bJumpLast);
 		}
 	}
 	extendObject(obj){

@@ -164,7 +164,7 @@ class CallManager{
 			bSetChangeObjStep=true;
 		}
 		cm.object=theObj;
-		obj.callManager.addStep(method,forkId,theObj);
+		self.callManager.addStep(method,forkId,theObj);
 		if (bSetChangeObjStep){
 			var changeObjectStep=function(aArgs){
 				cm.object=antObj;

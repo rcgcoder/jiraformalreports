@@ -75,7 +75,7 @@ class CallManager{
 	}
 	runSteps(aArgs){
 		var self=this;
-		if ((self.method=null)||(self.method=="")||(typeof self.method==="undefined")){
+		if ((self.method==null)||(self.method=="")||(typeof self.method==="undefined")){
 			self.popCallback(aArgs);
 		} else {
 			self.callMethod(aArgs);

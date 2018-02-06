@@ -872,7 +872,7 @@ class RCGZippedApp{
 			self.callManager.addStep(self.github.updateLastCommit,undefined,self.github);
 		}
 		self.callManager.addStep(self.startPersistence,undefined,self);
-		self.callManager.addStep(self.startPersistence);
+		self.callManager.addStep(self.startApplication);
 		self.callManager.runSteps();
 		 
 	}

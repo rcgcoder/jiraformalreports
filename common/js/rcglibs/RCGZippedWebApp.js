@@ -73,6 +73,9 @@ class CallManager{
 		var newId=(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
 		return newId;
 	}
+	runSteps(aArgs){
+		callMethod(aArgs);
+	}
 	addFork(method,obj){
 		var self=this;
 		cm=self.newSubManager(method,obj);
@@ -859,13 +862,12 @@ class RCGZippedApp{
 	}
 	run(){
 		var self=this;
-		self.pushCallback(self.startApplication);
-		self.pushCallback(self.startPersistence);
 		if ((self.github!="")&&((self.github.commitId=="")||(self.github.commitDate==""))){
-			self.github.updateLastCommit();
-		} else {
-			self.popCallback();
+			self.cm.addStep(self.github.updateLastCommit,undefined,self.github);
 		}
+		self.cm.addStep(self.startPersistence,undefined,self);
+		self.cm.addStep(self.startPersistence);
+		self.runSteps();
 	}
 	onerror(message) {
 		alert(message);

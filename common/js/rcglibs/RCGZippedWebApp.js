@@ -863,11 +863,11 @@ class RCGZippedApp{
 	run(){
 		var self=this;
 		if ((self.github!="")&&((self.github.commitId=="")||(self.github.commitDate==""))){
-			self.cm.addStep(self.github.updateLastCommit,undefined,self.github);
+			self.callManager.addStep(self.github.updateLastCommit,undefined,self.github);
 		}
 		self.callManager.addStep(self.startPersistence,undefined,self);
 		self.callManager.addStep(self.startPersistence);
-		self.runSteps();
+		self.callManager.runSteps();
 		 
 	}
 	onerror(message) {

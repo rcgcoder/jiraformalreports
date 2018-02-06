@@ -191,7 +191,7 @@ class CallManager{
 		}
 		cm.object=theObj;
 		self.callManager.pushCallback(method,forkId,theObj);
-	};
+	}
 	extended_popCallback(aArgs){
 		this.callManager.popCallback(aArgs);
 	}
@@ -791,10 +791,13 @@ class RCGZippedApp{
 		   (theDeploy.commitDate>theDeploy.deployedDate)){ // new release
 			// needs to be deployed
 			bNotUpdate=false;
-			self.pushCallback(function(){
+			self.addStep(function(){
+				self.deploy(theDeploy);
+			});
+			self.addStep(function(){
 				self.checkForDeploys(iZip+1);
 			});
-			self.deploy(theDeploy);
+			self.callManager.runSteps();
 		} else {
 			console.log("the deploy: "+ theDeploy.relativePath+ " is up to date");
 			self.checkForDeploys(iZip+1);
@@ -863,7 +866,6 @@ class RCGZippedApp{
 					  "js/rcglibs/RCGPersist.js",
 	  		  		  "js/libs/b64.js",
 			  		  ];
-		self.pushCallback(self.updateDeployZips)
 		self.pushCallback(self.loadPersistentStorage);
 		self.loadRemoteFiles(arrFiles);
 	}
@@ -898,6 +900,7 @@ class RCGZippedApp{
 			self.addStep(self.github.updateLastCommit,undefined,self.github);
 		}
 		self.addStep(self.startPersistence);
+		self.addStep(self.updateDeployZips);
 		self.addStep(self.startApplication);
 		self.callManager.runSteps();
 		 

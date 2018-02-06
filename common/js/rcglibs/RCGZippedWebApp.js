@@ -150,32 +150,58 @@ class CallManager{
 			self.nextStep(aArgs,forkId,bJumpLast);
 		}
 	}
+	extended_addStep(method,forkId,newObj){
+		var self=this;
+		var cm=self.callManager;
+		var theObj=newObj;
+		if (typeof newObj==="undefined"){
+			theObj=self;
+		}
+		var antObj="";
+		var bSetChangeObjStep=false;
+		if (cm.object!=theObj){
+			antObj=cm.object;
+			bSetChangeObjStep=true;
+		}
+		cm.object=theObj;
+		obj.callManager.addStep(method,forkId,theObj);
+		if (bSetChangeObjStep){
+			var changeObjectStep=function(aArgs){
+				cm.object=antObj;
+				cm.popCallback(aArgs);
+			}
+			self.callManager.addStep(changeObjectStep,forkId,"");
+		}
+
+	}
+	extended_pushCallBack(method,forkId,newObj){
+		var self=this;
+		var cm=self.callManager;
+		var theObj=newObj;
+		if (typeof newObj==="undefined"){
+			theObj=self;
+		}
+		if (cm.object!=theObj){
+			var antObj=cm.object;
+			var changeObjectCallback=function(aArgs){
+				cm.object=antObj;
+				cm.popCallback(aArgs);
+			}
+			self.callManager.pushCallback(changeObjectCallback,forkId,"");
+		}
+		cm.object=theObj;
+		self.callManager.pushCallback(method,forkId,theObj);
+	};
+	extended_popCallback(aArgs){
+		this.callManager.popCallback(aArgs);
+	}
 	extendObject(obj){
 		var self=this;
 		self.object=obj;
 		obj.callManager=self;
-		var newPushCallBack=function(method,forkId,newObj){
-			var self=this;
-			var cm=self.callManager;
-			var theObj=newObj;
-			if (typeof newObj==="undefined"){
-				theObj=self;
-			}
-			if (cm.object!=theObj){
-				var antObj=cm.object;
-				var changeObjectCallback=function(aArgs){
-					cm.object=antObj;
-					cm.popCallback(aArgs);
-				}
-				obj.callManager.pushCallback(changeObjectCallback,forkId,"");
-			}
-			cm.object=theObj;
-			obj.callManager.pushCallback(method,forkId,theObj);
-		};
-		obj.pushCallback=newPushCallBack; 
-		obj.popCallback=function(aArgs){
-			obj.callManager.popCallback(aArgs);
-		}; 
+		obj.addStep=self.extended_addStep;
+		obj.pushCallback=self.extended_pushCallBack;
+		obj.popCallback=self.extended_popCallback;
 	}
 }
 var callManager=new CallManager();

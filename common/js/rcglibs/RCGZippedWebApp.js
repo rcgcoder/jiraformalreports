@@ -868,7 +868,7 @@ class RCGZippedApp{
 		self.cm.addStep(self.startPersistence,undefined,self);
 		self.cm.addStep(self.startPersistence);
 		self.runSteps();
-		
+		 
 	}
 	onerror(message) {
 		alert(message);

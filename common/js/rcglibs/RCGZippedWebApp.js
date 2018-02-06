@@ -127,9 +127,13 @@ class CallManager{
         var nextStep=stepParent.steps[stepParent.actStep];
         nextStep.callMethod(aArgs);
 	}
-	popCallback(aArgs,forkId){
+	popCallback(aArgs,forkId,bJumpLast){
 		var self=this;
 		var ds=self.getDeepStep(forkId);
+		if ((typeof bJumpLast!=="undefined")&&(bJumpLast)){
+			ds.stackCallsbacks.pop();
+			return self.popCallback(aArgs,forkId,false);
+		}
 		if (ds.stackCallsbacks.length>0){
 			var theCallback=ds.stackCallsbacks.pop();
 			theCallback.callMethod(aArgs);
@@ -254,10 +258,10 @@ class GitHub{
 			  self.pushCallback(self.processCommitsPage);
 			  self.apiCall(sUrl,nextPage,undefined,undefined,arrHeaders);
 		  } else {
-			  self.app.popCallback([self.arrCommits]);
+			  self.popCallback([self.arrCommits],self.callManager.forkId,true);
 		  }
 	   } else {
-		  self.app.popCallback([self.arrCommits]);
+		  self.popCallback([self.arrCommits],self.callManager.forkId,true);
 	   }
 	}
 	getCommits(fromDate){
@@ -284,7 +288,7 @@ class GitHub{
 		var sCommitShortId=sCommitLongId.substring(0,8);
 		self.commitId=sCommitShortId;
 		self.commitDate=(new Date(self.lastCommit.commit.author.date)).getTime();
-		self.app.popCallback([self.commitId,self.commitDate]);
+		self.popCallback([self.commitId,self.commitDate],self.callManager.forkId,true);
 	}
 	updateLastCommit(){
 		var self=this;
@@ -295,7 +299,7 @@ class GitHub{
 		var self=this;
 		if (typeof relativePaths!="undefined"){
 			self.pushCallback(function(arrCommits){
-				self.app.popCallback([self.commitId,arrCommits]);
+				self.popCallback([self.commitId,arrCommits],self.callManager.forkId,true);
 			});
 			self.pushCallback(function(){
 				self.getLastCommitOfFiles(relativePaths);
@@ -310,7 +314,7 @@ class GitHub{
 		var sCommitLongId=lastCommit.sha;
 		var sCommitShortId=sCommitLongId.substring(0,8);
 		var sCommitDate=(new Date(lastCommit.commit.author.date)).getTime();
-		self.app.popCallback([sCommitShortId,sCommitDate]);
+		self.popCallback([sCommitShortId,sCommitDate],self.callManager.forkId,true);
 	}
 	getLastCommitOfFile(sRelativePath){
 		var self=this;
@@ -320,9 +324,9 @@ class GitHub{
 	updateDeployZipCommits(deployZips,iFile){
 		var self=this;
 		if (iFile>=deployZips.length){
-			self.app.popCallback();
+			self.popCallback(self.callManager.forkId,true);
 		} else {
-			self.app.pushCallback(function(sCommitId,sCommitDate){
+			self.pushCallback(function(sCommitId,sCommitDate){
 				deployZips[iFile].commitId=sCommitId;
 				deployZips[iFile].commitDate=sCommitDate;
 				self.updateDeployZipCommits(deployZips,iFile+1);

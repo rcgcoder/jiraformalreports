@@ -99,7 +99,7 @@ class CallManager{
 
 		var context=obj;
 		if (obj==""){
-			context=window;
+			context=undefined;
 		}
 		if (typeof theMethod==="string"){
 			theMethod=context[theMethod];

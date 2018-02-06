@@ -895,10 +895,10 @@ class RCGZippedApp{
 	run(){
 		var self=this;
 		if ((self.github!="")&&((self.github.commitId=="")||(self.github.commitDate==""))){
-			self.callManager.addStep(self.github.updateLastCommit,undefined,self.github);
+			self.addStep(self.github.updateLastCommit,undefined,self.github);
 		}
-		self.callManager.addStep(self.startPersistence,undefined,self);
-		self.callManager.addStep(self.startApplication,undefined,self);
+		self.addStep(self.startPersistence);
+		self.addStep(self.startApplication);
 		self.callManager.runSteps();
 		 
 	}

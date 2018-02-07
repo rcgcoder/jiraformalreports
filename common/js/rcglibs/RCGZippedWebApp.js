@@ -496,6 +496,7 @@ class RCGZippedApp{
 			var status=self.callManager.getStatus();
 			setTimeout(fncShowStatus,500);
 		}
+		fncShowStatus();
 
 		
 	}

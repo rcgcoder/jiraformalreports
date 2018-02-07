@@ -143,7 +143,7 @@ class CallManager{
 		while (stepRunning!=""){
 			if ((stepRunning.steps.length>0)&&((stepRunning.steps.length-1)>stepRunning.actStep)){
 				if (stepRunning.actStep>=0){
-					stepRunning.step[stepRunning.actStep].running=false;
+					stepRunning.steps[stepRunning.actStep].running=false;
 				}
 				stepRunning.actStep++;
 				var cm=stepRunning.steps[stepRunning.actStep];

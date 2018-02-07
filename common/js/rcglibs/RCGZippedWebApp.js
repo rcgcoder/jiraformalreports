@@ -72,6 +72,7 @@ class CallManager{
 			theObj=self.object;
 		}
 		var cm=new CallManager();
+		cm.parent=self;
 		cm.object=theObj;
 		cm.forkId=self.forkId;
 		cm.method=method;

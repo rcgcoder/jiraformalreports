@@ -492,7 +492,7 @@ class RCGZippedApp{
 								|| window.requestFileSystem;
 		self.storage="";
 		self.loadedFiles={"rcglibs/RCGZippedWebApp.js":true};
-		fncShowStatus=function(){
+		var fncShowStatus=function(){
 			var status=self.callManager.getStatus();
 			setTimeout(fncShowStatus,500);
 		}

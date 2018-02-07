@@ -893,10 +893,10 @@ class RCGZippedApp{
 		   (theDeploy.commitDate>theDeploy.deployedDate)){ // new release
 			// needs to be deployed
 			bNotUpdate=false;
-			self.addStep(function(){
+			self.addStep("Deploying Zip:"+ theDeploy.relativePath,function(){
 				self.deploy(theDeploy);
 			});
-			self.addStep(function(){
+			self.addStep("Checking for other Deploying Zip:"+ iZip+1,function(){
 				self.checkForDeploys(iZip+1);
 			});
 			self.callManager.runSteps();
@@ -1001,9 +1001,9 @@ class RCGZippedApp{
 		if ((self.github!="")&&((self.github.commitId=="")||(self.github.commitDate==""))){
 			self.addStep(self.github.updateLastCommit,undefined,self.github);
 		}
-		self.addStep(self.startPersistence);
-		self.addStep(self.updateDeployZips);
-		self.addStep(self.startApplication);
+		self.addStep("Starting Persistence...",self.startPersistence);
+		self.addStep("Updating Deploy Zips...",self.updateDeployZips);
+		self.addStep("Starting Application...",self.startApplication);
 		self.callManager.runSteps();
 		 
 	}

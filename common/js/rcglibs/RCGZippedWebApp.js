@@ -22,7 +22,7 @@ class CallManager{
 		self.progressMax=0;
 		self.progress=0;
 		self.method="";
-		self.stackCallsbacks=[];
+		self.stackCallbacks=[];
 		self.object="";
 		self.running=false;
 		//self.extendObject(obj);
@@ -107,7 +107,7 @@ class CallManager{
 		}
 		var ds=self.getDeepStep(forkId);
 		var cm=ds.newSubManager(method,obj);
-		ds.stackCallsbacks.push(cm);
+		ds.stackCallbacks.push(cm);
 	}
 	callMethod(aArgs){
 		var self=this;
@@ -151,12 +151,12 @@ class CallManager{
 	popCallback(aArgs,forkId,bJumpLast){
 		var self=this;
 		var ds=self.getDeepStep(forkId);
-		if (ds.stackCallsbacks.length>0){
+		if (ds.stackCallbacks.length>0){
 			if ((typeof bJumpLast!=="undefined")&&(bJumpLast)){
-				ds.stackCallsbacks.pop();
+				ds.stackCallbacks.pop();
 				return self.popCallback(aArgs,forkId,false);
 			} else {
-				var theCallback=ds.stackCallsbacks.pop();
+				var theCallback=ds.stackCallbacks.pop();
 				theCallback.callMethod(aArgs);
 			}
 		} else { // there is not callbacks to pop..... let´s go to next step.

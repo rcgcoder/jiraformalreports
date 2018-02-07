@@ -24,6 +24,7 @@ class CallManager{
 		self.method="";
 		self.stackCallsbacks=[];
 		self.object="";
+		self.running=false;
 		//self.extendObject(obj);
 		self.asyncPops=false;
 	}
@@ -51,6 +52,16 @@ class CallManager{
 			}
 		} 
 		return stepRunning.getDeepStep();
+	}
+	getRunningCall(forkId){
+		var stepRunning=getDeepStep(forkId);
+		for (var i=(stepRunning.stackCallbacks.length-1);i>=0;i--){
+			var cb=stepRunning[i];
+			if (cb.running){
+				return cb;
+			}
+		}
+		return stepRunning;
 	}
 	newSubManager(method,obj){
 		var self=this;
@@ -99,6 +110,7 @@ class CallManager{
 	}
 	callMethod(aArgs){
 		var self=this;
+		self.running=true;
 		var obj=self.object;
 		var theMethod=self.method;
 		if (typeof theMethod==="undefined"){
@@ -152,7 +164,7 @@ class CallManager{
 	}
 	extended_addStep(method,forkId,newObj){
 		var self=this;
-		var cm=self.callManager;
+		var cm=self.callManager.getRunningCall();
 		var theObj=newObj;
 		if (typeof newObj==="undefined"){
 			theObj=self;
@@ -164,13 +176,13 @@ class CallManager{
 			bSetChangeObjStep=true;
 		}
 		cm.object=theObj;
-		self.callManager.addStep(method,forkId,theObj);
+		cm.addStep(method,forkId,theObj);
 		if (bSetChangeObjStep){
 			var changeObjectStep=function(aArgs){
 				cm.object=antObj;
 				cm.popCallback(aArgs);
 			}
-			self.callManager.addStep(changeObjectStep,forkId,"");
+			cm.addStep(changeObjectStep,forkId,"");
 		}
 
 	}
@@ -370,6 +382,7 @@ class GitHub{
 		}
 	}
 	getLastCommitOfDeploys(deployZips){
+		
 		this.updateDeployZipCommits(deployZips,0);
 	}
 }

@@ -54,9 +54,10 @@ class CallManager{
 		return stepRunning.getDeepStep();
 	}
 	getRunningCall(forkId){
-		var stepRunning=getDeepStep(forkId);
+		var self=this;
+		var stepRunning=self.getDeepStep(forkId);
 		for (var i=(stepRunning.stackCallbacks.length-1);i>=0;i--){
-			var cb=stepRunning[i];
+			var cb=stepRunning.stackCallbacks[i];
 			if (cb.running){
 				return cb;
 			}

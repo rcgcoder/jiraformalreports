@@ -13,7 +13,9 @@ Class for download a Zip File with a lot of js files.
 class CallManager{
 	constructor(){
 		var self=this;
+		self.description="";
 		self.method="";
+		self.isChangeObj=false;
 		self.parent="";
 		self.forkId="";
 		self.actStep=-1;
@@ -22,11 +24,80 @@ class CallManager{
 		self.progressMin=0;
 		self.progressMax=0;
 		self.progress=0;
+		self.progressWeight=-1;
 		self.stackCallbacks=[];
 		self.object="";
 		self.running=false;
 		//self.extendObject(obj);
 		self.asyncPops=false;
+	}
+	getStatus(){
+		var self=this;
+		var progressItems=0;
+		var progressPercent=0;
+		var progressMax=100;
+		var progressMin=0;
+		var itemsRunned=0;
+//		if (self.steps.length==0){
+		// call status
+		if (self.method!=""){
+			progressMax=self.progressMax;
+			progressMin=self.progressMin;
+			progressItems=progressMax-progressMin;
+			progressPercent=0;
+			if (progressItems>0){
+				progressPercent=self.progress/progressItems;
+			}
+		}
+		if (self.steps.length==0){
+			return {perc:progressPercent,weight:self.weight};
+		} else { // if has substeps
+			progressMax=100;
+			progressMin=0;
+			progressItems=self.steps.length;
+			var totalWeight=0;
+			var itemsWithWeight=0;
+			var acumWeightProcessed=0;
+			var itemsProcessedWithoutWeight=0;
+			if (self.method!=""){
+				progressItems++; // if has method... there is a one more item
+				if (self.weight>=0){
+					itemsWithWeight++;
+					totalWeight+=self.weight;
+					if (self.actStep>=0){
+						acumWeightProcessed+=self.weight;
+					}
+				} else if (self.actStep>=0){
+					itemsProcessedWithoutWeight++;
+				}
+			}
+			for (var i=0;i<self.steps.length;i++){
+				var auxStep=self.steps[i];
+				if (auxStep.weight>=0){
+					itemsWithWeight++;
+					totalWeight+=auxStep.weight;
+					if ((self.actStep>=0)&&(self.actStep<i)){
+						acumWeightProcessed+=auxStep.weight;
+					}
+				} else if ((self.actStep>=0)&&(self.actStep<i)){
+					itemsProcessedWithoutWeight++;
+				}
+			}
+			var medWeight=0;
+			var percWeight=0;
+			var percProcessedWeight=0;
+			if (itemsWithWeight==0){
+				totalWeight=100;
+				medWeight=totalWeight/progressItems;
+			} else {
+				medWeight=totalWeight/itemsWithWeight;
+				totalWeight+=(medWeight*(progressItems-itemsWithWeight));
+			}
+			acumWeightProcessed+=(itemsProcessedWithoutWeight*medWeight);
+			percWeight=100/totalWeight;
+			percProcessedWeight=(percWeight*acumWeightProcessed);
+			return {perc:percProcessedWeight,weight:self.weight};
+		}
 	}
 	searchForFork(forkId){
 		if (typeof forkId==="undefined") return self;
@@ -78,9 +149,10 @@ class CallManager{
 		cm.method=method;
 		return cm;
 	}
-	addStep(method,forkId,obj){
+	addStep(description,method,forkId,obj){
 		var self=this;
 		var cm=self.newSubManager(method,obj);
+		cm.description=description;
 		self.steps.push(cm);
 	}
 	newForkId(){
@@ -172,7 +244,7 @@ class CallManager{
 			self.nextStep(aArgs,forkId,bJumpLast);
 		}
 	}
-	extended_addStep(method,forkId,newObj){
+	extended_addStep(description,method,forkId,newObj){
 		var self=this;
 		var cm=self.callManager.getRunningCall();
 		var theObj=newObj;
@@ -186,13 +258,14 @@ class CallManager{
 			bSetChangeObjStep=true;
 		}
 		cm.object=theObj;
-		cm.addStep(method,forkId,theObj);
+		cm.addStep(description,method,forkId,theObj);
 		if (bSetChangeObjStep){
 			var changeObjectStep=function(aArgs){
 				cm.object=antObj;
 				cm.popCallback(aArgs);
+				cm.isChangeObj=true;
 			}
-			cm.addStep(changeObjectStep,forkId,"");
+			cm.addStep(description,changeObjectStep,forkId,"");
 		}
 
 	}
@@ -419,6 +492,11 @@ class RCGZippedApp{
 								|| window.requestFileSystem;
 		self.storage="";
 		self.loadedFiles={"rcglibs/RCGZippedWebApp.js":true};
+		fncShowStatus=function(){
+			var status=self.callManager.getStatus();
+			setTimeout(fncShowStatus,500);
+		}
+
 		
 	}
 	useGitHub(sRepository,branch,code){

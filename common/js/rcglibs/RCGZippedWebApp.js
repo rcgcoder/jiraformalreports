@@ -139,19 +139,22 @@ class CallManager{
 	nextStep(aArgs,forkId,bJumpLast){
 		var self=this;
 		var stepRunning=self.getRunningCall();
-		if ((stepRunning.steps.length>0)&&((stepRunning.steps.length-1)>stepRunning.actStep)){
-			stepRunning.actStep++;
-			var cm=stepRunning.steps[stepRunning.actStep];
-			if ((typeof bJumpLast!=="undefined")&&(bJumpLast)){
-				self.nextStep(aArgs,forkId,false);
-			} else {
-				cm.callMethod(aArgs);
-			}
-		} else {
-			if (stepRunning.parent!="") {
-				stepRunning.running=false;  // the step is finished
-				return stepRunning.parent.nextStep(aArgs,forkId,bJumpLast);
-			}
+		
+		while (stepRunning!=""){
+			if ((stepRunning.steps.length>0)&&((stepRunning.steps.length-1)>stepRunning.actStep)){
+				if (stepRunning.actStep>=0){
+					stepRunning.step[stepRunning.actStep].running=false;
+				}
+				stepRunning.actStep++;
+				var cm=stepRunning.steps[stepRunning.actStep];
+				if ((typeof bJumpLast!=="undefined")&&(bJumpLast)){
+					return self.nextStep(aArgs,forkId,false);
+				} else {
+					return cm.callMethod(aArgs);
+				}
+			} 
+			stepRunning.running=false;  // the step is finished
+			stepRunning=stepRunning.parent;
 		}
 	}
 	popCallback(aArgs,forkId,bJumpLast){

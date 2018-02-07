@@ -44,13 +44,14 @@ class CallManager{
 		var self=this;
 		if (self.steps.length==0) return self;
 		if (self.actStep>=self.steps.length) return self;
-		var stepRunning=self.steps[self.actStep];
+		if (self.actStep<0) return self;
 		if (typeof forkId!=="undefined"){
 			var theFork=self.searchForFork(forkId);
 			if (theFork!=""){
 				return theFork.getDeepStep();
 			}
 		} 
+		var stepRunning=self.steps[self.actStep];
 		return stepRunning.getDeepStep();
 	}
 	getRunningCall(forkId){

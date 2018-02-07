@@ -148,7 +148,10 @@ class CallManager{
 				cm.callMethod(aArgs);
 			}
 		} else {
-			if (stepRunning.parent!="") return stepRunning.parent.nextStep(aArgs,forkId,bJumpLast);
+			if (stepRunning.parent!="") {
+				stepRunning.running=false;  // the step is finished
+				return stepRunning.parent.nextStep(aArgs,forkId,bJumpLast);
+			}
 		}
 	}
 	popCallback(aArgs,forkId,bJumpLast){

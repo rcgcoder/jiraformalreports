@@ -13,6 +13,7 @@ Class for download a Zip File with a lot of js files.
 class CallManager{
 	constructor(){
 		var self=this;
+		self.method="";
 		self.parent="";
 		self.forkId="";
 		self.actStep=-1;
@@ -21,7 +22,6 @@ class CallManager{
 		self.progressMin=0;
 		self.progressMax=0;
 		self.progress=0;
-		self.method="";
 		self.stackCallbacks=[];
 		self.object="";
 		self.running=false;
@@ -137,9 +137,10 @@ class CallManager{
 	}
 	nextStep(aArgs,forkId,bJumpLast){
 		var self=this;
-		if ((self.steps.length>0)&&((self.steps.length-1)>self.actStep)){
-			self.actStep++;
-			var cm=self.steps[self.actStep];
+		var stepRunning=self.getRunningCall();
+		if ((stepRunning.steps.length>0)&&((stepRunning.steps.length-1)>stepRunning.actStep)){
+			stepRunning.actStep++;
+			var cm=stepRunning.steps[stepRunning.actStep];
 			if ((typeof bJumpLast!=="undefined")&&(bJumpLast)){
 				self.nextStep(aArgs,forkId,false);
 			} else {

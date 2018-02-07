@@ -147,7 +147,7 @@ class CallManager{
 				cm.callMethod(aArgs);
 			}
 		} else {
-			if (self.parent!="") return self.parent.nextStep(aArgs,forkId,bJumpLast);
+			if (stepRunning.parent!="") return stepRunning.parent.nextStep(aArgs,forkId,bJumpLast);
 		}
 	}
 	popCallback(aArgs,forkId,bJumpLast){

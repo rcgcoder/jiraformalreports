@@ -480,7 +480,7 @@ class RCGZippedApp{
 		
 	loadFileFromStorage(sRelativePath){
 		var self=this;
-		if ((self.storage=="")||(self.github=="")){ // if there is not storage initialized or github is not used
+		if ((!self.bWithPersistentStorage)||(self.storage=="")||(self.github=="")){ // if there is not storage initialized or github is not used
 			return self.popCallback([false,sRelativePath]);
 		}
 		// now there is storage and github

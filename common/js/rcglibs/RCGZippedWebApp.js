@@ -602,6 +602,9 @@ class RCGZippedApp{
 	}
 	updateDeployZips(){
 		var self=this;
+		if (!self.bWithPersistentStorage){
+			self.popCallback();
+		}
 		var sTotalDeployInfo=self.storage.get('#FILEINFO#'+"LastDeployInfo");
 		var oTotalDeployInfo="";
 		if ((sTotalDeployInfo!=null)&&(sTotalDeployInfo!="")&&(typeof sTotalDeployInfo!=="undefined")){

@@ -324,4 +324,4 @@ class RCGCallManager{
 		obj.popCallback=self.extended_popCallback;
 	}
 }
-var callManager=new CallManager();
+var callManager=new RCGCallManager();

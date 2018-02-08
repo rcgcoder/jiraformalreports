@@ -274,12 +274,12 @@ class RCGCallManager{
 			self.nextStep(aArgs,forkId,bJumpLast);
 		}
 	}
-	extended_setProgressMinMax(min,max){
+	extended_setProgressMinMax(min,max,forkId){
 		var stepRunning=self.getDeepStep(forkId);
 		stepRunning.progressMin=min;
 		stepRunning.progressMax=max;
 	}
-	extended_setProgress(amount){
+	extended_setProgress(amount,forkId){
 		var stepRunning=self.getDeepStep(forkId);
 		var val=amount;
 		if (typeof val==="undefined"){
@@ -287,7 +287,7 @@ class RCGCallManager{
 		}
 		stepRunning.progress=val;
 	}
-	extended_incProgress(amount){
+	extended_incProgress(amount,forkId){
 		var stepRunning=self.getDeepStep(forkId);
 		var incVal=amount;
 		if (typeof incVal==="undefined"){

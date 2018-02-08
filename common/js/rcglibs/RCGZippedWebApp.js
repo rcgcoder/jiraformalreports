@@ -690,7 +690,7 @@ class RCGZippedApp{
 	}
 	loadMemoryMonitor(){
 		var self=this;
-		var arrFiles=["js/libs/memory-starts.js"];
+		var arrFiles=["js/libs/memory-stats.js"];
 		self.pushCallback(self.startMemoryMonitor);
 		self.loadRemoteFiles(arrFiles);
 	}

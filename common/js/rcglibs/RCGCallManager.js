@@ -1,45 +1,45 @@
-class callManagerTask{
-	constructor(method,callManager,isChangeObj,progressMin,progressMax,weight){
-		self.method="";
-		self.isChangeObj=false;
-		self.progressMin=progressMin;
-		self.progressMax=progressMax;
-		self.progress=0;
-		self.progressWeight=weight;
-		self.running=false;
-		self.callManager=callManager;
-	}
-}
-
-
-class CallManager{
+class RCGCallManager{
 	constructor(){
 		var self=this;
 		self.description="";
+		self.method="";
+		self.isChangeObj=false;
 		self.parent="";
 		self.forkId="";
 		self.actStep=-1;
 		self.progressMin=0;
-		self.progressMax=0;
+		self.progressMax=1;
 		self.progress=0;
+		self.weight=-1;
+		self.methodWeight=-1;
 		self.steps=[];
 		self.forks=[];
 		self.stackCallbacks=[];
 		self.object="";
 		self.running=false;
+		self.done=false;
 		//self.extendObject(obj);
 		self.asyncPops=false;
 	}
 	getStatus(){
 		var self=this;
+		if ((self.done)||(!self.running)){
+			return {
+					desc:self.description,
+					perc:(self.done?1:0),
+					weight:self.weight,
+					done:self.done,
+					running:self.running
+					};
+		}
 		var progressPercent=0;
 //		if (self.steps.length==0){
 		// call status
-		var bRunning=false;
+		var bRunningMethod=false;
 		if (self.actStep>=0){
 			progressPercent=1;
 		} else if (self.method!=""){
-			bRunning=true;
+			bRunningMethod=true;
 			var progressMax=self.progressMax;
 			var progressMin=self.progressMin;
 			var progressItems=progressMax-progressMin;
@@ -48,19 +48,25 @@ class CallManager{
 				progressPercent=self.progress/progressItems;
 			}
 		}
-
+		var status={
+				desc:self.description,
+				perc:progressPercent,
+				weight:self.methodWeight,
+				done:false,
+				running:bRunningMethod
+				};
+		if (self.steps.length==0){
+			status.min=self.progressMin;
+			status.max=self.progressMax;
+			status.adv=self.progress;
+			status.weight=self.weight;
+			return status;
+		}
 		var arrStatus=[];
-		arrStatus.push({desc:self.description,perc:progressPercent,weight:self.weight,running:bRunning});
+		arrStatus.push(status);
 		for (var i=0;i<self.steps.length;i++){
 			var auxStep=self.steps[i];
-			if (i<self.actStep){
-				arrStatus.push({desc:auxStep.description,perc:1,weight:auxStep.weight,running:false});
-			} else if (i>self.actStep) {
-				arrStatus.push({desc:auxStep.description,perc:0,weight:auxStep.weight,running:false});
-			} else {
-				var auxStatus=auxStep.getStatus();
-				arrStatus.push({desc:auxStep.description,perc:auxStatus.perc,weight:auxStep.weight,running:true});
-			}
+			arrStatus.push(auxStep.getStatus());
 		}
 		var totalWeight=0;
 		var medWeight=0;
@@ -93,90 +99,25 @@ class CallManager{
 			if (auxStatus.perc>0){
 				var auxWeight=auxStatus.weight;
 				if (auxWeight<0){
-					auxWeight=medWeight;
+					auxWeight=medWeight*auxStatus.perc;
+				} else {
+					auxWeight=auxWeight*auxStatus.perc;
 				}
 				acumProcessed+=auxWeight;
 			}
 		}
-		
-		
-		var 
-		totalWeight=totalWeightSetted
-		
-		
-		
-		if (self.steps.length==0){
-			return ;
-		} else { // if has substeps
-			
-			
-			
-			
-			
-			progressMax=100;
-			progressMin=0;
-			progressItems=self.steps.length;
-			var totalWeight=0;
-			var itemsWithWeight=0;
-			var acumWeightProcessed=0;
-			var itemsProcessedWithoutWeight=0;
-			var bRunning=false;
-			var actualStepWeight=-1;
-			var actualStepAdv=0;
-			if (self.method!=""){
-				progressItems++; // if has method... there is a one more item
-				if (self.actStep<0){
-					bRunning=true;
-					actualStepWeight=self.weight;
-					actualStepAdv=progressPercent;		
-				} else if (self.weight>=0){
-					itemsWithWeight++;
-					totalWeight+=self.weight;
-					if (self.actStep>=0){
-						acumWeightProcessed+=self.weight;
-					}
-				} else 
-					itemsProcessedWithoutWeight++;
-				}
-			}
-			for (var i=0;i<self.steps.length;i++){
-				var auxStep=self.steps[i];
-				if (i==self.actStep){
-					bRunning=true;
-					var actStatus=auxStep.getStatus();
-					if (auxStep.weight<0){
-						actualStepWeight=-1;
-						var actualStepAdv=0;
-						
-					} else {
-						actualStepWeight=auxStep.weight;
-						
-					}
-				} else if (auxStep.weight>=0){
-					itemsWithWeight++;
-					totalWeight+=auxStep.weight;
-					if ((self.actStep>=0)&&(self.actStep>i)){
-						acumWeightProcessed+=auxStep.weight;
-					}
-				} else if ((self.actStep>=0)&&(self.actStep>i)){
-					itemsProcessedWithoutWeight++;
-				} 
-			}
-			var medWeight=0;
-			var percWeight=0;
-			var percProcessedWeight=0;
-			if (itemsWithWeight==0){
-				totalWeight=100;
-				medWeight=totalWeight/progressItems;
-			} else {
-				medWeight=totalWeight/itemsWithWeight;
-				totalWeight+=(medWeight*(progressItems-itemsWithWeight));
-			}
-			acumWeightProcessed+=(itemsProcessedWithoutWeight*medWeight);
-			percWeight=100/totalWeight;
-			percProcessedWeight=(percWeight*acumWeightProcessed);
-			return {perc:percProcessedWeight,weight:self.weight};
-		}
+		var totalPerc=acumProcessed/totalWeight;
+		var returnStatus={
+				desc:self.description,
+				weight:self.weight,
+				min:0,
+				max:1,
+				perc:totalPerc,
+				done:false,
+				running:true,
+				child:arrStatus[iRunning]
+				};
+		return returnStatus;
 	}
 	searchForFork(forkId){
 		if (typeof forkId==="undefined") return self;
@@ -221,7 +162,7 @@ class CallManager{
 		if (typeof theObj==="undefined"){
 			theObj=self.object;
 		}
-		var cm=new CallManager();
+		var cm=new RCGCallManager();
 		cm.parent=self;
 		cm.object=theObj;
 		cm.forkId=self.forkId;
@@ -240,6 +181,8 @@ class CallManager{
 	}
 	runSteps(aArgs,forkId,bJumpLast){
 		var self=this;
+		self.done=false;
+		self.running=true;
 		if (!((self.method==null)||(self.method=="")||(typeof self.method==="undefined"))){
 			self.callMethod(aArgs);
 		} else {
@@ -295,6 +238,7 @@ class CallManager{
 			if ((stepRunning.steps.length>0)&&((stepRunning.steps.length-1)>stepRunning.actStep)){
 				if (stepRunning.actStep>=0){
 					stepRunning.steps[stepRunning.actStep].running=false;
+					stepRunning.steps[stepRunning.actStep].done=true;
 				}
 				stepRunning.actStep++;
 				var cm=stepRunning.steps[stepRunning.actStep];
@@ -305,6 +249,8 @@ class CallManager{
 				}
 			} 
 			stepRunning.running=false;  // the step is finished
+			stepRunning.done=true;
+			stepRunning.steps=[]; // remove all steps;
 			stepRunning=stepRunning.parent;
 		}
 	}

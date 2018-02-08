@@ -26,6 +26,8 @@ class RCGCallManager{
 		if ((self.done)||(!self.running)){
 			return {
 					desc:self.description,
+					min:0,
+					max:1,
 					perc:(self.done?1:0),
 					weight:self.weight,
 					done:self.done,
@@ -50,7 +52,10 @@ class RCGCallManager{
 		}
 		var status={
 				desc:self.description,
+				min:0,
+				max:1,
 				perc:progressPercent,
+				adv:perc,
 				weight:self.methodWeight,
 				done:false,
 				running:bRunningMethod
@@ -113,6 +118,7 @@ class RCGCallManager{
 				min:0,
 				max:1,
 				perc:totalPerc,
+				adv:totalPerc,
 				done:false,
 				running:true,
 				child:arrStatus[iRunning]

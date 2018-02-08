@@ -206,7 +206,7 @@ class RCGZippedApp{
 			console.log("Total Advance:"+status.desc+":"+Math.round(status.perc*100)+"%");
 			var child=status.child;
 			while (typeof child!=="undefined"){
-				console.log("   child Advance:"+child.desc+":"+Math.round(child.perc*100)+"%");
+				console.log("   child Advance:"+child.desc+":"+Math.round(child.perc*100)+"%" + "["+child.min+"--> "+child.adv +" -->"+child.max+"]");
 				child=child.child;
 			}
 			if (status.perc<1){

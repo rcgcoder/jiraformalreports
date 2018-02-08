@@ -204,7 +204,12 @@ class RCGZippedApp{
 		var fncShowStatus=function(){
 			var status=self.callManager.getStatus();
 			if (status.perc<1){
-				console.log("Total Advance:"+status.perc+"%");
+				console.log("Total Advance:"+status.desc+":"+Math.round(status.perc*100)+"%");
+				var child=status.child;
+				while (typeof child!=="undefined"){
+					console.log("   child Advance:"+child.desc+":"+Math.round(child.perc*100)+"%");
+					child=child.child;
+				}
 				setTimeout(fncShowStatus,500);
 			}
 		}

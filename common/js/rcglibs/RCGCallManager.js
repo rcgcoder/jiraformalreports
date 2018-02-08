@@ -225,7 +225,7 @@ class RCGCallManager{
 			theMethod.apply(context,aArgs);
 		}
 		if (self.asyncPops) {
-			setTimeout(fncApply,1000);
+			setTimeout(fncApply);
 		} else {
 			fncApply();
 		}

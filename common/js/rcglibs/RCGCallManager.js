@@ -19,7 +19,7 @@ class RCGCallManager{
 		self.running=false;
 		self.done=false;
 		//self.extendObject(obj);
-		self.asyncPops=false;
+		self.asyncPops=true;
 	}
 	getStatus(){
 		var self=this;
@@ -225,7 +225,7 @@ class RCGCallManager{
 			theMethod.apply(context,aArgs);
 		}
 		if (self.asyncPops) {
-			setTimeout(fncApply);
+			setTimeout(fncApply,1000);
 		} else {
 			fncApply();
 		}

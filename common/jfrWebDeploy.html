@@ -121,6 +121,7 @@
 			 var sRepo="rcgcoder/jiraformalreports";
 			 var commitId="";
 			 var commitDate="";
+			 var sRCGCallManager="js/rcglibs/RCGCallManager.js";
 			 var sRCGZipWebAppClass="js/rcglibs/RCGZippedWebApp.js";
 			 var appMainJs="js/ZipWebApp.js";
 			 var appMainClass="ZipWebApp";
@@ -147,10 +148,17 @@
 			 getLastCommit(sRepo,function(sCommitId,tCommitDate){
 				 commitId=sCommitId;
 				 commitDate=tCommitDate;
-				 var sUrlJs=rootPath+"/"+sRepo+"/"+commitId+"/common/"+sRCGZipWebAppClass;
-				 getJavaScriptFile(sUrlJs,function(jsContent){
-					 loadJavaScriptFile(jsContent,fncEngineStart);
+				 
+				 var sUrlCM=rootPath+"/"+sRepo+"/"+commitId+"/common/"+sRCGCallManager;
+				 getJavaScriptFile(sUrlCM,function(jsContent){
+					 loadJavaScriptFile(jsContent,function(){
+						 var sUrlJs=rootPath+"/"+sRepo+"/"+commitId+"/common/"+sRCGZipWebAppClass;
+						 getJavaScriptFile(sUrlJs,function(jsContent){
+							 loadJavaScriptFile(jsContent,fncEngineStart);
+						 });
+					 });
 				 });
+				 
 			 });		
          })();
      </script>

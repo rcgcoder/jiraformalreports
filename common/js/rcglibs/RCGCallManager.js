@@ -76,7 +76,7 @@ class RCGCallManager{
 		var iRunning=-1;
 		for (var i=0;i<arrStatus.length;i++){
 			var auxStatus=arrStatus[i];
-			if (auxStatus.weight<0){
+			if (auxStatus.weight>=0){
 				totalWeightSetted+=auxStatus.weight;
 				itemsWithWeight++;
 			} else {

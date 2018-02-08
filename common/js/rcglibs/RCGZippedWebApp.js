@@ -702,7 +702,8 @@ class RCGZippedApp{
 //			var webapp = new window[self.mainClass]();
 			var webapp=new ZipWebApp();
 			self.extendFromObject(webapp);
-			self.run();
+			setTimeout(function(){self.run();});
+			self.popCallback();
 		});
 		self.loadRemoteFile(self.mainJs);
 	}

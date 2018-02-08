@@ -193,6 +193,7 @@ class RCGZippedApp{
 		self.lastDeployInfo="";
 		self.mainJs="";
 		self.mainClass="";
+		self.bWithPersistentStorage=false;
 		self.localStorageMaxSize=200*1024*1024; // 200 MBytes by default
 		callManager.extendObject(self);
 		console.log("ZippedApp Created");
@@ -420,7 +421,11 @@ class RCGZippedApp{
 			  ct.commitId=self.github.commitId;
 			  ct.commitDate=self.github.commitDate;
 			  ct.saveDate=(new Date()).getTime();
-			  var sResult=self.saveFileToStorage(sRelativePath,toSave,ct);
+			  if (self.bWithPersistentStorage){
+				  var sResult=self.saveFileToStorage(sRelativePath,toSave,ct);
+			  } else {
+				  self.popCallback([toSave]);
+			  }
 		  } else {
 			  console.log("Error downloading "+sRelativePath);
 			  self.loadError({target:{src:sUrl}});			  
@@ -517,62 +522,16 @@ class RCGZippedApp{
 			}
 		}
 		return self.popCallback([false,sRelativePath]);
-/*		
-		// now, it's necesary to download the file.... but ¿it´s posible to download a whole zip?
-		if (self.zipAppFile=="") { // there is not zip file configured.... not possible to download zip
-			return self.popCallback([false,sRelativePath]);
-		}
-		
-		if ((self.zipLastCommitId!="")&&(self.zipLastCommitId!=sCommitId)) {
-			// the last commitId of the zip file differs over the last commit in the repository..
-			// the zip file is unusuable
-			return self.popCallback([false,sRelativePath]);
-		} else if (self.zipLastCommitId!=""){ // then lastCommit of Zip is not the repository lastCommit.. 
-			return self.popCallback([false,sRelativePath]);
-		}
-		
-		// status at this point
-		// self.zipAppFile!="";
-		// self.zipLastCommitId=="";
-		
-		// now .... get last commit id of the file
-		
-		var arrGitHubRelativePath=self.zipAppFile;
-		if (!Array.isArray(sGitHubRelativePath)){
-			arrGitHubRelativePath=[arrGitHubRelativePath];
-		}
-		
-		var fncCallbackLastCommitOfFile=function(sFileCommitId){
-			self.zipLastCommitId=sFileCommitId;
-			if (self.zipLastCommitId!=sCommitId){ // deploy only the file
-				return self.popCallback([false,sRelativePath]);
-			} else { // deploy whole zip			
-				var arrFiles=["js/libs/jquery-3.3.1.min.js",
-							  "js/libs/zip/zip.js"
-//							  ,"js/libs/zip/zip-ext.js"
-							  ];
-				
-				self.pushCallback(function(){
-					self.loadFileFromStorage(sRelativePath);
-				});
-				self.pushCallback(self.deploy);
-				self.loadRemoteFiles(arrFiles);
-			}
-			
-		}
-		
-		if (self.prependPath!=""){
-			sGitHubRelativePath=self.prependPath+"/"+sGitHubRelativePath;
-		}
-		self.pushCallback(fncCallbackLastCommitOfFile);
-		self.github.getLastCommitsOfFile(arrGitHubRelativePath);
-		*/
 	}
 	
 	loadRemoteFile(sRelativePath){
 		var self=this;
-		self.pushCallback(self.loadFileFromNetwork);
-		self.loadFileFromStorage(sRelativePath);
+		if (self.bWithPersistentStorage){
+			self.pushCallback(self.loadFileFromNetwork);
+			self.loadFileFromStorage(sRelativePath);
+		} else {
+			self.loadFileFromNetwork(false,sRelativePath);
+		}
 	}
 	loadRemoteFileIteration(arrRelativePaths,iFile){
 		var self=this;
@@ -685,7 +644,9 @@ class RCGZippedApp{
 					  "js/rcglibs/RCGPersist.js",
 	  		  		  "js/libs/b64.js",
 			  		  ];
-		self.pushCallback(self.loadPersistentStorage);
+		if (self.bWithPersistentStorage){
+			self.pushCallback(self.loadPersistentStorage);
+		}
 		self.loadRemoteFiles(arrFiles);
 	}
 	loadMemoryMonitor(){

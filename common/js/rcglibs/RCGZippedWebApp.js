@@ -755,30 +755,16 @@ class RCGZippedApp{
 		});
 		self.loadRemoteFile(self.mainJs);
 	}
-	wastemem(arrBig){
-		self=this;
-		var arrSmall=[];
-		for (var i=0;i<(1024*1024);i++){
-			arrSmall.push(i);
-		}
-		arrBig.push(arrSmall);
-		console.log("Wasted Array:"+arrBig.length+"MB");
-		setTimeout(function(){
-			self.wastemem(arrBig)
-		},1000);
-	}
 	run(){
 		var self=this;
 		if ((self.github!="")&&((self.github.commitId=="")||(self.github.commitDate==""))){
 			self.addStep(self.github.updateLastCommit,undefined,self.github);
 		}
-		self.addStep("Starting Memory Monitor...",self.loadMemoryMonitor);
+//		self.addStep("Starting Memory Monitor...",self.loadMemoryMonitor);
 		self.addStep("Starting Persistence...",self.startPersistence);
 		self.addStep("Updating Deploy Zips...",self.updateDeployZips);
 		self.addStep("Starting Application...",self.startApplication);
 		self.callManager.runSteps();
-		var arrBig=[];
-		self.wastemem(arrBig);
 		 
 	}
 	onerror(message) {

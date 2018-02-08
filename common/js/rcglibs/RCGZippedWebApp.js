@@ -747,7 +747,7 @@ class RCGZippedApp{
 	}
 	saveZipEntries(arrEntries,iEntry){
 		var self=this;
-		self.setProgressMinMax(0,arrEntries.length);
+		self.setStepProgressMinMax(0,arrEntries.length);
 		self.setStepProgress(iEntry);
 		var iAct=iEntry;
 		if (typeof iEntry==="undefined"){

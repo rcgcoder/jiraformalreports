@@ -613,7 +613,7 @@ class RCGZippedApp{
 			self.addStep("Deploying Zip:"+ theDeploy.relativePath,function(){
 				self.deploy(theDeploy);
 			});
-			self.addStep("Checking for other Deploying Zip:"+ iZip+1,function(){
+			self.addStep("Checking for other Deploying Zip:"+ iZip,function(){
 				self.checkForDeploys(iZip+1);
 			});
 			self.callManager.runSteps();
@@ -747,6 +747,8 @@ class RCGZippedApp{
 	}
 	saveZipEntries(arrEntries,iEntry){
 		var self=this;
+		self.setProgressMinMax(0,arrEntries.length);
+		self.setStepProgress(iEntry);
 		var iAct=iEntry;
 		if (typeof iEntry==="undefined"){
 			iAct=0;

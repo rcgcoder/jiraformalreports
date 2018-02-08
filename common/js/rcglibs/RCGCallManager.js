@@ -169,9 +169,14 @@ class RCGCallManager{
 		cm.method=method;
 		return cm;
 	}
-	addStep(description,method,forkId,obj){
+	addStep(description,method,progressMin,progressMax,forkId,obj){
 		var self=this;
 		var cm=self.newSubManager(method,obj);
+		if ((typeof progressMin!=="undefined")&&(typeof progressMax!=="undefined")){
+			cm.progressMin=progressMin;
+			cm.progressMax=progressMax;
+			cm.progress=progressMin;
+		}
 		cm.description=description;
 		self.steps.push(cm);
 	}
@@ -269,7 +274,28 @@ class RCGCallManager{
 			self.nextStep(aArgs,forkId,bJumpLast);
 		}
 	}
-	extended_addStep(description,method,forkId,newObj){
+	extended_setProgressMinMax(min,max){
+		var stepRunning=self.getDeepStep(forkId);
+		stepRunning.progressMin=min;
+		stepRunning.progressMax=max;
+	}
+	extended_setProgress(amount){
+		var stepRunning=self.getDeepStep(forkId);
+		var val=amount;
+		if (typeof val==="undefined"){
+			val=0;
+		}
+		stepRunning.progress=val;
+	}
+	extended_incProgress(amount){
+		var stepRunning=self.getDeepStep(forkId);
+		var incVal=amount;
+		if (typeof incVal==="undefined"){
+			incVal=1;
+		}
+		stepRunning.progress+=incVal;
+	}
+	extended_addStep(description,method,progressMin,progressMax,forkId,newObj){
 		var self=this;
 		var cm=self.callManager.getRunningCall();
 		var theObj=newObj;
@@ -283,7 +309,7 @@ class RCGCallManager{
 			bSetChangeObjStep=true;
 		}
 		cm.object=theObj;
-		cm.addStep(description,method,forkId,theObj);
+		cm.addStep(description,method,progressMin,progressMax,forkId,theObj);
 		if (bSetChangeObjStep){
 			var changeObjectStep=function(aArgs){
 				cm.object=antObj;
@@ -322,6 +348,9 @@ class RCGCallManager{
 		obj.addStep=self.extended_addStep;
 		obj.pushCallback=self.extended_pushCallBack;
 		obj.popCallback=self.extended_popCallback;
+		obj.incStepProgress=self.extended_incProgress;
+		obj.setStepProgressMinMax=self.extended_setProgressMinMax;
+		obj.setStepProgress=self.extended_setProgress;
 	}
 }
 var callManager=new RCGCallManager();

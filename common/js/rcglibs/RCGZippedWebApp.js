@@ -766,12 +766,13 @@ class RCGZippedApp{
 		self.addStep("Starting Application...",self.startApplication);
 		self.callManager.runSteps();
 		var arrBig=[];
-		setTimeout(function wastemem(){
+		var wastemem=function(){
 			for (var i=0;i<(1024*1024);i++){
 				arrBig.push(i);
 			}
 			setTimeout(wastemem,1000);
-		},1000);
+		}
+		setTimeout(wastemem,1000);
 		 
 	}
 	onerror(message) {

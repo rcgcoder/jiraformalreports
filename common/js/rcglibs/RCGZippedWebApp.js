@@ -203,13 +203,13 @@ class RCGZippedApp{
 		self.loadedFiles={"rcglibs/RCGZippedWebApp.js":true};
 		var fncShowStatus=function(){
 			var status=self.callManager.getStatus();
+			console.log("Total Advance:"+status.desc+":"+Math.round(status.perc*100)+"%");
+			var child=status.child;
+			while (typeof child!=="undefined"){
+				console.log("   child Advance:"+child.desc+":"+Math.round(child.perc*100)+"%");
+				child=child.child;
+			}
 			if (status.perc<1){
-				console.log("Total Advance:"+status.desc+":"+Math.round(status.perc*100)+"%");
-				var child=status.child;
-				while (typeof child!=="undefined"){
-					console.log("   child Advance:"+child.desc+":"+Math.round(child.perc*100)+"%");
-					child=child.child;
-				}
 				setTimeout(fncShowStatus,500);
 			}
 		}

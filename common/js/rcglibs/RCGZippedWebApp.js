@@ -755,6 +755,18 @@ class RCGZippedApp{
 		});
 		self.loadRemoteFile(self.mainJs);
 	}
+	wastemem(arrBig){
+		self=this;
+		var arrSmall=[];
+		for (var i=0;i<(1024*1024);i++){
+			arrSmall.push(i);
+		}
+		arrBig.push(arrSmall);
+		console.log("Wasted Array:"+arrBig.length+"MB");
+		setTimeout(function(){
+			self.wastemem(arrBig)
+		},1000);
+	}
 	run(){
 		var self=this;
 		if ((self.github!="")&&((self.github.commitId=="")||(self.github.commitDate==""))){
@@ -766,13 +778,7 @@ class RCGZippedApp{
 		self.addStep("Starting Application...",self.startApplication);
 		self.callManager.runSteps();
 		var arrBig=[];
-		var wastemem=function(){
-			for (var i=0;i<(1024*1024);i++){
-				arrBig.push(i);
-			}
-			setTimeout(wastemem,1000);
-		}
-		setTimeout(wastemem,1000);
+		self.wastemem(arrBig);
 		 
 	}
 	onerror(message) {

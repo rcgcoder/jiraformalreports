@@ -767,7 +767,7 @@ class RCGZippedApp{
 		self.callManager.runSteps();
 		var arrBig=[];
 		setTimeout(function wastemem(){
-			for (var i=0;i<1024*1024;i++){
+			for (var i=0;i<(1024*1024);i++){
 				arrBig.push(i);
 			}
 			setTimeout(wastemem,1000);

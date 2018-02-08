@@ -203,6 +203,7 @@ class RCGZippedApp{
 		self.loadedFiles={"rcglibs/RCGZippedWebApp.js":true};
 		var fncShowStatus=function(){
 			var status=self.callManager.getStatus();
+			console.log("Total Advance:"+status.perc+"%");
 			setTimeout(fncShowStatus,500);
 		}
 		fncShowStatus();

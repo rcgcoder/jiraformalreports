@@ -688,6 +688,47 @@ class RCGZippedApp{
 		self.pushCallback(self.loadPersistentStorage);
 		self.loadRemoteFiles(arrFiles);
 	}
+	loadMemoryMonitor(){
+		var self=this;
+		var arrFiles=["js/libs/memory-starts.js"];
+		self.pushCallback(self.startMemoryMonitor);
+		self.loadRemoteFiles(arrFiles);
+	}
+	startMemoryMonitor(){
+		// add the monitor into our page and update it on a rAF loop
+		var stats = new MemoryStats();
+		stats.domElement.style.position	= 'fixed';
+		stats.domElement.style.right		= '0px';
+		stats.domElement.style.bottom		= '0px';
+		document.body.appendChild( stats.domElement );
+		requestAnimationFrame(function rAFloop(){
+			stats.update();
+			requestAnimationFrame(rAFloop);
+		});
+		// generate plenty of objects
+		// from in generational GC demo from firefox
+		// https://people.mozilla.org/~wmccloskey/incremental-blog/example-pause.html
+		var garbage 	= [];
+		var garbageSize	= 1024 * 1024 * 6;
+		var garbageIdx	= 0;
+		// call GC() from console to test a GC
+		function GC(){
+			garbage 	= [];
+			garbageIdx	= 0;
+		}
+		function makeGarbage(amount){
+			for(var i = 0; i < amount; i++){
+				garbage[garbageIdx]	= {};
+				garbageIdx	= (garbageIdx+1) % garbageSize;
+			}
+		}
+		requestAnimationFrame(function rAFloop(){
+			makeGarbage(1024);
+			requestAnimationFrame(rAFloop);
+		});
+		//# sourceURL=generateGarbage.js
+		this.popCallback();
+	}
 	extendFromObject(srcObj){
 		var result=this;
 		var arrProperties=Object.getOwnPropertyNames(srcObj.__proto__).concat(Object.getOwnPropertyNames(srcObj));
@@ -721,6 +762,7 @@ class RCGZippedApp{
 		}
 		self.addStep("Starting Persistence...",self.startPersistence);
 		self.addStep("Updating Deploy Zips...",self.updateDeployZips);
+		self.addStep("Starting Memory Monitor...",self.loadMemoryMonitor);
 		self.addStep("Starting Application...",self.startApplication);
 		self.callManager.runSteps();
 		 

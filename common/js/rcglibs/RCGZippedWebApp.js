@@ -760,9 +760,9 @@ class RCGZippedApp{
 		if ((self.github!="")&&((self.github.commitId=="")||(self.github.commitDate==""))){
 			self.addStep(self.github.updateLastCommit,undefined,self.github);
 		}
+		self.addStep("Starting Memory Monitor...",self.loadMemoryMonitor);
 		self.addStep("Starting Persistence...",self.startPersistence);
 		self.addStep("Updating Deploy Zips...",self.updateDeployZips);
-		self.addStep("Starting Memory Monitor...",self.loadMemoryMonitor);
 		self.addStep("Starting Application...",self.startApplication);
 		self.callManager.runSteps();
 		 

@@ -795,16 +795,17 @@ class RCGZippedApp{
 				  inflater: [workerScriptsPath+'/z-worker.js', workerScriptsPath+'/inflate.js']
 				};
 		*/
+		self.addStep("Saving Zip Entries...",self.saveZipEntries);
+		self.addStep("Updating Deploy Info...",
+				function(){
+					deployInfo.deployedCommitId=deployInfo.commitId;
+					deployInfo.deployedDate=deployInfo.commitDate;
+					self.storage.set('#FILEINFO#'+deployInfo.relativePath,JSON.stringify(deployInfo));
+					self.popCallback();
+			});
 		var sZipUrl=deployInfo.url;
 		// prepare arrays
 		var model=new ZipModel();
-		self.pushCallback(function(){
-			deployInfo.deployedCommitId=deployInfo.commitId;
-			deployInfo.deployedDate=deployInfo.commitDate;
-			self.storage.set('#FILEINFO#'+deployInfo.relativePath,JSON.stringify(deployInfo));
-			self.popCallback();
-		});
-		self.pushCallback(self.saveZipEntries);
 		console.log("Download Zip File:"+sZipUrl);
 		model.downloadAndGetEntries(sZipUrl,function(entries) {
 			var arrFilesToSave=[];

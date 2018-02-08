@@ -186,6 +186,7 @@ class RCGCallManager{
 		}
 		cm.description=description;
 		self.steps.push(cm);
+		return cm;
 	}
 	newForkId(){
 		var newId=(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
@@ -321,9 +322,9 @@ class RCGCallManager{
 			var changeObjectStep=function(aArgs){
 				cm.object=antObj;
 				cm.popCallback(aArgs);
-				cm.isChangeObj=true;
 			}
-			cm.addStep(description,changeObjectStep,forkId,"");
+			var chObj=cm.addStep(description+" changeObj",changeObjectStep,forkId,"");
+			chObj.isChangeObj=true;
 		}
 
 	}

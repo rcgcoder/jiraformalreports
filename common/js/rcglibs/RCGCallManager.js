@@ -19,7 +19,7 @@ class RCGCallManager{
 		self.running=false;
 		self.done=false;
 		//self.extendObject(obj);
-		self.asyncPops=true;
+		self.asyncPops=false;
 	}
 	getStatus(){
 		var self=this;

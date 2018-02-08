@@ -2,6 +2,7 @@
  * @author mrdoob / http://mrdoob.com/
  * @author jetienne / http://jetienne.com/
  * @author paulirish / http://paulirish.com/
+ * 
  */
 var MemoryStats = function (){
 

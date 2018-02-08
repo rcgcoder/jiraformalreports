@@ -321,7 +321,7 @@ class RCGCallManager{
 		if (bSetChangeObjStep){
 			var changeObjectStep=function(aArgs){
 				cm.object=antObj;
-				cm.popCallback(aArgs);
+				cm.popCallback(aArgs,forkId,cm.object);
 			}
 			var chObj=cm.addStep(description+" changeObj",changeObjectStep,forkId,"");
 			chObj.isChangeObj=true;

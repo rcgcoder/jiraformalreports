@@ -29,6 +29,7 @@ class RCGCallManager{
 					min:0,
 					max:1,
 					perc:(self.done?1:0),
+					adv:(self.done?1:0),
 					weight:self.weight,
 					done:self.done,
 					running:self.running
@@ -55,7 +56,7 @@ class RCGCallManager{
 				min:0,
 				max:1,
 				perc:progressPercent,
-				adv:perc,
+				adv:progressPercent,
 				weight:self.methodWeight,
 				done:false,
 				running:bRunningMethod

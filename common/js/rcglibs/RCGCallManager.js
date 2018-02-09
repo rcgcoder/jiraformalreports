@@ -319,6 +319,7 @@ class RCGCallManager{
 		cm.object=theObj;
 		cm.addStep(description,method,progressMin,progressMax,forkId,theObj);
 		if (bSetChangeObjStep){
+			console.log("Requires ChangeObject Callback");
 			var changeObjectStep=function(aArgs){
 				cm.object=antObj;
 				cm.popCallback(aArgs,forkId,cm.object);

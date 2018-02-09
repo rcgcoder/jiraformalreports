@@ -424,9 +424,11 @@ class RCGZippedApp{
 			  if (self.bWithPersistentStorage){
 				  var sResult=self.saveFileToStorage(sRelativePath,toSave,ct);
 			  } else {
-			      var u8Arr = new Uint8Array(toSave);
-				  var sB64=fromByteArray(u8Arr);
-				  self.popCallback([sB64]);
+				  if (!ct.isText) {
+				      var u8Arr = new Uint8Array(toSave);
+					  toSave=fromByteArray(u8Arr);
+				  }
+				  self.popCallback([toSave]);
 			  }
 		  } else {
 			  console.log("Error downloading "+sRelativePath);

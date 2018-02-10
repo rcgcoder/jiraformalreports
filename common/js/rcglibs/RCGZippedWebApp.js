@@ -545,11 +545,11 @@ class RCGZippedApp{
 				});
 				return filesystem.ReadFile(sRelativePath,
 						function(sStringContent){
-							log("file "+sRelativePath +"loaded from storage");
+							log("file "+sRelativePath +" readed from storage");
 							self.popCallback([sStringContent]);
 						},
 						function(e){
-							log("file "+sRelativePath +" Error loading from storage");
+							log("file "+sRelativePath +" Error reading from storage");
 							self.popCallback([""]);
 						});
 			}

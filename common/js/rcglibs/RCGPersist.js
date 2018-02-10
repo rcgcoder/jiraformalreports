@@ -146,8 +146,9 @@ function InitializeFileSystem(initCallBack,quota){
 	filesystem.SaveFile=function (filename,theString,endWriteCallback,errorCallback) {
 		
 		var newName=replaceAll(filename,"/","_DIR_");
+		var rootFs=this.fs.root;
 		var onDelete=function(){
-			this.fs.root.getFile(newName, {create: true},
+			rootFs.getFile(newName, {create: true},
 					function(DatFile) {
 						DatFile.isFile=true;
 						DatFile.name=newName;
@@ -209,7 +210,7 @@ function InitializeFileSystem(initCallBack,quota){
 						});
 		}
 		//deleting file;
-		this.fs.root.getFile(newName, {create: false}, function(fileEntry) {
+		rootFs.getFile(newName, {create: false}, function(fileEntry) {
 			    fileEntry.remove(onDelete,onDelete);
 			  }, onDelete);		
 		

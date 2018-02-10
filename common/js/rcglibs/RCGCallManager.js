@@ -251,6 +251,7 @@ class RCGCallManager{
 		var bWithSubSteps;
 		var subSteps;
 		var iSubStep;
+		var nSteps;
 		
 		while (stepRunning!=""){
 			subSteps=stepRunning.steps;

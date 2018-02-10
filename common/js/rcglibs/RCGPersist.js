@@ -146,66 +146,77 @@ function InitializeFileSystem(initCallBack,quota){
 	filesystem.SaveFile=function (filename,theString,endWriteCallback,errorCallback) {
 		
 		var newName=replaceAll(filename,"/","_DIR_");
-		this.fs.root.getFile(newName, {create: true},
-										function(DatFile) {
-											DatFile.isFile=true;
-											DatFile.name=newName;
-											DatFile.fullPath = '/'+newName;
-											DatFile.createWriter(
-												function(DatContent) {
-													DatContent.onwriteend = function(e) {
-//														console.log('Write completed.');
-														endWriteCallback(e);
-													};			
-													DatContent.onerror = function(e) {
-														console.log('Write failed: ' + e);
-														errorCallback(e);
-													};
-													var theBlob;
-													if (false){
-														var compressed = LZString.compress(theString);
-														console.log("Compressed: " + theString.length+" to "+compressed.length);
-														var decompressed=LZString.decompress(compressed);
-														console.log("Works!: " + theString.length+" in "+compressed.length + " in "+decompressed.length);
-														theBlob = new Blob([compressed], {type: "text/plain"});
-														DatContent.write(theBlob);
-													} else if(false){
-														var timeStart=Date.now();
-														var percInit=0.0;
-														my_lzma.compress(theString, compression_mode, 
-																	function on_compress_complete(result) {
-																		console.log("Compressed: " + result.length);
-																		/*for (var xi=0;xi<16;xi++){
-																			log("Comp["+xi+"]:"+result[xi]);
-																		}*/
-																		var arr = new Uint8Array(result);
-																		/*for (var xi=0;xi<16;xi++){
-																			log("u8a["+xi+"]:"+arr[xi]);
-																		}*/
-																		var sB64=fromByteArray(arr);
-																		/*for (var xi=0;xi<16;xi++){
-																			log("b64["+xi+"]:"+sB64[xi]);
-																		}*/
-//																		console.log("B64: " + sB64.length);
-//																		console.log("======");
-																		sB64="#COMPRESSED#"+sB64;
-																		theBlob = new Blob([sB64], {type: "text/plain"});
-																		DatContent.write(theBlob);
-																	}, 
-																	function on_compress_progress_update(percent) {
-																		if (((percent*100)-percInit)>10){
-																			percInit=(percent*100);
-																			/// Compressing progress code goes here.
-																			console.log("Compressing: " + (percent * 100).toFixed(2) + "% "+((Date.now()-timeStart)/1000).toFixed(2)+" secs");
-																			
-																		}
-																	});
-													} else {
-														theBlob = new Blob([theString], {type: "text/plain"});
-														DatContent.write(theBlob);
+		var onDelete=function(){
+			this.fs.root.getFile(newName, {create: true},
+					function(DatFile) {
+						DatFile.isFile=true;
+						DatFile.name=newName;
+						DatFile.fullPath = '/'+newName;
+						DatFile.createWriter(
+							function(DatContent) {
+								DatContent.onwriteend = function(e) {
+	//								console.log('Write completed.');
+									endWriteCallback(e);
+								};			
+								DatContent.onerror = function(e) {
+									console.log('Write failed: ' + e);
+									errorCallback(e);
+								};
+								var theBlob;
+								if (false){
+									var compressed = LZString.compress(theString);
+									console.log("Compressed: " + theString.length+" to "+compressed.length);
+									var decompressed=LZString.decompress(compressed);
+									console.log("Works!: " + theString.length+" in "+compressed.length + " in "+decompressed.length);
+									theBlob = new Blob([compressed], {type: "text/plain"});
+									DatContent.write(theBlob);
+								} else if(false){
+									var timeStart=Date.now();
+									var percInit=0.0;
+									my_lzma.compress(theString, compression_mode, 
+												function on_compress_complete(result) {
+													console.log("Compressed: " + result.length);
+													/*for (var xi=0;xi<16;xi++){
+														log("Comp["+xi+"]:"+result[xi]);
+													}*/
+													var arr = new Uint8Array(result);
+													/*for (var xi=0;xi<16;xi++){
+														log("u8a["+xi+"]:"+arr[xi]);
+													}*/
+													var sB64=fromByteArray(arr);
+													/*for (var xi=0;xi<16;xi++){
+														log("b64["+xi+"]:"+sB64[xi]);
+													}*/
+	//												console.log("B64: " + sB64.length);
+	//												console.log("======");
+													sB64="#COMPRESSED#"+sB64;
+													theBlob = new Blob([sB64], {type: "text/plain"});
+													DatContent.write(theBlob);
+												}, 
+												function on_compress_progress_update(percent) {
+													if (((percent*100)-percInit)>10){
+														percInit=(percent*100);
+														/// Compressing progress code goes here.
+														console.log("Compressing: " + (percent * 100).toFixed(2) + "% "+((Date.now()-timeStart)/1000).toFixed(2)+" secs");
+														
 													}
 												});
-											});
+								} else {
+									theBlob = new Blob([theString], {type: "text/plain"});
+									DatContent.write(theBlob);
+								}
+							});
+						});
+		}
+		//deleting file;
+		this.fs.root.getFile(newName, {create: false}, function(fileEntry) {
+
+			    fileEntry.remove(function() {
+			      onDelete();
+			    }, errorHandler);
+
+			  }, errorHandler);		
+		
 		}
 	filesystem.RemoveFile=function(filename){
 		var newName=replaceAll(filename,"/","_DIR_");

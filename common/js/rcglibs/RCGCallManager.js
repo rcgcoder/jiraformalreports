@@ -247,24 +247,49 @@ class RCGCallManager{
 		var self=this;
 		var stepRunning=self.getRunningCall();
 		
+		
+		bWithSubSteps;
+		subSteps;
+		iSubStep;
+		
 		while (stepRunning!=""){
-			if ((stepRunning.steps.length>0)&&((stepRunning.steps.length-1)>stepRunning.actStep)){
-				if (stepRunning.actStep>=0){
-					stepRunning.steps[stepRunning.actStep].running=false;
-					stepRunning.steps[stepRunning.actStep].done=true;
-				}
+			subSteps=stepRunning.steps;
+			nSteps=subSteps.length;
+			iSubStep=stepRunning.actStep;
+			bWithSubSteps=(nSteps>0);
+			if (!bWithSubSteps){ // it´s finished
+				stepRunning.running=false;  // the step is finished
+				stepRunning.done=true;
+				stepRunning=stepRunning.parent; // goto next brother
+			} else if (iSubStep>nSteps){
+				stepRunning.running=false;  // the step is finished
+				stepRunning.done=true;
+				stepRunning=stepRunning.parent; // goto next brother
+			} else if (iSubStep==(nSteps-1)){
+				stepRunning.running=false;  // the step is finished
+				stepRunning.done=true;
 				stepRunning.actStep++;
-				var cm=stepRunning.steps[stepRunning.actStep];
-				if ((typeof bJumpLast!=="undefined")&&(bJumpLast)){
-					return self.nextStep(aArgs,forkId,false);
-				} else {
-					return cm.callMethod(aArgs);
+				stepRunning=stepRunning.parent; // goto next brother
+			} else if (iSubStep<0){
+				if (stepRunning.running){ // if it´s running.... the method were called and only advances the sub steps
+					stepRunning.actStep++;
+					if ((typeof bJumpLast!=="undefined")&&(bJumpLast)){
+						return stepRunning.nextStep(aArgs,forkId,false);
+					} else {
+						var cm=stepRunning.steps[stepRunning.actStep];
+						return cm.callMethod(aArgs);
+					}
+				} else if (stepRunning.method!="") { // if not is running... check if there is a method
+					stepRunning.running=true;  // the step is finished
+					stepRunning.done=false;
+					if ((typeof bJumpLast!=="undefined")&&(bJumpLast)){ // if have to jump the operation....
+						stepRunning.actStep++;
+						return stepRunning.nextStep(aArgs,forkId,false);
+					} else { // 
+						return stepRunning.callMethod(aArgs);
+					}
 				}
-			} 
-			stepRunning.running=false;  // the step is finished
-			stepRunning.done=true;
-			stepRunning.steps=[]; // remove all steps;
-			stepRunning=stepRunning.parent;
+			}
 		}
 	}
 	popCallback(aArgs,forkId,bJumpLast){

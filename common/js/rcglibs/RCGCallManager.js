@@ -263,7 +263,11 @@ class RCGCallManager{
 			theMethod=context[theMethod];
 		}
 		var fncApply=function(){
-			theMethod.apply(context,aArgs);
+			var newArgs=aArgs;
+			if (!Array.isArray(aArgs)){
+				newArgs=[aArgs];
+			}
+			theMethod.apply(context,newArgs);
 		}
 		if (self.asyncPops) {
 			setTimeout(fncApply);

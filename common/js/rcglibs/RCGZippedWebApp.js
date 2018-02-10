@@ -536,6 +536,7 @@ class RCGZippedApp{
 				log("Loading from storage the File:"+sRelativePath);
 
 				self.pushCallback(function(sFileContent){
+					console.
 					//var sFileContent=self.storage.get(sRelativePath);
 					self.pushCallback(function(sRelativePath,fileContents){
 							log("file "+sRelativePath+" Processed");

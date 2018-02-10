@@ -418,7 +418,10 @@ class RCGCallManager{
 		self.callManager.pushCallback(method,forkId,theObj);
 	}
 	extended_popCallback(aArgs){
-		this.callManager.popCallback(aArgs);
+		var self=this;
+		setTimeout(function(){
+			self.callManager.popCallback(aArgs);
+		});
 	}
 	extendObject(obj){
 		var self=this;

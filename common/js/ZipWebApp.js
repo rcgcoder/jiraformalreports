@@ -3,7 +3,6 @@ class ZipWebApp{
 		var self=this;
 		self.oneParam="Casa";
 		self.twoParam="Coche";
-		console.log("Constructed");
 	}
 	run(){
 		var self=this;
@@ -17,4 +16,3 @@ class ZipWebApp{
 //		alert("Running ZipWebApp ");
 	}
 }
-console.log("Procesed ZipWebApp js file")

@@ -411,6 +411,7 @@ class RCGCallManager{
 			theObj=self;
 		}
 		if (cm.object!=theObj){
+			log("Object Changed... pushing change callback:"+ self.callManager.getDeepStep(forkId).stackCallbacks.length);
 			var antObj=cm.object;
 			var changeObjectCallback=function(aArgs){
 				cm.object=antObj;

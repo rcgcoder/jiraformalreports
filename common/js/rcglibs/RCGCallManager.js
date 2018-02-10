@@ -271,6 +271,14 @@ class RCGCallManager{
 				stepRunning.done=true;
 				stepRunning.actStep++;
 				stepRunning=stepRunning.parent; // goto next brother
+			} else if (iSubStep>=0){ // the next step is [0 ... n-1] normal case
+				stepRunning.actStep++;
+				if ((typeof bJumpLast!=="undefined")&&(bJumpLast)){
+					return stepRunning.nextStep(aArgs,forkId,false);
+				} else {
+					var cm=stepRunning.steps[stepRunning.actStep];
+					return cm.callMethod(aArgs);
+				}
 			} else if (iSubStep<0){
 				if (stepRunning.running){ // if it´s running.... the method were called and only advances the sub steps
 					stepRunning.actStep++;

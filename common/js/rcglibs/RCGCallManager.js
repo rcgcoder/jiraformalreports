@@ -263,7 +263,7 @@ class RCGCallManager{
 			theMethod=context[theMethod];
 		}
 		var newArgs=aArgs;
-		if (!Array.isArray(aArgs)){
+		if ((!Array.isArray(aArgs))&&(typeof aArgs!=="undefined")){
 			newArgs=[aArgs];
 		}
 		var fncApply=function(){

@@ -342,7 +342,11 @@ class RCGCallManager{
 				return self.popCallback(aArgs,forkId,false);
 			} else {
 				var theCallback=ds.stackCallbacks.pop();
-				theCallback.callMethod(aArgs);
+				if (theCallback.isChangeObj){
+					theCallback.callMethod(aArgs);
+				} else {
+					theCallback.callMethod(aArgs);
+				}
 			}
 		} else { // there is not callbacks to pop..... let´s go to next step.
 			self.nextStep(aArgs,forkId,bJumpLast);

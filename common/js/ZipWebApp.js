@@ -1,4 +1,4 @@
-class ZipWebApp{;;
+class ZipWebApp{
 	constructor(){
 		var self=this;
 		self.oneParam="Casa";

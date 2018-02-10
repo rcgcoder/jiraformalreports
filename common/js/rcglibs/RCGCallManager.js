@@ -388,7 +388,7 @@ class RCGCallManager{
 			log("Requires ChangeObject Callback");
 			var changeObjectStep=function(aArgs){
 				var auxArgs=aArgs;
-				if (typeof auxArgs!=="array"){
+				if ((typeof auxArgs!=="array")&&(typeof auxArgs!=="undefined")){
 					auxArgs=[auxArgs];
 				}
 				cm.object=antObj;

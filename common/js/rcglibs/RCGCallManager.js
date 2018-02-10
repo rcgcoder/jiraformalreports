@@ -1,3 +1,31 @@
+class RCGBarrier{
+	constructor(callback,nItems){
+		self=this;
+		self.callback=callback;
+		self.nItems=0;
+		self.fixedItems=false;
+		if (typeof nItems!=="undefined"){
+			self.nItems==nItems;
+			self.fixedItems=true;
+		}
+	}
+	reach(){
+		var self=this;
+		if (self.nItems<=0) {
+			console.log("You reached to barrier but no items asigned to. It´s a bug in your program... no callback is launched");
+			return;
+		}
+		self.nItems--;
+		if (self.nItems<=0){
+			self.callback();
+		} 
+	}
+	add(){
+		var self=this;
+		if (self.fixedItem) return;
+		self.nItems++;
+	}
+}
 class RCGCallManager{
 	constructor(){
 		var self=this;
@@ -19,7 +47,7 @@ class RCGCallManager{
 		self.running=false;
 		self.done=false;
 		//self.extendObject(obj);
-		self.asyncPops=false;
+		self.asyncPops=true;
 	}
 	getStatus(){
 		var self=this;
@@ -367,7 +395,7 @@ class RCGCallManager{
 		}
 
 	}
-	extended_pushCallBack(method,forkId,newObj){
+	extended_pushCallBack(method,forkId,newObj,isFork,barrier){
 		var self=this;
 		var cm=self.callManager;
 		var theObj=newObj;

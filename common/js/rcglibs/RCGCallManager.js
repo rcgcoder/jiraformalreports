@@ -262,11 +262,11 @@ class RCGCallManager{
 		if (typeof theMethod==="string"){
 			theMethod=context[theMethod];
 		}
+		var newArgs=aArgs;
+		if (!Array.isArray(aArgs)){
+			newArgs=[aArgs];
+		}
 		var fncApply=function(){
-			var newArgs=aArgs;
-			if (!Array.isArray(aArgs)){
-				newArgs=[aArgs];
-			}
 			theMethod.apply(context,newArgs);
 		}
 		if (self.asyncPops) {

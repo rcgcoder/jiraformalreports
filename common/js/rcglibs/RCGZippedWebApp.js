@@ -754,7 +754,7 @@ class RCGZippedApp{
 			setTimeout(function(){
 				self.run();
 			});
-			self.popCallback();
+//			self.popCallback();
 		});
 		self.loadRemoteFile(self.mainJs);
 	}

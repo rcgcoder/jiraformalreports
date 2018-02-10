@@ -248,9 +248,9 @@ class RCGCallManager{
 		var stepRunning=self.getRunningCall();
 		
 		
-		bWithSubSteps;
-		subSteps;
-		iSubStep;
+		var bWithSubSteps;
+		var subSteps;
+		var iSubStep;
 		
 		while (stepRunning!=""){
 			subSteps=stepRunning.steps;

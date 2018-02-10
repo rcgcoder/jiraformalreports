@@ -1,4 +1,4 @@
-class ZipWebApp{
+class ZipWebApp{;;
 	constructor(){
 		var self=this;
 		self.oneParam="Casa";
@@ -17,3 +17,4 @@ class ZipWebApp{
 //		alert("Running ZipWebApp ");
 	}
 }
+console.log("Procesed ZipWebApp js file")

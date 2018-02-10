@@ -210,12 +210,8 @@ function InitializeFileSystem(initCallBack,quota){
 		}
 		//deleting file;
 		this.fs.root.getFile(newName, {create: false}, function(fileEntry) {
-
-			    fileEntry.remove(function() {
-			      onDelete();
-			    }, errorHandler);
-
-			  }, errorHandler);		
+			    fileEntry.remove(onDelete,onDelete);
+			  }, onDelete);		
 		
 		}
 	filesystem.RemoveFile=function(filename){

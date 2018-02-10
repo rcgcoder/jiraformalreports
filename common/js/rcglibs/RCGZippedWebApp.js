@@ -8,6 +8,9 @@ Class for download a Zip File with a lot of js files.
  * First it´s load the other javascript libs.....
  * 
  */
+function log(sText){
+	console.log(sText);
+}
 function isChrome() {
   var isChromium = window.chrome,
     winNav = window.navigator,
@@ -87,7 +90,7 @@ class GitHub{
 		xhr.onerror=self.loadError;
 		xhr.onload = function(e) {
 		  var nRemaining=xhr.getResponseHeader("X-RateLimit-Remaining");
-		  console.log("Remaining GitHub Pets:"+nRemaining+" test");
+		  log("Remaining GitHub Pets:"+nRemaining+" test");
 		  if (this.status == 302) {
 			  var ghLink=xhr.getResponseHeader("Location");
 			  self.apiCall(ghLink);
@@ -217,7 +220,7 @@ class RCGZippedApp{
 		self.bWithPersistentStorage=isChrome();
 		self.localStorageMaxSize=200*1024*1024; // 200 MBytes by default
 		callManager.extendObject(self);
-		console.log("ZippedApp Created");
+		log("ZippedApp Created");
 		self.requestFileSystem = window.webkitRequestFileSystem 
 								|| window.mozRequestFileSystem 
 								|| window.requestFileSystem;
@@ -225,10 +228,10 @@ class RCGZippedApp{
 		self.loadedFiles={"rcglibs/RCGZippedWebApp.js":true};
 		var fncShowStatus=function(){
 			var status=self.callManager.getStatus();
-			console.log("Total Advance:"+status.desc+":"+Math.round(status.perc*100)+"%");
+			log("Total Advance:"+status.desc+":"+Math.round(status.perc*100)+"%");
 			var child=status.child;
 			while (typeof child!=="undefined"){
-				console.log("   child Advance:"+child.desc+":"+Math.round(child.perc*100)+"%" + "["+child.min+"--> "+child.adv +" -->"+child.max+"]");
+				log("   child Advance:"+child.desc+":"+Math.round(child.perc*100)+"%" + "["+child.min+"--> "+child.adv +" -->"+child.max+"]");
 				child=child.child;
 			}
 			if (status.perc<1){
@@ -392,7 +395,7 @@ class RCGZippedApp{
 			/*for (var xi=0;xi<16;xi++){
 				log("b64["+xi+"]:"+sB64[xi]);
 			}*/
-			//console.log("B64: " + sB64.length);
+			//log("B64: " + sB64.length);
 			sStringContent=sB64;
 		}
 		if ((self.storage!="")
@@ -426,7 +429,7 @@ class RCGZippedApp{
 		xhr.responseType = 'arraybuffer';
 		xhr.onload = function(e) {
 		  if (this.status == 200) {
-			  console.log("Downloaded "+sRelativePath);
+			  log("Downloaded "+sRelativePath);
 			  var ct=self.getContentType(xhr);
 			  var response="";
 			  var toSave="";
@@ -452,7 +455,7 @@ class RCGZippedApp{
 				  self.popCallback([toSave]);
 			  }
 		  } else {
-			  console.log("Error downloading "+sRelativePath);
+			  log("Error downloading "+sRelativePath);
 			  self.loadError({target:{src:sUrl}});			  
 		  }
 		};
@@ -492,11 +495,11 @@ class RCGZippedApp{
 	loadFileFromNetwork(bLoadedFromStorage,sRelativePath,fileContent){
 		var self=this;
 		if (bLoadedFromStorage) {
-			console.log(sRelativePath+" loaded from persistent storage");
+			log(sRelativePath+" loaded from persistent storage");
 			return self.popCallback([sRelativePath,fileContent]);
 			
 		}
-		console.log(sRelativePath+" loaded from network");
+		log(sRelativePath+" loaded from network");
 		var sUrl=self.composeUrl(sRelativePath);
 		self.pushCallback(self.processFile);
     	self.downloadFile(sUrl,sRelativePath);
@@ -504,8 +507,10 @@ class RCGZippedApp{
 	
 		
 	loadFileFromStorage(sRelativePath){
+		log("Loading "+ sRelativePath + " from storage");
 		var self=this;
 		if ((!self.bWithPersistentStorage)||(self.storage=="")||(self.github=="")){ // if there is not storage initialized or github is not used
+			log("There is not storage engine loaded");
 			return self.popCallback([false,sRelativePath]);
 		}
 		// now there is storage and github
@@ -528,20 +533,23 @@ class RCGZippedApp{
 			var jsonContentType=JSON.parse(sContentType);
 			var sVersion=jsonContentType.commitId;
 			if (sCommitId==sVersion){ // if stored file version == github version are the same.... use the storage version
-				console.log("Loading from storage the File:"+sRelativePath);
+				log("Loading from storage the File:"+sRelativePath);
 
 				self.pushCallback(function(sFileContent){
 					//var sFileContent=self.storage.get(sRelativePath);
 					self.pushCallback(function(sRelativePath,fileContents){
+							log("file "+sRelativePath+" Processed");
 							self.popCallback([true,sRelativePath,fileContents]);
 					});
 					return self.processFile(sFileContent,undefined,jsonContentType,sRelativePath);
 				});
 				return filesystem.ReadFile(sRelativePath,
 						function(sStringContent){
+							log("file "+sRelativePath +"loaded from storage");
 							self.popCallback([sStringContent]);
 						},
 						function(e){
+							log("file "+sRelativePath +" Error loading from storage");
 							self.popCallback([""]);
 						});
 			}
@@ -602,7 +610,7 @@ class RCGZippedApp{
 			});
 			self.callManager.runSteps();
 		} else {
-			console.log("the deploy: "+ theDeploy.relativePath+ " is up to date");
+			log("the deploy: "+ theDeploy.relativePath+ " is up to date");
 			self.checkForDeploys(iZip+1);
 		}
 	}
@@ -618,9 +626,9 @@ class RCGZippedApp{
 			}
 		}
 		self.pushCallback(function(arrCommits){
-			console.log("Test");
+			log("Test");
 		});
-		console.log("GetCommits");
+		log("GetCommits");
 		self.github.getCommits(minZipCommitDate);
 
 		
@@ -811,7 +819,7 @@ class RCGZippedApp{
 			}
 		}
 		var fncProgress=function(current, total) {
-//			console.log(current + "/" + total + "   " + Math.round((current/total)*100)+"%");
+//			log(current + "/" + total + "   " + Math.round((current/total)*100)+"%");
 		}
 		model.getEntryFile(entry
 				, "Blob"
@@ -820,9 +828,9 @@ class RCGZippedApp{
 	}
 	deploy(deployInfo){ 
 		var self=this;
-		console.log("Deploying Zip:"+deployInfo.relativePath);
+		log("Deploying Zip:"+deployInfo.relativePath);
 		if (typeof zip==="undefined"){
-			console.log("Zip engine is not running.... loading");
+			log("Zip engine is not running.... loading");
 			var arrFiles=["js/libs/jquery-3.3.1.min.js",
 				  "js/libs/zip/zip.js"
 //				  ,"js/libs/zip/zip-ext.js"
@@ -851,7 +859,7 @@ class RCGZippedApp{
 		var sZipUrl=deployInfo.url;
 		// prepare arrays
 		var model=new ZipModel();
-		console.log("Download Zip File:"+sZipUrl);
+		log("Download Zip File:"+sZipUrl);
 		model.downloadAndGetEntries(sZipUrl,function(entries) {
 			var arrFilesToSave=[];
 			entries.forEach(function(entry) {
@@ -869,7 +877,7 @@ class RCGZippedApp{
 						bContinue=false;
 					} else if (deployInfo.imports.length==0){
 						sRelativePath=entry.filename;
-//						console.log("Entry "+entry.filename + " will be saved as "+sRelativePath);
+//						log("Entry "+entry.filename + " will be saved as "+sRelativePath);
 						bWillNotSave=false;
 					} else {
 						sImportPath=deployInfo.imports[i];
@@ -877,7 +885,7 @@ class RCGZippedApp{
 						sRelativePath=sFile.substring(sPrefix.length);
 						if ((sPrefix.length!=sFile.length)
 							  &&(sPrefix==sImportPath)){
-//							console.log("Entry "+entry.filename + " will be saved as "+sRelativePath);
+//							log("Entry "+entry.filename + " will be saved as "+sRelativePath);
 							bWillNotSave=false;
 						}
 					}
@@ -891,7 +899,7 @@ class RCGZippedApp{
 					}
 					if ((oContentSaved=="") || 
 						(oContentSaved.saveDate<deployInfo.commitDate)){
-						console.log("Entry "+entry.filename + " will be saved as "+sRelativePath);
+						log("Entry "+entry.filename + " will be saved as "+sRelativePath);
 						jsonContent.commitId=deployInfo.commitId;
 						jsonContent.commitDate=deployInfo.commitDate;
 						arrFilesToSave.push({
@@ -901,7 +909,7 @@ class RCGZippedApp{
 											relativePath:sRelativePath
 											});
 					} else {
-						console.log(sRelativePath+" saved is newer");
+						log(sRelativePath+" saved is newer");
 					}
 				}
 			});

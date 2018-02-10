@@ -12,7 +12,7 @@ class RCGBarrier{
 	reach(){
 		var self=this;
 		if (self.nItems<=0) {
-			console.log("You reached to barrier but no items asigned to. It´s a bug in your program... no callback is launched");
+			log("You reached to barrier but no items asigned to. It´s a bug in your program... no callback is launched");
 			return;
 		}
 		self.nItems--;
@@ -240,7 +240,7 @@ class RCGCallManager{
 	pushCallback(method,forkId,obj){
 		var self=this;
 		if (typeof method==="undefined"){
-			console.log("you are pushing an undefined callback... be carefull.... it´s maybe a big bug");
+			log("you are pushing an undefined callback... be carefull.... it´s maybe a big bug");
 		}
 		var ds=self.getDeepStep(forkId);
 		var cm=ds.newSubManager(method,obj);
@@ -252,7 +252,7 @@ class RCGCallManager{
 		var obj=self.object;
 		var theMethod=self.method;
 		if (typeof theMethod==="undefined"){
-			console.log("¿undefined?.... this will be a Big Crash!!!");
+			log("¿undefined?.... this will be a Big Crash!!!");
 		}
 
 		var context=obj;
@@ -385,7 +385,7 @@ class RCGCallManager{
 		cm.object=theObj;
 		cm.addStep(description,method,progressMin,progressMax,forkId,theObj);
 		if (bSetChangeObjStep){
-			console.log("Requires ChangeObject Callback");
+			log("Requires ChangeObject Callback");
 			var changeObjectStep=function(aArgs){
 				var auxArgs=aArgs;
 				if (typeof auxArgs!=="array"){

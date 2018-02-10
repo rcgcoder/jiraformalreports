@@ -360,7 +360,7 @@ class RCGCallManager{
 					auxArgs=[auxArgs];
 				}
 				cm.object=antObj;
-				cm.popCallback(auxArgs,forkId,cm.object);
+				cm.popCallback(auxArgs,forkId,false);
 			}
 			var chObj=cm.addStep(description+" changeObj",changeObjectStep,forkId,"");
 			chObj.isChangeObj=true;

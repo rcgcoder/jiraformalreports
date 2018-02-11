@@ -225,7 +225,7 @@ class RCGCallManager{
 	}
 	addFork(method,barrier,forkId,obj){
 		var self=this;
-		var cm=self.callManager.getRunningCall(forkId);
+		var cm=self.getRunningCall(forkId);
 		var fork=cm.newSubManager(method,obj);
 		cm.forkId=self.newForkId();
 		cm.barrier=barrier;

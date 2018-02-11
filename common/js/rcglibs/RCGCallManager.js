@@ -181,9 +181,19 @@ class RCGCallManager{
 		if (self.actStep>=self.steps.length) return "";
 		var bForkLocated=false;
 		var theFork="";
-		for (var i=0;(theFork=="") &&(i<self.forks.length);i++){
+		for (var i=0;(i<self.forks.length);i++){
 			theFork=self.forks[i].searchForFork(forkId);
+			if (theFork!="") return theFork;
 		}
+		for (var i=0;(i<self.steps.length);i++){
+			theFork=self.steps[i].searchForFork(forkId);
+			if (theFork!="") return theFork;
+		}
+		for (var i=0;(i<self.stackCallbacks.length);i++){
+			theFork=self.stackCallbacks[i].searchForFork(forkId);
+			if (theFork!="") return theFork;
+		}
+		
 		return theFork;
 	}
 	getDeepStep(){

@@ -596,7 +596,7 @@ class RCGZippedApp{
 		}
 		var barrier=new RCGBarrier(fncBarrierFinish,arrRelativePaths.length);
 		for (var i=0;i<arrRelativePaths.length;i++){
-			loadRemoteFileNewFork(arrRelativePaths[i],barrier);
+			self.loadRemoteFileNewFork(arrRelativePaths[i],barrier);
 		}
 	}
 	loadRemoteFiles(arrRelativePaths){

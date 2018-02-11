@@ -454,7 +454,7 @@ class RCGCallManager{
 				cm.popCallback(aArgs);
 			}
 			var newCM=self.callManager.pushCallback(changeObjectCallback,"",bNewFork,barrier);
-			auxForkId=newCM.forkId;
+			var auxForkId=newCM.forkId;
 			bNewFork=false; // the fork is done... next push will be in the new fork
 		}
 		cm.object=theObj;

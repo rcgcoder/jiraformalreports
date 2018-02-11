@@ -579,6 +579,7 @@ class RCGZippedApp{
 		self.loadFileFromStorage(arrRelativePaths[iFileAux]);
 	}
 	loadRemoteFileNewFork(sRelativePath,barrier){
+		var self=this;
 		var fncLoadFile=function(){
 			self.pushCallback(self.loadFileFromNetwork);
 			self.loadFileFromStorage(sRelativePath);

@@ -14,6 +14,7 @@ class ZipWebApp{
 			var image=document.getElementById("jrfSplash");
 			image.src = content;
 			log("Image changed");
+			self.popCallback(); // finishing the process.
 		});
 		log("Requesting Image");
 		self.loadRemoteFile("img/reports2.jpg");

@@ -586,8 +586,9 @@ class RCGZippedApp{
 		var barrier=new RCGBarrier(fncBarrierFinish,arrRelativePaths.length);
 		for (var i=0;i<arrRelativePaths.length;i++){
 			var fncLoadFile=function(){
+				var sRelativePath=arrRelativePaths[i];
 				self.pushCallback(self.loadFileFromNetwork);
-				self.loadFileFromStorage(arrRelativePaths[i]);
+				self.loadFileFromStorage(sRelativePath);
 			}
 			var cm=self.pushCallback(fncLoadFile,undefined,undefined,true,barrier);
 			setTimeout(function(){

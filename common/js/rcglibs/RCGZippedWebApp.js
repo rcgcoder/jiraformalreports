@@ -9,7 +9,7 @@ Class for download a Zip File with a lot of js files.
  * 
  */
 function log(sText){
-	console.log(callManager.getRootForkId+" - "+sText);
+	console.log(callManager.getRootForkId()+" - "+sText);
 }
 function isChrome() {
   var isChromium = window.chrome,

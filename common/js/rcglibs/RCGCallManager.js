@@ -47,8 +47,26 @@ class RCGCallManager{
 		self.running=false;
 		self.done=false;
 		self.barrier="";
+		self.rootManager="";
+		self.runningForkId="";
 		//self.extendObject(obj);
 		self.asyncPops=true;
+	}
+	getRunningForkId(){
+		var self=this;
+		if (self.rootManager==""){
+			return self.runningForkId; 
+		} else {
+			return self.rootManager.runningForkId;
+		}
+	}
+	setRunningForkId(forkId){
+		var self=this;
+		if (self.rootManager==""){
+			self.runningForkId=forkId;
+		} else {
+			self.rootManager.runningForkId=forkId;
+		}
 	}
 	getStatus(){
 		var self=this;
@@ -167,13 +185,14 @@ class RCGCallManager{
 		}
 		return theFork;
 	}
-	getDeepStep(forkId){
+	getDeepStep(){
 		var self=this;
 		if (self.steps.length==0) return self;
 		if (self.actStep>=self.steps.length) return self;
 		if (self.actStep<0) return self;
-		if (typeof forkId!=="undefined"){
-			var theFork=self.searchForFork(forkId);
+		var actForkId=self.getRunningForkId();
+		if (actForkId!=""){
+			var theFork=self.searchForFork(actForkId);
 			if (theFork!=""){
 				return theFork.getDeepStep();
 			}
@@ -181,9 +200,9 @@ class RCGCallManager{
 		var stepRunning=self.steps[self.actStep];
 		return stepRunning.getDeepStep();
 	}
-	getRunningCall(forkId){
+	getRunningCall(){
 		var self=this;
-		var stepRunning=self.getDeepStep(forkId);
+		var stepRunning=self.getDeepStep();
 		for (var i=(stepRunning.stackCallbacks.length-1);i>=0;i--){
 			var cb=stepRunning.stackCallbacks[i];
 			if (cb.running){
@@ -199,13 +218,14 @@ class RCGCallManager{
 			theObj=self.object;
 		}
 		var cm=new RCGCallManager();
+		cm.rootManager=self.rootManager;
 		cm.parent=self;
 		cm.object=theObj;
 		cm.forkId=self.forkId;
 		cm.method=method;
 		return cm;
 	}
-	addStep(description,method,progressMin,progressMax,forkId,obj){
+	addStep(description,method,progressMin,progressMax,obj){
 		var self=this;
 		var cm=self.newSubManager(method,obj);
 		if ((typeof progressMin!=="undefined")&&(typeof progressMax!=="undefined")){
@@ -214,6 +234,7 @@ class RCGCallManager{
 			cm.progress=progressMin;
 		}
 		cm.description=description;
+		cm.parent=self;
 		self.steps.push(cm);
 		return cm;
 	}
@@ -223,17 +244,18 @@ class RCGCallManager{
 		var newId=(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
 		return newId;
 	}
-	addFork(method,barrier,forkId,obj){
+	addFork(method,barrier,obj){
 		var self=this;
-		var cm=self.getRunningCall(forkId);
+		var cm=self.getRunningCall();
 		var cmFork=cm.newSubManager(method,obj);
 		cmFork.forkId=self.newForkId();
 		cmFork.barrier=barrier;
 		cm.forks.push(cmFork);
 		return cmFork;
 	}
-	runSteps(aArgs,forkId,bJumpLast){
+	runSteps(aArgs,bJumpLast){
 		var self=this;
+		var forkId=self.getRunningForkId();
 		self.done=false;
 		self.running=true;
 		if (!((self.method==null)||(self.method=="")||(typeof self.method==="undefined"))){
@@ -242,15 +264,15 @@ class RCGCallManager{
 			self.nextStep(aArgs);
 		}
 	}
-	pushCallback(method,forkId,obj,newFork,barrier){
+	pushCallback(method,obj,newFork,barrier){
 		var self=this;
 		if (typeof method==="undefined"){
 			log("you are pushing an undefined callback... be carefull.... it´s maybe a big bug");
 		}
 		if ((typeof newFork!=="undefined")&&(newFork)){
-			return self.addFork(method,barrier,forkId,obj);
+			return self.addFork(method,barrier,obj);
 		} else {
-			var ds=self.getDeepStep(forkId);
+			var ds=self.getDeepStep();
 			var cm=ds.newSubManager(method,obj);
 			ds.stackCallbacks.push(cm);
 			return cm;
@@ -278,6 +300,7 @@ class RCGCallManager{
 			newArgs=[aArgs];
 		}
 		var fncApply=function(){
+			self.setRunningForkId(self.forkId);
 			theMethod.apply(context,newArgs);
 		}
 		if (self.asyncPops) {
@@ -286,7 +309,7 @@ class RCGCallManager{
 			fncApply();
 		}
 	}
-	nextStep(aArgs,forkId,bJumpLast){
+	nextStep(aArgs,bJumpLast){
 		var self=this;
 		var stepRunning=self.getRunningCall();
 		
@@ -317,7 +340,7 @@ class RCGCallManager{
 			} else if (iSubStep>=0){ // the next step is [0 ... n-1] normal case
 				stepRunning.actStep++;
 				if ((typeof bJumpLast!=="undefined")&&(bJumpLast)){
-					return stepRunning.nextStep(aArgs,forkId,false);
+					return stepRunning.nextStep(aArgs,false);
 				} else {
 					var cm=stepRunning.steps[stepRunning.actStep];
 					return cm.callMethod(aArgs);
@@ -326,7 +349,7 @@ class RCGCallManager{
 				if (stepRunning.running){ // if it´s running.... the method were called and only advances the sub steps
 					stepRunning.actStep++;
 					if ((typeof bJumpLast!=="undefined")&&(bJumpLast)){
-						return stepRunning.nextStep(aArgs,forkId,false);
+						return stepRunning.nextStep(aArgs,false);
 					} else {
 						var cm=stepRunning.steps[stepRunning.actStep];
 						return cm.callMethod(aArgs);
@@ -336,7 +359,7 @@ class RCGCallManager{
 					stepRunning.done=false;
 					if ((typeof bJumpLast!=="undefined")&&(bJumpLast)){ // if have to jump the operation....
 						stepRunning.actStep++;
-						return stepRunning.nextStep(aArgs,forkId,false);
+						return stepRunning.nextStep(aArgs,false);
 					} else { // 
 						return stepRunning.callMethod(aArgs);
 					}
@@ -344,13 +367,13 @@ class RCGCallManager{
 			}
 		}
 	}
-	popCallback(aArgs,forkId,bJumpLast){
+	popCallback(aArgs,bJumpLast){
 		var self=this;
-		var ds=self.getDeepStep(forkId);
+		var ds=self.getDeepStep();
 		if (ds.stackCallbacks.length>0){
 			if ((typeof bJumpLast!=="undefined")&&(bJumpLast)){
 				ds.stackCallbacks.pop();
-				return self.popCallback(aArgs,forkId,false);
+				return self.popCallback(aArgs,false);
 			} else {
 				var theCallback=ds.stackCallbacks.pop();
 				if (theCallback.isChangeObj){
@@ -360,31 +383,31 @@ class RCGCallManager{
 				}
 			}
 		} else { // there is not callbacks to pop..... let´s go to next step.
-			self.nextStep(aArgs,forkId,bJumpLast);
+			self.nextStep(aArgs,bJumpLast);
 		}
 	}
-	extended_setProgressMinMax(min,max,forkId){
-		var stepRunning=self.callManager.getDeepStep(forkId);
+	extended_setProgressMinMax(min,max){
+		var stepRunning=self.callManager.getDeepStep();
 		stepRunning.progressMin=min;
 		stepRunning.progressMax=max;
 	}
-	extended_setProgress(amount,forkId){
-		var stepRunning=self.callManager.getDeepStep(forkId);
+	extended_setProgress(amount){
+		var stepRunning=self.callManager.getDeepStep();
 		var val=amount;
 		if (typeof val==="undefined"){
 			val=0;
 		}
 		stepRunning.progress=val;
 	}
-	extended_incProgress(amount,forkId){
-		var stepRunning=self.callManager.getDeepStep(forkId);
+	extended_incProgress(amount){
+		var stepRunning=self.callManager.getDeepStep();
 		var incVal=amount;
 		if (typeof incVal==="undefined"){
 			incVal=1;
 		}
 		stepRunning.progress+=incVal;
 	}
-	extended_addStep(description,method,progressMin,progressMax,forkId,newObj){
+	extended_addStep(description,method,progressMin,progressMax,newObj){
 		var self=this;
 		var cm=self.callManager.getRunningCall();
 		var theObj=newObj;
@@ -398,7 +421,7 @@ class RCGCallManager{
 			bSetChangeObjStep=true;
 		}
 		cm.object=theObj;
-		cm.addStep(description,method,progressMin,progressMax,forkId,theObj);
+		cm.addStep(description,method,progressMin,progressMax,theObj);
 		if (bSetChangeObjStep){
 			log("Requires ChangeObject Callback");
 			var changeObjectStep=function(aArgs){
@@ -407,14 +430,14 @@ class RCGCallManager{
 					auxArgs=[auxArgs];
 				}
 				cm.object=antObj;
-				cm.popCallback(auxArgs,forkId,false);
+				cm.popCallback(auxArgs,false);
 			}
-			var chObj=cm.addStep(description+" changeObj",changeObjectStep,forkId,"");
+			var chObj=cm.addStep(description+" changeObj",changeObjectStep,"");
 			chObj.isChangeObj=true;
 		}
 
 	}
-	extended_pushCallBack(method,forkId,newObj,newFork,barrier){
+	extended_pushCallBack(method,newObj,newFork,barrier){
 		var self=this;
 		var cm=self.callManager;
 		var theObj=newObj;
@@ -422,21 +445,20 @@ class RCGCallManager{
 			theObj=self;
 		}
 		var bNewFork=((typeof newFork!=="undefined")&&(newFork));
-		var auxForkId=forkId;
 			
 		if (cm.object!=theObj){
-			log("Object Changed... pushing change callback:"+ self.callManager.getDeepStep(forkId).stackCallbacks.length);
+			log("Object Changed... pushing change callback:"+ self.callManager.getDeepStep().stackCallbacks.length);
 			var antObj=cm.object;
 			var changeObjectCallback=function(aArgs){
 				cm.object=antObj;
 				cm.popCallback(aArgs);
 			}
-			var newCM=self.callManager.pushCallback(changeObjectCallback,forkId,"",bNewFork,barrier);
+			var newCM=self.callManager.pushCallback(changeObjectCallback,"",bNewFork,barrier);
 			auxForkId=newCM.forkId;
 			bNewFork=false; // the fork is done... next push will be in the new fork
 		}
 		cm.object=theObj;
-		return self.callManager.pushCallback(method,forkId,theObj,bNewFork,barrier);
+		return self.callManager.pushCallback(method,theObj,bNewFork,barrier);
 	}
 	extended_popCallback(aArgs){
 		var self=this;

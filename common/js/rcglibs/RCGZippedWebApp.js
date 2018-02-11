@@ -584,17 +584,15 @@ class RCGZippedApp{
 			self.popCallback();
 		}
 		var barrier=new RCGBarrier(fncBarrierFinish,arrRelativePaths.length);
-		var j=0;
 		for (var i=0;i<arrRelativePaths.length;i++){
-			j++;
-			var fncLoadFile=function(){
-				var sRelativePath=arrRelativePaths[j+0];
+			var fncLoadFile=function(nItem){
+				var sRelativePath=arrRelativePaths[nItem];
 				self.pushCallback(self.loadFileFromNetwork);
 				self.loadFileFromStorage(sRelativePath);
 			}
 			var cm=self.pushCallback(fncLoadFile,undefined,undefined,true,barrier);
 			setTimeout(function(){
-				cm.callMethod(); // start
+				cm.callMethod(i+0); // start
 			});
 		}
 	}

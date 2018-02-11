@@ -14,7 +14,7 @@ function log(sText){
 		console.log(cm.getRootForkId()+" - "+sText);
 	} else {
 		console.log("Error in getrootforkid");
-¡	}
+	}
 }
 function isChrome() {
   var isChromium = window.chrome,

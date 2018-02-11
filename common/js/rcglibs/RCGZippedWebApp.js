@@ -584,11 +584,8 @@ class RCGZippedApp{
 			self.pushCallback(self.loadFileFromNetwork);
 			self.loadFileFromStorage(sRelativePath);
 		}
-		var cm=self.pushCallback(fncLoadFile,undefined,undefined,true,barrier);
-		setTimeout(function(){
-			cm.callMethod(); // start
-		});
-
+		var cm=self.pushCallback(fncLoadFile,undefined,true,barrier);
+		cm.callMethod(); // start
 	}
 	loadRemoteFileForks(arrRelativePaths){
 		var self=this;
@@ -773,9 +770,7 @@ class RCGZippedApp{
 //			var webapp = new window[self.mainClass]();
 			var webapp=new ZipWebApp();
 			self.extendFromObject(webapp);
-			setTimeout(function(){
-				self.run();
-			});
+			self.run();
 //			self.popCallback();
 		});
 		self.loadRemoteFile(self.mainJs);

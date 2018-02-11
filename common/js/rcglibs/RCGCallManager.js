@@ -299,8 +299,9 @@ class RCGCallManager{
 		if ((!Array.isArray(aArgs))&&(typeof aArgs!=="undefined")){
 			newArgs=[aArgs];
 		}
+		var theForkId=self.getRunningForkId();
 		var fncApply=function(){
-			self.setRunningForkId(self.forkId);
+			self.setRunningForkId(theForkId);
 			theMethod.apply(context,newArgs);
 		}
 		if (self.asyncPops) {
@@ -462,9 +463,7 @@ class RCGCallManager{
 	}
 	extended_popCallback(aArgs){
 		var self=this;
-		setTimeout(function(){
-			self.callManager.popCallback(aArgs);
-		});
+		self.callManager.popCallback(aArgs);
 	}
 	extendObject(obj){
 		var self=this;

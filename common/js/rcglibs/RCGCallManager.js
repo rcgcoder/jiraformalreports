@@ -226,11 +226,11 @@ class RCGCallManager{
 	addFork(method,barrier,forkId,obj){
 		var self=this;
 		var cm=self.getRunningCall(forkId);
-		var fork=cm.newSubManager(method,obj);
-		cm.forkId=self.newForkId();
-		cm.barrier=barrier;
-		cm.forks.push(cm);
-		return cm;
+		var cmFork=cm.newSubManager(method,obj);
+		cmFork.forkId=self.newForkId();
+		cmFork.barrier=barrier;
+		cm.forks.push(cmFork);
+		return cmFork;
 	}
 	runSteps(aArgs,forkId,bJumpLast){
 		var self=this;

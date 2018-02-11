@@ -599,8 +599,8 @@ class RCGZippedApp{
 	}
 	loadRemoteFiles(arrRelativePaths){
 		var self=this;
-		self.loadRemoteFileIteration(arrRelativePaths,0);
-//		self.loadRemoteFileForks(arrRelativePaths);
+//		self.loadRemoteFileIteration(arrRelativePaths,0);
+		self.loadRemoteFileForks(arrRelativePaths);
 	}
 	checkForDeploys(iFile){
 		var self=this;

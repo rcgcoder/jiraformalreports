@@ -578,9 +578,27 @@ class RCGZippedApp{
 		self.pushCallback(self.loadFileFromNetwork);
 		self.loadFileFromStorage(arrRelativePaths[iFileAux]);
 	}
+	loadRemoteFileForks(arrRelativePaths){
+		var self=this;
+		var fncBarrierFinish=function(){
+			self.popCallback();
+		}
+		var barrier=new RCGBarrier(fncBarrierFinish,arrRelativePaths.length);
+		for (var i=0;i<arrRelativePaths.length;i++){
+			var fncLoadFile=function(){
+				self.pushCallback(self.loadFileFromNetwork);
+				self.loadFileFromStorage(arrRelativePaths[i]);
+			}
+			var cm=self.pushCallback(fncLoadFile,undefined,undefined,true,barrier);
+			setTimeout(function(){
+				cm.callMethod(); // start
+			});
+		}
+	}
 	loadRemoteFiles(arrRelativePaths){
 		var self=this;
-		self.loadRemoteFileIteration(arrRelativePaths,0);
+//		self.loadRemoteFileIteration(arrRelativePaths,0);
+		self.loadRemoteFileForks(arrRelativePaths);
 	}
 	checkForDeploys(iFile){
 		var self=this;

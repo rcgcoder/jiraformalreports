@@ -46,6 +46,7 @@ class RCGCallManager{
 		self.object="";
 		self.running=false;
 		self.done=false;
+		self.barrier="";
 		//self.extendObject(obj);
 		self.asyncPops=true;
 	}
@@ -216,9 +217,20 @@ class RCGCallManager{
 		self.steps.push(cm);
 		return cm;
 	}
+
+	
 	newForkId(){
 		var newId=(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
 		return newId;
+	}
+	addFork(method,barrier,forkId,obj){
+		var self=this;
+		var cm=self.callManager.getRunningCall(forkId);
+		var fork=cm.newSubManager(method,obj);
+		cm.forkId=self.newForkId();
+		cm.barrier=barrier;
+		cm.forks.push(cm);
+		return cm;
 	}
 	runSteps(aArgs,forkId,bJumpLast){
 		var self=this;
@@ -230,21 +242,20 @@ class RCGCallManager{
 			self.nextStep(aArgs);
 		}
 	}
-	addFork(method,obj){
-		var self=this;
-		cm=self.newSubManager(method,obj);
-		cm.forkId=self.newForkId();
-		self.forks.push(cm);
-		return cm;
-	}
-	pushCallback(method,forkId,obj){
+	pushCallback(method,forkId,obj,newFork,barrier){
 		var self=this;
 		if (typeof method==="undefined"){
 			log("you are pushing an undefined callback... be carefull.... it´s maybe a big bug");
 		}
-		var ds=self.getDeepStep(forkId);
-		var cm=ds.newSubManager(method,obj);
-		ds.stackCallbacks.push(cm);
+		if ((typeof newFork!=="undefined")&&(newFork)){
+			return self.addFork(method,barrier,forkId,obj);
+		} else {
+			var ds=self.getDeepStep(forkId);
+			var cm=ds.newSubManager(method,obj);
+			ds.stackCallbacks.push(cm);
+			return cm;
+		}
+		
 	}
 	callMethod(aArgs){
 		var self=this;
@@ -403,13 +414,16 @@ class RCGCallManager{
 		}
 
 	}
-	extended_pushCallBack(method,forkId,newObj,isFork,barrier){
+	extended_pushCallBack(method,forkId,newObj,newFork,barrier){
 		var self=this;
 		var cm=self.callManager;
 		var theObj=newObj;
 		if (typeof newObj==="undefined"){
 			theObj=self;
 		}
+		var bNewFork=((typeof newFork!=="undefined")&&(newFork));
+		var auxForkId=forkId;
+			
 		if (cm.object!=theObj){
 			log("Object Changed... pushing change callback:"+ self.callManager.getDeepStep(forkId).stackCallbacks.length);
 			var antObj=cm.object;
@@ -417,10 +431,12 @@ class RCGCallManager{
 				cm.object=antObj;
 				cm.popCallback(aArgs);
 			}
-			self.callManager.pushCallback(changeObjectCallback,forkId,"");
+			var newCM=self.callManager.pushCallback(changeObjectCallback,forkId,"",bNewFork,barrier);
+			auxForkId=newCM.forkId;
+			bNewFork=false; // the fork is done... next push will be in the new fork
 		}
 		cm.object=theObj;
-		self.callManager.pushCallback(method,forkId,theObj);
+		return self.callManager.pushCallback(method,forkId,theObj,bNewFork,barrier);
 	}
 	extended_popCallback(aArgs){
 		var self=this;

@@ -218,7 +218,11 @@ class RCGCallManager{
 			theObj=self.object;
 		}
 		var cm=new RCGCallManager();
-		cm.rootManager=self.rootManager;
+		if (self.rootManager==""){
+			cm.rootManager=self;
+		} else {
+			cm.rootManager=self.rootManager;
+		}
 		cm.parent=self;
 		cm.object=theObj;
 		cm.forkId=self.forkId;

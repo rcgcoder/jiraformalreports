@@ -11,7 +11,7 @@ Class for download a Zip File with a lot of js files.
 function log(sText){
 	var cm=callManager;
 	if ((typeof cm!=="undefined")&&(cm!=null)&&(cm!="")){
-		console.log(cm.getRootForkId()+" - "+sText);
+		console.log(cm.getRunningForkId()+" - "+sText);
 	} else {
 		console.log("Error in getrootforkid");
 	}

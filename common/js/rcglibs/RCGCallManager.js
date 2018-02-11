@@ -177,7 +177,7 @@ class RCGCallManager{
 		var self=this;
 		if (typeof forkId==="undefined") return self;
 		if (self.forkId==forkId) return self;
-		if (self.steps.length==0) return "";
+		if ((self.steps.length==0) && (self.forks.length==0) && (self.stackCallbacks.lenght==0)) return "";
 		if (self.actStep>=self.steps.length) return "";
 		var bForkLocated=false;
 		var theFork="";

@@ -578,6 +578,17 @@ class RCGZippedApp{
 		self.pushCallback(self.loadFileFromNetwork);
 		self.loadFileFromStorage(arrRelativePaths[iFileAux]);
 	}
+	loadRemoteFileNewFork(sRelativePath,barrier){
+		var fncLoadFile=function(){
+			self.pushCallback(self.loadFileFromNetwork);
+			self.loadFileFromStorage(sRelativePath);
+		}
+		var cm=self.pushCallback(fncLoadFile,undefined,undefined,true,barrier);
+		setTimeout(function(){
+			cm.callMethod(); // start
+		});
+
+	}
 	loadRemoteFileForks(arrRelativePaths){
 		var self=this;
 		var fncBarrierFinish=function(){
@@ -585,21 +596,8 @@ class RCGZippedApp{
 		}
 		var barrier=new RCGBarrier(fncBarrierFinish,arrRelativePaths.length);
 		for (var i=0;i<arrRelativePaths.length;i++){
-			var fncLoadFile=function(nItem){
-				var sRelativePath=arrRelativePaths[nItem];
-				self.pushCallback(self.loadFileFromNetwork);
-				self.loadFileFromStorage(sRelativePath);
-			}
-			var cm=self.pushCallback(fncLoadFile,undefined,undefined,true,barrier);
-			setTimeout(function(){
-				cm.callMethod(i+0); // start
-			});
+			loadRemoteFileNewFork(arrRelativePaths[i],barrier);
 		}
-	}
-	loadRemoteFiles(arrRelativePaths){
-		var self=this;
-//		self.loadRemoteFileIteration(arrRelativePaths,0);
-		self.loadRemoteFileForks(arrRelativePaths);
 	}
 	checkForDeploys(iFile){
 		var self=this;

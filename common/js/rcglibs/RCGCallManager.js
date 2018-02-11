@@ -303,7 +303,7 @@ class RCGCallManager{
 		if ((!Array.isArray(aArgs))&&(typeof aArgs!=="undefined")){
 			newArgs=[aArgs];
 		}
-		var theForkId=self.getRunningForkId();
+		var theForkId=self.forkId;
 		var fncApply=function(){
 			self.setRunningForkId(theForkId);
 			theMethod.apply(context,newArgs);

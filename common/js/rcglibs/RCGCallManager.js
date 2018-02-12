@@ -428,7 +428,15 @@ class RCGCallManager{
 			}
 		} else { // there is not callbacks to pop..... let´s go to next step.
 			if ((self.parent!="")&&(self.parent.forkId!=self.forkId)){
-				log("The fork "+self.forkId+" is finished!");
+				log("The fork "+self.forkId+" is finished!... forks running:"+self.forks.length);
+				for (var i=0;i<self.forks.length;i++){
+					var auxFork=self.forks[i];
+					if (auxFork.forkId==self.forkId){
+						self.forks.splice(i,1); 
+						log("Now.... forks:"+self.forks.length);
+						return;
+					}
+				}
 			} else {
 				self.nextStep(aArgs,bJumpLast);
 			}
@@ -536,7 +544,6 @@ class RCGCallManager{
 		obj.setStepProgressMinMax=self.extended_setProgressMinMax;
 		obj.setStepProgress=self.extended_setProgress;
 		obj.createManagedCallback=self.extended_createManagedCallback;
-
 	}
 }
 var callManager=new RCGCallManager();

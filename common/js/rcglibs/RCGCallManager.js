@@ -440,11 +440,13 @@ class RCGCallManager{
 		return fncManagedCallback;
 	}
 	extended_setProgressMinMax(min,max){
+		var self=this;
 		var stepRunning=self.callManager.getDeepStep();
 		stepRunning.progressMin=min;
 		stepRunning.progressMax=max;
 	}
 	extended_setProgress(amount){
+		var self=this;
 		var stepRunning=self.callManager.getDeepStep();
 		var val=amount;
 		if (typeof val==="undefined"){
@@ -453,6 +455,7 @@ class RCGCallManager{
 		stepRunning.progress=val;
 	}
 	extended_incProgress(amount){
+		var self=this;
 		var stepRunning=self.callManager.getDeepStep();
 		var incVal=amount;
 		if (typeof incVal==="undefined"){

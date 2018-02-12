@@ -595,7 +595,7 @@ class RCGZippedApp{
 	loadRemoteFileForks(arrRelativePaths){
 		var self=this;
 		var fncBarrierFinish=function(){
-			log("Barrier Finished");
+			log("Barrier Finished:" + self.callManager.getRunningForkId());
 			self.popCallback();
 		}
 		var barrier=new RCGBarrier(fncBarrierFinish,arrRelativePaths.length);

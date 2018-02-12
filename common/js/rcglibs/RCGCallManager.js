@@ -286,7 +286,13 @@ class RCGCallManager{
 		var cmFork=cm.newSubManager(method,obj);
 		cmFork.forkId=self.newForkId();
 		cmFork.barrier=barrier;
+		cmFork.barrier.add();
 		rootCM.forks.push(cmFork);
+		if (typeof barrier!=="undefined"){
+			cmFork.pushCallback(function(){
+				barrier.reach();
+			});
+		}
 		return cmFork;
 	}
 	runSteps(aArgs,bJumpLast){

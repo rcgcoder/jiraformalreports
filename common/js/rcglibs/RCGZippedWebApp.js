@@ -433,16 +433,16 @@ class RCGZippedApp{
 		xhr.onerror=self.loadError;
 		xhr.responseType = 'arraybuffer';
 		xhr.onload = self.createManagedCallback(function(e) {
-		  if (this.status == 200) {
+		  if (xhr.status == 200) {
 			  log("Downloaded "+sRelativePath);
 			  var ct=self.getContentType(xhr);
 			  var response="";
 			  var toSave="";
 			  if (ct.isText){
-				  var arr=new Uint8Array(this.response);
+				  var arr=new Uint8Array(xhr.response);
 				  toSave = String.fromCharCode.apply(null,arr);
 			  } else {
-				  toSave = this.response;
+				  toSave = xhr.response;
 			  }
 			  self.pushCallback(function(sContent){
 				  self.popCallback([sContent,xhr,ct,sRelativePath]);

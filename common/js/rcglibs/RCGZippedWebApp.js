@@ -699,10 +699,10 @@ class RCGZippedApp{
 							defer:true,
 							size:self.localStorageMaxSize
 							});
-		InitializeFileSystem(function(){
-			self.popCallback();
-			},
-			self.localStorageMaxSize);
+		InitializeFileSystem(self.createManagedCallback(function(){
+								self.popCallback();
+							 }),
+							 self.localStorageMaxSize);
 	}
 	startPersistence(){
 		var self=this;

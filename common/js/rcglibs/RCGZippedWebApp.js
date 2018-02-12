@@ -886,61 +886,63 @@ class RCGZippedApp{
 		// prepare arrays
 		var model=new ZipModel();
 		log("Download Zip File:"+sZipUrl);
-		model.downloadAndGetEntries(sZipUrl,self.function(entries) {
-			var arrFilesToSave=[];
-			entries.forEach(function(entry) {
-				var sFile=entry.filename;
-				var sImportPath;
-				var bWillNotSave=true;
-				var bContinue=true;
-				var sRelativePath="";
-				for (var i=0;(bContinue)&&(bWillNotSave) && 
-							 ((deployInfo.imports.length==0)||(i<deployInfo.imports.length))
-							 ;i++){
-					var sPrefix="";
-					var sLastChar=sFile.substring(sFile.length-1);
-					if (sLastChar=="/") {
-						bContinue=false;
-					} else if (deployInfo.imports.length==0){
-						sRelativePath=entry.filename;
-//						log("Entry "+entry.filename + " will be saved as "+sRelativePath);
-						bWillNotSave=false;
-					} else {
-						sImportPath=deployInfo.imports[i];
-						var sPrefix=sFile.substring(0,sImportPath.length);
-						sRelativePath=sFile.substring(sPrefix.length);
-						if ((sPrefix.length!=sFile.length)
-							  &&(sPrefix==sImportPath)){
-//							log("Entry "+entry.filename + " will be saved as "+sRelativePath);
+		model.downloadAndGetEntries(sZipUrl,
+			self.createManagedCallback(function(entries) {
+				var arrFilesToSave=[];
+				entries.forEach(function(entry) {
+					var sFile=entry.filename;
+					var sImportPath;
+					var bWillNotSave=true;
+					var bContinue=true;
+					var sRelativePath="";
+					for (var i=0;(bContinue)&&(bWillNotSave) && 
+								 ((deployInfo.imports.length==0)||(i<deployInfo.imports.length))
+								 ;i++){
+						var sPrefix="";
+						var sLastChar=sFile.substring(sFile.length-1);
+						if (sLastChar=="/") {
+							bContinue=false;
+						} else if (deployInfo.imports.length==0){
+							sRelativePath=entry.filename;
+	//						log("Entry "+entry.filename + " will be saved as "+sRelativePath);
 							bWillNotSave=false;
+						} else {
+							sImportPath=deployInfo.imports[i];
+							var sPrefix=sFile.substring(0,sImportPath.length);
+							sRelativePath=sFile.substring(sPrefix.length);
+							if ((sPrefix.length!=sFile.length)
+								  &&(sPrefix==sImportPath)){
+	//							log("Entry "+entry.filename + " will be saved as "+sRelativePath);
+								bWillNotSave=false;
+							}
 						}
 					}
-				}
-				if (!bWillNotSave){
-					var jsonContent=self.getContentTypeFromExtension(sFile);
-					var sContentSaved=self.storage.get('#FILEINFO#'+sRelativePath);
-					var oContentSaved="";
-					if (sContentSaved!=null){
-						oContentSaved=JSON.parse(sContentSaved);
+					if (!bWillNotSave){
+						var jsonContent=self.getContentTypeFromExtension(sFile);
+						var sContentSaved=self.storage.get('#FILEINFO#'+sRelativePath);
+						var oContentSaved="";
+						if (sContentSaved!=null){
+							oContentSaved=JSON.parse(sContentSaved);
+						}
+						if ((oContentSaved=="") || 
+							(oContentSaved.saveDate<deployInfo.commitDate)){
+							log("Entry "+entry.filename + " will be saved as "+sRelativePath);
+							jsonContent.commitId=deployInfo.commitId;
+							jsonContent.commitDate=deployInfo.commitDate;
+							arrFilesToSave.push({
+												model:model,
+												entry:entry,
+												type:jsonContent,
+												relativePath:sRelativePath
+												});
+						} else {
+							log(sRelativePath+" saved is newer");
+						}
 					}
-					if ((oContentSaved=="") || 
-						(oContentSaved.saveDate<deployInfo.commitDate)){
-						log("Entry "+entry.filename + " will be saved as "+sRelativePath);
-						jsonContent.commitId=deployInfo.commitId;
-						jsonContent.commitDate=deployInfo.commitDate;
-						arrFilesToSave.push({
-											model:model,
-											entry:entry,
-											type:jsonContent,
-											relativePath:sRelativePath
-											});
-					} else {
-						log(sRelativePath+" saved is newer");
-					}
-				}
-			});
-			self.popCallback([arrFilesToSave]);
-		});
+				});
+				self.popCallback([arrFilesToSave]);
+			})
+		);
 	}
 }
 

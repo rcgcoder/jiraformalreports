@@ -423,6 +423,15 @@ class RCGCallManager{
 			self.nextStep(aArgs,bJumpLast);
 		}
 	}
+	extended_createManagedCallback(fncTraditionalCallback){
+		var self=this;
+		var forkId=self.getRunningForkId();
+		var fncManagedCallback=function(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10){
+			self.setRunningForkId(forkId);
+			fncTraditionalCallback(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10);
+		}
+		return fncManagedCallback;
+	}
 	extended_setProgressMinMax(min,max){
 		var stepRunning=self.callManager.getDeepStep();
 		stepRunning.progressMin=min;
@@ -511,6 +520,8 @@ class RCGCallManager{
 		obj.incStepProgress=self.extended_incProgress;
 		obj.setStepProgressMinMax=self.extended_setProgressMinMax;
 		obj.setStepProgress=self.extended_setProgress;
+		obj.createManagedCallback=extended_createManagedCallback;
+
 	}
 }
 var callManager=new RCGCallManager();

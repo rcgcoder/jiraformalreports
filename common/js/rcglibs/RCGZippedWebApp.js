@@ -432,7 +432,7 @@ class RCGZippedApp{
 		xhr.open('GET', sUrl, true);
 		xhr.onerror=self.loadError;
 		xhr.responseType = 'arraybuffer';
-		xhr.onload = function(e) {
+		xhr.onload = self.createManagedCallback(function(e) {
 		  if (this.status == 200) {
 			  log("Downloaded "+sRelativePath);
 			  var ct=self.getContentType(xhr);
@@ -463,7 +463,7 @@ class RCGZippedApp{
 			  log("Error downloading "+sRelativePath);
 			  self.loadError({target:{src:sUrl}});			  
 		  }
-		};
+		});
 		xhr.send();	
 
 	}

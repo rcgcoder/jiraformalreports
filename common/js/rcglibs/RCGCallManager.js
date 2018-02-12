@@ -189,8 +189,10 @@ class RCGCallManager{
 		if (rootCM.forks.length==0) return "";
 		var theFork="";
 		for (var i=0;(i<self.forks.length);i++){
-			theFork=self.forks[i].searchForFork(forkId);
-			if (theFork!="") return theFork;
+			theFork=self.forks[i];
+			if (theFork.forkId==forkId){
+				return theFork;
+			}
 		}
 		
 		/*

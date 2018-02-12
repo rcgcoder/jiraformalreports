@@ -52,6 +52,14 @@ class RCGCallManager{
 		//self.extendObject(obj);
 		self.asyncPops=true;
 	}
+	getRootCallManager(){
+		var self=this;
+		var rootCM=self.rootManager;
+		if (rootCM==""){
+			rootCM=self;
+		}
+		return rootCM;
+	}
 	getRunningForkId(){
 		var self=this;
 		if (self.rootManager==""){
@@ -177,6 +185,15 @@ class RCGCallManager{
 		var self=this;
 		if (typeof forkId==="undefined") return self;
 		if (self.forkId==forkId) return self;
+		var rootCM=self.getRootCallManager();
+		if (rootCM.forks.length==0) return "";
+		var theFork="";
+		for (var i=0;(i<self.forks.length);i++){
+			theFork=self.forks[i].searchForFork(forkId);
+			if (theFork!="") return theFork;
+		}
+		
+		/*
 		if ((self.steps.length==0) && (self.forks.length==0) && (self.stackCallbacks.lenght==0)) return "";
 		if (self.actStep>=self.steps.length) return "";
 		var bForkLocated=false;
@@ -193,7 +210,7 @@ class RCGCallManager{
 			theFork=self.stackCallbacks[i].searchForFork(forkId);
 			if (theFork!="") return theFork;
 		}
-		
+		*/
 		return theFork;
 	}
 	getDeepStep(){
@@ -261,11 +278,12 @@ class RCGCallManager{
 	}
 	addFork(method,barrier,obj){
 		var self=this;
+		var rootCM=self.getRootCallManager();
 		var cm=self.getRunningCall();
 		var cmFork=cm.newSubManager(method,obj);
 		cmFork.forkId=self.newForkId();
 		cmFork.barrier=barrier;
-		cm.forks.push(cmFork);
+		rootCM.forks.push(cmFork);
 		return cmFork;
 	}
 	runSteps(aArgs,bJumpLast){

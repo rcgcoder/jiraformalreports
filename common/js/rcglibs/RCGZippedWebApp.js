@@ -486,6 +486,7 @@ class RCGZippedApp{
 	    oScript.innerHTML = jsContent;
 	}
 	processFile(content,xhr,contentType,sRelativePath){
+		log("Processing file:"+sRelativePath);
 		var self=this;
 		var auxContent=content;
 	    if (contentType.isJS){ //if filename is a external JavaScript file

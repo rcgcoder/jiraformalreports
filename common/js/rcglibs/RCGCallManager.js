@@ -17,7 +17,7 @@ class RCGBarrier{
 		}
 		self.nItems--;
 		if (self.nItems<=0){
-			self.callback();
+			setTimeout(self.callback);
 		} 
 	}
 	add(){
@@ -291,6 +291,7 @@ class RCGCallManager{
 		if (typeof barrier!=="undefined"){
 			cmFork.pushCallback(function(){
 				barrier.reach();
+				cmFork.popCallback();
 			});
 		}
 		return cmFork;
@@ -426,7 +427,11 @@ class RCGCallManager{
 				}
 			}
 		} else { // there is not callbacks to pop..... let´s go to next step.
-			self.nextStep(aArgs,bJumpLast);
+			if ((self.parent!="")&&(self.parent.forkId!=self.forkId)){
+				log("The fork "+self.forkId+" is finished!");
+			} else {
+				self.nextStep(aArgs,bJumpLast);
+			}
 		}
 	}
 	extended_createManagedCallback(fncTraditionalCallback){

@@ -865,8 +865,7 @@ class RCGZippedApp{
 			self.pushCallback(function(){
 				self.deploy(deployInfo);
 			});
-			self.loadRemoteFiles(arrFiles);
-			return;
+			return self.loadRemoteFiles(arrFiles);
 		}
 		zip.useWebWorkers=true;
 		zip.workerScriptsPath = 'js/libs/zip/';
@@ -887,7 +886,7 @@ class RCGZippedApp{
 		// prepare arrays
 		var model=new ZipModel();
 		log("Download Zip File:"+sZipUrl);
-		model.downloadAndGetEntries(sZipUrl,function(entries) {
+		model.downloadAndGetEntries(sZipUrl,self.function(entries) {
 			var arrFilesToSave=[];
 			entries.forEach(function(entry) {
 				var sFile=entry.filename;

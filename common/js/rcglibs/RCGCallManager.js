@@ -520,7 +520,7 @@ class RCGCallManager{
 		obj.incStepProgress=self.extended_incProgress;
 		obj.setStepProgressMinMax=self.extended_setProgressMinMax;
 		obj.setStepProgress=self.extended_setProgress;
-		obj.createManagedCallback=extended_createManagedCallback;
+		obj.createManagedCallback=self.extended_createManagedCallback;
 
 	}
 }

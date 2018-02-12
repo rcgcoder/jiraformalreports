@@ -251,6 +251,7 @@ class RCGCallManager{
 		} else {
 			cm.rootManager=self.rootManager;
 		}
+		cm.forks=self.forks;
 		cm.parent=self;
 		cm.object=theObj;
 		cm.forkId=self.forkId;

@@ -375,15 +375,15 @@ class RCGCallManager{
 			} else if (iSubStep>nSteps){
 				stepRunning.running=false;  // the step is finished
 				stepRunning.done=true;
-				stepRunning.steps.length=0; // clear the array of steps
-				stepRunninf.actStep=-1;
+//				stepRunning.steps.length=0; // clear the array of steps
+//				stepRunninf.actStep=-1;
 				stepRunning=stepRunning.parent; // goto next brother
 			} else if (iSubStep==(nSteps-1)){
 				stepRunning.running=false;  // the step is finished
 				stepRunning.done=true;
 				stepRunning.actStep++;
-				stepRunning.steps.length=0; // clear the array of steps
-				stepRunninf.actStep=-1;
+//				stepRunning.steps.length=0; // clear the array of steps
+//				stepRunninf.actStep=-1;
 				stepRunning=stepRunning.parent; // goto next brother
 			} else if (iSubStep>=0){ // the next step is [0 ... n-1] normal case
 				stepRunning.actStep++;

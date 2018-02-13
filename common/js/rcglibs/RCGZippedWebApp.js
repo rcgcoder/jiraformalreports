@@ -126,10 +126,10 @@ class GitHub{
 			  self.pushCallback(self.processCommitsPage);
 			  self.apiCall(sUrl,nextPage,undefined,undefined,arrHeaders);
 		  } else {
-			  self.popCallback([self.arrCommits],true);
+			  self.popCallback([self.arrCommits],1);
 		  }
 	   } else {
-		  self.popCallback([self.arrCommits],true);
+		  self.popCallback([self.arrCommits],1);
 	   }
 	}
 	getCommits(fromDate){
@@ -156,7 +156,7 @@ class GitHub{
 		var sCommitShortId=sCommitLongId.substring(0,8);
 		self.commitId=sCommitShortId;
 		self.commitDate=(new Date(self.lastCommit.commit.author.date)).getTime();
-		self.popCallback([self.commitId,self.commitDate],true);
+		self.popCallback([self.commitId,self.commitDate],1);
 	}
 	updateLastCommit(){
 		var self=this;
@@ -167,7 +167,7 @@ class GitHub{
 		var self=this;
 		if (typeof relativePaths!="undefined"){
 			self.pushCallback(function(arrCommits){
-				self.popCallback([self.commitId,arrCommits],true);
+				self.popCallback([self.commitId,arrCommits],1);
 			});
 			self.pushCallback(function(){
 				self.getLastCommitOfFiles(relativePaths);
@@ -182,7 +182,7 @@ class GitHub{
 		var sCommitLongId=lastCommit.sha;
 		var sCommitShortId=sCommitLongId.substring(0,8);
 		var sCommitDate=(new Date(lastCommit.commit.author.date)).getTime();
-		self.popCallback([sCommitShortId,sCommitDate],true);
+		self.popCallback([sCommitShortId,sCommitDate],1);
 	}
 	getLastCommitOfFile(sRelativePath){
 		var self=this;
@@ -192,7 +192,7 @@ class GitHub{
 	updateDeployZipCommits(deployZips,iFile){
 		var self=this;
 		if (iFile>=deployZips.length){
-			self.popCallback([],true);
+			self.popCallback([],1);
 		} else {
 			self.pushCallback(function(sCommitId,sCommitDate){
 				deployZips[iFile].commitId=sCommitId;

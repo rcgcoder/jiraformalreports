@@ -42,7 +42,7 @@ class RCGCallManager{
 		self.methodWeight=-1;
 		self.steps=[];
 		self.forks=[];
-		self.stackCallbacks=[];
+		self.stack=[];
 		self.object="";
 		self.running=false;
 		self.done=false;
@@ -196,7 +196,7 @@ class RCGCallManager{
 		}
 		
 		/*
-		if ((self.steps.length==0) && (self.forks.length==0) && (self.stackCallbacks.lenght==0)) return "";
+		if ((self.steps.length==0) && (self.forks.length==0) && (self.stack.lenght==0)) return "";
 		if (self.actStep>=self.steps.length) return "";
 		var bForkLocated=false;
 		var theFork="";
@@ -208,8 +208,8 @@ class RCGCallManager{
 			theFork=self.steps[i].searchForFork(forkId);
 			if (theFork!="") return theFork;
 		}
-		for (var i=0;(i<self.stackCallbacks.length);i++){
-			theFork=self.stackCallbacks[i].searchForFork(forkId);
+		for (var i=0;(i<self.stack.length);i++){
+			theFork=self.stack[i].searchForFork(forkId);
 			if (theFork!="") return theFork;
 		}
 		*/
@@ -233,8 +233,8 @@ class RCGCallManager{
 	getRunningCall(){
 		var self=this;
 		var stepRunning=self.getDeepStep();
-		for (var i=(stepRunning.stackCallbacks.length-1);i>=0;i--){
-			var cb=stepRunning.stackCallbacks[i];
+		for (var i=(stepRunning.stack.length-1);i>=0;i--){
+			var cb=stepRunning.stack[i];
 			if (cb.running){
 				return cb;
 			}
@@ -296,7 +296,7 @@ class RCGCallManager{
 		}
 		return cmFork;
 	}
-	runSteps(aArgs,bJumpLast){
+	runSteps(aArgs,iJumps){
 		var self=this;
 		var forkId=self.getRunningForkId();
 		self.done=false;
@@ -304,7 +304,7 @@ class RCGCallManager{
 		if (!((self.method==null)||(self.method=="")||(typeof self.method==="undefined"))){
 			self.callMethod(aArgs);
 		} else {
-			self.nextStep(aArgs);
+			self.nextStep(aArgs,iJumps);
 		}
 	}
 	pushCallback(method,obj,newFork,barrier){
@@ -317,7 +317,7 @@ class RCGCallManager{
 		} else {
 			var ds=self.getDeepStep();
 			var cm=ds.newSubManager(method,obj);
-			ds.stackCallbacks.push(cm);
+			ds.stack.push(cm);
 			return cm;
 		}
 		
@@ -353,8 +353,95 @@ class RCGCallManager{
 			fncApply();
 		}
 	}
-	nextStep(aArgs,bJumpLast){
+	next(aArgs,iJumpOps){ // secuence
+						  // 0 - method
+						  // 1 - calls in the stack array LIFO
+						  // 2 - calls in the step array FIFO
 		var self=this;
+		var stepRunning=self.getRunningCall();
+		
+		
+		var bWithSubSteps;
+		var bwithCallbacks;
+		var subSteps;
+		var stack;
+		var iSubStep;
+		var nSteps;
+		var nStack;
+		
+		var nJumps=iJumpOps;
+		if (typeof nJumps==="undefined"){
+			nJumps=0;
+		}
+		var bLocated=false;
+		while ((stepRunning!="")&&(!bLocated)){
+			subSteps=stepRunning.steps;
+			stack=stepRunning.stack;
+			
+			nSteps=subSteps.length;
+			nStack=stack.length;
+			
+			iSubStep=stepRunning.actStep;			
+			bWithSubSteps=(nSteps>0);
+			if (nStack>0){ // first Phase.... the stacks 
+				var lastStackCall=stack[nStack-1]; // getting the last call in the stack
+				if (lastStackCall.done){ // if the call is done.... 
+					stack.pop(); // not computed.... and next round will check for other call in the stack or step...
+				} else {  // the call is not done it have to be processed
+					if (nJumps==0){ // if there is not jumps remain... 
+						stepRunning=lastStackCall; // set the call for next round.
+					} else { // It have to jump some calls..
+						stack.pop();  // do pop... removes de call.
+						nJumps--; // decrease the jumps....
+					}
+				}
+			} else if ((iSubStep>=0)&&(iSubStep<nSteps)) { // Phase 2..steps.... if there is not calls in the stack 
+															// and it´s running a intermediate step...
+				var nextStep=steps[iSubStep];   // setting the actual step to process in next round
+				if (nextStep.done){ // if the next step is done....
+					stepRunning.actStep++; 
+					if (stepRunning.actStep>=nSteps){ // if where the last step...
+						stepRunning.running=false;  // the step was finished... now is not running (ensure)
+						stepRunning.done=true;     // the step was finished .. now is done (ensure)
+						stepRunning=stepRunning.parent; // next round have to check a brother step... method probably...
+					}
+				} else { // if next step is not done.... 
+					stepRunning=nextStep; //next round wil check the next step action to do (method, substeps)
+				}
+			} else if (iSubStep<0){ // if there is not steps running..Phase 0... ¿the method?
+				if ((!bWithSubSteps)&& (stepRunning.running)){ // if its running Method and there is not subSteps
+					stepRunning.running=false;  // the call was executed
+					stepRunning.done=true;      // the call is done
+					stepRunning=stepRunning.parent; // goto next brother
+				} else if (stepRunning.running){ // if is running.... the call is finishing...
+					stepRunning.actStep++;  // act step is 0 (-1 + 1)
+					stepRunning=steps[stepRunning.actStep]; // next round will check actions for first step
+				} else if (stepRunning.method!=""){ // if there is method setted....
+					if (nJumps==0){ // if not jumps remaining
+						bLocated=true; // ¡¡LOCATED!!
+					} else { // if jumps remaining
+						nJumps--; // reduce njumps
+						stepRunning.running=false;  // the call was executed
+						stepRunning.done=true;      // the call is done
+						stepRunning=stepRunning.parent; // goto next brother
+					}
+				} else if (stepRunning.parent!=""){ // if there is not method setted and is not the root callmanager
+					log("Call without method....¿big error?"); // may be an error
+				} else {
+					stepRunning=stepRunning.parent; // is root.... 
+				}
+			}
+		}
+		if (bLocated){
+			return stepRunning.callMethod(aArgs);
+		} else {
+			log("¡¡FINISHED!!");
+			return self.rootManager;
+		}
+	}
+	nextStep(aArgs,iJumps){
+		var self=this;
+		return self.next(aArgs,iJumps);
 		var stepRunning=self.getRunningCall();
 		
 		
@@ -415,15 +502,16 @@ class RCGCallManager{
 			}
 		}
 	}
-	popCallback(aArgs,bJumpLast){
+	popCallback(aArgs,iJumps){
 		var self=this;
+		return self.next(aArgs,iJumps);
 		var ds=self.getDeepStep();
-		if (ds.stackCallbacks.length>0){
+		if (ds.stack.length>0){
 			if ((typeof bJumpLast!=="undefined")&&(bJumpLast)){
-				ds.stackCallbacks.pop();
+				ds.stack.pop();
 				return self.popCallback(aArgs,false);
 			} else {
-				var theCallback=ds.stackCallbacks.pop();
+				var theCallback=ds.stack.pop();
 				if (theCallback.isChangeObj){
 					theCallback.callMethod(aArgs);
 				} else {
@@ -520,7 +608,7 @@ class RCGCallManager{
 		var bNewFork=((typeof newFork!=="undefined")&&(newFork));
 			
 		if (cm.object!=theObj){
-			log("Object Changed... pushing change callback:"+ self.callManager.getDeepStep().stackCallbacks.length);
+			log("Object Changed... pushing change callback:"+ self.callManager.getDeepStep().stack.length);
 			var antObj=cm.object;
 			var changeObjectCallback=function(aArgs){
 				cm.object=antObj;
@@ -533,9 +621,9 @@ class RCGCallManager{
 		cm.object=theObj;
 		return self.callManager.pushCallback(method,theObj,bNewFork,barrier);
 	}
-	extended_popCallback(aArgs){
+	extended_popCallback(aArgs,iJumps){
 		var self=this;
-		self.callManager.popCallback(aArgs);
+		self.callManager.popCallback(aArgs,iJumps);
 	}
 	extendObject(obj){
 		var self=this;

@@ -550,14 +550,15 @@ class RCGZippedApp{
 					return self.processFile(sFileContent,undefined,jsonContentType,sRelativePath);
 				});
 				return filesystem.ReadFile(sRelativePath,
-						function(sStringContent){
+						self.createManagedCallback(function(sStringContent){
 							log("file "+sRelativePath +" readed from storage");
 							self.popCallback([sStringContent]);
-						},
-						function(e){
+						}),
+						self.createManagedCallback(function(e){
 							log("file "+sRelativePath +" Error reading from storage");
 							self.popCallback([""]);
-						});
+						})
+						);
 			}
 		}
 		return self.popCallback([false,sRelativePath]);

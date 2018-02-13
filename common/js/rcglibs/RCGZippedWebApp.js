@@ -661,11 +661,11 @@ class RCGZippedApp{
 	deployZipFork(theDeploy,barrier){
 		var self=this;
 		var fncDeploy=function(){
-			self.pushCallback(function(){
-				log("Deploying Zip:"+ theDeploy.relativePath);
-				self.deploy(theDeploy);
+			self.pushCallback(function(){ // to store the steps
+				self.popCallback();
 			});
-			self.popCallback();
+			log("Deploying Zip:"+ theDeploy.relativePath);
+			self.deploy(theDeploy);
 		}
 		var cm=self.pushCallback(fncDeploy,undefined,true,barrier);
 		cm.callMethod(); // start

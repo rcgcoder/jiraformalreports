@@ -759,7 +759,7 @@ class RCGZippedApp{
 			}
 		}
 //		self.pushCallback(self.updateFilesFromCommits);
-		self.pushCallback(self.checkForDeploys);
+		self.pushCallback(self.checkForDeploysForked);
 		self.github.getLastCommitOfDeploys(self.DeployZips);
 	}
 	loadPersistentStorage() {

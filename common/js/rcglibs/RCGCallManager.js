@@ -397,7 +397,7 @@ class RCGCallManager{
 				}
 			} else if ((iSubStep>=0)&&(iSubStep<nSteps)) { // Phase 2..steps.... if there is not calls in the stack 
 															// and it´s running a intermediate step...
-				var nextStep=steps[iSubStep];   // setting the actual step to process in next round
+				var nextStep=subSteps[iSubStep];   // setting the actual step to process in next round
 				if (nextStep.done){ // if the next step is done....
 					stepRunning.actStep++; 
 					if (stepRunning.actStep>=nSteps){ // if where the last step...
@@ -415,7 +415,7 @@ class RCGCallManager{
 					stepRunning=stepRunning.parent; // goto next brother
 				} else if (stepRunning.running){ // if is running.... the call is finishing...
 					stepRunning.actStep++;  // act step is 0 (-1 + 1)
-					stepRunning=steps[stepRunning.actStep]; // next round will check actions for first step
+					stepRunning=subSteps[stepRunning.actStep]; // next round will check actions for first step
 				} else if (stepRunning.method!=""){ // if there is method setted....
 					if (nJumps==0){ // if not jumps remaining
 						bLocated=true; // ¡¡LOCATED!!

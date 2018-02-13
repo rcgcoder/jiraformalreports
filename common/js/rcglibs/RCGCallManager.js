@@ -509,7 +509,7 @@ class RCGCallManager{
 		if (ds.stack.length>0){
 			if ((typeof bJumpLast!=="undefined")&&(bJumpLast)){
 				ds.stack.pop();
-				return self.popCallback(aArgs,false);
+				return self.popCallback(aArgs);
 			} else {
 				var theCallback=ds.stack.pop();
 				if (theCallback.isChangeObj){
@@ -591,7 +591,7 @@ class RCGCallManager{
 					auxArgs=[auxArgs];
 				}
 				cm.object=antObj;
-				cm.popCallback(auxArgs,false);
+				cm.popCallback(auxArgs);
 			}
 			var chObj=cm.addStep(description+" changeObj",changeObjectStep,"");
 			chObj.isChangeObj=true;

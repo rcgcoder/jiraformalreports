@@ -665,7 +665,7 @@ class RCGZippedApp{
 				log("Deploying Zip:"+ theDeploy.relativePath);
 				self.deploy(theDeploy);
 			});
-//			self.popCallback();
+			self.popCallback();
 		}
 		var cm=self.pushCallback(fncDeploy,undefined,true,barrier);
 		cm.callMethod(); // start

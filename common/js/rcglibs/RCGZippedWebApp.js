@@ -646,6 +646,7 @@ class RCGZippedApp{
 
 
 	loadZipEngine(){
+		var self=this;
 		if (typeof zip==="undefined"){
 			log("Zip engine is not running.... loading");
 			var arrFiles=["js/libs/jquery-3.3.1.min.js",

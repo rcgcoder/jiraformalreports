@@ -608,8 +608,8 @@ class RCGZippedApp{
 	}
 	loadRemoteFiles(arrRelativePaths){
 		var self=this;
-//		self.loadRemoteFileIteration(arrRelativePaths,0);
-		self.loadRemoteFileForks(arrRelativePaths);
+		self.loadRemoteFileIteration(arrRelativePaths,0);
+		//self.loadRemoteFileForks(arrRelativePaths);
 	}
 	checkForDeploys(iFile){
 		var self=this;
@@ -643,6 +643,80 @@ class RCGZippedApp{
 			self.checkForDeploys(iZip+1);
 		}
 	}
+
+
+	loadZipEngine(){
+		if (typeof zip==="undefined"){
+			log("Zip engine is not running.... loading");
+			var arrFiles=["js/libs/jquery-3.3.1.min.js",
+				          "js/libs/zip/zip.js"
+	//			  ,"js/libs/zip/zip-ext.js"
+				  ];
+			return self.loadRemoteFiles(arrFiles);
+		} else {
+			return self.popCallback();
+		}
+	}
+	deployZipFork(theDeploy,barrier){
+		var self=this;
+		var fncDeploy=function(){
+			log("Deploying Zip:"+ theDeploy.relativePath);
+			self.deploy(theDeploy)
+		}
+		var cm=self.pushCallback(fncDeploy,undefined,true,barrier);
+		cm.callMethod(); // start
+	}
+	checkForDeploysForked(){
+		var self=this;
+		
+		var tLastDeploy=0;
+		if (self.lastDeployInfo!=""){
+			tLastDeploy=self.lastDeployInfo.date;
+		}
+		
+		var bNotUpdate=true;
+		var bFirstDeployToAdd=true;
+		var barrier;
+		var arrDeploysToUpdate=[];
+		for (var i=0;i<self.DeployZips.length;i++){
+			var theDeploy=self.DeployZips[i];
+			if ((theDeploy.deployedDate=="")  // never deployed
+				||
+			   (theDeploy.commitDate>theDeploy.deployedDate)){ // new release
+				// needs to be deployed
+				bNotUpdate=false;
+				if (bFirstDeployToAdd){ // the first deploy creates the barrier, the fork and adds the step to load the zip engine
+					bFirstDeployToAdd=false;
+					// creating the barrier
+					var actForkId=self.callManager.getRunningForkId();
+					var fncBarrierFinish=function(){
+						log("Barrier Finished:" + actForkId);
+						self.callManager.setRunningForkId(actForkId);
+						self.popCallback();
+					}
+					var barrier=new RCGBarrier(fncBarrierFinish);
+					// loading the zips...
+					self.addStep("Loading Zip Engine...",function(){
+						self.loadZipEngine();
+					});
+				}
+				arrDeploysToUpdate.push(theDeploy);
+			} else {
+				log("the deploy: "+ theDeploy.relativePath+ " is up to date");
+			}
+		}
+		if (arrDeploysToUpdate.length>0){
+			self.addStep("Deploying Zips...",function(){
+				for (var i=0;i<arrDeploysToUpdate.length;i++){
+					var theDeploy=arrDeploysToUpdate[i];
+					self.deployZipFork(theDeploy,barrier);
+				}
+			});
+			self.callManager.runSteps();
+		}
+	}
+
+
 	updateFilesFromCommits(){
 		var self=this;
 		var minZipCommitDate;
@@ -859,7 +933,7 @@ class RCGZippedApp{
 		if (typeof zip==="undefined"){
 			log("Zip engine is not running.... loading");
 			var arrFiles=["js/libs/jquery-3.3.1.min.js",
-				  "js/libs/zip/zip.js"
+				          "js/libs/zip/zip.js"
 //				  ,"js/libs/zip/zip-ext.js"
 				  ];
 			self.pushCallback(function(){

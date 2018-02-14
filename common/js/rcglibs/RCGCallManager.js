@@ -49,6 +49,7 @@ class RCGCallManager{
 		self.barrier="";
 		self.rootManager="";
 		self.runningForkId="";
+		self.runningLastCall="";
 		//self.extendObject(obj);
 		self.asyncPops=true;
 	}
@@ -74,6 +75,22 @@ class RCGCallManager{
 			self.runningForkId=forkId;
 		} else {
 			self.rootManager.runningForkId=forkId;
+		}
+	}
+	getLastRunningCall(){
+		var self=this;
+		if (self.rootManager==""){
+			return self.runningLastCall; 
+		} else {
+			return self.rootManager.runningLastCall;
+		}
+	}
+	setRunningLastCall(theCall){
+		var self=this;
+		if (self.rootManager==""){
+			self.runningLastCall=theCall;
+		} else {
+			self.rootManager.runningLastCall=theCall;
 		}
 	}
 	getStatus(){
@@ -343,8 +360,10 @@ class RCGCallManager{
 			newArgs=[aArgs];
 		}
 		var theForkId=self.forkId;
+		var theCall=self;
 		var fncApply=function(){
 			self.setRunningForkId(theForkId);
+			self.setRunningLastCall(theCall);
 			theMethod.apply(context,newArgs);
 		}
 		if (self.asyncPops) {
@@ -570,6 +589,7 @@ class RCGCallManager{
 	}
 	extended_addStep(description,method,progressMin,progressMax,newObj){
 		var self=this;
+		log("Adding Step:["+description+"]");
 		var cm=self.callManager.getRunningCall();
 		var theObj=newObj;
 		if (typeof newObj==="undefined"){

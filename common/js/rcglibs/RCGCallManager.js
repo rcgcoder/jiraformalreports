@@ -80,7 +80,11 @@ class RCGCallManager{
 	getRunningLastCall(){
 		var self=this;
 		if (self.rootManager==""){
-			return self.runningLastCall; 
+			if (self.runningLastCall==""){
+				return self;
+			} else {
+				return self.runningLastCall; 
+			}
 		} else {
 			return self.rootManager.runningLastCall;
 		}
@@ -234,6 +238,7 @@ class RCGCallManager{
 	}
 	getDeepStep(){
 		var self=this;
+		return getRunningLastCall();
 		if (self.steps.length==0) return self;
 		if (self.actStep>=self.steps.length) return self;
 		if (self.actStep<0) return self;

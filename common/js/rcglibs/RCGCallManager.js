@@ -234,6 +234,7 @@ class RCGCallManager{
 	}
 	getDeepStep(){
 		var self=this;
+		return self.getRunningLastCall();
 		if (self.steps.length==0) return self;
 		if (self.actStep>=self.steps.length) return self;
 		if (self.actStep<0) return self;

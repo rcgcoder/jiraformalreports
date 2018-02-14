@@ -662,9 +662,6 @@ class RCGZippedApp{
 	deployZipFork(theDeploy,barrier){
 		var self=this;
 		var fncDeploy=function(){
-			self.pushCallback(function(){ // to store the steps
-				self.popCallback();
-			});
 			log("Deploying Zip:"+ theDeploy.relativePath);
 			self.deploy(theDeploy);
 		}

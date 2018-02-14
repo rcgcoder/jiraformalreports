@@ -77,7 +77,7 @@ class RCGCallManager{
 			self.rootManager.runningForkId=forkId;
 		}
 	}
-	getLastRunningCall(){
+	getRunningLastCall(){
 		var self=this;
 		if (self.rootManager==""){
 			return self.runningLastCall; 

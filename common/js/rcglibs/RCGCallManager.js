@@ -254,6 +254,7 @@ class RCGCallManager{
 	}
 	getRunningCall(){
 		var self=this;
+		return self.getRunningLastCall();
 		var stepRunning=self.getDeepStep();
 		for (var i=(stepRunning.stack.length-1);i>=0;i--){
 			var cb=stepRunning.stack[i];

@@ -121,7 +121,7 @@
 			 var sRepo="rcgcoder/jiraformalreports";
 			 var commitId="";
 			 var commitDate="";
-			 var sRCGCallManager="js/rcglibs/RCGCallManager.js";
+			 var sRCGTaskManager="js/rcglibs/RCGTaskManager.js";
 			 var sRCGZipWebAppClass="js/rcglibs/RCGZippedWebApp.js";
 			 var appMainJs="js/ZipWebApp.js";
 			 var appMainClass="ZipWebApp";
@@ -149,7 +149,7 @@
 				 commitId=sCommitId;
 				 commitDate=tCommitDate;
 				 
-				 var sUrlCM=rootPath+"/"+sRepo+"/"+commitId+"/common/"+sRCGCallManager;
+				 var sUrlCM=rootPath+"/"+sRepo+"/"+commitId+"/common/"+sRCGTaskManager;
 				 getJavaScriptFile(sUrlCM,function(jsContent){
 					 loadJavaScriptFile(jsContent,function(){
 						 var sUrlJs=rootPath+"/"+sRepo+"/"+commitId+"/common/"+sRCGZipWebAppClass;

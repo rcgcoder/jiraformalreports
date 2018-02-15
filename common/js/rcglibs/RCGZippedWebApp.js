@@ -9,9 +9,9 @@ Class for download a Zip File with a lot of js files.
  * 
  */
 function log(sText){
-	var cm=callManager;
-	if ((typeof cm!=="undefined")&&(cm!=null)&&(cm!="")){
-		console.log(cm.getRunningForkId()+" - "+sText);
+	var tm=taskManager;
+	if ((typeof tm!=="undefined")&&(tm!=null)&&(tm!="")){
+		console.log(tm.getRunningForkId()+" - "+sText);
 	} else {
 		console.log("Error in getrootforkid");
 	}
@@ -66,7 +66,7 @@ class GitHub{
 		self.ghCode="";
 		self.headerAuth="";
 		self.ghStateString="_ungues";
-		callManager.extendObject(self);
+		taskManager.extendObject(self);
 	}
 	loadError(oError){
 	    throw new URIError("The file " + oError.target.src + " is not accessible.");
@@ -224,7 +224,7 @@ class RCGZippedApp{
 		self.mainClass="";
 		self.bWithPersistentStorage=isChrome();
 		self.localStorageMaxSize=200*1024*1024; // 200 MBytes by default
-		callManager.extendObject(self);
+		taskManager.extendObject(self);
 		log("ZippedApp Created");
 		self.requestFileSystem = window.webkitRequestFileSystem 
 								|| window.mozRequestFileSystem 
@@ -232,7 +232,7 @@ class RCGZippedApp{
 		self.storage="";
 		self.loadedFiles={"rcglibs/RCGZippedWebApp.js":true};
 		var fncShowStatus=function(){
-			var status=self.callManager.getStatus();
+			var status=self.getStatus();
 			log("Total Advance:"+status.desc+":"+Math.round(status.perc*100)+"%");
 			var child=status.child;
 			while (typeof child!=="undefined"){
@@ -596,10 +596,10 @@ class RCGZippedApp{
 	}
 	loadRemoteFileForks(arrRelativePaths){
 		var self=this;
-		var actForkId=self.callManager.getRunningForkId();
+		var actTask=taskManager.getRunningTask();
 		var fncBarrierFinish=function(){
-			log("Barrier Finished:" + actForkId);
-			self.callManager.setRunningForkId(actForkId);
+			log("Barrier Finished:" + actTask.forkId);
+			self.setRunningTask(actTask);
 			self.popCallback();
 		}
 		var barrier=new RCGBarrier(fncBarrierFinish,arrRelativePaths.length);
@@ -638,7 +638,7 @@ class RCGZippedApp{
 			self.addStep("Checking for other Deploying Zip:"+ iZip,function(){
 				self.checkForDeploys(iZip+1);
 			});
-			self.callManager.runSteps();
+			self.taskManager.runSteps();
 		} else {
 			log("the deploy: "+ theDeploy.relativePath+ " is up to date");
 			self.checkForDeploys(iZip+1);
@@ -690,10 +690,10 @@ class RCGZippedApp{
 				if (bFirstDeployToAdd){ // the first deploy creates the barrier, the fork and adds the step to load the zip engine
 					bFirstDeployToAdd=false;
 					// creating the barrier
-					var actForkId=self.callManager.getRunningForkId();
+					var actTask=taskManager.getRunningTask();
 					var fncBarrierFinish=function(){
-						log("Barrier Finished:" + actForkId);
-						self.callManager.setRunningForkId(actForkId);
+						log("Barrier Finished:" + actTask.forkId);
+						self.taskManager.setRunningForkId(actTask);
 						self.popCallback();
 					}
 					var barrier=new RCGBarrier(fncBarrierFinish);
@@ -714,7 +714,7 @@ class RCGZippedApp{
 					self.deployZipFork(theDeploy,barrier);
 				}
 			});
-			self.callManager.runSteps();
+			self.taskManager.runSteps();
 		}
 	}
 
@@ -869,7 +869,7 @@ class RCGZippedApp{
 		self.addStep("Starting Persistence...",self.startPersistence);
 		self.addStep("Updating Deploy Zips...",self.updateDeployZips);
 		self.addStep("Starting Application...",self.startApplication);
-		self.callManager.runSteps();
+		self.taskManager.runSteps();
 		 
 	}
 	onerror(message) {

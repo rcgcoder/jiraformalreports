@@ -318,16 +318,17 @@ class RCGTaskManager{
 		var runningTask=self.getRunningTask();
 		var fork=self.newTask(method,obj,description,progressMin,progressMax,totalWeight,methodWeight);
 		fork.forkId=self.newForkId();
-		fork.barrier=barrier;
-		fork.barrier.add(fork);
 		var task=self.getRunningTask();
 		task.innerForks.push(fork);
 		self.innerForks.push(fork);
 		if (typeof barrier!=="undefined"){
-			fork.pushCallback(function(){
+			fork.barrier=barrier;
+			fork.barrier.add(fork);
+			// there is not necesary to include a reach callback.... the next method launches automatically
+			/*fork.pushCallback(function(){
 				barrier.reach(fork);
 				fork.popCallback();
-			});
+			});*/
 		}
 		var innerBarrier;
 		if (runningTask.barrier==""){

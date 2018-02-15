@@ -516,9 +516,8 @@ class RCGTaskManager{
 					log("Impossible situation.... the fork has to be in the step array of the parent");
 				} else { // remove the parent step of the fork
 					parent.steps.splice(iStep, 1);
-					parent.actStep--; // backward the actual step
 					var continueTask=parent;
-					if (iStep>=0){
+					if (parent.actStep<parent.steps.length){
 						continueTask=parent.steps[parent.actStep];
 					}
 					setTimeout(function(){ // continue to next task

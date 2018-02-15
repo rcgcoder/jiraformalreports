@@ -372,7 +372,7 @@ class RCGTaskManager{
 			self.globalForks.push(task);
 		} else {
 			var rtask=self.getRunningTask();
-			rTask.steps.unshift(task); // set the new task in the first step
+			task.steps.unshift(task); // set the new task in the first step
 		}
 		return task;
 	}

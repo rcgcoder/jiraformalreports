@@ -350,10 +350,9 @@ class RCGTaskManager{
 		
 		
 		
-		var task=self.getRunningTask();
-		task.innerForks.push(fork);
+		runningTask.innerForks.push(fork);
 		self.innerForks.push(fork);
-		self.steps.push(fork);
+		runningTask.steps.push(fork);
 		if (typeof barrier!=="undefined"){
 			fork.barrier=barrier;
 			fork.barrier.add(fork);

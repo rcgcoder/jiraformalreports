@@ -682,6 +682,10 @@ class RCGZippedApp{
 					bFirstDeployToAdd=false;
 					// loading the zips...
 					self.addStep("Loading Zip Engine...",self.loadZipEngine);
+					self.addStep("Finished Loading Zip Engine...",function(aArgs){
+						log("Finished Loading Zip Engine...");
+						self.popCalback(aArgs);
+					});
 				}
 				arrDeploysToUpdate.push(theDeploy);
 			} else {

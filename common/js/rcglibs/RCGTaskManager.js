@@ -36,6 +36,7 @@ class RCGTask{
 		self.description="";
 		self.method="";
 		self.isCallBack=false;
+		self.isFork=false;
 		self.parent="";
 		self.forkId="";
 		self.actStep=-1;
@@ -302,6 +303,18 @@ class RCGTaskManager{
 		var fork=self.newTask(method,obj,description,progressMin,progressMax,totalWeight,methodWeight);
 		fork.parent="";
 		fork.forkId=self.newForkId();
+		fork.isFork=true;
+		var iTotalWeight=0;
+		var iMethodWeight=0;
+		if (typeof totalWeight!=="undefined"){
+			iTotalWeight=totalWeight;
+		}
+		if (typeof methodWeight!=="undefined"){
+			iMethodWeight=methodWeight;
+		}
+		fork.weight=iTotalWeight;
+		fork.methodWeight=iMethodWeight;
+		
 		fork.barrier=barrier;
 		fork.barrier.add();
 		self.globalForks.push(fork);
@@ -317,7 +330,23 @@ class RCGTaskManager{
 		var self=this;
 		var runningTask=self.getRunningTask();
 		var fork=self.newTask(method,obj,description,progressMin,progressMax,totalWeight,methodWeight);
+
 		fork.forkId=self.newForkId();
+		fork.isFork=true;
+
+		var iTotalWeight=0;
+		var iMethodWeight=0;
+		if (typeof totalWeight!=="undefined"){
+			iTotalWeight=totalWeight;
+		}
+		if (typeof methodWeight!=="undefined"){
+			iMethodWeight=methodWeight;
+		}
+		fork.weight=iTotalWeight;
+		fork.methodWeight=iMethodWeight;
+		
+		
+		
 		var task=self.getRunningTask();
 		task.innerForks.push(fork);
 		self.innerForks.push(fork);
@@ -345,6 +374,8 @@ class RCGTaskManager{
 		innerBarrier.add(fork);
 		return fork;
 	}
+	
+	
 	searchForFork(forkId){
 		var self=this;
 		for (var i=0;i<self.globalForks.length;i++){
@@ -426,8 +457,8 @@ class RCGTaskManager{
 			bWithSubSteps=(nSteps>0);
 			if ((iSubStep>=0)&&(iSubStep<nSteps)) { // Phase 2..steps.... 
 													// it´s running a intermediate step...
-				var nextStep=subSteps[iSubStep];   // setting the actual step to identify the task to process in next round
-				if (nextStep.done){ // if the next step is done....
+				var actStep=subSteps[iSubStep];   // setting the actual step to identify the task to process in next round
+				if (actStep.done){ // if the next step is done....
 					stepRunning.actStep++; 
 					if (stepRunning.actStep>=nSteps){ // if where the last step...
 						stepRunning.running=false;  // the step was finished... now is not running (ensure)
@@ -439,11 +470,11 @@ class RCGTaskManager{
 							stepRunning=stepRunning.parent; // next round have to check a brother step... method probably...
 						}
 					}
-				} else { // if next step is not done.... 
-					stepRunning=nextStep; //next round wil check the next step action to do (method, substeps)
+				} else { // if act step is not done.... 
+					stepRunning=actStep; //next round wil check the next step action to do (method, substeps)
 				}
 			} else if (iSubStep<0){ // if there is not steps running..Phase 0... ¿the method?
-				if ((!bWithSubSteps)&& (stepRunning.running)){ // if its running Method and there is not subSteps
+				if ((!bWithSubSteps)&&(stepRunning.running)){ // if its running Method and there is not subSteps
 					stepRunning.running=false;  // the call was executed
 					stepRunning.done=true;      // the call is done
 					if (stepRunning.barrier!=""){
@@ -472,7 +503,29 @@ class RCGTaskManager{
 			}
 		}
 		if (bLocated){
-			return stepRunning.callMethod(aArgs);
+			var taskToRun=stepRunning;
+			if (stepRunning.isFork){ // if the step is a fork.... 
+				// remove the step..... and continue
+				log ("Step running is fork": + stepRunning.description);
+				var parent=stepRunning.parent;
+				var iStep=parent.actStep;
+				if ((iStep<0)||(iStep>parent.steps.length)){
+					log("Impossible situation.... the fork has to be in the step array of the parent");
+				} else { // remove the parent step of the fork
+					parent.steps.splice(iStep, 1);
+					parent.actStep--; // backward the actual step
+					var continueTask=parent;
+					if (iStep>=0){
+						continueTask=parent.steps[parent.actStep];
+					}
+					setTimeout(function(){ // continue to next task
+						log("Continue running "+continueTask.description);
+						self.setRunningTask(continueTask);
+						self.next(aArgs,nJumps);
+					});
+				}
+			}
+			taskToRun.callMethod(aArgs);
 		} else {
 			log("¡¡FINISHED!!");
 			return "";
@@ -542,7 +595,7 @@ class RCGTaskManager{
 		}
 		runningTask.progress+=incVal;
 	}
-	extended_addStep(description,method,progressMin,progressMax,newObj,totalWeight,methodWeight){
+	extended_addStep(description,method,progressMin,progressMax,newObj,totalWeight,methodWeight,sForkType,barrier){
 		var self=this;
 		log("Adding Step:["+description+"]");
 		var tm=self.getTaskManager();
@@ -551,7 +604,7 @@ class RCGTaskManager{
 		if (typeof newObj==="undefined"){
 			theObj=self;
 		}
-		return tm.addStep(method,theObj,undefined,undefined,description,progressMin,progressMax,totalWeight,methodWeight);
+		return tm.addStep(method,theObj,sForkType,barrier,description,progressMin,progressMax,totalWeight,methodWeight);
 	}
 	extended_pushCallBack(method,newObj,sForkType,barrier,description,progressMin,progressMax,totalWeight,methodWeight){
 		var self=this;
@@ -561,15 +614,7 @@ class RCGTaskManager{
 		if (typeof newObj==="undefined"){
 			theObj=self;
 		}
-		var iTotalWeight=0;
-		if (typeof totalWeight!=="undefined"){
-			iTotalWeight=totalWeight;
-		}
-		var iMethodWeight=0;
-		if (typeof methodWeight!=="undefined"){
-			iMethodWeight=methodWeight;
-		}
-		return tm.pushCallback(method,theObj,sForkType,barrier,description,progressMin,progressMax,iTotalWeight,iMethodWeight);
+		return tm.pushCallback(method,theObj,sForkType,barrier,description,progressMin,progressMax,totalWeight,methodWeight);
 	}
 	extended_popCallback(aArgs,iJumps){
 		var self=this;

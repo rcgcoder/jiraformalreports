@@ -659,7 +659,7 @@ class RCGZippedApp{
 			return self.popCallback();
 		}
 	}
-	deployZipFork(theDeploy,barrier){
+	deployZipFork(theDeploy){
 		var self=this;
 		var fncDeploy=function(){
 			log("Deploying Zip:"+ theDeploy.relativePath);
@@ -689,18 +689,8 @@ class RCGZippedApp{
 				bNotUpdate=false;
 				if (bFirstDeployToAdd){ // the first deploy creates the barrier, the fork and adds the step to load the zip engine
 					bFirstDeployToAdd=false;
-					// creating the barrier
-					var actTask=taskManager.getRunningTask();
-					var fncBarrierFinish=function(){
-						log("Barrier Finished:" + actTask.forkId);
-						self.taskManager.setRunningForkId(actTask);
-						self.popCallback();
-					}
-					var barrier=new RCGBarrier(fncBarrierFinish);
 					// loading the zips...
-					self.addStep("Loading Zip Engine...",function(){
-						self.loadZipEngine();
-					});
+					self.addStep("Loading Zip Engine...",self.loadZipEngine);
 				}
 				arrDeploysToUpdate.push(theDeploy);
 			} else {
@@ -711,7 +701,7 @@ class RCGZippedApp{
 			self.addStep("Deploying Zips...",function(){
 				for (var i=0;i<arrDeploysToUpdate.length;i++){
 					var theDeploy=arrDeploysToUpdate[i];
-					self.deployZipFork(theDeploy,barrier);
+					self.deployZipFork(theDeploy);
 				}
 			});
 			self.continueTask();

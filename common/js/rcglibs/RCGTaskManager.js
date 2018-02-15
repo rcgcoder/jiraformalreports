@@ -300,6 +300,7 @@ class RCGTaskManager{
 	}
 	addGlobalFork(method,barrier,obj,description,progressMin,progressMax,totalWeight,methodWeight){
 		var self=this;
+		var runningTask=self.getRunningTask();
 		var fork=self.newTask(method,obj,description,progressMin,progressMax,totalWeight,methodWeight);
 		fork.parent="";
 		fork.forkId=self.newForkId();
@@ -314,11 +315,12 @@ class RCGTaskManager{
 		}
 		fork.weight=iTotalWeight;
 		fork.methodWeight=iMethodWeight;
-		
-		fork.barrier=barrier;
-		fork.barrier.add();
+		if (typeof barrier!=="undefined"){
+			fork.barrier=barrier;
+			fork.barrier.add(fork);
+		}
 		self.globalForks.push(fork);
-		self.steps.push(fork);
+		runningTask.steps.push(fork);
 		if (typeof barrier!=="undefined"){
 			fork.pushCallback(function(){
 				barrier.reach(self.getRunningTask());

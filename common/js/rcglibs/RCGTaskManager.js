@@ -99,9 +99,12 @@ class RCGTask{
 		if ((!Array.isArray(aArgs))&&(typeof aArgs!=="undefined")){
 			newArgs=[aArgs];
 		}
-		var theCall=self;
+		var theTask=self;
 		var fncApply=function(){
-			self.getTaskManager().setRunningTask(theCall);
+			self.getTaskManager().setRunningTask(theTask);
+			if (theTask.description!=""){
+				log("Calling method of task:"+theTask.description);
+			}
 			theMethod.apply(context,newArgs);
 		}
 		if (self.getTaskManager().asyncTaskCalls) {

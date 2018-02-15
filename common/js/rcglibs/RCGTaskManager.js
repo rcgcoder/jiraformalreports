@@ -8,9 +8,12 @@ class RCGBarrier{
 			self.nItems==nItems;
 			self.fixedItems=true;
 		}
+		self.tasksBarried=[]; // to debug barrier activity
+		self.tasksReached=[]; // to debug barrier activity
 	}
-	reach(){
+	reach(task){
 		var self=this;
+		self.tasksReached.push(task); // to debug activity
 		if (self.nItems<=0) {
 			log("You reached to barrier but no items asigned to. It´s a bug in your program... no callback is launched");
 			return;
@@ -20,8 +23,9 @@ class RCGBarrier{
 			setTimeout(self.callback);
 		} 
 	}
-	add(){
+	add(task){
 		var self=this;
+		salf.tasksBarried.push(task); // to debug barrier activity
 		if (self.fixedItem) return;
 		self.nItems++;
 	}
@@ -303,7 +307,7 @@ class RCGTaskManager{
 		self.globalForks.push(fork);
 		if (typeof barrier!=="undefined"){
 			fork.pushCallback(function(){
-				barrier.reach();
+				barrier.reach(self.getRunningTask());
 				fork.popCallback();
 			});
 		}
@@ -311,19 +315,33 @@ class RCGTaskManager{
 	}
 	addInnerFork(method,barrier,obj,description,progressMin,progressMax,totalWeight,methodWeight){
 		var self=this;
+		var runningTask=self.getRunningTask();
 		var fork=self.newTask(method,obj,description,progressMin,progressMax,totalWeight,methodWeight);
 		fork.forkId=self.newForkId();
 		fork.barrier=barrier;
-		fork.barrier.add();
+		fork.barrier.add(fork);
 		var task=self.getRunningTask();
 		task.innerForks.push(fork);
 		self.innerForks.push(fork);
 		if (typeof barrier!=="undefined"){
 			fork.pushCallback(function(){
-				barrier.reach();
+				barrier.reach(fork);
 				fork.popCallback();
 			});
 		}
+		var innerBarrier;
+		if (runningTask.barrier==""){
+			var fncBarrierOpen=function(){
+				self.setRunningTask(runningTask);
+				self.next();
+			}
+			innerBarrier=new Barrier(fncBarrierOpen);
+			innerBarrier.add(runningTask); // to reach the barrier at the end of the last step of the task
+			runningTask.barrier=innerBarrier;
+		} else {
+			innerBarrier=runningTask.barrier;
+		}
+		innerBarrier.add(fork);
 		return fork;
 	}
 	searchForFork(forkId){
@@ -407,13 +425,18 @@ class RCGTaskManager{
 			bWithSubSteps=(nSteps>0);
 			if ((iSubStep>=0)&&(iSubStep<nSteps)) { // Phase 2..steps.... 
 													// it´s running a intermediate step...
-				var nextStep=subSteps[iSubStep];   // setting the actual step to process in next round
+				var nextStep=subSteps[iSubStep];   // setting the actual step to identify the task to process in next round
 				if (nextStep.done){ // if the next step is done....
 					stepRunning.actStep++; 
 					if (stepRunning.actStep>=nSteps){ // if where the last step...
 						stepRunning.running=false;  // the step was finished... now is not running (ensure)
 						stepRunning.done=true;     // the step was finished .. now is done (ensure)
-						stepRunning=stepRunning.parent; // next round have to check a brother step... method probably...
+						if (stepRunning.barrier!=""){
+							// if where a barrier the jumps are avoided
+							return stepRunning.barrier.reach(stepRunning);
+						} else {
+							stepRunning=stepRunning.parent; // next round have to check a brother step... method probably...
+						}
 					}
 				} else { // if next step is not done.... 
 					stepRunning=nextStep; //next round wil check the next step action to do (method, substeps)
@@ -422,7 +445,12 @@ class RCGTaskManager{
 				if ((!bWithSubSteps)&& (stepRunning.running)){ // if its running Method and there is not subSteps
 					stepRunning.running=false;  // the call was executed
 					stepRunning.done=true;      // the call is done
-					stepRunning=stepRunning.parent; // goto next brother
+					if (stepRunning.barrier!=""){
+						// if where a barrier the jumps are avoided
+						return stepRunning.barrier.reach(stepRunning);
+					} else {
+						stepRunning=stepRunning.parent; // goto next brother
+					}
 				} else if (stepRunning.running){ // if is running.... the call is finishing...
 					stepRunning.actStep++;  // act step is 0 (-1 + 1)
 					stepRunning=subSteps[stepRunning.actStep]; // next round will check actions for first step

@@ -534,6 +534,9 @@ class RCGTaskManager{
 	extended_getRunningTask(){
 		return this.RCGTaskManager.getRunningTask();
 	}
+	extended_nextTask(aArgs,iJumpOps){
+		return this.RCGTaskManager.next(aArgs,iJumpOps);
+	}
 	extendObject(obj){
 		var self=this;
 		self.object=obj;
@@ -548,6 +551,7 @@ class RCGTaskManager{
 		obj.setRunningTask=self.extended_setRunningTask;
 		obj.getRunningTask=self.extended_getRunningTask;
 		obj.getTaskManagerStatus=self.extended_getTaskManagerStatus;
+		obj.nextTask=self.extended_nextTask;
 	}
 }
 var taskManager=new RCGTaskManager("Total Tasks");

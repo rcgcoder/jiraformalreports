@@ -143,7 +143,8 @@
 		 			 zipApp.addDeployZip("ZippedWebApp/jiraformalreports.zip","jiraformalreports-master/common/");
 					 zipApp.addDeployZip("ZippedWebApp/aui-flat-pack.zip");
 					 zipApp.setHtmlContainerID("JFR_Main_DIV");
-					 zipApp.run();
+					 zipApp.addStep("Running the ZipApp Engine",zipApp.run);
+					 zipApp.nextTask();
 			 }
 			 getLastCommit(sRepo,function(sCommitId,tCommitDate){
 				 commitId=sCommitId;

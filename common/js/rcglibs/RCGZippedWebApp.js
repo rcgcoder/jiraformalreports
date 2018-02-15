@@ -869,7 +869,7 @@ class RCGZippedApp{
 		self.addStep("Starting Persistence...",self.startPersistence);
 		self.addStep("Updating Deploy Zips...",self.updateDeployZips);
 		self.addStep("Starting Application...",self.startApplication);
-		self.taskManager.runSteps();
+		self.runTasks();
 		 
 	}
 	onerror(message) {

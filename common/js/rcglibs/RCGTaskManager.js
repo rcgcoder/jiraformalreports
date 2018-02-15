@@ -238,7 +238,7 @@ class RCGTaskManager{
 		if (typeof description!=="undefined"){
 			self.description=description;
 		}
-		self.gloabalForks=[]; // list of pseudothreaded global tasks
+		self.globalForks=[]; // list of pseudothreaded global tasks
 		self.innerForks=[];   // list of pseudothreaded inner forks (forks in a subtask)
 		self.runningTask="";
 		//self.extendObject(obj);

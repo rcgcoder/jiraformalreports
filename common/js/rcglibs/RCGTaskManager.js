@@ -506,7 +506,7 @@ class RCGTaskManager{
 		if (typeof newObj==="undefined"){
 			theObj=self;
 		}
-		var task=self.RCGTaskManager.addStep(method,theObj,undefined,undefined,description,progressMin,progressMax,totalWeight,methodWeight);
+		return self.RCGTaskManager.addStep(method,theObj,undefined,undefined,description,progressMin,progressMax,totalWeight,methodWeight);
 	}
 	extended_pushCallBack(method,newObj,sForkType,barrier,description,progressMin,progressMax,totalWeight,methodWeight){
 		var self=this;

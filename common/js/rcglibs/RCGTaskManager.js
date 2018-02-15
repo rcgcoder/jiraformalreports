@@ -264,7 +264,7 @@ class RCGTaskManager{
 	}
 	newTask(method,obj,description,progressMin,progressMax,totalWeight,methodWeight){
 		var self=this;
-		var bFirstTask=(self.forks.length==0);
+		var bFirstTask=(self.globalForks.length==0);
 		var lastForkId=self.getRunningForkId();
 		var lastTask=self.getRunningTask();
 		if (lastForkId==""){

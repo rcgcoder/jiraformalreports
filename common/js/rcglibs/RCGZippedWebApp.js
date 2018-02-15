@@ -666,7 +666,7 @@ class RCGZippedApp{
 			self.deploy(theDeploy);
 		}
 		var cm=self.pushCallback(fncDeploy,undefined,"inner",undefined,"Fork Deploy zip:"+theDeploy.relativePath);
-		cm.callMethod(); // start
+//		cm.callMethod(); // start
 	}
 	checkForDeploysForked(){
 		var self=this;

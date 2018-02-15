@@ -454,7 +454,7 @@ class RCGTaskManager{
 	extended_getTaskManagerStatus(){
 		var self=this;
 		var tm=self.RCGTaskManager;
-		if ((typeof tm !== "undefined") || (tm=="")){
+		if ((typeof tm === "undefined") || (tm=="")){
 			return "";
 		} 
 		var arrStatus=[];

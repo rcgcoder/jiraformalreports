@@ -232,7 +232,7 @@ class RCGZippedApp{
 		self.storage="";
 		self.loadedFiles={"rcglibs/RCGZippedWebApp.js":true};
 		var fncShowStatus=function(){
-			var status=self.getStatus();
+			var status=self.getTaskManagerStatus();
 			log("Total Advance:"+status.desc+":"+Math.round(status.perc*100)+"%");
 			var child=status.child;
 			while (typeof child!=="undefined"){

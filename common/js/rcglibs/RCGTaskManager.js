@@ -231,7 +231,7 @@ class RCGTask{
 	}
 
 }
-class RCGCallManager{
+class RCGTaskManager{
 	constructor(description){
 		var self=this;
 		self.description="";

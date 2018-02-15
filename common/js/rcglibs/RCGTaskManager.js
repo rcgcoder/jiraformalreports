@@ -451,7 +451,14 @@ class RCGTaskManager{
 		var self=this;
 		return self.next(aArgs,iJumps);
 	}
-	
+	extended_getTaskManager(){
+		var self=this;
+		var tm=self.RCGTaskManager;
+		if ((typeof tm === "undefined") || (tm=="")){
+			return "";
+		} 
+		return tm;
+	}
 	extended_getTaskManagerStatus(){
 		var self=this;
 		var tm=self.RCGTaskManager;
@@ -467,51 +474,57 @@ class RCGTaskManager{
 	
 	extended_createManagedCallback(fncTraditionalCallback){
 		var self=this;
-		var runningTask=self.RCGTaskManager.getRunningTask();
+		var tm=self.getTaskManager();
+		var runningTask=tm.getRunningTask();
 		var fncManagedCallback=function(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10){
-			self.RCGTaskManager.setRunningTask(runningTask);
-			log("Calling Traditional Callback in fork:"+forkId);
+			tm.setRunningTask(runningTask);
+			log("Calling Traditional Callback in fork:"+runningTask.forkId);
 			fncTraditionalCallback(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10);
 		}
 		return fncManagedCallback;
 	}
 	extended_setProgressMinMax(min,max){
 		var self=this;
-		var stepRunning=self.RCGTaskManager.getRunningTask();
-		stepRunning.progressMin=min;
-		stepRunning.progressMax=max;
+		var tm=self.getTaskManager();
+		var runningTask=tm.getRunningTask();
+		runningTask.progressMin=min;
+		runningTask.progressMax=max;
 	}
 	extended_setProgress(amount){
 		var self=this;
-		var stepRunning=self.RCGTaskManager.getRunningTask();
+		var tm=self.getTaskManager();
+		var runningTask=tm.getRunningTask();
 		var val=amount;
 		if (typeof val==="undefined"){
 			val=0;
 		}
-		stepRunning.progress=val;
+		runningTask.progress=val;
 	}
 	extended_incProgress(amount){
 		var self=this;
-		var stepRunning=self.RCGTaskManager.getRunningTask();
+		var tm=self.getTaskManager();
+		var runningTask=tm.getRunningTask();
 		var incVal=amount;
 		if (typeof incVal==="undefined"){
 			incVal=1;
 		}
-		stepRunning.progress+=incVal;
+		runningTask.progress+=incVal;
 	}
 	extended_addStep(description,method,progressMin,progressMax,newObj,totalWeight,methodWeight){
 		var self=this;
 		log("Adding Step:["+description+"]");
-		var stepRunning=taskManager.getRunningTask();
+		var tm=self.getTaskManager();
+		var runningTask=tm.getRunningTask();
 		var theObj=newObj;
 		if (typeof newObj==="undefined"){
 			theObj=self;
 		}
-		return self.RCGTaskManager.addStep(method,theObj,undefined,undefined,description,progressMin,progressMax,totalWeight,methodWeight);
+		return tm.addStep(method,theObj,undefined,undefined,description,progressMin,progressMax,totalWeight,methodWeight);
 	}
 	extended_pushCallBack(method,newObj,sForkType,barrier,description,progressMin,progressMax,totalWeight,methodWeight){
 		var self=this;
-		var cm=self.callManager;
+		var tm=self.getTaskManager();
+		var runningTask=tm.getRunningTask();
 		var theObj=newObj;
 		if (typeof newObj==="undefined"){
 			theObj=self;
@@ -524,20 +537,28 @@ class RCGTaskManager{
 		if (typeof methodWeight!=="undefined"){
 			iMethodWeight=methodWeight;
 		}
-		return self.RCGTaskManager.pushCallback(method,theObj,sForkType,barrier,description,progressMin,progressMax,iTotalWeight,iMethodWeight);
+		return tm.pushCallback(method,theObj,sForkType,barrier,description,progressMin,progressMax,iTotalWeight,iMethodWeight);
 	}
 	extended_popCallback(aArgs,iJumps){
-		return this.RCGTaskManager.popCallback(aArgs,iJumps);
+		var tm=self.getTaskManager();
+		var runningTask=tm.getRunningTask();
+		return tm.popCallback(aArgs,iJumps);
 	}
 	extended_setRunningTask(task){
-		this.RCGTaskManager.setRunningTask(task);
+		var tm=self.getTaskManager();
+		var runningTask=tm.getRunningTask();
+		tm.setRunningTask(task);
 	}
 	extended_getRunningTask(){
-		return this.RCGTaskManager.getRunningTask();
+		var tm=self.getTaskManager();
+		var runningTask=tm.getRunningTask();
+		return tm.getRunningTask();
 	}
 	extended_continueTask(aArgs,iJumps){
 		var self=this;
-		self.RCGTaskManager.next(aArgs,iJumps);
+		var tm=self.getTaskManager();
+		var runningTask=tm.getRunningTask();
+		tm.next(aArgs,iJumps);
 	}
 	extendObject(obj){
 		var self=this;
@@ -553,6 +574,7 @@ class RCGTaskManager{
 		obj.setRunningTask=self.extended_setRunningTask;
 		obj.getRunningTask=self.extended_getRunningTask;
 		obj.getTaskManagerStatus=self.extended_getTaskManagerStatus;
+		obj.getTaskManager=self.extended_getTaskManager();
 		obj.continueTask=self.extended_continueTask;
 	}
 }

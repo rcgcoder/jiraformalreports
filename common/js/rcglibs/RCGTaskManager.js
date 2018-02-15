@@ -540,16 +540,19 @@ class RCGTaskManager{
 		return tm.pushCallback(method,theObj,sForkType,barrier,description,progressMin,progressMax,iTotalWeight,iMethodWeight);
 	}
 	extended_popCallback(aArgs,iJumps){
+		var self=this;
 		var tm=self.getTaskManager();
 		var runningTask=tm.getRunningTask();
 		return tm.popCallback(aArgs,iJumps);
 	}
 	extended_setRunningTask(task){
+		var self=this;
 		var tm=self.getTaskManager();
 		var runningTask=tm.getRunningTask();
 		tm.setRunningTask(task);
 	}
 	extended_getRunningTask(){
+		var self=this;
 		var tm=self.getTaskManager();
 		var runningTask=tm.getRunningTask();
 		return tm.getRunningTask();

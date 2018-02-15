@@ -574,7 +574,7 @@ class RCGTaskManager{
 		obj.setRunningTask=self.extended_setRunningTask;
 		obj.getRunningTask=self.extended_getRunningTask;
 		obj.getTaskManagerStatus=self.extended_getTaskManagerStatus;
-		obj.getTaskManager=self.extended_getTaskManager();
+		obj.getTaskManager=self.extended_getTaskManager;
 		obj.continueTask=self.extended_continueTask;
 	}
 }

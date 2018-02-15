@@ -684,7 +684,7 @@ class RCGZippedApp{
 					self.addStep("Loading Zip Engine...",self.loadZipEngine);
 					self.addStep("Finished Loading Zip Engine...",function(aArgs){
 						log("Finished Loading Zip Engine...");
-						self.popCalback(aArgs);
+						self.continueTask(aArgs);
 					});
 				}
 				arrDeploysToUpdate.push(theDeploy);

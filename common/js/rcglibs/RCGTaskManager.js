@@ -28,6 +28,7 @@ class RCGBarrier{
 }
 class RCGTask{
 	constructor(taskManager,description,progressMin,progressMax,totalWeight,methodWeight){
+		var self=this;
 		self.description="";
 		self.method="";
 		self.isCallBack=false;

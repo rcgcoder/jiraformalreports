@@ -246,7 +246,7 @@ class RCGTaskManager{
 	}
 	getRunningForkId(){
 		var self=this;
-		var rtask=self.getRunningTask();
+		var rTask=self.getRunningTask();
 		if (rTask=="") return "";
 		return rTask.forkId; 
 	}

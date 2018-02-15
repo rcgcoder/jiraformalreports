@@ -366,6 +366,8 @@ class RCGTaskManager{
 		if (runningTask.barrier==""){
 			var fncBarrierOpen=function(){
 				self.setRunningTask(runningTask);
+				runningTask.running=false;
+				runningTask.done=true;
 				self.next();
 			}
 			innerBarrier=new RCGBarrier(fncBarrierOpen);
@@ -458,7 +460,16 @@ class RCGTaskManager{
 			nSteps=subSteps.length;
 			iSubStep=stepRunning.actStep;			
 			bWithSubSteps=(nSteps>0);
-			if ((iSubStep>=0)&&(iSubStep<nSteps)) { // Phase 2..steps.... 
+			if (iSubStep>nSteps){ // the actual task is reached the end of de steps
+				if ((stepRunning.innerForks.length>0)||(stepRunning.barrier!="")){
+					return stepRunning.barrier.reach(stepRunning);
+				} else {
+					stepRunning.running=false;
+					stepRunning.done=true;
+					stepRunning=stepRunning.parent;
+				}
+				
+			} else if ((iSubStep>=0)&&(iSubStep<nSteps)) { // Phase 2..steps.... 
 													// it´s running a intermediate step...
 				var actStep=subSteps[iSubStep];   // setting the actual step to identify the task to process in next round
 				if (actStep.done){ // if the next step is done....

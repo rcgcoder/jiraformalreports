@@ -25,7 +25,7 @@ class RCGBarrier{
 	}
 	add(task){
 		var self=this;
-		salf.tasksBarried.push(task); // to debug barrier activity
+		self.tasksBarried.push(task); // to debug barrier activity
 		if (self.fixedItem) return;
 		self.nItems++;
 	}

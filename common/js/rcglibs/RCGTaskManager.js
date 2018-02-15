@@ -547,7 +547,7 @@ class RCGTaskManager{
 		obj.createManagedCallback=self.extended_createManagedCallback;
 		obj.setRunningTask=self.extended_setRunningTask;
 		obj.getRunningTask=self.extended_getRunningTask;
-		obj.getTaskManagerStatus=self.getTaskManagerStatus;
+		obj.getTaskManagerStatus=self.extended_getTaskManagerStatus;
 	}
 }
 var taskManager=new RCGTaskManager("Total Tasks");

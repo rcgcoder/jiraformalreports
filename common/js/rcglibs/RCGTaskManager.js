@@ -108,7 +108,7 @@ class RCGTask{
 			theMethod.apply(context,newArgs);
 		}
 		if (self.getTaskManager().asyncTaskCalls) {
-			setTimeout(fncApply);
+			setTimeout(fncApply); //976 76 70 02 #9315# 
 		} else {
 			fncApply();
 		}
@@ -374,8 +374,8 @@ class RCGTaskManager{
 		if (self.globalForks.length==0){
 			self.globalForks.push(task);
 		} else {
-			var rtask=self.getRunningTask();
-			task.steps.unshift(task); // set the new task in the first step
+			var rTask=self.getRunningTask();
+			rTask.steps.unshift(task); // set the new task in the first step
 		}
 		return task;
 	}

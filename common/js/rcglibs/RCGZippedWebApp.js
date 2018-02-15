@@ -714,7 +714,7 @@ class RCGZippedApp{
 					self.deployZipFork(theDeploy,barrier);
 				}
 			});
-			self.taskManager.runSteps();
+			self.continueTask();
 		}
 	}
 

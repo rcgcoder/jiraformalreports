@@ -318,6 +318,7 @@ class RCGTaskManager{
 		fork.barrier=barrier;
 		fork.barrier.add();
 		self.globalForks.push(fork);
+		self.steps.push(fork);
 		if (typeof barrier!=="undefined"){
 			fork.pushCallback(function(){
 				barrier.reach(self.getRunningTask());
@@ -350,6 +351,7 @@ class RCGTaskManager{
 		var task=self.getRunningTask();
 		task.innerForks.push(fork);
 		self.innerForks.push(fork);
+		self.steps.push(fork);
 		if (typeof barrier!=="undefined"){
 			fork.barrier=barrier;
 			fork.barrier.add(fork);

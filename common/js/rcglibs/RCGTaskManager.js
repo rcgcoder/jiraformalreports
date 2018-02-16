@@ -475,12 +475,12 @@ class RCGTaskManager{
 				if (actStep.done){ // if the next step is done....
 					stepRunning.actStep++; 
 					if (stepRunning.actStep>=nSteps){ // if where the last step...
-						stepRunning.running=false;  // the step was finished... now is not running (ensure)
-						stepRunning.done=true;     // the step was finished .. now is done (ensure)
 						if (stepRunning.barrier!=""){
 							// if where a barrier the jumps are avoided
 							return stepRunning.barrier.reach(stepRunning);
 						} else {
+							stepRunning.running=false;  // the step was finished... now is not running (ensure)
+							stepRunning.done=true;     // the step was finished .. now is done (ensure)
 							stepRunning=stepRunning.parent; // next round have to check a brother step... method probably...
 						}
 					}

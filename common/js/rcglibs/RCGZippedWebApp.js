@@ -721,7 +721,8 @@ class RCGZippedApp{
 		});
 		self.addStep("All inner Forks Finished...",function(aArgs){
 			self.setRunningTask(runningTask);
-			log("Finish all inner Forks");
+			log("Finish all inner Forks.... it´s necesary to increment the number of items in barrier");
+			runningTask.barrier.add(runningTask);
 			self.continueTask(aArgs);
 		});
 		self.continueTask();

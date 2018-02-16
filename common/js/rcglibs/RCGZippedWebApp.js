@@ -659,6 +659,15 @@ class RCGZippedApp{
 			return self.popCallback();
 		}
 	}
+	addDeployFork(theDeploy){
+		var fncDeploy=function(){
+			var runningTask=self.getRunningTask();
+			log("Deploying Zip:"+ theDeploy.relativePath + "(Task "+runningTask.forkId+"name:"+runningTask.description+")");
+			self.deploy(theDeploy);
+		}
+		self.addStep("Fork Deploy zip:"+theDeploy.relativePath
+					,fncDeploy,undefined,undefined,"",undefined,undefined,"inner",undefined);
+	}
 	checkForDeploysForked(){
 		var self=this;
 		
@@ -695,13 +704,7 @@ class RCGZippedApp{
 		if (arrDeploysToUpdate.length>0){
 			for (var i=0;i<arrDeploysToUpdate.length;i++){
 				var theDeploy=arrDeploysToUpdate[i];
-				var fncDeploy=function(){
-					var runningTask=self.getRunningTask();
-					log("Deploying Zip:"+ theDeploy.relativePath + "(Task "+runningTask.forkId+"name:"+runningTask.description+")");
-					self.deploy(theDeploy);
-				}
-				self.addStep("Fork Deploy zip:"+theDeploy.relativePath
-							,fncDeploy,undefined,undefined,"",undefined,undefined,"inner",undefined);
+				self.addDeployFork(theDeploy);				
 			}
 			self.continueTask();
 		}

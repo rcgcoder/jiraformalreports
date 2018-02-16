@@ -380,7 +380,7 @@ class RCGTaskManager{
 		self.setRunningTask(fork);
 		self.pushCallback(function(){
 			self.setRunningTask(runningTask);
-			log("fork:" + fork.forkid+" has reached the finish Barrier");
+			log("fork:" + fork.forkId+" has reached the finish Barrier");
 			innerBarrier.reach(fork);
 			if (typeof barrier!=="undefined"){
 				barrier.reach(fork);

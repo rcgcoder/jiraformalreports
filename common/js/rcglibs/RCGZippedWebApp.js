@@ -714,7 +714,7 @@ class RCGZippedApp{
 			log("Finished launching inner FORKS...");
 			self.continueTask(aArgs);
 		});
-/*		self.addStep("Waiting inner Forks Finish...",function(aArgs){
+		self.addStep("Waiting inner Forks Finish...",function(aArgs){
 			self.setRunningTask(runningTask);
 			log("...");
 			self.getRunningTask().barrier.reach(self);
@@ -724,7 +724,7 @@ class RCGZippedApp{
 			log("Finish all inner Forks");
 			self.continueTask(aArgs);
 		});
-*/		self.continueTask();
+		self.continueTask();
 	}
 
 

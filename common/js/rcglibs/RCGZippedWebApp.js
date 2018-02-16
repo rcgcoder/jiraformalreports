@@ -676,6 +676,7 @@ class RCGZippedApp{
 		if (self.lastDeployInfo!=""){
 			tLastDeploy=self.lastDeployInfo.date;
 		}
+		var runningTask=self.getRunningTask();
 		
 		var bNotUpdate=true;
 		var bFirstDeployToAdd=true;
@@ -710,14 +711,17 @@ class RCGZippedApp{
 		}
 		self.getRunningTask().barrier.add(self);
 		self.addStep("Finished launching inner FORKS...",function(aArgs){
+			self.setRunningTask(runningTask);
 			log("Finished launching inner FORKS...");
 			self.continueTask(aArgs);
 		});
 		self.addStep("Waiting inner Forks Finish...",function(aArgs){
+			self.setRunningTask(runningTask);
 			log("...");
 			self.getRunningTask().barrier.reach(self);
 		});
 		self.addStep("All inner Forks Finished...",function(aArgs){
+			self.setRunningTask(runningTask);
 			log("Finish all inner Forks");
 			self.continueTask(aArgs);
 		});

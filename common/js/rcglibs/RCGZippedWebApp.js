@@ -660,6 +660,7 @@ class RCGZippedApp{
 		}
 	}
 	addDeployFork(theDeploy){
+		var self=this;
 		var fncDeploy=function(){
 			var runningTask=self.getRunningTask();
 			log("Deploying Zip:"+ theDeploy.relativePath + "(Task "+runningTask.forkId+"name:"+runningTask.description+")");

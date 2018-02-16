@@ -371,7 +371,7 @@ class RCGTaskManager{
 				self.next();
 			}
 			innerBarrier=new RCGBarrier(fncBarrierOpen);
-//			innerBarrier.add(runningTask); // to reach the barrier at the end of the last step of the task
+			innerBarrier.add(runningTask); // to reach the barrier at the end of the last step of the task
 			runningTask.barrier=innerBarrier;
 		} else {
 			innerBarrier=runningTask.barrier;

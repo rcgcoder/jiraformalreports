@@ -709,7 +709,6 @@ class RCGZippedApp{
 				self.addDeployFork(theDeploy);				
 			}
 		}
-		self.getRunningTask().barrier.add(self);
 		self.addStep("Finished launching inner FORKS...",function(aArgs){
 			self.setRunningTask(runningTask);
 			log("Finished launching inner FORKS...");

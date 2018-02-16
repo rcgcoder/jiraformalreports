@@ -377,6 +377,14 @@ class RCGTaskManager{
 			innerBarrier=runningTask.barrier;
 		}
 		innerBarrier.add(fork);
+		self.setRunningTask(fork);
+		self.pushCallback(function(){
+			innerBarrier.reach(fork);
+			if (typeof barrier!=="undefined"){
+				barrier.reach(fork);
+			}
+		});
+		self.setRunningTask(runningTask);
 		return fork;
 	}
 	

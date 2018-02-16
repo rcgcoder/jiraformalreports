@@ -532,8 +532,8 @@ class RCGTaskManager{
 						continueTask=parent.steps[parent.actStep];
 					}
 					setTimeout(function(){ // continue to next task
-						log("Continue running "+continueTask.description);
 						self.setRunningTask(continueTask);
+						log("Continue running "+continueTask.description);
 						self.next(aArgs,nJumps);
 					});
 				}

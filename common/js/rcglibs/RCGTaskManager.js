@@ -489,12 +489,12 @@ class RCGTaskManager{
 				}
 			} else if (iSubStep<0){ // if there is not steps running..Phase 0... ¿the method?
 				if ((!bWithSubSteps)&&(stepRunning.running)){ // if its running Method and there is not subSteps
-					stepRunning.running=false;  // the call was executed
-					stepRunning.done=true;      // the call is done
 					if (stepRunning.barrier!=""){
 						// if where a barrier the jumps are avoided
 						return stepRunning.barrier.reach(stepRunning);
 					} else {
+						stepRunning.running=false;  // the call was executed
+						stepRunning.done=true;      // the call is done
 						stepRunning=stepRunning.parent; // goto next brother
 					}
 				} else if (stepRunning.running){ // if is running.... the call is finishing...

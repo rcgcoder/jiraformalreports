@@ -708,8 +708,17 @@ class RCGZippedApp{
 				self.addDeployFork(theDeploy);				
 			}
 		}
+		self.getRunningTask().barrier.add(self);
 		self.addStep("Finished launching inner FORKS...",function(aArgs){
 			log("Finished launching inner FORKS...");
+			self.continueTask(aArgs);
+		});
+		self.addStep("Waiting inner Forks Finish...",function(aArgs){
+			log("...");
+			self.getRunningTask().barrier.reach(self);
+		});
+		self.addStep("All inner Forks Finished...",function(aArgs){
+			log("Finish all inner Forks");
 			self.continueTask(aArgs);
 		});
 		self.continueTask();

@@ -461,7 +461,7 @@ class RCGTaskManager{
 			iSubStep=stepRunning.actStep;			
 			bWithSubSteps=(nSteps>0);
 			if (iSubStep>=nSteps){ // the actual task is reached the end of de steps
-				if ((stepRunning.innerForks.length>0)||(stepRunning.barrier!="")){
+				if ((!stepRunning.done)&&((stepRunning.innerForks.length>0)||(stepRunning.barrier!=""))){
 					return stepRunning.barrier.reach(stepRunning);
 				} else {
 					stepRunning.running=false;

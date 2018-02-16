@@ -707,8 +707,12 @@ class RCGZippedApp{
 				var theDeploy=arrDeploysToUpdate[i];
 				self.addDeployFork(theDeploy);				
 			}
-			self.continueTask();
 		}
+		self.addStep("Finished launching inner FORKS...",function(aArgs){
+			log("Finished launching inner FORKS...");
+			self.continueTask(aArgs);
+		});
+		self.continueTask();
 	}
 
 

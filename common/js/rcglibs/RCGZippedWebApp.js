@@ -893,10 +893,10 @@ class RCGZippedApp{
 				var allTasksInfo=self.getTaskManagerStatus();
 				var fncAddProgressItem=function(item){
 					var sItem='<div id="statusBox" class="inline">'+
-					  '	  <span id="sbTitle"> ' + taskStatus.desc +
+					  '	  <span id="sbTitle"> ' + item.desc +
 					  '   </span>'+
 					  '   <br>'+
-					  '   <progress id="sbProgress" value="'+(Math.round(taskStatus.perc*100))+'" max="100">Progress Text</progress>'+
+					  '   <progress id="sbProgress" value="'+(Math.round(item.perc*100))+'" max="100">Progress Text</progress>'+
 					  '</div>';
 					var sSubItems="";
 					if (item.detail.length>0) {

@@ -80,7 +80,7 @@ class RCGTask{
 		if (self.parent!=""){
 			self.parent.changeStatus();
 		} else {
-			self.getTaskManager.changeStatus();
+			self.getTaskManager().changeStatus();
 		}
 	}
 	

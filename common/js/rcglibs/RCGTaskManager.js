@@ -466,7 +466,7 @@ class RCGTaskManager{
 		}
 		var bLocated=false;
 		while ((stepRunning!="")&&(!bLocated)){
-			self.setStepRunning(stepRunning);
+			self.setRunningTask(stepRunning);
 			subSteps=stepRunning.steps;
 			nSteps=subSteps.length;
 			iSubStep=stepRunning.actStep;			

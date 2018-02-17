@@ -910,6 +910,7 @@ class RCGZippedApp{
 		if (typeof iEntry==="undefined"){
 			iAct=0;
 		}
+		log("Saving zip entry " + iEntry + "/",arrEntries.length);
 		if (iAct>=arrEntries.length){
 			return self.popCallback();
 		} 

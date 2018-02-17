@@ -879,10 +879,19 @@ class RCGZippedApp{
 		self.getTaskManager().setOnChangeStatus(self.createManagedCallback(function(){
 			if (window.jQuery){
 				var progressDiv=$("#JFR_Progress_DIV");
+				var pDiv; 
 				if (progressDiv.length==0){
 					log("adding progress div");
-					var $div = $("<div id='JFR_Progress_DIV'>created</div>").appendTo('body');
-				} 
+					pDiv= $("<div id='JFR_Progress_DIV'>created</div>").appendTo('body');
+				} else {
+					pDiv=progressDiv;
+				}
+				pDiv.append($('<div id="statusBox">'+
+							  '	  <span id="sbTitle"> Title Text' +
+							  '   </span>'+
+							  '   <br>'+
+							  '   <progress id="sbProgress" value="22" max="100">Progress Text</progress>'+
+							  '</div>'));
 			}
 		}));
 		if ((self.github!="")&&((self.github.commitId=="")||(self.github.commitDate==""))){

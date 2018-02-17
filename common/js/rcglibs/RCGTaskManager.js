@@ -560,11 +560,9 @@ class RCGTaskManager{
 					if (parent.actStep<parent.steps.length){
 						continueTask=parent.steps[parent.actStep];
 					}
-					setTimeout(function(){ // continue to next task
-						self.setRunningTask(continueTask);
-						log("Continue running "+continueTask.description);
-						self.next(aArgs,nJumps);
-					});
+					log("Continue running "+continueTask.description+ "("+continueTask.forkId+")");
+					self.setRunningTask(continueTask);
+					self.next(aArgs,nJumps);
 				}
 			}
 			taskToRun.callMethod(aArgs);

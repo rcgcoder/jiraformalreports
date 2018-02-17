@@ -886,7 +886,7 @@ class RCGZippedApp{
 				} else {
 					pDiv=progressDiv;
 				}
-				pDiv.append($('<div id="statusBox">'+
+				pDiv.append($('<div id="statusBox" style="float:left;">'+
 							  '	  <span id="sbTitle"> Title Text' +
 							  '   </span>'+
 							  '   <br>'+

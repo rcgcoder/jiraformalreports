@@ -251,7 +251,7 @@ class RCGTaskManager{
 		self.innerForks=[];   // list of pseudothreaded inner forks (forks in a subtask)
 		self.runningTask="";
 		//self.extendObject(obj);
-		self.asyncTaskCalls=false;
+		self.asyncTaskCalls=true;
 	}
 	getRunningForkId(){
 		var self=this;

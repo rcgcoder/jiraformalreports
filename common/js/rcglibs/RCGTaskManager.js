@@ -129,7 +129,7 @@ class RCGTask{
 			theMethod.apply(context,newArgs);
 		}
 		if (self.getTaskManager().asyncTaskCalls) {
-			setTimeout(fncApply); //976 76 70 02 #9315# 
+			setTimeout(fncApply,500); //976 76 70 02 #9315# 
 		} else {
 			fncApply();
 		}

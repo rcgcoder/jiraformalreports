@@ -415,12 +415,16 @@ class RCGZippedApp{
 			//self.storage.set(sRelativePath,sStringContent);
 			self.storage.save();
 			filesystem.SaveFile(sRelativePath,sStringContent,
+				self.createManagedCallback(
 						function(e){
 							self.popCallback([sStringContent]);
-						},
+						}),
+				self.createManagedCallback(
 						function(e){
 							self.popCallback([""]);
-						});
+						})
+				);
+			
 			return sStringContent;
 		}
 		self.popCallback([sStringContent]);

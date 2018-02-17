@@ -910,8 +910,8 @@ class RCGZippedApp{
 					return sItem;
 				}
 				var sHtml="";
-				for (var i=0;i<allTaskInfo.length;i++){
-					sHtml+=fncAddProgressItem(allTaskInfo[0]);
+				for (var i=0;i<allTasksInfo.length;i++){
+					sHtml+=fncAddProgressItem(allTasksInfo[0]);
 				}
 				var list= $("<ul id='ProgressList'>"+
 							sHtml+

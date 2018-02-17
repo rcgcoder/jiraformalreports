@@ -882,11 +882,11 @@ class RCGZippedApp{
 				var pDiv; 
 				if (progressDiv.length==0){
 					log("adding progress div");
-					pDiv= $("<div id='JFR_Progress_DIV'>created</div>").appendTo('body');
+					pDiv= $("<div id='JFR_Progress_DIV'></div>").appendTo('body');
 				} else {
 					pDiv=progressDiv;
 				}
-				pDiv.append($('<div id="statusBox" style="float:left;">'+
+				pDiv.append($('<div id="statusBox" style="border:3,float:left;">'+
 							  '	  <span id="sbTitle"> Title Text' +
 							  '   </span>'+
 							  '   <br>'+

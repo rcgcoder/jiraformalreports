@@ -943,6 +943,7 @@ class RCGZippedApp{
 	deploy(deployInfo){ 
 		var self=this;
 		log("Deploying Zip:"+deployInfo.relativePath);
+		var runningTask=self.getRunningTask();
 		if (typeof zip==="undefined"){
 			log("Zip engine is not running.... loading");
 			var arrFiles=["js/libs/jquery-3.3.1.min.js",

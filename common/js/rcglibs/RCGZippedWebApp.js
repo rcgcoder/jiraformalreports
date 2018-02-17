@@ -887,6 +887,7 @@ class RCGZippedApp{
 				} else {
 					pDiv=progressDiv;
 				}
+				pDiv.empty();
 				pDiv.append($('<div id="statusBox" class="inline">'+
 							  '	  <span id="sbTitle"> Title Text añsdlkfjas ñlsad jfñlsakj fñsald jfñaslfd jsañlfd jsañlfd kjsafd' +
 							  '   </span>'+

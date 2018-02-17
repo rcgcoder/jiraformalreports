@@ -910,11 +910,12 @@ class RCGZippedApp{
 		if (typeof iEntry==="undefined"){
 			iAct=0;
 		}
-		log("Saving zip entry " + iAct+ "/" +arrEntries.length);
 		if (iAct>=arrEntries.length){
+			log("Saving zip entry Finished");
 			return self.popCallback();
 		} 
 		var params=arrEntries[iAct];
+		log("Saving zip entry " + iAct+ "/" +arrEntries.length + " -- "+ params.relativePath);
 		var model=params.model;
 		var entry=params.entry;
 		var fncSaveBlob=function (blob){

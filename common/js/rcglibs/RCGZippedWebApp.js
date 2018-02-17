@@ -895,6 +895,7 @@ class RCGZippedApp{
 				pDiv.empty();
 				var allTasksInfo=self.getTaskManagerStatus();
 				var fncAddProgressItem=function(item){
+					if (item.done) return "";
 					var sItem='<div id="statusBox" class="inline">'+
 					  '	  <span id="sbTitle"> ' + item.desc +
 					  '   </span>'+

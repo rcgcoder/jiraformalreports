@@ -918,21 +918,24 @@ class RCGZippedApp{
 		log("Saving zip entry " + iAct+ "/" +arrEntries.length + " -- "+ params.relativePath);
 		var model=params.model;
 		var entry=params.entry;
-		var fncSaveBlob=function (blob){
-			var reader = new FileReader();
-			reader.onload = function(e) {
-				  var content = reader.result;
-				  self.pushCallback(function (){
-					  self.saveZipEntries(arrEntries,iAct+1);  
-				  });
-				  self.saveFileToStorage(params.relativePath,content,params.type);
-			}		
-			if (params.type.isText){
-				reader.readAsText(blob);
-			} else {
-				reader.readAsArrayBuffer(blob);
-			}
-		}
+		var fncSaveBlob=
+			self.createManagedCallback(function (blob){
+				var reader = new FileReader();
+				reader.onload = 
+					self.createManagedCallback(function(e) {
+					  var content = reader.result;
+					  self.pushCallback(function (){
+						  self.saveZipEntries(arrEntries,iAct+1);  
+					  });
+					  self.saveFileToStorage(params.relativePath,content,params.type);
+					});
+				
+				if (params.type.isText){
+					reader.readAsText(blob);
+				} else {
+					reader.readAsArrayBuffer(blob);
+				}
+			});
 		var fncProgress=function(current, total) {
 //			log(current + "/" + total + "   " + Math.round((current/total)*100)+"%");
 		}

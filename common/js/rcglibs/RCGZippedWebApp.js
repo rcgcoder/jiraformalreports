@@ -920,6 +920,7 @@ class RCGZippedApp{
 		var entry=params.entry;
 		var fncSaveBlob=
 			self.createManagedCallback(function (blob){
+				log("save blob");
 				var reader = new FileReader();
 				reader.onload = 
 					self.createManagedCallback(function(e) {

@@ -880,8 +880,9 @@ class RCGZippedApp{
 			if (window.jQuery){
 				var progressDiv=$("#JFR_Progress_DIV");
 				if (progressDiv.length==0){
-					$( ".container" ).append( $( "<div id='JFR_Progress_DIV'>created</div>" ) );
-				}
+					log("adding progress div");
+					$(document).append( $( "<div id='JFR_Progress_DIV'>created</div>" ) );
+				} 
 			}
 		}));
 		if ((self.github!="")&&((self.github.commitId=="")||(self.github.commitDate==""))){

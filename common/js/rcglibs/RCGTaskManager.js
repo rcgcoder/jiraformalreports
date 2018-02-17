@@ -52,6 +52,7 @@ class RCGTask{
 		self.done=false;
 		self.barrier="";
 		self.taskManager=taskManager;
+		self.onChangeStatus="";
 		if (typeof description!=="undefined"){
 			self.description=description;
 		}
@@ -65,6 +66,21 @@ class RCGTask{
 		}
 		if (typeof methodWeight!=="undefined"){
 			self.methodWeight=methodWeight;
+		}
+	}
+	setOnChangeStatus(callback){
+		var self=this;
+		self.onChangeStatus=callback;
+	}
+	changeStatus(){
+		var self=this;
+		if (self.onChangeStatus!=""){
+			self.onChangeStatus();
+		}
+		if (self.parent!=""){
+			self.parent.changeStatus();
+		} else {
+			self.getTaskManager.changeStatus();
 		}
 	}
 	
@@ -250,9 +266,22 @@ class RCGTaskManager{
 		self.globalForks=[]; // list of pseudothreaded global tasks
 		self.innerForks=[];   // list of pseudothreaded inner forks (forks in a subtask)
 		self.runningTask="";
+		self.onChangeStatus="";
 		//self.extendObject(obj);
 		self.asyncTaskCalls=true;
 	}
+	setOnChangeStatus(callback){
+		var self=this;
+		self.onChangeStatus=callback;
+	}
+	changeStatus(){
+		var self=this;
+		if (self.onChangeStatus!=""){
+			self.onChangeStatus();
+		}
+	}
+	
+	
 	getRunningForkId(){
 		var self=this;
 		var rTask=self.getRunningTask();
@@ -473,10 +502,12 @@ class RCGTaskManager{
 			bWithSubSteps=(nSteps>0);
 			if (iSubStep>=nSteps){ // the actual task is reached the end of de steps
 				if ((!stepRunning.done)&&((stepRunning.innerForks.length>0)||(stepRunning.barrier!=""))){
+					stepRunning.changeStatus();
 					return stepRunning.barrier.reach(stepRunning);
 				} else {
 					stepRunning.running=false;
 					stepRunning.done=true;
+					stepRunning.changeStatus();
 					stepRunning=stepRunning.parent;
 				}
 				
@@ -501,6 +532,7 @@ class RCGTaskManager{
 						}else {
 							stepRunning.running=false;  // the step was finished... now is not running (ensure)
 							stepRunning.done=true;     // the step was finished .. now is done (ensure)
+							stepRunning.changeStatus();
 							stepRunning=stepRunning.parent; // next round have to check a brother step... method probably...
 						}
 					}
@@ -524,6 +556,7 @@ class RCGTaskManager{
 					} else {
 						stepRunning.running=false;  // the call was executed
 						stepRunning.done=true;      // the call is done
+						stepRunning.changeStatus();
 						stepRunning=stepRunning.parent; // goto next brother
 					}
 				} else if (stepRunning.running){ // if is running.... the call is finishing...
@@ -536,6 +569,7 @@ class RCGTaskManager{
 						nJumps--; // reduce njumps
 						stepRunning.running=false;  // the call was executed
 						stepRunning.done=true;      // the call is done
+						stepRunning.changeStatus();
 						stepRunning=stepRunning.parent; // goto next brother
 					}
 				} else if (stepRunning.parent!=""){ // if there is not method setted and is not the root callmanager

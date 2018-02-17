@@ -877,6 +877,7 @@ class RCGZippedApp{
 	}
 	run(){
 		var self=this;
+		var iTime=0;
 		self.getTaskManager().setOnChangeStatus(self.createManagedCallback(function(){
 			if (window.jQuery){
 				var progressDiv=$("#JFR_Progress_DIV");
@@ -887,9 +888,10 @@ class RCGZippedApp{
 				} else {
 					pDiv=progressDiv;
 				}
+				iTime++;
 				pDiv.empty();
 				pDiv.append($('<div id="statusBox" class="inline">'+
-							  '	  <span id="sbTitle"> Title Text añsdlkfjas ñlsad jfñlsakj fñsald jfñaslfd jsañlfd jsañlfd kjsafd' +
+							  '	  <span id="sbTitle"> Title Text '+ iTime +
 							  '   </span>'+
 							  '   <br>'+
 							  '   <progress id="sbProgress" value="22" max="100">Progress Text</progress>'+

@@ -892,7 +892,7 @@ class RCGZippedApp{
 				pDiv.empty();
 				var tasksInfo=self.getTaskManagerStatus();
 				for (var i=0;i<tasksInfo.length;i++){
-					taskStatus=tasksInfo[i];
+					var taskStatus=tasksInfo[i];
 					pDiv.append($('<div id="statusBox" class="inline">'+
 								  '	  <span id="sbTitle"> ' + taskStatus.desc +
 								  '   </span>'+

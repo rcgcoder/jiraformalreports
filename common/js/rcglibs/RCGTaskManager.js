@@ -377,7 +377,7 @@ class RCGTaskManager{
 			innerBarrier=runningTask.barrier;
 		}
 		innerBarrier.add(fork);
-		self.setRunningTask(fork);
+/*		self.setRunningTask(fork);
 		self.pushCallback(function(){
 			self.setRunningTask(runningTask);
 			log("fork:" + fork.forkId+" has reached the finish Barrier");
@@ -387,7 +387,7 @@ class RCGTaskManager{
 			}
 		});
 		self.setRunningTask(runningTask);
-		return fork;
+*/		return fork;
 	}
 	
 	

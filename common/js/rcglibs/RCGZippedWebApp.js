@@ -877,9 +877,12 @@ class RCGZippedApp{
 	run(){
 		var self=this;
 		self.getTaskManager().setOnChangeStatus(self.createManagedCallback(function(){
-			var progressDiv=$("#JFR_Progress_DIV");
-			if (progressDiv.length==0){
-				$( ".container" ).append( $( "<div id='JFR_Progress_DIV'>created</div>" ) );
+			var chkJQuery=jQuery;
+			if (typeof chkJQuery!=="undefined"){
+				var progressDiv=$("#JFR_Progress_DIV");
+				if (progressDiv.length==0){
+					$( ".container" ).append( $( "<div id='JFR_Progress_DIV'>created</div>" ) );
+				}
 			}
 		}));
 		if ((self.github!="")&&((self.github.commitId=="")||(self.github.commitDate==""))){

@@ -883,6 +883,9 @@ class RCGZippedApp{
 				var progressDiv=$("#JFR_Progress_DIV");
 				var pDiv; 
 				if (progressDiv.length==0){
+					log("minimice img");
+					$("#jrfSplash").width(100);
+					$("#jrfSplash").eight(100);
 					log("adding progress div");
 					pDiv= $("<div id='JFR_Progress_DIV'></div>").appendTo('body');
 				} else {

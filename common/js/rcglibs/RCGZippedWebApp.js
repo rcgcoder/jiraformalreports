@@ -890,7 +890,7 @@ class RCGZippedApp{
 				}
 				iTime++;
 				pDiv.empty();
-				var status=self.getTaskManager().getStatus();
+				var status=self.getTaskManagerStatus();
 				
 				pDiv.append($('<div id="statusBox" class="inline">'+
 							  '	  <span id="sbTitle"> Title Text '+ iTime +

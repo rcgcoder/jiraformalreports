@@ -890,12 +890,12 @@ class RCGZippedApp{
 				}
 				iTime++;
 				pDiv.empty();
-				var list=pDiv.append($("<ul>"));
+				var list=pDiv.append($("<ul id='ProgressList'>"));
 				
 				var tasksInfo=self.getTaskManagerStatus();
 				for (var i=0;i<tasksInfo.length;i++){
 					var taskStatus=tasksInfo[i];
-					list.append($('<li><div id="statusBox" class="inline">'+
+					$("#ProgressList").append($('<li><div id="statusBox" class="inline">'+
 								  '	  <span id="sbTitle"> ' + taskStatus.desc +
 								  '   </span>'+
 								  '   <br>'+

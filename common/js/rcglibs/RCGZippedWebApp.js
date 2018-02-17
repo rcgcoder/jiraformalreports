@@ -654,7 +654,8 @@ class RCGZippedApp{
 		var self=this;
 		if (typeof zip==="undefined"){
 			log("Zip engine is not running.... loading");
-			var arrFiles=["js/libs/jquery-3.3.1.min.js",
+			var arrFiles=["css/RCGTaskManager.css",
+						  "js/libs/jquery-3.3.1.min.js",
 				          "js/libs/zip/zip.js"
 	//			  ,"js/libs/zip/zip-ext.js"
 				  ];
@@ -886,7 +887,7 @@ class RCGZippedApp{
 				} else {
 					pDiv=progressDiv;
 				}
-				pDiv.append($('<div id="statusBox" style="border:3,float:left;">'+
+				pDiv.append($('<div id="statusBox" class="inline">'+
 							  '	  <span id="sbTitle"> Title Text' +
 							  '   </span>'+
 							  '   <br>'+

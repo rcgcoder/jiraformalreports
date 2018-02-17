@@ -891,18 +891,33 @@ class RCGZippedApp{
 				iTime++;
 				pDiv.empty();
 				var allTasksInfo=self.getTaskManagerStatus();
-					
-				var list= $("<ul id='ProgressList'>").appendTo(pDiv);
-				
-				for (var i=0;i<tasksInfo.length;i++){
-					var taskStatus=tasksInfo[i];
-					var item = $('<li class="progress"><div id="statusBox" class="inline">'+
-								  '	  <span id="sbTitle"> ' + taskStatus.desc +
-								  '   </span>'+
-								  '   <br>'+
-								  '   <progress id="sbProgress" value="'+(Math.round(taskStatus.perc*100))+'" max="100">Progress Text</progress>'+
-								  '</div></li>').appendTo(list);
+				var fncAddProgressItem=function(item){
+					var sItem='<div id="statusBox" class="inline">'+
+					  '	  <span id="sbTitle"> ' + taskStatus.desc +
+					  '   </span>'+
+					  '   <br>'+
+					  '   <progress id="sbProgress" value="'+(Math.round(taskStatus.perc*100))+'" max="100">Progress Text</progress>'+
+					  '</div>';
+					var sSubItems="";
+					if (item.detail.length>0) {
+						for (var i=0;i<itemDetail.length;i++){
+							var sSubItem=fncAddProgressItem(itemDetail[i]);
+							sSubItems+=sSubItem;
+						}
+						sSubItems="<ul>"+sSubItems+"</ul>";
+					}
+					sItem="<li class='progress'>"+sItem+sSubItems"</li>";
+					return sItem;
 				}
+				var sHtml="";
+				for (var i=0;i<allTaskInfo.length;i++){
+					sHtml+=fncAddProgressItem(allTaskInfo[0]);
+				}
+				var list= $("<ul id='ProgressList'>"+
+							sHtml+
+							"</ul>"
+							).appendTo(pDiv);
+				
 			}
 		}));
 		if ((self.github!="")&&((self.github.commitId=="")||(self.github.commitDate==""))){

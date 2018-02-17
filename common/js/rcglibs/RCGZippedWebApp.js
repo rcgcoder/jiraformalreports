@@ -895,7 +895,7 @@ class RCGZippedApp{
 				var tasksInfo=self.getTaskManagerStatus();
 				for (var i=0;i<tasksInfo.length;i++){
 					var taskStatus=tasksInfo[i];
-					$("#ProgressList").append($('<li><div id="statusBox" class="inline">'+
+					$("#ProgressList").append($('<li class="progress"><div id="statusBox" class="inline">'+
 								  '	  <span id="sbTitle"> ' + taskStatus.desc +
 								  '   </span>'+
 								  '   <br>'+

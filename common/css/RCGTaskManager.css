@@ -3,4 +3,7 @@ div.inline {
     margin: 3px;
     box-shadow: 2px 1px 5px 0px #2196F3;
 }
+li.progress {
+	list-style-type: none;
+}
 .clearBoth { clear:both; }

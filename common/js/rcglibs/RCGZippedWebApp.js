@@ -900,13 +900,13 @@ class RCGZippedApp{
 					  '</div>';
 					var sSubItems="";
 					if (item.detail.length>0) {
-						for (var i=0;i<itemDetail.length;i++){
-							var sSubItem=fncAddProgressItem(itemDetail[i]);
+						for (var i=0;i<item.detail.length;i++){
+							var sSubItem=fncAddProgressItem(item.detail[i]);
 							sSubItems+=sSubItem;
 						}
 						sSubItems="<ul>"+sSubItems+"</ul>";
 					}
-					sItem="<li class='progress'>"+sItem+sSubItems"</li>";
+					sItem='<li class="progress">'+sItem+' '+sSubItems+'</li>';
 					return sItem;
 				}
 				var sHtml="";

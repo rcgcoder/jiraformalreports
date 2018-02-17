@@ -891,12 +891,11 @@ class RCGZippedApp{
 				iTime++;
 				pDiv.empty();
 				var status=self.getTaskManagerStatus();
-				
 				pDiv.append($('<div id="statusBox" class="inline">'+
-							  '	  <span id="sbTitle"> Title Text '+ iTime +
+							  '	  <span id="sbTitle"> ' + status.desc +
 							  '   </span>'+
 							  '   <br>'+
-							  '   <progress id="sbProgress" value="22" max="100">Progress Text</progress>'+
+							  '   <progress id="sbProgress" value="'+(Math.round(status.perc*100))+'" max="100">Progress Text</progress>'+
 							  '</div>'));
 			}
 		}));

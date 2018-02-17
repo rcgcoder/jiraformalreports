@@ -890,17 +890,18 @@ class RCGZippedApp{
 				}
 				iTime++;
 				pDiv.empty();
-				var list=pDiv.append($("<ul id='ProgressList'>"));
+				var allTasksInfo=self.getTaskManagerStatus();
+					
+				var list= $("<ul id='ProgressList'>").appendTo(pDiv);
 				
-				var tasksInfo=self.getTaskManagerStatus();
 				for (var i=0;i<tasksInfo.length;i++){
 					var taskStatus=tasksInfo[i];
-					$("#ProgressList").append($('<li class="progress"><div id="statusBox" class="inline">'+
+					var item = $('<li class="progress"><div id="statusBox" class="inline">'+
 								  '	  <span id="sbTitle"> ' + taskStatus.desc +
 								  '   </span>'+
 								  '   <br>'+
 								  '   <progress id="sbProgress" value="'+(Math.round(taskStatus.perc*100))+'" max="100">Progress Text</progress>'+
-								  '</div></li>'));
+								  '</div></li>').appendTo(list);
 				}
 			}
 		}));

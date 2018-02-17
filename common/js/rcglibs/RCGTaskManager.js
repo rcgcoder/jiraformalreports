@@ -601,6 +601,7 @@ class RCGTaskManager{
 			}
 			taskToRun.callMethod(aArgs);
 		} else {
+			self.changeStatus();
 			log("¡¡FINISHED!!");
 			return "";
 		}

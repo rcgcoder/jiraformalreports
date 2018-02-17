@@ -108,7 +108,7 @@ class RCGTask{
 		var fncApply=function(){
 			self.getTaskManager().setRunningTask(theTask);
 			if (theTask.description!=""){
-				log("Calling method of task:"+theTask.description);
+				log("Calling method of task: "+theTask.description);
 			}
 			theMethod.apply(context,newArgs);
 		}
@@ -548,7 +548,7 @@ class RCGTaskManager{
 			var taskToRun=stepRunning;
 			if (stepRunning.isFork){ // if the step is a fork.... 
 				// remove the step..... and continue
-				log ("Step running is fork" + stepRunning.description);
+				log ("Step running is fork: " + stepRunning.description);
 				var parent=stepRunning.parent;
 				var iStep=parent.actStep;
 				if ((iStep<0)||(iStep>parent.steps.length)){

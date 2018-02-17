@@ -485,10 +485,19 @@ class RCGTaskManager{
 				if (actStep.done){ // if the next step is done....
 					stepRunning.actStep++; 
 					if (stepRunning.actStep>=nSteps){ // if where the last step...
-						if (stepRunning.barrier!=""){
+						var bReachBarrier=false;
+						if ((stepRunning.isFork)&&(stepRunning.parent!="")){ //its inner fork
+							stepRunning.parent.barrier.reach(stepRunning);
+							bReachBarrier=true;
+						} 
+						if (stepRunning.barrier!=""){ // waiting
+							stepRunning.barrier.reach(stepRunning);
+							bReachBarrier=true;
+						} 
+						if (bReachBarrier){
 							// if where a barrier the jumps are avoided
-							return stepRunning.barrier.reach(stepRunning);
-						} else {
+							return;
+						}else {
 							stepRunning.running=false;  // the step was finished... now is not running (ensure)
 							stepRunning.done=true;     // the step was finished .. now is done (ensure)
 							stepRunning=stepRunning.parent; // next round have to check a brother step... method probably...
@@ -499,9 +508,18 @@ class RCGTaskManager{
 				}
 			} else if (iSubStep<0){ // if there is not steps running..Phase 0... ¿the method?
 				if ((!bWithSubSteps)&&(stepRunning.running)){ // if its running Method and there is not subSteps
-					if (stepRunning.barrier!=""){
+					var bReachBarrier=false;
+					if ((stepRunning.isFork)&&(stepRunning.parent!="")){ //its inner fork
+						stepRunning.parent.barrier.reach(stepRunning);
+						bReachBarrier=true;
+					} 
+					if (stepRunning.barrier!=""){ // waiting
+						stepRunning.barrier.reach(stepRunning);
+						bReachBarrier=true;
+					} 
+					if (bReachBarrier){
 						// if where a barrier the jumps are avoided
-						return stepRunning.barrier.reach(stepRunning);
+						return;
 					} else {
 						stepRunning.running=false;  // the call was executed
 						stepRunning.done=true;      // the call is done

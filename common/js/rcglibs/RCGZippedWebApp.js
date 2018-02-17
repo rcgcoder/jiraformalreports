@@ -919,12 +919,11 @@ class RCGZippedApp{
 			return self.popCallback();
 		} 
 		var params=arrEntries[iAct];
-		log("Saving zip entry " + iAct+ "/" +arrEntries.length + " -- "+ params.relativePath);
+//		log("Saving zip entry " + iAct+ "/" +arrEntries.length + " -- "+ params.relativePath);
 		var model=params.model;
 		var entry=params.entry;
-		var fncSaveBlob=
-			self.createManagedCallback(function (blob){
-				log("save blob");
+		var fncSaveBlob=self.createManagedCallback(function (blob){
+//				log("save blob");
 				var reader = new FileReader();
 				reader.onload = 
 					self.createManagedCallback(function(e) {
@@ -1023,7 +1022,7 @@ class RCGZippedApp{
 						}
 						if ((oContentSaved=="") || 
 							(oContentSaved.saveDate<deployInfo.commitDate)){
-							log("Entry "+entry.filename + " will be saved as "+sRelativePath);
+	//						log("Entry "+entry.filename + " will be saved as "+sRelativePath);
 							jsonContent.commitId=deployInfo.commitId;
 							jsonContent.commitDate=deployInfo.commitDate;
 							arrFilesToSave.push({
@@ -1033,7 +1032,7 @@ class RCGZippedApp{
 												relativePath:sRelativePath
 												});
 						} else {
-							log(sRelativePath+" saved is newer");
+//							log(sRelativePath+" saved is newer");
 						}
 					}
 				});

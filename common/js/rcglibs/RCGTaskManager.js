@@ -603,7 +603,7 @@ class RCGTaskManager{
 		var runningTask=tm.getRunningTask();
 		var fncManagedCallback=function(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10){
 			tm.setRunningTask(runningTask);
-			log("Calling Traditional Callback in fork:"+runningTask.forkId);
+//			log("Calling Traditional Callback in fork:"+runningTask.forkId);
 			fncTraditionalCallback(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10);
 		}
 		return fncManagedCallback;

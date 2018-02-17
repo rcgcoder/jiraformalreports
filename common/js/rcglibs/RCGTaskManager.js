@@ -546,10 +546,11 @@ class RCGTaskManager{
 			}
 		}
 		if (bLocated){
+			self.setRunningTask(stepRunning);
 			var taskToRun=stepRunning;
 			if (stepRunning.isFork){ // if the step is a fork.... 
 				// remove the step..... and continue
-				log ("Step running is fork: " + stepRunning.description + "("+stepRunning.forkId+")");
+				log ("Running task is fork: " + stepRunning.description + "("+stepRunning.forkId+")");
 				var parent=stepRunning.parent;
 				var iStep=parent.actStep;
 				if ((iStep<0)||(iStep>parent.steps.length)){

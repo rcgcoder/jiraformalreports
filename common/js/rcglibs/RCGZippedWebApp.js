@@ -929,7 +929,7 @@ class RCGZippedApp{
 		}
 //		self.addStep("Starting Memory Monitor...",self.loadMemoryMonitor);
 		self.addStep("Starting Persistence...",self.startPersistence);
-//		self.addStep("Updating Deploy Zips...",self.updateDeployZips);
+		self.addStep("Updating Deploy Zips...",self.updateDeployZips);
 		self.addStep("Starting Application...",self.startApplication);
 		self.continueTask();
 		 

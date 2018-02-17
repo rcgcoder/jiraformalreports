@@ -877,8 +877,7 @@ class RCGZippedApp{
 	run(){
 		var self=this;
 		self.getTaskManager().setOnChangeStatus(self.createManagedCallback(function(){
-			var chkJQuery=jQuery;
-			if (typeof chkJQuery!=="undefined"){
+			if (jQuery){
 				var progressDiv=$("#JFR_Progress_DIV");
 				if (progressDiv.length==0){
 					$( ".container" ).append( $( "<div id='JFR_Progress_DIV'>created</div>" ) );

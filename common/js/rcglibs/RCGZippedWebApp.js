@@ -881,7 +881,7 @@ class RCGZippedApp{
 				var progressDiv=$("#JFR_Progress_DIV");
 				if (progressDiv.length==0){
 					log("adding progress div");
-					$(document).append( $( "<div id='JFR_Progress_DIV'>created</div>" ) );
+					var $div = $("<div id='JFR_Progress_DIV'>created</div>").appendTo('body');
 				} 
 			}
 		}));

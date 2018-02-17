@@ -945,7 +945,7 @@ class RCGZippedApp{
 		var self=this;
 		log("Deploying Zip:"+deployInfo.relativePath);
 		var runningTask=self.getRunningTask();
-		if (typeof zip==="undefined"){
+/*		if (typeof zip==="undefined"){
 			log("Zip engine is not running.... loading");
 			var arrFiles=["js/libs/jquery-3.3.1.min.js",
 				          "js/libs/zip/zip.js"
@@ -956,7 +956,7 @@ class RCGZippedApp{
 			});
 			return self.loadRemoteFiles(arrFiles);
 		}
-		zip.useWebWorkers=true;
+*/		zip.useWebWorkers=true;
 		zip.workerScriptsPath = 'js/libs/zip/';
 		/*zip.workerScripts = {
 				  deflater: [workerScriptsPath+'/z-worker.js', workerScriptsPath+'/deflate.js'],

@@ -890,13 +890,16 @@ class RCGZippedApp{
 				}
 				iTime++;
 				pDiv.empty();
-				var status=self.getTaskManagerStatus();
-				pDiv.append($('<div id="statusBox" class="inline">'+
-							  '	  <span id="sbTitle"> ' + status.desc +
-							  '   </span>'+
-							  '   <br>'+
-							  '   <progress id="sbProgress" value="'+(Math.round(status.perc*100))+'" max="100">Progress Text</progress>'+
-							  '</div>'));
+				var tasksInfo=self.getTaskManagerStatus();
+				for (var i=0;i<tasksInfo.length;i++){
+					taskStatus=tasksInfo[i];
+					pDiv.append($('<div id="statusBox" class="inline">'+
+								  '	  <span id="sbTitle"> ' + taskStatus.desc +
+								  '   </span>'+
+								  '   <br>'+
+								  '   <progress id="sbProgress" value="'+(Math.round(taskStatus.perc*100))+'" max="100">Progress Text</progress>'+
+								  '</div>'));
+				}
 			}
 		}));
 		if ((self.github!="")&&((self.github.commitId=="")||(self.github.commitDate==""))){

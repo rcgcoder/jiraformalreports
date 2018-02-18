@@ -1004,12 +1004,14 @@ class RCGZippedApp{
 		// prepare arrays
 		var model=new ZipModel();
 		var fncDownOnProgress=function (evt) {
+			log("Download Progress");
 	        if(evt.lengthComputable) {
 	            var percentComplete = evt.loaded / evt.total;
 	            console.log("Download progress:"+percentComplete);
 	        }
 	    };
 		var fncUnzipOnProgress=function (evt) {
+			log("Unzip Progress");
 	        if(evt.lengthComputable) {
 	            var percentComplete = evt.loaded / evt.total;
 	            console.log("Unzip progress:"+percentComplete);

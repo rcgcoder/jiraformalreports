@@ -34,7 +34,14 @@
 						var sCommitDate=(new Date(lastCommit.commit.author.date)).getTime();
 						callback(sCommitShortId,sCommitDate);
 				  } else {
-					  console.log("Error getting last commit");			  
+					  console.log("Error getting last commit... setting from url");
+					  var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+				      var arrParts= sPageURL.split('jiraformalreports/');
+					  var arrParts=arrParts[1].split('/');
+					  var sCommitShortId=arrParts[0];
+					  var sCommitDate=(new Date()).getTime();
+					  https://cdn.rawgit.com/rcgcoder/jiraformalreports/81206f75/common/jfrWebDeploy.html
+						callback(sCommitShortId,sCommitDate);
 				  }
 			 };
 			 xhr.send();
@@ -127,8 +134,6 @@
 			 var sRCGZipWebAppClass="js/rcglibs/RCGZippedWebApp.js";
 			 var appMainJs="js/ZipWebApp.js";
 			 var appMainClass="ZipWebApp";
-			 var commitId="";
-			 var commitDate=""; 
 			 var fncEngineStart=function(){
 				 	var zipApp=new RCGZippedApp();
 					//zipApp.localStorageMaxSize=200*1024*1024;
@@ -150,8 +155,7 @@
 			 }
 			 getLastCommit(sRepo,function(sCommitId,tCommitDate){
 				 commitId=sCommitId;
-				 commitDate=tCommitDate;
-				 
+				 commitDate=tCommitDate;				 
 				 var sUrlCM=rootPath+"/"+sRepo+"/"+commitId+"/common/"+sRCGTaskManager;
 				 getJavaScriptFile(sUrlCM,function(jsContent){
 					 loadJavaScriptFile(jsContent,function(){

@@ -887,7 +887,7 @@ class RCGZippedApp{
 						sChildsInfo=" ("+nChildsDone+"/"+nChildsTotal+")";
 					}
 					var sItem='<div id="statusBox" class="inline">'+
-					  '	  <span id="sbTitle"> ' + (item.desc==""?"Running...":item.desc) + sChildsInfo + " "+perc100+"%"
+					  '	  <span id="sbTitle"> ' + (item.desc==""?"Running...":item.desc) + sChildsInfo + ' '+perc100+'% '+
 					  '   </span>'+
 					  '   <progress id="sbProgress" value="'+(Math.round(perc100))+'" max="100">Progress Text</progress>'+
 					  '</div>';

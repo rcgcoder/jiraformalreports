@@ -1122,16 +1122,18 @@ class ZipModel{
 
 		function getData() {
 			entry.getData(writer, function(blob) {
-				var result;
-				if (creationMethod == "BlobUrl") {
-					result=URL.createObjectURL(blob);
-				} else if (creationMethod == "Blob") {
-						result=blob;
-				} else {
-					result=zipFileEntry.toURL();
-				}
-				onend(result);
-			}, onprogress);
+					var result;
+					if (creationMethod == "BlobUrl") {
+						result=URL.createObjectURL(blob);
+					} else if (creationMethod == "Blob") {
+							result=blob;
+					} else {
+						result=zipFileEntry.toURL();
+					}
+					onend(result);
+				}, function(args){
+					onprogress(args);
+				});
 		}
 
 		if (creationMethod == "Blob") {

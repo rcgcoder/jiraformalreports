@@ -873,10 +873,11 @@ class RCGZippedApp{
 				var fncAddProgressItem=function(item){
 					if (item.done) return "";
 					if (!item.running) return "";
+					var perc100=(Math.round(item.perc*1000))/10;
 					var sItem='<div id="statusBox" class="inline">'+
-					  '	  <span id="sbTitle"> ' + (item.desc==""?"Running...":item.desc) +
+					  '	  <span id="sbTitle"> ' + (item.desc==""?"Running...":item.desc) + " "+perc100+"%"
 					  '   </span>'+
-					  '   <progress id="sbProgress" value="'+(Math.round(item.perc*100))+'" max="100">Progress Text</progress>'+
+					  '   <progress id="sbProgress" value="'+(Math.round(perc100))+'" max="100">Progress Text</progress>'+
 					  '</div>';
 					var sSubItems="";
 					if (item.detail.length>0) {

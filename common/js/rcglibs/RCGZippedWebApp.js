@@ -938,7 +938,7 @@ class RCGZippedApp{
 //			log(current + "/" + total + "   " + Math.round((current/total)*100)+"%");
 		}
 		for (var i=0;i<arrEntries.length;i++){
-			var params=arrEntries[iAct];
+			var params=arrEntries[i];
 			var model=params.model;
 			var entry=params.entry;
 			var fncSaveBlob=self.createManagedCallback(function (blob){

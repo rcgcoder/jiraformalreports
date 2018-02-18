@@ -341,7 +341,6 @@ class RCGZippedApp{
 		}
 		return result;
 	}
-	
 	getContentType(xhr){
 		var result={
 			isText:false,
@@ -469,9 +468,7 @@ class RCGZippedApp{
 		  }
 		});
 		xhr.send();	
-
 	}
-	
 	addStyleString(cssContent) {
 	    var node = document.createElement('style');
 	    node.innerHTML = cssContent;
@@ -514,8 +511,6 @@ class RCGZippedApp{
 		self.pushCallback(self.processFile);
     	self.downloadFile(sUrl,sRelativePath);
 	}
-	
-		
 	loadFileFromStorage(sRelativePath){
 		log("Loading "+ sRelativePath + " from storage");
 		var self=this;
@@ -939,61 +934,42 @@ class RCGZippedApp{
 	saveZipEntries(arrEntries,iEntry){
 		var self=this;
 		self.setStepProgressMinMax(0,arrEntries.length);
-		self.setStepProgress(iEntry);
-		var iAct=iEntry;
-		if (typeof iEntry==="undefined"){
-			iAct=0;
+		var fncProgress=function(current, total) {
+//			log(current + "/" + total + "   " + Math.round((current/total)*100)+"%");
 		}
-		if (iAct>=arrEntries.length){
-			log("Saving zip entry Finished");
-			return self.popCallback();
-		} 
-		var params=arrEntries[iAct];
-//		log("Saving zip entry " + iAct+ "/" +arrEntries.length + " -- "+ params.relativePath);
-		var model=params.model;
-		var entry=params.entry;
-		var fncSaveBlob=self.createManagedCallback(function (blob){
+		for (var i=0;i<arrEntries.length;i++){
+			var params=arrEntries[iAct];
+			var model=params.model;
+			var entry=params.entry;
+			var fncSaveBlob=self.createManagedCallback(function (blob){
 //				log("save blob");
 				var reader = new FileReader();
 				reader.onload = 
 					self.createManagedCallback(function(e) {
 					  var content = reader.result;
-					  self.pushCallback(function (){
-						  self.saveZipEntries(arrEntries,iAct+1);  
-					  });
 					  self.saveFileToStorage(params.relativePath,content,params.type);
 					});
-				
 				if (params.type.isText){
 					reader.readAsText(blob);
 				} else {
 					reader.readAsArrayBuffer(blob);
 				}
 			});
-		var fncProgress=function(current, total) {
-//			log(current + "/" + total + "   " + Math.round((current/total)*100)+"%");
+			var fncGetEntry=function(){
+				model.getEntryFile(entry
+						, "Blob"
+						, fncSaveBlob
+						, fncProgress);
+			}
+			self.addStep("Saving Entry "+i+"/"+arrEntries.length+"...",fncGetEntry);
 		}
-		model.getEntryFile(entry
-				, "Blob"
-				, fncSaveBlob
-				, fncProgress);
+		self.continueTask();
 	}
 	deploy(deployInfo){ 
 		var self=this;
 		log("Deploying Zip:"+deployInfo.relativePath);
 		var runningTask=self.getRunningTask();
-/*		if (typeof zip==="undefined"){
-			log("Zip engine is not running.... loading");
-			var arrFiles=["js/libs/jquery-3.3.1.min.js",
-				          "js/libs/zip/zip.js"
-//				  ,"js/libs/zip/zip-ext.js"
-				  ];
-			self.pushCallback(function(){
-				self.deploy(deployInfo);
-			});
-			return self.loadRemoteFiles(arrFiles);
-		}
-*/		zip.useWebWorkers=true;
+		zip.useWebWorkers=true;
 		zip.workerScriptsPath = 'js/libs/zip/';
 		/*zip.workerScripts = {
 				  deflater: [workerScriptsPath+'/z-worker.js', workerScriptsPath+'/deflate.js'],

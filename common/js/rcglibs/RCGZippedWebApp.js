@@ -99,7 +99,7 @@ class GitHub{
 		  if (xhr.status == 302) {
 			  var ghLink=xhr.getResponseHeader("Location");
 			  self.apiCall(ghLink);
-		  } else if (this.status == 200) {
+		  } else if (xhr.status == 200) {
 			  self.popCallback([xhr.response,xhr,sTargetUrl,arrHeaders]);
 		  } else {
 			  self.loadError({target:{src:sUrl}});			  

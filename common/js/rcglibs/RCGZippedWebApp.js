@@ -1003,9 +1003,14 @@ class RCGZippedApp{
 		var sZipUrl=deployInfo.url;
 		// prepare arrays
 		var model=new ZipModel();
-		log("Download Zip File:"+sZipUrl);
-		model.downloadAndGetEntries(sZipUrl,
-			self.createManagedCallback(function(entries) {
+		var fncOnProgress=function (evt) {
+	        if(evt.lengthComputable) {
+	            var percentComplete = evt.loaded / evt.total;
+	            console.log(percentComplete);
+	        }
+	    };
+	    var fncOnDone=function(entries) {
+				log("Processing Zip File:"+sZipUrl);
 				var arrFilesToSave=[];
 				entries.forEach(function(entry) {
 					var sFile=entry.filename;
@@ -1059,7 +1064,12 @@ class RCGZippedApp{
 					}
 				});
 				self.popCallback([arrFilesToSave]);
-			})
+			};
+
+		log("Download Zip File:"+sZipUrl);
+		model.downloadAndGetEntries(sZipUrl,
+			self.createManagedCallback(fncOnDone),
+			self.createManagedCallback(fncOnProgress)
 		);
 	}
 }
@@ -1073,32 +1083,29 @@ class ZipModel{
 		this.ZipData="";
 	}
 	
-	downloadAndGetEntries(urlZipFile,onend){
+	downloadAndGetEntries(urlZipFile,onend,onprogress){
 		var self=this;
 		self.ZipFile=urlZipFile;
 		var xhr = new XMLHttpRequest();
 		xhr.open('GET', urlZipFile, true);
 		xhr.responseType = 'blob';
-	    xhr.addEventListener("progress", function (evt) {
-	        if(evt.lengthComputable) {
-	            var percentComplete = evt.loaded / evt.total;
-	            console.log(percentComplete);
-	        }
-	    }, false);
+		if (typeof onprogress!=="undefined"){
+		    xhr.addEventListener("progress", onprogress, false);
+		}
 		xhr.onload = function(e) {
 		  if (this.status == 200) {
 		    var myBlob = this.response;
 		    self.ZipData=myBlob;
 		    // myBlob is now the blob that the object URL pointed to.
-		    self.getEntries(myBlob,onend);
+		    self.getEntries(myBlob,onend,onprogress);
 		  }
 		};
 		xhr.send();	
 	}
 		
-	getEntries(file, onend) {
+	getEntries(file, onend,onprogress) {
 		zip.createReader(new zip.BlobReader(file), function(zipReader) {
-			zipReader.getEntries(onend);
+			zipReader.getEntries(onend,onprogress);
 		}, onerror);
 	}
 	getEntryFile(entry, creationMethod, onend, onprogress) {

@@ -192,7 +192,7 @@ class GitHub{
 	updateDeployZipCommits(deployZips,iFile){
 		var self=this;
 		if (iFile>=deployZips.length){
-			self.popCallback([],1);
+			self.popCallback();
 		} else {
 			self.pushCallback(function(sCommitId,sCommitDate){
 				deployZips[iFile].commitId=sCommitId;

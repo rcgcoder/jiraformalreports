@@ -648,9 +648,7 @@ class RCGZippedApp{
 			self.checkForDeploys(iZip+1);
 		}
 	}
-
-
-	loadZipEngine(){
+	loadJSBaseEngine(){
 		var self=this;
 		if (typeof zip==="undefined"){
 			log("Zip engine is not running.... loading");
@@ -682,10 +680,6 @@ class RCGZippedApp{
 			tLastDeploy=self.lastDeployInfo.date;
 		}
 		var runningTask=self.getRunningTask();
-		
-		var bNotUpdate=true;
-		var bFirstDeployToAdd=true;
-		var barrier;
 		var arrDeploysToUpdate=[];
 		for (var i=0;i<self.DeployZips.length;i++){
 			var theDeploy=self.DeployZips[i];
@@ -693,16 +687,6 @@ class RCGZippedApp{
 				||
 			   (theDeploy.commitDate>theDeploy.deployedDate)){ // new release
 				// needs to be deployed
-				bNotUpdate=false;
-				if (bFirstDeployToAdd){ // the first deploy creates the barrier, the fork and adds the step to load the zip engine
-					bFirstDeployToAdd=false;
-					// loading the zips...
-					self.addStep("Loading Zip Engine...",self.loadZipEngine);
-					self.addStep("Finished Loading Zip Engine...",function(aArgs){
-						log("Finished Loading Zip Engine...");
-						self.continueTask(aArgs);
-					});
-				}
 				arrDeploysToUpdate.push(theDeploy);
 			} else {
 				log("the deploy: "+ theDeploy.relativePath+ " is up to date");
@@ -929,6 +913,7 @@ class RCGZippedApp{
 		}
 //		self.addStep("Starting Memory Monitor...",self.loadMemoryMonitor);
 		self.addStep("Starting Persistence...",self.startPersistence);
+		self.addStep("Loading Base Files...",self.loadJSBaseEngine);
 		self.addStep("Updating Deploy Zips...",self.updateDeployZips);
 		self.addStep("Starting Application...",self.startApplication);
 		self.continueTask();

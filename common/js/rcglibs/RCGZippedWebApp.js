@@ -939,7 +939,6 @@ class RCGZippedApp{
 //			log(current + "/" + total + "   " + Math.round((current/total)*100)+"%");
 		}
 		var fncSaveBlob=self.createManagedCallback(function (blob){
-			var localParams=params;
 //			log("save blob");
 			var reader = new FileReader();
 			reader.onload = 

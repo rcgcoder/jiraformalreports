@@ -874,8 +874,20 @@ class RCGZippedApp{
 					if (item.done) return "";
 					if (!item.running) return "";
 					var perc100=(Math.round(item.perc*1000))/10;
+					var nChildsDone=0;
+					var nChildsTotal=item.detail.length;
+					for (var i=0;i<nChildsTotal;i++){
+						var child=item.detail[i];
+						if (child.done){
+							nChildsDone++;
+						}
+					}
+					var sChildsInfo="";
+					if (nChildsTotal>0){
+						sChildsInfo=" ("+nChildsDone+"/"+nChildsTotal+")";
+					}
 					var sItem='<div id="statusBox" class="inline">'+
-					  '	  <span id="sbTitle"> ' + (item.desc==""?"Running...":item.desc) + " "+perc100+"%"
+					  '	  <span id="sbTitle"> ' + (item.desc==""?"Running...":item.desc) + sChildsInfo + " "+perc100+"%"
 					  '   </span>'+
 					  '   <progress id="sbProgress" value="'+(Math.round(perc100))+'" max="100">Progress Text</progress>'+
 					  '</div>';

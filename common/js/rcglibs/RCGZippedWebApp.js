@@ -1009,13 +1009,8 @@ class RCGZippedApp{
 	            var percentComplete = evt.loaded / evt.total;
 	            console.log("Download progress:"+percentComplete);
 	        }
-	    };
-		var fncUnzipOnProgress=function (evt) {
-			log("Unzip Progress");
-	        if(evt.lengthComputable) {
-	            var percentComplete = evt.loaded / evt.total;
-	            console.log("Unzip progress:"+percentComplete);
-	        }
+	        self.setProgressMinMax(0,evt.total);
+	        self.setProgress(evt.loaded);
 	    };
 	    var fncOnDone=function(entries) {
 				log("Processing Zip File:"+sZipUrl);
@@ -1077,8 +1072,7 @@ class RCGZippedApp{
 		log("Download Zip File:"+sZipUrl);
 		model.downloadAndGetEntries(sZipUrl,
 			self.createManagedCallback(fncOnDone),
-			self.createManagedCallback(fncDownOnProgress),
-			self.createManagedCallback(fncUnzipOnProgress)
+			self.createManagedCallback(fncDownOnProgress)
 		);
 	}
 }
@@ -1092,7 +1086,7 @@ class ZipModel{
 		this.ZipData="";
 	}
 	
-	downloadAndGetEntries(urlZipFile,onend,down_onprogress,unzip_onprogress){
+	downloadAndGetEntries(urlZipFile,onend,down_onprogress){
 		var self=this;
 		self.ZipFile=urlZipFile;
 		var xhr = new XMLHttpRequest();
@@ -1106,21 +1100,18 @@ class ZipModel{
 		    var myBlob = this.response;
 		    self.ZipData=myBlob;
 		    // myBlob is now the blob that the object URL pointed to.
-		    self.getEntries(myBlob,onend,unzip_onprogress);
+		    self.getEntries(myBlob,onend);
 		  }
 		};
 		xhr.send();	
 	}
 		
-	getEntries(file, onend,onprogress) {
+	getEntries(file, onend) {
 		zip.createReader(new zip.BlobReader(file), function(zipReader) {
-			zipReader.getEntries(onend,function(args){
-				log("GetEntries progress");
-				onprogress(args);
-			});
+			zipReader.getEntries(onend);
 		}, onerror);
 	}
-	getEntryFile(entry, creationMethod, onend, onprogress) {
+	getEntryFile(entry, creationMethod, onend) {
 		var writer, zipFileEntry;
 
 		function getData() {

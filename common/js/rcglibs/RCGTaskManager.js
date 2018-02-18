@@ -660,6 +660,7 @@ class RCGTaskManager{
 			val=0;
 		}
 		runningTask.progress=val;
+		runningTask.changeStatus();
 	}
 	extended_incProgress(amount){
 		var self=this;

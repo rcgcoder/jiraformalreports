@@ -1079,7 +1079,7 @@ class ZipModel{
 		var xhr = new XMLHttpRequest();
 		xhr.open('GET', urlZipFile, true);
 		xhr.responseType = 'blob';
-	    req.addEventListener("progress", function (evt) {
+	    xhr.addEventListener("progress", function (evt) {
 	        if(evt.lengthComputable) {
 	            var percentComplete = evt.loaded / evt.total;
 	            console.log(percentComplete);

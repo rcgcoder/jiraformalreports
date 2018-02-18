@@ -931,37 +931,41 @@ class RCGZippedApp{
 				}, create);
 			});
 	}
-	saveZipEntries(arrEntries,iEntry){
-		var self=this;
-		self.setStepProgressMinMax(0,arrEntries.length);
+	addSaveZipEntryStep(entry){
+		var params=entry;
+		var model=params.model;
+		var entry=params.entry;
 		var fncProgress=function(current, total) {
 //			log(current + "/" + total + "   " + Math.round((current/total)*100)+"%");
 		}
-		for (var i=0;i<arrEntries.length;i++){
-			var params=arrEntries[i];
-			var model=params.model;
-			var entry=params.entry;
-			var fncSaveBlob=self.createManagedCallback(function (blob){
-//				log("save blob");
-				var reader = new FileReader();
-				reader.onload = 
-					self.createManagedCallback(function(e) {
-					  var content = reader.result;
-					  self.saveFileToStorage(params.relativePath,content,params.type);
-					});
-				if (params.type.isText){
-					reader.readAsText(blob);
-				} else {
-					reader.readAsArrayBuffer(blob);
-				}
-			});
-			var fncGetEntry=function(){
-				model.getEntryFile(entry
-						, "Blob"
-						, fncSaveBlob
-						, fncProgress);
+		var fncSaveBlob=self.createManagedCallback(function (blob){
+			var localParams=params;
+//			log("save blob");
+			var reader = new FileReader();
+			reader.onload = 
+				self.createManagedCallback(function(e) {
+				  var content = reader.result;
+				  self.saveFileToStorage(params.relativePath,content,params.type);
+				});
+			if (params.type.isText){
+				reader.readAsText(blob);
+			} else {
+				reader.readAsArrayBuffer(blob);
 			}
-			self.addStep("Saving Entry "+i+"/"+arrEntries.length+"...",fncGetEntry);
+		});
+		var fncGetEntry=function(){
+			model.getEntryFile(entry
+					, "Blob"
+					, fncSaveBlob
+					, fncProgress);
+		}
+		self.addStep("Saving Entry "+i+"/"+arrEntries.length+"...",fncGetEntry);
+	}
+	saveZipEntries(arrEntries,iEntry){
+		var self=this;
+		self.setStepProgressMinMax(0,arrEntries.length);
+		for (var i=0;i<arrEntries.length;i++){
+			self.addSaveZipEntryStep(arrEntries[i]);
 		}
 		self.continueTask();
 	}

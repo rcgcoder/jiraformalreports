@@ -975,7 +975,7 @@ class RCGZippedApp{
 	}
 	saveZipEntries(arrEntries,iEntry){
 		var self=this;
-		self.setStepProgressMinMax(0,arrEntries.length);
+		self.setTaskProgressMinMax(0,arrEntries.length);
 		for (var i=0;i<arrEntries.length;i++){
 			self.addSaveZipEntryStep(arrEntries[i]);
 		}
@@ -1009,8 +1009,8 @@ class RCGZippedApp{
 	            var percentComplete = evt.loaded / evt.total;
 	            console.log("Download progress:"+percentComplete);
 	        }
-	        self.setProgressMinMax(0,evt.total);
-	        self.setProgress(evt.loaded);
+	        self.setTaskProgressMinMax(0,evt.total);
+	        self.setTaskProgress(evt.loaded);
 	    };
 	    var fncOnDone=function(entries) {
 				log("Processing Zip File:"+sZipUrl);

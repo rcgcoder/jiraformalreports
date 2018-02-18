@@ -724,9 +724,9 @@ class RCGTaskManager{
 		obj.addStep=self.extended_addStep;
 		obj.pushCallback=self.extended_pushCallBack;
 		obj.popCallback=self.extended_popCallback;
-		obj.incStepProgress=self.extended_incProgress;
-		obj.setStepProgressMinMax=self.extended_setProgressMinMax;
-		obj.setStepProgress=self.extended_setProgress;
+		obj.incTaskProgress=self.extended_incProgress;
+		obj.setTaskProgressMinMax=self.extended_setProgressMinMax;
+		obj.setTaskProgress=self.extended_setProgress;
 		obj.createManagedCallback=self.extended_createManagedCallback;
 		obj.setRunningTask=self.extended_setRunningTask;
 		obj.getRunningTask=self.extended_getRunningTask;

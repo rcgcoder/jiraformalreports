@@ -932,6 +932,7 @@ class RCGZippedApp{
 			});
 	}
 	addSaveZipEntryStep(entry){
+		var self=this;
 		var params=entry;
 		var model=params.model;
 		var entry=params.entry;

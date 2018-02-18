@@ -688,32 +688,29 @@ class RCGZippedApp{
 			   (theDeploy.commitDate>theDeploy.deployedDate)){ // new release
 				// needs to be deployed
 				arrDeploysToUpdate.push(theDeploy);
+				self.addDeployFork(theDeploy);				
 			} else {
 				log("the deploy: "+ theDeploy.relativePath+ " is up to date");
 			}
 		}
 		if (arrDeploysToUpdate.length>0){
-			for (var i=0;i<arrDeploysToUpdate.length;i++){
-				var theDeploy=arrDeploysToUpdate[i];
-				self.addDeployFork(theDeploy);				
-			}
+			self.addStep("Finished launching inner FORKS...",function(aArgs){
+				self.setRunningTask(runningTask);
+				log("Finished launching inner FORKS...");
+				self.continueTask(aArgs);
+			});
+			self.addStep("Waiting inner Forks Finish...",function(aArgs){
+				self.setRunningTask(runningTask);
+				log("...");
+				self.getRunningTask().barrier.reach(self);
+			});
+			self.addStep("All inner Forks Finished...",function(aArgs){
+				self.setRunningTask(runningTask);
+				log("Finish all inner Forks.... it´s necesary to increment the number of items in barrier");
+				runningTask.barrier.add(runningTask);
+				self.continueTask(aArgs);
+			});
 		}
-		self.addStep("Finished launching inner FORKS...",function(aArgs){
-			self.setRunningTask(runningTask);
-			log("Finished launching inner FORKS...");
-			self.continueTask(aArgs);
-		});
-		self.addStep("Waiting inner Forks Finish...",function(aArgs){
-			self.setRunningTask(runningTask);
-			log("...");
-			self.getRunningTask().barrier.reach(self);
-		});
-		self.addStep("All inner Forks Finished...",function(aArgs){
-			self.setRunningTask(runningTask);
-			log("Finish all inner Forks.... it´s necesary to increment the number of items in barrier");
-			runningTask.barrier.add(runningTask);
-			self.continueTask(aArgs);
-		});
 		self.continueTask();
 	}
 

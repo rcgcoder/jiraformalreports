@@ -92,8 +92,8 @@ class GitHub{
 				xhr.setRequestHeader(arrHeaders[i].key, arrHeaders[i].value);
 			}
 		}
-		xhr.onerror=self.loadError;
-		xhr.onload = function(e) {
+		xhr.onerror=self.createTradiciontalCallback(functionself.loadError);
+		xhr.onload = self.createTraditionalCallback(function(e) {
 		  var nRemaining=xhr.getResponseHeader("X-RateLimit-Remaining");
 		  log("Remaining GitHub Pets:"+nRemaining+" test");
 		  if (this.status == 302) {
@@ -104,7 +104,7 @@ class GitHub{
 		  } else {
 			  self.loadError({target:{src:sUrl}});			  
 		  }
-		};
+		});
 		xhr.send();	
 	}
 	processCommitsPage(response,xhr,url,arrHeaders){

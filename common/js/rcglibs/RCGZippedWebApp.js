@@ -1114,7 +1114,9 @@ class ZipModel{
 		
 	getEntries(file, onend,onprogress) {
 		zip.createReader(new zip.BlobReader(file), function(zipReader) {
-			zipReader.getEntries(onend,onprogress);
+			zipReader.getEntries(onend,function(args){
+				onprogress(args);
+			});
 		}, onerror);
 	}
 	getEntryFile(entry, creationMethod, onend, onprogress) {
@@ -1131,8 +1133,6 @@ class ZipModel{
 						result=zipFileEntry.toURL();
 					}
 					onend(result);
-				}, function(args){
-					onprogress(args);
 				});
 		}
 

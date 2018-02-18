@@ -1096,7 +1096,7 @@ class ZipModel{
 		var xhr = new XMLHttpRequest();
 		xhr.open('GET', urlZipFile, true);
 		xhr.responseType = 'blob';
-		if (typeof onprogress!=="undefined"){
+		if (typeof down_onprogress!=="undefined"){
 		    xhr.addEventListener("progress", down_onprogress, false);
 		}
 		xhr.onload = function(e) {

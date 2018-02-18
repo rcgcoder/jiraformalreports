@@ -1115,6 +1115,7 @@ class ZipModel{
 	getEntries(file, onend,onprogress) {
 		zip.createReader(new zip.BlobReader(file), function(zipReader) {
 			zipReader.getEntries(onend,function(args){
+				log("GetEntries progress");
 				onprogress(args);
 			});
 		}, onerror);

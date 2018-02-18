@@ -128,6 +128,7 @@ class RCGTask{
 			}
 			theMethod.apply(context,newArgs);
 		}
+		self.changeStatus();
 		if (self.getTaskManager().asyncTaskCalls) {
 			setTimeout(fncApply,500); 
 		} else {

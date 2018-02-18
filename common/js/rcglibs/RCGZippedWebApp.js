@@ -95,12 +95,12 @@ class GitHub{
 		xhr.onerror=self.loadError;
 		xhr.onload = self.createManagedCallback(function(e) {
 		  var nRemaining=xhr.getResponseHeader("X-RateLimit-Remaining");
-		  log("Remaining GitHub Pets:"+nRemaining+" test");
-		  if (this.status == 302) {
+		  log("Remaining GitHub Pets:"+nRemaining);
+		  if (xhr.status == 302) {
 			  var ghLink=xhr.getResponseHeader("Location");
 			  self.apiCall(ghLink);
 		  } else if (this.status == 200) {
-			  self.popCallback([this.response,xhr,sTargetUrl,arrHeaders]);
+			  self.popCallback([xhr.response,xhr,sTargetUrl,arrHeaders]);
 		  } else {
 			  self.loadError({target:{src:sUrl}});			  
 		  }

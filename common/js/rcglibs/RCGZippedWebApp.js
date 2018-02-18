@@ -93,7 +93,7 @@ class GitHub{
 			}
 		}
 		xhr.onerror=self.loadError;
-		xhr.onload = self.createTraditionalCallback(function(e) {
+		xhr.onload = self.createManagedCallback(function(e) {
 		  var nRemaining=xhr.getResponseHeader("X-RateLimit-Remaining");
 		  log("Remaining GitHub Pets:"+nRemaining+" test");
 		  if (this.status == 302) {

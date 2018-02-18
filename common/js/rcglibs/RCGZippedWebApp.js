@@ -1079,6 +1079,12 @@ class ZipModel{
 		var xhr = new XMLHttpRequest();
 		xhr.open('GET', urlZipFile, true);
 		xhr.responseType = 'blob';
+	    req.addEventListener("progress", function (evt) {
+	        if(evt.lengthComputable) {
+	            var percentComplete = evt.loaded / evt.total;
+	            console.log(percentComplete);
+	        }
+	    }, false);
 		xhr.onload = function(e) {
 		  if (this.status == 200) {
 		    var myBlob = this.response;

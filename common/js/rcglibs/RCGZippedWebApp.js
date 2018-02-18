@@ -92,7 +92,7 @@ class GitHub{
 				xhr.setRequestHeader(arrHeaders[i].key, arrHeaders[i].value);
 			}
 		}
-		xhr.onerror=self.createTradiciontalCallback(functionself.loadError);
+		xhr.onerror=self.loadError;
 		xhr.onload = self.createTraditionalCallback(function(e) {
 		  var nRemaining=xhr.getResponseHeader("X-RateLimit-Remaining");
 		  log("Remaining GitHub Pets:"+nRemaining+" test");

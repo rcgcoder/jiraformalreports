@@ -959,7 +959,7 @@ class RCGZippedApp{
 					, fncSaveBlob
 					, fncProgress);
 		}
-		self.addStep("Saving Entry "+i+"/"+arrEntries.length+"...",fncGetEntry);
+		self.addStep("Saving file "+ params.relativePath+" from deploy zip ...",fncGetEntry);
 	}
 	saveZipEntries(arrEntries,iEntry){
 		var self=this;

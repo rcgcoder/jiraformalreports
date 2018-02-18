@@ -879,7 +879,7 @@ class RCGZippedApp{
 					if (item.done) return "";
 					if (!item.running) return "";
 					var sItem='<div id="statusBox" class="inline">'+
-					  '	  <span id="sbTitle"> ' + item.desc +
+					  '	  <span id="sbTitle"> ' + (item.desc==""?"Running...":item.desc) +
 					  '   </span>'+
 					  '   <progress id="sbProgress" value="'+(Math.round(item.perc*100))+'" max="100">Progress Text</progress>'+
 					  '</div>';

@@ -16,7 +16,7 @@ class ZipWebApp{
 			var image=document.getElementById("jrfSplash");
 			image.src = content;
 			log("Image changed");
-			$("#htmlContainerId").html("<hero></hero>");
+			$("#"+self.htmlContainerId).html("<hero></hero>");
 			self.popCallback(); // finishing the process.
 		});
 		

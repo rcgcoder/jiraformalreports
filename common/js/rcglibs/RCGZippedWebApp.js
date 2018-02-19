@@ -513,7 +513,7 @@ class RCGZippedApp{
 	    	self.popCallback();
 	    }
 */	    oHead.appendChild(oScript);
-	    oScript.innerHTML = jsContent;
+	    oScript.innerHTML = tsContent;
 	}
 	processFile(content,xhr,contentType,sRelativePath){
 		log("Processing file:"+sRelativePath);

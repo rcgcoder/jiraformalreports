@@ -308,7 +308,8 @@ class RCGZippedApp{
 			isSVG:false,
 			isIMG:false,
 			isCacheable:true,
-			commitId:""
+			commitId:"",
+			isUndefined:false
 		}
 		var nPos=fileName.lastIndexOf(".");
 		var sExt=fileName.substring(nPos+1,fileName.length).toLowerCase();
@@ -344,6 +345,7 @@ class RCGZippedApp{
 		} else {
 			return result;
 		}
+		result.isUndefined=true;
 		return result;
 	}
 	getContentType(xhr){
@@ -356,6 +358,7 @@ class RCGZippedApp{
 			isJSON:false,
 			isSVG:false,
 			isCacheable:true,
+			isUndefined:false,
 			commitId:""
 		}
 		var arrContentTypes=xhr.getResponseHeader("content-type").split(";");
@@ -393,6 +396,7 @@ class RCGZippedApp{
 				return result;
 			}
 		}
+		result.isUndefined=true;
 		return result;
 	}
 	saveFileToStorage(sRelativePath,content,contentType){
@@ -449,6 +453,9 @@ class RCGZippedApp{
 		  if (xhr.status == 200) {
 			  log("Downloaded "+sRelativePath);
 			  var ct=self.getContentType(xhr);
+			  if (ct.isUndefined){
+				  ct=self.getContentTypeFromExtension(sRelativePath);
+			  }
 			  var response="";
 			  var toSave="";
 			  if (ct.isText){

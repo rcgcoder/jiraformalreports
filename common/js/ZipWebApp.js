@@ -17,8 +17,10 @@ class ZipWebApp{
 			self.popCallback(); // finishing the process.
 		});
 		log("Requesting Image");
-		self.loadRemoteFile("img/reports2.jpg");
-		self.loadRemoteFile("ts/demo.ts");
+		var arrFiles=["img/reports2.jpg",
+						"ts/demo.ts"
+					 ];
+		self.loadRemoteFiles(arrFiles);
 		log("Running.... background");
 //		alert("Running ZipWebApp "); 
 	}

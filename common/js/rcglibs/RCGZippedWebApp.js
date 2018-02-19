@@ -466,13 +466,13 @@ class RCGZippedApp{
 				  ct.commitDate=self.github.commitDate;
 				  ct.saveDate=(new Date()).getTime();
 				  if (self.bWithPersistentStorage){
-					  var sResult=self.saveFileToStorage(sRelativePath,toSave,ct);
+					  var sResult=self.saveFileToStorage(sRelativePath,sContent,ct);
 				  } else {
 					  if (!ct.isText) {
 					      var u8Arr = new Uint8Array(toSave);
 						  toSave=fromByteArray(u8Arr);
 					  }
-					  self.popCallback([toSave]);
+					  self.popCallback(sContent);
 				  }
 			  });
 			  if (ct.isText){
@@ -481,12 +481,12 @@ class RCGZippedApp{
 				  var bb = new Blob([uint8arr]);
 				  var f = new FileReader();
 				  f.onload = self.createManagedCallback(function(e) {
-				     self.popCallback([e.target.result]);
+				     self.popCallback(e.target.result);
 				  });
 				  f.readAsText(bb);
 			  } else {
 				  toSave = xhr.response;
-				  popCallback([toSave]);
+				  popCallback(toSave);
 			  }
 		  } else {
 			  log("Error downloading "+sRelativePath);

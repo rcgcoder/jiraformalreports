@@ -18,7 +18,9 @@ class ZipWebApp{
 		});
 		log("Requesting Image");
 		var arrFiles=["img/reports2.jpg",
-						"ts/demo.ts"
+						"ts/demo.ts",
+						"js/libs/typescript.min.js",
+						"js/libs/typescript.compile.min.js"
 					 ];
 		self.loadRemoteFiles(arrFiles);
 		log("Running.... background");

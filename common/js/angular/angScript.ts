@@ -30,6 +30,4 @@ angular
   .module("mySuperAwesomeApp", [])
   .component("heros", new HerosComponent());
 
-angular.element(document).ready(function() {
-  angular.bootstrap(document, ["mySuperAwesomeApp"]);
-});
+angular.bootstrap(document, ["mySuperAwesomeApp"]);

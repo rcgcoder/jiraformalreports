@@ -486,7 +486,7 @@ class RCGZippedApp{
 				  f.readAsText(bb);
 			  } else {
 				  toSave = xhr.response;
-				  popCallback(toSave);
+				  self.popCallback(toSave);
 			  }
 		  } else {
 			  log("Error downloading "+sRelativePath);

@@ -7,24 +7,26 @@ class ZipWebApp{
 	run(){
 		log("starting ZipWebApp");
 		var self=this;
-		self.pushCallback(function(sPath,content){
+		self.addStep("Download Image...",function(){
+			log("Requesting Image");
+			self.loadRemoteFile("img/reports2.jpg");
+		});
+		self.addStep("changing image...",function(sPath,content){
 			log("Image Loaded:"+sPath);
-/*			var jqContainer=$("#"+self.getHtmlContainerID());
-			var jqImage=$("#jrfSplash");*/
 			var image=document.getElementById("jrfSplash");
 			image.src = content;
 			log("Image changed");
 			self.popCallback(); // finishing the process.
 		});
-		log("Requesting Image");
-		var arrFiles=["img/reports2.jpg",
-						"ts/demo.ts",
-						"js/libs/typescript.min.js",
-						"js/libs/typescript.compile.min.js",
-						"js/libs/angular.min.js"
-					 ]; //test
-		self.loadRemoteFiles(arrFiles);
-		log("Running.... background");
-//		alert("Running ZipWebApp "); 
+		
+		self.addStep("Loading angularjs and typescript inline compiler.... ",function(){
+			var arrFiles=[	"ts/demo.ts",
+							"js/libs/typescript.min.js",
+							"js/libs/typescript.compile.min.js",
+							"js/libs/angular.min.js"
+						 ]; //test
+			self.loadRemoteFiles(arrFiles);
+		});
+		self.continueTask();
 	}
 }

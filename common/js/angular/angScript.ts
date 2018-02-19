@@ -1,9 +1,9 @@
 module.component("heros", {
-  template: '
-    <ul>
-      <li ng-repeat="hero in $ctrl.heros">{{ hero.name }}</li>
-    </ul>
-  ',
+  template: 
+    '<ul>'
+    +'  <li ng-repeat="hero in $ctrl.heros">{{ hero.name }}</li>'
+    +'</ul>'
+  ,
   controller: function() {
     this.heros = [
       { id: 11, name: 'Mr. Nice' },

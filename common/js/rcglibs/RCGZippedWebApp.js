@@ -301,6 +301,7 @@ class RCGZippedApp{
 		var result={
 			isText:false,
 			isJS:false,
+			isTS:false,
 			isCSS:false,
 			isHTML:false,
 			isJSON:false,
@@ -315,6 +316,10 @@ class RCGZippedApp{
 			result.isText=true;
 			result.isJS=true;
 			return result;
+		} else if (sExt=="ts"){
+				result.isText=true;
+				result.isTS=true;
+				return result;
 		} else if (sExt=="html"){
 			result.isText=true;
 			result.isHTML=true;
@@ -345,6 +350,7 @@ class RCGZippedApp{
 		var result={
 			isText:false,
 			isJS:false,
+			isTS:false,
 			isCSS:false,
 			isHTML:false,
 			isJSON:false,
@@ -358,6 +364,10 @@ class RCGZippedApp{
 				result.isText=true;
 				result.isJS=true;
 				return result;
+			} else if (arrContentTypes[i]=="application/typescript"){
+					result.isText=true;
+					result.isTS=true;
+					return result;
 			} else if (arrContentTypes[i]=="text/html"){
 				result.isText=true;
 				result.isHTML=true;
@@ -486,12 +496,26 @@ class RCGZippedApp{
 */	    oHead.appendChild(oScript);
 	    oScript.innerHTML = jsContent;
 	}
+	addTypescriptString(tsContent){
+		var self=this;
+		var oHead=(document.head || document.getElementsByTagName("head")[0]);
+	    var oScript = document.createElement("script");
+	    oScript.type = "text\/typescript";
+	    oScript.onerror = self.loadError;
+/*	    oScript.onload = function(){
+	    	self.popCallback();
+	    }
+*/	    oHead.appendChild(oScript);
+	    oScript.innerHTML = jsContent;
+	}
 	processFile(content,xhr,contentType,sRelativePath){
 		log("Processing file:"+sRelativePath);
 		var self=this;
 		var auxContent=content;
 	    if (contentType.isJS){ //if filename is a external JavaScript file
 	    	self.addJavascriptString(content);
+	    } else if (contentType.isTS){ //if filename is a external TypeScript file
+		    	self.addTypescriptString(content);
 	    } else if (contentType.isCSS){ //if filename is an external CSS file
 	    	self.addStyleString(content);
 	    } else if (contentType.isIMG){

@@ -18,6 +18,7 @@ class ZipWebApp{
 		});
 		log("Requesting Image");
 		self.loadRemoteFile("img/reports2.jpg");
+		self.loadRemoteFile("ts/demo.ts");
 		log("Running.... background");
 //		alert("Running ZipWebApp "); 
 	}

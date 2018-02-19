@@ -458,26 +458,35 @@ class RCGZippedApp{
 			  }
 			  var response="";
 			  var toSave="";
-			  if (ct.isText){
-				  var arr=new Uint8Array(xhr.response);
-				  toSave = String.fromCharCode.apply(null,arr);
-			  } else {
-				  toSave = xhr.response;
-			  }
 			  self.pushCallback(function(sContent){
 				  self.popCallback([sContent,xhr,ct,sRelativePath]);
-			  })
-			  ct.commitId=self.github.commitId;
-			  ct.commitDate=self.github.commitDate;
-			  ct.saveDate=(new Date()).getTime();
-			  if (self.bWithPersistentStorage){
-				  var sResult=self.saveFileToStorage(sRelativePath,toSave,ct);
-			  } else {
-				  if (!ct.isText) {
-				      var u8Arr = new Uint8Array(toSave);
-					  toSave=fromByteArray(u8Arr);
+			  });
+			  self.pushCallback(function(sContent){
+				  ct.commitId=self.github.commitId;
+				  ct.commitDate=self.github.commitDate;
+				  ct.saveDate=(new Date()).getTime();
+				  if (self.bWithPersistentStorage){
+					  var sResult=self.saveFileToStorage(sRelativePath,toSave,ct);
+				  } else {
+					  if (!ct.isText) {
+					      var u8Arr = new Uint8Array(toSave);
+						  toSave=fromByteArray(u8Arr);
+					  }
+					  self.popCallback([toSave]);
 				  }
-				  self.popCallback([toSave]);
+			  });
+			  if (ct.isText){
+				  var uint8arr=new Uint8Array(xhr.response);
+				  //toSave = String.fromCharCode.apply(null,arr);
+				  var bb = new Blob([uint8arr]);
+				  var f = new FileReader();
+				  f.onload = self.createManagedCallback(function(e) {
+				     self.popCallback([e.target.result]);
+				  });
+				  f.readAsText(bb);
+			  } else {
+				  toSave = xhr.response;
+				  popCallback([toSave]);
 			  }
 		  } else {
 			  log("Error downloading "+sRelativePath);

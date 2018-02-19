@@ -22,7 +22,7 @@ class ZipWebApp{
 		
 		self.addStep("Loading angularjs and typescript inline compiler.... ",function(){
 			var arrFiles=[	"ts/demo.ts",
-							"js/angular/angScript.js",
+							"js/angular/angScript.ts",
 							"js/libs/typescript.min.js",
 							"js/libs/typescript.compile.min.js",
 							"js/libs/angular.min.js"

@@ -892,7 +892,7 @@ class RCGZippedApp{
 	}
 	run(){
 		var self=this;
-		var iTime=0;
+		var iTime=0;/*
 		self.getTaskManager().setOnChangeStatus(self.createManagedCallback(function(){
 			if (window.jQuery){
 				var tm=self.getTaskManager();
@@ -966,7 +966,7 @@ class RCGZippedApp{
 					fncUpdateProgress();
 				}
 			}
-		}));
+		}));*/
 		if ((self.github!="")&&((self.github.commitId=="")||(self.github.commitDate==""))){
 			self.addStep(self.github.updateLastCommit,undefined,self.github);
 		}

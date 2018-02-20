@@ -86,6 +86,7 @@ class RCGTask{
 		}
 	}
 	done(){
+		self=this;
 		self.isDone=true;
 		self.finishTime=(new Date()).getTime();
 		self.changeStatus();

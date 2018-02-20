@@ -49,9 +49,11 @@ class RCGTask{
 		self.innerForks=[]; // list of pseudothreaded forks running in task. The task not finish before the last fork finish
 		self.object="";
 		self.running=false;
-		self.done=false;
+		self.isDone=false;
 		self.barrier="";
 		self.taskManager=taskManager;
+		self.initTime="";
+		self.finishTime="";
 		self.onChangeStatus="";
 		if (typeof description!=="undefined"){
 			self.description=description;
@@ -82,6 +84,11 @@ class RCGTask{
 		} else {
 			self.getTaskManager().changeStatus();
 		}
+	}
+	done(){
+		self.isDone=true;
+		self.finishTime=(new Date()).getTime();
+		self.changeStatus();
 	}
 	
 
@@ -122,6 +129,7 @@ class RCGTask{
 		}
 		var theTask=self;
 		var fncApply=function(){
+			self.initTime=(new Date).getTime();
 			self.getTaskManager().setRunningTask(theTask);
 			if (theTask.description!=""){
 				log("Calling method of task: "+theTask.description);
@@ -138,7 +146,7 @@ class RCGTask{
 	
 	getStatus(){
 		var self=this;
-		if ((self.done)||(!self.running)){
+		if ((self.isDone)||(!self.running)){
 			return {
 					desc:self.description,
 					min:0,
@@ -146,7 +154,8 @@ class RCGTask{
 					perc:(self.done?1:0),
 					adv:(self.done?1:0),
 					weight:self.weight,
-					done:self.done,
+					done:self.isDone,
+					timeSpent:self.finishTime-self.initTime,
 					running:self.running,
 					isCallback:self.isCallback,
 					detail:[]  // there is not detail..... 
@@ -176,6 +185,7 @@ class RCGTask{
 				adv:progressPercent,
 				weight:self.methodWeight,
 				done:false,
+				timeSpent:(bRunningMethod?(new Date()).getTime()-self.initTime:""),
 				running:bRunningMethod,
 				isCallback:self.isCallback
 				,detail:[]  // there is not more detail???..... 
@@ -250,6 +260,7 @@ class RCGTask{
 				adv:totalPerc,
 				done:false,
 				running:true,
+				timeSpent:(new Date()).getTime()-self.initTime,
 				child:arrRunningTasks,
 				detail:arrStatus  // there is detail..... useful info!
 				};
@@ -397,7 +408,7 @@ class RCGTaskManager{
 			var fncBarrierOpen=function(){
 				self.setRunningTask(runningTask);
 				runningTask.running=false;
-				runningTask.done=true;
+				runningTask.done();
 				self.next();
 			}
 			innerBarrier=new RCGBarrier(fncBarrierOpen);
@@ -507,8 +518,7 @@ class RCGTaskManager{
 					return stepRunning.barrier.reach(stepRunning);
 				} else {
 					stepRunning.running=false;
-					stepRunning.done=true;
-					stepRunning.changeStatus();
+					stepRunning.done();
 					stepRunning=stepRunning.parent;
 				}
 				
@@ -532,8 +542,7 @@ class RCGTaskManager{
 							return;
 						}else {
 							stepRunning.running=false;  // the step was finished... now is not running (ensure)
-							stepRunning.done=true;     // the step was finished .. now is done (ensure)
-							stepRunning.changeStatus();
+							stepRunning.done();     // the step was finished .. now is done (ensure)
 							stepRunning=stepRunning.parent; // next round have to check a brother step... method probably...
 						}
 					}
@@ -556,8 +565,7 @@ class RCGTaskManager{
 						return;
 					} else {
 						stepRunning.running=false;  // the call was executed
-						stepRunning.done=true;      // the call is done
-						stepRunning.changeStatus();
+						stepRunning.done();      // the call is done
 						stepRunning=stepRunning.parent; // goto next brother
 					}
 				} else if (stepRunning.running){ // if is running.... the call is finishing...
@@ -569,8 +577,7 @@ class RCGTaskManager{
 					} else { // if jumps remaining
 						nJumps--; // reduce njumps
 						stepRunning.running=false;  // the call was executed
-						stepRunning.done=true;      // the call is done
-						stepRunning.changeStatus();
+						stepRunning.done();      // the call is done
 						stepRunning=stepRunning.parent; // goto next brother
 					}
 				} else if (stepRunning.parent!=""){ // if there is not method setted and is not the root callmanager

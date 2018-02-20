@@ -3,7 +3,10 @@ interface IHero {
   name: string;
 }
 
-const HEROS: IHero[] = [
+
+class HerosComponentController implements ng.IComponentController {
+
+  public heros: IHero[
   { id: 11, name: "Mr. Nice" },
   { id: 12, name: "Narco" },
   { id: 13, name: "Bombasto" },
@@ -15,12 +18,6 @@ const HEROS: IHero[] = [
   { id: 19, name: "Magma" },
   { id: 20, name: "Tornado" }
 ];
-
-
-
-class HerosComponentController implements ng.IComponentController {
-
-  public heros: IHero[];
 
   constructor() {}
 

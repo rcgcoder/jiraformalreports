@@ -269,7 +269,7 @@ class RCGTaskManager{
 		self.runningTask="";
 		self.onChangeStatus="";
 		//self.extendObject(obj);
-		self.asyncTaskCalls=true;
+		self.asyncTaskCalls=false;
 	}
 	setOnChangeStatus(callback){
 		var self=this;

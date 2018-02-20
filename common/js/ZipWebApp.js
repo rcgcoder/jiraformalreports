@@ -16,8 +16,8 @@ class ZipWebApp{
 			var image=document.getElementById("jrfSplash");
 			image.src = content;
 			log("Image changed");
-			$('body').attr('ng-app', 'mySuperAwesomeApp');
-			$("#"+self.htmlContainerId).html("<hero></hero>");
+//			$('body').attr('ng-app', 'mySuperAwesomeApp');
+			$("#"+self.htmlContainerId).html("<heros></heros>");
 			self.popCallback(); // finishing the process.
 		});
 		

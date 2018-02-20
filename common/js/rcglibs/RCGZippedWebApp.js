@@ -904,10 +904,13 @@ class RCGZippedApp{
 				}
 				if (!tm.updateScheduled){
 					var fncUpdateProgress=function(){
+						log("UPDATE STATE PROGRESS: Update Progress");
 						if (!tm.needProgressUpdate){
+							log("UPDATE STATE PROGRESS: not Update");
 							tm.updateScheduled=false;
 							return;
 						}
+						log("UPDATE STATE PROGRESS: updating");
 						tm.updateScheduled=true;
 						tm.needProgressUpdate=false;
 						var progressDiv=$("#JFR_Progress_DIV");
@@ -965,11 +968,15 @@ class RCGZippedApp{
 									sHtml+
 									"</ul>"
 									).appendTo(pDiv);
+						log("UPDATE STATE PROGRESS: schedule next update");
 						setTimeout(function(){
+							log("UPDATE STATE PROGRESS: scheduling");
 							if (tm.needProgressUpdate){
 								tm.updateScheduled=true;
+								log("UPDATE STATE PROGRESS: it will run next second");
 								setTimeout(fncUpdateProgress,1000);
 							} else {
+								log("UPDATE STATE PROGRESS: not shedule");
 								tm.updateScheduled=false;
 							}
 						});

@@ -893,7 +893,7 @@ class RCGZippedApp{
 	run(){
 		var self=this;
 		var iTime=0;
-		self.getTaskManager().setOnChangeStatus(self.createManagedCallback(function(){
+/*		self.getTaskManager().setOnChangeStatus(self.createManagedCallback(function(){
 			if (window.jQuery){
 				var progressDiv=$("#JFR_Progress_DIV");
 				var pDiv; 
@@ -952,7 +952,7 @@ class RCGZippedApp{
 				
 			}
 		}));
-		if ((self.github!="")&&((self.github.commitId=="")||(self.github.commitDate==""))){
+*/		if ((self.github!="")&&((self.github.commitId=="")||(self.github.commitDate==""))){
 			self.addStep(self.github.updateLastCommit,undefined,self.github);
 		}
 //		self.addStep("Starting Memory Monitor...",self.loadMemoryMonitor);

@@ -222,7 +222,7 @@ class RCGZippedApp{
 		self.lastDeployInfo="";
 		self.mainJs="";
 		self.mainClass="";
-		self.bWithPersistentStorage=isChrome();
+		self.bWithPersistentStorage=false; //isChrome();
 		self.localStorageMaxSize=200*1024*1024; // 200 MBytes by default
 		taskManager.extendObject(self);
 		log("ZippedApp Created");

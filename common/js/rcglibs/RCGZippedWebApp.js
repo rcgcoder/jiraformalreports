@@ -898,13 +898,18 @@ class RCGZippedApp{
 				var tm=self.getTaskManager();
 				if (typeof tm.needProgressUpdate==="undefined"){
 					tm.needProgressUpdate=true;
-					tm.updatingProgress=false;
+					tm.updateScheduled=false;
 				} else {
 					tm.needProgressUpdate=true;
 				}
-				if (!tm.updatingProgress){
+				if (!tm.updateScheduled){
 					var fncUpdateProgress=function(){
-						tm.updatingProgress=true;
+						if (!tm.needProgressUpdate){
+							tm.updateScheduled=false;
+							return;
+						}
+						tm.updateScheduled=true;
+						tm.needProgressUpdate=false;
 						var progressDiv=$("#JFR_Progress_DIV");
 						var pDiv; 
 						if (progressDiv.length==0){
@@ -960,8 +965,14 @@ class RCGZippedApp{
 									sHtml+
 									"</ul>"
 									).appendTo(pDiv);
-						tm.updatingProgress=false;
-						setTimeout(fncUpdateProgress,1000);
+						setTimeout(function(){
+							if (tm.needProgressUpdate){
+								tm.updateScheduled=true;
+								setTimeout(fncUpdateProgress,1000);
+							} else {
+								tm.updateScheduled=false;
+							}
+						});
 					}
 					fncUpdateProgress();
 				}

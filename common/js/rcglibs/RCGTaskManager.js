@@ -152,8 +152,8 @@ class RCGTask{
 					desc:self.description,
 					min:0,
 					max:1,
-					perc:(self.done?1:0),
-					adv:(self.done?1:0),
+					perc:(self.isDone?1:0),
+					adv:(self.isDone?1:0),
 					weight:self.weight,
 					done:self.isDone,
 					timeSpent:self.finishTime-self.initTime,
@@ -514,7 +514,7 @@ class RCGTaskManager{
 			iSubStep=stepRunning.actStep;			
 			bWithSubSteps=(nSteps>0);
 			if (iSubStep>=nSteps){ // the actual task is reached the end of de steps
-				if ((!stepRunning.done)&&((stepRunning.innerForks.length>0)||(stepRunning.barrier!=""))){
+				if ((!stepRunning.isDone)&&((stepRunning.innerForks.length>0)||(stepRunning.barrier!=""))){
 					stepRunning.changeStatus();
 					return stepRunning.barrier.reach(stepRunning);
 				} else {
@@ -526,7 +526,7 @@ class RCGTaskManager{
 			} else if ((iSubStep>=0)&&(iSubStep<nSteps)) { // Phase 2..steps.... 
 													// it´s running a intermediate step...
 				var actStep=subSteps[iSubStep];   // setting the actual step to identify the task to process in next round
-				if (actStep.done){ // if the next step is done....
+				if (actStep.isDone){ // if the next step is done....
 					stepRunning.actStep++; 
 					if (stepRunning.actStep>=nSteps){ // if where the last step...
 						var bReachBarrier=false;

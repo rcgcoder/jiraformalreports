@@ -942,7 +942,7 @@ class RCGZippedApp{
 							  '   '+(Math.round((item.timeSpent/1000)*100)/100)+' segs'+
 							  '</div>';
 							var sSubItems="";
-							if (item.detail.length>0) {
+							if (item.detail.length>0) { 
 								for (var i=0;i<item.detail.length;i++){
 									var sSubItem=fncAddProgressItem(item.detail[i]);
 									sSubItems+=sSubItem;

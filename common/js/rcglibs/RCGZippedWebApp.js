@@ -222,7 +222,7 @@ class RCGZippedApp{
 		self.lastDeployInfo="";
 		self.mainJs="";
 		self.mainClass="";
-		self.bWithPersistentStorage=false; //isChrome();
+		self.bWithPersistentStorage=isChrome();
 		self.localStorageMaxSize=200*1024*1024; // 200 MBytes by default
 		taskManager.extendObject(self);
 		log("ZippedApp Created");
@@ -939,7 +939,7 @@ class RCGZippedApp{
 							  '	  <span id="sbTitle"> ' + (item.desc==""?"Running...":item.desc) + sChildsInfo + ' '+perc100+'% '+
 							  '   </span>'+
 							  '   <progress id="sbProgress" value="'+(Math.round(perc100))+'" max="100">Progress Text</progress>'+
-							  '   '+item.timeSpent+' segs'+
+							  '   '+(Math.round((item.timeSpent/1000)*100)/100)+' segs'+
 							  '</div>';
 							var sSubItems="";
 							if (item.detail.length>0) {

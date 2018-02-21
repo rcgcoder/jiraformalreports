@@ -929,7 +929,7 @@ class RCGZippedApp{
 				if (item.perc>0){
 					tTotal=(1/item.perc)*item.timeSpent;
 					tETA=tTotal-item.timeSpent;
-					tETA=Math.round((item.timeSpent/1000)*100)/100;
+					tETA=Math.round((tETA/1000)*100)/100;
 				}
 				var sItem='<div id="statusBox" class="inline">'+
 				  '	  <span id="sbTitle"> ' + (item.desc==""?"Running...":item.desc) + sChildsInfo + ' '+perc100+'% '+

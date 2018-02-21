@@ -905,7 +905,6 @@ class RCGZippedApp{
 			} else {
 				pDiv=progressDiv;
 			}
-			iTime++;
 			pDiv.empty();
 			var allTasksInfo=self.getTaskManagerStatus();
 			var fncAddProgressItem=function(item){
@@ -953,7 +952,6 @@ class RCGZippedApp{
 	}
 	run(){
 		var self=this;
-		var iTime=0;
 		self.getTaskManager().setOnChangeStatus(self.createManagedCallback(function(){
 				self.updateStatus();}));
 		if ((self.github!="")&&((self.github.commitId=="")||(self.github.commitDate==""))){

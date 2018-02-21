@@ -139,7 +139,11 @@ class RCGTask{
 		}
 		self.changeStatus();
 		if (self.getTaskManager().asyncTaskCalls) {
-			setTimeout(fncApply); 
+			if (self.getTaskManager().asyncTaskCallsDelay>0){
+				setTimeout(fncApply,self.getTaskManager().asyncTaskCallsDelay);
+			} else {
+				setTimeout(fncApply);
+			}
 		} else {
 			fncApply();
 		}
@@ -282,6 +286,7 @@ class RCGTaskManager{
 		self.onChangeStatus="";
 		//self.extendObject(obj);
 		self.asyncTaskCalls=true;
+		self.asyncTaskCallsDelay=1000;
 		self.updateStatusDelay=1000;
 		self.changeStatusNeedsNotify=false;
 		self.changeStatusUpdateScheduled=false;

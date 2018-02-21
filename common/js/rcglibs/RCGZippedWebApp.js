@@ -923,11 +923,19 @@ class RCGZippedApp{
 				if (nChildsTotal>0){
 					sChildsInfo=" ("+nChildsDone+"/"+nChildsTotal+")";
 				}
+				
+				var tTotal=0;
+				var tETA=0;
+				if (item.perc>0){
+					tTotal=(1/item.perc)*item.timeSpent;
+					tETA=tTotal-item.timeSpent;
+					tETA=Math.round((item.timeSpent/1000)*100)/100;
+				}
 				var sItem='<div id="statusBox" class="inline">'+
 				  '	  <span id="sbTitle"> ' + (item.desc==""?"Running...":item.desc) + sChildsInfo + ' '+perc100+'% '+
 				  '   </span>'+
 				  '   <progress id="sbProgress" value="'+(Math.round(perc100))+'" max="100">Progress Text</progress>'+
-				  '   '+(Math.round((item.timeSpent/1000)*100)/100)+' segs'+
+				  '   '+(Math.round((item.timeSpent/1000)*100)/100)+' segs'+(tTotal>0?(' ('+tETA+' segs)'):'')+
 				  '</div>';
 				var sSubItems="";
 				if (item.detail.length>0) { 

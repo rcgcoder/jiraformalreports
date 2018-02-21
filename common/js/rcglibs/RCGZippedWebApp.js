@@ -891,6 +891,7 @@ class RCGZippedApp{
 		self.loadRemoteFile(self.mainJs);
 	}
 	updateStatus(){
+		var self=this;
 		if (window.jQuery){
 			var tm=self.getTaskManager();
 			var progressDiv=$("#JFR_Progress_DIV");
@@ -953,7 +954,8 @@ class RCGZippedApp{
 	run(){
 		var self=this;
 		var iTime=0;
-		self.getTaskManager().setOnChangeStatus(self.createManagedCallback(self.updateStatus));
+		self.getTaskManager().setOnChangeStatus(self.createManagedCallback(function(){
+				self.updateStatus();}));
 		if ((self.github!="")&&((self.github.commitId=="")||(self.github.commitDate==""))){
 			self.addStep(self.github.updateLastCommit,undefined,self.github);
 		}

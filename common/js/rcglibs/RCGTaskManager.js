@@ -282,6 +282,12 @@ class RCGTaskManager{
 		self.onChangeStatus="";
 		//self.extendObject(obj);
 		self.asyncTaskCalls=true;
+		self.updateStatusDelay=1000;
+		self.changeStatusNeedsNotify=false;
+		self.changeStatusUpdateScheduled=false;
+	}
+	setChangeStatusNotifyDelay(millis){
+		var self=this;
 	}
 	setOnChangeStatus(callback){
 		var self=this;
@@ -290,7 +296,36 @@ class RCGTaskManager{
 	changeStatus(){
 		var self=this;
 		if (self.onChangeStatus!=""){
-			self.onChangeStatus();
+			if (self.updateStatusDelay<=0){
+				return self.onChangeStatus();
+			} 
+			if (typeof self.changeStatusNeedsNotify==="undefined"){
+				self.changeStatusNeedsNotify=true;
+				self.changeStatusUpdateScheduled=false;
+			} else {
+				self.changeStatusNeedsNotify=true;
+			}
+			if (!self.changeStatusUpdateScheduled){
+				var fncUpdateProgress=function(){
+					log("UPDATE STATE PROGRESS: Update Progress");
+					if (!self.changeStatusNeedsNotify){
+						log("UPDATE STATE PROGRESS: not Update");
+						self.changeStatusUpdateScheduled=false;
+						return;
+					}
+					log("UPDATE STATE PROGRESS: updating");
+					self.changeStatusUpdateScheduled=true;
+					self.changeStatusNeedsNotify=false;
+					self.onChangeStatus();
+					log("UPDATE STATE PROGRESS: schedule next update");
+					setTimeout(function(){
+						self.changeStatusUpdateScheduled=true;
+						log("UPDATE STATE PROGRESS: it will run next second");
+						setTimeout(fncUpdateProgress,self.updateStatusDelay);
+					});
+				}
+				fncUpdateProgress();
+			}
 		}
 	}
 	

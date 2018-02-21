@@ -890,95 +890,70 @@ class RCGZippedApp{
 		});
 		self.loadRemoteFile(self.mainJs);
 	}
+	updateStatus(){
+		if (window.jQuery){
+			var tm=self.getTaskManager();
+			var progressDiv=$("#JFR_Progress_DIV");
+			var pDiv; 
+			if (progressDiv.length==0){
+				log("minimice img");
+				$("#jrfSplash").width(100);
+				$("#jrfSplash").height(100);
+				log("adding progress div");
+				pDiv= $("<div id='JFR_Progress_DIV'></div>").appendTo('body');
+			} else {
+				pDiv=progressDiv;
+			}
+			iTime++;
+			pDiv.empty();
+			var allTasksInfo=self.getTaskManagerStatus();
+			var fncAddProgressItem=function(item){
+				if (item.done) return "";
+				if (!item.running) return "";
+				var perc100=(Math.round(item.perc*1000))/10;
+				var nChildsDone=0;
+				var nChildsTotal=item.detail.length;
+				for (var i=0;i<nChildsTotal;i++){
+					var child=item.detail[i];
+					if (child.done){
+						nChildsDone++;
+					}
+				}
+				var sChildsInfo="";
+				if (nChildsTotal>0){
+					sChildsInfo=" ("+nChildsDone+"/"+nChildsTotal+")";
+				}
+				var sItem='<div id="statusBox" class="inline">'+
+				  '	  <span id="sbTitle"> ' + (item.desc==""?"Running...":item.desc) + sChildsInfo + ' '+perc100+'% '+
+				  '   </span>'+
+				  '   <progress id="sbProgress" value="'+(Math.round(perc100))+'" max="100">Progress Text</progress>'+
+				  '   '+(Math.round((item.timeSpent/1000)*100)/100)+' segs'+
+				  '</div>';
+				var sSubItems="";
+				if (item.detail.length>0) { 
+					for (var i=0;i<item.detail.length;i++){
+						var sSubItem=fncAddProgressItem(item.detail[i]);
+						sSubItems+=sSubItem;
+					}
+					sSubItems="<ul>"+sSubItems+"</ul>";
+				}
+				sItem='<li class="progress">'+sItem+' '+sSubItems+'</li>';
+				return sItem;
+			}
+			var sHtml="";
+			for (var i=0;i<allTasksInfo.length;i++){
+				sHtml+=fncAddProgressItem(allTasksInfo[0]);
+			}
+			var list= $("<ul id='ProgressList'>"+
+						sHtml+
+						"</ul>"
+						).appendTo(pDiv);
+		}
+	}
 	run(){
 		var self=this;
 		var iTime=0;
-		self.getTaskManager().setOnChangeStatus(self.createManagedCallback(function(){
-			if (window.jQuery){
-				var tm=self.getTaskManager();
-				if (typeof tm.needProgressUpdate==="undefined"){
-					tm.needProgressUpdate=true;
-					tm.updateScheduled=false;
-				} else {
-					tm.needProgressUpdate=true;
-				}
-				if (!tm.updateScheduled){
-					var fncUpdateProgress=function(){
-						log("UPDATE STATE PROGRESS: Update Progress");
-						if (!tm.needProgressUpdate){
-							log("UPDATE STATE PROGRESS: not Update");
-							tm.updateScheduled=false;
-							return;
-						}
-						log("UPDATE STATE PROGRESS: updating");
-						tm.updateScheduled=true;
-						tm.needProgressUpdate=false;
-						var progressDiv=$("#JFR_Progress_DIV");
-						var pDiv; 
-						if (progressDiv.length==0){
-							log("minimice img");
-							$("#jrfSplash").width(100);
-							$("#jrfSplash").height(100);
-							log("adding progress div");
-							pDiv= $("<div id='JFR_Progress_DIV'></div>").appendTo('body');
-						} else {
-							pDiv=progressDiv;
-						}
-						iTime++;
-						pDiv.empty();
-						var allTasksInfo=self.getTaskManagerStatus();
-						var fncAddProgressItem=function(item){
-							if (item.done) return "";
-							if (!item.running) return "";
-							var perc100=(Math.round(item.perc*1000))/10;
-							var nChildsDone=0;
-							var nChildsTotal=item.detail.length;
-							for (var i=0;i<nChildsTotal;i++){
-								var child=item.detail[i];
-								if (child.done){
-									nChildsDone++;
-								}
-							}
-							var sChildsInfo="";
-							if (nChildsTotal>0){
-								sChildsInfo=" ("+nChildsDone+"/"+nChildsTotal+")";
-							}
-							var sItem='<div id="statusBox" class="inline">'+
-							  '	  <span id="sbTitle"> ' + (item.desc==""?"Running...":item.desc) + sChildsInfo + ' '+perc100+'% '+
-							  '   </span>'+
-							  '   <progress id="sbProgress" value="'+(Math.round(perc100))+'" max="100">Progress Text</progress>'+
-							  '   '+(Math.round((item.timeSpent/1000)*100)/100)+' segs'+
-							  '</div>';
-							var sSubItems="";
-							if (item.detail.length>0) { 
-								for (var i=0;i<item.detail.length;i++){
-									var sSubItem=fncAddProgressItem(item.detail[i]);
-									sSubItems+=sSubItem;
-								}
-								sSubItems="<ul>"+sSubItems+"</ul>";
-							}
-							sItem='<li class="progress">'+sItem+' '+sSubItems+'</li>';
-							return sItem;
-						}
-						var sHtml="";
-						for (var i=0;i<allTasksInfo.length;i++){
-							sHtml+=fncAddProgressItem(allTasksInfo[0]);
-						}
-						var list= $("<ul id='ProgressList'>"+
-									sHtml+
-									"</ul>"
-									).appendTo(pDiv);
-						log("UPDATE STATE PROGRESS: schedule next update");
-						setTimeout(function(){
-							tm.updateScheduled=true;
-							log("UPDATE STATE PROGRESS: it will run next second");
-							setTimeout(fncUpdateProgress,1000);
-						});
-					}
-					fncUpdateProgress();
-				}
-			}
-		}));
+		self.getTaskManager().setOnChangeStatus(self.createManagedCallback(self.updateStatus));
 		if ((self.github!="")&&((self.github.commitId=="")||(self.github.commitDate==""))){
 			self.addStep(self.github.updateLastCommit,undefined,self.github);
 		}

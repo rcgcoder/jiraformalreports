@@ -935,7 +935,7 @@ class RCGZippedApp{
 				  '	  <span id="sbTitle"> ' + (item.desc==""?"Running...":item.desc) + sChildsInfo + ' '+perc100+'% '+
 				  '   </span>'+
 				  '   <progress id="sbProgress" value="'+(Math.round(perc100))+'" max="100">Progress Text</progress>'+
-				  '   '+(Math.round((item.timeSpent/1000)*100)/100)+' segs'+(tTotal>0?(' ('+tETA+' segs)'):'')+
+				  '   '+(Math.round((item.timeSpent/1000)*100)/100)+' segs'+(tTotal>0?(' (ETA: '+tETA+' segs)'):'')+
 				  '</div>';
 				var sSubItems="";
 				if (item.detail.length>0) { 

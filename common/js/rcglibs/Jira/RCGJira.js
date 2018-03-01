@@ -13,7 +13,7 @@ class RCGJira{
 	}
 	apiCall(sTargetUrl,sPage,sType,callback,arrHeaders){
 		var self=this;
-		var sUrl='/jira/rest/auth/1/session'; //sTargetUrl;
+		var sUrl='https://rcgcoder.atlassian.net/jira/rest/auth/1/session'; //sTargetUrl;
 		var xhr = new XMLHttpRequest();
 		xhr.open('POST', sUrl, true);
 		xhr.responseType = 'json';

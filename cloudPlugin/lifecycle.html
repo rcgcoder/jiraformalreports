@@ -1,0 +1,90 @@
+<html>
+<head>
+<script type="text/javascript" src="js/libs/jquery-3.3.1.min.js"></script><script type="text/javascript">
+	 	function getUrlParameter(sParam) {
+		    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+		        sURLVariables = sPageURL.split('&'),
+		        sParameterName,
+		        i;
+
+		    for (i = 0; i < sURLVariables.length; i++) {
+		        sParameterName = sURLVariables[i].split('=');
+		        if (sParameterName[0] === sParam) {
+		            return sParameterName[1] === undefined ? true : sParameterName[1];
+		        }
+		    }
+		};
+		function getLastCommit(repo,callback){
+	  		 var xhr = new XMLHttpRequest();
+			 var sRepoUrl="https://api.github.com/repos/"+repo+"/commits/master";
+			 xhr.open('GET', sRepoUrl, true);
+			 xhr.responseType = 'json';
+		     xhr.onerror=function(){alert("Error getting last commit");};
+			 xhr.onload = function(e) {
+				  if (this.status == 200) {
+						var lastCommit=this.response;
+						var sCommitLongId=lastCommit.sha;
+						var sCommitShortId=sCommitLongId.substring(0,8);
+						var sCommitDate=(new Date(lastCommit.commit.author.date)).getTime();
+						callback(sCommitShortId,sCommitDate);
+				  } else {
+					  console.log("Error getting last commit... setting from url");
+					  var sPageURL = window.location.pathname; 
+				      var arrParts= sPageURL.split('jiraformalreports/');
+					  var arrParts=arrParts[1].split('/');
+					  var sCommitShortId=arrParts[0];
+					  var sCommitDate=(new Date()).getTime();
+					  https://cdn.rawgit.com/rcgcoder/jiraformalreports/81206f75/common/jfrWebDeploy.html
+						callback(sCommitShortId,sCommitDate);
+				  }
+			 };
+			 xhr.send();
+		 };
+
+	     function getJavaScriptFile(sUrl,callback){
+				var xhr = new XMLHttpRequest();
+				xhr.open('GET', sUrl, true);
+				xhr.onerror=function(){console.log("Error getting:"+ sUrl);};
+				xhr.onload = function(e) {
+				  if (this.status == 200) {
+					  console.log("Downloaded "+sUrl);
+					  callback(this.responseText);
+				  } else {
+					  console.log("Error downloading "+sUrl);
+				  }
+				};
+				xhr.send();
+		 };
+	     function loadJavaScriptFile(jsContent,callback){
+				var oHead=(document.head || document.getElementsByTagName("head")[0]);
+				var oScript = document.createElement("script");
+				oScript.type = "text\/javascript";
+				oScript.onerror = function(){console.log("Error applying javascrip");};
+   				oHead.appendChild(oScript);
+				oScript.innerHTML = jsContent;
+				callback();
+		 };
+		 
+		 function init(){
+			 var rootPath="https://cdn.rawgit.com";
+			 var sRepo="rcgcoder/jiraformalreports";
+			 var commitId="";
+			 var commitDate="";
+			 
+			 getLastCommit(sRepo,function(sCommitId,tCommitDate){
+				 commitId=sCommitId;
+				 commitDate=tCommitDate;				 
+				 var sUrlCM=rootPath+"/"+sRepo+"/"+commitId+"/cloudPlugin/lifecycle.js";
+				 getJavaScriptFile(sUrlCM,function(jsContent){
+					 loadJavaScriptFile(jsContent,function(){
+					 });
+				 });
+			 });		
+		 }
+		 
+</script>
+</head>
+<body onload="init()">
+	Loaded!
+</body>
+</html>

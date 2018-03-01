@@ -286,7 +286,7 @@ class RCGTaskManager{
 		self.onChangeStatus="";
 		//self.extendObject(obj);
 		self.asyncTaskCalls=true;
-		self.asyncTaskCallsDelay=1000;
+		self.asyncTaskCallsDelay=0;
 		self.updateStatusDelay=1000;
 		self.changeStatusNeedsNotify=false;
 		self.changeStatusUpdateScheduled=false;

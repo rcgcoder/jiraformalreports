@@ -17,7 +17,7 @@ class RCGJira{
 		var xhr = new XMLHttpRequest();
 		xhr.open('POST', sUrl, true);
 		xhr.responseType = 'json';
-		request.setRequestHeader('Authorization', 'Basic ' + 'rcgcoder:jiraRitxar1676');
+		xhr.setRequestHeader('Authorization', 'Basic ' + 'rcgcoder:jiraRitxar1676');
 		xhr.onerror=self.loadError;
 		xhr.onload = self.createManagedCallback(function(e) {
 		  if (xhr.status == 302) {

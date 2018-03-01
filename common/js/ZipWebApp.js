@@ -35,6 +35,9 @@ class ZipWebApp{
 			var jira=new RCGJira(self);
 			jira.getAllIssues();
 		});
+		AP.getLocation(function(location){
+			  alert(location);
+			});
 		
 		self.continueTask();
 	}

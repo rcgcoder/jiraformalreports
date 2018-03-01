@@ -15,9 +15,9 @@ class RCGJira{
 		var self=this;
 		// A simple POST request which logs response in the console.
 		self.JiraAPConnection.request({
-		  url: '/rest/api/2/search',
+		  url: '/jira/rest/auth/1/session',
 		  type: 'POST',
-		  data: {name: 'some text', description: 'test'},
+		  data: {username: 'rcgcoder', description: 'jiraRitxar1676'},
 		  success: function(responseText){
 		    console.log(responseText);
 		  },

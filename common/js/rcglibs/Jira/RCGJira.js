@@ -17,6 +17,7 @@ class RCGJira{
 		self.JiraAPConnection.request({
 		  url: '/jira/rest/auth/1/session',
 		  type: 'POST',
+		  authorization:'Basic rcgcoder:jiraRitxar1676',
 		  data: {username: 'rcgcoder', description: 'jiraRitxar1676'},
 		  success: function(responseText){
 		    console.log(responseText);

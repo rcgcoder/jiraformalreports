@@ -3,6 +3,9 @@
      "description": "Jira Formal Reports Plugin",
      "key": "com.rcgcoder.jiraformalreports",
      "baseUrl": "https://cdn.rawgit.com",
+     "scopes": [
+            "read", "write"
+        ],
      "vendor": {
          "name": "RCG Coder",
          "url": "https://www.github.com/rcgcoder"

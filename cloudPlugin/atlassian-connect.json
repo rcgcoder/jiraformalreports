@@ -2,7 +2,7 @@
      "name": "Formal Reports",
      "description": "Jira Formal Reports Plugin",
      "key": "com.rcgcoder.jiraformalreports",
-     "baseUrl": "https://cdn.rawgit.com",
+     "baseUrl": "https://d696dc44.ngrok.io",
      "scopes": [
             "read", "write"
         ],
@@ -14,13 +14,13 @@
          "type": "jwt" 
      },
      "lifecycle": {
-            "installed": "/app-installed-callback"
+            "installed": "/jfreports/callback"
      }     
      ,"apiVersion": 1,
      "modules": {
          "generalPages": [
              {
-                 "url": "/rcgcoder/jiraformalreports/6898c8ba/common/jfrWebDeploy.html",
+                 "url": "/jfreports/common/jfrWebDeploy.html",
                  "key": "JiraFormalReportPlugin",
                  "location": "system.top.navigation.bar",
                  "name": {

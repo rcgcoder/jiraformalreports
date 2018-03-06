@@ -34,7 +34,7 @@ class RCGJira{
 			log("getAllProjects:"+response);
 			self.popCallback();
 		});
-		self.apiCall("/rest/api/2/project");
+		self.apiCall("/rest/api/2/project?expand=issueTypes");
 	}
 	getAllIssues(){
 		var self=this;

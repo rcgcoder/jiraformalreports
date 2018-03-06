@@ -21,7 +21,7 @@ class RCGJira{
 		self.JiraAPConnection.request({
 			  url: sTargetUrl,
 			  success: self.createManagedCallback(function(responseText){
-			    self.popCallback([responseText,xhr]);
+			    self.popCallback([responseText,self.JiraAPConnection]);
 			  }),
 			  error: self.createManagedCallback(function(xhr, statusText, errorThrown){
 			    self.popCallback(["",xhr, statusText, errorThrown]);

@@ -15,18 +15,9 @@ class RCGJira{
 		var self=this;
 		
 		// A simple POST request which logs response in the console.
-		self.JiraAPConnection.request({
-		  url: '/jira/rest/auth/1/session',
-		  type: 'POST',
-		  authorization:'Basic rcgcoder:jiraRitxar1676',
-		  data: {username: 'rcgcoder', description: 'jiraRitxar1676'},
-		  success: function(responseText){
-		    console.log(responseText);
-		  },
-		  error: function(xhr, statusText, errorThrown){
-		    console.log(arguments);
-		  }
-		});		
+		self.JiraAPConnection.request('/rest/api/2/issue/PDP-12/changelog')
+		  .then(data => alert(data.body))
+		  .catch(e => alert(e.err));
 	}
 	getAllIssues(){
 		var self=this;

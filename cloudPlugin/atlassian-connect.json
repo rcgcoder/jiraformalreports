@@ -11,9 +11,12 @@
          "url": "https://www.github.com/rcgcoder"
      },
      "authentication": {
-         "type": "none" 
+         "type": "jwt" 
      },
-     "apiVersion": 1,
+     "lifecycle": {
+            "installed": "/app-installed-callback"
+     }     
+     ,"apiVersion": 1,
      "modules": {
          "generalPages": [
              {

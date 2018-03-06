@@ -1,0 +1,110 @@
+{
+	"self": "https://rcgcoder.atlassian.net/rest/api/2/issue/PDP-12/changelog?maxResults=100&startAt=0",
+	"maxResults": 100,
+	"startAt": 0,
+	"total": 3,
+	"isLast": true,
+	"values": [
+		{
+			"id": "10004",
+			"author": {
+				"self": "https://rcgcoder.atlassian.net/rest/api/2/user?username=admin",
+				"name": "admin",
+				"key": "admin",
+				"accountId": "557058:2a2f9597-3edf-4961-9850-009de457461e",
+				"emailAddress": "rcantabrana@aragon.es",
+				"avatarUrls": {
+					"48x48": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+					"24x24": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+					"16x16": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+					"32x32": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+				},
+				"displayName": "Ricardo Cantabrana",
+				"active": true,
+				"timeZone": "Europe/Berlin"
+			},
+			"created": "2018-01-23T20:36:51.250+0100",
+			"items": [
+				{
+					"field": "Parent",
+					"fieldtype": "jira",
+					"from": null,
+					"fromString": null,
+					"to": "10009",
+					"toString": "PDP-10"
+				}
+			]
+		},
+		{
+			"id": "10030",
+			"author": {
+				"self": "https://rcgcoder.atlassian.net/rest/api/2/user?username=admin",
+				"name": "admin",
+				"key": "admin",
+				"accountId": "557058:2a2f9597-3edf-4961-9850-009de457461e",
+				"emailAddress": "rcantabrana@aragon.es",
+				"avatarUrls": {
+					"48x48": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+					"24x24": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+					"16x16": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+					"32x32": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+				},
+				"displayName": "Ricardo Cantabrana",
+				"active": true,
+				"timeZone": "Europe/Berlin"
+			},
+			"created": "2018-03-06T08:40:41.959+0100",
+			"items": [
+				{
+					"field": "status",
+					"fieldtype": "jira",
+					"fieldId": "status",
+					"from": "3",
+					"fromString": "In Progress",
+					"to": "3",
+					"toString": "In Progress"
+				}
+			]
+		},
+		{
+			"id": "10031",
+			"author": {
+				"self": "https://rcgcoder.atlassian.net/rest/api/2/user?username=admin",
+				"name": "admin",
+				"key": "admin",
+				"accountId": "557058:2a2f9597-3edf-4961-9850-009de457461e",
+				"emailAddress": "rcantabrana@aragon.es",
+				"avatarUrls": {
+					"48x48": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+					"24x24": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+					"16x16": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+					"32x32": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+				},
+				"displayName": "Ricardo Cantabrana",
+				"active": true,
+				"timeZone": "Europe/Berlin"
+			},
+			"created": "2018-03-06T08:40:50.231+0100",
+			"items": [
+				{
+					"field": "resolution",
+					"fieldtype": "jira",
+					"fieldId": "resolution",
+					"from": null,
+					"fromString": null,
+					"to": "10000",
+					"toString": "Done"
+				},
+				{
+					"field": "status",
+					"fieldtype": "jira",
+					"fieldId": "status",
+					"from": "3",
+					"fromString": "In Progress",
+					"to": "10001",
+					"toString": "Done"
+				}
+			]
+		}
+	]
+}

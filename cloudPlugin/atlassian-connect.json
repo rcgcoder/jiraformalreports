@@ -20,7 +20,7 @@
      "modules": {
          "generalPages": [
              {
-                 "url": "/jfreports/common/jfrWebDeploy.html",
+                 "url": "/jfreports/app/jfrWebDeploy.html",
                  "key": "JiraFormalReportPlugin",
                  "location": "system.top.navigation.bar",
                  "name": {

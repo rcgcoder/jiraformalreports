@@ -20,7 +20,6 @@ class RCGJira{
 */		
 		self.JiraAPConnection.request({
 			  url: sTargetUrl,
-			  type: 'POST',
 			  success: self.createManagedCallback(function(responseText){
 			    self.popCallback([responseText,xhr]);
 			  }),

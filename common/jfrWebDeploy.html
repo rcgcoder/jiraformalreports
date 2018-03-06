@@ -47,7 +47,7 @@
 */	     
 		function getLastCommit(repo,callback){
 			var xhr = new XMLHttpRequest();
-			var sRepoUrl="getCommitId";
+			var sRepoUrl="../getCommitId";
 			xhr.open('GET', sRepoUrl, true);
 			xhr.responseType = 'json';
 			xhr.onerror=function(){alert("Error getting last commit");};

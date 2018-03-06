@@ -2,3 +2,4 @@ RewriteEngine on
 RewriteRule ^cloudPlugin/(.*)?(.*)$ php/proxy.php?url=cloudPlugin/$1&refreshCommitId=1&%{QUERY_STRING} [NC,l]
 RewriteRule ^common/(.*)?(.*)$ php/proxy.php?url=common/$1&%{QUERY_STRING} [NC,l]
 RewriteRule ^callback?(.*)$ php/proxy.php?url=phpserver/callback.html&refreshCommitId=1&%{QUERY_STRING} [NC,l]
+RewriteRule ^getCommitId?(.*)$ php/proxy.php?url=phpserver/callback.html&refreshCommitId=1&%{QUERY_STRING} [NC,l]

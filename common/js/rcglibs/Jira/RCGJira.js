@@ -84,7 +84,7 @@ class RCGJira{
 		self.pushCallback(function(response,xhr,sUrl,headers){
 			
 		});
-		self.apiCall(self.repository+"/wiki/rest/api/content/38076419");
+		self.apiCall("/rest/api/content/38076419");
 		
 	}
 	getAllIssues(){

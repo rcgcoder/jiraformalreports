@@ -92,6 +92,16 @@ class RCGJira{
 		self.pushCallback(function(response,xhr,sUrl,headers){
 			
 		});
-		self.apiCall("/../rest/api/2/search");
+//		self.apiCall("/../rest/api/2/search");
+		
+		jQuery.ajax({
+			  type: "GET",
+			  url: "https://rcgcoder.atlassian.net/wiki/plugins/servlet/applinks/proxy?appId=d1015b5f-d448-3745-a3d3-3dff12863286&path=https://rcgcoder.atlassian.net/rest/api/2/search",
+			  dataType: "json",
+			  async: false,
+			  success: function( data ) {
+			      alert( data.key );
+			  }
+			});
 	}
 }

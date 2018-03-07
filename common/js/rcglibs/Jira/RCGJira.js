@@ -84,7 +84,7 @@ class RCGJira{
 		self.pushCallback(function(response,xhr,sUrl,headers){
 			
 		});
-		self.apiCall(self.repository+"wiki/spaces/PACP/pages/38076419/Ejemplo+Confluence+1");
+		self.apiCall(self.repository+"/wiki/spaces/PACP/pages/38076419/Ejemplo+Confluence+1");
 		
 	}
 	getAllIssues(){

@@ -22,6 +22,7 @@ class RCGJira{
 			  url: sTargetUrl,
 			  type:'POST',
 			  data:data,
+			  contentType: 'application/json',
 			  success: self.createManagedCallback(function(responseText){
 			    self.popCallback([responseText,self.JiraAPConnection]);
 			  }),

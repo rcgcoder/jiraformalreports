@@ -33,7 +33,7 @@ class ZipWebApp{
 		});
 		self.addStep("Getting All Issues.... ",function(){
 			var jira=new RCGJira(self);
-			jira.getAllProjects();
+			jira.getAllEpics();
 		});
 		
 		self.continueTask();

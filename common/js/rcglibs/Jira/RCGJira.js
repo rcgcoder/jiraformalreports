@@ -63,7 +63,7 @@ class RCGJira{
 			self.popCallback();
 		});
 		var data= {
-			      "jql": "project = PDP",
+			      "jql": "issuetype=epic",
 			      "startAt": 0,
 			      "maxResults": 15,
 			      "fields": [

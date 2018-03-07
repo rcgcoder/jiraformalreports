@@ -1,7 +1,7 @@
 class RCGJira{
 	constructor(app){
 		var self=this;
-		self.repository="https://paega2.atlassian.net";
+		self.repository="https://rcgcoder.atlassian.net";
 		self.JiraAPConnection=AP;
 		self.app=app;
 		self.headerAuth="";

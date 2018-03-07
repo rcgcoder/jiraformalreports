@@ -1,110 +1,599 @@
 {
-	"self": "https://rcgcoder.atlassian.net/rest/api/2/issue/PDP-12/changelog?maxResults=100&startAt=0",
-	"maxResults": 100,
+	"expand": "schema,names",
 	"startAt": 0,
-	"total": 3,
-	"isLast": true,
-	"values": [
+	"maxResults": 15,
+	"total": 27,
+	"issues": 
+	[
 		{
-			"id": "10004",
-			"author": {
-				"self": "https://rcgcoder.atlassian.net/rest/api/2/user?username=admin",
-				"name": "admin",
-				"key": "admin",
-				"accountId": "557058:2a2f9597-3edf-4961-9850-009de457461e",
-				"emailAddress": "rcantabrana@aragon.es",
-				"avatarUrls": {
-					"48x48": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
-					"24x24": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
-					"16x16": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
-					"32x32": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
-				},
-				"displayName": "Ricardo Cantabrana",
-				"active": true,
-				"timeZone": "Europe/Berlin"
-			},
-			"created": "2018-01-23T20:36:51.250+0100",
-			"items": [
+			"expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+			"id": "10026",
+			"self": "https://rcgcoder.atlassian.net/rest/api/2/issue/10026",
+			"key": "PDP-27",
+			"fields": 
+			{
+				"summary": "Requisito de Prueba 1",
+				"assignee": null,
+				"status": 
 				{
-					"field": "Parent",
-					"fieldtype": "jira",
-					"from": null,
-					"fromString": null,
-					"to": "10009",
-					"toString": "PDP-10"
+					"self": "https://rcgcoder.atlassian.net/rest/api/2/status/10000",
+					"description": "",
+					"iconUrl": "https://rcgcoder.atlassian.net/",
+					"name": "Por hacer",
+					"id": "10000",
+					"statusCategory": 
+					{
+						"self": "https://rcgcoder.atlassian.net/rest/api/2/statuscategory/2",
+						"id": 2,
+						"key": "new",
+						"colorName": "blue-gray",
+						"name": "Por hacer"
+					}
 				}
-			]
+			}
 		},
+
 		{
-			"id": "10030",
-			"author": {
-				"self": "https://rcgcoder.atlassian.net/rest/api/2/user?username=admin",
-				"name": "admin",
-				"key": "admin",
-				"accountId": "557058:2a2f9597-3edf-4961-9850-009de457461e",
-				"emailAddress": "rcantabrana@aragon.es",
-				"avatarUrls": {
-					"48x48": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
-					"24x24": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
-					"16x16": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
-					"32x32": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
-				},
-				"displayName": "Ricardo Cantabrana",
-				"active": true,
-				"timeZone": "Europe/Berlin"
-			},
-			"created": "2018-03-06T08:40:41.959+0100",
-			"items": [
+			"expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+			"id": "10025",
+			"self": "https://rcgcoder.atlassian.net/rest/api/2/issue/10025",
+			"key": "PDP-26",
+			"fields": 
+			{
+				"summary": "Subproyecto 3",
+				"assignee": null,
+				"status": 
 				{
-					"field": "status",
-					"fieldtype": "jira",
-					"fieldId": "status",
-					"from": "3",
-					"fromString": "In Progress",
-					"to": "3",
-					"toString": "In Progress"
+					"self": "https://rcgcoder.atlassian.net/rest/api/2/status/10000",
+					"description": "",
+					"iconUrl": "https://rcgcoder.atlassian.net/",
+					"name": "Por hacer",
+					"id": "10000",
+					"statusCategory": 
+					{
+						"self": "https://rcgcoder.atlassian.net/rest/api/2/statuscategory/2",
+						"id": 2,
+						"key": "new",
+						"colorName": "blue-gray",
+						"name": "Por hacer"
+					}
 				}
-			]
+			}
 		},
+
 		{
-			"id": "10031",
-			"author": {
-				"self": "https://rcgcoder.atlassian.net/rest/api/2/user?username=admin",
-				"name": "admin",
-				"key": "admin",
-				"accountId": "557058:2a2f9597-3edf-4961-9850-009de457461e",
-				"emailAddress": "rcantabrana@aragon.es",
-				"avatarUrls": {
-					"48x48": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
-					"24x24": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
-					"16x16": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
-					"32x32": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
-				},
-				"displayName": "Ricardo Cantabrana",
-				"active": true,
-				"timeZone": "Europe/Berlin"
-			},
-			"created": "2018-03-06T08:40:50.231+0100",
-			"items": [
+			"expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+			"id": "10024",
+			"self": "https://rcgcoder.atlassian.net/rest/api/2/issue/10024",
+			"key": "PDP-25",
+			"fields": 
+			{
+				"summary": "Ejemplo 2 de Subproyecto",
+				"assignee": null,
+				"status": 
 				{
-					"field": "resolution",
-					"fieldtype": "jira",
-					"fieldId": "resolution",
-					"from": null,
-					"fromString": null,
-					"to": "10000",
-					"toString": "Done"
-				},
-				{
-					"field": "status",
-					"fieldtype": "jira",
-					"fieldId": "status",
-					"from": "3",
-					"fromString": "In Progress",
-					"to": "10001",
-					"toString": "Done"
+					"self": "https://rcgcoder.atlassian.net/rest/api/2/status/10000",
+					"description": "",
+					"iconUrl": "https://rcgcoder.atlassian.net/",
+					"name": "Por hacer",
+					"id": "10000",
+					"statusCategory": 
+					{
+						"self": "https://rcgcoder.atlassian.net/rest/api/2/statuscategory/2",
+						"id": 2,
+						"key": "new",
+						"colorName": "blue-gray",
+						"name": "Por hacer"
+					}
 				}
-			]
+			}
+		},
+
+		{
+			"expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+			"id": "10023",
+			"self": "https://rcgcoder.atlassian.net/rest/api/2/issue/10023",
+			"key": "PDP-24",
+			"fields": 
+			{
+				"summary": "Ejemplo de Subproyecto",
+				"assignee": null,
+				"status": 
+				{
+					"self": "https://rcgcoder.atlassian.net/rest/api/2/status/10000",
+					"description": "",
+					"iconUrl": "https://rcgcoder.atlassian.net/",
+					"name": "Por hacer",
+					"id": "10000",
+					"statusCategory": 
+					{
+						"self": "https://rcgcoder.atlassian.net/rest/api/2/statuscategory/2",
+						"id": 2,
+						"key": "new",
+						"colorName": "blue-gray",
+						"name": "Por hacer"
+					}
+				}
+			}
+		},
+
+		{
+			"expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+			"id": "10022",
+			"self": "https://rcgcoder.atlassian.net/rest/api/2/issue/10022",
+			"key": "PDP-23",
+			"fields": 
+			{
+				"summary": "As a user, I'd like a historical story to show in reports",
+				"assignee": 
+				{
+					"self": "https://rcgcoder.atlassian.net/rest/api/2/user?username=admin",
+					"name": "admin",
+					"key": "admin",
+					"accountId": "557058:2a2f9597-3edf-4961-9850-009de457461e",
+					"emailAddress": "rcantabrana@aragon.es",
+					"avatarUrls": 
+					{
+						"48x48": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+						"24x24": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+						"16x16": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+						"32x32": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+					},
+
+					"displayName": "Ricardo Cantabrana",
+					"active": true,
+					"timeZone": "Europe/Berlin"
+				},
+
+				"status": 
+				{
+					"self": "https://rcgcoder.atlassian.net/rest/api/2/status/10001",
+					"description": "",
+					"iconUrl": "https://rcgcoder.atlassian.net/",
+					"name": "Listo",
+					"id": "10001",
+					"statusCategory": 
+					{
+						"self": "https://rcgcoder.atlassian.net/rest/api/2/statuscategory/3",
+						"id": 3,
+						"key": "done",
+						"colorName": "green",
+						"name": "Listo"
+					}
+				}
+			}
+		},
+
+		{
+			"expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+			"id": "10021",
+			"self": "https://rcgcoder.atlassian.net/rest/api/2/issue/10021",
+			"key": "PDP-22",
+			"fields": 
+			{
+				"summary": "As a user, I'd like a historical story to show in reports",
+				"assignee": 
+				{
+					"self": "https://rcgcoder.atlassian.net/rest/api/2/user?username=admin",
+					"name": "admin",
+					"key": "admin",
+					"accountId": "557058:2a2f9597-3edf-4961-9850-009de457461e",
+					"emailAddress": "rcantabrana@aragon.es",
+					"avatarUrls": 
+					{
+						"48x48": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+						"24x24": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+						"16x16": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+						"32x32": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+					},
+
+					"displayName": "Ricardo Cantabrana",
+					"active": true,
+					"timeZone": "Europe/Berlin"
+				},
+
+				"status": 
+				{
+					"self": "https://rcgcoder.atlassian.net/rest/api/2/status/10001",
+					"description": "",
+					"iconUrl": "https://rcgcoder.atlassian.net/",
+					"name": "Listo",
+					"id": "10001",
+					"statusCategory": 
+					{
+						"self": "https://rcgcoder.atlassian.net/rest/api/2/statuscategory/3",
+						"id": 3,
+						"key": "done",
+						"colorName": "green",
+						"name": "Listo"
+					}
+				}
+			}
+		},
+
+		{
+			"expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+			"id": "10020",
+			"self": "https://rcgcoder.atlassian.net/rest/api/2/issue/10020",
+			"key": "PDP-21",
+			"fields": 
+			{
+				"summary": "As a user, I'd like a historical story to show in reports",
+				"assignee": 
+				{
+					"self": "https://rcgcoder.atlassian.net/rest/api/2/user?username=admin",
+					"name": "admin",
+					"key": "admin",
+					"accountId": "557058:2a2f9597-3edf-4961-9850-009de457461e",
+					"emailAddress": "rcantabrana@aragon.es",
+					"avatarUrls": 
+					{
+						"48x48": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+						"24x24": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+						"16x16": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+						"32x32": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+					},
+
+					"displayName": "Ricardo Cantabrana",
+					"active": true,
+					"timeZone": "Europe/Berlin"
+				},
+
+				"status": 
+				{
+					"self": "https://rcgcoder.atlassian.net/rest/api/2/status/10001",
+					"description": "",
+					"iconUrl": "https://rcgcoder.atlassian.net/",
+					"name": "Listo",
+					"id": "10001",
+					"statusCategory": 
+					{
+						"self": "https://rcgcoder.atlassian.net/rest/api/2/statuscategory/3",
+						"id": 3,
+						"key": "done",
+						"colorName": "green",
+						"name": "Listo"
+					}
+				}
+			}
+		},
+
+		{
+			"expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+			"id": "10019",
+			"self": "https://rcgcoder.atlassian.net/rest/api/2/issue/10019",
+			"key": "PDP-20",
+			"fields": 
+			{
+				"summary": "As a user, I'd like a historical story to show in reports",
+				"assignee": 
+				{
+					"self": "https://rcgcoder.atlassian.net/rest/api/2/user?username=admin",
+					"name": "admin",
+					"key": "admin",
+					"accountId": "557058:2a2f9597-3edf-4961-9850-009de457461e",
+					"emailAddress": "rcantabrana@aragon.es",
+					"avatarUrls": 
+					{
+						"48x48": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+						"24x24": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+						"16x16": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+						"32x32": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+					},
+
+					"displayName": "Ricardo Cantabrana",
+					"active": true,
+					"timeZone": "Europe/Berlin"
+				},
+
+				"status": 
+				{
+					"self": "https://rcgcoder.atlassian.net/rest/api/2/status/10001",
+					"description": "",
+					"iconUrl": "https://rcgcoder.atlassian.net/",
+					"name": "Listo",
+					"id": "10001",
+					"statusCategory": 
+					{
+						"self": "https://rcgcoder.atlassian.net/rest/api/2/statuscategory/3",
+						"id": 3,
+						"key": "done",
+						"colorName": "green",
+						"name": "Listo"
+					}
+				}
+			}
+		},
+
+		{
+			"expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+			"id": "10018",
+			"self": "https://rcgcoder.atlassian.net/rest/api/2/issue/10018",
+			"key": "PDP-19",
+			"fields": 
+			{
+				"summary": "As a user, I'd like a historical story to show in reports",
+				"assignee": 
+				{
+					"self": "https://rcgcoder.atlassian.net/rest/api/2/user?username=admin",
+					"name": "admin",
+					"key": "admin",
+					"accountId": "557058:2a2f9597-3edf-4961-9850-009de457461e",
+					"emailAddress": "rcantabrana@aragon.es",
+					"avatarUrls": 
+					{
+						"48x48": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+						"24x24": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+						"16x16": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+						"32x32": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+					},
+
+					"displayName": "Ricardo Cantabrana",
+					"active": true,
+					"timeZone": "Europe/Berlin"
+				},
+
+				"status": 
+				{
+					"self": "https://rcgcoder.atlassian.net/rest/api/2/status/10001",
+					"description": "",
+					"iconUrl": "https://rcgcoder.atlassian.net/",
+					"name": "Listo",
+					"id": "10001",
+					"statusCategory": 
+					{
+						"self": "https://rcgcoder.atlassian.net/rest/api/2/statuscategory/3",
+						"id": 3,
+						"key": "done",
+						"colorName": "green",
+						"name": "Listo"
+					}
+				}
+			}
+		},
+
+		{
+			"expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+			"id": "10017",
+			"self": "https://rcgcoder.atlassian.net/rest/api/2/issue/10017",
+			"key": "PDP-18",
+			"fields": 
+			{
+				"summary": "As a user, I'd like a historical story to show in reports",
+				"assignee": 
+				{
+					"self": "https://rcgcoder.atlassian.net/rest/api/2/user?username=admin",
+					"name": "admin",
+					"key": "admin",
+					"accountId": "557058:2a2f9597-3edf-4961-9850-009de457461e",
+					"emailAddress": "rcantabrana@aragon.es",
+					"avatarUrls": 
+					{
+						"48x48": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+						"24x24": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+						"16x16": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+						"32x32": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+					},
+
+					"displayName": "Ricardo Cantabrana",
+					"active": true,
+					"timeZone": "Europe/Berlin"
+				},
+
+				"status": 
+				{
+					"self": "https://rcgcoder.atlassian.net/rest/api/2/status/10001",
+					"description": "",
+					"iconUrl": "https://rcgcoder.atlassian.net/",
+					"name": "Listo",
+					"id": "10001",
+					"statusCategory": 
+					{
+						"self": "https://rcgcoder.atlassian.net/rest/api/2/statuscategory/3",
+						"id": 3,
+						"key": "done",
+						"colorName": "green",
+						"name": "Listo"
+					}
+				}
+			}
+		},
+
+		{
+			"expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+			"id": "10016",
+			"self": "https://rcgcoder.atlassian.net/rest/api/2/issue/10016",
+			"key": "PDP-17",
+			"fields": 
+			{
+				"summary": "Instructions for deleting this sample board and project are in the description for this issue >> Click the \"PDP-17\" link and read the description tab of the detail view for more",
+				"assignee": 
+				{
+					"self": "https://rcgcoder.atlassian.net/rest/api/2/user?username=admin",
+					"name": "admin",
+					"key": "admin",
+					"accountId": "557058:2a2f9597-3edf-4961-9850-009de457461e",
+					"emailAddress": "rcantabrana@aragon.es",
+					"avatarUrls": 
+					{
+						"48x48": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+						"24x24": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+						"16x16": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+						"32x32": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+					},
+
+					"displayName": "Ricardo Cantabrana",
+					"active": true,
+					"timeZone": "Europe/Berlin"
+				},
+
+				"status": 
+				{
+					"self": "https://rcgcoder.atlassian.net/rest/api/2/status/10001",
+					"description": "",
+					"iconUrl": "https://rcgcoder.atlassian.net/",
+					"name": "Listo",
+					"id": "10001",
+					"statusCategory": 
+					{
+						"self": "https://rcgcoder.atlassian.net/rest/api/2/statuscategory/3",
+						"id": 3,
+						"key": "done",
+						"colorName": "green",
+						"name": "Listo"
+					}
+				}
+			}
+		},
+
+		{
+			"expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+			"id": "10015",
+			"self": "https://rcgcoder.atlassian.net/rest/api/2/issue/10015",
+			"key": "PDP-16",
+			"fields": 
+			{
+				"summary": "As a team, we can finish the sprint by clicking the cog icon next to the sprint name above the \"To Do\" column then selecting \"Complete Sprint\" >> Try closing this sprint now",
+				"assignee": null,
+				"status": 
+				{
+					"self": "https://rcgcoder.atlassian.net/rest/api/2/status/10001",
+					"description": "",
+					"iconUrl": "https://rcgcoder.atlassian.net/",
+					"name": "Listo",
+					"id": "10001",
+					"statusCategory": 
+					{
+						"self": "https://rcgcoder.atlassian.net/rest/api/2/statuscategory/3",
+						"id": 3,
+						"key": "done",
+						"colorName": "green",
+						"name": "Listo"
+					}
+				}
+			}
+		},
+
+		{
+			"expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+			"id": "10014",
+			"self": "https://rcgcoder.atlassian.net/rest/api/2/issue/10014",
+			"key": "PDP-15",
+			"fields": 
+			{
+				"summary": "As a scrum master, I can see the progress of a sprint via the Burndown Chart >> Click \"Reports\" to view the Burndown Chart",
+				"assignee": null,
+				"status": 
+				{
+					"self": "https://rcgcoder.atlassian.net/rest/api/2/status/10001",
+					"description": "",
+					"iconUrl": "https://rcgcoder.atlassian.net/",
+					"name": "Listo",
+					"id": "10001",
+					"statusCategory": 
+					{
+						"self": "https://rcgcoder.atlassian.net/rest/api/2/statuscategory/3",
+						"id": 3,
+						"key": "done",
+						"colorName": "green",
+						"name": "Listo"
+					}
+				}
+			}
+		},
+
+		{
+			"expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+			"id": "10013",
+			"self": "https://rcgcoder.atlassian.net/rest/api/2/issue/10013",
+			"key": "PDP-14",
+			"fields": 
+			{
+				"summary": "As a user, I can find important items on the board by using the customisable \"Quick Filters\" above >> Try clicking the \"Only My Issues\" Quick Filter above",
+				"assignee": 
+				{
+					"self": "https://rcgcoder.atlassian.net/rest/api/2/user?username=admin",
+					"name": "admin",
+					"key": "admin",
+					"accountId": "557058:2a2f9597-3edf-4961-9850-009de457461e",
+					"emailAddress": "rcantabrana@aragon.es",
+					"avatarUrls": 
+					{
+						"48x48": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+						"24x24": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+						"16x16": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+						"32x32": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+					},
+
+					"displayName": "Ricardo Cantabrana",
+					"active": true,
+					"timeZone": "Europe/Berlin"
+				},
+
+				"status": 
+				{
+					"self": "https://rcgcoder.atlassian.net/rest/api/2/status/10000",
+					"description": "",
+					"iconUrl": "https://rcgcoder.atlassian.net/",
+					"name": "Por hacer",
+					"id": "10000",
+					"statusCategory": 
+					{
+						"self": "https://rcgcoder.atlassian.net/rest/api/2/statuscategory/2",
+						"id": 2,
+						"key": "new",
+						"colorName": "blue-gray",
+						"name": "Por hacer"
+					}
+				}
+			}
+		},
+
+		{
+			"expand": "operations,versionedRepresentations,editmeta,changelog,renderedFields",
+			"id": "10012",
+			"self": "https://rcgcoder.atlassian.net/rest/api/2/issue/10012",
+			"key": "PDP-13",
+			"fields": 
+			{
+				"summary": "As a developer, I can update details on an item using the Detail View >> Click the \"PDP-13\" link at the top of this card to open the detail view",
+				"assignee": 
+				{
+					"self": "https://rcgcoder.atlassian.net/rest/api/2/user?username=admin",
+					"name": "admin",
+					"key": "admin",
+					"accountId": "557058:2a2f9597-3edf-4961-9850-009de457461e",
+					"emailAddress": "rcantabrana@aragon.es",
+					"avatarUrls": 
+					{
+						"48x48": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+						"24x24": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+						"16x16": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+						"32x32": "https://avatar-cdn.atlassian.com/af6d30db76768a64d4a2392cc9b202e0?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2Faf6d30db76768a64d4a2392cc9b202e0%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+					},
+
+					"displayName": "Ricardo Cantabrana",
+					"active": true,
+					"timeZone": "Europe/Berlin"
+				},
+
+				"status": 
+				{
+					"self": "https://rcgcoder.atlassian.net/rest/api/2/status/10000",
+					"description": "",
+					"iconUrl": "https://rcgcoder.atlassian.net/",
+					"name": "Por hacer",
+					"id": "10000",
+					"statusCategory": 
+					{
+						"self": "https://rcgcoder.atlassian.net/rest/api/2/statuscategory/2",
+						"id": 2,
+						"key": "new",
+						"colorName": "blue-gray",
+						"name": "Por hacer"
+					}
+				}
+			}
 		}
 	]
 }

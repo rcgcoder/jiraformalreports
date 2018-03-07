@@ -31,6 +31,9 @@ class RCGJira{
 			  })
 			});
 	}
+	apiCall(sTargetUrl,sPage,sType,callback,arrHeaders){
+		this.apiCallGET(sTargetUrl,sPage,sType,callback,arrHeaders);
+	}
 	apiCallGET(sTargetUrl,sPage,sType,callback,arrHeaders){
 		var self=this;
 		// A simple POST request which logs response in the console.
@@ -74,6 +77,14 @@ class RCGJira{
 			      "fieldsByKeys": false
 			    };
 		self.apiCallPOST("/rest/api/2/search",data);
+		
+	}
+	getConfluence(){
+		var self=this;
+		self.pushCallback(function(response,xhr,sUrl,headers){
+			
+		});
+		self.apiCall(self.repository+"wiki/spaces/PACP/pages/38076419/Ejemplo+Confluence+1");
 		
 	}
 	getAllIssues(){

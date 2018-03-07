@@ -92,6 +92,6 @@ class RCGJira{
 		self.pushCallback(function(response,xhr,sUrl,headers){
 			
 		});
-		self.apiCall(self.repository+"/rest/api/2/search");
+		self.apiCall("../rest/api/2/search");
 	}
 }

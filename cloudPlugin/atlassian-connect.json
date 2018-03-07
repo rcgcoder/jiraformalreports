@@ -22,7 +22,7 @@
              {
                  "url": "/jfreports/app/jfrWebDeploy.html",
                  "key": "JiraFormalReportPlugin",
-                 "location": "system.top.navigation.bar",
+                 "location": "system.content.action",
                  "name": {
                      "value": "Formal Reports"
                  }

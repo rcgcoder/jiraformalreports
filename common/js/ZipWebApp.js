@@ -6,6 +6,7 @@ class ZipWebApp{
 		self.jira="";
 	}
 	getJira(){
+		var self=this;
 		if (self.jira==""){
 			self.jira=new RCGJira(self);
 		}

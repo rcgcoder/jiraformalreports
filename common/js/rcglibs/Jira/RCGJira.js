@@ -42,7 +42,7 @@ class RCGJira{
 						setTimeout(checkIfToken,1000);
 					} else {
 						win.close();
-						popCalback();
+						self.popCalback();
 					}
 				});
 				self.apiCallOauth("/sessionToken");

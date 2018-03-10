@@ -33,7 +33,7 @@ class RCGJira{
 		self.pushCallback(function(response,xhr,sUrl,headers){
 			log("Oauth Jira URL:"+response.url);
 			var win;
-			function checkIfOpen(){
+			var checkIfOpen=function(){
 				var content=win.content;
 				log(content);
 				if (typeof win==="undefined"){
@@ -57,6 +57,7 @@ class RCGJira{
 			log("Tab Opened");
 			var content=win.content;
 			log(content);
+			setTimeout(checkIfOpen,1000);
 		});
 		self.apiCallOauth("/sessions/connect?jiraInstance="+self.instance+"/wiki"+
 								"&callbackServer="+self.proxyPath);

@@ -15,7 +15,7 @@ class RCGJira{
 	
 	apiCallConfluence(sTargetUrl,data,sPage,sType,callback,arrHeaders){
 		var self=this;
-		var sUrl=self.proxyPath+"/oauth"+sTargetUrl;
+		var sUrl="https://rcgcoder.atlassian.net/wiki"+sTargetUrl;
 		var xhr = new XMLHttpRequest();
 		xhr.open('GET', sUrl, true);
 		xhr.responseType = 'json';

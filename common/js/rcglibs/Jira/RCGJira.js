@@ -59,7 +59,7 @@ class RCGJira{
 			log("Tab Opened");
 			var content=win.content;
 			log(content);
-			setTimeout(checkIfOpen,1000);
+			setTimeout(checkIfToken,1000);
 		});
 		self.apiCallOauth("/sessions/connect?jiraInstance="+self.instance+"/wiki"+
 								"&callbackServer="+self.proxyPath);

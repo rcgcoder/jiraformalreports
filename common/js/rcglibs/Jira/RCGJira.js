@@ -34,14 +34,15 @@ class RCGJira{
 			log("Oauth Jira URL:"+response.url);
 			var win;
 			var checkIfOpen=function(){
+				log("Check Open");
 				var content=win.content;
 				log(content);
 				if (typeof win==="undefined"){
 					log("Closed");
 				} else {
 					log("Open");
-					setTimeout(checkIfOpen,1000);
 				}
+				setTimeout(checkIfOpen,1000);
 			}
 			function openInNewTab(url) {
 				  win = window.open(url, '_blank');

@@ -69,6 +69,7 @@ class RCGJira{
 	}
 	apiCallPOST(sTargetUrl,data,sPage,sType,callback,arrHeaders){
 		var self=this;
+		log("Calling Jira Api POST:"+sTargetUrl);
 		// A simple POST request which logs response in the console.
 /*		self.JiraAPConnection.request('/rest/api/2/issue/PDP-12/changelog')
 		  .then(data => alert(data.body))
@@ -92,6 +93,7 @@ class RCGJira{
 	}
 	apiCallGET(sTargetUrl,sPage,sType,callback,arrHeaders){
 		var self=this;
+		log("Calling Jira Api GET:"+sTargetUrl);
 		// A simple POST request which logs response in the console.
 /*		self.JiraAPConnection.request('/rest/api/2/issue/PDP-12/changelog')
 		  .then(data => alert(data.body))

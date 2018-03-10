@@ -77,6 +77,7 @@ class RCGJira{
 			self.confluenceOauthSecret=response.secret;
 			self.popCallback();
 		});
+		self.continueTask();
 	}
 	oauthJiraConnect(){
 		var self=this;

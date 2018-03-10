@@ -41,7 +41,7 @@ class RCGJira{
 					(response.isToken==false)){
 					setTimeout(checkIfToken,1000);
 				} else {
-					log("Confluence oauth token:"+response.access);
+					log("Oauth Access token:"+response.access);
 					self.popCallback(response.access,response.secret);
 				}
 			});

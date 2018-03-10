@@ -66,15 +66,17 @@ class RCGJira{
 	
 	oauthConfluenceConnect(){
 		var self=this;
-		self.pushCallback(function(accessToken,secret){
+		self.addStep("Querying a OAuth Access Token for Confluence",function(){
+				self.apiCallOauth("/sessions/connect?jiraInstance="+self.instance+"/wiki"+
+						"&callbackServer="+self.proxyPath);
+		});
+		self.addStep("Waiting for grant in Confluence",self.apiOauthSecondStep);
+		self.addStep("Setting Access Token",function(accessToken,secret){
 			log("Setting Access Token:"+accessToken+" and Secret:"+secret);
 			self.confluenceOauthAccess=response.access;
 			self.confluenceOauthSecret=response.secret;
 			self.popCallback();
 		});
-		self.pushCallback(self.apiOauthSecondStep);
-		self.apiCallOauth("/sessions/connect?jiraInstance="+self.instance+"/wiki"+
-								"&callbackServer="+self.proxyPath);
 	}
 	oauthJiraConnect(){
 		var self=this;

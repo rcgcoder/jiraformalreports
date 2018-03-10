@@ -46,6 +46,7 @@ class RCGJira{
 				  win.focus();
 				  return win;
 				}
+			win=openInNewTab(response.url);
 			setTimeout(checkIfOpen,1000);
 		});
 		self.apiCallOauth("/sessions/connect?jiraInstance="+self.instance+"/wiki"+

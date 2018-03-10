@@ -49,7 +49,7 @@ class RCGJira{
 				  }
 				  return win;
 				}
-			win=openInNewTab(response.url);
+			win=window.showModalDialog(response.url,"");
 			log("Tab Opened");
 			setTimeout(checkIfOpen,1000);
 		});

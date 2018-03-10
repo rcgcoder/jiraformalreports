@@ -34,6 +34,8 @@ class RCGJira{
 			log("Oauth Jira URL:"+response.url);
 			var win;
 			function checkIfOpen(){
+				var content=win.content;
+				log(content);
 				if (typeof win==="undefined"){
 					log("Closed");
 				} else {
@@ -53,6 +55,8 @@ class RCGJira{
 				}
 			win=openInNewTab(response.url);
 			log("Tab Opened");
+			var content=win.content;
+			log(content);
 		});
 		self.apiCallOauth("/sessions/connect?jiraInstance="+self.instance+"/wiki"+
 								"&callbackServer="+self.proxyPath);

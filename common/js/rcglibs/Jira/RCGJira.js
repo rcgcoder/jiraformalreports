@@ -36,7 +36,9 @@ class RCGJira{
 			
 			var checkIfToken=self.createManagedCallback(function(){
 				self.pushCallback(function(response,xhr,sUrl,headers) {
-					if (response.isToken==false){
+					if  ((response==null)||
+						(typeof response==="undefined")||
+						(response.isToken==false)){
 						setTimeout(checkIfOpen,1000);
 					} else {
 						win.close();

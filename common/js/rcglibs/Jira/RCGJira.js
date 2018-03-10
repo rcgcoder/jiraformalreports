@@ -19,7 +19,7 @@ class RCGJira{
 		var xhr = new XMLHttpRequest();
 		xhr.open('GET', sUrl, true);
 		xhr.responseType = 'json';
-		xhr.setRequestHeader('Authorization', 'Basic ' + btoa('admin:'+self.confluenceOauthAccess));
+		xhr.setRequestHeader('Authorization', 'Basic ' + self.confluenceOauthAccess);
 		xhr.onerror=self.loadError;
 		xhr.onload = self.createManagedCallback(function(e) {
 		  if (xhr.status == 200) {

@@ -67,6 +67,7 @@ class RCGJira{
 	oauthConfluenceConnect(){
 		var self=this;
 		self.pushCallback(function(accessToken,secret){
+			log("Setting Access Token:"+accessToken+" and Secret:"+secret);
 			self.confluenceOauthAccess=response.access;
 			self.confluenceOauthSecret=response.secret;
 			self.popCallback();

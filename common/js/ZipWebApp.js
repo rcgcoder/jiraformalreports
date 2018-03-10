@@ -31,6 +31,14 @@ class ZipWebApp{
 						 ]; //test
 			self.loadRemoteFiles(arrFiles);
 		});
+		self.addStep("Getting Confluence Oauth Token"){
+			var self=this;
+			var jira=new RCGJira(self);
+			jira.proxyPath=self.proxyPath;
+			jira.instance=self.urlBase;
+			
+		}
+		
 		self.addStep("Getting All Issues.... ",function(){
 			var jira=new RCGJira(self);
 			jira.getAllIssues();

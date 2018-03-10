@@ -126,6 +126,7 @@
 
 			 var githubCode=getUrlParameter("code");
 			 var rootPath="https://cdn.rawgit.com";
+			 var proxyPath="https://d696dc44.ngrok.io/jfreports";
 			 var sRepo="rcgcoder/jiraformalreports";
 			 var commitId="";
 			 var commitDate="";
@@ -136,6 +137,7 @@
 			 var fncEngineStart=function(){
 				 	var zipApp=new RCGZippedApp();
 					//zipApp.localStorageMaxSize=200*1024*1024;
+					 zipApp.proxyPath=proxyPath;
 					 zipApp.rootPath=rootPath;
 					 zipApp.useGitHub(sRepo,"master");
 					 zipApp.prependPath="common";

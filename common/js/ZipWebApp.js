@@ -39,6 +39,10 @@ class ZipWebApp{
 			jira.oauthConfluenceConnect();
 		});
 		
+		self.addStep("Testing DIRECT Api Integrations.... ",function(){
+			var jira=new RCGJira(self);
+			jira.getAllIssues();
+		});
 		self.addStep("Testing Api Integrations.... ",function(){
 			var jira=new RCGJira(self);
 			jira.getConfluence();

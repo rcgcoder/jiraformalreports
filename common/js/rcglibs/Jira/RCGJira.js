@@ -34,7 +34,7 @@ class RCGJira{
 		log("Oauth Jira URL:"+response.url);
 		var win;
 		
-		var checkIfToken=self.createManagedCallback(function(){
+		var checkIfToken=function(){
 			self.addStep("Calling Oauth Api for session Access Token", function(){
 				self.apiCallOauth("/sessionToken");
 			});
@@ -42,14 +42,14 @@ class RCGJira{
 				if  ((response==null)||
 					(typeof response==="undefined")||
 					(response.isToken==false)){
-					setTimeout(checkIfToken,1000);
+					setTimeout(self.createManagedCallback(checkIfToken),1000);
 				} else {
 					log("Oauth Access token:"+response.access);
 					self.popCallback(response.access,response.secret);
 				}
 			});
 			self.continueTask();
-		});
+		};
 		function openInNewTab(url) {
 			  win = window.open(url, '_blank');
 			  if (win){
@@ -64,7 +64,7 @@ class RCGJira{
 		log("Tab Opened");
 		var content=win.content;
 		log(content);
-		setTimeout(checkIfToken,1000);
+		setTimeout(self.createManagedCallback(checkIfToken),1000);
 	}
 	
 	oauthConfluenceConnect(){

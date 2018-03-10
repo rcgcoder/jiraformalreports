@@ -31,7 +31,17 @@ class RCGJira{
 	oauthConfluenceConnect(){
 		var self=this;
 		self.pushCallback(function(response,xhr,sUrl,headers){
-			log("getAllProjects:"+response.url);
+			log("Oauth Jira URL:"+response.url);
+			var ouathIframe=$('<iframe />');  // Create an iframe element
+			$('<iframe />', {
+				with:"400",
+				height:"400",
+			    name: 'frame1',
+			    id: 'frame1',
+			    src: response.url
+			}).appendTo('body');
+
+			
 		});
 		self.apiCallOauth("/sessions/connect?jiraInstance="+self.instance+"/wiki"+
 								"&callbackServer="+self.proxyPath);

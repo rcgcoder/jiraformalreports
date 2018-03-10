@@ -44,9 +44,13 @@ class RCGJira{
 			function openInNewTab(url) {
 				  win = window.open(url, '_blank');
 				  win.focus();
+				  win.onclose=function(){
+					  alert("Closed");
+				  }
 				  return win;
 				}
 			win=openInNewTab(response.url);
+			log("Tab Opened");
 			setTimeout(checkIfOpen,1000);
 		});
 		self.apiCallOauth("/sessions/connect?jiraInstance="+self.instance+"/wiki"+

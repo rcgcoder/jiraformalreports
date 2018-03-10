@@ -43,7 +43,7 @@ class RCGJira{
 					} else {
 						log("token:"+response.access);
 						win.close();
-						self.popCalback();
+						self.popCallback();
 					}
 				});
 				self.apiCallOauth("/sessionToken");

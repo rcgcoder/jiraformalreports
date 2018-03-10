@@ -30,6 +30,7 @@ class RCGJira{
 	}
 	
 	apiOauthSecondStep(response,xhr,sUrl,headers){
+		var self=this;
 		log("Oauth Jira URL:"+response.url);
 		var win;
 		

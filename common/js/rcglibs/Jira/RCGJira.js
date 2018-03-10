@@ -12,6 +12,25 @@ class RCGJira{
 	loadError(oError){
 	    throw new URIError("The URL " + oError.target.src + " is not accessible.");
 	}
+	
+	apiCallConfluence(sTargetUrl,data,sPage,sType,callback,arrHeaders){
+		var self=this;
+		var sUrl=self.proxyPath+"/oauth"+sTargetUrl;
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', sUrl, true);
+		xhr.responseType = 'json';
+		xhr.setRequestHeader('Authorization', 'Basic ' + btoa('admin:'+self.confluenceOauthAccess));
+		xhr.onerror=self.loadError;
+		xhr.onload = self.createManagedCallback(function(e) {
+		  if (xhr.status == 200) {
+			  self.popCallback([xhr.response,xhr,sTargetUrl,arrHeaders]);
+		  } else {
+			  self.loadError({target:{src:sUrl}});			  
+		  }
+		});
+		xhr.send();	
+	}
+	
 	apiCallOauth(sTargetUrl,data,sPage,sType,callback,arrHeaders){
 		var self=this;
 		var sUrl=self.proxyPath+"/oauth"+sTargetUrl;
@@ -144,7 +163,7 @@ class RCGJira{
 		self.pushCallback(function(response,xhr,sUrl,headers){
 			
 		});
-		self.apiCall("/rest/api/content/38076419");
+		self.apiCallConfluence("/rest/api/content/38076419");
 		
 	}
 	getAllIssues(){

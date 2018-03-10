@@ -15,20 +15,7 @@ class RCGJira{
 	
 	apiCallConfluence(sTargetUrl,data,sPage,sType,callback,arrHeaders){
 		var self=this;
-		var sUrl="https://rcgcoder.atlassian.net/wiki"+sTargetUrl;
-		var xhr = new XMLHttpRequest();
-		xhr.open('GET', sUrl, true);
-		xhr.responseType = 'json';
-		xhr.setRequestHeader('Authorization', 'Basic ' + self.confluenceOauthAccess);
-		xhr.onerror=self.loadError;
-		xhr.onload = self.createManagedCallback(function(e) {
-		  if (xhr.status == 200) {
-			  self.popCallback([xhr.response,xhr,sTargetUrl,arrHeaders]);
-		  } else {
-			  self.loadError({target:{src:sUrl}});			  
-		  }
-		});
-		xhr.send();	
+		self.apiCallGET("/wiki"+sTargetUrl+"?access_token=" + self.confluenceOauthAccess,sPage,sType,callback,arrHeaders);
 	}
 	
 	apiCallOauth(sTargetUrl,data,sPage,sType,callback,arrHeaders){

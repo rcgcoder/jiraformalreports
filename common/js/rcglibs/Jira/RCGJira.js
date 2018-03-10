@@ -32,6 +32,8 @@ class RCGJira{
 		var self=this;
 		self.pushCallback(function(response,xhr,sUrl,headers){
 			log("Oauth Jira URL:"+response.url);
+			var oDoc=document;
+			var oWindow=window;
 			var ouathIframe=$('<iframe />');  // Create an iframe element
 			$('<iframe />', {
 				with:"400",

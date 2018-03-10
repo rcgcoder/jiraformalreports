@@ -35,14 +35,14 @@ class RCGJira{
 			var win;
 			
 			var checkIfToken=self.createManagedCallback(function(){
-				self.pushCallback(method, function(response,xhr,sUrl,headers) {
+				self.pushCallback(function(response,xhr,sUrl,headers) {
 					if (response.isToken==false){
 						setTimeout(checkIfOpen,1000);
 					} else {
 						win.close();
 						popCalback();
 					}
-				})
+				});
 				self.apiCallOauth("/sessionToken");
 			});
 			function openInNewTab(url) {

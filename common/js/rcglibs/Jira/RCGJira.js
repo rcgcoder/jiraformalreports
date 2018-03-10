@@ -39,7 +39,7 @@ class RCGJira{
 					if  ((response==null)||
 						(typeof response==="undefined")||
 						(response.isToken==false)){
-						setTimeout(checkIfOpen,1000);
+						setTimeout(checkIfToken,1000);
 					} else {
 						win.close();
 						popCalback();

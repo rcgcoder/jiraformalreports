@@ -12,12 +12,6 @@ class RCGJira{
 	loadError(oError){
 	    throw new URIError("The URL " + oError.target.src + " is not accessible.");
 	}
-	
-	apiCallConfluence(sTargetUrl,data,sPage,sType,callback,arrHeaders){
-		var self=this;
-		self.apiCallGET("/wiki"+sTargetUrl+"?access_token=" + self.confluenceOauthAccess,sPage,sType,callback,arrHeaders);
-	}
-	
 	apiCallOauth(sTargetUrl,data,sPage,sType,callback,arrHeaders){
 		var self=this;
 		var sUrl=self.proxyPath+"/oauth"+sTargetUrl;
@@ -34,47 +28,69 @@ class RCGJira{
 		});
 		xhr.send();	
 	}
+	
+	apiOauthSecondStep(response,xhr,sUrl,headers){
+		log("Oauth Jira URL:"+response.url);
+		var win;
+		
+		var checkIfToken=self.createManagedCallback(function(){
+			self.pushCallback(function(response,xhr,sUrl,headers) {
+				if  ((response==null)||
+					(typeof response==="undefined")||
+					(response.isToken==false)){
+					setTimeout(checkIfToken,1000);
+				} else {
+					log("Confluence oauth token:"+response.access);
+					self.popCallback(response.access,response.secret);
+				}
+			});
+			self.apiCallOauth("/sessionToken");
+		});
+		function openInNewTab(url) {
+			  win = window.open(url, '_blank');
+			  if (win){
+				  win.focus();
+				  win.onclose=function(){
+					  alert("Closed");
+				  }
+			  }
+			  return win;
+			}
+		win=openInNewTab(response.url);
+		log("Tab Opened");
+		var content=win.content;
+		log(content);
+		setTimeout(checkIfToken,1000);
+	}
+	
 	oauthConfluenceConnect(){
 		var self=this;
-		self.pushCallback(function(response,xhr,sUrl,headers){
-			log("Oauth Jira URL:"+response.url);
-			var win;
-			
-			var checkIfToken=self.createManagedCallback(function(){
-				self.pushCallback(function(response,xhr,sUrl,headers) {
-					if  ((response==null)||
-						(typeof response==="undefined")||
-						(response.isToken==false)){
-						setTimeout(checkIfToken,1000);
-					} else {
-						log("Confluence oauth token:"+response.access);
-						self.confluenceOauthAccess=response.access;
-						self.confluenceOauthSecret=response.secret;
-						win.close();
-						self.popCallback();
-					}
-				});
-				self.apiCallOauth("/sessionToken");
-			});
-			function openInNewTab(url) {
-				  win = window.open(url, '_blank');
-				  if (win){
-					  win.focus();
-					  win.onclose=function(){
-						  alert("Closed");
-					  }
-				  }
-				  return win;
-				}
-			win=openInNewTab(response.url);
-			log("Tab Opened");
-			var content=win.content;
-			log(content);
-			setTimeout(checkIfToken,1000);
+		self.pushCallback(function(accessToken,secret){
+			self.confluenceOauthAccess=response.access;
+			self.confluenceOauthSecret=response.secret;
+			self.popCallback();
 		});
+		self.pushCallback(self.apiOauthSecondStep);
 		self.apiCallOauth("/sessions/connect?jiraInstance="+self.instance+"/wiki"+
 								"&callbackServer="+self.proxyPath);
 	}
+	oauthJiraConnect(){
+		var self=this;
+		self.pushCallback(function(accessToken,secret){
+			self.JiraOauthAccess=response.access;
+			self.JiraOauthSecret=response.secret;
+			self.popCallback();
+		});
+		self.pushCallback(self.apiOauthSecondStep);
+		self.apiCallOauth("/sessions/connect?jiraInstance="+self.instance+
+								"&callbackServer="+self.proxyPath);
+	}
+	
+	apiCallConfluence(sTargetUrl,data,sPage,sType,callback,arrHeaders){
+		var self=this;
+		self.apiCallGET("/wiki"+sTargetUrl+"?access_token=" + self.confluenceOauthAccess,sPage,sType,callback,arrHeaders);
+	}
+	
 	apiCallPOST(sTargetUrl,data,sPage,sType,callback,arrHeaders){
 		var self=this;
 		log("Calling Jira Api POST:"+sTargetUrl);

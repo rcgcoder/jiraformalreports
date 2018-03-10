@@ -32,18 +32,21 @@ class RCGJira{
 		var self=this;
 		self.pushCallback(function(response,xhr,sUrl,headers){
 			log("Oauth Jira URL:"+response.url);
-			var oDoc=document;
-			var oWindow=window;
-			var ouathIframe=$('<iframe />');  // Create an iframe element
-			$('<iframe />', {
-				with:"400",
-				height:"400",
-			    name: 'frame1',
-			    id: 'frame1',
-			    src: response.url
-			}).appendTo('body');
-
-			
+			var win;
+			function checkIfOpen(){
+				if (typeof win==="undefined"){
+					log("Closed");
+				} else {
+					log("Open");
+					setTimeout(checkIfOpen,1000);
+				}
+			}
+			function openInNewTab(url) {
+				  win = window.open(url, '_blank');
+				  win.focus();
+				  return win;
+				}
+			setTimeout(checkIfOpen,1000);
 		});
 		self.apiCallOauth("/sessions/connect?jiraInstance="+self.instance+"/wiki"+
 								"&callbackServer="+self.proxyPath);

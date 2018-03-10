@@ -3,6 +3,13 @@ class ZipWebApp{
 		var self=this;
 		self.oneParam="Casa";
 		self.twoParam="Coche";
+		self.jira="";
+	}
+	getJira(){
+		if (self.jira==""){
+			self.jira=new RCGJira(self);
+		}
+		return self.jira;
 	}
 	run(){
 		log("starting ZipWebApp");
@@ -32,19 +39,18 @@ class ZipWebApp{
 			self.loadRemoteFiles(arrFiles);
 		});
 		self.addStep("Getting Confluence Oauth Token", function(){
-			var self=this;
-			var jira=new RCGJira(self);
+			var jira=self.getJira();
 			jira.proxyPath=self.proxyPath;
 			jira.instance=self.urlBase;
 			jira.oauthConfluenceConnect();
 		});
 		
 		self.addStep("Testing DIRECT Api Integrations.... ",function(){
-			var jira=new RCGJira(self);
+			var jira=self.getJira();
 			jira.getAllIssues();
 		});
 		self.addStep("Testing Api Integrations.... ",function(){
-			var jira=new RCGJira(self);
+			var jira=self.getJira();
 			jira.getConfluence();
 		});
 		

@@ -33,17 +33,18 @@ class RCGJira{
 		self.pushCallback(function(response,xhr,sUrl,headers){
 			log("Oauth Jira URL:"+response.url);
 			var win;
-			var checkIfOpen=function(){
-				log("Check Open");
-				var content=win.content;
-				log(content);
-				if (typeof win==="undefined"){
-					log("Closed");
-				} else {
-					log("Open");
-				}
-				setTimeout(checkIfOpen,1000);
-			}
+			
+			var checkIfToken=self.createManagedCallback(function(){
+				self.pushCallback(method, function(response,xhr,sUrl,headers) {
+					if (response.isToken==false){
+						setTimeout(checkIfOpen,1000);
+					} else {
+						win.close();
+						popCalback();
+					}
+				})
+				self.apiCallOauth("/sessionToken");
+			});
 			function openInNewTab(url) {
 				  win = window.open(url, '_blank');
 				  if (win){

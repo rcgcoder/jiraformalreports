@@ -312,20 +312,20 @@ class RCGTaskManager{
 			}
 			if (!self.changeStatusUpdateScheduled){
 				var fncUpdateProgress=function(){
-					log("UPDATE STATE PROGRESS: Update Progress");
+//					log("UPDATE STATE PROGRESS: Update Progress");
 					if (!self.changeStatusNeedsNotify){
-						log("UPDATE STATE PROGRESS: not Update");
+//						log("UPDATE STATE PROGRESS: not Update");
 						self.changeStatusUpdateScheduled=false;
 						return;
 					}
-					log("UPDATE STATE PROGRESS: updating");
+//					log("UPDATE STATE PROGRESS: updating");
 					self.changeStatusUpdateScheduled=true;
 					self.changeStatusNeedsNotify=false;
 					self.onChangeStatus();
-					log("UPDATE STATE PROGRESS: schedule next update");
+//					log("UPDATE STATE PROGRESS: schedule next update");
 					setTimeout(function(){
 						self.changeStatusUpdateScheduled=true;
-						log("UPDATE STATE PROGRESS: it will run next second");
+//						log("UPDATE STATE PROGRESS: it will run next second");
 						setTimeout(fncUpdateProgress,self.updateStatusDelay);
 					});
 				}

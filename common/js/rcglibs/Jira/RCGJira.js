@@ -116,10 +116,14 @@ class RCGJira{
 		log("Calling api of "+(newSubPath==""?"Jira":appInfo.subPath) + " final url:"+sTargetUrl);
 		self.pushCallback(function(response,xhr,sUrl,headers){
 			log("Api Call Response:"+response);
-			if (response==""){
-				log("¡ERROR!");
+			if (this.status == 403) { // forbidden
+				self.pushCallback(function(){
+					apiCallApp(appInfo,sTarget,callType,data,sPage,sResponseType,callback,arrHeaders);					
+				});
+				self.oauthConnect(appInfo);
+			} else {
+				self.popCallback([response,xhr,sUrl,headers]);
 			}
-			self.popCallback([response,xhr,sUrl,headers]);
 		});
 		self.apiCallBase(sTargetUrl,callType,data,sPage,sResponseType,callback,arrHeaders);
 	}

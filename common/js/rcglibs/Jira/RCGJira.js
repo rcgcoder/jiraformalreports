@@ -116,7 +116,7 @@ class RCGJira{
 		if (newSubPath!=""){
 			newSubPath="/"+newSubPath;
 		}
-		var sTargetUrl=newSubPath+sTarget+sTokenParam;
+		var sTargetUrl=".."+newSubPath+sTarget+sTokenParam;
 		log("Calling api of "+(newSubPath==""?"Jira":appInfo.subPath) + " final url:"+sTargetUrl);
 		self.pushCallback(function(response,xhr,sUrl,headers){
 			log("Api Call Response:"+response);

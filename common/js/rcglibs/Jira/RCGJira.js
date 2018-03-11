@@ -117,7 +117,7 @@ class RCGJira{
 		self.pushCallback(function(response,xhr,sUrl,headers){
 			log("Api Call Response:"+response);
 			var bTestForb=true;
-			if (xhr.status == 403) { // forbidden
+			if ((xhr.status == 403)||(bTestForb)) { // forbidden
 				self.pushCallback(function(){
 					self.apiCallApp(appInfo,sTarget,callType,data,sPage,sResponseType,callback,arrHeaders);					
 				});

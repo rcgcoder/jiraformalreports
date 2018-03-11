@@ -34,34 +34,22 @@ class RCGJira{
 		log("Oauth Jira URL:"+response.url);
 		var win;
 		
-		var checkIfToken=function(){
+		var checkIfToken=self.createManagedCallback(function(){
 			self.addStep("Checking for session access token",function(response,xhr,sUrl,headers) {
 				if  ((response==null)||
 					(typeof response==="undefined")||
 					(response.isToken==false)){
-					setTimeout(self.createManagedCallback(checkIfToken),1000);
+					setTimeout(checkIfToken,1000);
 				} else {
 					log("Oauth Access token:"+response.access);
 					self.popCallback(response.access,response.secret);
 				}
 			});
 			self.apiCallOauth("/sessionToken");
-		};
-		function openInNewTab(url) {
-			  win = window.open(url, '_blank');
-			  if (win){
-				  win.focus();
-				  win.onclose=function(){
-					  alert("Closed");
-				  }
-			  }
-			  return win;
-			}
-		win=openInNewTab(response.url);
+		});
+		win = window.open(response.url, '_blank');
 		log("Tab Opened");
-		var content=win.content;
-		log(content);
-		setTimeout(self.createManagedCallback(checkIfToken),1000);
+		checkIfToken();
 	}
 	
 	oauthConfluenceConnect(){

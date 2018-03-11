@@ -89,6 +89,7 @@
         	 var appParameters={};
 			 var vXdm=getUrlParameter('xdm_e');
 			 var vCp=getUrlParameter('cp');
+			 var urlInstance=vXdm;
 			 var isCloud=((typeof vXdm!=="undefined")&&
 						(typeof vCp!=="undefined"));
 			 if (isCloud){
@@ -144,7 +145,7 @@
 					 zipApp.useGitHub(sRepo,"master");
 					 zipApp.prependPath="common";
 					 zipApp.isCloud=isCloud;
-					 zipApp.urlBase=appParameters["urlBase"];
+					 zipApp.urlBase=urlInstance;
 					 zipApp.urlFull=appParameters["urlFull"];
 					 zipApp.mainJs=appMainJs;
 					 zipApp.mainClass=appMainClass;

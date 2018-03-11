@@ -112,9 +112,15 @@ class RCGJira{
 		if (newSubPath!=""){
 			newSubPath="/"+newSubPath;
 		}
-		self.apiCallBase(newSubPath+sTargetUrl+sTokenParam,callType,data,sPage,sResponseType,callback,arrHeaders);
+		var sTargetUrl=newSubPath+sTarget+sTokenParam;
+		log("Calling api of "+(newSubPath==""?"Jira":appInfo.subPath) + " final url:"+sTargetUrl);
+		self.pushCallback(function(response,xhr,sUrl,headers){
+			log("Api Call Response:"+response);
+			self.popCallback([response,xhr,sUrl,headers]);
+		});
+		self.apiCallBase(sTargetUrl,callType,data,sPage,sResponseType,callback,arrHeaders);
 	}
-	apiCallBase(sTarget,callType,data,sPage,sResponseType,callback,arrHeaders){
+	apiCallBase(sTargetUrl,callType,data,sPage,sResponseType,callback,arrHeaders){
 		var self=this;
 		var newType="GET";
 		if (typeof callType!=="undefined"){

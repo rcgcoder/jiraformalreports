@@ -5,8 +5,33 @@ class RCGJira{
 		self.instance="";
 		self.JiraAPConnection=AP;
 		self.app=app;
-		self.headerAuth="";
-		self.ghStateString="_ungues";
+		self.confluence={
+				jiraManager:self,
+				subPath:"wiki",
+				tokenNeeded:false,
+				tokenAccess:"",
+				tokenTime:0,
+				oauthConnect:function(){
+					self.oauthConnect(self.confluence);
+					}
+				,
+				apiCall:function(sTarget,callType,data,sPage,sResponseType,callback,arrHeaders){
+					self.apiCallApp(self.confluence, sTarget, callType, data, sPage, sResponseType,callback,arrHeaders);
+				}
+			};
+		self.jira={
+				jiraManager:self,
+				subPath:"",
+				tokenNeeded:false,
+				tokenAccess:"",
+				tokenTime:0,
+				oauthConnect:function(){
+					self.oauthConnect(self.jira);
+					},
+				apiCall:function(sTarget,callType,data,sPage,sResponseType,callback,arrHeaders){
+					self.apiCallApp(self.jira, sTarget, callType, data, sPage, sResponseType,callback,arrHeaders);
+					}
+				};
 		taskManager.extendObject(self);
 	}
 	loadError(oError){
@@ -28,7 +53,6 @@ class RCGJira{
 		});
 		xhr.send();	
 	}
-	
 	apiOauthSecondStep(response,xhr,sUrl,headers){
 		var self=this;
 		log("Oauth Jira URL:"+response.url);
@@ -51,83 +75,76 @@ class RCGJira{
 		log("Tab Opened");
 		checkIfToken();
 	}
-	
-	oauthConfluenceConnect(){
+
+	oauthConnect(appInfo){
 		var self=this;
-		self.addStep("Querying a OAuth Access Token for Confluence",function(){
-				self.apiCallOauth("/sessions/connect?jiraInstance="+self.instance+"/wiki"+
+		var appName="Jira";
+		if (appInfo.subPath!=""){
+			appName=appInfo.subPath;
+		}
+		self.addStep("Querying a OAuth Access Token for "+appName,function(){
+				self.apiCallOauth("/sessions/connect?jiraInstance="+
+						self.instance+
+						(appInfo.subPath!=""?"/":"")+appInfo.subPath+
 						"&callbackServer="+self.proxyPath);
 		});
-		self.addStep("Waiting for grant in Confluence",self.apiOauthSecondStep);
-		self.addStep("Setting Access Token",function(accessToken,secret){
+		self.addStep("Waiting for grant in "+appName,self.apiOauthSecondStep);
+		self.addStep("Setting Access Token for "+appName,function(accessToken,secret){
 			log("Setting Access Token:"+accessToken+" and Secret:"+secret);
-			self.confluenceOauthAccess=accessToken;
-			self.confluenceOauthSecret=secret;
-			self.popCallback();
-		});
-		self.continueTask();
-	}
-	oauthJiraConnect(){
-		var self=this;
-		self.addStep("Querying a OAuth Access Token for Jira",function(){
-				self.apiCallOauth("/sessions/connect?jiraInstance="+self.instance+
-						"&callbackServer="+self.proxyPath);
-		});
-		self.addStep("Waiting for grant in Jira",self.apiOauthSecondStep);
-		self.addStep("Setting Access Token",function(accessToken,secret){
-			log("Setting Access Token:"+accessToken+" and Secret:"+secret);
-			self.jiraOauthAccess=accessToken;
-			self.jiraOauthSecret=secret;
+			appInfo.subPath.tokenNeeded=true;
+			appInfo.subPath.tokenAccess=accessToken;
+			appInfo.subPath.tokenTime=secret;
 			self.popCallback();
 		});
 		self.continueTask();
 	}
 	
-	apiCallConfluence(sTargetUrl,data,sPage,sType,callback,arrHeaders){
+	apiCallApp(appInfo,sTarget,callType,data,sPage,sResponseType,callback,arrHeaders){
 		var self=this;
-		self.apiCallGET("/wiki"+sTargetUrl+"?access_token=" + self.confluenceOauthAccess,sPage,sType,callback,arrHeaders);
+		var sTokenParam="";
+		if (appInfo.tokenNeeded){
+			sTokenParam="access_token=" + appInfo.tokenAccess;
+			if (sTargetUrl.indexOf("?")<0){
+				sTokenParam="?"+sTokenParam;
+			}
+		}
+		var newSubPath=appInfo.subPath;
+		if (newSubPath!=""){
+			newSubPath="/"+newSubPath;
+		}
+		self.apiCallBase(newSubPath+sTargetUrl+sTokenParam,callType,data,sPage,sResponseType,callback,arrHeaders);
 	}
-	
-	apiCallPOST(sTargetUrl,data,sPage,sType,callback,arrHeaders){
+	apiCallBase(sTarget,callType,data,sPage,sResponseType,callback,arrHeaders){
 		var self=this;
-		log("Calling Jira Api POST:"+sTargetUrl);
-		// A simple POST request which logs response in the console.
-/*		self.JiraAPConnection.request('/rest/api/2/issue/PDP-12/changelog')
-		  .then(data => alert(data.body))
-		  .catch(e => alert(e.err));
-*/		
-		self.JiraAPConnection.request({
-			  url: sTargetUrl,
-			  type:'POST',
-			  data:JSON.stringify(data),
-			  contentType: 'application/json',
-			  success: self.createManagedCallback(function(responseText){
-			    self.popCallback([responseText,self.JiraAPConnection]);
-			  }),
-			  error: self.createManagedCallback(function(xhr, statusText, errorThrown){
+		var newType="GET";
+		if (typeof callType!=="undefined"){
+			newType=callType;
+		}
+		var newData;
+		if (typeof data!=="undefined"){
+			newData=JSON.stringify(data);
+		}
+		var newResponseType='application/json';
+		if (typeof sResponseType!=="undefined"){
+			newResponseType=sResponseType;
+		}
+		var newCallback=callback;
+		var newErrorCallback=callback;
+		if (typeof newCallback==="undefined"){
+			newCallback=self.createManagedCallback(function(responseObj){
+			    self.popCallback([responseObj,self.JiraAPConnection]);
+			  });
+			newErrorCallback=self.createManagedCallback(function(xhr, statusText, errorThrown){
 			    self.popCallback(["",xhr, statusText, errorThrown]);
 			  })
-			});
-	}
-	apiCall(sTargetUrl,sPage,sType,callback,arrHeaders){
-		this.apiCallGET(sTargetUrl,sPage,sType,callback,arrHeaders);
-	}
-	apiCallGET(sTargetUrl,sPage,sType,callback,arrHeaders){
-		var self=this;
-		log("Calling Jira Api GET:"+sTargetUrl);
-		// A simple POST request which logs response in the console.
-/*		self.JiraAPConnection.request('/rest/api/2/issue/PDP-12/changelog')
-		  .then(data => alert(data.body))
-		  .catch(e => alert(e.err));
-*/		
+		}
 		self.JiraAPConnection.request({
 			  url: sTargetUrl,
-			  success: self.createManagedCallback(function(responseText){
-			    self.popCallback([responseText,self.JiraAPConnection]);
-			  }),
-			  error: self.createManagedCallback(function(xhr, statusText, errorThrown){
-			    self.popCallback(["",xhr, statusText, errorThrown]);
-			  })
+			  type:newType,
+			  data:newData,
+			  contentType: sResponseType,
+			  success: newCallback,
+			  error: newErrorCallback
 			});
 	}
 	getAllProjects(){
@@ -136,7 +153,7 @@ class RCGJira{
 			log("getAllProjects:"+response);
 			self.popCallback();
 		});
-		self.apiCall("/rest/api/2/project?expand=issueTypes");
+		self.jira.apiCall("/rest/api/2/project?expand=issueTypes");
 	}
 	getAllEpics(){
 		var self=this;
@@ -155,7 +172,7 @@ class RCGJira{
 			      ],
 			      "fieldsByKeys": false
 			    };
-		self.apiCallPOST("/rest/api/2/search",data);
+		self.jira.apiCall("/rest/api/2/search","POST",data);
 		
 	}
 	getConfluence(){
@@ -163,7 +180,7 @@ class RCGJira{
 		self.pushCallback(function(response,xhr,sUrl,headers){
 			
 		});
-		self.apiCallConfluence("/rest/api/content/38076419");
+		self.confluence.apiCall("/rest/api/content/38076419");
 		
 	}
 	getAllIssues(){
@@ -172,6 +189,7 @@ class RCGJira{
 			self.popCallback();
 		});
 //		self.apiCall("/plugins/servlet/applinks/proxy?appId=d1015b5f-d448-3745-a3d3-3dff12863286&path=https://rcgcoder.atlassian.net/rest/api/2/search");
-		self.apiCall("/rest/api/2/search?expand=changelog");
+		self.jira.apiCall("/rest/api/2/search?expand=changelog");
+		//expand=changelog&jql=updateddate>'2018/03/01'
 	}
 }

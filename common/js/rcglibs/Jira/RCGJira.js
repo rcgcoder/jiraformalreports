@@ -119,7 +119,7 @@ class RCGJira{
 			var bTestForb=true;
 			if (xhr.status == 403) { // forbidden
 				self.pushCallback(function(){
-					apiCallApp(appInfo,sTarget,callType,data,sPage,sResponseType,callback,arrHeaders);					
+					self.apiCallApp(appInfo,sTarget,callType,data,sPage,sResponseType,callback,arrHeaders);					
 				});
 				self.oauthConnect(appInfo);
 			} else {

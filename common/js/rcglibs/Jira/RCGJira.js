@@ -55,7 +55,11 @@ class RCGJira{
 	}
 	apiOauthSecondStep(response,xhr,sUrl,headers){
 		var self=this;
-		log("Oauth Jira URL:"+response.url);
+		if (response!=null){
+			log("Oauth Jira URL:"+response.url);
+		} else {
+			log("Oauth Jira ... waiting");
+		}
 		var win;
 		
 		var checkIfToken=self.createManagedCallback(function(){

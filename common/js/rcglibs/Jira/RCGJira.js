@@ -104,7 +104,7 @@ class RCGJira{
 		var sTokenParam="";
 		if (appInfo.tokenNeeded){
 			sTokenParam="access_token=" + appInfo.tokenAccess;
-			if (sTargetUrl.indexOf("?")<0){
+			if (sTarget.indexOf("?")<0){
 				sTokenParam="?"+sTokenParam;
 			}
 		}

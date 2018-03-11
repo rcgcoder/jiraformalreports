@@ -35,7 +35,7 @@ class RCGJira{
 		var win;
 		
 		var checkIfToken=function(){
-			self.addCallback(function(response,xhr,sUrl,headers) {
+			self.pushCallback(function(response,xhr,sUrl,headers) {
 				if  ((response==null)||
 					(typeof response==="undefined")||
 					(response.isToken==false)){

@@ -23,7 +23,7 @@ function redirect($url) {
     ob_end_flush();
     die();
 }
-
+$nodeJsServer="http://192.168.100.3:18080/";
 $baseUrl=getUrlParameter("url");
 $refreshCommitId=getUrlParameter('refreshCommitId');
 $onlyCommitId=getUrlParameter('getCommitId');
@@ -50,7 +50,6 @@ foreach($_POST as $key => $value){
     //   echo "<br>". $key . " : " . $value . "<br />\r\n";
 }
 
-
 if ($oauth=="1"){
     //	echo "<br>Oauth";
     //	echo "<br>".$baseUrl;
@@ -70,7 +69,7 @@ if ($oauth=="1"){
         }
         exit();
     }
-    $url="http://192.168.100.3:18080/".$baseUrl.$urlParams;
+    $url=$nodeJsServer.$baseUrl.$urlParams;
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $_SERVER['REQUEST_METHOD']);
@@ -145,6 +144,7 @@ function getSessionCommitID() {
     global $sGitHubRepository;
     global $sGitHubUser;
     global $refreshCommitId;
+    global $nodeJsServer;
     $commitID='';
     if ((!isset($_SESSION['GITHUBCOMMITID']))
         ||
@@ -153,7 +153,9 @@ function getSessionCommitID() {
         ($refreshCommitId=='1')) {
             //		echo "No Session Commit ID";
             session_unset();
-            $github='https://api.github.com/repos/'.$sGitHubUser.'/'.$sGitHubRepository.'/commits/master';
+            $github=$nodeJsServer.'sessions/getGitHubLastCommitInfo?user='.$sGitHubUser.'&repository='.$sGitHubRepository;
+            //		$github='https://api.github.com/repos/'.$sGitHubUser.'/'.$sGitHubRepository.'/commits/master';
+            //		$github='https://github.com/'.$sGitHubUser.'/'.$sGitHubRepository;
             $ch = curl_init($github);
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
             //curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
@@ -167,7 +169,12 @@ function getSessionCommitID() {
             $objCommit = json_decode($result);
             $sha=$objCommit->sha;
             $commitID=substr($sha,0,8);
-            session_start();
+            header('X-githubURL:'.$github);
+            
+            /*		$result = curl_exec($ch);
+             $parts=explode('<a class="commit-tease-sha" href="/rcgcoder/jiraformalreports/commit/',$result);
+             $commitID=substr($parts[1],0,8);
+             */		session_start();
             $_SESSION['GITHUBCOMMITID']  = $commitID;
             $_SESSION['GITHUBCOMMITOBJECT']  = $result;
             session_write_close();

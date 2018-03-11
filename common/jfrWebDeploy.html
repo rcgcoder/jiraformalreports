@@ -26,23 +26,23 @@
 			 xhr.responseType = 'json';
 		     xhr.onerror=function(){alert("Error getting last commit");};
 			 xhr.onload = function(e) {
+				 var sCommitShortId="";
 				  if (this.status == 200) {
 						var lastCommit=this.response;
 						var sCommitLongId=lastCommit.sha;
-						var sCommitShortId=sCommitLongId.substring(0,8);
-						var sCommitDate=(new Date(lastCommit.commit.author.date)).getTime();
-						callback(sCommitShortId,sCommitDate);
+						sCommitShortId=sCommitLongId.substring(0,8);
+						//var sCommitDate=(new Date(lastCommit.commit.author.date)).getTime();
 				  } else {
 					  console.log("Error getting last commit... setting from url");
 					  var sPageURL = window.location.pathname; 
 				      var arrParts= sPageURL.split('jiraformalreports/');
 					  var arrParts=arrParts[1].split('/');
-					  var sCommitShortId=arrParts[0];
-					  var dNow=new Date();
-					  var sCommitDate=dNow.getTime();
+					  sCommitShortId=arrParts[0];
+//					  var dNow=new Date();
+//					  var sCommitDate=dNow.getTime();
 					  https://cdn.rawgit.com/rcgcoder/jiraformalreports/81206f75/common/jfrWebDeploy.html
-						callback(sCommitShortId,sCommitDate);
 				  }
+				  callback(sCommitShortId/*,sCommitDate*/);
 			 };
 			 xhr.send();
 		 };
@@ -132,7 +132,7 @@
 			 var proxyPath="https://d696dc44.ngrok.io/jfreports";
 			 var sRepo="rcgcoder/jiraformalreports";
 			 var commitId="";
-			 var commitDate="";
+//			 var commitDate="";
 			 var sRCGTaskManager="js/rcglibs/RCGTaskManager.js";
 			 var sRCGZipWebAppClass="js/rcglibs/RCGZippedWebApp.js";
 			 var appMainJs="js/ZipWebApp.js";
@@ -151,16 +151,16 @@
 					 zipApp.mainJs=appMainJs;
 					 zipApp.mainClass=appMainClass;
 					 zipApp.github.commitId=commitId;
-					 zipApp.github.commitDate=commitDate;
+//					 zipApp.github.commitDate=commitDate;
 //		 			 zipApp.addDeployZip("ZippedWebApp/jiraformalreports.zip","jiraformalreports-master/common/");
 //					 zipApp.addDeployZip("ZippedWebApp/aui-flat-pack.zip");
 					 zipApp.setHtmlContainerID("JFR_Main_DIV");
 					 var launcher=zipApp.addStep("Running the ZipApp Engine",zipApp.run);
 					 launcher.callMethod();
 			 }
-			 getLastCommit(sRepo,function(sCommitId,tCommitDate){
+			 getLastCommit(sRepo,function(sCommitId/*,tCommitDate*/){
 				 commitId=sCommitId;
-				 commitDate=tCommitDate;				 
+				 //commitDate=tCommitDate;				 
 				 var sUrlCM=rootPath+"/"+sRepo+"/"+commitId+"/common/"+sRCGTaskManager;
 				 getJavaScriptFile(sUrlCM,function(jsContent){
 					 loadJavaScriptFile(jsContent,function(){

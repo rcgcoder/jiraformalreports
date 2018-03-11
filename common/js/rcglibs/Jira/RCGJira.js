@@ -35,10 +35,7 @@ class RCGJira{
 		var win;
 		
 		var checkIfToken=function(){
-			self.addStep("Calling Oauth Api for session Access Token", function(){
-				self.apiCallOauth("/sessionToken");
-			});
-			self.addStep("Processing Response",function(response,xhr,sUrl,headers) {
+			self.addCallback(function(response,xhr,sUrl,headers) {
 				if  ((response==null)||
 					(typeof response==="undefined")||
 					(response.isToken==false)){
@@ -48,7 +45,7 @@ class RCGJira{
 					self.popCallback(response.access,response.secret);
 				}
 			});
-			self.continueTask();
+			self.apiCallOauth("/sessionToken");
 		};
 		function openInNewTab(url) {
 			  win = window.open(url, '_blank');

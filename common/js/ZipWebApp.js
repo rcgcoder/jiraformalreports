@@ -9,8 +9,8 @@ class ZipWebApp{
 		var self=this;
 		if (self.jira==""){
 			self.jira=new RCGJira(self);
-			jira.proxyPath=self.proxyPath;
-			jira.instance=self.urlBase;
+			self.jira.proxyPath=self.proxyPath;
+			self.jira.instance=self.urlBase;
 		}
 		return self.jira;
 	}

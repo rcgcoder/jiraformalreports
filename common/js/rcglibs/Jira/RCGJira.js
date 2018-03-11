@@ -118,10 +118,13 @@ class RCGJira{
 			log("Api Call Response:"+response);
 			var bTestForb=true;
 			if ((xhr.status == 403)||(bTestForb)) { // forbidden
-				self.pushCallback(function(){
+				self.addStep("Getting Oauth Access Token",function(){
+					self.oauthConnect(appInfo);
+				});
+				self.addStep("Retrying api call",function(){
 					self.apiCallApp(appInfo,sTarget,callType,data,sPage,sResponseType,callback,arrHeaders);					
 				});
-				self.oauthConnect(appInfo);
+				self.continueTask();
 			} else {
 				self.popCallback([response,xhr,sUrl,headers]);
 			}

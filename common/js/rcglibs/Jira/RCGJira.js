@@ -91,9 +91,9 @@ class RCGJira{
 		self.addStep("Waiting for grant in "+appName,self.apiOauthSecondStep);
 		self.addStep("Setting Access Token for "+appName,function(accessToken,secret){
 			log("Setting Access Token:"+accessToken+" and Secret:"+secret);
-			appInfo.subPath.tokenNeeded=true;
-			appInfo.subPath.tokenAccess=accessToken;
-			appInfo.subPath.tokenTime=secret;
+			appInfo.tokenNeeded=true;
+			appInfo.tokenAccess=accessToken;
+			appInfo.tokenTime=secret;
 			self.popCallback();
 		});
 		self.continueTask();

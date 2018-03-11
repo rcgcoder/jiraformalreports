@@ -116,8 +116,7 @@ class RCGJira{
 		log("Calling api of "+(newSubPath==""?"Jira":appInfo.subPath) + " final url:"+sTargetUrl);
 		self.pushCallback(function(response,xhr,sUrl,headers){
 			log("Api Call Response:"+response);
-			var bTestForb=true;
-			if ((xhr.status == 403)||(bTestForb)) { // forbidden
+			if ((xhr.status == 403)||(response=="")) { // forbidden
 				self.addStep("Getting Oauth Access Token",function(){
 					self.oauthConnect(appInfo);
 				});

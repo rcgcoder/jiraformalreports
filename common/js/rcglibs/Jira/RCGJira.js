@@ -61,22 +61,26 @@ class RCGJira{
 		self.addStep("Waiting for grant in Confluence",self.apiOauthSecondStep);
 		self.addStep("Setting Access Token",function(accessToken,secret){
 			log("Setting Access Token:"+accessToken+" and Secret:"+secret);
-			self.confluenceOauthAccess=response.access;
-			self.confluenceOauthSecret=response.secret;
+			self.confluenceOauthAccess=accessToken;
+			self.confluenceOauthSecret=secret;
 			self.popCallback();
 		});
 		self.continueTask();
 	}
 	oauthJiraConnect(){
 		var self=this;
-		self.pushCallback(function(accessToken,secret){
-			self.JiraOauthAccess=response.access;
-			self.JiraOauthSecret=response.secret;
+		self.addStep("Querying a OAuth Access Token for Jira",function(){
+				self.apiCallOauth("/sessions/connect?jiraInstance="+self.instance+
+						"&callbackServer="+self.proxyPath);
+		});
+		self.addStep("Waiting for grant in Jira",self.apiOauthSecondStep);
+		self.addStep("Setting Access Token",function(accessToken,secret){
+			log("Setting Access Token:"+accessToken+" and Secret:"+secret);
+			self.jiraOauthAccess=accessToken;
+			self.jiraOauthSecret=secret;
 			self.popCallback();
 		});
-		self.pushCallback(self.apiOauthSecondStep);
-		self.apiCallOauth("/sessions/connect?jiraInstance="+self.instance+
-								"&callbackServer="+self.proxyPath);
+		self.continueTask();
 	}
 	
 	apiCallConfluence(sTargetUrl,data,sPage,sType,callback,arrHeaders){

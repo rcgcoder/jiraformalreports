@@ -63,6 +63,7 @@
 				xhr.send();
 		 };
 	     function loadJavaScriptFile(jsContent,callback){
+	    	 	console.log("Loading JS file");
 				var oHead=(document.head || document.getElementsByTagName("head")[0]);
 				var oScript = document.createElement("script");
 				oScript.type = "text\/javascript";

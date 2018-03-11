@@ -116,6 +116,9 @@ class RCGJira{
 		log("Calling api of "+(newSubPath==""?"Jira":appInfo.subPath) + " final url:"+sTargetUrl);
 		self.pushCallback(function(response,xhr,sUrl,headers){
 			log("Api Call Response:"+response);
+			if (response==""){
+				log("¡ERROR!");
+			}
 			self.popCallback([response,xhr,sUrl,headers]);
 		});
 		self.apiCallBase(sTargetUrl,callType,data,sPage,sResponseType,callback,arrHeaders);

@@ -46,7 +46,7 @@ class ZipDeploy{
 		self.url=zipUrl;
 		self.imports=[];
 		self.commitId="";
-//		self.commitDate="";
+		self.commitDate="";
 		self.deployedCommitId="";
 		self.deployedDate="";
 	}
@@ -61,7 +61,7 @@ class GitHub{
 		self.app=app;
 		self.arrCommits="";
 		self.lastCommit="";
-//		self.lastCommitDate="";
+		self.lastCommitDate="";
 		self.commitId="";
 		self.ghCode="";
 		self.headerAuth="";
@@ -155,8 +155,8 @@ class GitHub{
 		var sCommitLongId=self.lastCommit.sha;
 		var sCommitShortId=sCommitLongId.substring(0,8);
 		self.commitId=sCommitShortId;
-//		self.commitDate=(new Date(self.lastCommit.commit.author.date)).getTime();
-		self.popCallback([self.commitId/*,self.commitDate*/],1);
+		self.commitDate=(new Date(self.lastCommit.commit.author.date)).getTime();
+		self.popCallback(self.commitId,self.commitDate,1);
 	}
 	updateLastCommit(){
 		var self=this;
@@ -181,8 +181,8 @@ class GitHub{
 		var lastCommit=arrCommits[0];
 		var sCommitLongId=lastCommit.sha;
 		var sCommitShortId=sCommitLongId.substring(0,8);
-//		var sCommitDate=(new Date(lastCommit.commit.author.date)).getTime();
-		self.popCallback([sCommitShortId/*,sCommitDate*/]);
+		var sCommitDate=(new Date(lastCommit.commit.author.date)).getTime();
+		self.popCallback(sCommitShortId,sCommitDate);
 	}
 	getLastCommitOfFile(sRelativePath){
 		var self=this;
@@ -194,9 +194,9 @@ class GitHub{
 		if (iFile>=deployZips.length){
 			self.popCallback();
 		} else {
-			self.pushCallback(function(sCommitId/*,sCommitDate*/){
+			self.pushCallback(function(sCommitId,sCommitDate){
 				deployZips[iFile].commitId=sCommitId;
-//				deployZips[iFile].commitDate=sCommitDate;
+				deployZips[iFile].commitDate=sCommitDate;
 				self.updateDeployZipCommits(deployZips,iFile+1);
 			});
 			self.getLastCommitOfFile(deployZips[iFile].relativePath);
@@ -464,7 +464,7 @@ class RCGZippedApp{
 			  });
 			  self.pushCallback(function(sContent){
 				  ct.commitId=self.github.commitId;
-//				  ct.commitDate=self.github.commitDate;
+				  ct.commitDate=self.github.commitDate;
 				  ct.saveDate=(new Date()).getTime();
 				  if (self.bWithPersistentStorage){
 					  var sResult=self.saveFileToStorage(sRelativePath,sContent,ct);
@@ -668,9 +668,9 @@ class RCGZippedApp{
 		var bNotUpdate=true;
 		var theDeploy=self.DeployZips[iZip];
 		if ((theDeploy.deployedDate=="")  // never deployed
-/*			||
+			||
 		   (theDeploy.commitDate>theDeploy.deployedDate)
-*/		   ){ // new release
+		   ){ // new release
 			// needs to be deployed
 			bNotUpdate=false;
 			self.addStep("Deploying Zip:"+ theDeploy.relativePath,function(){

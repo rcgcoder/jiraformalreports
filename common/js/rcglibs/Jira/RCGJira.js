@@ -187,7 +187,7 @@ class RCGJira{
 	getConfluence(){
 		var self=this;
 		self.pushCallback(function(response,xhr,sUrl,headers){
-			
+			self.popCallback();
 		});
 		self.confluence.apiCall("/rest/api/content/38076419");
 		

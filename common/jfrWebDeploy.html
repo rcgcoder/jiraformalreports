@@ -38,7 +38,8 @@
 				      var arrParts= sPageURL.split('jiraformalreports/');
 					  var arrParts=arrParts[1].split('/');
 					  var sCommitShortId=arrParts[0];
-					  var sCommitDate=(new Date()).getTime();
+					  var dNow=new Date();
+					  var sCommitDate=dNow.getTime();
 					  https://cdn.rawgit.com/rcgcoder/jiraformalreports/81206f75/common/jfrWebDeploy.html
 						callback(sCommitShortId,sCommitDate);
 				  }

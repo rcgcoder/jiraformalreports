@@ -2,6 +2,7 @@
      "name": "Formal Reports",
      "description": "Jira Formal Reports Plugin",
      "key": "com.rcgcoder.jiraformalreports",
+	 "enableLicensing": true,
      "baseUrl": "https://d696dc44.ngrok.io",
      "scopes": [
             "read", "write"

@@ -116,6 +116,9 @@ class RCGJira{
 		var arrResults=[];
 		var nLast=0;
 		var fncAddIteration=function(nLast,nTotal){
+			//	extended_addStep(description,method,
+			//progressMin,progressMax,newObj,totalWeight,methodWeight,sForkType,barrier){
+
 			self.addStep("Getting "+resultName+" ["+nLast+","+nTotal+"]",function(){
 					self.pushCallback(function(response,xhr,sUrl,headers){
 						var objResp;
@@ -128,7 +131,7 @@ class RCGJira{
 						self.popCallback();
 					});
 					self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,undefined,callback,arrHeaders);
-			});
+			},0,1,undefined,undefined,undefined,"INNER",undefined);
 		};
 		var fncIteration=self.createManagedCallback(function(){
 			self.pushCallback(function(response,xhr,sUrl,headers){

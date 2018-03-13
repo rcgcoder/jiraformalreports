@@ -197,7 +197,7 @@ class RCGJira{
 			log("Api Call Response:"+response.length);
 			if (xhr.status == 429){
 				var millis=Math.round(((Math.random()*5)+10)*1000);
-				log("too many request.... have to wait "+(Math.round(millis/10)/100)+ secs");
+				log("too many request.... have to wait "+(Math.round(millis/10)/100)+" secs");
 				setTimeout(self.createManagedCallback(function(){
 					log("retrying api call");
 					self.apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders);					

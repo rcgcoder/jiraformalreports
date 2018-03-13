@@ -131,7 +131,8 @@ class RCGJira{
 						self.popCallback();
 					});
 					self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,undefined,callback,arrHeaders);
-			},0,1,undefined,undefined,undefined,"INNER",undefined);
+			}// cannot fork.... "to many request",0,1,undefined,undefined,undefined,"INNER",undefined
+			);
 		};
 		var fncIteration=self.createManagedCallback(function(){
 			self.pushCallback(function(response,xhr,sUrl,headers){

@@ -279,7 +279,7 @@ class RCGJira{
 			self.popCallback();
 		});
 //		self.apiCall("/plugins/servlet/applinks/proxy?appId=d1015b5f-d448-3745-a3d3-3dff12863286&path=https://rcgcoder.atlassian.net/rest/api/2/search");
-		self.jira.getFullList("/rest/api/2/search?expand=changelog");
+		self.jira.getFullList("/rest/api/2/search?expand=changelog","issues");
 		//expand=changelog&jql=updateddate>'2018/03/01'
 	}
 }

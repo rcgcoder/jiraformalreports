@@ -19,7 +19,7 @@ class RCGJira{
 					self.apiCallApp(self.confluence, sTarget, callType, data, sPage, sResponseType,callback,arrHeaders);
 					}
 				,
-				apiGetFullList:function(appInfo,sTarget,resultName,callType,data,callback,arrHeaders){
+				apiGetFullList:function(sTarget,resultName,callType,data,callback,arrHeaders){
 					self.apiCallApp(self.confluence, sTarget, resultName,callType, data, callback,arrHeaders);
 					}
 			};
@@ -36,8 +36,8 @@ class RCGJira{
 					self.apiCallApp(self.jira, sTarget, callType, data, sPage, sResponseType,callback,arrHeaders);
 					}
 				,
-				apiGetFullList:function(appInfo,sTarget,resultName,callType,data,callback,arrHeaders){
-					self.apiCallApp(self.confluence, sTarget, resultName,callType, data, callback,arrHeaders);
+				apiGetFullList:function(sTarget,resultName,callType,data,callback,arrHeaders){
+					self.apiCallApp(self.jira, sTarget, resultName,callType, data, callback,arrHeaders);
 					}
 				};
 		taskManager.extendObject(self);
@@ -255,7 +255,7 @@ class RCGJira{
 			self.popCallback();
 		});
 //		self.apiCall("/plugins/servlet/applinks/proxy?appId=d1015b5f-d448-3745-a3d3-3dff12863286&path=https://rcgcoder.atlassian.net/rest/api/2/search");
-		self.jira.apiCall("/rest/api/2/search?expand=changelog&startAt=0&maxResults=1000");
+		self.jira.getFullList("/rest/api/2/search?expand=changelog");
 		//expand=changelog&jql=updateddate>'2018/03/01'
 	}
 }

@@ -136,9 +136,9 @@ class RCGJira{
 	apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders){
 		var self=this;
 		var sTokenParam="";
-		var bHasParams=false;
+		var bHasParams=true;
 		if (sTarget.indexOf("?")<0){
-			bHasParams=true;
+			bHasParams=false;
 		}
 		var fncAddParam=function(name,value){
 			if (typeof value!=="undefined"){

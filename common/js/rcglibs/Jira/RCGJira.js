@@ -284,7 +284,7 @@ class RCGJira{
 		self.pushCallback(function(response,xhr,sUrl,headers){
 			self.popCallback();
 		});
-		self.confluence.apiCall("/rest/api/content/238125273");
+		self.confluence.apiCall("/rest/api/content/search?cql=type%3Dpage");
 		
 	}
 	getAllIssues(){

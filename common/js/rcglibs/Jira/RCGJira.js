@@ -117,6 +117,12 @@ class RCGJira{
 		var nLast=0;
 		var fncIteration=self.createManagedCallback(function(){
 			self.pushCallback(function(response,xhr,sUrl,headers){
+				var objResp;
+				if (typeof response=="string"){
+					objResp=JSON.parse(response);
+				} else {
+					objResp=response;
+				}
 				var nTotal=response.total;
 				var nResults=response.maxResults;
 				var nInit=response.startAt;

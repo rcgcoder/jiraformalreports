@@ -115,6 +115,15 @@ class RCGJira{
 		var self=this;
 		var arrResults=[];
 		var nLast=0;
+		var fncAddIteration=function(nLast,nTotal){
+			self.addStep("Getting resultName ["+nLast+","nTotal"]",function(){
+				self.pushCallback(function(response,xhr,sUrl,headers){
+					arrResults=arrResults.concat(objResp[resultName]);
+					self.popCallback();
+				}
+				self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,undefined,callback,arrHeaders);
+			});
+		}
 		var fncIteration=self.createManagedCallback(function(){
 			self.pushCallback(function(response,xhr,sUrl,headers){
 				var objResp;
@@ -129,7 +138,11 @@ class RCGJira{
 				nLast=nInit+nResults;
 				arrResults=arrResults.concat(objResp[resultName]);
 				if (nLast<nTotal){
-					fncIteration();
+					while (nLast<nTotal){
+						fncAddIteration(nLast,nTotal);
+						nLast+=nResult;
+					}
+					self.continueTask();
 				} else {
 					self.popCallback(arrResults);
 				}

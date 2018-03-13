@@ -202,6 +202,9 @@ class RCGJira{
 					self.apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders);					
 					}),Math.round(((Math.random()*5)+10)*1000));
 			} else if ((xhr.status == 403)||(response=="")) { // forbidden
+				self.addStep("Discarding Oauth Access Token",function(){
+					self.apiCallOauth("/discardToken");
+				});
 				self.addStep("Getting Oauth Access Token",function(){
 					self.oauthConnect(appInfo);
 				});

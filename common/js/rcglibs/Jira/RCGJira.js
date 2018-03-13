@@ -143,10 +143,9 @@ class RCGJira{
 		var fncAddParam=function(name,value){
 			if (typeof value!=="undefined"){
 				if (!bHasParams){
-					sTarget+="?";
+					sTokenParam+="?";
 					bHasParams=true;
-				}
-				if (sTokenParam!=""){
+				} else {
 					sTokenParam+="&";
 				}
 				sTokenParam+=name+"="+value;

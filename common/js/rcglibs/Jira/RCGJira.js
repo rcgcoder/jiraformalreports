@@ -131,7 +131,7 @@ class RCGJira{
 						self.popCallback();
 					});
 					self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,undefined,callback,arrHeaders);
-			}// cannot fork.... "to many request",0,1,undefined,undefined,undefined,"INNER",undefined
+			},0,1,undefined,undefined,undefined,"INNER",undefined
 			);
 		};
 		var fncIteration=self.createManagedCallback(function(){
@@ -194,7 +194,13 @@ class RCGJira{
 		log("Calling api of "+(newSubPath==""?"Jira":appInfo.subPath) + " final url:"+sTargetUrl);
 		self.pushCallback(function(response,xhr,sUrl,headers){
 			log("Api Call Response:"+response.length);
-			if ((xhr.status == 403)||(response=="")) { // forbidden
+			if (xhr.status == 429){
+				log("too many request.... have to wait 30 secs");
+				setTimeout(self.createManagedCallback(function(){
+					log("retrying api call");
+					self.apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders);					
+					}),30*1000);
+			} else if ((xhr.status == 403)||(response=="")) { // forbidden
 				self.addStep("Getting Oauth Access Token",function(){
 					self.oauthConnect(appInfo);
 				});

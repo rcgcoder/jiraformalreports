@@ -116,12 +116,12 @@ class RCGJira{
 		var arrResults=[];
 		var nLast=0;
 		var fncAddIteration=function(nLast,nTotal){
-			self.addStep("Getting resultName ["+nLast+","nTotal"]",function(){
-				self.pushCallback(function(response,xhr,sUrl,headers){
-					arrResults=arrResults.concat(objResp[resultName]);
-					self.popCallback();
-				});
-				self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,undefined,callback,arrHeaders);
+			self.addStep("Getting resultName ["+nLast+","+nTotal"]",function(){
+					self.pushCallback(function(response,xhr,sUrl,headers){
+						arrResults=arrResults.concat(objResp[resultName]);
+						self.popCallback();
+					});
+					self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,undefined,callback,arrHeaders);
 			});
 		};
 		var fncIteration=self.createManagedCallback(function(){

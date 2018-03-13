@@ -140,7 +140,7 @@ class RCGJira{
 				if (nLast<nTotal){
 					while (nLast<nTotal){
 						fncAddIteration(nLast,nTotal);
-						nLast+=nResult;
+						nLast+=nResults;
 					}
 					self.continueTask();
 				} else {

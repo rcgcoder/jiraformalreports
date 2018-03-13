@@ -17,7 +17,11 @@ class RCGJira{
 				,
 				apiCall:function(sTarget,callType,data,sPage,sResponseType,callback,arrHeaders){
 					self.apiCallApp(self.confluence, sTarget, callType, data, sPage, sResponseType,callback,arrHeaders);
-				}
+					}
+				,
+				apiGetFullList:function(appInfo,sTarget,resultName,callType,data,callback,arrHeaders){
+					self.apiCallApp(self.confluence, sTarget, resultName,callType, data, callback,arrHeaders);
+					}
 			};
 		self.jira={
 				jiraManager:self,
@@ -30,6 +34,10 @@ class RCGJira{
 					},
 				apiCall:function(sTarget,callType,data,sPage,sResponseType,callback,arrHeaders){
 					self.apiCallApp(self.jira, sTarget, callType, data, sPage, sResponseType,callback,arrHeaders);
+					}
+				,
+				apiGetFullList:function(appInfo,sTarget,resultName,callType,data,callback,arrHeaders){
+					self.apiCallApp(self.confluence, sTarget, resultName,callType, data, callback,arrHeaders);
 					}
 				};
 		taskManager.extendObject(self);
@@ -103,15 +111,53 @@ class RCGJira{
 		self.continueTask();
 	}
 	
-	apiCallApp(appInfo,sTarget,callType,data,sPage,sResponseType,callback,arrHeaders){
+	apiGetFullList(appInfo,sTarget,resultName,callType,data,callback,arrHeaders){
+		var self=this;
+		var arrResults=[];
+		var nLast=0;
+		var fncIteration=self.createManagedCallback(function(){
+			self.pushCallback(function(response,xhr,sUrl,headers){
+				var nTotal=response.total;
+				var nResults=response.maxResults;
+				var nInit=response.startAt;
+				nLast=nInit+nResults;
+				arrResults=arrResults.concat(response[resultName]);
+				if (nLast<nTotal){
+					fncIteration();
+				} else {
+					self.popCallback(arrResults);
+				}
+			}		
+			self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,undefined,callback,arrHeaders);
+		});
+		fncIteration();
+	}
+	
+	apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders){
 		var self=this;
 		var sTokenParam="";
-		if (appInfo.tokenNeeded){
-			sTokenParam="access_token=" + appInfo.tokenAccess;
-			if (sTarget.indexOf("?")<0){
-				sTokenParam="?"+sTokenParam;
+		var bHasParams=false;
+		if (sTarget.indexOf("?")<0){
+			bHasParams=true;
+		}
+		var fncAddParam=function(name,value){
+			if (typeof value!=="undefined"){
+				if (!bHasParams){
+					sTarget+="?";
+					bHasParams=true;
+				}
+				if (sTokenParam!=""){
+					sTokenParam+="&";
+				}
+				sTokenParam+=name+value;
+				
 			}
 		}
+		if (appInfo.tokenNeeded){
+			fncAddParam("access_token",appInfo.tokenAccess);
+		}
+		fncAddParam("startAt",startItem);
+		fncAddParam("maxResults",maxResults);
 		var newSubPath=appInfo.subPath;
 		if (newSubPath!=""){
 			newSubPath="/"+newSubPath;
@@ -125,16 +171,16 @@ class RCGJira{
 					self.oauthConnect(appInfo);
 				});
 				self.addStep("Retrying api call",function(){
-					self.apiCallApp(appInfo,sTarget,callType,data,sPage,sResponseType,callback,arrHeaders);					
+					self.apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders);					
 				});
 				self.continueTask();
 			} else {
 				self.popCallback([response,xhr,sUrl,headers]);
 			}
 		});
-		self.apiCallBase(sTargetUrl,callType,data,sPage,sResponseType,callback,arrHeaders);
+		self.apiCallBase(sTargetUrl,callType,data,sResponseType,callback,arrHeaders);
 	}
-	apiCallBase(sTargetUrl,callType,data,sPage,sResponseType,callback,arrHeaders){
+	apiCallBase(sTargetUrl,callType,data,sResponseType,callback,arrHeaders){
 		var self=this;
 		var newType="GET";
 		if (typeof callType!=="undefined"){

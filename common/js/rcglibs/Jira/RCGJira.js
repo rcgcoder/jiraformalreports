@@ -20,7 +20,7 @@ class RCGJira{
 					}
 				,
 				getFullList:function(sTarget,resultName,callType,data,callback,arrHeaders){
-					self.apiCallApp(self.confluence, sTarget, resultName,callType, data, callback,arrHeaders);
+					self.apiGetFullList(self.confluence, sTarget, resultName,callType, data, callback,arrHeaders);
 					}
 			};
 		self.jira={
@@ -37,7 +37,7 @@ class RCGJira{
 					}
 				,
 				getFullList:function(sTarget,resultName,callType,data,callback,arrHeaders){
-					self.apiCallApp(self.jira, sTarget, resultName,callType, data, callback,arrHeaders);
+					self.apiGetFullList(self.jira, sTarget, resultName,callType, data, callback,arrHeaders);
 					}
 				};
 		taskManager.extendObject(self);

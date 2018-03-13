@@ -129,9 +129,9 @@ class RCGJira{
 						}
 						arrResults=arrResults.concat(objResp[resultName]);
 						log("Retrieved "+resultName+":"+arrResults.length);
-						frkTask.parent.progressMin=0;
-						frkTask.parent.progressMax=nTotal;
-						frkTask.parent.progress=arrResults.length;
+						frkTask.parent.parent.progressMin=0;
+						frkTask.parent.parent.progressMax=nTotal;
+						frkTask.parent.parent.progress=arrResults.length;
 //						log(frkTask.description);
 						self.popCallback();
 					});

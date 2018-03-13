@@ -128,6 +128,7 @@ class RCGJira{
 							objResp=response;
 						}
 						arrResults=arrResults.concat(objResp[resultName]);
+						log("Retrieved "+resultName+":"+arrResults.length);
 						self.popCallback();
 					});
 					self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,undefined,callback,arrHeaders);

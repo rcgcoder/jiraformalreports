@@ -123,11 +123,11 @@ class RCGJira{
 				} else {
 					objResp=response;
 				}
-				var nTotal=response.total;
-				var nResults=response.maxResults;
-				var nInit=response.startAt;
+				var nTotal=objResp.total;
+				var nResults=objResp.maxResults;
+				var nInit=objResp.startAt;
 				nLast=nInit+nResults;
-				arrResults=arrResults.concat(response[resultName]);
+				arrResults=arrResults.concat(objResp[resultName]);
 				if (nLast<nTotal){
 					fncIteration();
 				} else {
@@ -170,7 +170,7 @@ class RCGJira{
 		var sTargetUrl=newSubPath+sTarget+sTokenParam;
 		log("Calling api of "+(newSubPath==""?"Jira":appInfo.subPath) + " final url:"+sTargetUrl);
 		self.pushCallback(function(response,xhr,sUrl,headers){
-			log("Api Call Response:"+response);
+			log("Api Call Response:"+response.length);
 			if ((xhr.status == 403)||(response=="")) { // forbidden
 				self.addStep("Getting Oauth Access Token",function(){
 					self.oauthConnect(appInfo);

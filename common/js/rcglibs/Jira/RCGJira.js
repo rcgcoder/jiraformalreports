@@ -119,7 +119,7 @@ class RCGJira{
 			//	extended_addStep(description,method,
 			//progressMin,progressMax,newObj,totalWeight,methodWeight,sForkType,barrier){
 
-			self.addStep("Getting "+resultName+" ["+nLast+","+nTotal+"]",function(){
+			var frkTask=self.addStep("Getting "+resultName+" ["+nLast+","+nTotal+"]",function(){
 					self.pushCallback(function(response,xhr,sUrl,headers){
 						var objResp;
 						if (typeof response=="string"){
@@ -129,6 +129,7 @@ class RCGJira{
 						}
 						arrResults=arrResults.concat(objResp[resultName]);
 						log("Retrieved "+resultName+":"+arrResults.length);
+						log(frkTask.description);
 						self.popCallback();
 					});
 					self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,undefined,callback,arrHeaders);

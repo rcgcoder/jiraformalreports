@@ -116,8 +116,14 @@ class RCGJira{
 		var arrResults=[];
 		var nLast=0;
 		var fncAddIteration=function(nLast,nTotal){
-			self.addStep("Getting resultName ["+nLast+","+nTotal+"]",function(){
+			self.addStep("Getting "+resultName+" ["+nLast+","+nTotal+"]",function(){
 					self.pushCallback(function(response,xhr,sUrl,headers){
+						var objResp;
+						if (typeof response=="string"){
+							objResp=JSON.parse(response);
+						} else {
+							objResp=response;
+						}
 						arrResults=arrResults.concat(objResp[resultName]);
 						self.popCallback();
 					});

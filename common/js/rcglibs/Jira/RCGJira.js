@@ -149,7 +149,7 @@ class RCGJira{
 				if (sTokenParam!=""){
 					sTokenParam+="&";
 				}
-				sTokenParam+=name+value;
+				sTokenParam+=name+"="+value;
 				
 			}
 		}

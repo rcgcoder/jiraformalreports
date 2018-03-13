@@ -196,11 +196,12 @@ class RCGJira{
 		self.pushCallback(function(response,xhr,sUrl,headers){
 			log("Api Call Response:"+response.length);
 			if (xhr.status == 429){
-				log("too many request.... have to wait 10-15 secs");
+				var millis=Math.round(((Math.random()*5)+10)*1000);
+				log("too many request.... have to wait "+(Math.round(millis/10)/100)+ secs");
 				setTimeout(self.createManagedCallback(function(){
 					log("retrying api call");
 					self.apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders);					
-					}),Math.round(((Math.random()*5)+10)*1000));
+					}),millis);
 			} else if ((xhr.status == 403)||(response=="")) { // forbidden
 				self.addStep("Discarding Oauth Access Token",function(){
 					self.apiCallOauth("/discardToken");

@@ -120,10 +120,10 @@ class RCGJira{
 				self.pushCallback(function(response,xhr,sUrl,headers){
 					arrResults=arrResults.concat(objResp[resultName]);
 					self.popCallback();
-				}
+				});
 				self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,undefined,callback,arrHeaders);
 			});
-		}
+		};
 		var fncIteration=self.createManagedCallback(function(){
 			self.pushCallback(function(response,xhr,sUrl,headers){
 				var objResp;

@@ -170,7 +170,18 @@ class RCGTask{
 //		if (self.steps.length==0){
 		// call status
 		var bRunningMethod=false;
-		if (self.actStep>=0){
+		
+		// checking if all inner forks are finished
+		var allInnerForksDone=true;
+		for (var i=0;(!allInnerForksDone)&&(i<self.innerForks.length);i++){
+			var auxFork=self.innerForks[i];
+			if (auxFork.running){
+				allInnerForksDone=false;
+			}
+		}
+		
+		
+		if ((self.actStep>=0)&&(allInnerForksDone)){ // the method was executed
 			progressPercent=1;
 		} else if (self.method!=""){
 			bRunningMethod=true;
@@ -195,7 +206,7 @@ class RCGTask{
 				isCallback:self.isCallback
 				,detail:[]  // there is not more detail???..... 
 				};
-		if (self.steps.length==0){
+		if ((self.steps.length==0)&&(allInnerForksDone)){
 			status.min=self.progressMin;
 			status.max=self.progressMax;
 			status.adv=self.progress;
@@ -207,7 +218,9 @@ class RCGTask{
 		arrStatus.push(status);
 		for (var i=0;i<self.steps.length;i++){
 			var auxStep=self.steps[i];
-			arrStatus.push(auxStep.getStatus());
+			if (!auxStep.isFork){ // the forks will be processed in next for
+				arrStatus.push(auxStep.getStatus());
+			}
 		}
 		for (var i=0;i<self.innerForks.length;i++){
 			var auxStep=self.innerForks[i];
@@ -429,9 +442,6 @@ class RCGTaskManager{
 		}
 		fork.weight=iTotalWeight;
 		fork.methodWeight=iMethodWeight;
-		
-		
-		
 		runningTask.innerForks.push(fork);
 		self.innerForks.push(fork);
 		runningTask.steps.push(fork);
@@ -630,21 +640,22 @@ class RCGTaskManager{
 		}
 		if (bLocated){
 			var taskToRun=stepRunning;
-			if (stepRunning.isFork){ // if the step is a fork.... 
+			if (taskToRun.isFork){ // if the step is a fork.... 
 				// remove the step..... and continue
-				log ("Next running task is fork: " + stepRunning.description + "("+stepRunning.forkId+")");
-				var parent=stepRunning.parent;
+				log ("Next running task is fork: " + taskToRun.description + "("+taskToRun.forkId+")");
+				var parent=taskToRun.parent;
+				parent.inner
 				var iStep=parent.actStep;
 				if ((iStep<0)||(iStep>parent.steps.length)){
 					log("Impossible situation.... the fork has to be in the step array of the parent");
-				} else { // remove the parent step of the fork
+				} else { // remove the fork from the parent step
 					parent.steps.splice(iStep, 1);
-					var continueTask=parent;
+					var nextTask=parent;
 					if (parent.actStep<parent.steps.length){
-						continueTask=parent.steps[parent.actStep];
+						nextTask=parent.steps[parent.actStep];
 					}
-					log("Continue running "+continueTask.description+ "("+continueTask.forkId+")");
-					self.setRunningTask(continueTask);
+					log("Continue running "+nextTask.description+ "("+nextTask.forkId+")");
+					self.setRunningTask(nextTask);
 					self.next(aArgs,nJumps);
 				}
 			}

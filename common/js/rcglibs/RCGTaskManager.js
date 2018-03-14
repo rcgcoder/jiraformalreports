@@ -150,10 +150,20 @@ class RCGTask{
 			fncApply();
 		}
 	}
-	
+	isTotalDone(){
+		if (!self.isDone) return false;
+		if (self.innerForks.length==0) return true;
+		var bForksDone=true;
+		for (var i=0;i<self.innerForks.length;i++){
+			if (!self.innerForks.isTotalDone()){
+				return false;
+			}
+		}
+		return true;
+	}
 	getStatus(){
 		var self=this;
-		if ((self.isDone)||(!self.running)){
+		if ((self.isTotalDone())||(!self.running)){
 			return {
 					desc:self.description,
 					min:0,

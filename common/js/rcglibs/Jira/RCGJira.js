@@ -129,12 +129,14 @@ class RCGJira{
 						}
 						arrResults=arrResults.concat(objResp[resultName]);
 						log("Retrieved "+resultName+":"+arrResults.length);
-						frkTask.progress=objResp[resultName].length;
+						frkTask.parent.progressMin=0;
+						frkTask.parent.progressMax=nTotal;
+						frkTask.parent.progress=objResp[resultName].length;
 //						log(frkTask.description);
 						self.popCallback();
 					});
 					self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,undefined,callback,arrHeaders);
-			},0,1,0,nBlockItems,undefined,"INNER",undefined
+			},0,1,undefined,undefined,undefined,"INNER",undefined
 			);
 		};
 		var fncIteration=self.createManagedCallback(function(){

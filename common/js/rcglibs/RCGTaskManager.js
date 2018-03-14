@@ -173,7 +173,7 @@ class RCGTask{
 		
 		// checking if all inner forks are finished
 		var allInnerForksDone=true;
-		for (var i=0;(!allInnerForksDone)&&(i<self.innerForks.length);i++){
+		for (var i=0;(allInnerForksDone)&&(i<self.innerForks.length);i++){
 			var auxFork=self.innerForks[i];
 			if (auxFork.running){
 				allInnerForksDone=false;

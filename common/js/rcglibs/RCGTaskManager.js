@@ -155,7 +155,7 @@ class RCGTask{
 		if (self.innerForks.length==0) return true;
 		var bForksDone=true;
 		for (var i=0;i<self.innerForks.length;i++){
-			if (!self.innerForks.isTotalDone()){
+			if (!self.innerForks[i].isTotalDone()){
 				return false;
 			}
 		}

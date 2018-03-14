@@ -115,7 +115,7 @@ class RCGJira{
 		var self=this;
 		var arrResults=[];
 		var nLast=0;
-		var fncAddIteration=function(nLast,nTotal){
+		var fncAddIteration=function(nLast,nTotal,nBlockItems){
 			//	extended_addStep(description,method,
 			//progressMin,progressMax,newObj,totalWeight,methodWeight,sForkType,barrier){
 
@@ -129,14 +129,12 @@ class RCGJira{
 						}
 						arrResults=arrResults.concat(objResp[resultName]);
 						log("Retrieved "+resultName+":"+arrResults.length);
-						frkTask.parent.parent.progressMin=0;
-						frkTask.parent.parent.progressMax=nTotal;
-						frkTask.parent.parent.progress=arrResults.length;
+						frkTask.progress=objResp[resultName].length;
 //						log(frkTask.description);
 						self.popCallback();
 					});
 					self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,undefined,callback,arrHeaders);
-			},0,1,undefined,undefined,undefined,"INNER",undefined
+			},0,1,0,nBlockItems,undefined,"INNER",undefined
 			);
 		};
 		var fncIteration=self.createManagedCallback(function(){
@@ -154,7 +152,11 @@ class RCGJira{
 				arrResults=arrResults.concat(objResp[resultName]);
 				if (nLast<nTotal){
 					while (nLast<nTotal){
-						fncAddIteration(nLast,nTotal);
+						var nBlockItems=nResults;
+						if (nLast+nBlockItems>nTotal){
+							nBlockItems=nTotal-nLast;
+						}
+						fncAddIteration(nLast,nTotal,nBlockItems);
 						nLast+=nResults;
 					}
 					self.continueTask();

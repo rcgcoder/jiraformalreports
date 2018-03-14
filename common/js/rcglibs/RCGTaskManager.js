@@ -14,6 +14,8 @@ class RCGBarrier{
 	reach(task){
 		var self=this;
 		self.tasksReached.push(task); // to debug activity
+		task.done();
+		task.running=false;
 		if (self.nItems<=0) {
 			log("You reached to barrier but no items asigned to. It´s a bug in your program... no callback is launched");
 			return;

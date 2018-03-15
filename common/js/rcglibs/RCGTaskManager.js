@@ -236,10 +236,10 @@ class RCGTask{
 		
 		var status={
 				desc:self.description,
-				min:Math.round(progressMin*100)/100,
-				max:Math.round(progressMax*100)/100,
+				min:Math.round(progressMin),
+				max:Math.round(progressMax),
 				perc:progressPercent,
-				adv:Math.round(progressAdv*100)/100,
+				adv:Math.round(progressAdv),
 				weight:self.methodWeight,
 				done:false,
 				timeSpent:(bRunningMethod?(new Date()).getTime()-self.initTime:""),
@@ -310,10 +310,10 @@ class RCGTask{
 		var returnStatus={
 				desc:self.description,
 				weight:self.weight,
-				min:Math.round(progressMin*100)/100,
-				max:Math.round(progressMax*100)/100,
+				min:Math.round(progressMin),
+				max:Math.round(progressMax),
 				perc:totalPerc,
-				adv:Math.round((progressItems*totalPerc)+progressMin)/100,
+				adv:Math.round((progressItems*totalPerc)+progressMin),
 				done:false,
 				running:true,
 				timeSpent:(new Date()).getTime()-self.initTime,

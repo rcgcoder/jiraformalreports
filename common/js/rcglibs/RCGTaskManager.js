@@ -150,13 +150,38 @@ class RCGTask{
 			fncApply();
 		}
 	}
+	isSomethingRunning(){
+		var self=this;
+		var totalDone=self.isTotalDone();
+		if (totalDone){
+			return false;
+		}
+		if (self.running) return true;
+		if ((self.innerForks.length==0) && ((self.steps.length==0)) return false;
+		for (var i=0;i<self.innerForks.length;i++){
+			if (self.innerForks[i].isSomethingRunning()){
+				return true;
+			}
+		}
+		for (var i=0;i<self.steps.length;i++){
+			if (self.steps[i].isSomethingRunning()){
+				return true;
+			}
+		}
+		return false;
+	}
 	isTotalDone(){
 		var self=this;
 		if (!self.isDone) return false;
-		if (self.innerForks.length==0) return true;
-		var bForksDone=true;
+		if (self.running) return false;
+		if ((self.innerForks.length==0) && ((self.steps.length==0)) return true;
 		for (var i=0;i<self.innerForks.length;i++){
 			if (!self.innerForks[i].isTotalDone()){
+				return false;
+			}
+		}
+		for (var i=0;i<self.steps.length;i++){
+			if (!self.steps[i].isTotalDone()){
 				return false;
 			}
 		}
@@ -164,7 +189,7 @@ class RCGTask{
 	}
 	getStatus(){
 		var self=this;
-		if ((self.isTotalDone())){
+		if ((!self.isSomethingRunning())){
 			return {
 					desc:self.description,
 					min:0,

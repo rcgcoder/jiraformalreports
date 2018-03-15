@@ -192,10 +192,10 @@ class RCGTask{
 		if ((!self.isSomethingRunning())){
 			return {
 					desc:self.description,
-					min:0,
-					max:1,
-					perc:(self.isDone?1:0),
-					adv:(self.isDone?1:0),
+					min:self.progressMin,
+					max:self.progressMax,
+					perc:1,
+					adv:self.progressMax,
 					weight:self.weight,
 					done:self.isDone,
 					timeSpent:self.finishTime-self.initTime,

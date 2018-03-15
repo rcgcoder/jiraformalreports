@@ -470,8 +470,8 @@ class RCGTaskManager{
 		fork.forkId=self.newForkId();
 		fork.isFork=true;
 
-		var iTotalWeight=0;
-		var iMethodWeight=0;
+		var iTotalWeight=-1;
+		var iMethodWeight=-1;
 		if (typeof totalWeight!=="undefined"){
 			iTotalWeight=totalWeight;
 		}

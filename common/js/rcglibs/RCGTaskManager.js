@@ -682,7 +682,6 @@ class RCGTaskManager{
 				// remove the step..... and continue
 				log ("Next running task is fork: " + taskToRun.description + "("+taskToRun.forkId+")");
 				var parent=taskToRun.parent;
-				parent.inner
 				var iStep=parent.actStep;
 				if ((iStep<0)||(iStep>parent.steps.length)){
 					log("Impossible situation.... the fork has to be in the step array of the parent");

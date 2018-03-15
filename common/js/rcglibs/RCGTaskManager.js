@@ -219,24 +219,25 @@ class RCGTask{
 		}
 		
 		
+		var progressMax=self.progressMax;
+		var progressMin=self.progressMin;
+		var progressItems=progressMax-progressMin;
+		var progressPercent=0;
 		if ((self.actStep>=0)&&(allInnerForksDone)){ // the method was executed
 			progressPercent=1;
+			progressItems=progressMax;
 		} else if (self.method!=""){
 			bRunningMethod=true;
-			var progressMax=self.progressMax;
-			var progressMin=self.progressMin;
-			var progressItems=progressMax-progressMin;
-			progressPercent=0;
 			if (progressItems>0){
 				progressPercent=self.progress/progressItems;
 			}
 		}
 		var status={
 				desc:self.description,
-				min:0,
-				max:1,
+				min:progressMin,
+				max:progressMax,
 				perc:progressPercent,
-				adv:progressPercent,
+				adv:progressItems,
 				weight:self.methodWeight,
 				done:false,
 				timeSpent:(bRunningMethod?(new Date()).getTime()-self.initTime:""),
@@ -310,10 +311,10 @@ class RCGTask{
 		var returnStatus={
 				desc:self.description,
 				weight:self.weight,
-				min:0,
-				max:1,
+				min:progressMin,
+				max:progressMax,
 				perc:totalPerc,
-				adv:totalPerc,
+				adv:progressItems,
 				done:false,
 				running:true,
 				timeSpent:(new Date()).getTime()-self.initTime,

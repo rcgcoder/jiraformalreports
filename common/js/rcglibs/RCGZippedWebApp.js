@@ -988,7 +988,7 @@ class RCGZippedApp{
 		self.addStep("Starting Persistence...",self.startPersistence);
 		self.addStep("Loading Base Files...",self.loadJSBaseEngine);
 		self.addStep("Updating Deploy Zips...",self.updateDeployZips);
-		self.addStep("Starting Application...",self.startApplication);
+		self.addStep("Starting Application...",self.startApplication,0,1,undefined,undefined,undefined,"GLOBAL",undefined);
 		self.continueTask();
 		 
 	}

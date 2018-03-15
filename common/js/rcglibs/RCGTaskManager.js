@@ -157,7 +157,7 @@ class RCGTask{
 			return false;
 		}
 		if (self.running) return true;
-		if ((self.innerForks.length==0) && ((self.steps.length==0)) return false;
+		if ((self.innerForks.length==0) && (self.steps.length==0)) return false;
 		for (var i=0;i<self.innerForks.length;i++){
 			if (self.innerForks[i].isSomethingRunning()){
 				return true;
@@ -174,7 +174,7 @@ class RCGTask{
 		var self=this;
 		if (!self.isDone) return false;
 		if (self.running) return false;
-		if ((self.innerForks.length==0) && ((self.steps.length==0)) return true;
+		if ((self.innerForks.length==0) && (self.steps.length==0)) return true;
 		for (var i=0;i<self.innerForks.length;i++){
 			if (!self.innerForks[i].isTotalDone()){
 				return false;

@@ -915,15 +915,25 @@ class RCGZippedApp{
 				var perc100=(Math.round(item.perc*1000))/10;
 				var nChildsDone=0;
 				var nChildsTotal=item.detail.length;
+				var nInnerMin=0;
+				var nInnerMax=0;
+				var nInnerAdv=0;
 				for (var i=0;i<nChildsTotal;i++){
 					var child=item.detail[i];
 					if (child.done){
 						nChildsDone++;
 					}
+					nInnerMax+=child.max;
+					nInnerMin+=child.min;
+					nInnerAdv+=child.adv;
 				}
 				var sChildsInfo="";
 				if (nChildsTotal>0){
 					sChildsInfo=" ("+nChildsDone+"/"+nChildsTotal+")";
+				}
+				if ((nInnerAdv>0)&&(nInnerMax!=nChildsTotal)){
+					sChildsInfo+=" ["+nInnerMin+" => "+ nInnerAdv +" => "+nInnerMax+"]";
+					
 				}
 				
 				var tTotal=0;
@@ -933,6 +943,13 @@ class RCGZippedApp{
 					tETA=tTotal-item.timeSpent;
 					tETA=Math.round((tETA/1000)*100)/100;
 				}
+				if (item.detail.length>0) { 
+					for (var i=0;i<item.detail.length;i++){
+						var detail=item.detail[i];
+					}
+				}
+				
+
 				var sItem='<div id="statusBox" class="inline">'+
 				  '	  <span id="sbTitle"> ' + (item.desc==""?"Running...":item.desc) + sChildsInfo + ' '+perc100+'% '+
 				  '   </span>'+

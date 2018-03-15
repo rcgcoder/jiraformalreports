@@ -136,7 +136,7 @@ class RCGJira{
 						self.popCallback();
 					});
 					self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,undefined,callback,arrHeaders);
-			},0,1,0,nBlockItems,undefined,"INNER",undefined
+			},0,nBlockItems,undefined,undefined,undefined,"INNER",undefined
 			);
 		};
 		var fncIteration=self.createManagedCallback(function(){

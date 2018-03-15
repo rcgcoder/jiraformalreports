@@ -164,7 +164,7 @@ class RCGTask{
 	}
 	getStatus(){
 		var self=this;
-		if ((self.isTotalDone())||(!self.running)){
+		if ((self.isTotalDone())){
 			return {
 					desc:self.description,
 					min:0,

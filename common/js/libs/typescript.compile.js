@@ -46,7 +46,7 @@ class tsCompiler{
     }
 	reset(){
         this.outfile.source='';
-        var compiler = new TypeScript.TypeScriptCompiler(outfile);
+        var compiler = new TypeScript.TypeScriptCompiler(self.outfile);
         this.innerCompiler=compiler;
 	}
 

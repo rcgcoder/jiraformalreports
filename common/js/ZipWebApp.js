@@ -46,6 +46,8 @@ class ZipWebApp{
 		    angular.element(document).append(compiledHtml);
 		    */
 			$("#"+self.htmlContainerId).html("<heros></heros>");
+			$("#"+self.htmlContainerId).html("<heros></heros>");
+			$("#"+self.htmlContainerId).html("<heros></heros>");
 			angular.bootstrap(document, ["mySuperAwesomeApp"]);
 		
 			self.popCallback(); // finishing the process.

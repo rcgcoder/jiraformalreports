@@ -520,14 +520,8 @@ class RCGZippedApp{
 			log("TypeScript Engine is not running");
 			self.tsCompiler=new tsCompiler();
 		}
-		var tsCompiled=self.tsCompiler.compile(tsContent);
-	    oScript.type = "text\/javascript";
-	    oScript.onerror = self.loadError;
-/*	    oScript.onload = function(){
-	    	self.popCallback();
-	    }
-*/	    oHead.appendChild(oScript);
-	    oScript.innerHTML = tsCompiled;
+		var jsCompiled=self.tsCompiler.compile(tsContent);
+		self.addJavascriptString(jsCompiled);
 	}
 	processFile(content,xhr,contentType,sRelativePath){
 		log("Processing file:"+sRelativePath);

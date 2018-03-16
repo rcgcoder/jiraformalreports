@@ -74,7 +74,7 @@ class tsCompiler{
                 return outfile;
             });
             if(window.sessionStorage) {
-                sessionStorage.setItem('typescript' + hashCode(src.join('')), outfile.source);
+                sessionStorage.setItem('typescript' + self.hashCode(src.join('')), outfile.source);
             }
         }
         return outfile.source;

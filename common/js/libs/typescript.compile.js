@@ -43,19 +43,19 @@ class tsCompiler{
 			src=[src];
 		}
 		var hashcode=self.hashCode(src.join(''));
+        var outfile={
+                source: '',
+                Write: function(s) {
+                    this.source += s;
+                },
+                WriteLine: function(s) {
+                    this.source += s + '\n';
+                },
+                Close: function() {}
+            };
         if(window.sessionStorage && sessionStorage.getItem('typescript' + hashcode)) {
-            self.outfile.source = sessionStorage.getItem('typescript' + hashcode);
+            outfile.source = sessionStorage.getItem('typescript' + hashcode);
         } else {
-            var outfile={
-                    source: '',
-                    Write: function(s) {
-                        this.source += s;
-                    },
-                    WriteLine: function(s) {
-                        this.source += s + '\n';
-                    },
-                    Close: function() {}
-                };
             var compiler = new TypeScript.TypeScriptCompiler(outfile);
             compiler.parser.errorRecovery = true;
             compiler.setErrorCallback(function(start, len, message, block) {

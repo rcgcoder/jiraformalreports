@@ -36,11 +36,15 @@ class ZipWebApp{
 			log("Image changed");
 //			$('body').attr('ng-app', 'mySuperAwesomeApp');
 			
-		    var html = '<div class="row dataPane"> Chunk of html elements </div>';
-		    var trustedHtml = $sce.trustAsHtml(html);
+		    angular
+		    	.module("mySuperAwesomeApp", [])
+		    	.component("heros", new HerosComponent());
+		    /*
+		   	var html = '<div class="row dataPane"> Chunk of html elements </div>';
+			var trustedHtml = $sce.trustAsHtml(html);
 		    var compiledHtml = $compile(trustedHtml)($scope);
 		    angular.element(document).append(compiledHtml);
-		    
+		    */
 /*			$("#"+self.htmlContainerId).html("<heros></heros>");
 			angular.bootstrap(document, ["mySuperAwesomeApp"]);
 	*/		

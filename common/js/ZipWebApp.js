@@ -45,9 +45,15 @@ class ZipWebApp{
 		    var compiledHtml = $compile(trustedHtml)($scope);
 		    angular.element(document).append(compiledHtml);
 		    */
-			$("#"+self.htmlContainerId).html("<heros></heros>")
-				.append("<heros></heros>")
-				.append("<heros></heros>");
+			$("#"+self.htmlContainerId).html(
+				'<div ng-controller="Tabs" class="panel panel-default" id="tabs-panel">'+ 
+				'  <tabset  class="panel-body">'+
+				'    <tab heading="Tab 1"> </tab>'+
+				'    <tab heading="Tab 2"> </tab>'+
+				'    <tab heading="Tab 3"> </tab>'+
+				'  </tabset>'+
+				'</div>'
+				);
 			angular.bootstrap(document, ["mySuperAwesomeApp"]);
 		
 			self.popCallback(); // finishing the process.

@@ -14,15 +14,8 @@ and limitations under the License.
 ***************************************************************************** */
 var tsCompiler={};
 (function() {
-
-    //Polyfill for older browsers
-    if (!window.console) {
-        window.console = {
-            log: function() {}
-        };
-    }
     
-    hashCode = function(s) {
+    var hashCode = function(s) {
         var hsh = 0, chr, i;
         if(s.length == 0) {
             return hsh;
@@ -35,7 +28,7 @@ var tsCompiler={};
         return hsh;
     }
 
-    tsCompilerInitialize = function() {
+    var tsCompilerInitialize = function() {
     	var objCompiler={};
         //Minimal declaration file lib.d.ts
         var libfile = '/// <reference no-default-lib="true"/>\n' +
@@ -88,7 +81,7 @@ var tsCompiler={};
             return outfile.source;
     	}
     }
-    tsCompiler=compilerInitialize();
+    tsCompiler=tsCompilerInitialize();
        
 //    compile();
 

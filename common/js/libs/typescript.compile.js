@@ -54,6 +54,7 @@ class tsCompiler{
                 Close: function() {}
             };
         if(window.sessionStorage && sessionStorage.getItem('typescript' + hashcode)) {
+        	log("Loaded from session storage");
             outfile.source = sessionStorage.getItem('typescript' + hashcode);
         } else {
             var compiler = new TypeScript.TypeScriptCompiler(outfile);

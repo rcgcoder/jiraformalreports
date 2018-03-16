@@ -60,14 +60,13 @@ class tsCompiler{
             outfile.source = sessionStorage.getItem('typescript' + hashcode);
         } else {
         	self.reset();
-        	var libfile=self.libfile;
         	var compiler=self.innerCompiler;
             compiler.parser.errorRecovery = true;
             compiler.setErrorCallback(function(start, len, message, block) {
                 console.log('Compilation error: ', message, '\n Code block: ', block, ' Start position: ', start, ' Length: ', len);
             });
-            compiler.addUnit(libfile, 'lib.d.ts');
-            for(i = 0; i < src.length; i++) {
+            compiler.addUnit(self.libfile, 'lib.d.ts');
+            for(var i = 0; i < src.length; i++) {
                 compiler.addUnit(src[i], '');
             }
             compiler.typeCheck();

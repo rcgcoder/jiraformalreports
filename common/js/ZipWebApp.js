@@ -36,7 +36,7 @@ class ZipWebApp{
 							"js/libs/angular.min.js",
 							"js/angular/angScript.ts",
 							"js/libs/typescript.min.js",
-							"js/libs/typescript.compile.min.js",
+							"js/libs/typescript.compile.js",
 							"js/rcglibs/Jira/RCGJira.js"
 						 ]; //test
 			self.loadRemoteFiles(arrFiles);

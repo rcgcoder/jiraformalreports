@@ -223,6 +223,7 @@ class RCGZippedApp{
 		self.lastDeployInfo="";
 		self.mainJs="";
 		self.mainClass="";
+		self.tsCompiler="";
 		self.bWithPersistentStorage=isChrome();
 		self.localStorageMaxSize=200*1024*1024; // 200 MBytes by default
 		taskManager.extendObject(self);
@@ -515,27 +516,18 @@ class RCGZippedApp{
 	}
 	addTypescriptString(tsContent){
 		var self=this;
-		if (typeof tsCompiler==="undefined"){
+		if (typeof self.tsCompiler==="undefined"){
 			log("TypeScript Engine is not running");
-			var oHead=(document.head || document.getElementsByTagName("head")[0]);
-		    var oScript = document.createElement("script");
-		    oScript.type = "text\/typescript";
-		    oScript.onerror = self.loadError;
-	/*	    oScript.onload = function(){
-		    	self.popCallback();
-		    }
-	*/	    oHead.appendChild(oScript);
-		    oScript.innerHTML = tsContent;
-		} else {
-			var tsCompiled=tsCompiler.compile(tsContent);
-		    oScript.type = "text\/javascript";
-		    oScript.onerror = self.loadError;
-	/*	    oScript.onload = function(){
-		    	self.popCallback();
-		    }
-	*/	    oHead.appendChild(oScript);
-		    oScript.innerHTML = tsCompiled;
+			self.tsCompiler=new tsCompiler();
 		}
+		var tsCompiled=self.tsCompiler.compile(tsContent);
+	    oScript.type = "text\/javascript";
+	    oScript.onerror = self.loadError;
+/*	    oScript.onload = function(){
+	    	self.popCallback();
+	    }
+*/	    oHead.appendChild(oScript);
+	    oScript.innerHTML = tsCompiled;
 	}
 	processFile(content,xhr,contentType,sRelativePath){
 		log("Processing file:"+sRelativePath);

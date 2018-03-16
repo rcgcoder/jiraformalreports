@@ -515,7 +515,7 @@ class RCGZippedApp{
 	}
 	addTypescriptString(tsContent){
 		var self=this;
-		if (tsCompiler==="undefined"){
+		if (typeof tsCompiler==="undefined"){
 			log("TypeScript Engine is not running");
 			var oHead=(document.head || document.getElementsByTagName("head")[0]);
 		    var oScript = document.createElement("script");

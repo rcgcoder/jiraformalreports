@@ -22,13 +22,6 @@ class ZipWebApp{
 			self.loadRemoteFile("img/reports2.jpg");
 		});
 		
-		self.addStep("Loading angularjs and typescript inline compiler and Jira REST Client.... ",function(){
-			var arrFiles=[	//"ts/demo.ts",
-							"js/angular/angScript.ts",
-							"js/rcglibs/Jira/RCGJira.js"
-						 ]; //test
-			self.loadRemoteFiles(arrFiles);
-		});
 		self.addStep("changing image...",function(sPath,content){
 			log("Image Loaded:"+sPath);
 			var image=document.getElementById("jrfSplash");
@@ -36,10 +29,10 @@ class ZipWebApp{
 			log("Image changed");
 //			$('body').attr('ng-app', 'mySuperAwesomeApp');
 			
-		    angular
+/*		    angular
 		    	.module("mySuperAwesomeApp", [])
 		    	.component("heros", new HerosComponent());
-		    /*
+	*/	    /*
 		   	var html = '<div class="row dataPane"> Chunk of html elements </div>';
 			var trustedHtml = $sce.trustAsHtml(html);
 		    var compiledHtml = $compile(trustedHtml)($scope);
@@ -49,6 +42,13 @@ class ZipWebApp{
 			angular.bootstrap(document, ["mySuperAwesomeApp"]);
 	*/		
 			self.popCallback(); // finishing the process.
+		});
+		self.addStep("Loading angularjs and typescript files and Jira REST Client.... ",function(){
+			var arrFiles=[	//"ts/demo.ts",
+							"js/angular/angScript.ts",
+							"js/rcglibs/Jira/RCGJira.js"
+						 ]; //test
+			self.loadRemoteFiles(arrFiles);
 		});
 /*		self.addStep("Getting Confluence Oauth Token", function(){
 			var jira=self.getJira();

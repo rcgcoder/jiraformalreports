@@ -33,10 +33,7 @@ class ZipWebApp{
 		
 		self.addStep("Loading angularjs and typescript inline compiler and Jira REST Client.... ",function(){
 			var arrFiles=[	//"ts/demo.ts",
-							"js/libs/angular.min.js",
 							"js/angular/angScript.ts",
-							"js/libs/typescript.min.js",
-							"js/libs/typescript.compile.js",
 							"js/rcglibs/Jira/RCGJira.js"
 						 ]; //test
 			self.loadRemoteFiles(arrFiles);

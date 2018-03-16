@@ -35,9 +35,15 @@ class ZipWebApp{
 			image.src = content;
 			log("Image changed");
 //			$('body').attr('ng-app', 'mySuperAwesomeApp');
-			$("#"+self.htmlContainerId).html("<heros></heros>");
-			angular.bootstrap(document, ["mySuperAwesomeApp"]);
 			
+		    var html = '<div class="row dataPane"> Chunk of html elements </div>';
+		    var trustedHtml = $sce.trustAsHtml(html);
+		    var compiledHtml = $compile(trustedHtml)($scope);
+		    angular.element(document).append(compiledHtml);
+		    
+/*			$("#"+self.htmlContainerId).html("<heros></heros>");
+			angular.bootstrap(document, ["mySuperAwesomeApp"]);
+	*/		
 			self.popCallback(); // finishing the process.
 		});
 /*		self.addStep("Getting Confluence Oauth Token", function(){

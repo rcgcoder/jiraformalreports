@@ -45,10 +45,9 @@ class ZipWebApp{
 		    var compiledHtml = $compile(trustedHtml)($scope);
 		    angular.element(document).append(compiledHtml);
 		    */
-/*			$("#"+self.htmlContainerId).html("<heros></heros>");
+			$("#"+self.htmlContainerId).html("<heros></heros>");
 			angular.bootstrap(document, ["mySuperAwesomeApp"]);
-	*/		
-			angular.bootstrap(document, ["mySuperAwesomeApp"]);
+		
 			self.popCallback(); // finishing the process.
 		});
 /*		self.addStep("Getting Confluence Oauth Token", function(){

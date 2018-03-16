@@ -82,7 +82,7 @@ tsCompiler={};
     	}
     }
     tsCompiler=tsCompilerInitialize();
-       
+    alert("TS Compiler created");   
 //    compile();
 
 })();

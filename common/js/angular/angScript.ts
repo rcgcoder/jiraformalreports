@@ -49,4 +49,3 @@ angular
   .module("mySuperAwesomeApp", [])
   .component("heros", new HerosComponent());
 
-angular.bootstrap(document, ["mySuperAwesomeApp"]);

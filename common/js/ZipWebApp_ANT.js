@@ -17,7 +17,7 @@ class ZipWebApp{
 	run(){
 		log("starting ZipWebApp");
 		var self=this;
-		self.addStep("Starting Systemjs...",function(){
+		self.addStep("Download Image...",function(){
 			log("Requesting Image");
 			self.loadRemoteFile("img/reports2.jpg");
 		});

@@ -18,6 +18,23 @@ class ZipWebApp{
 		log("starting ZipWebApp");
 		var self=this;
 		self.addStep("Starting Systemjs...",function(){
+			var arrFiles=[	//"ts/demo.ts",
+				"js/angular/angScript.ts",
+				"js/rcglibs/Jira/RCGJira.js"
+			 ]; //test
+			self.loadRemoteFiles(arrFiles);
+
+				self.loadRemoteFile("img/reports2.jpg");
+		    <link data-require="bootstrap-css@*" data-semver="3.3.1" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+		        <link rel="stylesheet" href="style.css" />
+		        <script src="https://unpkg.com/zone.js/dist/zone.js"></script>
+		        <script src="https://unpkg.com/zone.js/dist/long-stack-trace-zone.js"></script>
+		        <script src="https://unpkg.com/reflect-metadata@0.1.3/Reflect.js"></script>
+		        <script src="https://unpkg.com/systemjs@0.19.31/dist/system.js"></script>
+		        <script src="config.js"></script>
+			
+			
+			
 			log("Requesting Image");
 			self.loadRemoteFile("img/reports2.jpg");
 		});

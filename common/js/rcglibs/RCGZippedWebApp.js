@@ -281,6 +281,9 @@ class RCGZippedApp{
 	
 	composeUrl(sRelativePath){
 		var self=this;
+		if (sRelativePath.substr(0,4).toLowerCase()=="http"){
+			return sRelativePath;
+		}
 		var sUrl=self.rootPath; 
 		if (self.github!=""){
 			if (self.github!=""){

@@ -9,7 +9,7 @@ import {Tab} from './tab';
   selector: 'my-app',
   template: `
     <tabs>
-      <tab [tabTitle]="'Reports'" tabKind="'Reports'">Reports</tab>
+      <tab [tabTitle]="'Reports'" [tabKind]="'Reports'">Reports</tab>
       <tab tabTitle="Config" tabKind="'Config'">R. Config</tab>
       <tab tabTitle="Structure" tabKind="'Structure'">R. Structure</tab>
       <tab tabTitle="Result" tabKind="'Result'">R. Result</tab>

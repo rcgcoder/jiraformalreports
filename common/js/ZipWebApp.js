@@ -18,27 +18,23 @@ class ZipWebApp{
 		log("starting ZipWebApp");
 		var self=this;
 		self.addStep("Starting Systemjs...",function(){
-			var arrFiles=[	//"ts/demo.ts",
-				"js/angular/angScript.ts",
-				"js/rcglibs/Jira/RCGJira.js"
+			$("#"+self.htmlContainerId).html(
+				`<my-app>
+				    loading...
+				  </my-app>
+				`);
+			var arrFiles=[
+				"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css",
+		        "https://unpkg.com/zone.js/dist/zone.js",
+		        "https://unpkg.com/zone.js/dist/long-stack-trace-zone.js",
+		        "https://unpkg.com/reflect-metadata@0.1.3/Reflect.js",
+		        "https://unpkg.com/systemjs@0.19.31/dist/system.js",
+		        "html/config.js"
 			 ]; //test
 			self.loadRemoteFiles(arrFiles);
 
-				self.loadRemoteFile("img/reports2.jpg");
-		    <link data-require="bootstrap-css@*" data-semver="3.3.1" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
-		        <link rel="stylesheet" href="style.css" />
-		        <script src="https://unpkg.com/zone.js/dist/zone.js"></script>
-		        <script src="https://unpkg.com/zone.js/dist/long-stack-trace-zone.js"></script>
-		        <script src="https://unpkg.com/reflect-metadata@0.1.3/Reflect.js"></script>
-		        <script src="https://unpkg.com/systemjs@0.19.31/dist/system.js"></script>
-		        <script src="config.js"></script>
-			
-			
-			
-			log("Requesting Image");
-			self.loadRemoteFile("img/reports2.jpg");
 		});
-		self.addStep("Loading angularjs and typescript files and Jira REST Client.... ",function(){
+/*		self.addStep("Loading angularjs and typescript files and Jira REST Client.... ",function(){
 			var arrFiles=[	//"ts/demo.ts",
 							"js/angular/angScript.ts",
 							"js/rcglibs/Jira/RCGJira.js"
@@ -52,7 +48,7 @@ class ZipWebApp{
 			image.src = content;
 			log("Image changed");
 //			$('body').attr('ng-app', 'mySuperAwesomeApp');
-			
+*/			
 /*		    angular
 		    	.module("mySuperAwesomeApp", [])
 		    	.component("heros", new HerosComponent());
@@ -62,7 +58,7 @@ class ZipWebApp{
 		    var compiledHtml = $compile(trustedHtml)($scope);
 		    angular.element(document).append(compiledHtml);
 		    */
-			$("#"+self.htmlContainerId).html(
+/*			$("#"+self.htmlContainerId).html(
 				'<div ng-controller="Tabs" class="panel panel-default" id="tabs-panel">'+ 
 				'  <tabset  class="panel-body">'+
 				'    <tab heading="Tab 1"> </tab>'+
@@ -75,7 +71,7 @@ class ZipWebApp{
 		
 			self.popCallback(); // finishing the process.
 		});
-/*		self.addStep("Getting Confluence Oauth Token", function(){
+*//*		self.addStep("Getting Confluence Oauth Token", function(){
 			var jira=self.getJira();
 			jira.proxyPath=self.proxyPath;
 			jira.instance=self.urlBase;
@@ -86,7 +82,8 @@ class ZipWebApp{
 			var jira=self.getJira();
 			jira.getAllIssues();
 		});
-*/		self.addStep("Getting All Projects.... ",function(){
+*/
+/*		self.addStep("Getting All Projects.... ",function(){
 			var jira=self.getJira();
 			jira.getAllProjects();
 		});
@@ -94,7 +91,8 @@ class ZipWebApp{
 			var jira=self.getJira();
 			jira.getConfluence();
 		});
-		
+*/		
 		self.continueTask();
 	}
+
 }

@@ -3,14 +3,7 @@ import { Tab } from './tab';
 
 @Component({
   selector: 'tabs',
-  template:`
-    <ul class="nav nav-tabs">
-      <li *ngFor="let tab of tabs" (click)="selectTab(tab)" [class.active]="tab.active">
-        <a > {{tab.title}} - {{tab.type}}</a>
-      </li>
-    </ul>
-    <ng-content></ng-content>
-  `
+  templateUrl:"./ngComponents/tabs.html"
 })
 export class Tabs implements AfterContentInit {
   

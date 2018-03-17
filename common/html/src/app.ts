@@ -4,17 +4,12 @@ import {BrowserModule} from '@angular/platform-browser'
 
 import {Tabs} from './tabs';
 import {Tab} from './tab';
+import {TabReports} from './tab.reports';
+
 
 @Component({
   selector: 'my-app',
-  template: `
-    <tabs>
-      <tab tabTitle="Reports" tabType="Reports"></tab>
-      <tab tabTitle="Config" tabType="Config"></tab>
-      <tab tabTitle="Structure" tabType="Structure"></tab>
-      <tab tabTitle="Result" tabType="Result"></tab>
-    </tabs>  
-  `
+  template: 'app.html'
 })
 class App {
   constructor() {
@@ -24,7 +19,7 @@ class App {
 
 @NgModule({
   imports: [ BrowserModule ],
-  declarations: [ App, Tabs, Tab ],
+  declarations: [ App, Tabs, Tab , TabReports],
   bootstrap: [ App ]
 })
 export class AppModule {}

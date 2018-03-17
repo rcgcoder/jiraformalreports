@@ -10,10 +10,10 @@ import {Tab2} from './tab2';
   selector: 'my-app',
   template: `
     <tabs>
-      <tab [tabTitle]="'Reports'">Reports</tab>
-      <tab tabTitle="Config">R. Config</tab>
-      <tab tabTitle="Structure">R. Structure</tab>
-      <tab tabTitle="Result">R. Result</tab>
+      <tab [tabTitle]="'Reports'" rTabType="'Reports'">Reports</tab>
+      <tab tabTitle="Config" rTabType="'Config'">R. Config</tab>
+      <tab tabTitle="Structure" rTabType="'Structure'">R. Structure</tab>
+      <tab tabTitle="Result" rTabType="'Result'">R. Result</tab>
     </tabs>  
   `
 })

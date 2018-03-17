@@ -4,7 +4,7 @@ import {BrowserModule} from '@angular/platform-browser'
 
 import {Tabs} from './tabs';
 import {Tab} from './tab';
-import {Tab} from './tab2';
+import {Tab2} from './tab2';
 
 @Component({
   selector: 'my-app',

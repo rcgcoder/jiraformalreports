@@ -1,5 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { TabReports } from './tab.reports';
+import { TabConfig } from './tab.config';
+import { TabStructure } from './tab.structure';
+import { TabResult } from './tab.result';
 
 @Component({
   selector: 'tab',

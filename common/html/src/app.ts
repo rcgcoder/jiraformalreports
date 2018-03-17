@@ -9,7 +9,7 @@ import {Tab} from './tab';
 
 @Component({
   selector: 'my-app',
-  template: 'app.html'
+  templateUrl: 'app.html'
 })
 class App {
   constructor() {

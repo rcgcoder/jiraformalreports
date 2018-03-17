@@ -23,7 +23,7 @@ class App {
 
 @NgModule({
   imports: [ BrowserModule ],
-  declarations: [ App, Tabs, Tab ],
+  declarations: [ App, Tabs, Tab, Tab2 ],
   bootstrap: [ App ]
 })
 export class AppModule {}

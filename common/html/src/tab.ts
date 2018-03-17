@@ -8,12 +8,7 @@ import { TabReports } from './tab.reports';
       padding: 1em;
     }
   `],
-  template: `
-    <div [hidden]="!active" class="pane">
-    {{type}}
-    <ng-content select="tab-reports"></ng-content>
-    </div>
-  `
+  templateUrl:"./ngComponents/tab.html"
 })
 export class Tab {
   @Input('tabTitle') title: string;

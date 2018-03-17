@@ -8,6 +8,9 @@ import { Tab } from './tab';
       <li *ngFor="let tab of tabs" (click)="selectTab(tab)" [class.active]="tab.active">
         <a > {{tab.title}}</a>
       </li>
+      <li *ngFor="let tab2 of tabs" (click)="selectTab(tab2)" [class.active]="tab2.active">
+        <a > {{tab2.title}}</a>
+      </li>
     </ul>
     <ng-content></ng-content>
   `

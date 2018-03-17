@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-//import { TabReports } from './tab.reports';
+import { TabReports } from './tab.reports';
 
 @Component({
   selector: 'tab',

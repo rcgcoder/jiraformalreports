@@ -4,7 +4,7 @@ import {BrowserModule} from '@angular/platform-browser'
 
 import {Tabs} from './tabs';
 import {Tab} from './tab';
-import {TabReports} from './tab.reports';
+//import {TabReports} from './tab.reports';
 
 
 @Component({
@@ -19,7 +19,7 @@ class App {
 
 @NgModule({
   imports: [ BrowserModule ],
-  declarations: [ App, Tabs, Tab , TabReports],
+  declarations: [ App, Tabs, Tab ],
   bootstrap: [ App ]
 })
 export class AppModule {}

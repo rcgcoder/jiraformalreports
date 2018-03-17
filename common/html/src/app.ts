@@ -4,16 +4,15 @@ import {BrowserModule} from '@angular/platform-browser'
 
 import {Tabs} from './tabs';
 import {Tab} from './tab';
-import {Tab2} from './tab2';
 
 @Component({
   selector: 'my-app',
   template: `
     <tabs>
-      <tab [tabTitle]="'Reports'" rTabType="'Reports'">Reports</tab>
-      <tab tabTitle="Config" rTabType="'Config'">R. Config</tab>
-      <tab tabTitle="Structure" rTabType="'Structure'">R. Structure</tab>
-      <tab tabTitle="Result" rTabType="'Result'">R. Result</tab>
+      <tab [tabTitle]="'Reports'" tabKind="'Reports'">Reports</tab>
+      <tab tabTitle="Config" tabKind="'Config'">R. Config</tab>
+      <tab tabTitle="Structure" tabKind="'Structure'">R. Structure</tab>
+      <tab tabTitle="Result" tabKind="'Result'">R. Result</tab>
     </tabs>  
   `
 })

@@ -11,7 +11,7 @@ import { TabReports } from './tab.reports';
   template: `
     <div [hidden]="!active" class="pane">
     {{type}}
-    <ng-content select="[tab-reports]"></ng-content>
+    <ng-content select="tab-reports"></ng-content>
     </div>
   `
 })

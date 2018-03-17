@@ -20,10 +20,16 @@ class ZipWebApp{
 		self.addStep("Starting Systemjs...",function(){
 			$("#"+self.htmlContainerId).html(
 				`<my-app>
+  	<script src="https://unpkg.com/zone.js/dist/zone.js"></script>
+    <script src="https://unpkg.com/zone.js/dist/long-stack-trace-zone.js"></script>
+    <script src="https://unpkg.com/reflect-metadata@0.1.3/Reflect.js"></script>
+    <script src="https://unpkg.com/systemjs@0.19.31/dist/system.js"></script>
+    <script src="config.js"></script>
+
 				    loading...
 				  </my-app>
 				`);
-			var arrFiles=[
+/*			var arrFiles=[
 				"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css",
 		        "https://unpkg.com/zone.js/dist/zone.js",
 		        "https://unpkg.com/zone.js/dist/long-stack-trace-zone.js",
@@ -32,7 +38,7 @@ class ZipWebApp{
 		        "html/config.js"
 			 ]; //test
 			self.loadRemoteFiles(arrFiles);
-
+*/
 		});
 /*		self.addStep("Loading angularjs and typescript files and Jira REST Client.... ",function(){
 			var arrFiles=[	//"ts/demo.ts",

@@ -9,6 +9,7 @@ import { Component, Input } from '@angular/core';
   `],
   template: `
     <div [hidden]="!active" class="pane">
+    {{type}}
       <ng-content></ng-content>
     </div>
   `

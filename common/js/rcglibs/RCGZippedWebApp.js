@@ -511,13 +511,10 @@ class RCGZippedApp{
 	    var oScript = document.createElement("script");
 	    oScript.type = "text\/javascript";
 	    oScript.onerror = self.loadError;
-/*	    oScript.onload = function(){
-	    	self.popCallback();
-	    }
-*/	    oHead.appendChild(oScript);
+	    oHead.appendChild(oScript);
 	    oScript.innerHTML = jsContent;
 	}
-	addTypescriptString(tsContent){
+/*	addTypescriptString(tsContent){
 		var self=this;
 		if (self.tsCompiler==""){
 			log("TypeScript Engine is not running... loading");
@@ -525,16 +522,16 @@ class RCGZippedApp{
 		}
 		var jsCompiled=self.tsCompiler.compile(tsContent);
 		self.addJavascriptString(jsCompiled);
-	}
+	}*/
 	processFile(content,xhr,contentType,sRelativePath){
 		log("Processing file:"+sRelativePath);
 		var self=this;
 		var auxContent=content;
 	    if (contentType.isJS){ //if filename is a external JavaScript file
 	    	self.addJavascriptString(content);
-	    } else if (contentType.isTS){ //if filename is a external TypeScript file
+/*	    } else if (contentType.isTS){ //if filename is a external TypeScript file
 		    	self.addTypescriptString(content);
-	    } else if (contentType.isCSS){ //if filename is an external CSS file
+*/	    } else if (contentType.isCSS){ //if filename is an external CSS file
 	    	self.addStyleString(content);
 	    } else if (contentType.isIMG){
 	    	auxContent='data:image/bmp;base64,'+auxContent;
@@ -692,9 +689,10 @@ class RCGZippedApp{
 			log("Zip engine is not running.... loading");
 			var arrFiles=["css/RCGTaskManager.css",
 				          "js/libs/zip/zip.js",
-						  "js/libs/angular.min.js",
-						  "js/libs/typescript.min.js",
-						  "js/libs/typescript.compile.js"
+						  "js/libs/angular.min.js"
+				    //      ,
+					//	  "js/libs/typescript.min.js",
+					//	  "js/libs/typescript.compile.js"
 	//			  ,"js/libs/zip/zip-ext.js"
 				  ];
 			return self.loadRemoteFiles(arrFiles);

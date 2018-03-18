@@ -37,7 +37,8 @@ class ZipWebApp{
 		self.addStep("Launching Systemjs.... ",function(){
 			var sjs=self.getSystemjs();
 			sjs.loadEngine();
-		});
+		},0,nBlockItems,undefined,undefined,undefined,"INNER",undefined
+		);
 		
 /*		self.addStep("Getting Confluence Oauth Token", function(){
 			var jira=self.getJira();

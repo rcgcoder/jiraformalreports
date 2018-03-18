@@ -29,7 +29,8 @@ class ZipWebApp{
 		return self.systemjs;
 	}
 	initialize(){
-		log("Initializing ZipWebApp");
+		var self=this;
+		log("Initializing engines of ZipWebApp");
 		self.addStep("Loading SystemJS engine and Atlassian REST Client.... ",function(){
 			var arrFiles=[	//"ts/demo.ts",
 							"js/rcglibs/systemjs/RCGSystemJSManager.js",
@@ -71,7 +72,7 @@ class ZipWebApp{
 	run(){
 		log("starting ZipWebApp");
 		var self=this;
-		self.addStep("Initializing plugin.... ",self.initialize);
+		self.addStep("Initializing engines.... ",self.initialize);
 		self.continueTask();
 	}
 

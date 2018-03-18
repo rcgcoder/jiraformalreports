@@ -6,7 +6,8 @@ class ZipWebApp{
 		self.twoParam="Coche";
 		self.jira="";
 		composeUrl=function(sRelativePath){
-			return self.composeUrl(sRelativePath);
+			var newUrl=self.composeUrl(sRelativePath);
+			return newUrl;
 		}
 	}
 	getJira(){

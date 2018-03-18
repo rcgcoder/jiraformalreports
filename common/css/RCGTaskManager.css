@@ -20,5 +20,6 @@ div.tm-progresDiv{
     height:224px;
     overflow:auto;
     width: 100%;
+    opacity: 0.3;
 }    
 .clearBoth { clear:both; }

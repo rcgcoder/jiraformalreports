@@ -1,8 +1,8 @@
-div.inline { 
+div.tm-inline { 
     margin: 3px;
     box-shadow: 2px 1px 5px 0px #2196F3;
 }
-li.progress {
+li.progress.tm-progress {
 	list-style-type: none;
 }
 .clearBoth { clear:both; }

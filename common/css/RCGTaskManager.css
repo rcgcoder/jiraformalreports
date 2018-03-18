@@ -16,7 +16,7 @@ ul.tm-ulSubItems{
 div.tm-progresDiv{
 	display:block;
 	position: absolute;
-    bottom: 224px;
+    bottom: 0px;
     height:224px;
     overflow:auto;
     width: 100%;

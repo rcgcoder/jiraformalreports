@@ -5,10 +5,6 @@ class ZipWebApp{
 		self.oneParam="Casa";
 		self.twoParam="Coche";
 		self.jira="";
-		composeUrl=function(sRelativePath){
-			var newUrl=self.composeUrl(sRelativePath);
-			return newUrl;
-		}
 	}
 	getJira(){
 		var self=this;
@@ -22,6 +18,11 @@ class ZipWebApp{
 	run(){
 		log("starting ZipWebApp");
 		var self=this;
+		//creating a global function composeurl to be used in the TS files
+		composeUrl=function(sRelativePath){
+			var newUrl=self.composeUrl(sRelativePath);
+			return newUrl;
+		}
 		self.addStep("Loading Systemjs...",function(){
 			$("#"+self.htmlContainerId).html(
 				`<my-app>

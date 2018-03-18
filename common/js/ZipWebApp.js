@@ -20,7 +20,7 @@ class ZipWebApp{
 		if (self.systemjs==""){
 			self.systemjs=new RCGSystemJSManager(self);
 		}
-		return self.jira;
+		return self.systemjs;
 	}
 	run(){
 		log("starting ZipWebApp");

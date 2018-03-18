@@ -11,6 +11,7 @@ var isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined'
 var isNode = typeof process !== 'undefined' && process.versions && process.versions.node;
 var isWindows = typeof process !== 'undefined' && typeof process.platform === 'string' && process.platform.match(/^win/);
 
+alert('test');
 var envGlobal = typeof self !== 'undefined' ? self : global;
 /*
  * Simple Symbol() shim

@@ -66,7 +66,7 @@ class ZipWebApp{
 			var jira=self.getJira();
 			jira.getAllIssues();
 		});
-*/
+
 		self.addStep("Getting All Projects.... ",function(){
 			var jira=self.getJira();
 			jira.getAllProjects();

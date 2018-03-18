@@ -33,7 +33,7 @@ class ZipWebApp{
 			bootStrapFinish=self.createManagedCallback(
 					function(){
 						log("Bootstrap is finished");
-						self.popCallback();
+//						self.popCallback();
 					});
 			var arrFiles=[
 				"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css",
@@ -45,11 +45,11 @@ class ZipWebApp{
 			 ]; //test
 			self.loadRemoteFiles(arrFiles);
 		});
-/*		self.addStep("Launching systemjs based interface.... ",function(){
+		self.addStep("Launching systemjs based interface.... ",function(){
 		    System.import('app')
 		      .catch(console.error.bind(console));
 		});
-*/
+
 /*		self.addStep("Loading angularjs and typescript files and Jira REST Client.... ",function(){
 			var arrFiles=[	//"ts/demo.ts",
 							"js/angular/angScript.ts",

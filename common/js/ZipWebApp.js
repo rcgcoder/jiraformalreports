@@ -37,12 +37,12 @@ class ZipWebApp{
 			self.loadRemoteFiles(arrFiles);
 		});
 		var bootStrapTask=self.addStep("Launching systemjs based interface.... ",function(){
-			composeUrl=self.createManagedCallback(function(sRelativePath){
+			composeUrl=function(sRelativePath){
 				var newUrl=self.composeUrl(sRelativePath);
 				bootStrapTask.progressMax++;
 				bootStrapTask.progress++;
 				return newUrl;
-			});
+			};
 			bootStrapFinish=self.createManagedCallback(
 					function(){
 						log("Bootstrap is finished");

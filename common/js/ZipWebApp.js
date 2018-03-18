@@ -1,5 +1,3 @@
-var composeUrl;
-var bootStrapFinish;
 class ZipWebApp{
 	constructor(){
 		var self=this;
@@ -36,14 +34,12 @@ class ZipWebApp{
 			 ]; //test
 			self.loadRemoteFiles(arrFiles);
 		});
-		var bootStrapTask=self.addStep("Launching systemjs based interface.... ",function(){
-			composeUrl=function(sRelativePath){
+		self.addStep("Launching systemjs based interface.... it takes a while",function(){
+			System.composeUrl=function(sRelativePath){
 				var newUrl=self.composeUrl(sRelativePath);
-				bootStrapTask.progressMax++;
-				bootStrapTask.progress++;
 				return newUrl;
 			};
-			bootStrapFinish=self.createManagedCallback(
+			System.bootStrapFinish=self.createManagedCallback(
 					function(){
 						log("Bootstrap is finished");
 						self.popCallback();

@@ -6,6 +6,6 @@ import {AppModule} from './app';
 //enableProdMode();
 
 platformBrowserDynamic().bootstrapModule(AppModule);
-if (typeof bootStrapFinish!=="undefined"){
-    bootStrapFinish();
+if (typeof System.bootStrapFinish!=="undefined"){
+    System.bootStrapFinish();
 }

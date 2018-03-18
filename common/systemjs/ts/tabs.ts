@@ -3,7 +3,7 @@ import { Tab } from './tab';
 
 @Component({
   selector: 'tabs',
-  templateUrl:composeUrl("systemjs/html/tabs.html")
+  templateUrl:System.composeUrl("systemjs/html/tabs.html")
 })
 export class Tabs implements AfterContentInit {
   

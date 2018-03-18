@@ -29,7 +29,7 @@ class ZipWebApp{
 		        "https://unpkg.com/zone.js/dist/zone.js",
 		        "https://unpkg.com/zone.js/dist/long-stack-trace-zone.js",
 		        "https://unpkg.com/reflect-metadata@0.1.3/Reflect.js",
-		        "js/libs/system.js",
+		        "https://unpkg.com/systemjs@0.19.31/dist/system.js",
 		        "html/config.js"
 			 ]; //test
 			self.loadRemoteFiles(arrFiles);

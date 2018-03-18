@@ -33,7 +33,7 @@ class ZipWebApp{
 			bootStrapFinish=self.createManagedCallback(
 					function(){
 						log("Bootstrap is finished");
-//						self.popCallback();
+						self.popCallback();
 					});
 			var arrFiles=[
 				"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css",

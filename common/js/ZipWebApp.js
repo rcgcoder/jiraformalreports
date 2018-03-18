@@ -32,6 +32,7 @@ class ZipWebApp{
 				`);
 			bootStrapFinish=self.createManagedCallback(
 					function(){
+						log("Bootstrap is finished");
 						self.popCallback();
 					});
 			var arrFiles=[

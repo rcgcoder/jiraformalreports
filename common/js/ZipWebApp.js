@@ -1,9 +1,13 @@
+var composeUrl;
 class ZipWebApp{
 	constructor(){
 		var self=this;
 		self.oneParam="Casa";
 		self.twoParam="Coche";
 		self.jira="";
+		composeUrl=function(sRelativePath){
+			return self.composeUrl(sRelativePath);
+		}
 	}
 	getJira(){
 		var self=this;

@@ -23,7 +23,8 @@ class ZipWebApp{
 				    loading...
 				  </my-app>
 				`);
-/*			var arrFiles=[
+			
+			var arrFiles=[
 				"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css",
 		        "https://unpkg.com/zone.js/dist/zone.js",
 		        "https://unpkg.com/zone.js/dist/long-stack-trace-zone.js",
@@ -32,7 +33,6 @@ class ZipWebApp{
 		        "html/config.js"
 			 ]; //test
 			self.loadRemoteFiles(arrFiles);
-*/
 		});
 /*		self.addStep("Loading angularjs and typescript files and Jira REST Client.... ",function(){
 			var arrFiles=[	//"ts/demo.ts",

@@ -46,21 +46,14 @@ class ZipWebApp{
 		},0,1,undefined,undefined,undefined,"INNER",undefined
 		);
 		
-/*		self.addStep("Getting Confluence Oauth Token", function(){
-			var jira=self.getJira();
-			jira.proxyPath=self.proxyPath;
-			jira.instance=self.urlBase;
-			jira.oauthConfluenceConnect();
-		});
-*/		
 /*		self.addStep("Getting All Issues.... ",function(){
 			var jira=self.getJira();
 			jira.getAllIssues();
 		});
 */
-		self.addStep("Getting All Projects.... ",function(){
+		self.addStep("Getting All Project, issuetypes and field info.... ",function(){
 			var jira=self.getJira();
-			jira.getAllProjects();
+			jira.getProjectsAndMetaInfo();
 		});
 		self.addStep("Testing Confluence Api Integrations.... ",function(){
 			var cfc=self.getConfluence();

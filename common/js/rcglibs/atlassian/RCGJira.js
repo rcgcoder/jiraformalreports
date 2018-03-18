@@ -16,7 +16,39 @@ class RCGJira{
 		self.getFullList=function(sTarget,resultName,callType,data,callback,arrHeaders){
 			atlassian.apiGetFullList(self, sTarget, resultName,callType, data, callback,arrHeaders);
 			};
+		self.projects="";
+		self.issueTypes="";
+		self.fields="";
 	}
+	
+	getProjectsAndMetaInfo(){
+		var self=this;
+		self.pushCallback(function(response,xhr,sUrl,headers){
+			//log("getAllProjects:"+response);
+			if (response!=""){
+				for (var i=0;i<response.projects.length;i++){
+					var project=response.projects[i];
+					var prjKey=project.key;
+					var prjName=project.name;
+					var prjInnerId=project.id;
+					for (var j=0;j<project.issuetypes.length;j++){
+						var issuetype=project.issuetypes[j];
+						var itKey=issuetype.id;
+						var itName=issuetype.name;
+						var itSubtask=issuetype.subtask;
+						for (var k=0;k<issuetype.fields.length;k++){
+							var field=issuetype.fields[k];
+							var fldName=field.name;
+							var fldKey=field.key;
+						}
+					}
+				}
+			}
+			self.popCallback(response);
+		});
+		self.apiCall("/rest/api/latest/issue/createmeta?expand=projects.issuetypes.fields");
+	}
+	
 	getAllProjects(){
 		var self=this;
 		self.pushCallback(function(response,xhr,sUrl,headers){

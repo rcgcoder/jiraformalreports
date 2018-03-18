@@ -20,21 +20,12 @@ class ZipWebApp{
 		log("starting ZipWebApp");
 		var self=this;
 		//creating a global function composeurl to be used in the TS files
-		composeUrl=function(sRelativePath){
-			var newUrl=self.composeUrl(sRelativePath);
-			return newUrl;
-		}
 		self.addStep("Loading Systemjs...",function(){
 			$("#"+self.htmlContainerId).html(
 				`<my-app>
 				    loading...
 				  </my-app>
 				`);
-			bootStrapFinish=self.createManagedCallback(
-					function(){
-						log("Bootstrap is finished");
-						self.popCallback();
-					});
 			var arrFiles=[
 				"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css",
 		        "https://unpkg.com/zone.js/dist/zone.js",
@@ -45,7 +36,18 @@ class ZipWebApp{
 			 ]; //test
 			self.loadRemoteFiles(arrFiles);
 		});
-		self.addStep("Launching systemjs based interface.... ",function(){
+		var bootStrapTask=self.addStep("Launching systemjs based interface.... ",function(){
+			composeUrl=self.createManagedCallback(function(sRelativePath){
+				var newUrl=self.composeUrl(sRelativePath);
+				bootStrapTask.progressMax++;
+				bootStrapTask.progress++;
+				return newUrl;
+			});
+			bootStrapFinish=self.createManagedCallback(
+					function(){
+						log("Bootstrap is finished");
+						self.popCallback();
+					});
 		    System.import('app')
 		      .catch(console.error.bind(console));
 		});

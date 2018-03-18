@@ -11,7 +11,7 @@ import { TabResult } from './tab.result';
       padding: 1em;
     }
   `],
-  templateUrl:"./ngComponents/tab.html"
+  templateUrl:"html/ngComponents/tab.html"
 })
 export class Tab {
   @Input('tabTitle') title: string;

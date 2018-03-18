@@ -1,7 +1,7 @@
 import { Component, Input, Output } from '@angular/core';
 @Component({
   selector: 'tabReports',
-  templateUrl: './ngComponents/tab.reports.html',
+  templateUrl: 'html/ngComponents/tab.reports.html',
 })
 export class TabReports {
     @Input() header: string = 'this is header';   

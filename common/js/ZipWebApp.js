@@ -4,6 +4,7 @@ class ZipWebApp{
 		self.oneParam="Casa";
 		self.twoParam="Coche";
 		self.jira="";
+		self.systemjs="";
 	}
 	getJira(){
 		var self=this;
@@ -14,45 +15,28 @@ class ZipWebApp{
 		}
 		return self.jira;
 	}
+	getSystemjs(){
+		var self=this;
+		if (self.systemjs==""){
+			self.systemjs=new RCGSystemJSManager(self);
+		}
+		return self.jira;
+	}
 	run(){
 		log("starting ZipWebApp");
 		var self=this;
 		//creating a global function composeurl to be used in the TS files
-		self.addStep("Loading Systemjs...",function(){
-			$("#"+self.htmlContainerId).html(
-				`<my-app>
-				    loading...
-				  </my-app>
-				`);
-			var arrFiles=[
-				"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css",
-		        "https://unpkg.com/zone.js/dist/zone.js",
-		        "https://unpkg.com/zone.js/dist/long-stack-trace-zone.js",
-		        "https://unpkg.com/reflect-metadata@0.1.3/Reflect.js",
-		        "https://unpkg.com/systemjs@0.19.31/dist/system.js",
-		        "systemjs/config.js"
-			 ]; //test
-			self.loadRemoteFiles(arrFiles);
-		});
-		self.addStep("Launching systemjs based interface.... it takes a while",function(){
-			System.composeUrl=function(sRelativePath){
-				var newUrl=self.composeUrl(sRelativePath);
-				return newUrl;
-			};
-			System.bootStrapFinish=self.createManagedCallback(
-					function(){
-						log("Bootstrap is finished");
-						self.popCallback();
-					});
-		    System.import('app')
-		      .catch(console.error.bind(console));
-		});
 
-		self.addStep("Loading Jira REST Client.... ",function(){
+		self.addStep("Loading SystemJS engine and Jira REST Client.... ",function(){
 			var arrFiles=[	//"ts/demo.ts",
+							"js/rcglibs/Jira/RCGSystemJSManager.js",
 							"js/rcglibs/Jira/RCGJira.js"
 						 ]; //test
 			self.loadRemoteFiles(arrFiles);
+		});
+		self.addStep("Launching Systemjs.... ",function(){
+			var sjs=self.getSystemjs();
+			sjs.loadEngine();
 		});
 		
 /*		self.addStep("Getting Confluence Oauth Token", function(){

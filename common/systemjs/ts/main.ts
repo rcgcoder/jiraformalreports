@@ -5,4 +5,6 @@ import {AppModule} from './app';
 
 //enableProdMode();
 
-platformBrowserDynamic().bootstrapModule(AppModule)
+log("BootStrapping");
+platformBrowserDynamic().bootstrapModule(AppModule);
+log("End of bootstrap");

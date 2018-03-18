@@ -12,7 +12,7 @@ import {TabResult} from './tab.result';
 
 @Component({
   selector: 'my-app',
-  templateUrl: 'html/ngComponents/app.html'
+  templateUrl: 'systemjs/html/app.html'
 })
 class App {
   constructor() {

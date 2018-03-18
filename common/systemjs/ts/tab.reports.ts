@@ -1,9 +1,9 @@
 import { Component, Input, Output } from '@angular/core';
 @Component({
-  selector: 'tabConfig',
-  templateUrl: 'html/ngComponents/tab.config.html',
+  selector: 'tabReports',
+  templateUrl: 'systemjs/html/tab.reports.html',
 })
-export class TabConfig {
+export class TabReports {
     @Input() header: string = 'this is header';   
     @Input() footer: string = 'this is footer';
 }

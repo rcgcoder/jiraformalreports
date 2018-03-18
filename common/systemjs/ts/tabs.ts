@@ -3,7 +3,7 @@ import { Tab } from './tab';
 
 @Component({
   selector: 'tabs',
-  templateUrl:"html/ngComponents/tabs.html"
+  templateUrl:"systemjs/html/tabs.html"
 })
 export class Tabs implements AfterContentInit {
   

@@ -11,7 +11,7 @@ System.config({
   //map tells the System loader where to look for things
   map: {
     
-    'app': 'html/src',
+    'app': 'systemjs/ts',
     
     '@angular/core': 'npm:@angular/core/bundles/core.umd.js',
     '@angular/common': 'npm:@angular/common/bundles/common.umd.js',

@@ -47,7 +47,7 @@ class RCGJira{
 								if (typeof field==="object"){
 									var fldName=field.name;
 									var fldKey=field.key;
-								}
+								} 
 							}
 						}
 					}

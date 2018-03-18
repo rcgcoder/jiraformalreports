@@ -37,10 +37,18 @@ class RCGJira{
 						var itKey=issuetype.id;
 						var itName=issuetype.name;
 						var itSubtask=issuetype.subtask;
-						for (var k=0;k<issuetype.fields.length;k++){
-							var field=issuetype.fields[k];
-							var fldName=field.name;
-							var fldKey=field.key;
+						// the fields are not an array...
+						
+						var arrProperties=Object.getOwnPropertyNames(issuetype.fields.__proto__).concat(Object.getOwnPropertyNames(issuetype.fields));
+						for (var i=0;i<arrProperties.length;i++){
+							var vPropName=arrProperties[i];
+							if (vPropName!=="__proto__"){
+								var field=srcObj[vPropName];
+								if (typeof field==="object"){
+									var fldName=field.name;
+									var fldKey=field.key;
+								}
+							}
 						}
 					}
 				}

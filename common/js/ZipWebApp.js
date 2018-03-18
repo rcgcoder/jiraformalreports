@@ -58,9 +58,9 @@ class ZipWebApp{
 			var jira=self.getJira();
 			jira.getAllProjects();
 		});
-		self.addStep("Testing Api Integrations.... ",function(){
-			var jira=self.getJira();
-			jira.getConfluence();
+		self.addStep("Testing Confluence Api Integrations.... ",function(){
+			var cfc=self.getConfluence();
+			cfc.getAllPages();
 		});
 		
 		self.continueTask();

@@ -40,8 +40,8 @@ class RCGJira{
 						// the fields are not an array...
 						
 						var arrProperties=Object.getOwnPropertyNames(issuetype.fields.__proto__).concat(Object.getOwnPropertyNames(issuetype.fields));
-						for (var i=0;i<arrProperties.length;i++){
-							var vPropName=arrProperties[i];
+						for (var k=0;k<arrProperties.length;k++){
+							var vPropName=arrProperties[k];
 							if (vPropName!=="__proto__"){
 								var field=srcObj[vPropName];
 								if (typeof field==="object"){

@@ -28,11 +28,8 @@ class ZipWebApp{
 		}
 		return self.systemjs;
 	}
-	run(){
-		log("starting ZipWebApp");
-		var self=this;
-		//creating a global function composeurl to be used in the TS files
-
+	initialize(){
+		log("Initializing ZipWebApp");
 		self.addStep("Loading SystemJS engine and Atlassian REST Client.... ",function(){
 			var arrFiles=[	//"ts/demo.ts",
 							"js/rcglibs/systemjs/RCGSystemJSManager.js",
@@ -69,6 +66,12 @@ class ZipWebApp{
 			cfc.getAllPages();
 		});
 		
+		self.continueTask();
+	}
+	run(){
+		log("starting ZipWebApp");
+		var self=this;
+		self.addStep("Initializing plugin.... ",self.initialize);
 		self.continueTask();
 	}
 

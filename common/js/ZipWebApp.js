@@ -1,4 +1,5 @@
 var composeUrl;
+var bootStrapFinish;
 class ZipWebApp{
 	constructor(){
 		var self=this;
@@ -29,7 +30,10 @@ class ZipWebApp{
 				    loading...
 				  </my-app>
 				`);
-			
+			bootStrapFinish=self.createManagedCallback(
+					function(e){
+						self.popCallback([sStringContent]);
+					});
 			var arrFiles=[
 				"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css",
 		        "https://unpkg.com/zone.js/dist/zone.js",
@@ -43,7 +47,6 @@ class ZipWebApp{
 		self.addStep("Launching systemjs based interface.... ",function(){
 		    System.import('app')
 		      .catch(console.error.bind(console));
-		    self.continueTask();
 		});
 
 /*		self.addStep("Loading angularjs and typescript files and Jira REST Client.... ",function(){

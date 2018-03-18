@@ -5,6 +5,7 @@ import {AppModule} from './app';
 
 //enableProdMode();
 
-log("BootStrapping");
 platformBrowserDynamic().bootstrapModule(AppModule);
-log("End of bootstrap");
+if (typeof bootStrapFinish!=="undefined"){
+    bootStrapFinish();
+}

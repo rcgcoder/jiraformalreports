@@ -6,6 +6,7 @@ class RCGConfluence{
 		self.tokenNeeded=false;
 		self.tokenAccess="";
 		self.tokenTime=0;
+		taskManager.extendObject(self);
 		self.oauthConnect=function(){
 			atlassian.oauthConnect(self);
 			};
@@ -15,5 +16,13 @@ class RCGConfluence{
 		self.getFullList=function(sTarget,resultName,callType,data,callback,arrHeaders){
 			atlassian.apiGetFullList(self, sTarget, resultName,callType, data, callback,arrHeaders);
 			};
+	}
+	getAllPages(){
+		var self=this;
+		self.pushCallback(function(response,xhr,sUrl,headers){
+			self.popCallback();
+		});
+		self.apiCall("/rest/api/content/search?cql=type=page");
+		
 	}
 }

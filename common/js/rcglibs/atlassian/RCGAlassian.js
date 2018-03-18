@@ -1,46 +1,27 @@
-class RCGJira{
+class RCGAtlassian{
 	constructor(app){
 		var self=this;
 		self.proxyPath="";
 		self.instance="";
 		self.JiraAPConnection=AP;
 		self.app=app;
-		self.confluence={
-				jiraManager:self,
-				subPath:"wiki",
-				tokenNeeded:false,
-				tokenAccess:"",
-				tokenTime:0,
-				oauthConnect:function(){
-					self.oauthConnect(self.confluence);
-					}
-				,
-				apiCall:function(sTarget,callType,data,sPage,sResponseType,callback,arrHeaders){
-					self.apiCallApp(self.confluence, sTarget, callType, data, sPage, sResponseType,callback,arrHeaders);
-					}
-				,
-				getFullList:function(sTarget,resultName,callType,data,callback,arrHeaders){
-					self.apiGetFullList(self.confluence, sTarget, resultName,callType, data, callback,arrHeaders);
-					}
-			};
-		self.jira={
-				jiraManager:self,
-				subPath:"",
-				tokenNeeded:false,
-				tokenAccess:"",
-				tokenTime:0,
-				oauthConnect:function(){
-					self.oauthConnect(self.jira);
-					},
-				apiCall:function(sTarget,callType,data,sPage,sResponseType,callback,arrHeaders){
-					self.apiCallApp(self.jira, sTarget, callType, data, sPage, sResponseType,callback,arrHeaders);
-					}
-				,
-				getFullList:function(sTarget,resultName,callType,data,callback,arrHeaders){
-					self.apiGetFullList(self.jira, sTarget, resultName,callType, data, callback,arrHeaders);
-					}
-				};
+		self.confluence="";//new RCGConfluence();
+		self.jira="";
 		taskManager.extendObject(self);
+	}
+	getJira(){
+		var self=this;
+		if (self.jira==""){
+			self.jira=new RCGJira(self);
+		}
+		return self.jira;
+	}
+	getConfluence(){
+		var self=this;
+		if (self.confluence==""){
+			self.confluence=new RCGConfluence(self);
+		}
+		return self.confluence;
 	}
 	loadError(oError){
 	    throw new URIError("The URL " + oError.target.src + " is not accessible.");

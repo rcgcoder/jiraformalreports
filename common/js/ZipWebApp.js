@@ -3,17 +3,17 @@ class ZipWebApp{
 		var self=this;
 		self.oneParam="Casa";
 		self.twoParam="Coche";
-		self.jira="";
+		self.atlassian="";
 		self.systemjs="";
 	}
 	getJira(){
 		var self=this;
-		if (self.jira==""){
-			self.jira=new RCGJira(self);
-			self.jira.proxyPath=self.proxyPath;
-			self.jira.instance=self.urlBase;
+		if (self.atlassian==""){
+			self.atlassian=new RCGAtlassian(self);
+			self.atlassian.proxyPath=self.proxyPath;
+			self.atlassian.instance=self.urlBase;
 		}
-		return self.jira;
+		return self.atlassian.getJira();
 	}
 	getSystemjs(){
 		var self=this;
@@ -27,10 +27,12 @@ class ZipWebApp{
 		var self=this;
 		//creating a global function composeurl to be used in the TS files
 
-		self.addStep("Loading SystemJS engine and Jira REST Client.... ",function(){
+		self.addStep("Loading SystemJS engine and Atlassian REST Client.... ",function(){
 			var arrFiles=[	//"ts/demo.ts",
 							"js/rcglibs/systemjs/RCGSystemJSManager.js",
-							"js/rcglibs/Jira/RCGJira.js"
+							"js/rcglibs/atlassian/RCGAtlassian.js",
+							"js/rcglibs/atlassian/RCGConfluence.js",
+							"js/rcglibs/atlassian/RCGJira.js"
 						 ]; //test
 			self.loadRemoteFiles(arrFiles);
 		});

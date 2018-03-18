@@ -964,16 +964,16 @@ class RCGZippedApp{
 						var sSubItem=fncAddProgressItem(item.detail[i]);
 						sSubItems+=sSubItem;
 					}
-					sSubItems="<ul>"+sSubItems+"</ul>";
+					sSubItems="<ul class='tm-ulSubItems'>"+sSubItems+"</ul>";
 				}
-				sItem='<li class="progress">'+sItem+' '+sSubItems+'</li>';
+				sItem='<li class="tm-progress">'+sItem+' '+sSubItems+'</li>';
 				return sItem;
 			}
 			var sHtml="";
 			for (var i=0;i<allTasksInfo.length;i++){
 				sHtml+=fncAddProgressItem(allTasksInfo[0]);
 			}
-			var list= $("<ul id='ProgressList'>"+
+			var list= $("<ul id='ProgressList' class='tm-ProgressList'>"+
 						sHtml+
 						"</ul>"
 						).appendTo(pDiv);

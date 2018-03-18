@@ -2,7 +2,15 @@ div.tm-inline {
     margin: 3px;
     box-shadow: 2px 1px 5px 0px #2196F3;
 }
-li.progress.tm-progress {
+li.tm-progress {
 	list-style-type: none;
+}
+ul.tm-ProgressList{
+	list-style-type: none;
+	
+}
+ul.tm-ulSubItems{
+	list-style-type: none;
+	
 }
 .clearBoth { clear:both; }

@@ -13,4 +13,9 @@ ul.tm-ulSubItems{
 	list-style-type: none;
 	
 }
+div.tm-progresDiv{
+	position: absolute;
+    bottom: 100px;
+    width: 100%;
+}    
 .clearBoth { clear:both; }

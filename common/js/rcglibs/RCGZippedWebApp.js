@@ -905,7 +905,7 @@ class RCGZippedApp{
 				$("#jrfSplash").width(100);
 				$("#jrfSplash").height(100);
 				log("adding progress div");
-				pDiv= $("<div id='JFR_Progress_DIV'></div>").appendTo('body');
+				pDiv= $("<div id='JFR_Progress_DIV' class='tm-progresDiv'></div>").appendTo('body');
 			} else {
 				pDiv=progressDiv;
 			}

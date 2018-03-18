@@ -29,7 +29,7 @@ class ZipWebApp{
 
 		self.addStep("Loading SystemJS engine and Jira REST Client.... ",function(){
 			var arrFiles=[	//"ts/demo.ts",
-							"js/rcglibs/Jira/RCGSystemJSManager.js",
+							"js/rcglibs/systemjs/RCGSystemJSManager.js",
 							"js/rcglibs/Jira/RCGJira.js"
 						 ]; //test
 			self.loadRemoteFiles(arrFiles);

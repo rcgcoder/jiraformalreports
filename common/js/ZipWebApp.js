@@ -35,7 +35,7 @@ class ZipWebApp{
 			self.loadRemoteFiles(arrFiles);
 		});
 		self.addStep("Launching systemjs based interface.... ",function(){
-		    System.import('common/html')
+		    System.import('app')
 		      .catch(console.error.bind(console));
 		    self.continueTask();
 		});

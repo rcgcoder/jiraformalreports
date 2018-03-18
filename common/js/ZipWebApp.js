@@ -16,10 +16,10 @@ class ZipWebApp{
 		return self.atlassian;
 	}
 	getJira(){
-		return this.getAtlassian.getJira();
+		return this.getAtlassian().getJira();
 	}
 	getConfluence(){
-		return this.getAtlassian.getConfluence();
+		return this.getAtlassian().getConfluence();
 	}
 	getSystemjs(){
 		var self=this;

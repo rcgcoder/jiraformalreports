@@ -43,7 +43,7 @@ class RCGJira{
 						for (var k=0;k<arrProperties.length;k++){
 							var vPropName=arrProperties[k];
 							if (vPropName!=="__proto__"){
-								var field=srcObj[vPropName];
+								var field=issuetype.fields[vPropName];
 								if (typeof field==="object"){
 									var fldName=field.name;
 									var fldKey=field.key;

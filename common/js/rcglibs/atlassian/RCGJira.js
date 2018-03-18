@@ -11,7 +11,7 @@ class RCGJira{
 			atlassian.oauthConnect(self);
 			};
 		self.apiCall=function(sTarget,callType,data,sPage,sResponseType,callback,arrHeaders){
-			atlassian.apiCallApp(confluence, sTarget, callType, data, sPage, sResponseType,callback,arrHeaders);
+			atlassian.apiCallApp(self, sTarget, callType, data, sPage, sResponseType,callback,arrHeaders);
 			};
 		self.getFullList=function(sTarget,resultName,callType,data,callback,arrHeaders){
 			atlassian.apiGetFullList(self, sTarget, resultName,callType, data, callback,arrHeaders);

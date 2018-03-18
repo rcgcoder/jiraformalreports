@@ -1,7 +1,7 @@
 import { Component, Input, Output } from '@angular/core';
 @Component({
   selector: 'tabResult',
-  templateUrl: 'systemjs/html/tab.result.html',
+  templateUrl: composeUrl('systemjs/html/tab.result.html'),
 })
 export class TabResult {
     @Input() header: string = 'this is header';   

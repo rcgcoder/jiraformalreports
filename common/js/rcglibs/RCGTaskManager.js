@@ -96,7 +96,7 @@ class RCGTask{
 	
 
 	getTaskManager(){
-		var self=this;
+		var self=this; 
 		return self.taskManager;
 	}
 	getRunningForkId(){

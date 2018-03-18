@@ -1,6 +1,6 @@
 class RCGBarrier{
 	constructor(callback,nItems){
-		self=this;
+		var self=this;
 		self.callback=callback;
 		self.nItems=0;
 		self.fixedItems=false;
@@ -88,7 +88,7 @@ class RCGTask{
 		}
 	}
 	done(){
-		self=this;
+		var self=this;
 		self.isDone=true;
 		self.finishTime=(new Date()).getTime();
 		self.changeStatus();

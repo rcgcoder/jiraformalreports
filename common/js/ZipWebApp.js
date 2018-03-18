@@ -17,7 +17,7 @@ class ZipWebApp{
 	run(){
 		log("starting ZipWebApp");
 		var self=this;
-		self.addStep("Starting Systemjs...",function(){
+		self.addStep("Loading Systemjs...",function(){
 			$("#"+self.htmlContainerId).html(
 				`<my-app>
 				    loading...
@@ -34,6 +34,12 @@ class ZipWebApp{
 			 ]; //test
 			self.loadRemoteFiles(arrFiles);
 		});
+		self.addStep("Launching systemjs based interface.... ",function(){
+		    System.import('app')
+		      .catch(console.error.bind(console));
+		    self.continueTask();
+		});
+
 /*		self.addStep("Loading angularjs and typescript files and Jira REST Client.... ",function(){
 			var arrFiles=[	//"ts/demo.ts",
 							"js/angular/angScript.ts",

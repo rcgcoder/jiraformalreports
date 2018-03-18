@@ -1,10 +1,11 @@
 class RCGSystemJSManager{
 	constructor(app){
-		self=this;
+		var self=this;
 		self.app=app;
 		taskManager.extendObject(self);
 	}
 	loadEngine(){
+		var self=this;
 		self.addStep("Loading Systemjs...",function(){
 			$("#"+self.app.htmlContainerId).html(
 				`<my-app>

@@ -6,14 +6,20 @@ class ZipWebApp{
 		self.atlassian="";
 		self.systemjs="";
 	}
-	getJira(){
+	getAtlassian(){
 		var self=this;
 		if (self.atlassian==""){
 			self.atlassian=new RCGAtlassian(self);
 			self.atlassian.proxyPath=self.proxyPath;
 			self.atlassian.instance=self.urlBase;
 		}
-		return self.atlassian.getJira();
+		return self.atlassian;
+	}
+	getJira(){
+		return this.getAtlassian.getJira();
+	}
+	getConfluence(){
+		return this.getAtlassian.getConfluence();
 	}
 	getSystemjs(){
 		var self=this;

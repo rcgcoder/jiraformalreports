@@ -23,9 +23,10 @@ class RCGJira{
 	
 	getProjectsAndMetaInfo(){
 		var self=this;
-		self.pushCallback(function(response,xhr,sUrl,headers){
+		self.pushCallback(function(sResponse,xhr,sUrl,headers){
 			//log("getAllProjects:"+response);
-			if (response!=""){
+			if (sResponse!=""){
+				var response=JSON.parse(sResponse);
 				for (var i=0;i<response.projects.length;i++){
 					var project=response.projects[i];
 					var prjKey=project.key;

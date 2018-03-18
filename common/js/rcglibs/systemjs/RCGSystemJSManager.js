@@ -19,7 +19,7 @@ class RCGSystemJSManager{
 		        "https://unpkg.com/systemjs@0.19.31/dist/system.js",
 		        "systemjs/config.js"
 			 ]; //test
-			self.loadRemoteFiles(arrFiles);
+			self.app.loadRemoteFiles(arrFiles);
 		});
 		self.addStep("Launching systemjs based interface.... it takes a while",function(){
 			System.composeUrl=function(sRelativePath){

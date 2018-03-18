@@ -34,5 +34,6 @@ class RCGSystemJSManager{
 		    System.import('app')
 		      .catch(console.error.bind(console));
 		});
+		self.continueTask();
 	}
 }

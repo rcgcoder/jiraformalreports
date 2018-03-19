@@ -8,6 +8,11 @@ Class for download a Zip File with a lot of js files.
  * First it´s load the other javascript libs.....
  * 
  */
+async function callAsyncAwaitFunction(fncToBeCalled){
+		var vResult=await fncToBeCalled();
+		return vResult;
+	}
+
 function log(sText){
 	var tm=taskManager;
 	if ((typeof tm!=="undefined")&&(tm!=null)&&(tm!="")){
@@ -690,18 +695,19 @@ class RCGZippedApp{
 			self.pushCallback(function(){
 				var rcgUtilsManager=new RCGUtils();
 				rcgUtilsManager.require=function(sLibName){
-					var prmLoadFile=new Promise(self.createManagedCallback(
-						function(resolve,reject){
-							// the callback of the loadRemoteFile
-							self.pushCallback(function(sRelativePath,fileContent){
-								resolve(true);
-							});
-							self.loadRemoteFile(sLibName);
-						}));
-					var fncCallAsync=async function(){
-						var bResult= await prmLoadFile(); 
-					};
-					fncCallAsync();
+					var prmLoadFile=self.createManagedCallback(function(){
+									new Promise(
+										self.createManagedCallback(
+											function(resolve,reject){
+												// the callback of the loadRemoteFile
+												self.pushCallback(function(sRelativePath,fileContent){
+													resolve(true);
+												});
+												self.loadRemoteFile(sLibName);
+											}
+										)
+									)});
+					var vResult=callAsyncAwaitFunction(prmLoadFile);
 				};
 				rcgUtilsManager.loadUtils(true);
 				self.popCallback();

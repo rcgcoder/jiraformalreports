@@ -6,7 +6,7 @@ class RCGUtils{
     		"./AsyncUtils.js","./ExcelUtils.js","./ChronoUtils.js","./HashMapUtils.js","./DynamicObjectUtils.js"
     		,"./MongoUtils.js"
     		];
-    	if (!isDefined(require)){
+    	if (typeof require==="undefined"){
     		self.require=function(sLibName){
     			
     		}

@@ -32,8 +32,8 @@ class RCGUtils{
 				if (vPropName!=="constructor"){
 					var vPropValue=obj[vPropName];
 					if (isMethod(vPropValue)){
-						if (isUndefined(global[vPropName])){
-							global[vPropName]=vPropValue;
+						if (isUndefined(window[vPropName])){
+							window[vPropName]=vPropValue;
 						}
 					}
 				}
@@ -45,13 +45,13 @@ class RCGUtils{
 		console.log(sNameLib);
 		var vLib=require(sNameLib);
 		var obj=new vLib();
-	    makeGlobals(bMakeGlobals,obj);
+	    self.makeGlobals(bMakeGlobals,obj);
 	}
 	
 	requireLibs(bMakeGlobals,arrLibs){
 	    for (var i=0;i<arrLibs.length;i++){
 	    	var sNameLib=arrLibs[i];
-	    	requireLib(bMakeGlobals,sNameLib);
+	    	self.requireLib(bMakeGlobals,sNameLib);
 	    }
 	}
 

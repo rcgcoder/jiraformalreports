@@ -10,7 +10,7 @@ class RCGUtils{
     		self.require=function(sLibName){
     			
     		}
-    		global.require=function(sLibName){
+    		window.require=function(sLibName){
     			self.require(sLibName);
     		}
     	} else {

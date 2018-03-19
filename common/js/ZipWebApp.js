@@ -45,6 +45,15 @@ class ZipWebApp{
 			sjs.loadEngine();
 		},0,1,undefined,undefined,undefined,"INNER",undefined
 		);
+
+		self.addStep("Loading RCG extended libraries.... ",function(){
+			var arrFiles=[	//"ts/demo.ts",
+							"js/rcglibs/utils/RCGBaseUtils.js",
+							"js/rcglibs/utils/RCGUtils.js"
+						 ]; //test
+			self.loadRemoteFiles(arrFiles);
+		});
+		
 		
 /*		self.addStep("Getting All Issues.... ",function(){
 			var jira=self.getJira();

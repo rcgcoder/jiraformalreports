@@ -698,6 +698,10 @@ class RCGZippedApp{
 							});
 							self.loadRemoteFile(sLibName);
 						}));
+					var fncCallAsync=async function(){
+						var bResult= await prmLoadFile(); 
+					};
+					fncCallAsync();
 				};
 				rcgUtilsManager.loadUtils(true);
 				self.popCallback();

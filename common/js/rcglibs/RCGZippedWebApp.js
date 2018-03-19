@@ -708,6 +708,7 @@ class RCGZippedApp{
 										)
 									)});
 					var vResult=callAsyncAwaitFunction(prmLoadFile);
+					log("¿its awaiting?");
 				};
 				rcgUtilsManager.loadUtils(true);
 				self.popCallback();

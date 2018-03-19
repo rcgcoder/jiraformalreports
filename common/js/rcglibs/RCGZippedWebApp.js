@@ -689,6 +689,16 @@ class RCGZippedApp{
 			log("Zip engine is not running.... loading all utils");
 			self.pushCallback(function(){
 				var rcgUtilsManager=new RCGUtils();
+				rcgUtilsManager.require=function(sLibName){
+					var prmLoadFile=new Promise(self.createManagedCallback(
+						self.function(resolve,reject){
+							// the callback of the loadRemoteFile
+							self.pushCallback(function(sRelativePath,fileContent){
+								resolve(true);
+							});
+							self.loadRemoteFile(sLibName);
+						}));
+				};
 				rcgUtilsManager.loadUtils(true);
 				self.popCallback();
 			});

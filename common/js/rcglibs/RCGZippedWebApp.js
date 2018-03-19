@@ -696,7 +696,7 @@ class RCGZippedApp{
 				var rcgUtilsManager=new RCGUtils();
 				rcgUtilsManager.require=function(sLibName){
 					var prmLoadFile=self.createManagedCallback(function(){
-									new Promise(
+									return new Promise(
 										self.createManagedCallback(
 											function(resolve,reject){
 												// the callback of the loadRemoteFile

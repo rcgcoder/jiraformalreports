@@ -688,7 +688,7 @@ class RCGZippedApp{
 		if (typeof zip==="undefined"){
 			log("Zip engine is not running.... loading");
 			var arrFiles=["css/RCGTaskManager.css",
-				          "js/libs/zip/zip.js"
+				          "js/libs/zip/zip.js",
 						  "js/rcglibs/utils/RCGBaseUtils.js",
 						  "js/rcglibs/utils/RCGUtils.js"
 		//	,

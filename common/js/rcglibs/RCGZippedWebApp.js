@@ -695,7 +695,7 @@ class RCGZippedApp{
 					var auxArrLibs=[];
 					var fncRequireSteps=self.createManagedCallback(function(sNameLib){
 				    	var sFileUrl=rcgUtilsManager.basePath+sNameLib;
-			    		self.pushCallback("Processing "+sFileUrl,function(){
+			    		self.pushCallback(function(){
 			    			var className=sNameLib.split(".")[0];
 			    			// Instantiate the object using the class name string
 			    			var auxObj = new className();

@@ -3,7 +3,7 @@
      "description": "Jira Formal Reports Plugin",
      "key": "com.rcgcoder.jiraformalreports",
 	 "enableLicensing": true,
-     "baseUrl": "https://d696dc44.ngrok.io",
+     "baseUrl": "https://erepo.serveo.net/",
      "scopes": [
             "read", "write"
         ],

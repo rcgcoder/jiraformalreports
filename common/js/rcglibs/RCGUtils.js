@@ -4,7 +4,7 @@ class RCGUtils{
     	self.basePath="./";
     	self.arrLibs=[
     		"RCGStringUtils.js",
-    		"MathUtils.js",
+    		"RCGMathUtils.js"/*,
     		"DateUtils.js",
     		"LogUtils.js",
     		"ListUtils.js",
@@ -12,7 +12,7 @@ class RCGUtils{
     		"ExcelUtils.js",
     		"ChronoUtils.js",
     		"HashMapUtils.js",
-    		"DynamicObjectUtils.js"
+    		"DynamicObjectUtils.js"*/
     	//	,"MongoUtils.js"
     		];
     	if (typeof require==="undefined"){

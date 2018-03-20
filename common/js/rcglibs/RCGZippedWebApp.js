@@ -691,7 +691,7 @@ class RCGZippedApp{
 			log("Zip engine is not running.... loading all utils");
 			self.pushCallback(function(){
 				var rcgUtilsManager=new RCGUtils();
-				rcgUtilsManager.requireLibs=function(bMakeGlobals,arrLibs){
+				rcgUtilsManager.requireLibs=self.createManagedCallback(function(bMakeGlobals,arrLibs){
 					var auxArrLibs=[];
 					var fncRequireSteps=function(sNameLib){
 				    	var sFileUrl=rcgUtilsManager.basePath+sNameLib;
@@ -711,7 +711,7 @@ class RCGZippedApp{
 				    	fncRequireSteps(sNameLib);
 				    }
 		    		self.continueTask();
-				}
+				});
 				rcgUtilsManager.basePath="js/rcglibs/";
 				rcgUtilsManager.loadUtils(true);
 				self.popCallback();

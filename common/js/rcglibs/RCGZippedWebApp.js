@@ -9,7 +9,7 @@ Class for download a Zip File with a lot of js files.
  * 
  */
 
-function callAsyncAwaitFunction(fncToBeCalled){
+async function callAsyncAwaitFunction(fncToBeCalled){
 		log("Calling a function that returns a promise");
 		var vResult= await fncToBeCalled();
 		log("Result of the call"+JSON.stringify(vResult));

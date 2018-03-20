@@ -2,7 +2,7 @@ class RCGUtils{
     constructor(bMakeGlobals) {
     	var self=this;
     	self.arrLibs=[
-    		"js/rcglibs/utils/StringUtils.js","./MathUtils.js","./DateUtils.js","./LogUtils.js","./ListUtils.js",
+    		"js/rcglibs/RCGStringUtils.js","./MathUtils.js","./DateUtils.js","./LogUtils.js","./ListUtils.js",
     		"./AsyncUtils.js","./ExcelUtils.js","./ChronoUtils.js","./HashMapUtils.js","./DynamicObjectUtils.js"
     		,"./MongoUtils.js"
     		];

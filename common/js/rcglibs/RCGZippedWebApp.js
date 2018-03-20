@@ -697,29 +697,31 @@ class RCGZippedApp{
 			log("Zip engine is not running.... loading all utils");
 			self.pushCallback(function(){
 				var rcgUtilsManager=new RCGUtils();
-				rcgUtilsManager.require=function(sLibName){
-					var prmLoadFile=self.createManagedCallback(function(){
-									return new Promise(
-										self.createManagedCallback(
-											function(resolve,reject){
-												// the callback of the loadRemoteFile
-												self.pushCallback(function(sRelativePath,fileContent){
-													resolve(true);
-												});
-												self.loadRemoteFile(sLibName);
-											}
-										)
-									)});
-					var vResult=callAsyncAwaitFunction(prmLoadFile);
-					log("¿its awaiting?");
-				};
+				rcgUtilsManager.requireLibs=function(bMakeGlobals,arrLibs){
+					var auxArrLibs=[];
+			    	for (var i=0;i<rcgUtilsManager.arrLibs.length;i++){
+				    	var sNameLib=rcgUtilsManager.arrLibs[i];
+				    	var sFileUrl=rcgUtilsManager.basePath+sNameLib;
+			    		self.addStep("Loading "+sFileUrl,function(){
+			    			self.loadRemoteFile(sFileUrl);
+			    			});
+			    		self.addStep("Processing"+sFileUrl,function(){
+			    			var className=sNameLib.split(".")[0];
+			    			// Instantiate the object using the class name string
+			    			var auxObj = new className();
+			    			self.makeGlobals(bMakeGlobals,auxObj);
+			    			});
+				    }
+		    		self.continueTask();
+				}
+				rcgUtilsManager.basePath="js/rcglibs/";
 				rcgUtilsManager.loadUtils(true);
 				self.popCallback();
 			});
 			var arrFiles=["css/RCGTaskManager.css",
 				          "js/libs/zip/zip.js",
 						  "js/rcglibs/RCGBaseUtils.js",
-						  "js/rcglibs/RCGUtils.js"
+						  "js/rcglibs/RCGUtils.js",
 		//	,
 					//	  "js/libs/angular.min.js",
 					//	  "js/libs/typescript.min.js",

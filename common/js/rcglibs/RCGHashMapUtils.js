@@ -1537,7 +1537,7 @@ class RCGHashMapFactory{
 			}
 	}	 
 
-global.hashmapFactory=new FactoriaHashMaps(); 	
+global.hashmapFactory=new RCGHashMapFactory(); 	
 
 class HashMapUtils{
 	constructor(){
@@ -1550,4 +1550,4 @@ class HashMapUtils{
 }
 
 
-module.exports=HashMapUtils;
+module.exports=RCGHashMapUtils;

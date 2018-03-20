@@ -1,10 +1,19 @@
 class RCGUtils{
     constructor(bMakeGlobals) {
     	var self=this;
+    	self.basePath="./";
     	self.arrLibs=[
-    		"js/rcglibs/RCGStringUtils.js","./MathUtils.js","./DateUtils.js","./LogUtils.js","./ListUtils.js",
-    		"./AsyncUtils.js","./ExcelUtils.js","./ChronoUtils.js","./HashMapUtils.js","./DynamicObjectUtils.js"
-    		,"./MongoUtils.js"
+    		"RCGStringUtils.js",
+    		"MathUtils.js",
+    		"DateUtils.js",
+    		"LogUtils.js",
+    		"ListUtils.js",
+    		"AsyncUtils.js",
+    		"ExcelUtils.js",
+    		"ChronoUtils.js",
+    		"HashMapUtils.js",
+    		"DynamicObjectUtils.js"
+    	//	,"MongoUtils.js"
     		];
     	if (typeof require==="undefined"){
     		self.require=function(sLibName){
@@ -57,5 +66,4 @@ class RCGUtils{
 	    	self.requireLib(bMakeGlobals,sNameLib);
 	    }
 	}
-
 }

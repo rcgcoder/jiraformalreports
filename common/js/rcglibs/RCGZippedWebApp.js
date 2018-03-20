@@ -695,15 +695,15 @@ class RCGZippedApp{
 					var auxArrLibs=[];
 					var fncRequireSteps=function(sNameLib){
 				    	var sFileUrl=rcgUtilsManager.basePath+sNameLib;
-			    		self.addStep("Loading "+sFileUrl,function(){
-			    			self.loadRemoteFile(sFileUrl);
-			    			});
-			    		self.addStep("Processing "+sFileUrl,function(){
+			    		self.pushCallback("Processing "+sFileUrl,function(){
 			    			var className=sNameLib.split(".")[0];
 			    			// Instantiate the object using the class name string
 			    			var auxObj = new className();
 			    			self.makeGlobals(bMakeGlobals,auxObj);
-				    		self.continueTask();
+				    		self.popCallback();
+			    			});
+			    		self.addStep("Loading "+sFileUrl,function(){
+			    			self.loadRemoteFile(sFileUrl);
 			    			});
 					}
 			    	for (var i=0;i<rcgUtilsManager.arrLibs.length;i++){

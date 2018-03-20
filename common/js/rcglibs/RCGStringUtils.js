@@ -1,8 +1,5 @@
 'use strict';
 class StringUtils{
-	constructor(){
-		
-	}
 	number_format(number,ndecimals,decPoint,milesPoint){
 		var nAux=parseFloat(number).toFixed(ndecimals);
 		var nStr = ''+nAux;
@@ -98,5 +95,5 @@ class StringUtils{
 if (isInNodeJS()){
 	module.exports=RCGStringUtils;
 } else {
-	window['RCGStringUtils']=function (){return new RCGStringUtils()};
+	global['RCGStringUtils']=function (){return new RCGStringUtils()};
 }

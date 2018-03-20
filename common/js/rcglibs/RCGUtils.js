@@ -1,6 +1,9 @@
 class RCGUtils{
     constructor(bMakeGlobals) {
     	var self=this;
+		if (!isInNodeJS()){
+			global=window;
+		}
     	self.basePath="./";
     	self.arrLibs=[
     		"RCGStringUtils.js",
@@ -42,9 +45,7 @@ class RCGUtils{
 				if (vPropName!=="constructor"){
 					var vPropValue=obj[vPropName];
 					if (isMethod(vPropValue)){
-						if (isUndefined(window[vPropName])){
-							window[vPropName]=vPropValue;
-						}
+						global[vPropName]=vPropValue;
 					}
 				}
 			}

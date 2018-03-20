@@ -3,7 +3,7 @@
      "description": "Jira Formal Reports Plugin",
      "key": "com.rcgcoder.jiraformalreports",
 	 "enableLicensing": true,
-     "baseUrl": "https://erepo.serveo.net/",
+     "baseUrl": "https://cantabrana.no-ip.org/",
      "scopes": [
             "read", "write"
         ],

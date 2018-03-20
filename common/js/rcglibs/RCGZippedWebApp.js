@@ -9,12 +9,6 @@ Class for download a Zip File with a lot of js files.
  * 
  */
 
-async function callAsyncAwaitFunction(fncToBeCalled){
-		log("Calling a function that returns a promise");
-		var vResult= await fncToBeCalled();
-		log("Result of the call"+JSON.stringify(vResult));
-		return vResult;
-	}
 
 function log(sText){
 	var tm=taskManager;
@@ -705,11 +699,12 @@ class RCGZippedApp{
 			    		self.addStep("Loading "+sFileUrl,function(){
 			    			self.loadRemoteFile(sFileUrl);
 			    			});
-			    		self.addStep("Processing"+sFileUrl,function(){
+			    		self.addStep("Processing "+sFileUrl,function(){
 			    			var className=sNameLib.split(".")[0];
 			    			// Instantiate the object using the class name string
 			    			var auxObj = new className();
 			    			self.makeGlobals(bMakeGlobals,auxObj);
+				    		self.continueTask();
 			    			});
 				    }
 		    		self.continueTask();

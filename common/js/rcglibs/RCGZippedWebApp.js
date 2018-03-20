@@ -693,8 +693,7 @@ class RCGZippedApp{
 				var rcgUtilsManager=new RCGUtils();
 				rcgUtilsManager.requireLibs=function(bMakeGlobals,arrLibs){
 					var auxArrLibs=[];
-			    	for (var i=0;i<rcgUtilsManager.arrLibs.length;i++){
-				    	var sNameLib=rcgUtilsManager.arrLibs[i];
+					var fncRequireSteps=function(sNameLib){
 				    	var sFileUrl=rcgUtilsManager.basePath+sNameLib;
 			    		self.addStep("Loading "+sFileUrl,function(){
 			    			self.loadRemoteFile(sFileUrl);
@@ -706,6 +705,10 @@ class RCGZippedApp{
 			    			self.makeGlobals(bMakeGlobals,auxObj);
 				    		self.continueTask();
 			    			});
+					}
+			    	for (var i=0;i<rcgUtilsManager.arrLibs.length;i++){
+				    	var sNameLib=rcgUtilsManager.arrLibs[i];
+				    	fncRequireSteps(sNameLib);
 				    }
 		    		self.continueTask();
 				}

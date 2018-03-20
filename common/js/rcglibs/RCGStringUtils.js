@@ -1,5 +1,8 @@
 'use strict';
 class StringUtils{
+	constructor(){
+		
+	}
 	number_format(number,ndecimals,decPoint,milesPoint){
 		var nAux=parseFloat(number).toFixed(ndecimals);
 		var nStr = ''+nAux;

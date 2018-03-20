@@ -95,3 +95,8 @@ class StringUtils{
 			return sValue;
 	};
 }
+if (isInNodeJS()){
+	module.exports=RCGStringUtils;
+} else {
+	window['RCGStringUtils']=RCGStringUtils;
+}

@@ -1,4 +1,5 @@
 'use strict';
+// creates a list of global functions for habitual use of strings
 class StringUtils{
 	number_format(number,ndecimals,decPoint,milesPoint){
 		var nAux=parseFloat(number).toFixed(ndecimals);

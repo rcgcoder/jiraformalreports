@@ -700,7 +700,7 @@ class RCGZippedApp{
 				    			var className=sNameLib.split(".")[0];
 				    			// Instantiate the object using the class name string
 				    			var auxObj = new window[className](); 
-				    			self.makeGlobals(bMakeGlobals,auxObj);
+				    			rcgUtilsManager.makeGlobals(bMakeGlobals,auxObj);
 					    		self.popCallback();
 				    			});
 			    			self.loadRemoteFile(sFileUrl);

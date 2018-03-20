@@ -14,5 +14,5 @@ class RCGMathUtils{
 if (isInNodeJS()){
 	module.exports=RCGMathUtils;
 } else {
-	global['RCGMathUtils']=function (){return new RCGMathUtils()};
+	global['RCGMathUtils']=RCGMathUtils;
 }

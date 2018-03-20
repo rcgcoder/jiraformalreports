@@ -95,5 +95,5 @@ class StringUtils{
 if (isInNodeJS()){
 	module.exports=RCGStringUtils;
 } else {
-	global['RCGStringUtils']=function (){return new RCGStringUtils()};
+	global['RCGStringUtils']=RCGStringUtils;
 }

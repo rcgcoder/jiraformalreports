@@ -2,7 +2,7 @@ class RCGUtils{
     constructor(bMakeGlobals) {
     	var self=this;
 		if (!isInNodeJS()){
-			global=window;
+			window.global=window;
 		}
     	self.basePath="./";
     	self.arrLibs=[

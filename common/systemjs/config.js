@@ -1,4 +1,4 @@
-System.baseUrl=systemJSFunctionComposeUrl("");
+//System.baseUrl=systemJSFunctionComposeUrl("");
 System.config({
   //use typescript for compilation
   transpiler: 'typescript',

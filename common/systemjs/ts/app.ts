@@ -20,15 +20,18 @@ class App {
     var self=this;
     var taskm=taskManager;
     var rTask=taskm.getRunningTask();
+    log("--- initializing class app.ts");
     taskManager.extendObject(self);
     var fncCheckForFinishLoad = self.createManagedCallback(function(){
         var theApp=$("#appMain");
+        var rTask=taskm.getRunningTask();
         log("Checking if Systemjs app is loaded");
         if (theApp.length>0){
             log("App loaded!");
             self.popCallback();
         } else {
             log("App is not loaded... waiting");
+            rTask.changeStatus();
             setTimeout(fncCheckForFinishLoad,1000);
         }
     });

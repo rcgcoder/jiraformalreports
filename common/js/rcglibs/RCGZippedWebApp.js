@@ -718,9 +718,9 @@ class RCGZippedApp{
 				self.popCallback();
 			});
 			var arrFiles=["css/RCGTaskManager.css",
-				          "js/libs/zip/zip.js",
-						  "js/rcglibs/RCGBaseUtils.js",
-						  "js/rcglibs/RCGUtils.js"
+				          "js/libs/zip/zip.js"//,
+//						  "js/rcglibs/RCGBaseUtils.js",
+//						  "js/rcglibs/RCGUtils.js"
 		//	,
 					//	  "js/libs/angular.min.js",
 					//	  "js/libs/typescript.min.js",

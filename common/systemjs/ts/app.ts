@@ -17,7 +17,19 @@ import {TabResult} from './tab.result';
 class App {
   constructor() {
     this.name = 'Angular2';
-    var fncUpdateList=function(){
+    var fncCheckForFinishLoad = function(){
+        var theApp=$("#appMain");
+        log("Checking if Systemjs app is loaded");
+        if (theApp.length>0){
+            log("App loaded!");
+            $("#ulDwarfers").append('<li><a href="#">Menu item Dyn</a></li>');
+        } else {
+            log("App is not loaded... waiting");
+            setTimeout(fncCheckForFinishLoad,1000);
+        }
+    }
+    fncCheckForFinishLoad();
+/*    var fncUpdateList=function(){
         var theList=$("#ulDwarfers");
         console.log("List items:"+theList.length);
         if (theList.length>0){
@@ -30,7 +42,7 @@ class App {
     }
 //    setTimeout(fncUpdateList,1000);
     fncUpdateList();
-    });
+*/    });
   }
 }
 

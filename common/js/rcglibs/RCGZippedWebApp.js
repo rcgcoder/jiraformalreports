@@ -283,6 +283,7 @@ class RCGZippedApp{
 	
 	composeUrl(sRelativePath){
 		var self=this;
+		if (typeof sRelativePath==="undefined") return sRelativePath;
 		if (sRelativePath.substr(0,4).toLowerCase()=="http"){
 			return sRelativePath;
 		}

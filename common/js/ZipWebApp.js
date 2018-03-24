@@ -73,6 +73,7 @@ class ZipWebApp{
 	        console.log("List items:"+theList.length);
 	        console.log("Updating List");
 	        theList.append('<li><a href="#">Menu item Dyn</a></li>');
+			self.continueTask();
 		});
 		self.continueTask();
 	}

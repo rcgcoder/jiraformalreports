@@ -31,7 +31,6 @@ class App {
             self.popCallback();
         } else {
             log("App is not loaded... waiting");
-            rTask.changeStatus();
             setTimeout(fncCheckForFinishLoad,1000);
         }
     };

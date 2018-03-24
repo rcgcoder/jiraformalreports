@@ -11,7 +11,7 @@ class RCGSystemJSManager{
 		self.addStep("Loading Systemjs...",function(){
 			$("#"+self.app.htmlContainerId).html(
 				`<my-app>
-				    loading...
+				    loading Systemjs engine... it takes a little time
 				  </my-app>
 				`);
 			var arrFiles=[

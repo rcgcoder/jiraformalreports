@@ -17,7 +17,7 @@ import {TabResult} from './tab.result';
 class App {
   constructor() {
     this.name = 'Angular2';
-    var fncCheckForFinishLoad = function(){
+    var fncCheckForFinishLoad = taskManager.createManagedCallback(function(){
         var theApp=$("#appMain");
         log("Checking if Systemjs app is loaded");
         if (theApp.length>0){
@@ -27,7 +27,7 @@ class App {
             log("App is not loaded... waiting");
             setTimeout(fncCheckForFinishLoad,1000);
         }
-    }
+    });
     fncCheckForFinishLoad();
 /*    var fncUpdateList=function(){
         var theList=$("#ulDwarfers");

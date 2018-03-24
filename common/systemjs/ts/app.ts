@@ -19,13 +19,13 @@ class App {
     this.name = 'Angular2';
     var self=this;
     var taskm=taskManager;
+    var rTask=taskm.getRunningTask();
     taskManager.extendObject(self);
     var fncCheckForFinishLoad = self.createManagedCallback(function(){
         var theApp=$("#appMain");
         log("Checking if Systemjs app is loaded");
         if (theApp.length>0){
             log("App loaded!");
-            $("#ulDwarfers").append('<li><a href="#">Menu item Dyn</a></li>');
             self.continueTask();
         } else {
             log("App is not loaded... waiting");

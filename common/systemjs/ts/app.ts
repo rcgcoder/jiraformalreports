@@ -26,6 +26,7 @@ class App {
         if (theApp.length>0){
             log("App loaded!");
             $("#ulDwarfers").append('<li><a href="#">Menu item Dyn</a></li>');
+            self.popCallback();
         } else {
             log("App is not loaded... waiting");
             setTimeout(fncCheckForFinishLoad,1000);

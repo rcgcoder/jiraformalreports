@@ -29,11 +29,6 @@ class RCGSystemJSManager{
 				var newUrl=self.app.composeUrl(sRelativePath);
 				return newUrl;
 			};
-			System.bootStrapFinish=self.createManagedCallback(
-					function(){
-						log("Bootstrap is finished");
-						self.popCallback();
-					});
 		    System.import('app')
 		      .catch(console.error.bind(console));
 		});

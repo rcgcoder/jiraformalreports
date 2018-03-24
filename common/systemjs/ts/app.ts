@@ -28,8 +28,8 @@ class App {
             setTimeout(fncUpdateList,1000);
         }
     }
-    setTimeout(fncUpdateList,1000);
-        
+//    setTimeout(fncUpdateList,1000);
+    fncUpdateList();
     });
   }
 }

@@ -1,13 +1,23 @@
 <div tab-reports>
 lorem ipsum reports
+<script type="text/javascript">
+	function addNewItem(){
+		console.log("appending li to ul");
+		$("#ulDwarfers").append('<li><a href="#">Menu item</a></li>');
+	}
+	setTimeout(addNewItem,5000);
+</script>
 <div class="aui-group">
     <div class="aui-item">
 	    <!-- Trigger -->
-		<a href="#dwarfers" aria-owns="dwarfers" aria-haspopup="true" class="aui-button aui-style-default aui-dropdown2-trigger">Dropdown trigger</a>
+		<a href="#dwarfers" 
+			aria-owns="dwarfers" 
+			aria-haspopup="true" 
+			class="aui-button aui-style-default aui-dropdown2-trigger">Dropdown trigger</a>
 		
 		<!-- Dropdown -->
 		<div id="dwarfers" class="aui-style-default aui-dropdown2">
-		    <ul class="aui-list-truncate">
+		    <ul id="ulDwarfers" class="aui-list-truncate">
 		        <li><a href="#">Menu item</a></li>
 		        <li><a href="#">Menu item</a></li>
 		        <li><a href="#">Menu item</a></li>

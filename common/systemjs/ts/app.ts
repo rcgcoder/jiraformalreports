@@ -17,6 +17,7 @@ import {TabResult} from './tab.result';
 class App {
   constructor() {
     this.name = 'Angular2';
+    var taskm=taskManager;
     var fncCheckForFinishLoad = taskManager.createManagedCallback(function(){
         var theApp=$("#appMain");
         log("Checking if Systemjs app is loaded");

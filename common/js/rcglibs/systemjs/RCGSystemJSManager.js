@@ -31,7 +31,8 @@ class RCGSystemJSManager{
 				var newUrl=self.app.composeUrl(sRelativePath);
 				return newUrl;
 			};
-			System.baseURL=System.composeUrl("");
+			adfasdfasd.substr(0,3);
+//			System.baseURL=System.composeUrl("");
 		    System.import('app')
 		      .catch(console.error.bind(console));
 		});

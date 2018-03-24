@@ -1,5 +1,4 @@
 var systemJSTask;
-var systemJSFunctionComposeUrl;
 
 class RCGSystemJSManager{
 	constructor(app){
@@ -10,10 +9,6 @@ class RCGSystemJSManager{
 	loadEngine(){
 		var self=this;
 		self.addStep("Loading Systemjs...",function(){
-			systemJSFunctionComposeUrl=function(sRelativePath){
-				var newUrl=self.app.composeUrl(sRelativePath);
-				return newUrl;
-			};
 
 			$("#"+self.app.htmlContainerId).html(
 				`<my-app>

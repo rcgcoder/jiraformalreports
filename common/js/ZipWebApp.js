@@ -43,7 +43,7 @@ class ZipWebApp{
 		self.addStep("Launching Systemjs.... ",function(){
 			var sjs=self.getSystemjs();
 			sjs.loadEngine();
-		},0,1,undefined,undefined,undefined,"INNER",undefined
+		}//,0,1,undefined,undefined,undefined,"INNER",undefined
 		);
 
 		

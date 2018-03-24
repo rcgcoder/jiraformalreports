@@ -6,6 +6,7 @@ import { Component, Input, Output } from '@angular/core';
 
 export class TabReports {
     constructor(){
+        AJS.$("#select2-example").auiSelect2();
         log("TabReports constructor called");
     }
     @Input() header: string = 'this is header';   

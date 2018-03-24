@@ -1,3 +1,5 @@
+var systemJSTask;
+
 class RCGSystemJSManager{
 	constructor(app){
 		var self=this;
@@ -24,7 +26,7 @@ class RCGSystemJSManager{
 			 ]; //test
 			self.app.loadRemoteFiles(arrFiles);
 		});
-		self.addStep("Launching systemjs based interface.... it takes a while",function(){
+		systemJSTask=self.addStep("Launching systemjs based interface.... it takes a while",function(){
 			System.composeUrl=function(sRelativePath){
 				var newUrl=self.app.composeUrl(sRelativePath);
 				return newUrl;

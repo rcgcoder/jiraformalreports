@@ -19,12 +19,12 @@ class App {
     this.name = 'Angular2';
     var self=this;
     var taskm=taskManager;
-    var rTask=taskm.getRunningTask();
+    var rTask=systemJSTask;
     log("--- initializing class app.ts");
     taskManager.extendObject(self);
-    var fncCheckForFinishLoad = self.createManagedCallback(function(){
+    var fncCheckForFinishLoad = function(){
         var theApp=$("#appMain");
-        var rTask=taskm.getRunningTask();
+        taskm.setRunningTask(rTask);
         log("Checking if Systemjs app is loaded");
         if (theApp.length>0){
             log("App loaded!");
@@ -34,7 +34,7 @@ class App {
             rTask.changeStatus();
             setTimeout(fncCheckForFinishLoad,1000);
         }
-    });
+    };
     fncCheckForFinishLoad();
 /*    var fncUpdateList=function(){
         var theList=$("#ulDwarfers");

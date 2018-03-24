@@ -1,4 +1,5 @@
 var systemJSTask;
+var systemJSFunctionComposeUrl;
 
 class RCGSystemJSManager{
 	constructor(app){
@@ -9,6 +10,11 @@ class RCGSystemJSManager{
 	loadEngine(){
 		var self=this;
 		self.addStep("Loading Systemjs...",function(){
+			systemJSFunctionComposeUrl=function(sRelativePath){
+				var newUrl=self.app.composeUrl(sRelativePath);
+				return newUrl;
+			};
+
 			$("#"+self.app.htmlContainerId).html(
 				`<my-app>
 				    loading Systemjs engine... it takes a little time
@@ -27,10 +33,6 @@ class RCGSystemJSManager{
 			self.app.loadRemoteFiles(arrFiles);
 		});
 		systemJSTask=self.addStep("Launching systemjs based interface.... it takes a while",function(){
-			System.composeUrl=function(sRelativePath){
-				var newUrl=self.app.composeUrl(sRelativePath);
-				return newUrl;
-			};
 //			System.baseURL=System.composeUrl("");
 		    System.import('app')
 		      .catch(console.error.bind(console));

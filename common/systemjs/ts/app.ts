@@ -26,7 +26,7 @@ class App {
         log("Checking if Systemjs app is loaded");
         if (theApp.length>0){
             log("App loaded!");
-            self.continueTask();
+            self.popCallback();
         } else {
             log("App is not loaded... waiting");
             setTimeout(fncCheckForFinishLoad,1000);

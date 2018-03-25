@@ -68,6 +68,9 @@ class ZipWebApp{
 		log("starting ZipWebApp");
 		var self=this;
 		self.addStep("Initializing engines.... ",self.initialize);
+		self.addStep("Populating components.... ",function(){
+			$("#appMain").css('visibility','visible');
+		});
 		
 		self.continueTask();
 	}

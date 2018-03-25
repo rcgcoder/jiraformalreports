@@ -45,7 +45,6 @@ class App {
                 }
                 self.popCallback();
             });
-            
             self.continueTask();
         } else {
             log("App is not loaded... waiting");

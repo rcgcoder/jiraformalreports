@@ -40,12 +40,12 @@ class ZipWebApp{
 						 ]; //test
 			self.loadRemoteFiles(arrFiles);
 		});
-/*		self.addStep("Launching Systemjs.... ",function(){
+		self.addStep("Launching Systemjs.... ",function(){
 			var sjs=self.getSystemjs();
 			sjs.loadEngine();
 		}//,0,1,undefined,undefined,undefined,"INNER",undefined
 		);
-*/
+
 		
 		
 /*		self.addStep("Getting All Issues.... ",function(){

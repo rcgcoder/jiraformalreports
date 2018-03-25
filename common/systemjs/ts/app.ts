@@ -1,5 +1,5 @@
 //our root app component
-import {Component, NgModule} from '@angular/core'
+import {Component, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 import {BrowserModule} from '@angular/platform-browser'
 
 import {Tabs} from './tabs';

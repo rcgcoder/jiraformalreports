@@ -28,9 +28,10 @@ class RCGSystemJSManager{
 			self.app.loadRemoteFiles(arrFiles);
 		});
 		systemJSTask=self.addStep("Launching systemjs based interface.... it takes a while",function(){
+			log("¿Step launching?");
 			System.composeUrl=function(sRelativePath){
 				var sResult=self.composeUrl(sRelativePath);
-				log("Systemjs.. get file:"+sRelativePath + " full path:"+sResult);
+				console.log("Systemjs.. get file:"+sRelativePath + " full path:"+sResult);
 				return sResult;
 			}
 		    System.import('app')

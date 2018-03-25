@@ -28,10 +28,36 @@ class App {
         log("Checking if Systemjs app is loaded");
         if (theApp.length>0){
             log("App loaded!");
-            for (var i=0;i<System.postProcess.length;i++){
+            self.addStep("Applying AUI.... ",function(){
+                var arrFiles=[
+                              "https://aui-cdn.atlassian.com/aui-adg/6.0.9/js/aui.js",
+                              "https://aui-cdn.atlassian.com/aui-adg/6.0.9/css/aui.css",
+                              "https://aui-cdn.atlassian.com/aui-adg/6.0.9/css/aui-experimental.css",
+                              "https://aui-cdn.atlassian.com/aui-adg/6.0.9/js/aui-experimental.js",
+                              "https://aui-cdn.atlassian.com/aui-adg/6.0.9/js/aui-datepicker.js",
+                              "https://aui-cdn.atlassian.com/aui-adg/6.0.9/js/aui-soy.js"
+                           ]; //test
+                          self.app.loadRemoteFiles(arrFiles);
+            });
+            /*
+            <script src="//aui-cdn.atlassian.com/aui-adg/6.0.9/js/aui.js"></script>
+            <link rel="stylesheet" href="//aui-cdn.atlassian.com/aui-adg/6.0.9/css/aui.css" media="all">
+            
+            <!-- AUI Experimental components -->
+            <link rel="stylesheet" href="//aui-cdn.atlassian.com/aui-adg/6.0.9/css/aui-experimental.css" media="all">
+            <script src="//aui-cdn.atlassian.com/aui-adg/6.0.9/js/aui-experimental.js"></script>
+            
+            <!-- AUI Datepicker and Soy templates -->
+            <script src="//aui-cdn.atlassian.com/aui-adg/6.0.9/js/aui-datepicker.js"></script>
+            <script src="//aui-cdn.atlassian.com/aui-adg/6.0.9/js/aui-soy.js"></script> 
+             */
+
+            self.addStep("Postprocessing systemjs components.... ",function(){
+                for (var i=0;i<System.postProcess.length;i++){
                 System.postProcess[i]();
-            }
-            self.popCallback();
+            });
+            
+            self.continueTask();
         } else {
             log("App is not loaded... waiting");
             setTimeout(fncCheckForFinishLoad,1000);

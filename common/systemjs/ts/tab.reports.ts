@@ -14,6 +14,7 @@ export class TabReports {
             
             AJS.$("#select2-example").auiSelect2();
             log("TabReports constructor called");
+            AJS.$("#select2-example").append('<option value="test">Dyn Created</option>');
         });
     }
     

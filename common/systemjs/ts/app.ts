@@ -37,7 +37,7 @@ class App {
                               "https://aui-cdn.atlassian.com/aui-adg/6.0.9/js/aui-datepicker.js",
                               "https://aui-cdn.atlassian.com/aui-adg/6.0.9/js/aui-soy.js"
                            ]; //test
-                          system.webapp.loadRemoteFiles(arrFiles);
+                          System.webapp.loadRemoteFiles(arrFiles);
             });
             /*
             <script src="//aui-cdn.atlassian.com/aui-adg/6.0.9/js/aui.js"></script>

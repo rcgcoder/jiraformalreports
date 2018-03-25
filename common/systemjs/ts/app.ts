@@ -39,22 +39,11 @@ class App {
                            ]; //test
                           System.webapp.loadRemoteFiles(arrFiles);
             });
-            /*
-            <script src="//aui-cdn.atlassian.com/aui-adg/6.0.9/js/aui.js"></script>
-            <link rel="stylesheet" href="//aui-cdn.atlassian.com/aui-adg/6.0.9/css/aui.css" media="all">
-            
-            <!-- AUI Experimental components -->
-            <link rel="stylesheet" href="//aui-cdn.atlassian.com/aui-adg/6.0.9/css/aui-experimental.css" media="all">
-            <script src="//aui-cdn.atlassian.com/aui-adg/6.0.9/js/aui-experimental.js"></script>
-            
-            <!-- AUI Datepicker and Soy templates -->
-            <script src="//aui-cdn.atlassian.com/aui-adg/6.0.9/js/aui-datepicker.js"></script>
-            <script src="//aui-cdn.atlassian.com/aui-adg/6.0.9/js/aui-soy.js"></script> 
-             */
-
             self.addStep("Postprocessing systemjs components.... ",function(){
                 for (var i=0;i<System.postProcess.length;i++){
-                System.postProcess[i]();
+                    System.postProcess[i]();
+                }
+                self.popCallback();
             });
             
             self.continueTask();

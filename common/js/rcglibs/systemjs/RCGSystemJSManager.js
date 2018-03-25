@@ -34,6 +34,7 @@ class RCGSystemJSManager{
 				console.log("Systemjs.. get file:"+sRelativePath + " full path:"+sResult);
 				return sResult;
 			}
+			log(System.composeUrl("test"));
 		    System.import('app')
 		      .catch(console.error.bind(console));
 		});

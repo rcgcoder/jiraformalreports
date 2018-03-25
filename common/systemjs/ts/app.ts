@@ -15,12 +15,11 @@ import {TabResult} from './tab.result';
   templateUrl: System.composeUrl('systemjs/html/app.html')
 })
 class App {
-    /*
   constructor() {
     this.name = 'Angular2';
     var self=this;
     var taskm=taskManager;
-    var rTask=systemJSTask;
+    var rTask=System.systemJSTask;
     log("--- initializing class app.ts");
     taskManager.extendObject(self);
     var fncCheckForFinishLoad = function(){
@@ -36,7 +35,6 @@ class App {
         }
     };
     fncCheckForFinishLoad();
-*/
 /*    var fncUpdateList=function(){
         var theList=$("#ulDwarfers");
         console.log("List items:"+theList.length);

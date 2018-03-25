@@ -27,14 +27,11 @@ class RCGSystemJSManager{
 		});
 		var systemJSTask;
 		systemJSTask=self.addStep("Launching systemjs based interface.... it takes a while",function(){
-			log("¿Step launching?");
 			System.systemJSTask=systemJSTask;
 			System.composeUrl=function(sRelativePath){
 				var sResult=self.app.composeUrl(sRelativePath);
-				console.log("Systemjs.. get file:"+sRelativePath + " full path:"+sResult);
 				return sResult;
 			}
-			log(System.composeUrl("test"));
 		    System.import('app')
 		      .catch(console.error.bind(console));
 		});

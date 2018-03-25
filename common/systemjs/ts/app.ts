@@ -35,22 +35,7 @@ class App {
         }
     };
     fncCheckForFinishLoad();
-/*    var fncUpdateList=function(){
-        var theList=$("#ulDwarfers");
-        console.log("List items:"+theList.length);
-        if (theList.length>0){
-            console.log("Updating List");
-            theList.append('<li><a href="#">Menu item Dyn</a></li>');
-        } else {
-            console.log("New try");
-            setTimeout(fncUpdateList,1000);
-        }
-    }
-//    setTimeout(fncUpdateList,1000);
-    fncUpdateList();
-*/
-    /*});
-  }*/
+   }
 }
 
 @NgModule({

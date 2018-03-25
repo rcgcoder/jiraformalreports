@@ -15,6 +15,7 @@ import {TabResult} from './tab.result';
   templateUrl: System.composeUrl('systemjs/html/app.html');
 })
 class App {
+    /*
   constructor() {
     this.name = 'Angular2';
     var self=this;
@@ -35,6 +36,7 @@ class App {
         }
     };
     fncCheckForFinishLoad();
+*/
 /*    var fncUpdateList=function(){
         var theList=$("#ulDwarfers");
         console.log("List items:"+theList.length);
@@ -48,8 +50,9 @@ class App {
     }
 //    setTimeout(fncUpdateList,1000);
     fncUpdateList();
-*/    });
-  }
+*/
+    /*});
+  }*/
 }
 
 @NgModule({

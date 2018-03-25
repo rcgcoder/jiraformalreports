@@ -43,7 +43,7 @@ class ZipWebApp{
 		self.addStep("Launching Systemjs.... ",function(){
 			var sjs=self.getSystemjs();
 			sjs.loadEngine();
-		}//,0,1,undefined,undefined,undefined,"INNER",undefined
+		},0,1,undefined,undefined,undefined,"INNER",undefined
 		);
 
 		
@@ -68,14 +68,13 @@ class ZipWebApp{
 		log("starting ZipWebApp");
 		var self=this;
 		self.addStep("Initializing engines.... ",self.initialize);
-		/*
 		self.addStep("Adding field to combo (aui test).... ",function(){
 	        var theList=$("#ulDwarfers");
 	        console.log("List items:"+theList.length);
 	        console.log("Updating List");
 	        theList.append('<li><a href="#">Menu item Dyn</a></li>');
 			self.continueTask();
-		});*/
+		});
 		self.continueTask();
 	}
 

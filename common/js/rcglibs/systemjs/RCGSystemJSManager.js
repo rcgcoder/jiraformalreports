@@ -7,7 +7,6 @@ class RCGSystemJSManager{
 	loadEngine(){
 		var self=this;
 		self.addStep("Loading Systemjs...",function(){
-
 			$("#"+self.app.htmlContainerId).html(
 				`<my-app>
 				    loading Systemjs engine... it takes a little time
@@ -27,6 +26,7 @@ class RCGSystemJSManager{
 		});
 		var systemJSTask;
 		systemJSTask=self.addStep("Launching systemjs based interface.... it takes a while",function(){
+			System.webapp=self.app;
 			System.systemJSTask=systemJSTask;
 			System.composeUrl=function(sRelativePath){
 				var sResult=self.app.composeUrl(sRelativePath);

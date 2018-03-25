@@ -32,6 +32,10 @@ class RCGSystemJSManager{
 				var sResult=self.app.composeUrl(sRelativePath);
 				return sResult;
 			}
+			System.postProcess=[];
+			System.addPostProcess=function(fnc){
+				System.postProcess.push(fnc);
+			}
 		    System.import('app')
 		      .catch(console.error.bind(console));
 		});

@@ -28,6 +28,9 @@ class App {
         log("Checking if Systemjs app is loaded");
         if (theApp.length>0){
             log("App loaded!");
+            for (var i=0;i<System.postProcess.length;i++){
+                System.postProcess[i]();
+            }
             self.popCallback();
         } else {
             log("App is not loaded... waiting");

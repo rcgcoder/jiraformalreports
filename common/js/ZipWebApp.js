@@ -73,9 +73,6 @@ class ZipWebApp{
 	        console.log("List items:"+theList.length);
 	        console.log("Updating List");
 	        theList.append('<li><a href="#">Menu item Dyn</a></li>');
-	        AJS.$("#select2-example").auiSelect2();
-	        log("TabReports constructor called");
-
 			self.continueTask();
 		}); 
 		self.continueTask();

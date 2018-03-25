@@ -40,12 +40,12 @@ class ZipWebApp{
 						 ]; //test
 			self.loadRemoteFiles(arrFiles);
 		});
-		self.addStep("Launching Systemjs.... ",function(){
+/*		self.addStep("Launching Systemjs.... ",function(){
 			var sjs=self.getSystemjs();
 			sjs.loadEngine();
 		}//,0,1,undefined,undefined,undefined,"INNER",undefined
 		);
-
+*/
 		
 /*		self.addStep("Getting All Issues.... ",function(){
 			var jira=self.getJira();
@@ -56,11 +56,11 @@ class ZipWebApp{
 			var jira=self.getJira();
 			jira.getProjectsAndMetaInfo();
 		});
-/*		self.addStep("Testing Confluence Api Integrations.... ",function(){
+		self.addStep("Testing Confluence Api Integrations.... ",function(){
 			var cfc=self.getConfluence();
 			cfc.getAllPages();
 		});
-	*/	
+		
 		self.continueTask();
 	}
 	run(){

@@ -30,7 +30,7 @@ class RCGSystemJSManager{
 			log("¿Step launching?");
 			System.systemJSTask=systemJSTask;
 			System.composeUrl=function(sRelativePath){
-				var sResult=self.composeUrl(sRelativePath);
+				var sResult=self.app.composeUrl(sRelativePath);
 				console.log("Systemjs.. get file:"+sRelativePath + " full path:"+sResult);
 				return sResult;
 			}

@@ -42,6 +42,9 @@ class App {
 }
 
 @NgModule({
+  schemas: [
+            CUSTOM_ELEMENTS_SCHEMA
+        ],
   imports: [ BrowserModule ],
   declarations: [ App, Tabs, Tab, TabReports, TabConfig, TabStructure, TabResult ],
   bootstrap: [ App ]

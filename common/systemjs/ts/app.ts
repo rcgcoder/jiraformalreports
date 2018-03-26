@@ -2,7 +2,7 @@
 import {Component, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 import {BrowserModule} from '@angular/platform-browser'
 
-import {Tabs} from System.composeURL('systemjs/ts/tabs');
+import {Tabs} from './tabs';
 import {Tab} from './tab';
 import {TabReports} from './tab.reports';
 import {TabConfig} from './tab.config';

@@ -6,12 +6,13 @@ System.config({
     emitDecoratorMetadata: true
   },
   paths: {
+	'srv:': System.composeUrl("");
     'npm:': 'https://cdn.jsdelivr.net/npm/'
   },
   //map tells the System loader where to look for things
   map: {
     
-    'app': 'systemjs/ts',
+    'app': 'srv:systemjs/ts',
     
     '@angular/core': 'npm:@angular/core/bundles/core.umd.js',
     '@angular/common': 'npm:@angular/common/bundles/common.umd.js',

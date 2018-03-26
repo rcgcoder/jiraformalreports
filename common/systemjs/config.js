@@ -6,7 +6,7 @@ System.config({
     emitDecoratorMetadata: true
   },
   paths: {
-	'srv:': System.composeUrl("");
+	'srv:': System.composeUrl(""),
     'npm:': 'https://cdn.jsdelivr.net/npm/'
   },
   //map tells the System loader where to look for things

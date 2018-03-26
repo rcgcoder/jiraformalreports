@@ -30,6 +30,7 @@ class RCGSystemJSManager{
 			System.systemJSTask=systemJSTask;
 			System.composeUrl=function(sRelativePath){
 				var sResult=self.app.composeUrl(sRelativePath);
+				log(sResult);
 				return sResult;
 			}
 			System.postProcess=[];

@@ -47,15 +47,19 @@ class ZipWebApp{
 		);
 
 		
-		
+/*		
 		self.addStep("Getting All Issues.... ",function(){
 			var jira=self.getJira();
 			jira.getAllIssues();
 		});
-
+*/
 		self.addStep("Getting All Project, issuetypes and field info.... ",function(){
 			var jira=self.getJira();
 			jira.getProjectsAndMetaInfo();
+		});
+		self.addStep("Getting All Epics.... ",function(){
+			var jira=self.getJira();
+			jira.getAllEpics();
 		});
 		self.addStep("Testing Confluence Api Integrations.... ",function(){
 			var cfc=self.getConfluence();

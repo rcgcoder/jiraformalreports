@@ -61,7 +61,7 @@ class App {
             CUSTOM_ELEMENTS_SCHEMA
         ],
   imports: [ BrowserModule ],
-  declarations: [ App, Tabs, Tab, TabReports, TabConfig, TabStructure, TabResult ],
+  declarations: [ App, Tabs, Tab, TabReports, TabConfig, TabStructure, TabResult, dlgTest ],
   bootstrap: [ App ]
 })
 export class AppModule {}

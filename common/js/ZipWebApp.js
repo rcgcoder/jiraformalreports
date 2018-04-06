@@ -76,6 +76,7 @@ class ZipWebApp{
 		self.addStep("Initializing engines.... ",self.initialize);
 		self.addStep("Populating components.... ",function(){
 			$("#appMain").css('visibility','visible');
+			$("")
 			self.continueTask();
 		});
 		

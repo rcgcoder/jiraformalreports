@@ -16,7 +16,7 @@ class RCGJira{
 		self.getFullList=function(sTarget,resultName,callType,data,callback,arrHeaders){
 			atlassian.apiGetFullList(self, sTarget, resultName,callType, data, callback,arrHeaders);
 			};
-		self.projects="";
+		self.projects=[];
 		self.issueTypes="";
 		self.fields="";
 	}
@@ -32,6 +32,7 @@ class RCGJira{
 					var prjKey=project.key;
 					var prjName=project.name;
 					var prjInnerId=project.id;
+					self.projects.push({key:prjKey,name:prjName,id:prjInnerId});
 					for (var j=0;j<project.issuetypes.length;j++){
 						var issuetype=project.issuetypes[j];
 						var itKey=issuetype.id;

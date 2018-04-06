@@ -1,4 +1,5 @@
-import { Component, Input, Output,dlgTest } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
+import { dlgTest } from './dialogs/dlgTest';
 @Component({
   selector: 'tabResult',
   templateUrl: System.composeUrl('systemjs/html/tab.result.html'),

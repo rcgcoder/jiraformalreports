@@ -17,7 +17,7 @@ export class TabResult {
                  AJS.dialog2("#demo-dialog").hide();
              });
         });
- 
+    }
     @Input() header: string = 'this is header';   
     @Input() footer: string = 'this is footer';
 }

@@ -1,5 +1,5 @@
 import { Component, Input, Output } from '@angular/core';
-import { dlgTest } from './dialogs/dlgTest';
+import { dlgPrjSelector } from './dialogs/dlgPrjSelector';
 @Component({
   selector: 'tabResult',
   templateUrl: System.composeUrl('systemjs/html/tab.result.html'),

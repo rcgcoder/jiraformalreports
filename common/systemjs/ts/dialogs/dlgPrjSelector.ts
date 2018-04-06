@@ -18,6 +18,9 @@ export class dlgPrjSelector {
              });
         });
     }
+    get selected():[]{return ["a","b","c"];
+        
+    }
     @Input() header: string = 'this is header';   
     @Input() footer: string = 'this is footer';
 }

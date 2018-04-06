@@ -7,14 +7,15 @@ export class dlgPrjSelector {
     constructor(){
         System.addPostProcess(function(){
              // Shows the dialog when the "Show dialog" button is clicked
-             AJS.$("#dialog-show-button").click(function(e) {
+             AJS.$("#dlgProjectSelector-show").click(function(e) {
                  e.preventDefault();
-                 AJS.dialog2("#demo-dialog").show();
+                 AJS.dialog2("#dlgProjectSelector").show();
              });
              // Hides the dialog
-             AJS.$("#dialog-submit-button").click(function (e) {
+             AJS.$("#dlgProjectSelector-action").click(function (e) {
                  e.preventDefault();
-                 AJS.dialog2("#demo-dialog").hide();
+                 AJS.dialog2("#dlgProjectSelector").hide();
+                 
              });
         });
     }

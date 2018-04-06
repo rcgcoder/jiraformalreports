@@ -3,7 +3,7 @@ import { Component, Input, Output } from '@angular/core';
   selector: 'dlgPrjSelector',
   templateUrl: System.composeUrl('systemjs/html/dialogs/dlgPrjSelector.html'),
 })
-export class dlgTest {
+export class dlgPrjSelector {
     constructor(){
         System.addPostProcess(function(){
              // Shows the dialog when the "Show dialog" button is clicked

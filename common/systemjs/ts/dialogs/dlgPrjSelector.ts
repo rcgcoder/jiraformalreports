@@ -1,7 +1,7 @@
 import { Component, Input, Output } from '@angular/core';
 @Component({
   selector: 'dlgPrjSelector',
-  templateUrl: System.composeUrl('systemjs/html/dialogs/dlgTest.html'),
+  templateUrl: System.composeUrl('systemjs/html/dialogs/dlgPrjSelector.html'),
 })
 export class dlgTest {
     constructor(){

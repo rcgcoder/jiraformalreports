@@ -76,7 +76,12 @@ class ZipWebApp{
 		self.addStep("Initializing engines.... ",self.initialize);
 		self.addStep("Populating components.... ",function(){
 			$("#appMain").css('visibility','visible');
-			$("")
+			var tblProjects=$("#tblProjects");
+			var jira=self.getJira();
+			for (var i=0;i<jira.projects.length;i++){
+				var prj=jira.projects[i];
+				tblProjects.append('<tr><td>'+prj.key+'</td><td>'+prj.name+'</td></tr>');
+			}
 			self.continueTask();
 		});
 		

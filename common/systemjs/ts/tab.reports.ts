@@ -31,10 +31,10 @@ export class TabReports {
         for (var i=0;i<jira.projects.length;i++){
             var prj=jira.projects[i];
 */
-        theDlgPrjSelector.populateAllProjects();
+        theDlgPrjSelector.populateTable();
     }
     onRetrievePreviousSelectedProjects(theDlgPrjSelector){
-        theDlgPrjSelector.selectProjects();
+        theDlgPrjSelector.selectItems();
     }
 
     getProjects(){

@@ -30,16 +30,16 @@ export class dlgSelectionTable {
 
     populateTable(tableData){
         log("Populating table");
-        var tbl=getTable();
+        var tbl=this.getTable();
         for (var i=0;i<tableData.length;i++){
             var item=tableData[i];
-            tblProjects.append(
+            tbl.append(
                 `<tr>
                     <td>
                         <aui-toggle id="selected`+item.key+`" label="select"></aui-toggle>
                     </td>
-                        <td>`+prj.key+`</td>
-                        <td>`+prj.name+`</td></tr>`
+                        <td>`+item.key+`</td>
+                        <td>`+item.name+`</td></tr>`
                 );
         }
     }

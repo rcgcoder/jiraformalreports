@@ -38,8 +38,8 @@ class RCGJira{
 						var itKey=issuetype.id;
 						var itName=issuetype.name;
 						var bExists=false;
-						for (var i=0;(!bExists)&&(i<self.issueTypes.length);i++){
-							var it=self.issueTypes[i];
+						for (var k=0;(!bExists)&&(k<self.issueTypes.length);k++){
+							var it=self.issueTypes[k];
 							if (it.key==itKey){
 								bExists=true;
 							}

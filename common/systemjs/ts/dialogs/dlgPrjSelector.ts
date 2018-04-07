@@ -36,6 +36,7 @@ export class dlgPrjSelector {
         var arrValues=[];
         self.onRetrieveAllProjects.emit(self);
         self.onRetrievePreviousSelectedProjects.emit(self);
+        log("Showind the dialog");
         self.getDialog().show();
     }
     doAction(){

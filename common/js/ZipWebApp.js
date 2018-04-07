@@ -86,9 +86,10 @@ class ZipWebApp{
 		self.addStep("Initializing engines.... ",self.initialize);
 		self.addStep("Populating components.... ",function(){
 			var arrPrjs=self.getListProjects();
+	        var prjSelector=AJS.$('[name="prjFiller"]');
 			for (var i=0;i<arrPrjs.length;i++){
 				var prj=arrPrjs[i];
-	            AJS.$('[name="prjFiller"]').append('<option value="'+prj.key+'">'+prj.name+'</option>');
+				prjSelector.append('<option value="'+prj.key+'">'+prj.name+'</option>');
 			}
 			
 			$("#appMain").css('visibility','visible');

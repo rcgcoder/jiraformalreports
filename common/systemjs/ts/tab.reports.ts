@@ -23,6 +23,7 @@ export class TabReports {
         var prjSelector=AJS.$('[name="prjFiller"]');
         for (let i=0;i<selectedPrjs.length;i++){
             log("Selected:"+selectedPrjs[i]);
+            prjSelector.select(selectedPrjs[i]);
         }
         log("Processing selection event Finished");
     }

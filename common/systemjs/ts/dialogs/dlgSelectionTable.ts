@@ -41,6 +41,7 @@ export class dlgSelectionTable {
                         itemKey="`+item.key+`"
                         tooltip-on="Selected"
                         tooltip-off="Unselected"
+                        label="Select `+item.key+`"
                         ></aui-toggle>
                     </td>
                         <td>`+item.key+`</td>
@@ -68,7 +69,8 @@ export class dlgSelectionTable {
             var tglAux=arrSelected[i];
             var isChecked=tglAux.checked;
             if (isChecked){
-                var auxKey=tglAux.attr("itemKey");
+                var jqTgl=$(tglAux);
+                var auxKey=jqTgl.attr("itemKey");
                 arrResult.push(auxKey);
             }
         }

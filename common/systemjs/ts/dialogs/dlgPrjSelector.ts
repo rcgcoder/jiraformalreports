@@ -7,19 +7,26 @@ export class dlgPrjSelector {
     constructor(){
         System.addPostProcess(function(){
              // Shows the dialog when the "Show dialog" button is clicked
-             AJS.$("#dlgProjectSelector-show").click(function(e) {
+/*             AJS.$("#dlgProjectSelector-show").click(function(e) {
                  e.preventDefault();
                  AJS.dialog2("#dlgProjectSelector").show();
              });
-             // Hides the dialog
-             AJS.$("#dlgProjectSelector-action").click(function (e) {
+ */            // Hides the dialog
+/*             AJS.$("#dlgProjectSelector-action").click(function (e) {
                  e.preventDefault();
                  AJS.dialog2("#dlgProjectSelector").hide();
              });
-        });
+ */       });
     }
-    clickTest(){
-        alert("It´s Clicked");
+    doShowDialog(){
+        AJS.dialog2("#dlgProjectSelector").show();
+    }
+    doAction(){
+        log("It´s Clicked do action");
+        AJS.dialog2("#dlgProjectSelector").hide();
+    }
+    doCancel(){
+        log("It´s Clicked do cancel");
     }
     get selected():[]{return ["a","b","c"];
         

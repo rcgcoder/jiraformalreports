@@ -11,8 +11,9 @@ export class advSelector {
         return AJS.$('[name="'+this.name+'-select"]');
     }
     constructor(){
+        var self=this;
         System.addPostProcess(function(){
-            this.getSelect().auiSelect2();
+            self.getSelect().auiSelect2();
        });
     }
     onSelected(selectedKeys: []) {

@@ -20,7 +20,7 @@ export class TabReports {
     }
     onSelectedProjects(selectedPrjs: []) {
         log("Processing selection event");
-
+        var prjSelector=AJS.$('[name="prjFiller"]');
         for (let i=0;i<selectedPrjs.length;i++){
             log("Selected:"+selectedPrjs[i]);
         }

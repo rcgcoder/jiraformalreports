@@ -1,4 +1,4 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 @Component({
   selector: 'dlgPrjSelector',
   templateUrl: System.composeUrl('systemjs/html/dialogs/dlgPrjSelector.html'),
@@ -18,6 +18,7 @@ export class dlgPrjSelector {
              });
  */       });
     }
+    @Output() onSelected = new EventEmitter<[]>();    
     doShowDialog(){
         log("it´s clicked show button");
         AJS.dialog2("#dlgProjectSelector").show();
@@ -25,10 +26,12 @@ export class dlgPrjSelector {
     doAction(){
         log("It´s Clicked do action");
         AJS.dialog2("#dlgProjectSelector").hide();
+        this.onSelected.emit(["A","B","C"]);
     }
     doCancel(){
         log("It´s Clicked do cancel");
     }
+    
     get selected():[]{return ["a","b","c"];
         
     }

@@ -1,7 +1,7 @@
 <!-- Create a trigger which will be used by the JavaScript -->
-<button (click)="doShowDialog()" id="{{dlgId}}-show" class="aui-button">Show dialog</button>
+<button (click)="doShowDialog()" name="{{name}}-show" class="aui-button">Show dialog</button>
 
-<section id={{dlgId}} class="aui-dialog2 aui-dialog2-large aui-layer" role="dialog" aria-hidden="true">
+<section name={{name}} id={{name}} class="aui-dialog2 aui-dialog2-large aui-layer" role="dialog" aria-hidden="true">
     <header class="aui-dialog2-header">
         <h2 class="aui-dialog2-header-main">Select Projects</h2>
         <a class="aui-dialog2-header-close">

@@ -15,7 +15,7 @@ export class advSelector {
             self.getSelect().auiSelect2();
             var wApp=System.webapp;
             var arrPrjs=wApp.getListProjects();
-            angObj.fillOptions(arrPrjs);
+            self.fillOptions(arrPrjs);
             //System.bindObj(self);
         });
     }

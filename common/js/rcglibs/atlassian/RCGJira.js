@@ -37,7 +37,16 @@ class RCGJira{
 						var issuetype=project.issuetypes[j];
 						var itKey=issuetype.id;
 						var itName=issuetype.name;
-						self.issueTypes.push({key:itKey,name:itName});
+						var bExists=false;
+						for (var i=0;(!bExists)&&(i<self.issueTypes.length);i++){
+							var it=self.issueTypes[i];
+							if (it.key==itKey){
+								bExists=true;
+							}
+						}
+						if (!bExists){
+							self.issueTypes.push({key:itKey,name:itName});
+						}
 						var itSubtask=issuetype.subtask;
 						// the fields are not an array...
 						

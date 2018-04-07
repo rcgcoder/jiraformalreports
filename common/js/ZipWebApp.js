@@ -71,7 +71,8 @@ class ZipWebApp{
 		self.continueTask();
 	}
 	getListProjects(){
-        var jira=wApp.getJira();
+		var self=this;
+        var jira=self.getJira();
         var arrProjects=[];
         for (var i=0;i<jira.projects.length;i++){
             var prj=jira.projects[i];

@@ -25,7 +25,7 @@ export class dlgSelectionTable {
         return AJS.dialog2("#"+"dlg_"+this.name);
     }
     getTable(){
-        return AJS.dialog2("#"+"tbl_"+this.name);
+        return $("#"+"tbl_"+this.name);
     }
 
     populateTable(tableData){

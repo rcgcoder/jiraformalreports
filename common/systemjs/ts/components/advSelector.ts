@@ -6,7 +6,7 @@ import { Component, Input, Output } from '@angular/core';
 export class advSelector {
     @Input() name: string = 'advSelection';
     @Input() typeDescriptor: string = 'elements';
-    
+    @Export() AAAvalorPrueba: string = 'Valor Prueba';
     getSelect(){
         return AJS.$('[name="'+this.name+'-select"]');
     }

@@ -36,7 +36,10 @@ export class dlgSelectionTable {
             tbl.append(
                 `<tr>
                     <td>
-                        <aui-toggle id="selected`+item.key+`" label="select"></aui-toggle>
+                        <aui-toggle id="selected`+item.key+`" 
+                        tooltip-on="Selected"
+                        tooltip-off="Unselected"
+                        ></aui-toggle>
                     </td>
                         <td>`+item.key+`</td>
                         <td>`+item.name+`</td></tr>`

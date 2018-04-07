@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 @Component({
-  selector: 'dlgPrjSelector',
-  templateUrl: System.composeUrl('systemjs/html/dialogs/dlgPrjSelector.html'),
+  selector: 'dlgSelectionTable',
+  templateUrl: System.composeUrl('systemjs/html/dialogs/dlgSelectionTable.html'),
 })
-export class dlgPrjSelector {
+export class dlgSelectionTable {
     constructor(){
         System.addPostProcess(function(){
              // Shows the dialog when the "Show dialog" button is clicked
@@ -19,23 +19,33 @@ export class dlgPrjSelector {
  */       });
     }
     @Output() onSelected = new EventEmitter<[]>();
-    @Output() onRetrieveAllProjects = new EventEmitter<{}>();
-    @Output() onRetrievePreviousSelectedProjects = new EventEmitter<{}>();
+    @Output() onRetrieveTableData = new EventEmitter<{}>();
+    @Output() onRetrievePreviousSelectedKeys = new EventEmitter<{}>();
     getDialog(){
         return AJS.dialog2("#"+"dlg_"+this.name);
     }
-    populateAllProjects(arrProjects){
-        log("Populating table");
+    getTable(){
+        return AJS.dialog2("#"+"tbl_"+this.name);
     }
-    selectProjects(arrProjects){
-        log("Selecting previous projects");
+
+    populateTable(tableData){
+        log("Populating table");
+/*        var tbl=$("#tblSelectProjects");
+        for (var i=0;i<arrProjects.length;i++){
+            var prj=arrProjects[i];
+            tblProjects.append('<tr><td><aui-toggle id="selected'+prj.key+'" label="select"></aui-toggle> </td><td>'+prj.key+'</td><td>'+prj.name+'</td></tr>');
+        }
+  */      
+    }
+    selectItems(arrKeys){
+        log("Selecting previous items");
     }
     doShowDialog(){
         var self=this;
         log("it´s clicked show button");
         var arrValues=[];
-        self.onRetrieveAllProjects.emit(self);
-        self.onRetrievePreviousSelectedProjects.emit(self);
+        self.onRetrieveTableData.emit(self);
+        self.onRetrievePreviousSelectedKeys.emit(self);
         log("Showind the dialog");
         self.getDialog().show();
     }
@@ -52,7 +62,5 @@ export class dlgPrjSelector {
     get selected():[]{return ["a","b","c"];
         
     }
-    @Input() name: string = 'dlgProjectSelector';
-    @Input() obtainData: string ='';
-    @Input() footer: string = 'this is footer';
+    @Input() name: string = 'dlgSelectionTable';
 }

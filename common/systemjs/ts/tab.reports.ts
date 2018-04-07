@@ -27,6 +27,10 @@ export class TabReports {
     }
         
     onRetrieveAllProjects(theDlgPrjSelector){
+/*        var jira=self.getJira();
+        for (var i=0;i<jira.projects.length;i++){
+            var prj=jira.projects[i];
+*/
         theDlgPrjSelector.populateAllProjects();
     }
     onRetrievePreviousSelectedProjects(theDlgPrjSelector){

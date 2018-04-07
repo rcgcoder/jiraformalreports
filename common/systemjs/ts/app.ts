@@ -8,7 +8,7 @@ import {TabReports} from './tab.reports';
 import {TabConfig} from './tab.config';
 import {TabStructure} from './tab.structure';
 import {TabResult} from './tab.result';
-import {dlgPrjSelector} from './dialogs/dlgPrjSelector';
+import {dlgSelectionTable} from './dialogs/dlgSelectionTable';
 
 
 @Component({
@@ -61,7 +61,7 @@ class App {
             CUSTOM_ELEMENTS_SCHEMA
         ],
   imports: [ BrowserModule ],
-  declarations: [ App, Tabs, Tab, TabReports, TabConfig, TabStructure, TabResult, dlgPrjSelector ],
+  declarations: [ App, Tabs, Tab, TabReports, TabConfig, TabStructure, TabResult, dlgSelectionTable],
   bootstrap: [ App ]
 })
 export class AppModule {}

@@ -71,12 +71,12 @@ lorem ipsum reports
 </div>    
        </div>
 </div>
-<dlgPrjSelector name="ProjectSelector" 
+<dlgSelectionTable name="ProjectSelector" 
 	(onSelected)="onSelectedProjects($event)"
-	(onRetrieveAllProjects)="onRetrieveAllProjects($event)"
-	(onRetrievePreviousSelectedProjects)="onRetrievePreviousSelectedProjects($event)"
+	(onRetrieveTableData)="onRetrieveAllProjects($event)"
+	(onRetrievePreviousSelectedKeys)="onRetrievePreviousSelectedProjects($event)"
 >
-</dlgPrjSelector>
-<dlgPrjSelector name="ProjectSelector2" (onSelected)="onSelectedProjects($event)"></dlgPrjSelector>
+</dlgSelectionTable>
+<dlgSelectionTable name="ProjectSelector2" (onSelected)="onSelectedProjects($event)"></dlgSelectionTable>
 
 </div>

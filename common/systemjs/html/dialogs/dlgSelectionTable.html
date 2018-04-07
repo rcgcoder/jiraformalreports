@@ -4,13 +4,13 @@
 
 <section id="dlg_{{name}}" class="aui-dialog2 aui-dialog2-large aui-layer" role="dialog" aria-hidden="true">
     <header class="aui-dialog2-header">
-        <h2 class="aui-dialog2-header-main">Select Projects</h2>
+        <h2 class="aui-dialog2-header-main">Select {{typeDescriptor}}</h2>
         <a class="aui-dialog2-header-close">
             <span (click)="doCancel()" class="aui-icon aui-icon-small aui-iconfont-close-dialog">Close</span>
         </a>
     </header>
     <div class="aui-dialog2-content">
-		<table id="tblSelectProjects" class="aui">
+		<table id="dlg_{{name}}" class="aui">
 		    <thead>
 		        <tr>
 		            <th id="select"></th>

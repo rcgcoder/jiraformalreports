@@ -13,6 +13,8 @@ export class advSelector {
         // ...
         var self=this;
         self.getSelect().auiSelect2();
+        var elem=AJS.$('[name="'+self.name+'"]');
+        elem[0].angObject=self;
       }
 /*    constructor(){
         var self=this;

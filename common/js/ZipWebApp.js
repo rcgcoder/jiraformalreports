@@ -70,6 +70,16 @@ class ZipWebApp{
 		
 		self.continueTask();
 	}
+	getListIssueTypes(){
+		var self=this;
+        var jira=self.getJira();
+        var arrIssueTypes=[];
+        for (var i=0;i<jira.issueTypes.length;i++){
+            var it=jira.issueTypes[i];
+            arrIssueTypes.push({key:it.key,name:it.name});
+        }
+        return arrIssueTypes;
+	}
 	getListProjects(){
 		var self=this;
         var jira=self.getJira();
@@ -87,6 +97,8 @@ class ZipWebApp{
 		self.addStep("Populating components.... ",function(){
             var arrPrjs=self.getListProjects();
             System.getAngularObject('advSelector[name="selProjects"]').fillOptions(arrPrjs);
+            var arrTypes=self.getListIssueTypes();
+            System.getAngularObject('advSelector[name="selTypes"]').fillOptions(arrTypes);
 			$("#appMain").css('visibility','visible');
 			self.continueTask();
 		});

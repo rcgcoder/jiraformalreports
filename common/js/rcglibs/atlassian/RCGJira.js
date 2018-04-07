@@ -17,7 +17,7 @@ class RCGJira{
 			atlassian.apiGetFullList(self, sTarget, resultName,callType, data, callback,arrHeaders);
 			};
 		self.projects=[];
-		self.issueTypes="";
+		self.issueTypes=[];
 		self.fields="";
 	}
 	
@@ -37,6 +37,7 @@ class RCGJira{
 						var issuetype=project.issuetypes[j];
 						var itKey=issuetype.id;
 						var itName=issuetype.name;
+						self.issueTypes.push({key:itKey,name:itName});
 						var itSubtask=issuetype.subtask;
 						// the fields are not an array...
 						

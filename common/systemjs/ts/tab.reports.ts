@@ -21,11 +21,13 @@ export class TabReports {
     onSelectedProjects(selectedPrjs: []) {
         log("Processing selection event");
         var prjSelector=AJS.$('[name="prjFiller"]');
-        for (let i=0;i<selectedPrjs.length;i++){
+        prjSelector.val(selectedPrjs);
+        prjSelector.trigger('change'); // Notify any JS components that the value changed
+/*        for (let i=0;i<selectedPrjs.length;i++){
             log("Selected:"+selectedPrjs[i]);
             prjSelector.select(selectedPrjs[i]);
         }
-        log("Processing selection event Finished");
+*/        log("Processing selection event Finished");
     }
         
     onRetrieveAllProjects(theDlgPrjSelector){

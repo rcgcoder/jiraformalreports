@@ -87,6 +87,7 @@ class ZipWebApp{
 		self.addStep("Populating components.... ",function(){
 			var arrPrjs=self.getListProjects();
 	        var prjSelector=AJS.$('[name="prjFiller"]');
+	        
 			for (var i=0;i<arrPrjs.length;i++){
 				var prj=arrPrjs[i];
 				prjSelector.append('<option value="'+prj.key+'">'+prj.name+'</option>');

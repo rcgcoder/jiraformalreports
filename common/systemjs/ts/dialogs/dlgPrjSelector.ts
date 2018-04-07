@@ -21,11 +21,11 @@ export class dlgPrjSelector {
     @Output() onSelected = new EventEmitter<[]>();    
     doShowDialog(){
         log("it´s clicked show button");
-        AJS.dialog2("#dlgProjectSelector").show();
+        AJS.dialog2("#"+this.dlgId).show();
     }
     doAction(){
         log("It´s Clicked do action");
-        AJS.dialog2("#dlgProjectSelector").hide();
+        AJS.dialog2("#"+this.dlgId).hide();
         this.onSelected.emit(["A","B","C"]);
     }
     doCancel(){
@@ -35,6 +35,6 @@ export class dlgPrjSelector {
     get selected():[]{return ["a","b","c"];
         
     }
-    @Input() header: string = 'this is header';   
+    @Input() dlgId: string = 'dlgProjectSelector';   
     @Input() footer: string = 'this is footer';
 }

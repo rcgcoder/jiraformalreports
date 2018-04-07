@@ -13,7 +13,10 @@ export class advSelector {
         var self=this;
         System.addPostProcess(function(){
             self.getSelect().auiSelect2();
-            System.bindObj(self);
+            var wApp=System.webapp;
+            var arrPrjs=wApp.getListProjects();
+            angObj.fillOptions(arrPrjs);
+            //System.bindObj(self);
         });
     }
     fillOptions(arrOptions){

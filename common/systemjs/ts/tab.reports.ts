@@ -17,7 +17,7 @@ export class TabReports {
             theList.append('<li><a href="#">Menu item Dyn</a></li>');
             
             //AJS.$("#select2-example").append('<option value="test">Dyn Created</option>');
-            System.bindObj(self);
+            //System.bindObj(self);
         });
     }
 

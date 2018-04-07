@@ -68,6 +68,12 @@ class ZipWebApp{
 			cfc.getAllPages();
 		});
 		
+		self.addStep("Getting All Epics.... ",function(){
+			var jira=self.getJira();
+			jira.getAllEpics();
+		});
+
+		
 		self.continueTask();
 	}
 	getListIssueTypes(){

@@ -18,9 +18,12 @@ class RCGJira{
 			};
 		self.projects=[];
 		self.issueTypes=[];
+		self.labels=[];
 		self.fields="";
 	}
-	
+	getAllLabels(){
+		
+	}
 	getProjectsAndMetaInfo(){
 		var self=this;
 		self.pushCallback(function(sResponse,xhr,sUrl,headers){

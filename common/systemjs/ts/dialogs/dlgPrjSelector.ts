@@ -35,6 +35,7 @@ export class dlgPrjSelector {
     get selected():[]{return ["a","b","c"];
         
     }
-    @Input() dlgId: string = 'dlgProjectSelector';   
+    @Input() name: string = 'dlgProjectSelector';   
     @Input() footer: string = 'this is footer';
+    dlgId="id"+this.name;
 }

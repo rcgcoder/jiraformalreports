@@ -48,6 +48,20 @@ class RCGSystemJSManager{
 					objHtml[0].angObject=angObj;
 				}
 			}
+			System.getAngularObject=function(selector){
+		        var arrElements=AJS.$(selector);
+		        var arrResults=[];
+		        for (var i=0;i<arrElements.length;i++){
+		        	var obj=arrElements[i];
+		        	if (typeof obj.angObject!=="undefined"){
+		        		arrResults.push(obj.angObject);
+		        	}
+		        }
+		        if (arrResults.length==1){
+		        	return arrResults[0];
+		        }
+		        return arrResults;
+			}
 			System.postProcess=[];
 			System.addPostProcess=function(fnc){
 				System.postProcess.push(fnc);

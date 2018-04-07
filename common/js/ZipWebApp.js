@@ -87,7 +87,7 @@ class ZipWebApp{
 			var arrPrjs=self.getListProjects();
 			for (var i=0;i<arrPrjs.length;i++){
 				var prj=arrPrjs[i];
-	            AJS.$('name="prjFiller"').append('<option value="'+prj.key+'">'+prj.name+'</option>');
+	            AJS.$('[name="prjFiller"]').append('<option value="'+prj.key+'">'+prj.name+'</option>');
 			}
 			
 			$("#appMain").css('visibility','visible');

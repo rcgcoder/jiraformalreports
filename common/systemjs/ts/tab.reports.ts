@@ -14,7 +14,7 @@ export class TabReports {
             console.log("Updating List");
             theList.append('<li><a href="#">Menu item Dyn</a></li>');
             
-            AJS.$('name="prjFiller"').auiSelect2();
+            AJS.$('[name="prjFiller"]').auiSelect2();
             //AJS.$("#select2-example").append('<option value="test">Dyn Created</option>');
         });
     }

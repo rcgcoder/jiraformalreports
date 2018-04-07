@@ -15,9 +15,11 @@ export class dlgPrjSelector {
              AJS.$("#dlgProjectSelector-action").click(function (e) {
                  e.preventDefault();
                  AJS.dialog2("#dlgProjectSelector").hide();
-                 
              });
         });
+    }
+    clickTest(){
+        alert("It´s Clicked");
     }
     get selected():[]{return ["a","b","c"];
         

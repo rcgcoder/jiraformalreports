@@ -18,7 +18,7 @@ export class TabReports {
             AJS.$("#select2-example").append('<option value="test">Dyn Created</option>');
         });
     }
-    onSelected(selectedPrjs: []) {
+    onSelectedProjects(selectedPrjs: []) {
         for (let i=0;i<selectedPrjs.length;i++){
             log("Selected:"+selectedPrjs[i]);
         }

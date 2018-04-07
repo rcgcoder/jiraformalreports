@@ -62,7 +62,7 @@ export class dlgSelectionTable {
     }
     doAction(){
         log("It´s Clicked do action");
-        var arrSelected=$("aui-toggle");
+        var arrSelected=AJS.$("aui-toggle");
         var arrResult=[];
         for (var i=0;i<arrSelected.length;i++){
             var tglAux=arrSelected[i];

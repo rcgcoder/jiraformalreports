@@ -37,7 +37,8 @@ export class dlgSelectionTable {
             tbl.append(
                 `<tr>
                     <td>
-                        <aui-toggle id="selected`+item.key+`" 
+                        <aui-toggle id="toggle_`+item.key+`" 
+                        itemKey="`+item.key+`"
                         tooltip-on="Selected"
                         tooltip-off="Unselected"
                         ></aui-toggle>
@@ -61,8 +62,18 @@ export class dlgSelectionTable {
     }
     doAction(){
         log("It´s Clicked do action");
+        var arrSelected=$("aui-toggle");
+        var arrResult=[];
+        for (var i=0;i<arrSelected.length;i++){
+            var tglAux=$(arrSelected[i]);
+            var isChecked=tglAux.is(':checked')
+            if (isChecked){
+                var auxKey=tglAux.attr("itemKey");
+                arrResult.push(auxKey);
+            }
+        }
         this.getDialog().hide();
-        this.onSelected.emit(["A","B","C"]);
+        this.onSelected.emit(arrResult);
         log("Emmited event");
     }
     doCancel(){

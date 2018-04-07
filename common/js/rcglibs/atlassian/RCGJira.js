@@ -88,7 +88,7 @@ class RCGJira{
 		});
 		var data= {
 			      "jql": "issuetype=epic",
-			      "startAt": 0,
+/*			      "startAt": 0,
 			      "maxResults": 15,
 			      "fields": [
 			        "summary",
@@ -96,7 +96,7 @@ class RCGJira{
 			        "assignee"
 			      ],
 			      "fieldsByKeys": false
-			    };
+	*/		    };
 		self.apiCall("/rest/api/2/search","POST",data);
 	}
 	getAllIssues(){

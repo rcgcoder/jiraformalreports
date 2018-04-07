@@ -15,7 +15,7 @@ export class advSelector {
         this.AAAvalorPrueba=self;
         System.addPostProcess(function(){
             var elem=AJS.$('[name="'+self.name+'"]');
-            this.AAATestValue="Value Changed";
+            var scp=elem.scope();
             elem[0].angObject=self;
             self.getSelect().auiSelect2();
        });

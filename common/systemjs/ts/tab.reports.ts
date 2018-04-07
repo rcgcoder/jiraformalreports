@@ -19,9 +19,11 @@ export class TabReports {
         });
     }
     onSelectedProjects(selectedPrjs: []) {
+        log("Processing selection event");
         for (let i=0;i<selectedPrjs.length;i++){
             log("Selected:"+selectedPrjs[i]);
         }
+        log("Processing selection event Finished");
     }
     getProjects(){
         log("getting Projects");

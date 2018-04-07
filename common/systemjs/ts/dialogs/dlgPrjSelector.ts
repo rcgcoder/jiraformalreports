@@ -34,6 +34,7 @@ export class dlgPrjSelector {
         log("It´s Clicked do action");
         this.getDialog().hide();
         this.onSelected.emit(["A","B","C"]);
+        log("Emmited event");
     }
     doCancel(){
         log("It´s Clicked do cancel");

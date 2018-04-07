@@ -24,6 +24,7 @@ export class advSelector {
     }
         
     onRetrieveTableData(theDlgSelector){
+        var theAdvSelector=AJS.$('[name="'+this.name+'"]');
         var theSelect=this.getSelect();
         var nOps=theSelect[0].length;
         var arrTable=[];

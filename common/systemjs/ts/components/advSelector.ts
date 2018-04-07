@@ -13,7 +13,7 @@ export class advSelector {
     constructor(){
         var self=this;
         System.addPostProcess(function(){
-            var elem=AJS.$('[name="'+this.name+'"]');
+            var elem=AJS.$('[name="'+self.name+'"]');
             elem[0].angObject=self;
             self.getSelect().auiSelect2();
             

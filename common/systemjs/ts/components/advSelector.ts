@@ -13,8 +13,18 @@ export class advSelector {
     constructor(){
         var self=this;
         System.addPostProcess(function(){
+            var elem=AJS.$('[name="'+this.name+'"]');
+            elem[0].angObject=self;
             self.getSelect().auiSelect2();
+            
        });
+    }
+    fillOptions(arrOptions){
+        var objSelector=AJS.$('[name="'+this.name+'-select"]');
+        for (var i=0;i<arrOptions.length;i++){
+            var opt=arrOptions[i];
+            objSelector.append('<option value="'+opt.key+'">'+opt.name+'</option>');
+        }
     }
     onSelected(selectedKeys: []) {
         log("Processing selection event");

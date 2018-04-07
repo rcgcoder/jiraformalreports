@@ -65,8 +65,8 @@ export class dlgSelectionTable {
         var arrSelected=$("aui-toggle");
         var arrResult=[];
         for (var i=0;i<arrSelected.length;i++){
-            var tglAux=$(arrSelected[i]);
-            var isChecked=tglAux.is(':checked')
+            var tglAux=arrSelected[i];
+            var isChecked=tglAux.checked;
             if (isChecked){
                 var auxKey=tglAux.attr("itemKey");
                 arrResult.push(auxKey);

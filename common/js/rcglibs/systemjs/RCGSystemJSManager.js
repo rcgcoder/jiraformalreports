@@ -39,6 +39,15 @@ class RCGSystemJSManager{
 				log(sResult);
 				return sResult;
 			}
+			System.bindObj=function(angObj){
+				if (typeof angObj.name!=="undefined"){
+					var theName=angObj.name;
+					var sClassName=(typeof angObj).toLowerCase();
+					var sFinder=sClassName+'[name="'+theName+'"]';
+					var objHtml=$(sFinder);
+					objHtml[0].angObject=angObj;
+				}
+			}
 			System.postProcess=[];
 			System.addPostProcess=function(fnc){
 				System.postProcess.push(fnc);

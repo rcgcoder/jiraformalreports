@@ -33,9 +33,9 @@ export class advSelector {
             var name=opt.text;
             arrTable.push({key:key,name:name});
         }
-        theDlgPrjSelector.populateTable(arrTable);
+        theDlgSelector.populateTable(arrTable);
     }
-    onRetrievePreviousSelectedKeys(theDlgPrjSelector){
+    onRetrievePreviousSelectedKeys(theDlgSelector){
         log("do nothing");
     }
 }

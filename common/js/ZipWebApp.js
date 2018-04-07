@@ -70,18 +70,27 @@ class ZipWebApp{
 		
 		self.continueTask();
 	}
+	getListProjects(){
+        var jira=wApp.getJira();
+        var arrProjects=[];
+        for (var i=0;i<jira.projects.length;i++){
+            var prj=jira.projects[i];
+            arrProjects.push({key:prj.key,name:prj.name});
+        }
+        return arrProjects;
+	}
 	run(){
 		log("starting ZipWebApp");
 		var self=this;
 		self.addStep("Initializing engines.... ",self.initialize);
 		self.addStep("Populating components.... ",function(){
-			$("#appMain").css('visibility','visible');
-			var tblProjects=$("#tblSelectProjects");
-			var jira=self.getJira();
-			for (var i=0;i<jira.projects.length;i++){
-				var prj=jira.projects[i];
-				tblProjects.append('<tr><td><aui-toggle id="selected'+prj.key+'" label="select"></aui-toggle> </td><td>'+prj.key+'</td><td>'+prj.name+'</td></tr>');
+			var arrPrjs=self.getListProjects();
+			for (var i=0;i<arrPrjs.length;i++){
+				var prj=arrPrjs[i];
+	            AJS.$('name="prjFiller"').append('<option value="'+prj.key+'">'+prj.name+'</option>');
 			}
+			
+			$("#appMain").css('visibility','visible');
 			self.continueTask();
 		});
 		

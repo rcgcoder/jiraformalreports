@@ -8,18 +8,19 @@ import { Component, Input, Output } from '@angular/core';
 export class TabReports {
     constructor(){
         System.addPostProcess(function(){
+            log("TabReports constructor called");
             var theList=$("#ulDwarfers");
             console.log("List items:"+theList.length);
             console.log("Updating List");
             theList.append('<li><a href="#">Menu item Dyn</a></li>');
             
-            AJS.$("#select2-example").auiSelect2();
-            log("TabReports constructor called");
-            AJS.$("#select2-example").append('<option value="test">Dyn Created</option>');
+            AJS.$('name="prjFiller"').auiSelect2();
+            //AJS.$("#select2-example").append('<option value="test">Dyn Created</option>');
         });
     }
     onSelectedProjects(selectedPrjs: []) {
         log("Processing selection event");
+
         for (let i=0;i<selectedPrjs.length;i++){
             log("Selected:"+selectedPrjs[i]);
         }
@@ -28,12 +29,7 @@ export class TabReports {
         
     onRetrieveAllProjects(theDlgPrjSelector){
         var wApp=System.webapp;
-        var jira=wApp.getJira();
-        var arrTable=[];
-        for (var i=0;i<jira.projects.length;i++){
-            var prj=jira.projects[i];
-            arrTable.push({key:prj.key,name:prj.name});
-        }
+        var arrTable=wApp.getListProjects();
         theDlgPrjSelector.populateTable(arrTable);
     }
     onRetrievePreviousSelectedProjects(theDlgPrjSelector){

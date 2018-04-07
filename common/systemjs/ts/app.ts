@@ -1,6 +1,6 @@
 //our root app component
-import {Component, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
-import {BrowserModule} from '@angular/platform-browser'
+import {Component, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
 import {Tabs} from './tabs';
 import {Tab} from './tab';
@@ -8,6 +8,7 @@ import {TabReports} from './tab.reports';
 import {TabConfig} from './tab.config';
 import {TabStructure} from './tab.structure';
 import {TabResult} from './tab.result';
+import {advSelector} from "./components/advSelector";
 import {dlgSelectionTable} from './dialogs/dlgSelectionTable';
 
 
@@ -61,7 +62,15 @@ class App {
             CUSTOM_ELEMENTS_SCHEMA
         ],
   imports: [ BrowserModule ],
-  declarations: [ App, Tabs, Tab, TabReports, TabConfig, TabStructure, TabResult, dlgSelectionTable],
+  declarations: [   App, 
+                    Tabs, 
+                    Tab, 
+                    TabReports, 
+                    TabConfig, 
+                    TabStructure, 
+                    TabResult, 
+                    dlgSelectionTable,
+                    advSelector],
   bootstrap: [ App ]
 })
 export class AppModule {}

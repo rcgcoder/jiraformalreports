@@ -3,6 +3,10 @@ lorem ipsum reports
 <div class="aui-group">
     <div class="aui-item">
     
+    <advSelector name="selProjects" typeDescriptor="Projects">
+    </advSelector>
+    
+    
     <aui-label for="sync-product-single-select">Choose your product synchronously:</aui-label>
     <p>
         <aui-select
@@ -38,14 +42,6 @@ lorem ipsum reports
     <aui-label for="gzip-compression">Use gzip compression</aui-label>
     <aui-toggle id="gzip-compression" label="use gzip compression"></aui-toggle>    
     
-    <select name="prjFiller" multiple="">
-<!--         <option value="CONF">Confluence</option>
-        <option value="JIRA">JIRA</option>
-        <option value="BAM">Bamboo</option>
-        <option value="JAG">JIRA Agile</option>
-        <option value="CAP">JIRA Capture</option>
-        <option value="AUI">AUI</option>
--->    </select>
     
     
 <!-- Trigger -->
@@ -71,12 +67,6 @@ lorem ipsum reports
 </div>    
        </div>
 </div>
-<dlgSelectionTable name="ProjectSelector" typeDescriptor="Projects"
-	(onSelected)="onSelectedProjects($event)"
-	(onRetrieveTableData)="onRetrieveAllProjects($event)"
-	(onRetrievePreviousSelectedKeys)="onRetrievePreviousSelectedProjects($event)"
->
-</dlgSelectionTable>
 <dlgSelectionTable name="ProjectSelector2" (onSelected)="onSelectedProjects($event)"></dlgSelectionTable>
 
 </div>

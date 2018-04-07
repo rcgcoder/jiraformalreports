@@ -27,11 +27,14 @@ export class TabReports {
     }
         
     onRetrieveAllProjects(theDlgPrjSelector){
-/*        var jira=self.getJira();
+        var wApp=System.webapp;
+        var jira=wApp.getJira();
+        var arrTable=[];
         for (var i=0;i<jira.projects.length;i++){
             var prj=jira.projects[i];
-*/
-        theDlgPrjSelector.populateTable();
+            arrTable.push({key:prj.key,name:prj.name});
+        }
+        theDlgPrjSelector.populateTable(arrTable);
     }
     onRetrievePreviousSelectedProjects(theDlgPrjSelector){
         theDlgPrjSelector.selectItems();

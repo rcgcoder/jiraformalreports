@@ -30,12 +30,18 @@ export class dlgSelectionTable {
 
     populateTable(tableData){
         log("Populating table");
-/*        var tbl=$("#tblSelectProjects");
-        for (var i=0;i<arrProjects.length;i++){
-            var prj=arrProjects[i];
-            tblProjects.append('<tr><td><aui-toggle id="selected'+prj.key+'" label="select"></aui-toggle> </td><td>'+prj.key+'</td><td>'+prj.name+'</td></tr>');
+        var tbl=getTable();
+        for (var i=0;i<tableData.length;i++){
+            var item=tableData[i];
+            tblProjects.append(
+                `<tr>
+                    <td>
+                        <aui-toggle id="selected`+item.key+`" label="select"></aui-toggle>
+                    </td>
+                        <td>`+prj.key+`</td>
+                        <td>`+prj.name+`</td></tr>`
+                );
         }
-  */      
     }
     selectItems(arrKeys){
         log("Selecting previous items");

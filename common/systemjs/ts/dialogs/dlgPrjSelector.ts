@@ -19,16 +19,24 @@ export class dlgPrjSelector {
  */       });
     }
     @Output() onSelected = new EventEmitter<[]>();
+    @Output() onRetrieveAllProjects = new EventEmitter<function>();
+    @Output() onRetrievePreviousSelectedProjects = new EventEmitter<function>();
     getDialog(){
         return AJS.dialog2("#"+"dlg_"+this.name);
     }
+    populateAllProjects(arrProjects){
+        log("Populating table");
+    }
+    selectProjects(arrProjects){
+        log("Selecting previous projects");
+    }
     doShowDialog(){
+        var self=this;
         log("it´s clicked show button");
         var arrValues=[];
-        if (this.obtainData!=''){
-            arrValues=eval(this.obtainData);
-        }
-        this.getDialog().show();
+        self.onRetrieveAllProjects.emit(function(arrProjects){self.populateAllProjects(arrProjects)});
+        self.onRetrievePreviousSelectedProjects.emit(function(arrProjects){self.selectProjects(arrProjects)});
+        self.getDialog().show();
     }
     doAction(){
         log("It´s Clicked do action");

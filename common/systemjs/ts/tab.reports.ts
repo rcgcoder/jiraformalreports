@@ -25,6 +25,14 @@ export class TabReports {
         }
         log("Processing selection event Finished");
     }
+        
+    onRetrieveAllProjects(callback:function){
+        callback(["a","b","c","d"]);
+    }
+    onRetrievePreviousSelectedProjects(callback:function){
+        callback(["b","d"]);
+    }
+
     getProjects(){
         log("getting Projects");
         return ["C","D","E"];

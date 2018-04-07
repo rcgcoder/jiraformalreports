@@ -18,7 +18,11 @@ export class TabReports {
             AJS.$("#select2-example").append('<option value="test">Dyn Created</option>');
         });
     }
-    
+    onSelected(selectedPrjs: []) {
+        for (let i=0;i<selectedPrjs.length;i++){
+            log("Selected:"+selectedPrjs[i]);
+        }
+    }    
     @Input() header: string = 'this is header';   
     @Input() footer: string = 'this is footer';
 }

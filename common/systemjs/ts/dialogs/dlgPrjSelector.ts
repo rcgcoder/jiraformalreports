@@ -18,14 +18,17 @@ export class dlgPrjSelector {
              });
  */       });
     }
-    @Output() onSelected = new EventEmitter<[]>();    
+    @Output() onSelected = new EventEmitter<[]>();
+    getDialog(){
+        return AJS.dialog2("#"+"dlg_"+this.name);
+    }
     doShowDialog(){
         log("it´s clicked show button");
-        AJS.dialog2("#"+this.name).show();
+        getDialog().show();
     }
     doAction(){
         log("It´s Clicked do action");
-        AJS.dialog2("#"+this.name).hide();
+        getDialog().hide();
         this.onSelected.emit(["A","B","C"]);
     }
     doCancel(){

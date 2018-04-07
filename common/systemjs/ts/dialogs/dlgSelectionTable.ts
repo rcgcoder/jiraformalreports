@@ -63,4 +63,5 @@ export class dlgSelectionTable {
         
     }
     @Input() name: string = 'dlgSelectionTable';
+    @Input() typeDescriptor: string = 'elements';
 }

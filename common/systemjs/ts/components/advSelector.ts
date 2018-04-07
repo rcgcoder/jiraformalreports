@@ -6,7 +6,7 @@ import { Component, Input, Output } from '@angular/core';
 export class advSelector {
     @Input() name: string = 'advSelection';
     @Input() typeDescriptor: string = 'elements';
-    @Input() @Output() AAAvalorPrueba: string = 'Valor Prueba';
+    @Input() AAATestValue: string = 'Test Value';
     getSelect(){
         return AJS.$('[name="'+this.name+'-select"]');
     }
@@ -15,9 +15,9 @@ export class advSelector {
         this.AAAvalorPrueba=self;
         System.addPostProcess(function(){
             var elem=AJS.$('[name="'+self.name+'"]');
+            this.AAATestValue="Value Changed";
             elem[0].angObject=self;
             self.getSelect().auiSelect2();
-            
        });
     }
     fillOptions(arrOptions){

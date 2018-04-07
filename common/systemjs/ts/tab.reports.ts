@@ -1,4 +1,4 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, Input, Output, OnInit } from '@angular/core';
 
 @Component({
   selector: 'tabReports',
@@ -6,7 +6,9 @@ import { Component, Input, Output } from '@angular/core';
 })
 
 export class TabReports {
-    constructor(){
+    
+    ngOnInit() {
+        var self=this;
         System.addPostProcess(function(){
             log("TabReports constructor called");
             var theList=$("#ulDwarfers");
@@ -15,6 +17,7 @@ export class TabReports {
             theList.append('<li><a href="#">Menu item Dyn</a></li>');
             
             //AJS.$("#select2-example").append('<option value="test">Dyn Created</option>');
+            System.bindObj(self);
         });
     }
 

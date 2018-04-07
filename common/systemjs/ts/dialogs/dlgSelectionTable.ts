@@ -4,20 +4,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   templateUrl: System.composeUrl('systemjs/html/dialogs/dlgSelectionTable.html'),
 })
 export class dlgSelectionTable {
-    constructor(){
-        System.addPostProcess(function(){
-             // Shows the dialog when the "Show dialog" button is clicked
-/*             AJS.$("#dlgProjectSelector-show").click(function(e) {
-                 e.preventDefault();
-                 AJS.dialog2("#dlgProjectSelector").show();
-             });
- */            // Hides the dialog
-/*             AJS.$("#dlgProjectSelector-action").click(function (e) {
-                 e.preventDefault();
-                 AJS.dialog2("#dlgProjectSelector").hide();
-             });
- */       });
-    }
     @Output() onSelected = new EventEmitter<[]>();
     @Output() onRetrieveTableData = new EventEmitter<{}>();
     @Output() onRetrievePreviousSelectedKeys = new EventEmitter<{}>();

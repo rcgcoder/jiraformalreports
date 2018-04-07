@@ -1,5 +1,5 @@
 //our root app component
-import {Component, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {Component, NgModule, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {Tabs} from './tabs';
@@ -17,7 +17,9 @@ import {dlgSelectionTable} from './dialogs/dlgSelectionTable';
   templateUrl: System.composeUrl('systemjs/html/app.html')
 })
 class App {
-  constructor() {
+
+//  constructor() {
+  ngOnInit() {
     this.name = 'Angular2';
     var self=this;
     var taskm=taskManager;

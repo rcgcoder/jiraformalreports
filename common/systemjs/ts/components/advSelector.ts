@@ -16,8 +16,6 @@ export class advSelector {
             System.bindObj(self);
         });
     }
-/*    constructor(){
-    }*/
     fillOptions(arrOptions){
         var objSelector=AJS.$('[name="'+this.name+'-select"]');
         for (var i=0;i<arrOptions.length;i++){

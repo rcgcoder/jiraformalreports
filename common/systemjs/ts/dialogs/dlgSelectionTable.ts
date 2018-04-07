@@ -4,6 +4,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   templateUrl: System.composeUrl('systemjs/html/dialogs/dlgSelectionTable.html'),
 })
 export class dlgSelectionTable {
+    @Input() name: string = 'dlgSelectionTable';
+    @Input() typeDescriptor: string = 'elements';
+    @Input() openDialogCaption: string = '...';
     @Output() onSelected = new EventEmitter<[]>();
     @Output() onRetrieveTableData = new EventEmitter<{}>();
     @Output() onRetrievePreviousSelectedKeys = new EventEmitter<{}>();
@@ -68,10 +71,4 @@ export class dlgSelectionTable {
     doCancel(){
         log("It´s Clicked do cancel");
     }
-    
-    get selected():[]{return ["a","b","c"];
-        
-    }
-    @Input() name: string = 'dlgSelectionTable';
-    @Input() typeDescriptor: string = 'elements';
 }

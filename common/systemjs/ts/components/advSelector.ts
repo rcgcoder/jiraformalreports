@@ -6,6 +6,8 @@ import { Component, Input, Output, OnInit } from '@angular/core';
 export class advSelector {
     @Input() name: string = 'advSelection';
     @Input() typeDescriptor: string = 'elements';
+    @Input() openDialogCaption: string = '...';
+    
     getSelect(){
         return AJS.$('[name="'+this.name+'-select"]');
     }

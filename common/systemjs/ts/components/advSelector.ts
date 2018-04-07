@@ -6,12 +6,13 @@ import { Component, Input, Output } from '@angular/core';
 export class advSelector {
     @Input() name: string = 'advSelection';
     @Input() typeDescriptor: string = 'elements';
-    @Output() AAAvalorPrueba: string = 'Valor Prueba';
+    @Input() @Output() AAAvalorPrueba: string = 'Valor Prueba';
     getSelect(){
         return AJS.$('[name="'+this.name+'-select"]');
     }
     constructor(){
         var self=this;
+        this.AAAvalorPrueba=self;
         System.addPostProcess(function(){
             var elem=AJS.$('[name="'+self.name+'"]');
             elem[0].angObject=self;

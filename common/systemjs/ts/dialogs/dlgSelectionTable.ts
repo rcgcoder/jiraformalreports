@@ -28,6 +28,7 @@ export class dlgSelectionTable {
                         tooltip-on="Selected"
                         tooltip-off="Unselected"
                         label="Select `+item.key+`"
+                        selected
                         ></aui-toggle>
                     </td>
                         <td>`+item.key+`</td>

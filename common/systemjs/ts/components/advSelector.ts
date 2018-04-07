@@ -38,7 +38,7 @@ export class advSelector {
             var opt=theSelect[0][i];
             var key=opt.value;
             var name=opt.text;
-            arrTable.push({key:key,name:name});
+            arrTable.push({key:key,name:name,selected:false});
         }
         theDlgSelector.populateTable(arrTable);
     }

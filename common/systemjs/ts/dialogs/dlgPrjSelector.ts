@@ -24,7 +24,7 @@ export class dlgPrjSelector {
     }
     doShowDialog(){
         log("it´s clicked show button");
-        let arrValues=this.obtainData();
+        var arrValues=this.obtainData();
         this.getDialog().show();
     }
     doAction(){

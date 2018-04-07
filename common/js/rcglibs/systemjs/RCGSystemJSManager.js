@@ -42,7 +42,7 @@ class RCGSystemJSManager{
 			System.bindObj=function(angObj){
 				if (typeof angObj.name!=="undefined"){
 					var theName=angObj.name;
-					var sClassName=(typeof angObj).toLowerCase();
+					var sClassName=(angObj.constructor.name).toLowerCase();
 					var sFinder=sClassName+'[name="'+theName+'"]';
 					var objHtml=$(sFinder);
 					objHtml[0].angObject=angObj;

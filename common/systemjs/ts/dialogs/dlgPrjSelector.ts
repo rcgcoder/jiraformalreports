@@ -19,6 +19,7 @@ export class dlgPrjSelector {
  */       });
     }
     doShowDialog(){
+        log("it´s clicked show button");
         AJS.dialog2("#dlgProjectSelector").show();
     }
     doAction(){

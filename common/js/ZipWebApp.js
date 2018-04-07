@@ -85,6 +85,8 @@ class ZipWebApp{
 		var self=this;
 		self.addStep("Initializing engines.... ",self.initialize);
 		self.addStep("Populating components.... ",function(){
+            var arrPrjs=self.getListProjects();
+            System.getAngularObject('advSelector[name="selProjects"]').fillOptions(arrPrjs);
 			$("#appMain").css('visibility','visible');
 			self.continueTask();
 		});

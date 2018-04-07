@@ -22,7 +22,11 @@ export class TabReports {
         for (let i=0;i<selectedPrjs.length;i++){
             log("Selected:"+selectedPrjs[i]);
         }
-    }    
+    }
+    getProjects(){
+        log("getting Projects");
+        return ["C","D","E"];
+    }
     @Input() header: string = 'this is header';   
     @Input() footer: string = 'this is footer';
 }

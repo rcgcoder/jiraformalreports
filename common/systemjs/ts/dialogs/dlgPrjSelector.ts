@@ -24,7 +24,10 @@ export class dlgPrjSelector {
     }
     doShowDialog(){
         log("it´s clicked show button");
-        var arrValues=this.obtainData();
+        var arrValues=[];
+        if (this.obtainData!=''){
+            arrValues=eval(this.obtainData);
+        }
         this.getDialog().show();
     }
     doAction(){
@@ -40,6 +43,6 @@ export class dlgPrjSelector {
         
     }
     @Input() name: string = 'dlgProjectSelector';
-    @Input() obtainData: function = function (){log("Obtaining Data");return []};
+    @Input() obtainData: string ='';
     @Input() footer: string = 'this is footer';
 }

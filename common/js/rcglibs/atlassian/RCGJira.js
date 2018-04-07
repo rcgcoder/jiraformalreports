@@ -97,7 +97,7 @@ class RCGJira{
 			      ],
 			      "fieldsByKeys": false
 	*/		    };
-		self.apiCall("/rest/api/2/search","POST",data);
+		self.apiCall("/rest/api/2/search?jql=issueType=epic");//,"GET",data);
 	}
 	getAllIssues(){
 		var self=this;

@@ -24,11 +24,11 @@ export class dlgPrjSelector {
     }
     doShowDialog(){
         log("it´s clicked show button");
-        getDialog().show();
+        this.getDialog().show();
     }
     doAction(){
         log("It´s Clicked do action");
-        getDialog().hide();
+        this.getDialog().hide();
         this.onSelected.emit(["A","B","C"]);
     }
     doCancel(){

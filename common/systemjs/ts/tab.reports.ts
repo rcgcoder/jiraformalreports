@@ -26,10 +26,10 @@ export class TabReports {
         log("Processing selection event Finished");
     }
         
-    onRetrieveAllProjects(callback){
+    onRetrieveAllProjects(theDlgPrjSelector){
         callback(["a","b","c","d"]);
     }
-    onRetrievePreviousSelectedProjects(callback){
+    onRetrievePreviousSelectedProjects(theDlgPrjSelector){
         callback(["b","d"]);
     }
 

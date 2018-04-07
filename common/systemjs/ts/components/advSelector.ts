@@ -6,21 +6,21 @@ import { Component, Input, Output } from '@angular/core';
 export class advSelector {
     @Input() name: string = 'advSelection';
     @Input() typeDescriptor: string = 'elements';
-    @Input() AAATestValue: string = 'Test Value';
     getSelect(){
         return AJS.$('[name="'+this.name+'-select"]');
     }
-    constructor(){
+    ngOnInit() {
+        // ...
         var self=this;
-        this.AAAvalorPrueba=self;
+        self.getSelect().auiSelect2();
+      }
+/*    constructor(){
+        var self=this;
         System.addPostProcess(function(){
             var elem=AJS.$('[name="'+self.name+'"]');
-            var jqElem=$('[name="'+self.name+'"]');
-            var scp=jqElem.scope();
             elem[0].angObject=self;
-            self.getSelect().auiSelect2();
-       });
-    }
+        });
+    }*/
     fillOptions(arrOptions){
         var objSelector=AJS.$('[name="'+this.name+'-select"]');
         for (var i=0;i<arrOptions.length;i++){

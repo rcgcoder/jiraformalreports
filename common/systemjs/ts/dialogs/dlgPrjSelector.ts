@@ -24,10 +24,10 @@ export class dlgPrjSelector {
     getDialog(){
         return AJS.dialog2("#"+"dlg_"+this.name);
     }
-    @Output() populateAllProjects(arrProjects){
+    populateAllProjects(arrProjects){
         log("Populating table");
     }
-    @Output() selectProjects(arrProjects){
+    selectProjects(arrProjects){
         log("Selecting previous projects");
     }
     doShowDialog(){

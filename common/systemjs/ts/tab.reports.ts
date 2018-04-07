@@ -27,10 +27,10 @@ export class TabReports {
     }
         
     onRetrieveAllProjects(theDlgPrjSelector){
-        callback(["a","b","c","d"]);
+        theDlgPrjSelector.populateAllProjects();
     }
     onRetrievePreviousSelectedProjects(theDlgPrjSelector){
-        callback(["b","d"]);
+        theDlgPrjSelector.selectProjects();
     }
 
     getProjects(){

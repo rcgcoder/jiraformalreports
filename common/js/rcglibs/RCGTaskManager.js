@@ -22,6 +22,7 @@ class RCGBarrier{
 		}
 		self.nItems--;
 		if (self.nItems<=0){
+			log("Barrier reached!");
 			setTimeout(self.callback);
 		} 
 	}

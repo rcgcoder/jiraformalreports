@@ -130,6 +130,9 @@ class RCGAtlassian{
 				nLast=nInit+nResults;
 				arrResults=arrResults.concat(objResp[resultName]);
 				if (nLast<nTotal){
+					self.pushCallback(function(){
+						self.popCallback(arrResults);
+					});
 					while (nLast<nTotal){
 						var nBlockItems=nResults;
 						if (nLast+nBlockItems>nTotal){

@@ -131,7 +131,7 @@ class RCGJira{
 			}
 			self.popCallback([self.filters]);
 		});
-		self.apiCall("rest/api/2/filter");//,"GET",data);
+		self.apiCall("/rest/api/2/filter");//,"GET",data);
 	}
 	getAllIssues(){
 		var self=this;

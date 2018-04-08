@@ -102,15 +102,35 @@ class ZipWebApp{
         }
         return arrProjects;
 	}
+	getListEpics(){
+		var self=this;
+        var jira=self.getJira();
+        var arrEpics=[];
+        for (var i=0;i<jira.epics.length;i++){
+            var epic=jira.epics[i];
+            arrEpics.push({key:epic.key,name:epic.name});
+        }
+        return arrEpics;
+	}
+	getListLabels(){
+		var self=this;
+        var jira=self.getJira();
+        var arrLabels=[];
+        for (var i=0;i<jira.labels.length;i++){
+            var lbl=jira.labels[i];
+            arrLabels.push({key:lbl,name:lbl});
+        }
+        return arrLabels;
+	}
 	run(){
 		log("starting ZipWebApp");
 		var self=this;
 		self.addStep("Initializing engines.... ",self.initialize);
 		self.addStep("Populating components.... ",function(){
-            var arrPrjs=self.getListProjects();
-            System.getAngularObject('advSelector[name="selProjects"]').fillOptions(arrPrjs);
-            var arrTypes=self.getListIssueTypes();
-            System.getAngularObject('advSelector[name="selTypes"]').fillOptions(arrTypes);
+            System.getAngularObject('advSelector[name="selProjects"]').fillOptions(self.getListProjects());
+            System.getAngularObject('advSelector[name="selTypes"]').fillOptions(self.getListIssueTypes());
+            System.getAngularObject('advSelector[name="selLabels"]').fillOptions(self.getListLabels());
+            System.getAngularObject('advSelector[name="selEpics"]').fillOptions(self.getListEpics());
 			$("#appMain").css('visibility','visible');
 			self.continueTask();
 		});

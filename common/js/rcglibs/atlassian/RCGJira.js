@@ -115,6 +115,7 @@ class RCGJira{
 		var self=this;
 		self.pushCallback(function(response,xhr,sUrl,headers){
 			log("getAllEpics:"+response);
+			self.epics=response;
 			self.popCallback();
 		});
 		self.getFullList("/rest/api/2/search?jql=issueType=epic","issues");//,"GET",data);

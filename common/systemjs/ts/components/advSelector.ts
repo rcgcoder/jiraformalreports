@@ -7,7 +7,7 @@ export class advSelector {
     @Input() name: string = 'advSelection';
     @Input() typeDescriptor: string = 'elements';
     @Input() openDialogCaption: string = '...';
-    
+    elements: [] = [];
     getSelect(){
         return AJS.$('[name="'+this.name+'-select"]');
     }
@@ -19,10 +19,17 @@ export class advSelector {
         });
     }
     fillOptions(arrOptions){
-        var objSelector=AJS.$('[name="'+this.name+'-select"]');
+        this.elements=arrOptions;
+        var objSelector=this.getSelect();
         for (var i=0;i<arrOptions.length;i++){
-            var opt=arrOptions[i];
-            objSelector.append('<option value="'+opt.key+'">'+opt.name+'</option>');
+            var opt=this.elements[i];
+            var sKey=opt.key;
+            var sName=opt.name;
+            var sDescription=opt.description;
+            if (typeof sDescription==="undefined"){
+                sDescription=sName;
+            }
+            objSelector.append('<option value="'+sKey+'">'+sName+'</option>');
         }
     }
     onSelected(selectedKeys: []) {
@@ -33,14 +40,25 @@ export class advSelector {
     }
         
     onRetrieveTableData(theDlgSelector){
-        var theSelect=this.getSelect();
         var nOps=theSelect[0].length;
         var arrTable=[];
         for (var i=0;i<nOps;i++){
             var opt=theSelect[0][i];
             var key=opt.value;
             var name=opt.text;
-            arrTable.push({key:key,name:name,selected:opt.selected});
+            var isSelected=opt.selected;
+            var description=name;
+            var bLocated=false;
+            for (var j=0;(!bLocated)&&(j<this.elements.length);j++){
+                var elem=this.elements[j];
+                if (elem.key==key){
+                    bLocated=true;
+                    if (typeof elem.description!=="undefined"){
+                        description=elem.description;
+                    }
+                }
+            }
+            arrTable.push({key:key,name:description,selected:isSelected});
         }
         theDlgSelector.populateTable(arrTable);
     }

@@ -108,7 +108,7 @@ class ZipWebApp{
         var arrEpics=[];
         for (var i=0;i<jira.epics.length;i++){
             var epic=jira.epics[i];
-            arrEpics.push({key:epic.key,name:epic.fields.summary});
+            arrEpics.push({key:epic.key,name:epic.key,description:epic.fields.summary});
         }
         return arrEpics; 
 	}

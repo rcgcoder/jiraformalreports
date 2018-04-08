@@ -124,7 +124,7 @@ class ZipWebApp{
             var filter=jira.filters[i];
             arrFilters.push({key:filter.id,name:filter.name});
         }
-        return arrEpics; 
+        return arrFilters; 
 	}
 	getListLabels(){
 		var self=this;

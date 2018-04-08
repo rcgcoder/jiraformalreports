@@ -23,7 +23,12 @@ export class TabReports {
     doOpenJQL(){
         var win = window.open("https://paega2.atlassian.net/issues/?jql=", '_blank');
         win.focus();
+        var fncCheckUrl=function(){
+            log(win.location.href);
+            setTimeout(fncCheckUrl,1000);
+        }
         this.tabOpened=win;
+        fncCheckUrl();
     }
 
     @Input() header: string = 'this is header';   

@@ -41,7 +41,7 @@ export class advSelector {
         
     onRetrieveTableData(theDlgSelector){
         var theSelect=this.getSelect();
-        var nOps=theSelect[0].length;
+        var nOps=theSelect[0].length; 
         var arrTable=[];
         for (var i=0;i<nOps;i++){
             var opt=theSelect[0][i];

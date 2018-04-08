@@ -146,7 +146,7 @@ class RCGAtlassian{
 					});
 					self.continueTask();
 				} else {
-					self.popCallback(arrResults);
+					self.popCallback([arrResults]);
 				}
 			});
 			self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,undefined,callback,arrHeaders);

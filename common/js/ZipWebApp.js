@@ -110,7 +110,7 @@ class ZipWebApp{
             var epic=jira.epics[i];
             arrEpics.push({key:epic.key,name:epic.fields.summary});
         }
-        return arrEpics;
+        return arrEpics; 
 	}
 	getListLabels(){
 		var self=this;

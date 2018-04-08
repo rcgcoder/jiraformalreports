@@ -130,17 +130,20 @@ class RCGAtlassian{
 				nLast=nInit+nResults;
 				arrResults=arrResults.concat(objResp[resultName]);
 				if (nLast<nTotal){
-					self.pushCallback(function(){
+					self.addStep("Adding all blocks of response...",function(){
+						while (nLast<nTotal){
+							var nBlockItems=nResults;
+							if (nLast+nBlockItems>nTotal){
+								nBlockItems=nTotal-nLast;
+							}
+							fncAddIteration(nLast,nTotal,nBlockItems);
+							nLast+=nResults;
+						}
+						self.continueTask();
+					});
+					self.addStep("Returning all the results...",function(){
 						self.popCallback(arrResults);
 					});
-					while (nLast<nTotal){
-						var nBlockItems=nResults;
-						if (nLast+nBlockItems>nTotal){
-							nBlockItems=nTotal-nLast;
-						}
-						fncAddIteration(nLast,nTotal,nBlockItems);
-						nLast+=nResults;
-					}
 					self.continueTask();
 				} else {
 					self.popCallback(arrResults);

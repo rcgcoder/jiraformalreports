@@ -110,7 +110,7 @@ class RCGAtlassian{
 						}
 						arrResults=arrResults.concat(objResp[resultName]);
 						log("Retrieved "+resultName+":"+arrResults.length);
-						self.popCallback();
+						self.popCallback(arrResults);
 					});
 					self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,undefined,callback,arrHeaders);
 			},0,nBlockItems,undefined,undefined,undefined,"INNER",undefined

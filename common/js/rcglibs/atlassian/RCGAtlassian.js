@@ -142,7 +142,7 @@ class RCGAtlassian{
 						self.continueTask();
 					});
 					self.addStep("Returning all the results...",function(){
-						self.popCallback(arrResults);
+						self.popCallback([arrResults]);
 					});
 					self.continueTask();
 				} else {

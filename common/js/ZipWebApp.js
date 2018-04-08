@@ -67,6 +67,10 @@ class ZipWebApp{
 			var jira=self.getJira();
 			jira.getAllLabels()
 		});
+		self.addStep("Getting All Filters.... ",function(){
+			var jira=self.getJira();
+			jira.getAllFilters();
+		});
 		/*
 		self.addStep("Getting All Epics.... ",function(){
 			var jira=self.getJira();
@@ -112,6 +116,16 @@ class ZipWebApp{
         }
         return arrEpics; 
 	}
+	getListFilters(){
+		var self=this;
+        var jira=self.getJira();
+        var arrFilters=[];
+        for (var i=0;i<jira.filters.length;i++){
+            var filter=jira.filters[i];
+            arrFilters.push({key:filter.id,name:filter.name});
+        }
+        return arrEpics; 
+	}
 	getListLabels(){
 		var self=this;
         var jira=self.getJira();
@@ -131,6 +145,7 @@ class ZipWebApp{
             System.getAngularObject('advSelector[name="selTypes"]').fillOptions(self.getListIssueTypes());
             System.getAngularObject('advSelector[name="selLabels"]').fillOptions(self.getListLabels());
             System.getAngularObject('advSelector[name="selEpics"]').fillOptions(self.getListEpics());
+            System.getAngularObject('advSelector[name="selFilters"]').fillOptions(self.getListFilters());
 			$("#appMain").css('visibility','visible');
 			self.continueTask();
 		});

@@ -21,6 +21,7 @@ class RCGJira{
 		self.issueTypes=[];
 		self.labels=[];
 		self.fields=[];
+		self.filters=[];
 	}
 	getProjectsAndMetaInfo(){
 		var self=this;
@@ -75,7 +76,7 @@ class RCGJira{
 					}
 				}
 			}
-			self.popCallback(response);
+			self.popCallback([self.projects]);
 		});
 		self.apiCall("/rest/api/latest/issue/createmeta?expand=projects.issuetypes.fields");
 	}
@@ -107,7 +108,7 @@ class RCGJira{
 					}
 				}
 			}
-			self.popCallback();
+			self.popCallback([self.labels]);
 		});
 		self.getFullList("/rest/api/2/search?jql=labels is not empty","issues");//,"GET",data);
 	}
@@ -116,9 +117,21 @@ class RCGJira{
 		self.pushCallback(function(response,xhr,sUrl,headers){
 			log("getAllEpics:"+response);
 			self.epics=response;
-			self.popCallback();
+			self.popCallback([self.epics]);
 		});
 		self.getFullList("/rest/api/2/search?jql=issueType=epic","issues");//,"GET",data);
+	}
+	getAllFilters(){
+		var self=this;
+		self.pushCallback(function(sResponse,xhr,sUrl,headers){
+			log("getAllFilters:"+response);
+			if (sResponse!=""){
+				var response=JSON.parse(sResponse);
+				self.filters=response;
+			}
+			self.popCallback([self.filters]);
+		});
+		self.apiCall("rest/api/2/filter");//,"GET",data);
 	}
 	getAllIssues(){
 		var self=this;

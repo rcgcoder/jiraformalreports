@@ -24,7 +24,12 @@ export class TabReports {
         var win = window.open("https://paega2.atlassian.net/issues/?jql=", '_blank');
         win.focus();
         var fncCheckUrl=function(){
-            log(win.location.href);
+            try {
+                log(win.location.href);
+            }
+            catch(err) {
+                log("Error"+err);
+            }
             setTimeout(fncCheckUrl,1000);
         }
         this.tabOpened=win;

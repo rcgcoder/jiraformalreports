@@ -6,7 +6,7 @@ import { Component, Input, Output, OnInit } from '@angular/core';
 })
 
 export class TabReports {
-    
+    tabOpened:{}='';
     ngOnInit() {
         var self=this;
         System.addPostProcess(function(){
@@ -19,6 +19,11 @@ export class TabReports {
             //AJS.$("#select2-example").append('<option value="test">Dyn Created</option>');
             //System.bindObj(self);
         });
+    }
+    doOpenJQL(){
+        var win = window.open("https://paega2.atlassian.net/issues/?jql=", '_blank');
+        win.focus();
+        this.tabOpened=win;
     }
 
     @Input() header: string = 'this is header';   

@@ -57,6 +57,16 @@ class ZipWebApp{
 			var jira=self.getJira();
 			jira.getProjectsAndMetaInfo();
 		});
+
+		self.addStep("Getting All Epics.... ",function(){
+			var jira=self.getJira();
+			jira.getAllEpics();
+		});
+		
+		self.addStep("Getting All Labels.... ",function(){
+			var jira=self.getJira();
+			jira.getAllLabels()
+		});
 		/*
 		self.addStep("Getting All Epics.... ",function(){
 			var jira=self.getJira();
@@ -68,10 +78,6 @@ class ZipWebApp{
 			cfc.getAllPages();
 		});
 		
-		self.addStep("Getting All Epics.... ",function(){
-			var jira=self.getJira();
-			jira.getAllEpics();
-		});
 
 		
 		self.continueTask();

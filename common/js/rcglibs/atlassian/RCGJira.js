@@ -17,12 +17,10 @@ class RCGJira{
 			atlassian.apiGetFullList(self, sTarget, resultName,callType, data, callback,arrHeaders);
 			};
 		self.projects=[];
+		self.epics=[];
 		self.issueTypes=[];
 		self.labels=[];
-		self.fields="";
-	}
-	getAllLabels(){
-		
+		self.fields=[];
 	}
 	getProjectsAndMetaInfo(){
 		var self=this;
@@ -61,6 +59,16 @@ class RCGJira{
 								if (typeof field==="object"){
 									var fldName=field.name;
 									var fldKey=field.key;
+									bExists=false;
+									for (var m=0;(!bExists)&&(m<self.fields.length);m++){
+										var fld=self.fields[m];
+										if (fld.key==fldKey){
+											bExists=true;
+										}
+									}
+									if (!bExists){
+										self.fields.push({key:fldKey,name:fldName});
+									}
 								} 
 							}
 						}
@@ -80,24 +88,36 @@ class RCGJira{
 		});
 		self.apiCall("/rest/api/2/project?expand=issueTypes");
 	}
+	getAllLabels(){
+		var self=this;
+		self.pushCallback(function(response,xhr,sUrl,headers){
+			for (var i=0;i<response.length;i++){
+				var issue=response[i];
+				for (var j=0;j<issue.fields.labels.length;j++){
+					var issLbl=issue.fields.labels[j];
+					var bExists=false;
+					for (var k=0;(!bExists)&&(k<self.labels.length);k++){
+						var lbl=self.labels[k];
+						if (lbl==issLbl){
+							bExists=true;
+						}
+					}
+					if (!bExists){
+						self.labels.push(issLbl);
+					}
+				}
+			}
+			self.popCallback();
+		});
+		self.getFullList("/rest/api/2/search?jql=labels is not empty","issues");//,"GET",data);
+	}
 	getAllEpics(){
 		var self=this;
 		self.pushCallback(function(response,xhr,sUrl,headers){
 			log("getAllEpics:"+response);
 			self.popCallback();
 		});
-		var data= {
-			      "jql": "issuetype=epic",
-/*			      "startAt": 0,
-			      "maxResults": 15,
-			      "fields": [
-			        "summary",
-			        "status",
-			        "assignee"
-			      ],
-			      "fieldsByKeys": false
-	*/		    };
-		self.apiCall("/rest/api/2/search?jql=issueType=epic");//,"GET",data);
+		self.getFullList("/rest/api/2/search?jql=issueType=epic","issues");//,"GET",data);
 	}
 	getAllIssues(){
 		var self=this;

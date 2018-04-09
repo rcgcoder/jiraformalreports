@@ -21,7 +21,8 @@ export class jqlExtendedParser {
     testNearley(){
         var p = new nearley.Parser(arithmetic.ParserRules, arithmetic.ParserStart);
         try {
-            var sFormula=this.getText().text();
+            var objFormula=this.getText()[0];
+            var sFormula=objFormula.text();
             p.feed(sFormula);
             if (!p.results[0]) {
                 throw new Error();

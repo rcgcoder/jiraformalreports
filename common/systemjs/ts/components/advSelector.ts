@@ -21,7 +21,7 @@ export class advSelector {
     }
     
     testNearley(){
-        var p = new nearley.Parser(arithmetic.ParserRules, arithmetic.ParserStart)
+        var p = new nearley.Parser(arithmetic.ParserRules, arithmetic.ParserStart);
         try {
             p.feed("3+5");
             if (!p.results[0]) {

@@ -5,6 +5,32 @@ import { Component, Input, Output, OnInit } from '@angular/core';
 })
 export class jqlExtendedParser {
     @Input() name: string = 'jqlExtendedParser';
+    getSelect(){
+        return AJS.$('[name="'+this.name+'-select"]');
+    }
+    ngOnInit() {
+        var self=this;
+        System.addPostProcess(function(){
+            self.getSelect().auiSelect2();
+            System.bindObj(self);
+            var objSelector=this.getSelect();
+            var arrOptions=[
+                           {key:"AND",name:"AND"},
+                           {key:"OR",name:"OR"},
+                           {key:"NOT",name:"NOT"},
+                           {key:"(",name:"("},
+                           {key:")",name:")"},
+                           {key:",",name:","}
+                           ];
+            for (var i=0;i<arrOptions.length;i++){
+                var opt=arrOptions[i];
+                var sKey=opt.key;
+                var sName=opt.name;
+                objSelector.append('<option value="'+sKey+'">'+sName+'</option>');
+            }
+        });
+    }
+
     getText(){
         return AJS.$('[name="'+this.name+'-input"]')[0];
     }
@@ -13,14 +39,7 @@ export class jqlExtendedParser {
     }
     doTestNearley(){
         this.testNearley();
-    }    
-    ngOnInit() {
-        var self=this;
-        System.addPostProcess(function(){
-            System.bindObj(self);
-        });
-    }
-    
+    }        
     testNearley(){
         
         var lexer = new Lexer;

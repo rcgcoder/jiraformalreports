@@ -22,18 +22,17 @@ export class advSelector {
     testNearley(){
         var p = new nearley.Parser(arithmetic.ParserRules, arithmetic.ParserStart);
         try {
-            p.feed("3+5");
+            var sFormula=(Math.random()*40)+"+"+(Math.random()*35);
+            p.feed(sFormula);
             if (!p.results[0]) {
                 throw new Error();
             }
             if (isNaN(p.results[0]) || p.results[0] === Infinity) {
                 throw new Error();
             }
-            inp.value = p.results[0].toString();
+            log("Parsing: "+sFormula+" Result:<"+p.results[0].toString()+">"):
         } catch(e) {
-            inp.value = "[error]";
-            inp.style.color = "red";
-            inp.select();
+            log("Parsing: "+sFormula+" Result:<ERROR>:<"+e.toString());
         }
     }    
     fillOptions(arrOptions){

@@ -21,7 +21,9 @@ export class TabReports {
             //System.bindObj(self);
         });
     }
- 
+    doTestNearley(){
+        System.getAngularObject('advSelector[name="selProjects"]').testNearley();
+    }
     doOpenJQL(){
         var win = window.open("https://paega2.atlassian.net/issues/?jql=", '_blank');
         win.focus();

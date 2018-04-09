@@ -6,7 +6,7 @@ import { Component, Input, Output, OnInit } from '@angular/core';
 export class jqlExtendedParser {
     @Input() name: string = 'jqlExtendedParser';
     getText(){
-        return AJS.$('[name="'+this.name+'"]');
+        return AJS.$('[name="'+this.name+'-input"]');
     }
     doTestNearley(){
         this.testNearley();

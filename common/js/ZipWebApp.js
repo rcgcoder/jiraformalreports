@@ -82,6 +82,9 @@ class ZipWebApp{
 			cfc.getAllPages();
 		});
 		
+		self.addStep("Import nearley grammar.... ",function(){
+			this.loadRemoteFile("js/grammar/grammar.js");
+		});
 
 		
 		self.continueTask();

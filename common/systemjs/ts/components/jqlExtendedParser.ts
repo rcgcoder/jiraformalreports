@@ -23,27 +23,19 @@ export class jqlExtendedParser {
     
     testNearley(){
         
-        var row = 1;
-        var col = 1;
+        var lexer = new Lexer;
 
-        var lexer = new Lexer(function (char) {
-            throw new Error("Unexpected character at row " + row + ", col " + col + ": " + char);
+        lexer.addRule(/^ */gm, function (lexeme) {
+            console.log(lexeme.length);
         });
 
-        lexer.addRule(/\n/, function () {
-            row++;
-            col = 1;
-        }, []);
+        lexer.addRule(/[0-9]+/, function (lexeme) {
+            console.log(lexeme);
+        });
 
-        lexer.addRule(/./, function () {
-            this.reject = true;
-            col++;
-        }, []);
+        lexer.setInput("37");
 
-        lexer.input = "Hello World!";
-
-        lexer.lex();
-        
+        lexer.lex();        
         
         
         var p = new nearley.Parser(arithmetic.ParserRules, arithmetic.ParserStart);

@@ -1,4 +1,5 @@
 import { Component, Input, Output } from '@angular/core';
+import { nearley } from 'nearley'
 @Component({
   selector: 'tabConfig',
   templateUrl: System.composeUrl('systemjs/html/tab.config.html'),

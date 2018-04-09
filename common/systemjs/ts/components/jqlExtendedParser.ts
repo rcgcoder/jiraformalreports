@@ -28,7 +28,7 @@ export class jqlExtendedParser {
                 var sKey=opt.key;
                 var sName=opt.name;
                 var sOperator=opt.type;
-                objSelector.append('<option value="'+sKey+'" optType="'+sOperator+'">'+sName+'</option>');
+                objSelector.append('<option value="'+sKey+'->0" optType="'+sOperator+'">'+sName+'</option>');
             }
         });
     }
@@ -40,7 +40,7 @@ export class jqlExtendedParser {
             var sKey=opt.key;
             var sName=opt.name;
             var sOperator="Field";
-            objSelector.append('<option value="'+sKey+'" optType="'+sOperator+'">'+sName+'</option>');
+            objSelector.append('<option value="'+sKey+'->0" optType="'+sOperator+'">'+sName+'</option>');
         }
     }
     getText(){

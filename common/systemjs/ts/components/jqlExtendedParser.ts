@@ -6,10 +6,10 @@ import { Component, Input, Output, OnInit } from '@angular/core';
 export class jqlExtendedParser {
     @Input() name: string = 'jqlExtendedParser';
     getText(){
-        return AJS.$('[name="'+this.name+'-input"]');
+        return AJS.$('[name="'+this.name+'-input"]')[0];
     }
     getResult(){
-        return AJS.$('[name="'+this.name+'-result"]');
+        return AJS.$('[name="'+this.name+'-result"]')[0];
     }
     doTestNearley(){
         this.testNearley();
@@ -24,7 +24,7 @@ export class jqlExtendedParser {
     testNearley(){
         var p = new nearley.Parser(arithmetic.ParserRules, arithmetic.ParserStart);
         try {
-            var objFormula=this.getText()[0];
+            var objFormula=this.getText();
             var sFormula=objFormula.value.trim(); 
             p.feed(sFormula);
             if (!p.results[0]) {

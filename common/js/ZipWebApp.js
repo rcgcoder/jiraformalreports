@@ -144,6 +144,16 @@ class ZipWebApp{
         }
         return arrLabels;
 	}
+	getListFields(){
+		var self=this;
+        var jira=self.getJira();
+        var arrFields=[];
+        for (var i=0;i<jira.fields.length;i++){
+            var fld=jira.fields[i];
+            arrFields.push({key:fld.key,name:fld.name});
+        }
+        return arrFields;
+	}
 	run(){
 		log("starting ZipWebApp");
 		var self=this;
@@ -154,6 +164,7 @@ class ZipWebApp{
             System.getAngularObject('advSelector[name="selLabels"]').fillOptions(self.getListLabels());
             System.getAngularObject('advSelector[name="selEpics"]').fillOptions(self.getListEpics());
             System.getAngularObject('advSelector[name="selFilters"]').fillOptions(self.getListFilters());
+            System.getAngularObject('advSelector[name="testJQL"]').fillFields(self.getListFields());
             System.getAngularObject('advSelector[name="selProjects"]').testNearley();
 			$("#appMain").css('visibility','visible');
 			self.continueTask();

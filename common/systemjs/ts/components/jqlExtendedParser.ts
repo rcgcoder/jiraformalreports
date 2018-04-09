@@ -15,22 +15,34 @@ export class jqlExtendedParser {
             System.bindObj(self);
             var objSelector=self.getSelect();
             var arrOptions=[
-                           {key:"AND",name:"AND"},
-                           {key:"OR",name:"OR"},
-                           {key:"NOT",name:"NOT"},
-                           {key:"(",name:"("},
-                           {key:")",name:")"},
-                           {key:",",name:","}
+                           {key:"previous",name:"Previous.",type:"previous"},
+                           {key:"AND",name:"AND",type:"Operator"},
+                           {key:"OR",name:"OR",type:"Operator"},
+                           {key:"NOT",name:"NOT",type:"Operator"},
+                           {key:"(",name:"(",type:"Operator"},
+                           {key:")",name:")",type:"Operator"},
+                           {key:",",name:",",type:"Operator"}
                            ];
             for (var i=0;i<arrOptions.length;i++){
                 var opt=arrOptions[i];
                 var sKey=opt.key;
                 var sName=opt.name;
-                objSelector.append('<option value="'+sKey+'">'+sName+'</option>');
+                var sOperator=opt.type;
+                objSelector.append('<option value="'+sKey+'" optType="'+sOperator+'">'+sName+'</option>');
             }
         });
     }
-
+    fillFields(arrOptions){
+        var self=this;
+        var objSelector=self.getSelect();
+        for (var i=0;i<arrOptions.length;i++){
+            var opt=arrOptions[i];
+            var sKey=opt.key;
+            var sName=opt.name;
+            var sOperator="Field";
+            objSelector.append('<option value="'+sKey+'" optType="'+sOperator+'">'+sName+'</option>');
+        }
+    }
     getText(){
         return AJS.$('[name="'+this.name+'-input"]')[0];
     }

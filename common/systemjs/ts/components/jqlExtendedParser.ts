@@ -22,7 +22,7 @@ export class jqlExtendedParser {
         var p = new nearley.Parser(arithmetic.ParserRules, arithmetic.ParserStart);
         try {
             var objFormula=this.getText()[0];
-            var sFormula=objFormula.text();
+            var sFormula=objFormula.value.trim();
             p.feed(sFormula);
             if (!p.results[0]) {
                 throw new Error();

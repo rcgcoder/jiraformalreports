@@ -164,9 +164,9 @@ class ZipWebApp{
             System.getAngularObject('advSelector[name="selLabels"]').fillOptions(self.getListLabels());
             System.getAngularObject('advSelector[name="selEpics"]').fillOptions(self.getListEpics());
             System.getAngularObject('advSelector[name="selFilters"]').fillOptions(self.getListFilters());
-/*            var objTestJQL=System.getAngularObject('advSelector[name="testJQL"]');
+            var objTestJQL=System.getAngularObject('jqlextendedparser[name="testJQL"]');
             objTestJQL.fillFields(self.getListFields());
-            System.getAngularObject('advSelector[name="selProjects"]').testNearley();
+/*            System.getAngularObject('advSelector[name="selProjects"]').testNearley();
 */			$("#appMain").css('visibility','visible');
 			self.continueTask();
 		});

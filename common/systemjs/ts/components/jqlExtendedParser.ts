@@ -13,7 +13,7 @@ export class jqlExtendedParser {
         System.addPostProcess(function(){
             self.getSelect().auiSelect2();
             System.bindObj(self);
-            var objSelector=this.getSelect();
+            var objSelector=self.getSelect();
             var arrOptions=[
                            {key:"AND",name:"AND"},
                            {key:"OR",name:"OR"},

@@ -1,5 +1,6 @@
 import { Component, Input, Output, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'tabReports',
   templateUrl: System.composeUrl('systemjs/html/tab.reports.html')
@@ -20,6 +21,7 @@ export class TabReports {
             //System.bindObj(self);
         });
     }
+ 
     doOpenJQL(){
         var win = window.open("https://paega2.atlassian.net/issues/?jql=", '_blank');
         win.focus();

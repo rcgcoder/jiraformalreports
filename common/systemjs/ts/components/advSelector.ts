@@ -1,4 +1,5 @@
 import { Component, Input, Output, OnInit } from '@angular/core';
+import { nearley } from 'nearley'
 @Component({
   selector: 'advSelector',
   templateUrl: System.composeUrl('systemjs/html/components/advSelector.html'),
@@ -18,6 +19,24 @@ export class advSelector {
             System.bindObj(self);
         });
     }
+    
+    testNearley(){
+        var p = new nearley.Parser(arithmetic.ParserRules, arithmetic.ParserStart)
+        try {
+            p.feed(3+5);
+            if (!p.results[0]) {
+                throw new Error();
+            }
+            if (isNaN(p.results[0]) || p.results[0] === Infinity) {
+                throw new Error();
+            }
+            inp.value = p.results[0].toString();
+        } catch(e) {
+            inp.value = "[error]";
+            inp.style.color = "red";
+            inp.select();
+        }
+    }    
     fillOptions(arrOptions){
         this.elements=arrOptions;
         var objSelector=this.getSelect();

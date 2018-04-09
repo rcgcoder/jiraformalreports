@@ -149,6 +149,7 @@ class ZipWebApp{
             System.getAngularObject('advSelector[name="selLabels"]').fillOptions(self.getListLabels());
             System.getAngularObject('advSelector[name="selEpics"]').fillOptions(self.getListEpics());
             System.getAngularObject('advSelector[name="selFilters"]').fillOptions(self.getListFilters());
+            System.getAngularObject('advSelector[name="selProjects"]').testNearly();
 			$("#appMain").css('visibility','visible');
 			self.continueTask();
 		});

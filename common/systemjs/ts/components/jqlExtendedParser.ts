@@ -8,6 +8,9 @@ export class jqlExtendedParser {
     getText(){
         return AJS.$('[name="'+this.name+'-input"]');
     }
+    getResult(){
+        return AJS.$('[name="'+this.name+'-result"]');
+    }
     doTestNearley(){
         this.testNearley();
     }    
@@ -31,7 +34,9 @@ export class jqlExtendedParser {
                 throw new Error();
             }
             log("Parsing: "+sFormula+" Result:<"+p.results[0].toString()+">"):
+            this.getResult().value=p.results[0].toString();
         } catch(e) {
+            this.getResult().value="Error:" + e.toString():
             log("Parsing: "+sFormula+" Result:<ERROR>:<"+e.toString());
         }
     }    

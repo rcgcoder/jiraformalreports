@@ -84,6 +84,7 @@ class ZipWebApp{
 		
 		self.addStep("Import nearley grammar.... ",function(){
 			var arrFiles=[	//"ts/demo.ts",
+				"js/libs/grammar/lexer.js",
 				"js/libs/grammar/nearley.js",
 				"js/libs/grammar/grammar.js"
 			 ]; //test

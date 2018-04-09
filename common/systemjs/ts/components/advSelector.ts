@@ -1,5 +1,4 @@
 import { Component, Input, Output, OnInit } from '@angular/core';
-import { nearley } from 'nearley'
 @Component({
   selector: 'advSelector',
   templateUrl: System.composeUrl('systemjs/html/components/advSelector.html'),

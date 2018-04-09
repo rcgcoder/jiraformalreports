@@ -83,7 +83,11 @@ class ZipWebApp{
 		});
 		
 		self.addStep("Import nearley grammar.... ",function(){
-			this.loadRemoteFile("js/grammar/grammar.js");
+			var arrFiles=[	//"ts/demo.ts",
+				"js/libs/grammar/nearley.js",
+				"js/libs/grammar/grammar.js"
+			 ]; //test
+			self.loadRemoteFiles(arrFiles);
 		});
 
 		

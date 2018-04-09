@@ -1,7 +1,7 @@
 <label for="{{name}}-id">JQL</label>
 <br>
+<br>
 <div class="select2-container select2-container-multi aui-select2-container select2-dropdown-open">
-	
 	<ul class="select2-choices">
 		<li class="select2-search-choice">
 			<div>Testing</div>
@@ -19,7 +19,25 @@
 	</ul>
 </div>
 <br>
-
+<div class="select2-container select2-container-multi aui-select2-container">
+	<ul class="select2-choices">
+		<li class="select2-search-choice">
+			<div>Testing</div>
+			<a href="#" onclick="return false;" class="select2-search-choice-close" tabindex="-1"></a>
+		</li>
+		<li class="select2-search-choice">
+			<div>Other Testing</div>
+			<a href="#" onclick="return false;" class="select2-search-choice-close" tabindex="-1"></a>
+		</li>
+		<li class="select2-search-field">
+			<input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="off"
+				class="select2-input">
+		</li>
+		
+	</ul>
+</div>
+<br>
+<br>
 <textarea class="textarea" name="{{name}}-input" id="{{name}}-id" placeholder="5+3+(8*4)"></textarea>
 <br>
 <button (click)="doTestNearley()" class="aui-button">test expresion</button>

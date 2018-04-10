@@ -1,9 +1,9 @@
 <label for="{{name}}-id">JQL</label>
 
-<textarea name="{{name}}-test2" (keyup)="onKeyUp($event)">
+<textarea name="{{name}}-input" (keyup)="onKeyUp($event)">
 </textarea>
 
-<select class="js-example-basic-single" name="{{name}}-select" >
+<select name="{{name}}-select" >
   <option value="AL">Alabama</option>
   <option value="AL2">Alabama2</option>
   <option value="AL3">Alabama3</option>
@@ -11,8 +11,3 @@
   <option value="WY">Wyoming</option>
 </select>
 
-<br>
-<textarea class="textarea" name="{{name}}-input" id="{{name}}-id" placeholder="5+3+(8*4)"></textarea>
-<br>
-<button (click)="doTestNearley()" class="aui-button">test expresion</button>
-<textarea class="textarea" name="{{name}}-result" id="{{name}}-result" placeholder="...."></textarea>

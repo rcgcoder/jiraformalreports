@@ -5,10 +5,14 @@ import { Component, Input, Output, OnInit } from '@angular/core';
 })
 export class jqlExtendedParser {
     sJQL:string ="";
-    objTextJQL:{}="";
+    arrSelects:[] ="";
+    fields:[]="";
+    suggestions:[]=[];
+    jqInput:{}="";
+    jqSelect:{}="";
     @Input() name: string = 'jqlExtendedParser';
-    getTextBox(){
-        return AJS.$('[name="'+this.name+'-test2"]');
+    getInput(){
+        return AJS.$('[name="'+this.name+'-input"]');
     }
     getSelect(){
         return AJS.$('[name="'+this.name+'-select"]');
@@ -20,12 +24,38 @@ export class jqlExtendedParser {
         var selStop=self.objTextJQL.prop("selectionEnd");
         log("["+selStart+","+selStop+"]:{"+self.sJQL+"}");
     }
+    initialice(fieldList){
+        var self=this;
+        self.suggestions=[];
+        var initSuggestions=[];
+        var grammar={
+            "Previous":{key:"previous",name:"Previous.",next:["Field","Not",OpenBlock]}
+            "Not":{key:"NOT",name:"NOT",next:["Previous","Field","Not","("]},
+            "(":{key:"(",name:"(",next:["Previous","Field","Not","("]},
+            "Operators":{key:[],}
+            
+            Not:{key:"previous",name:"Previous.",next:["Field","Not","("]}
+        };
+        var arrOptions=[
+                        {key:"previous",name:"Previous.",type:"Previous",next:["Field","Not","("]},
+                        {key:"NOT",name:"NOT",type:"Not",next:["Previous","Field","Not","("]},
+                        {key:"(",name:"(",type:"(",next:["Previous","Field","Not","("]}
+                        ];
+        for (var i=0;i<fieldList.length;i++){
+            var fld=fieldList[i];
+            arrOptions.push({key:fld.key,name:fld.name,type:"Field",next:["Operator"]});
+        }
+        
+        
+    }
     ngOnInit() {
         var self=this;
         System.addPostProcess(function(){
-            self.objTextJQL=self.getTextBox();
+            self.objTextJQL=self.getInput();
             self.getSelect().auiSelect2();
             System.bindObj(self);
+           
+            
             var objSelector=self.getSelect();
             var arrOptions=[
                            {key:"previous",name:"Previous.",type:"previous"},

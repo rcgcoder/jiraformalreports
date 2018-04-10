@@ -8,6 +8,9 @@ export class jqlExtendedParser {
     getSelect(){
         return AJS.$('[name="'+this.name+'-select"]');
     }
+    onKeyUp(event){
+        alert(event.toString());
+    }
     ngOnInit() {
         var self=this;
         System.addPostProcess(function(){

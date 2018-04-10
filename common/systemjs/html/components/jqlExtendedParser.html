@@ -1,7 +1,8 @@
 <label for="{{name}}-id">JQL</label>
 
-<textarea name="{{name}}-test2">
+<textarea name="{{name}}-test2" (keyup)="onKeyUp($event)">
 </textarea>
+
 <select class="js-example-basic-single" name="{{name}}-select" >
   <option value="AL">Alabama</option>
   <option value="AL2">Alabama2</option>

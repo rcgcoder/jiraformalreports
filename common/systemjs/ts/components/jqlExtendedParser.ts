@@ -17,7 +17,7 @@ export class jqlExtendedParser {
         var self=this;
         self.sJQL=self.objTextJQL.val();
         var selStart=self.objTextJQL.prop("selectionStart");
-        var selStop=self.objTextJQL.prop("selectionStop");
+        var selStop=self.objTextJQL.prop("selectionEnd");
         log("["+selStart+","+selStop+"]:{"+self.sJQL+"}");
     }
     ngOnInit() {

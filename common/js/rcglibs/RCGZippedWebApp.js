@@ -721,7 +721,7 @@ class RCGZippedApp{
 				          "js/libs/zip/zip.js"//,
 //						  "js/rcglibs/RCGBaseUtils.js",
 //						  "js/rcglibs/RCGUtils.js"
-		//	,
+		//	, 
 					//	  "js/libs/angular.min.js",
 					//	  "js/libs/typescript.min.js",
 					//	  "js/libs/typescript.compile.js"

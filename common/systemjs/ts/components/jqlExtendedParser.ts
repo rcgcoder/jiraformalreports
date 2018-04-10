@@ -4,16 +4,26 @@ import { Component, Input, Output, OnInit } from '@angular/core';
   templateUrl: System.composeUrl('systemjs/html/components/jqlExtendedParser.html'),
 })
 export class jqlExtendedParser {
+    sJQL:string ="";
+    objTextJQL:{}="";
     @Input() name: string = 'jqlExtendedParser';
+    getTextBox(){
+        return AJS.$('[name="'+this.name+'-test2"]');
+    }
     getSelect(){
         return AJS.$('[name="'+this.name+'-select"]');
     }
     onKeyUp(event){
-        alert(event.toString());
+        var self=this;
+        self.sJQL=self.objTextJQL.val();
+        var selStart=self.objTextJQL.prop("selectionStart");
+        var selStop=self.objTextJQL.prop("selectionStop");
+        log("["+selStart+","+selStop+"]:{"+self.sJQL+"}");
     }
     ngOnInit() {
         var self=this;
         System.addPostProcess(function(){
+            self.objTextJQL=self.getTextBox();
             self.getSelect().auiSelect2();
             System.bindObj(self);
             var objSelector=self.getSelect();

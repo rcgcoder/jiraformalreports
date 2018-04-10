@@ -11,7 +11,7 @@ export class jqlExtendedParser {
     ngOnInit() {
         var self=this;
         System.addPostProcess(function(){
-            self.getSelect().auiSelect2();
+            self.getSelect().auiSelect2({maximumSelectionLength:1 });
             System.bindObj(self);
             var objSelector=self.getSelect();
             var arrOptions=[

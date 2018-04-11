@@ -1,3 +1,4 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
@@ -16,11 +17,24 @@
         <link rel="stylesheet" type="text/css" href="stylesheet/content-assist.css" media="all" />
         <link rel="stylesheet" type="text/css" href="stylesheet/layout.css" media="all" />
     </head>
-    
-    
     <body>
-    ¿is changed?
         <div id="container">
+            <h2>Content assisted free text editor for Concrete metamodel</h2>
+            <p><a href="http://concrete-editor.org/">Concrete editor</a> is powerful web-based DSL editor.
+                It uses structured approach where appearance can be highly customized with HTML/CSS templates.
+                Creation of a language is based on defining specific metamodel and optionally javascript plugins.
+            </p>
+            <p>This project is simple free-text editor with code completion for Concrete metamodel.
+                Main idea was to create language looks similar to natural language. It is not polished too much
+                but it shows the concept. Source code is available on
+                <a href="http://github.com/mstefaniuk/Concrete-Freetext">Concrete-Freetext project page</a>.
+                Some details about implementation you can find on
+                <a href="http://eutechne.stefaniuk.info/2011/10/dsl-editor-with-code-completion-in.html"
+                    >DSL editor with code completion in Javascript</a> entry on my blog.</p>
+            <p>Dedicated language to edit Concrete metamodel has been designed similar to natural language used in analysis activity.
+                Basic sentence outline for an entity looks as 
+                <tt>&lt;EntityName&gt; (has &lt;Attribute&gt; as &lt;Name&gt; | contains &lt;EntityName&gt; as &lt;Name&gt; | has &lt;Name&gt; referring to &lt;EntityName&gt;)*</tt>.
+                Below you have an example with definition of Statemachine metamodel.</p>
             <div id="result-tree-wrapper">
                 <h3>Concrete metamodel result tree</h3>
                 <pre id="result-tree">No result tree.</pre>
@@ -59,6 +73,7 @@ VarRef extends Expression
  has obligatory variable referring to Variable.</textarea>
                 <div id="message" />
             </div>
+            
         </div>
         <script type="text/javascript">
             /* <![CDATA[ */

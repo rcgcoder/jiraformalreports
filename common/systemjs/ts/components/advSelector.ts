@@ -42,7 +42,22 @@ export class advSelector {
         } catch(e) {
             log("Parsing: "+sFormula+" Result:<ERROR>:<"+e.toString());
         }
-    }    
+    }
+    findElement(key,source){
+        var srcAux=source;
+        if (typeof srcAux==="undefined"){
+            srcAux=this.elements;
+        }
+        var bFound=false;
+        for (var j=0;(!bFound)&&(j<srcAux.length);j++){
+            var elem=srcAux[j];
+            if (elem.key==key){
+                return elem;
+                bFound=true;
+            }
+        }
+        return "";
+    }
     fillOptions(arrOptions){
         // key ---> the issue key
         // name ---> the name of the issue
@@ -55,27 +70,17 @@ export class advSelector {
             if (!$(this).selected) {
                 $(this).remove();
             } else {
-                var bFound=false;
-                for (var j=0;(!bFound)&&(j<prevElements.length);j++){
-                    var elem=prevElements[j];
-                    if (elem.key==$(this).val()){
-                        self.elements.push(elem);
-                        bFound=true;
-                    }
+                var elem=self.findElement($(this).val(),prevElements);
+                if (elem!=""){
+                    self.elements.push(elem);
                 }
             }
         });
         for (var i=0;i<arrOptions.length;i++){
             var opt=arrOptions[i];
             var sKey=opt.key;
-            var bFound=false;
-            for (var j=0;(!bFound) && (j<self.elements.length);j++){
-                var elem=self.elements[j];
-                if (elem.key==sKey){
-                   bFound=true;
-                }
-            }
-            if (!bFound){
+            var elem=self.findElement(sKey);
+            if (elem==""){
                 var sName=opt.name;
                 var sDescription=opt.description;
                 this.elements.push(opt);
@@ -98,26 +103,22 @@ export class advSelector {
     }
         
     onRetrieveTableData(theDlgSelector){
-        var theSelect=this.getSelect();
+        var self=this;
+        var theSelect=self.getSelect();
         var nOps=theSelect[0].length; 
         var arrTable=[];
         for (var i=0;i<nOps;i++){
             var opt=theSelect[0][i];
             var key=opt.value;
-            var name=opt.text;
-            var isSelected=opt.selected;
-            var description=name;
-            var bLocated=false;
-            for (var j=0;(!bLocated)&&(j<this.elements.length);j++){
-                var elem=this.elements[j];
-                if (elem.key==key){
-                    bLocated=true;
-                    if (typeof elem.description!=="undefined"){
-                        description=elem.description;
-                    }
-                }
+            var elem=self.findElement(key);
+            if (elem==""){
+                log("Error.....the "+key+" element is not exists in elements array");
             }
-            arrTable.push({key:key,name:description,selected:isSelected});
+        
+            var name=elem.name;
+            var isSelected=opt.selected;
+            var description=elem.description;
+            arrTable.push({key:key,name:name,description:description,selected:isSelected});
         }
         theDlgSelector.populateTable(arrTable);
     }

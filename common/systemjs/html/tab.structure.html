@@ -1,7 +1,12 @@
 <div tab-result>
 	Epics 
 	<!-- onSelectedProjects($event) -->
-	<dlgSelectionTable name="EpicSelector" (onSelected)="alert('Seleccionado')"></dlgSelectionTable>
-	<button (click)="doOpenJQL()" class="aui-button">Open JQL Tab</button>
+    Epics <advSelector name="selEpicsToReport" typeDescriptor="Epics">
+    </advSelector>	
+	<label for="jqlEdit">Comment</label>
+        <textarea class="textarea" name="jqlEdit"
+                  id="jqlEdit" placeholder="Your jql here..."></textarea>    
+    
+    <button (click)="doOpenJQL()" class="aui-button">Open JQL Tab</button>
 
 </div>

@@ -1,1 +1,7 @@
-<div tab-result>lorem ipsum result</div>
+<div tab-result>
+	Epics 
+	<!-- onSelectedProjects($event) -->
+	<dlgSelectionTable name="EpicSelector" (onSelected)="alert('Seleccionado')"></dlgSelectionTable>
+	<button (click)="doOpenJQL()" class="aui-button">Open JQL Tab</button>
+
+</div>

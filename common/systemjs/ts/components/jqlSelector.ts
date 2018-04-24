@@ -37,7 +37,7 @@ export class jqlSelector extends advSelector {
                     var issue=issueList[i];
                     arrIssues.push({key:issue.key,name:issue.key,description:issue.fields.summary});
                 }
-                this.fillOptions(arrIssues);
+                self.fillOptions(arrIssues);
                 theSuper.prototype.onRetrieveTableData.call(self, theDlgSelector);
             });
             System.webapp.continueTask();

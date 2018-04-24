@@ -11,16 +11,14 @@ export class dlgSelectionTable {
     @Output() onRetrieveTableData = new EventEmitter<{}>();
     @Output() onRetrievePreviousSelectedKeys = new EventEmitter<{}>();
     waitForLoadTable=false;
-    changeWaiting(bWaiting){
-        if (this.waitForLoadTable!=bWaiting){
-            this.waitForLoadTable=bWaiting;
-            if (!this.waitForLoadTable){
-                this.getTable().show();
-                this.getWaiter().hide();
-            } else {
-                this.getTable().hide();
-                this.getWaiter().show();
-            }
+    setWaiting(bWaiting){
+        this.waitForLoadTable=bWaiting;
+        if (!this.waitForLoadTable){
+            this.getTable().show();
+            this.getWaiter().hide();
+        } else {
+            this.getTable().hide();
+            this.getWaiter().show();
         }
     }
     getDialog(){
@@ -68,6 +66,7 @@ export class dlgSelectionTable {
     doShowDialog(){
         var self=this;
         log("it´s clicked show button");
+        self.setWaiting(false);
         var arrValues=[];
         self.onRetrieveTableData.emit(self);
         self.onRetrievePreviousSelectedKeys.emit(self);

@@ -7,7 +7,7 @@ export class TabStructure {
     @Input() header: string = 'this is header';   
     @Input() footer: string = 'this is footer';
     @Input() name: string = 'tabStructure';
-   ngOnInit() {
+    ngOnInit() {
         var self=this;
         System.addPostProcess(function(){
             System.bindObj(self);

@@ -45,6 +45,13 @@ class RCGSystemJSManager{
 					var sClassName=(angObj.constructor.name).toLowerCase();
 					var sFinder=sClassName+'[name="'+theName+'"]';
 					var objHtml=$(sFinder);
+					if (objHtml.length==0){
+						sFinder=sClassName+'[ng-reflect-name="'+theName+'"]';
+						objHtml=$(sFinder);
+					}
+					if (objHtml.length==0){
+						log("There is not html component with name or ng-reflect-name equals to '"+theName+"'")
+					}
 					objHtml[0].angObject=angObj;
 				}
 			}

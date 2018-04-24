@@ -1,3 +1,4 @@
+{{typeDescriptor}}
 <select name="{{name}}-select" multiple=""></select>
 <dlgSelectionTable name="{{name}}-SelTable" typeDescriptor="{{typeDescriptor}}" openDialogCaption="{{openDialogCaption}}"
 	(onSelected)="onSelected($event)"
@@ -5,3 +6,7 @@
 	(onRetrievePreviousSelectedKeys)="onRetrievePreviousSelectedKeys($event)"
 >
 </dlgSelectionTable>
+<textarea class="textarea" name="{{name}}-jqlEdit"
+              id="{{name}}-jqlEdit" placeholder="Your jql here..."></textarea>    
+
+<button (click)="doOpenJQL()" class="aui-button">Open JQL Tab</button>

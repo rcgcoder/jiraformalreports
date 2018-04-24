@@ -167,6 +167,7 @@ class ZipWebApp{
             System.getAngularObject('advSelector[name="selLabels"]').fillOptions(self.getListLabels());
             System.getAngularObject('advSelector[name="selEpics"]').fillOptions(self.getListEpics());
             System.getAngularObject('advSelector[name="selFilters"]').fillOptions(self.getListFilters());
+            System.getAngularObject('advSelector[name="selFields"]').fillOptions(self.getListFields());
             var objTestJQL=System.getAngularObject('jqlextendedparser[name="testJQL"]');
             objTestJQL.fillFields(self.getListFields());
 /*            System.getAngularObject('advSelector[name="selProjects"]').testNearley();

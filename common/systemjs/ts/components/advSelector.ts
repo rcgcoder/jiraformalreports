@@ -67,7 +67,7 @@ export class advSelector {
         var prevElements=self.elements;
         self.elements=[];
         $(objSelector).find('option').each(function(){
-            if (!$(this).selected) {
+            if (!this.selected) {
                 $(this).remove();
             } else {
                 var elem=self.findElement($(this).val(),prevElements);

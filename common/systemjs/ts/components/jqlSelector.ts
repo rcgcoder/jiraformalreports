@@ -39,6 +39,7 @@ export class jqlSelector extends advSelector {
                 }
                 self.fillOptions(arrIssues);
                 theSuper.prototype.onRetrieveTableData.call(self, theDlgSelector);
+                System.webapp.continueTask();
             });
             System.webapp.continueTask();
             

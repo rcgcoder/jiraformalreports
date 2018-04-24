@@ -26,11 +26,15 @@ export class jqlSelector extends advSelector {
         } else {
             log("Diferent jql:"+sJQL);
             this.prev_jql=sJQL;
-            System.webapp.pushCallback(function(issueList){
+            System.webapp.addStep("Getting issues from JQL:"+sJQL, function(){
+                System.webapp.getJQLIssues(sJQL);
+            });
+            System.webapp.addStep("Retrieving issues once the search is done",function(issueList){
                 log(issueList.length);
                 theSuper.onRetrieveTableData(theDlgSelector);
             });
-            System.webapp.getJQLIssues(sJQL);
+            System.webapp.continueTask();
+            
         }
     }
 }

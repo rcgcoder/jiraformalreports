@@ -58,7 +58,7 @@ class ZipWebApp{
 			jira.getProjectsAndMetaInfo();
 		});
 */
-		self.addStep("Getting All Epics.... ",function(){
+		self.addStep("Getting All Epics  to do a list.... ",function(){
 			var jira=self.getJira();
 			jira.getAllEpics();
 		});

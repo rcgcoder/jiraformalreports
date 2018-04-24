@@ -70,7 +70,7 @@ export class advSelector {
             var sKey=opt.key;
             var bFound=false;
             for (var j=0;(!bFound) && (j<self.elements.length);j++){
-                var elem=prevElements[j];
+                var elem=self.elements[j];
                 if (elem.key==sKey){
                    bFound=true;
                 }

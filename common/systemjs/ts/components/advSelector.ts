@@ -12,7 +12,7 @@ export class advSelector {
         return AJS.$('[name="'+this.name+'-select"]');
     }
     getDialogObj(){
-        var objDlg=System.getAngularObject('dlgSelectionTable[name="'+this.name+'-SelTable"]');
+        var objDlg=System.getAngularObject('dlgSelectionTable[ng-reflect-name="'+this.name+'-SelTable"]');
         return objDlg;
     }
     setDialogWaiting(bWaiting){

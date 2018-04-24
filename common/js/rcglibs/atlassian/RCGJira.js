@@ -142,4 +142,11 @@ class RCGJira{
 		self.getFullList("/rest/api/2/search?expand=changelog","issues");
 		//expand=changelog&jql=updateddate>'2018/03/01'
 	}
+	getJQLIssues(jql){
+		var self=this;
+		self.pushCallback(function(response,xhr,sUrl,headers){
+			self.popCallback([response]);
+		});
+		self.getFullList("/rest/api/2/search?jql="+jql,"issues");
+	}
 }

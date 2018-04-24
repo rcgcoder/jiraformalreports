@@ -154,6 +154,11 @@ class ZipWebApp{
         }
         return arrFields;
 	}
+	getJQLIssues(jql){
+		var self=this;
+        var jira=self.getJira();
+    	jira.getJQLIssues(jql); // it does a popcallback at the end of process....
+	}
 	run(){
 		log("starting ZipWebApp");
 		var self=this;

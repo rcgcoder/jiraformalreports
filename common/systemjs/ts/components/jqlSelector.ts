@@ -15,16 +15,22 @@ export class jqlSelector extends advSelector {
     }
     
     onRetrieveTableData(theDlgSelector){
+        var theSuper=super;
         log("Retrienving table data on jqlSelector");
         var theSelect=this.getSelect();
         var theJQLBox=this.getJQLBox()[0];
         var sJQL=theJQLBox.value;
         if (this.prev_jql==sJQL){
             log("Same jql:"+sJQL);
+            theSuper.onRetrieveTableData(theDlgSelector);
         } else {
             log("Diferent jql:"+sJQL);
             this.prev_jql=sJQL;
+            System.webapp.pushCallback(function(issueList){
+                log(issueList.length);
+                theSuper.onRetrieveTableData(theDlgSelector);
+            });
+            System.webapp.getJQLIssues(sJQL);
         }
-        super.onRetrieveTableData(theDlgSelector);
     }
 }

@@ -11,8 +11,6 @@
     </header>
     <div class="aui-dialog2-content">
 		<aui-spinner id="wait_{{name}}" size="large"></aui-spinner>
-	    <button id="selAll_{{name}}" (click)="doSelectAll()" class="aui-button">Select All</button>
-	    <button id="unselAll_{{name}}" (click)="doUnselectAll()" class="aui-button">Unselect ALL</button>
 	    <table id="tbl_{{name}}" class="aui">
 		    <thead>
 		        <tr>
@@ -27,6 +25,8 @@
     </div>
     <footer class="aui-dialog2-footer">
         <div class="aui-dialog2-footer-actions">
+		    <button id="selAll_{{name}}" (click)="doSelectAll()" class="aui-button">Select All</button>
+		    <button id="unselAll_{{name}}" (click)="doUnselectAll()" class="aui-button">Unselect ALL</button>
             <button (click)="doAction()" class="aui-button aui-button-primary">Selected</button>
         </div>
     </footer>

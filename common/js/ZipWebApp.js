@@ -53,11 +53,11 @@ class ZipWebApp{
 			jira.getAllIssues();
 		});
 
-		self.addStep("Getting All Project, issuetypes and field info.... ",function(){
+/*		self.addStep("Getting All Project, issuetypes and field info.... ",function(){
 			var jira=self.getJira();
 			jira.getProjectsAndMetaInfo();
 		});
-
+*/
 		self.addStep("Getting All Epics.... ",function(){
 			var jira=self.getJira();
 			jira.getAllEpics();

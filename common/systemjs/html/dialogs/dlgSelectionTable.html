@@ -2,7 +2,7 @@
 <!-- id="{{name}}-show"-->
 <button (click)="doShowDialog()" class="aui-button">{{openDialogCaption}}</button>
 
-<section name="dlg_{{name}}" class="aui-dialog2 aui-dialog2-large aui-layer" role="dialog" aria-hidden="true">
+<section id="dlg_{{name}}" class="aui-dialog2 aui-dialog2-large aui-layer" role="dialog" aria-hidden="true">
     <header class="aui-dialog2-header">
         <h2 class="aui-dialog2-header-main">Select {{typeDescriptor}}</h2>
         <a class="aui-dialog2-header-close">

@@ -27,10 +27,10 @@ export class dlgSelectionTable {
         return dlgObj;
     }
     getTable(){
-        return $('[ng-reflect-name="'+"tbl_"+this.name+'"]');
+        return $("#tbl_"+this.name+'"]');
     }
     getWaiter(){
-        return $('[ng-reflect-name="'+"wait_"+this.name+'"]');
+        return $("#wait_"+this.name+'"]');
     }
     ngOnInit() {
         var self=this;

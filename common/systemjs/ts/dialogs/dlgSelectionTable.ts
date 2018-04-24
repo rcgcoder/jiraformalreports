@@ -97,14 +97,14 @@ export class dlgSelectionTable {
         var self=this;
         var tblAux=self.getTable();
         $(tblAux).find("aui-toggle").each(function(){
-            this.selected=true;
+            this.checked=true;
         });
     }
     doUnselectAll(){
         var self=this;
         var tblAux=self.getTable();
         $(tblAux).find("aui-toggle").each(function(){
-            this.selected=true;
+            this.checked=false;
         });
     }
 }

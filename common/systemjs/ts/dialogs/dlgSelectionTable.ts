@@ -16,10 +16,10 @@ export class dlgSelectionTable {
             this.waitForLoadTable=bWaiting;
             if (!this.waitForLoadTable){
                 this.getTable().show();
-                this.getWaiter().spinStop();
+                this.getWaiter().hide();
             } else {
                 this.getTable().hide();
-                this.getWaiter().spin();
+                this.getWaiter().show();
             }
         }
     }
@@ -31,7 +31,7 @@ export class dlgSelectionTable {
         return $("#tbl_"+this.name);
     }
     getWaiter(){
-        return AJS.$("#wait_"+this.name);
+        return $("#wait_"+this.name);
     }
     ngOnInit() {
         var self=this;

@@ -1,5 +1,5 @@
 import { Component, Input, Output, OnInit } from '@angular/core';
-import {advSelector};
+import {advSelector} from "./components/advSelector";
 @Component({
   selector: 'jqlSelector',
   templateUrl: System.composeUrl('systemjs/html/components/jqlSelector.html'),

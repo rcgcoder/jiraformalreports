@@ -32,6 +32,12 @@ export class jqlSelector extends advSelector {
             });
             System.webapp.addStep("Retrieving issues once the search is done",function(issueList){
                 log(issueList.length);
+                var arrIssues=[];
+                for (var i=0;i<issueList.length;i++){
+                    var issue=issueList[i];
+                    arrIssues.push({key:issue.key,name:issue.key,description:issue.fields.summary});
+                }
+                this.fillOptions(arrIssues);
                 theSuper.prototype.onRetrieveTableData.call(self, theDlgSelector);
             });
             System.webapp.continueTask();

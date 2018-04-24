@@ -87,7 +87,7 @@ export class advSelector {
                 if (typeof sDescription==="undefined"){
                     sDescription=sName;
                 }
-                var auxName=(sKey+"-"+sName);
+                var auxName=("["+sKey+"] "+sName);
                 if (auxName.length>20){
                     auxName=auxName.substring(0,17)+"...";
                 }

@@ -13,6 +13,7 @@ export class dlgSelectionTable {
     waitForLoadTable=false;
     changeWaiting(bWaiting){
         if (this.waitForLoadTable!=bWaiting){
+            this.waitForLoadTable=bWaiting;
             if (!this.waitForLoadTable){
                 this.getTable().show();
                 this.getWaiter().hide();

@@ -11,6 +11,7 @@ import {TabResult} from './tab.result';
 import {advSelector} from "./components/advSelector";
 import {dlgSelectionTable} from './dialogs/dlgSelectionTable';
 import {jqlExtendedParser} from './components/jqlExtendedParser';
+import {jqlSelector} from "./components/jqlSelector";
 
 
 @Component({
@@ -74,7 +75,8 @@ class App {
                     TabResult, 
                     dlgSelectionTable,
                     advSelector,
-                    jqlExtendedParser                
+                    jqlExtendedParser,
+                    jqlSelector
                 ],
   bootstrap: [ App ]
 })

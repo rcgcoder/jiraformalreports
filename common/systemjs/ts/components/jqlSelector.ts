@@ -18,7 +18,7 @@ export class jqlSelector extends advSelector {
         log("Retrienving table data on jqlSelector");
         var theSelect=this.getSelect();
         var theJQLBox=this.getJQLBox()[0];
-        var sJQL=theJQLBox.text();
+        var sJQL=theJQLBox.value;
         if (this.prev_jql==sJQL){
             log("Same jql:"+sJQL);
         } else {

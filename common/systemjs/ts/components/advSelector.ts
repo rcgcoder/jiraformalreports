@@ -44,21 +44,50 @@ export class advSelector {
         }
     }    
     fillOptions(arrOptions){
-        this.elements=arrOptions;
+        // key ---> the issue key
+        // name ---> the name of the issue
+        // description --> for the table
+        var self=this;
         var objSelector=this.getSelect();
-        var j=0;
-        while (j<objSelector.length){
-                j++;
-        }
-        for (var i=0;i<arrOptions.length;i++){
-            var opt=this.elements[i];
-            var sKey=opt.key;
-            var sName=opt.name;
-            var sDescription=opt.description;
-            if (typeof sDescription==="undefined"){
-                sDescription=sName;
+        var prevElements=self.elements;
+        self.elements=[];
+        $(objSelector).find('option').each(function(){
+            if (!$(this).selected) {
+                $(this).remove();
+            } else {
+                var bFound=false;
+                for (var j=0;(!bFound)&&(j<prevElements.length);j++){
+                    var elem=prevElements[j];
+                    if (elem.key==$(this).val()){
+                        self.elements.push(elem);
+                        bFound=true;
+                    }
+                }
             }
-            objSelector.append('<option value="'+sKey+'">'+sName+'</option>');
+        });
+        for (var i=0;i<arrOptions.length;i++){
+            var opt=arrOptions[i];
+            var sKey=opt.key;
+            var bFound=false;
+            for (var j=0;(!bFound) && (j<self.elements.length);j++){
+                var elem=prevElements[j];
+                if (elem.key==sKey){
+                   bFound=true;
+                }
+            }
+            if (!bFound){
+                var sName=opt.name;
+                var sDescription=opt.description;
+                this.elements.push(opt);
+                if (typeof sDescription==="undefined"){
+                    sDescription=sName;
+                }
+                var auxName=(sKey+"-"+sName);
+                if (auxName.length>20){
+                    auxName=auxName.substring(0,17)+"...";
+                }
+                objSelector.append('<option value="'+sKey+'">'+auxName+'</option>');
+            }
         }
     }
     onSelected(selectedKeys: []) {

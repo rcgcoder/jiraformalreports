@@ -15,6 +15,8 @@ export class jqlSelector extends advSelector {
     }
     
     onRetrieveTableData(theDlgSelector){
+        var self=this;
+        theSuper=_super;
         log("Retrieving table data on jqlSelector");
         var theSelect=this.getSelect();
         var theJQLBox=this.getJQLBox()[0];
@@ -30,7 +32,7 @@ export class jqlSelector extends advSelector {
             });
             System.webapp.addStep("Retrieving issues once the search is done",function(issueList){
                 log(issueList.length);
-                super.onRetrieveTableData(theDlgSelector);
+                theSuper.prototype.onRetrieveTableData.call(self, theDlgSelector);
             });
             System.webapp.continueTask();
             

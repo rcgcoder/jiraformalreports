@@ -9,6 +9,8 @@
             <span (click)="doCancel()" class="aui-icon aui-icon-small aui-iconfont-close-dialog">Close</span>
         </a>
     </header>
+    <button id="selAll_{{name}}" (click)="doSelectAll()" class="aui-button aui-button-primary">Select All</button>
+    <button id="unselAll_{{name}}" (click)="doUnselectAll()" class="aui-button aui-button-primary">Unselect ALL</button>
     <div class="aui-dialog2-content">
     
 		<aui-spinner id="wait_{{name}}" size="large"></aui-spinner>

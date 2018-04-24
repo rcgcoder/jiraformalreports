@@ -93,4 +93,18 @@ export class dlgSelectionTable {
     doCancel(){
         log("It´s Clicked do cancel");
     }
+    doSelectAll(){
+        var self=this;
+        var tblAux=self.getTable();
+        $(tblAux).find("aui-toggle").each(function(){
+            this.selected=true;
+        });
+    }
+    doUnselectAll(){
+        var self=this;
+        var tblAux=self.getTable();
+        $(tblAux).find("aui-toggle").each(function(){
+            this.selected=true;
+        });
+    }
 }

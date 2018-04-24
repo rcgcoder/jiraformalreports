@@ -18,15 +18,16 @@ export class jqlSelector extends advSelector {
         var self=this;
         var theSuper=_super;
         log("Retrieving table data on jqlSelector");
-        var theSelect=this.getSelect();
-        var theJQLBox=this.getJQLBox()[0];
+        var theSelect=self.getSelect();
+        var theJQLBox=self.getJQLBox()[0];
         var sJQL=theJQLBox.value;
-        if (this.prev_jql==sJQL){
+        if (self.prev_jql==sJQL){
             log("Same jql:"+sJQL);
             super.onRetrieveTableData(theDlgSelector);
         } else {
             log("Diferent jql:"+sJQL);
-            this.prev_jql=sJQL;
+            self.setDialogWaiting(true);
+            self.prev_jql=sJQL;
             System.webapp.addStep("Getting issues from JQL:"+sJQL, function(){
                 System.webapp.getJQLIssues(sJQL);
             });
@@ -39,10 +40,10 @@ export class jqlSelector extends advSelector {
                 }
                 self.fillOptions(arrIssues);
                 theSuper.prototype.onRetrieveTableData.call(self, theDlgSelector);
+                self.setDialogWaiting(false);
                 System.webapp.continueTask();
             });
             System.webapp.continueTask();
-            
         }
     }
 }

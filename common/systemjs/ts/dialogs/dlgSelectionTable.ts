@@ -10,11 +10,32 @@ export class dlgSelectionTable {
     @Output() onSelected = new EventEmitter<[]>();
     @Output() onRetrieveTableData = new EventEmitter<{}>();
     @Output() onRetrievePreviousSelectedKeys = new EventEmitter<{}>();
+    waitForLoadTable=false;
+    changeWaiting(bWaiting){
+        if (this.waitForLoadTable!=bWaiting){
+            if (!this.waitForLoadTable){
+                this.getTable().show();
+                this.getWaiter().hide();
+            } else {
+                this.getTable().hide();
+                this.getWaiter().show();
+            }
+        }
+    }
     getDialog(){
-        return AJS.dialog2("#"+"dlg_"+this.name);
+        var dlgObj=AJS.dialog2("#"+"dlg_"+this.name);
     }
     getTable(){
         return $("#"+"tbl_"+this.name);
+    }
+    getWaiter(){
+        return $("#"+"wait_"+this.name);
+    }
+    ngOnInit() {
+        var self=this;
+        System.addPostProcess(function(){
+            System.bindObj(self);
+        });
     }
 
     populateTable(tableData){
@@ -49,7 +70,7 @@ export class dlgSelectionTable {
         self.onRetrieveTableData.emit(self);
         self.onRetrievePreviousSelectedKeys.emit(self);
         log("Showind the dialog");
-        self.getDialog().show();
+        this.getDialog().show();
     }
     doAction(){
         log("It´s Clicked do action");

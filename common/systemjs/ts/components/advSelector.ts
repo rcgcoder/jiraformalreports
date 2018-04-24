@@ -11,6 +11,14 @@ export class advSelector {
     getSelect(){
         return AJS.$('[name="'+this.name+'-select"]');
     }
+    getDialogObj(){
+        var objDlg=System.getAngularObject('dlgSelectionTable[name="'+this.name+'-SelTable"]');
+        return objDlg;
+    }
+    setDialogWaiting(bWaiting){
+        var objDlg=this.getDialogObj();
+        objDlg.changeWaiting(bWaiting);
+    }
     ngOnInit() {
         var self=this;
         System.addPostProcess(function(){
@@ -38,6 +46,10 @@ export class advSelector {
     fillOptions(arrOptions){
         this.elements=arrOptions;
         var objSelector=this.getSelect();
+        var j=0;
+        while (j<objSelector.length){
+                j++;
+        }
         for (var i=0;i<arrOptions.length;i++){
             var opt=this.elements[i];
             var sKey=opt.key;

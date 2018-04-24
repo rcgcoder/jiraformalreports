@@ -32,7 +32,7 @@ class ZipWebApp{
 		var self=this;
 		self.addStep("Loading AUI components and CSS.... ",function(){
 			var arrFiles=[	//"ts/demo.ts",
-							"js/aui/js/aui.js"
+							"aui/js/aui.js"
 						 ]; //test
 			self.loadRemoteFiles(arrFiles);
 		});

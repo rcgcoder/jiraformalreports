@@ -23,13 +23,13 @@ export class dlgSelectionTable {
         }
     }
     getDialog(){
-        var dlgObj=AJS.dialog2("#"+"dlg_"+this.name);
+        var dlgObj=AJS.dialog2('[ng-reflect-name="'+"dlg_"+this.name+'"]');
     }
     getTable(){
-        return $("#"+"tbl_"+this.name);
+        return $('[ng-reflect-name="'+"tbl_"+this.name+'"]');
     }
     getWaiter(){
-        return $("#"+"wait_"+this.name);
+        return $('[ng-reflect-name="'+"wait_"+this.name+'"]');
     }
     ngOnInit() {
         var self=this;

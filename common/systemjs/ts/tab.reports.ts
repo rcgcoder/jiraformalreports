@@ -25,17 +25,6 @@ export class TabReports {
     doOpenJQL(){
         var win = window.open("https://paega2.atlassian.net/issues/?jql=", '_blank');
         win.focus();
-        var fncCheckUrl=function(){
-            try {
-                log(win.location.href);
-            }
-            catch(err) {
-                log("Error"+err);
-            }
-            setTimeout(fncCheckUrl,1000);
-        }
-        this.tabOpened=win;
-        fncCheckUrl();
     }
 
     @Input() header: string = 'this is header';   

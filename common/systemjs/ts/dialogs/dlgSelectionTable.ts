@@ -24,6 +24,7 @@ export class dlgSelectionTable {
     }
     getDialog(){
         var dlgObj=AJS.dialog2('#dlg_'+this.name);
+        return dlgObj;
     }
     getTable(){
         return $('[ng-reflect-name="'+"tbl_"+this.name+'"]');

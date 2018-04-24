@@ -23,7 +23,7 @@ export class dlgSelectionTable {
         }
     }
     getDialog(){
-        var dlgObj=AJS.dialog2('[ng-reflect-name="'+"dlg_"+this.name+'"]');
+        var dlgObj=AJS.dialog2('#dlg_'+this.name);
     }
     getTable(){
         return $('[ng-reflect-name="'+"tbl_"+this.name+'"]');

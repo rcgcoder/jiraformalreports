@@ -17,7 +17,7 @@ export class advSelector {
     }
     setDialogWaiting(bWaiting){
         var objDlg=this.getDialogObj();
-        objDlg.changeWaiting(bWaiting);
+        objDlg.setWaiting(bWaiting);
     }
     ngOnInit() {
         var self=this;

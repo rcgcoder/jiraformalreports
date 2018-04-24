@@ -36,12 +36,12 @@ class App {
             log("App loaded!");
             self.addStep("Applying AUI.... ",function(){
                 var arrFiles=[
-                              "https://aui-cdn.atlassian.com/aui-adg/6.0.9/js/aui.js",
-                              "https://aui-cdn.atlassian.com/aui-adg/6.0.9/css/aui.css",
-                              "https://aui-cdn.atlassian.com/aui-adg/6.0.9/css/aui-experimental.css",
-                              "https://aui-cdn.atlassian.com/aui-adg/6.0.9/js/aui-experimental.js",
-                              "https://aui-cdn.atlassian.com/aui-adg/6.0.9/js/aui-datepicker.js",
-                              "https://aui-cdn.atlassian.com/aui-adg/6.0.9/js/aui-soy.js"
+                              "aui/js/aui.js",
+                              "aui/css/aui.css",
+                              "aui/css/aui-experimental.css",
+                              "aui/js/aui-experimental.js",
+                              "aui/js/aui-datepicker.js",
+                              "aui/js/aui-soy.js"
                            ]; //test
                           System.webapp.loadRemoteFiles(arrFiles);
             });

@@ -28,16 +28,6 @@ class ZipWebApp{
 		}
 		return self.systemjs;
 	}
-	initializeAUI(){
-		var self=this;
-		self.addStep("Loading AUI components and CSS.... ",function(){
-			var arrFiles=[	//"ts/demo.ts",
-							"aui/js/aui.js"
-						 ]; //test
-			self.loadRemoteFiles(arrFiles);
-		});
-		self.continueTask();
-	}
 	initialize(){
 		var self=this;
 		log("Initializing engines of ZipWebApp");
@@ -171,7 +161,6 @@ class ZipWebApp{
 		log("starting ZipWebApp");
 		var self=this;
 		self.addStep("Initializing engines.... ",self.initialize);
-		self.addStep("Initializing AUI.... ",self.initializeAUI);
 		self.addStep("Populating components.... ",function(){
             System.getAngularObject('advSelector[name="selProjects"]').fillOptions(self.getListProjects());
             System.getAngularObject('advSelector[name="selTypes"]').fillOptions(self.getListIssueTypes());

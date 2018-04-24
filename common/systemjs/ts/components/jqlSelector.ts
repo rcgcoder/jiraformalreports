@@ -15,7 +15,7 @@ export class jqlSelector extends advSelector {
     }
     
     onRetrieveTableData(theDlgSelector){
-        var theSuper=_super;
+        var theSuper=_super.prototype;
         log("Retrieving table data on jqlSelector");
         var theSelect=this.getSelect();
         var theJQLBox=this.getJQLBox()[0];

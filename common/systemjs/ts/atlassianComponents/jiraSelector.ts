@@ -1,7 +1,7 @@
 import { Component, Input, Output, OnInit } from '@angular/core';
 import {advSelector} from "../components/advSelector";
 @Component({
-  selector: 'jqlSelector',
+  selector: 'jiraSelector',
   templateUrl: System.composeUrl('systemjs/html/atlassianComponents/jiraSelector.html'),
 })
 export class jiraSelector extends advSelector {

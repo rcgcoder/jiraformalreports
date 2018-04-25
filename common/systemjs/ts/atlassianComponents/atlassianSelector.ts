@@ -8,6 +8,7 @@ export class atlassianSelector extends advSelector {
     @Input() atlassianObjectProperty: string = 'fields';
     @Input() atlassianAplication: string = 'jira';
     @Input() retrieveDataFunction: string ='';
+    @Input() retrieveDataAsyncFunction: string ='';
     ngOnInit() {
         super.ngOnInit();
         var self=this;

@@ -23,7 +23,7 @@ export class dlgSelectionTable {
         }
     }
     hideButton(){
-        var btn=AJS.$('#show_'+this.name);
+        var btn=$('#show_'+this.name);
         btn.hide();
     }
     getDialog(){

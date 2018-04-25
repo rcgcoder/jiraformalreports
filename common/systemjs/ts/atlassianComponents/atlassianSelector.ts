@@ -7,7 +7,7 @@ import {advSelector} from "../components/advSelector";
 export class atlassianSelector extends advSelector {
     @Input() atlassianObjectProperty: string = undefined;
     @Input() atlassianAplication: string = undefined;
-    @Output() onRetrieveData = new EventEmitter<[]>();
+    @Output() onRetrieveData = new EventEmitter<{}>();
     ngOnInit() {
         super.ngOnInit();
         var self=this;

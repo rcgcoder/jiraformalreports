@@ -7,6 +7,7 @@ import {advSelector} from "../components/advSelector";
 export class atlassianSelector extends advSelector {
     @Input() atlassianObjectProperty: string = 'fields';
     @Input() atlassianAplication: string = 'jira';
+    @Input() retrieveDataFunction: string ='';
     ngOnInit() {
         super.ngOnInit();
         var self=this;
@@ -16,13 +17,18 @@ export class atlassianSelector extends advSelector {
     }
 
     getPropertyValues(){
-        var obj;
-        if (this.atlassianAplication.toUpperCase()=="JIRA"){
-            obj=System.webapp.getJira();
-        } else if (this.atlassianAplication.toUpperCase()=="CONFLUENCE"){
-            obj=System.webapp.getConfluence();
+        if (this.retrieveDataFunction==""){
+            var obj;
+            if (this.atlassianAplication.toUpperCase()=="JIRA"){
+                obj=System.webapp.getJira();
+            } else if (this.atlassianAplication.toUpperCase()=="CONFLUENCE"){
+                obj=System.webapp.getConfluence();
+            }
+            return obj[this.atlassianObjectProperty];
+        } else {
+            var fn = Function(this.retrieveDataFunction);
+            return fn();
         }
-        return obj[this.atlassianObjectProperty];
     }
     
     onRetrieveTableData(theDlgSelector){

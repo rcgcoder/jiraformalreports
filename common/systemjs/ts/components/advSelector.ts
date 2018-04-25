@@ -130,7 +130,7 @@ export class advSelector {
                 self.fillOptions(options);
                 System.webapp.continueTask();
             });
-        System.webapp.addStep("Populating the table",
+        System.webapp.addStep("Populating the table",function(){
                 var theSelect=self.getSelect();
                 var nOps=theSelect[0].length; 
                 var arrTable=[];

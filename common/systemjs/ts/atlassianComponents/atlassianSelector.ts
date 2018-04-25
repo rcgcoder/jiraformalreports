@@ -7,6 +7,14 @@ import {advSelector} from "../components/advSelector";
 export class atlassianSelector extends advSelector {
     @Input() atlassianObjectProperty: string = 'fields';
     @Input() atlassianAplication: string = 'jira';
+    ngOnInit() {
+        parent.ngOnInit();
+        var self=this;
+        System.addPostProcess(function(){
+            self.onRetrieveTableData();
+        });
+    }
+
     getPropertyValues(){
         var obj;
         if (this.atlassianAplication.toUpperCase()=="JIRA"){
@@ -23,6 +31,8 @@ export class atlassianSelector extends advSelector {
         var theSelect=self.getSelect();
         var arrOptions=self.getPropertyValues();
         self.fillOptions(arrOptions);
-        super.onRetrieveTableData(theDlgSelector);
+        if (typeof theDlgSelector!=="undefined"){
+            super.onRetrieveTableData(theDlgSelector);
+        }
     }
 }

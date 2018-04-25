@@ -28,13 +28,13 @@ export class atlassianSelector extends advSelector {
             return obj[this.atlassianObjectProperty];
         } else {
             var fnc=obj[this.atlassianObjectFunction];
-            fnc.apply(obj);
+            return fnc.apply(obj);
         }
     }
     
     onRetrieveTableData(theDlgSelector){
         var self=this;
-        log("Retrieving table data on jiraSelector property:"+self.jiraProperty);
+        log("Retrieving table data on jiraSelector");
         var theSelect=self.getSelect();
         var arrOptions=[];
         if ((typeof self.atlassianObjectProperty!=="undefined") 

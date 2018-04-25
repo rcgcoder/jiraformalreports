@@ -1,14 +1,9 @@
 <div tab-structure id={{name}}>
 	<!-- onSelectedProjects($event) -->
-    <jqlSelector name="selIssuesToReport" typeDescriptor="Report Root Issues">
+    <jqlSelector name="selIssuesToReport" typeDescriptor="Report Root Issues" multiple="true">
     </jqlSelector>	
-	Billing include issues field <select id="selBillingField" >
-								  <option value="AL">Alabama</option>
-								  <option value="AL2">Alabama2</option>
-								  <option value="AL3">Alabama3</option>
-								  <option value="AL4">Alabama4</option> 
-								  <option value="WY">Wyoming</option>
-								</select>
+	Billing include issues field <jiraSelector id="selBillingField" >
+								</jiraselector>
 	External Dependencies field 
 
 

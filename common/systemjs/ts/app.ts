@@ -12,7 +12,7 @@ import {advSelector} from "./components/advSelector";
 import {dlgSelectionTable} from './dialogs/dlgSelectionTable';
 import {jqlExtendedParser} from './components/jqlExtendedParser';
 import {jqlSelector} from "./atlassianComponents/jqlSelector";
-//import {jiraSelector} from "./atlassianComponents/jiraSelector";
+import {jiraSelector} from "./atlassianComponents/jiraSelector";
 
 
 @Component({

@@ -9,6 +9,7 @@ export class advSelector {
     @Input() multiple: string = "false";
     @Input() maxCharsInSelect: integer = 17;
     @Input() openDialogCaption: string = '...';
+    @Output() onRetrieveData = new EventEmitter<{}>();
     elements: [] = [];
     getSelect(){
         return AJS.$('[name="'+this.name+'-select"]');
@@ -30,6 +31,7 @@ export class advSelector {
             }
             theSelect.auiSelect2();
             System.bindObj(self);
+            self.onRetrieveTableData();
         });
     }
     
@@ -110,22 +112,41 @@ export class advSelector {
         
     onRetrieveTableData(theDlgSelector){
         var self=this;
-        var theSelect=self.getSelect();
-        var nOps=theSelect[0].length; 
-        var arrTable=[];
-        for (var i=0;i<nOps;i++){
-            var opt=theSelect[0][i];
-            var key=opt.value;
-            var elem=self.findElement(key);
-            if (elem==""){
-                log("Error.....the "+key+" element is not exists in elements array");
-            }
-            var name=elem.name;
-            var isSelected=opt.selected;
-            var description=elem.description;
-            arrTable.push({key:key,name:name,description:description,selected:isSelected});
-        }
-        theDlgSelector.populateTable(arrTable);
-        theDlgSelector.endPopulate();
+        var theSuper=_super;
+        System.webapp.addStep("Getting options", function(){
+            self.onRetrieveData.emit(self);
+        });
+        System.webapp.addStep("Retrieving options once they are loaded",
+            function(optionList){
+                log(optionList.length);
+                var options=[];
+                for (var i=0;i<issueList.length;i++){
+                    var issue=issueList[i];
+                    options.push({key:issue.key,name:issue.fields.summary,description:issue.fields.summary});
+                }
+                self.fillOptions(options);
+                System.webapp.continueTask();
+            });
+        System.webapp.addStep("Populating the table",
+                var theSelect=self.getSelect();
+                var nOps=theSelect[0].length; 
+                var arrTable=[];
+                for (var i=0;i<nOps;i++){
+                    var opt=theSelect[0][i];
+                    var key=opt.value;
+                    var elem=self.findElement(key);
+                    if (elem==""){
+                        log("Error.....the "+key+" element is not exists in elements array");
+                    }
+                    var name=elem.name;
+                    var isSelected=opt.selected;
+                    var description=elem.description;
+                    arrTable.push({key:key,name:name,description:description,selected:isSelected});
+                }
+                theDlgSelector.populateTable(arrTable);
+                theDlgSelector.endPopulate();
+                System.webapp.continueTask();
+            });
+        System.webapp.continueTask();
     }
 }

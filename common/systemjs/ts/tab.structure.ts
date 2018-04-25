@@ -25,6 +25,6 @@ export class TabStructure {
         }
     }
     onGetBillingFields(event){
-        log("structure fields event");
+        log("structure fields event.... onGetBillingFields");
     }
 }

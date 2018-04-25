@@ -113,7 +113,11 @@ export class advSelector {
     onRetrieveTableData(theDlgSelector){
         var self=this;
         System.webapp.addStep("Getting options", function(){
-            self.onRetrieveData.emit(self);
+            if (self.onRetrieveData.observers.length>0){
+                self.onRetrieveData.emit(self);
+            } else {
+                System.webapp.continueTask([]);
+            }
         });
         System.webapp.addStep("Retrieving options once they are loaded",
             function(optionList){

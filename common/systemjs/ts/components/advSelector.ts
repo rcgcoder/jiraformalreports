@@ -6,7 +6,7 @@ import { Component, Input, Output, OnInit } from '@angular/core';
 export class advSelector {
     @Input() name: string = 'advSelection';
     @Input() typeDescriptor: string = 'elements';
-    @Input() multiple: string = "true";
+    @Input() multiple: string = "false";
     @Input() openDialogCaption: string = '...';
     elements: [] = [];
     getSelect(){

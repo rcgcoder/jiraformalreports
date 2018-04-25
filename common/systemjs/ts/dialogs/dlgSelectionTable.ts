@@ -7,7 +7,7 @@ export class dlgSelectionTable {
     @Input() name: string = 'dlgSelectionTable';
     @Input() typeDescriptor: string = 'elements';
     @Input() openDialogCaption: string = '...';
-    @Input() multiple: string = 'multiple';
+    @Input() multiple: string = 'false';
     @Output() onSelected = new EventEmitter<[]>();
     @Output() onRetrieveTableData = new EventEmitter<{}>();
     @Output() onRetrievePreviousSelectedKeys = new EventEmitter<{}>();
@@ -38,7 +38,7 @@ export class dlgSelectionTable {
     }
     ngOnInit() {
         var self=this;
-        if (self.multiple==""){
+        if (self.multiple.toUpperCase()!="TRUE"){
             self.hideButton();
         }
         System.addPostProcess(function(){

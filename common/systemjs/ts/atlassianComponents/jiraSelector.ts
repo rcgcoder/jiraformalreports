@@ -5,37 +5,18 @@ import {advSelector} from "../components/advSelector";
   templateUrl: System.composeUrl('systemjs/html/atlassianComponents/jiraSelector.html'),
 })
 export class jiraSelector extends advSelector {
+    @Input() jiraProperty: string = 'fields';
+
+    getJira(){
+        return system.webapp.getJira();
+    }
     
     onRetrieveTableData(theDlgSelector){
         var self=this;
-        var theSuper=_super;
-        log("Retrieving table data on jqlSelector");
+        log("Retrieving table data on jiraSelector property:"+self.jiraProperty);
         var theSelect=self.getSelect();
-        var theJQLBox=self.getJQLBox()[0];
-        var sJQL=theJQLBox.value;
-        if (self.prev_jql==sJQL){
-            log("Same jql:"+sJQL);
-            super.onRetrieveTableData(theDlgSelector);
-        } else {
-            log("Diferent jql:"+sJQL);
-            self.setDialogWaiting(true);
-            self.prev_jql=sJQL;
-            System.webapp.addStep("Getting issues from JQL:"+sJQL, function(){
-                System.webapp.getJQLIssues(sJQL);
-            });
-            System.webapp.addStep("Retrieving issues once the search is done",function(issueList){
-                log(issueList.length);
-                var arrIssues=[];
-                for (var i=0;i<issueList.length;i++){
-                    var issue=issueList[i];
-                    arrIssues.push({key:issue.key,name:issue.fields.summary,description:issue.fields.summary});
-                }
-                self.fillOptions(arrIssues);
-                theSuper.prototype.onRetrieveTableData.call(self, theDlgSelector);
-                self.setDialogWaiting(false);
-                System.webapp.continueTask();
-            });
-            System.webapp.continueTask();
-        }
+        var arrOptions=self.getJira()[self.jiraProperty];
+        self.fillOptions(arrOptions);
+        super.onRetrieveTableData(theDlgSelector);
     }
 }

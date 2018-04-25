@@ -23,6 +23,10 @@ class RCGJira{
 		self.fields=[];
 		self.filters=[];
 	}
+	getFields(){
+		log("Getting fields");
+		return this.fields;
+	}
 	getProjectsAndMetaInfo(){
 		var self=this;
 		self.pushCallback(function(sResponse,xhr,sUrl,headers){

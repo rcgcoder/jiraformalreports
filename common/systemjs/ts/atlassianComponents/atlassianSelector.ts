@@ -6,6 +6,7 @@ import {advSelector} from "../components/advSelector";
 })
 export class atlassianSelector extends advSelector {
     @Input() atlassianObjectProperty: string = undefined;
+    @Input() atlassianObjectFunction: string = undefined;
     @Input() atlassianAplication: string = undefined;
     @Output() onRetrieveData = new EventEmitter<{}>();
     ngOnInit() {
@@ -17,18 +18,17 @@ export class atlassianSelector extends advSelector {
     }
 
     getPropertyValues(){
-        if (this.retrieveDataFunction==""){
-            var obj;
-            if (this.atlassianAplication.toUpperCase()=="JIRA"){
-                obj=System.webapp.getJira();
-            } else if (this.atlassianAplication.toUpperCase()=="CONFLUENCE"){
-                obj=System.webapp.getConfluence();
-            }
+        var obj;
+        if (this.atlassianAplication.toUpperCase()=="JIRA"){
+            obj=System.webapp.getJira();
+        } else if (this.atlassianAplication.toUpperCase()=="CONFLUENCE"){
+            obj=System.webapp.getConfluence();
+        }
+        if (typeof this.atlassianObjectProperty!=="undefined"){
             return obj[this.atlassianObjectProperty];
         } else {
-            
-            var fn = Function(this.retrieveDataFunction);
-            return fn();
+            var fnc=obj[this.atlassianObjectFunction];
+            fnc.apply(obj);
         }
     }
     
@@ -37,8 +37,12 @@ export class atlassianSelector extends advSelector {
         log("Retrieving table data on jiraSelector property:"+self.jiraProperty);
         var theSelect=self.getSelect();
         var arrOptions=[];
-        if ((typeof self.atlassianObjectProperty!=="undefined") || 
-            (typeof self.atlassianAplication!=="undefined")){
+        if ((typeof self.atlassianObjectProperty!=="undefined") 
+                || 
+            (typeof self.atlassianObjectFunction!=="undefined")
+            || 
+            (typeof self.atlassianAplication!=="undefined")
+            ){
             arrOptions=self.getPropertyValues();
         } else {
             this.onRetrieveData.emit();

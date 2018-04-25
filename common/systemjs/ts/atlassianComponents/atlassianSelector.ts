@@ -27,8 +27,7 @@ export class atlassianSelector extends advSelector {
         if (typeof this.atlassianObjectProperty!=="undefined"){
             return obj[this.atlassianObjectProperty];
         } else {
-            var fnc=obj[this.atlassianObjectFunction];
-            return fnc.apply(obj);
+            obj[this.atlassianObjectFunction]();
         }
     }
     

@@ -6,6 +6,7 @@ import { Component, Input, Output, OnInit } from '@angular/core';
 export class advSelector {
     @Input() name: string = 'advSelection';
     @Input() typeDescriptor: string = 'elements';
+    @Input() multiple: string = 'multiple';
     @Input() openDialogCaption: string = '...';
     elements: [] = [];
     getSelect(){
@@ -24,6 +25,9 @@ export class advSelector {
         System.addPostProcess(function(){
             self.getSelect().auiSelect2();
             System.bindObj(self);
+            if (self.multiple==""){
+                AJS.$('[name="'+this.name+'-select"]');
+            }
         });
     }
     

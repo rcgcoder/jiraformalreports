@@ -7,6 +7,7 @@ export class dlgSelectionTable {
     @Input() name: string = 'dlgSelectionTable';
     @Input() typeDescriptor: string = 'elements';
     @Input() openDialogCaption: string = '...';
+    @Input() multiple: string = 'multiple';
     @Output() onSelected = new EventEmitter<[]>();
     @Output() onRetrieveTableData = new EventEmitter<{}>();
     @Output() onRetrievePreviousSelectedKeys = new EventEmitter<{}>();
@@ -21,6 +22,10 @@ export class dlgSelectionTable {
             this.getWaiter().show();
         }
     }
+    hideButton(){
+        var btn=AJS.$('#show_'+this.name);
+        btn.hide();
+    }
     getDialog(){
         var dlgObj=AJS.dialog2('#dlg_'+this.name);
         return dlgObj;
@@ -33,6 +38,9 @@ export class dlgSelectionTable {
     }
     ngOnInit() {
         var self=this;
+        if (self.multiple==""){
+            self.hideButton();
+        }
         System.addPostProcess(function(){
             System.bindObj(self);
         });

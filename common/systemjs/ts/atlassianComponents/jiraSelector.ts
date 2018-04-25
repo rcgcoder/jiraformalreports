@@ -2,17 +2,9 @@ import { Component, Input, Output, OnInit } from '@angular/core';
 import {advSelector} from "../components/advSelector";
 @Component({
   selector: 'jqlSelector',
-  templateUrl: System.composeUrl('systemjs/html/atlassianComponents/jqlSelector.html'),
+  templateUrl: System.composeUrl('systemjs/html/atlassianComponents/jiraSelector.html'),
 })
-export class jqlSelector extends advSelector {
-    prev_jql="";
-    doOpenJQL(){
-        var win = window.open("https://paega2.atlassian.net/issues/?jql=", '_blank');
-        win.focus();
-    }
-    getJQLBox(){
-        return AJS.$('[name="'+this.name+'-jqlEdit"]');
-    }
+export class jiraSelector extends advSelector {
     
     onRetrieveTableData(theDlgSelector){
         var self=this;

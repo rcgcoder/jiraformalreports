@@ -6,7 +6,7 @@ import { Component, Input, Output, OnInit } from '@angular/core';
 export class advSelector {
     @Input() name: string = 'advSelection';
     @Input() typeDescriptor: string = 'elements';
-    @Input() multiple: string = 'multiple';
+    @Input() multiple: string = "true";
     @Input() openDialogCaption: string = '...';
     elements: [] = [];
     getSelect(){
@@ -24,7 +24,7 @@ export class advSelector {
         var self=this;
         System.addPostProcess(function(){
             var theSelect=self.getSelect();
-            if (self.multiple!=""){
+            if (self.multiple.toUpperCase()=="TRUE"){
                 theSelect.attr("multiple",self.multiple);
             }
             theSelect.auiSelect2();

@@ -6,12 +6,13 @@
     			 >
     </jqlSelector>	
     <br>
+<!--      			 atlassianAplication="jira"
+    			 atlassianObjectProperty="fields"
+-->
 	<atlassianSelector id="selBillingField" 
 				 name="selBillingField" 
     			 typeDescriptor="Field to bind Billing" 
-    			 atlassianAplication="jira"
-    			 atlassianObjectProperty="fields"
-    			 retrieveDataFunction='"onGetBillingFields($event)"'
+    			 (onRetrieveData)='"onGetBillingFields($event)"'
     			 >
 	</atlassianSelector>
 	<br>

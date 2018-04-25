@@ -8,7 +8,7 @@ export class atlassianSelector extends advSelector {
     @Input() atlassianObjectProperty: string = 'fields';
     @Input() atlassianAplication: string = 'jira';
     ngOnInit() {
-        parent.ngOnInit();
+        super.ngOnInit();
         var self=this;
         System.addPostProcess(function(){
             self.onRetrieveTableData();

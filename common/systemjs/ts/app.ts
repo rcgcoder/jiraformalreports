@@ -11,7 +11,7 @@ import {TabResult} from './tab.result';
 import {advSelector} from "./components/advSelector";
 import {dlgSelectionTable} from './dialogs/dlgSelectionTable';
 import {jqlExtendedParser} from './components/jqlExtendedParser';
-import {jqlSelector} from "./components/jqlSelector";
+import {jqlSelector} from "./atlassianComponents/jqlSelector";
 
 
 @Component({

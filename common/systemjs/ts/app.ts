@@ -77,7 +77,8 @@ class App {
                     dlgSelectionTable,
                     advSelector,
                     jqlExtendedParser,
-                    jqlSelector
+                    jqlSelector,
+                    jiraSelector
                 ],
   bootstrap: [ App ]
 })

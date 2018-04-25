@@ -112,7 +112,6 @@ export class advSelector {
         
     onRetrieveTableData(theDlgSelector){
         var self=this;
-        var theSuper=_super;
         System.webapp.addStep("Getting options", function(){
             self.onRetrieveData.emit(self);
         });

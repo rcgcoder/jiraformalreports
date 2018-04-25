@@ -7,6 +7,7 @@ export class advSelector {
     @Input() name: string = 'advSelection';
     @Input() typeDescriptor: string = 'elements';
     @Input() multiple: string = "false";
+    @Input() maxCharsInSelect: integer = 17;
     @Input() openDialogCaption: string = '...';
     elements: [] = [];
     getSelect(){
@@ -93,8 +94,8 @@ export class advSelector {
                     sDescription=sName;
                 }
                 var auxName=("["+sKey+"] "+sName);
-                if (auxName.length>20){
-                    auxName=auxName.substring(0,17)+"...";
+                if (auxName.length>self.maxCharsInSelect){
+                    auxName=auxName.substring(0,(self.maxCharsInSelect-3))+"...";
                 }
                 objSelector.append('<option value="'+sKey+'">'+auxName+'</option>');
             }
@@ -119,15 +120,12 @@ export class advSelector {
             if (elem==""){
                 log("Error.....the "+key+" element is not exists in elements array");
             }
-        
             var name=elem.name;
             var isSelected=opt.selected;
             var description=elem.description;
             arrTable.push({key:key,name:name,description:description,selected:isSelected});
         }
         theDlgSelector.populateTable(arrTable);
-    }
-    onRetrievePreviousSelectedKeys(theDlgSelector){
-        log("do nothing");
+        theDlgSelector.endPopulate();
     }
 }

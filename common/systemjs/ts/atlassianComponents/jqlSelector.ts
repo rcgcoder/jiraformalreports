@@ -21,6 +21,11 @@ export class jqlSelector extends advSelector {
         var theSelect=self.getSelect();
         var theJQLBox=self.getJQLBox()[0];
         var sJQL=theJQLBox.value;
+        if (sJQL==""){
+            log("Empty JQL is not allowed");
+            this.getDialog().hide();
+            return;
+        }
         if (self.prev_jql==sJQL){
             log("Same jql:"+sJQL);
             super.onRetrieveTableData(theDlgSelector);
@@ -40,7 +45,6 @@ export class jqlSelector extends advSelector {
                 }
                 self.fillOptions(arrIssues);
                 theSuper.prototype.onRetrieveTableData.call(self, theDlgSelector);
-                self.setDialogWaiting(false);
                 System.webapp.continueTask();
             });
             System.webapp.continueTask();

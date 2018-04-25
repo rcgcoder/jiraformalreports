@@ -10,7 +10,6 @@ export class dlgSelectionTable {
     @Input() multiple: string = 'false';
     @Output() onSelected = new EventEmitter<[]>();
     @Output() onRetrieveTableData = new EventEmitter<{}>();
-    @Output() onRetrievePreviousSelectedKeys = new EventEmitter<{}>();
     waitForLoadTable=false;
     setWaiting(bWaiting){
         this.waitForLoadTable=bWaiting;
@@ -68,18 +67,17 @@ export class dlgSelectionTable {
                 );
         }
     }
-    selectItems(arrKeys){
-        log("Selecting previous items");
-    }
     doShowDialog(){
         var self=this;
         log("it´s clicked show button");
-        self.setWaiting(false);
-        var arrValues=[];
+        self.setWaiting(true);
         self.onRetrieveTableData.emit(self);
-        self.onRetrievePreviousSelectedKeys.emit(self);
         log("Showind the dialog");
         this.getDialog().show();
+    }
+    endPopulating(){
+        var self=this;
+        self.setWaiting(false);
     }
     doAction(){
         log("It´s Clicked do action");

@@ -142,8 +142,10 @@ export class advSelector {
                     var description=elem.description;
                     arrTable.push({key:key,name:name,description:description,selected:isSelected});
                 }
-                theDlgSelector.populateTable(arrTable);
-                theDlgSelector.endPopulate();
+                if (typeof theDlgSelector!=='undefined'){
+                    theDlgSelector.populateTable(arrTable);
+                    theDlgSelector.endPopulate();
+                }
                 System.webapp.continueTask();
             });
         System.webapp.continueTask();

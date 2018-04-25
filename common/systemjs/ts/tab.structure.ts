@@ -24,4 +24,7 @@ export class TabStructure {
             selAux.append('<option value="'+op.key+'">'+op.name+'</option>');
         }
     }
+    onGetBillingFields(event){
+        log("structure fields event");
+    }
 }

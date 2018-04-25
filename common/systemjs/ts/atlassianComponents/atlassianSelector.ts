@@ -7,8 +7,7 @@ import {advSelector} from "../components/advSelector";
 export class atlassianSelector extends advSelector {
     @Input() atlassianObjectProperty: string = 'fields';
     @Input() atlassianAplication: string = 'jira';
-    @Input() retrieveDataFunction: string ='';
-    @Input() retrieveDataAsyncFunction: string ='';
+    @Output() retrieveDataFunction = new EventEmitter<[]>();
     ngOnInit() {
         super.ngOnInit();
         var self=this;
@@ -36,7 +35,13 @@ export class atlassianSelector extends advSelector {
         var self=this;
         log("Retrieving table data on jiraSelector property:"+self.jiraProperty);
         var theSelect=self.getSelect();
-        var arrOptions=self.getPropertyValues();
+        var arrOptions=[];
+        if (typeof self.retrieveDataFunction!=="undefined"){
+            this.retrieveDataFunction.emit();
+            return;
+        } else {
+            arrOptions=self.getPropertyValues();
+        }
         self.fillOptions(arrOptions);
         if (typeof theDlgSelector!=="undefined"){
             super.onRetrieveTableData(theDlgSelector);

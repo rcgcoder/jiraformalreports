@@ -23,11 +23,12 @@ export class advSelector {
     ngOnInit() {
         var self=this;
         System.addPostProcess(function(){
-            self.getSelect().auiSelect2();
-            System.bindObj(self);
-            if (self.multiple==""){
-                AJS.$('[name="'+this.name+'-select"]');
+            var theSelect=self.getSelect();
+            if (self.multiple!=""){
+                theSelect.attr("multiple",self.multiple);
             }
+            theSelect.auiSelect2();
+            System.bindObj(self);
         });
     }
     

@@ -1,4 +1,4 @@
-import { Component, Input, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 @Component({
   selector: 'advSelector',
   templateUrl: System.composeUrl('systemjs/html/components/advSelector.html'),

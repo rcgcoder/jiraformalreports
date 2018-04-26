@@ -33,7 +33,7 @@ export class jqlSelector {
         log("Retrieving table data on jqlSelector");
         var theJQLBox=self.getJQLBox()[0];
         var sJQL=theJQLBox.value;
-        if ((sJQL=="")||(self.jql=="")){
+        if ((sJQL=="")&&(self.jql=="")){
             log("Empty JQL is not allowed");
             System.webapp.continueTask([[]]);
             return;

@@ -48,7 +48,7 @@ class RCGSystemJSManager{
 					objHtml[0].angObject=angObj;
 				}
 			}
-			System.getAngularDomObject(sNameOrId,sClassName){
+			System.getAngularDomObject=function(sNameOrId,sClassName){
 				var sAuxClassName="";
 				var theName=sNameOrId;
 				if (typeof sClassName!=="undefined"){

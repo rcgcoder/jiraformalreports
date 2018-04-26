@@ -41,22 +41,38 @@ class RCGSystemJSManager{
 			}
 			System.bindObj=function(angObj){
 				if (typeof angObj.name!=="undefined"){
-					var theName=angObj.name;
-					var sClassName=(angObj.constructor.name).toLowerCase();
-					var sFinder=sClassName+'[name="'+theName+'"]';
-					var objHtml=$(sFinder);
-					if (objHtml.length==0){
-						sFinder=sClassName+'[ng-reflect-name="'+theName+'"]';
-						objHtml=$(sFinder);
-					}
-					if (objHtml.length==0){
-						log("There is not html component with name or ng-reflect-name equals to '"+theName+"'")
-					}
+					var objHtml=this.getAngularDomObject(angObj.name,angObj.constructor.name);
 					objHtml[0].angObject=angObj;
 				}
 			}
-			System.getAngularObject=function(selector){
-		        var arrElements=AJS.$(selector);
+			System.getAngularDomObject(sNameOrId,sClassName){
+				var sAuxClassName="";
+				var theName=sNameOrId;
+				if (typeof sClassName!=="undefined"){
+					sAuxClassName=sClassName.toLowerCase();
+				}
+				var sFinder=sAuxClassName+'[name="'+theName+'"]';
+				var objHtml=$(sFinder);
+				if (objHtml.length==0){
+					sFinder=sAuxClassName+'[ng-reflect-name="'+theName+'"]';
+					objHtml=$(sFinder);
+				}
+				if (objHtml.length==0){
+					sFinder=sAuxClassName+'[id="'+theName+'"]';
+					objHtml=$(sFinder);
+				}
+				if (objHtml.length==0){
+					log("There is not html component with name or ng-reflect-name equals to '"+theName+"'")
+				}
+				return objHtml;
+			}
+			System.getAngularObject=function(selector,bByNameOrId){
+				var arrElements;
+				if (typeof bByNameOrId==="undefined"){
+					arrElements=AJS.$(selector);
+				} else {
+					arrElements=self.getAngularDomObject(selector);
+				}
 		        var arrResults=[];
 		        for (var i=0;i<arrElements.length;i++){
 		        	var obj=arrElements[i];

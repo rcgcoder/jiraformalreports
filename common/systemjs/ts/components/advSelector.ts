@@ -32,7 +32,7 @@ export class advSelector {
                 theSelect.attr("multiple",self.multiple);
             }
             theSelect.auiSelect2();
-//            self.onRetrieveTableData();
+            self.onRetrieveTableData();
         });
     }
     

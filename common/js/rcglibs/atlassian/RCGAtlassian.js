@@ -191,10 +191,11 @@ class RCGAtlassian{
 		self.pushCallback(function(response,xhr,sUrl,headers){
 			log("Api Call Response of "+(newSubPath==""?"Jira":appInfo.subPath) 
 					+ " final url:"+sTargetUrl);
-			log(" --> Bytes:"+response.length);
 			if (typeof xhr==="undefined"){
 				log("ERROR: xhr is undefined.... " );
 				log(response);
+			} else {
+				log(" --> Bytes:"+response.length);
 			}
 			if (xhr.status == 429){
 				var millis=Math.round(((Math.random()*5)+10)*1000);

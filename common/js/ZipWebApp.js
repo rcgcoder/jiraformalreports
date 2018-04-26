@@ -45,6 +45,12 @@ class ZipWebApp{
 			sjs.loadEngine();
 		},0,1,undefined,undefined,undefined,"INNER",undefined
 		);
+
+		
+		self.addStep("Setting <initizing> Atlassian Engine.... ",function(){
+			var atl=self.getAtlassian();
+			atl.initialized=false;
+		});  
 		
 		self.addStep("Getting All Issues.... ",function(){
 			var jira=self.getJira();
@@ -79,6 +85,10 @@ class ZipWebApp{
 			var cfc=self.getConfluence();
 			cfc.getAllPages();
 		});
+		self.addStep("Setting <initized> Atlassian Engine.... ",function(){
+			var atl=self.getAtlassian();
+			atl.initialized=true;
+		});  
 		
 		self.addStep("Import nearley grammar.... ",function(){
 			var arrFiles=[	//"ts/demo.ts",
@@ -94,63 +104,87 @@ class ZipWebApp{
 	}
 	getListIssueTypes(){
 		var self=this;
-        var jira=self.getJira();
-        var arrIssueTypes=[];
-        for (var i=0;i<jira.issueTypes.length;i++){
-            var it=jira.issueTypes[i];
-            arrIssueTypes.push({key:it.key,name:it.name});
-        }
-        return arrIssueTypes;
+		if (self.getAtlassian.initilized==false){
+			
+		} else {
+	        var jira=self.getJira();
+	        var arrIssueTypes=[];
+	        for (var i=0;i<jira.issueTypes.length;i++){
+	            var it=jira.issueTypes[i];
+	            arrIssueTypes.push({key:it.key,name:it.name});
+	        }
+	        return arrIssueTypes;
+		}
 	}
 	getListProjects(){
 		var self=this;
-        var jira=self.getJira();
-        var arrProjects=[];
-        for (var i=0;i<jira.projects.length;i++){
-            var prj=jira.projects[i];
-            arrProjects.push({key:prj.key,name:prj.name});
-        }
-        return arrProjects;
+		if (self.getAtlassian.initilized==false){
+			
+		} else {
+	        var jira=self.getJira();
+	        var arrProjects=[];
+	        for (var i=0;i<jira.projects.length;i++){
+	            var prj=jira.projects[i];
+	            arrProjects.push({key:prj.key,name:prj.name});
+	        }
+	        return arrProjects;
+		}
 	}
 	getListEpics(){
 		var self=this;
-        var jira=self.getJira();
-        var arrEpics=[];
-        for (var i=0;i<jira.epics.length;i++){
-            var epic=jira.epics[i];
-            arrEpics.push({key:epic.key,name:epic.fields.summary,description:epic.fields.summary});
-        }
-        return arrEpics; 
+		if (self.getAtlassian.initilized==false){
+			
+		} else {
+	        var jira=self.getJira();
+	        var arrEpics=[];
+	        for (var i=0;i<jira.epics.length;i++){
+	            var epic=jira.epics[i];
+	            arrEpics.push({key:epic.key,name:epic.fields.summary,description:epic.fields.summary});
+	        }
+	        return arrEpics; 
+		}
 	}
 	getListFilters(){
 		var self=this;
-        var jira=self.getJira();
-        var arrFilters=[];
-        for (var i=0;i<jira.filters.length;i++){
-            var filter=jira.filters[i];
-            arrFilters.push({key:filter.id,name:filter.name});
-        }
-        return arrFilters; 
+		if (self.getAtlassian.initilized==false){
+			
+		} else {
+	        var jira=self.getJira();
+	        var arrFilters=[];
+	        for (var i=0;i<jira.filters.length;i++){
+	            var filter=jira.filters[i];
+	            arrFilters.push({key:filter.id,name:filter.name});
+	        }
+	        return arrFilters; 
+		}
 	}
 	getListLabels(){
 		var self=this;
-        var jira=self.getJira();
-        var arrLabels=[];
-        for (var i=0;i<jira.labels.length;i++){
-            var lbl=jira.labels[i];
-            arrLabels.push({key:lbl,name:lbl});
-        }
-        return arrLabels;
+		if (self.getAtlassian.initilized==false){
+			
+		} else {
+	        var jira=self.getJira();
+	        var arrLabels=[];
+	        for (var i=0;i<jira.labels.length;i++){
+	            var lbl=jira.labels[i];
+	            arrLabels.push({key:lbl,name:lbl});
+	        }
+	        return arrLabels;
+		}
 	}
 	getListFields(){
 		var self=this;
-        var jira=self.getJira();
-        var arrFields=[];
-        for (var i=0;i<jira.fields.length;i++){
-            var fld=jira.fields[i];
-            arrFields.push({key:fld.key,name:fld.name});
-        }
-        return arrFields;
+		if (self.getAtlassian.initilized==false){
+			
+		} else {
+	        var jira=self.getJira();
+	        var arrFields=[];
+	        for (var i=0;i<jira.fields.length;i++){
+	            var fld=jira.fields[i];
+	            arrFields.push({key:fld.key,name:fld.name});
+	        }
+	        return arrFields;
+		}
 	}
 	getJQLIssues(jql){
 		var self=this;

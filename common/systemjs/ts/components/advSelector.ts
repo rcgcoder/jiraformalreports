@@ -113,28 +113,35 @@ export class advSelector {
     
     getValuesAsync(theDlgSelector){
         var self=this;
-        System.webapp.addStep("Getting options for "+self.name, function(){
-            if (self.onRetrieveData.observers.length>0){
+        if (self.onRetrieveData.observers.length>0){
+            System.webapp.addStep("Getting Async options for "+self.name, function(){
                 self.onRetrieveData.emit(self);
-            } else {
-                System.webapp.continueTask([[]]);
-            }
-        });
-        System.webapp.addStep("Retrieving options once they are loaded for "+self.name,
-            function(optionList){
-                if (typeof optionList!=="undefined"){
-                    log(optionList.length);
-                    var options=[];
-                    for (var i=0;i<optionList.length;i++){
-                        var opt=optionList[i];
-                        options.push({key:opt.key,
-                                      name:opt.name,
-                                      description:opt.description});
-                    }
-                    self.fillOptions(options);
-                }
-                System.webapp.continueTask();
             });
+            System.webapp.addStep("Retrieving options once they are loaded for "+self.name,
+                function(optionList){
+                    if (typeof optionList!=="undefined"){
+                        log(optionList.length);
+                        var options=[];
+                        for (var i=0;i<optionList.length;i++){
+                            var opt=optionList[i];
+                            options.push({key:opt.key,
+                                          name:opt.name,
+                                          description:opt.description});
+                        }
+                        self.fillOptions(options);
+                        System.webapp.continueTask();
+                    } else {
+                        var nSeconds=(Math.random()*2000)+3000;
+                        log("The onRetrieveData function of "+ self.name+" returns undefined.... trying again in "+nSeconds+" millis");
+                        setTimeout(System.webapp.createManagedCallback(function(){
+                            System.webapp.addStep("Getting values of "+ self.name+" again...", function(){
+                                self.getValuesAsync(theDlgSelector);
+                            });
+                            System.webapp.continueTask();
+                        }),nSeconds);
+                    }
+                });
+        }
         System.webapp.addStep("Populating the table of "+self.name,function(){
                 var theSelect=self.getSelect();
                 var nOps=theSelect[0].length; 

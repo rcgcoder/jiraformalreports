@@ -19,12 +19,18 @@
 				 name="selBillingField" 
     			 typeDescriptor="Field to bind Billing" 
     			 maxCharsInSelect=50
+    			 multiple="true"
     			 (onRetrieveData)='onGetBillingFields($event)'
     			 >
 	</advSelector>
 	<br>
 	External Dependencies field 
-		<select id="link-type" class="select" name="linkDesc">
+	<advSelector id="selBillingRelationship" 
+				 name="selBillingRelationship" 
+    			 typeDescriptor="Relationship to bind Billing" 
+    			 maxCharsInSelect=50
+    			 multiple="true"
+    			 >
                <option value="es implementado por">es implementado por</option>
                <option value="causa">causa</option>
                <option value="est&aacute; causada por">est&aacute; causada por</option>
@@ -51,6 +57,6 @@
                <option value="es subrequisito de">es subrequisito de</option>
                <option value="valida">valida</option>
                <option value="es validado por">es validado por</option>
-       </select>
+		</advSelector>
 
 </div>

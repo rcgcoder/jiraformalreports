@@ -13,7 +13,8 @@ export class TabStructure {
             System.bindObj(self);
         });
     }
-*/    onGetBillingFields(event){
+ */
+    onGetBillingFields(event){
        log("structure fields event.... onGetBillingFields");
        System.webapp.continueTask([System.webapp.getListFields()]);
     }

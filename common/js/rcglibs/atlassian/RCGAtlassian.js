@@ -192,8 +192,9 @@ class RCGAtlassian{
 			log("Api Call Response of "+(newSubPath==""?"Jira":appInfo.subPath) 
 					+ " final url:"+sTargetUrl);
 			if (typeof xhr==="undefined"){
+				log("=========");
 				log("ERROR: xhr is undefined.... " );
-				log(response);
+				log("=========");
 			} else {
 				log(" --> Bytes:"+response.length);
 			}

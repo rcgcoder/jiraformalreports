@@ -548,7 +548,6 @@ class RCGTaskManager{
 		var task;
 		if ((typeof sForkType!=="undefined")&&(sForkType.toUpperCase()=="GLOBAL_RUN")){
 			var frkGlobalRun=self.addGlobalFork(method,barrier,obj,description,progressMin,progressMax,totalWeight,methodWeight);
-			frkGlobalRun.callMethod();
 		} else if ((typeof sForkType!=="undefined")&&(sForkType.toUpperCase()=="INNER")){
 			return self.addInnerFork(method,barrier,obj,description,progressMin,progressMax,totalWeight,methodWeight);
 		} else if ((typeof sForkType!=="undefined")&&(sForkType.toUpperCase()=="GLOBAL")){
@@ -612,7 +611,7 @@ class RCGTaskManager{
 			nSteps=subSteps.length;
 			iSubStep=stepRunning.actStep;			
 			bWithSubSteps=(nSteps>0);
-			if (iSubStep>=nSteps){ // the actual task is reached the end of de steps
+			if (iSubStep>=nSteps){ // the actual task is reached the end of the steps
 				if ((!stepRunning.isDone)&&
 					((stepRunning.innerForks.length>0)
 						||

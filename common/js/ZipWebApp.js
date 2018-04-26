@@ -43,6 +43,7 @@ class ZipWebApp{
 		self.addStep("Setting <initialized=false> Atlassian Engine.... ",function(){
 			var atl=self.getAtlassian();
 			atl.initialized=false;
+			self.continueTask();
 		});  
 		self.addStep("Launching Systemjs.... ",function(){
 			var sjs=self.getSystemjs();
@@ -88,6 +89,7 @@ class ZipWebApp{
 		self.addStep("Setting <initized> Atlassian Engine.... ",function(){
 			var atl=self.getAtlassian();
 			atl.initialized=true;
+			self.continueTask();
 		});  
 		
 		self.addStep("Import nearley grammar.... ",function(){

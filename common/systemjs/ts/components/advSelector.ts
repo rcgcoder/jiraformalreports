@@ -25,12 +25,12 @@ export class advSelector {
     ngOnInit() {
         var self=this;
         System.addPostProcess(function(){
+            System.bindObj(self);
             var theSelect=self.getSelect();
             if (self.multiple.toUpperCase()=="TRUE"){
                 theSelect.attr("multiple",self.multiple);
             }
             theSelect.auiSelect2();
-            System.bindObj(self);
             self.onRetrieveTableData();
         });
     }

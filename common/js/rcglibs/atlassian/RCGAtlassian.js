@@ -190,7 +190,7 @@ class RCGAtlassian{
 		log("Calling api of "+(newSubPath==""?"Jira":appInfo.subPath) + " final url:"+sTargetUrl);
 		self.pushCallback(function(response,xhr,sUrl,headers){
 			log("Api Call Response of "+(newSubPath==""?"Jira":appInfo.subPath) 
-					+ " final url:"+sTargetUrl+" --> Bytes:"+response.length);
+					+ " final url:"+sTargetUrl);
 			log(" --> Bytes:"+response.length);
 			if (typeof xhr==="undefined"){
 				log("ERROR: xhr is undefined.... " );

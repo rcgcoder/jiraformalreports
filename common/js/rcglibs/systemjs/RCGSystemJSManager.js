@@ -68,7 +68,9 @@ class RCGSystemJSManager{
 			}
 			System.getAngularObject=function(selector,bByNameOrId){
 				var arrElements;
-				if (typeof bByNameOrId==="undefined"){
+				if ((typeof bByNameOrId==="undefined")||
+				    ((typeof bByNameOrId!=="undefined")&&(bByNameOrId==false))
+				    ){
 					arrElements=AJS.$(selector);
 				} else {
 					arrElements=self.getAngularDomObject(selector);

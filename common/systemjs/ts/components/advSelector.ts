@@ -15,7 +15,7 @@ export class advSelector {
         return AJS.$('[name="'+this.name+'-select"]');
     }
     getDialogObj(){
-        var objDlg=System.getAngularObject('dlgSelectionTable[id="'+this.name+'-SelTable"]');
+        var objDlg=System.getAngularObject(this.name+'-SelTable',true);
         return objDlg;
     }
     setDialogWaiting(bWaiting){

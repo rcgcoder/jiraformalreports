@@ -10,6 +10,13 @@ export class jqlSelector {
     @Input() multiple: string = "false";
     @Input() maxCharsInSelect: integer = 17;
     @Input() openDialogCaption: string = '...';
+    ngOnInit() {
+        var self=this;
+        System.addPostProcess(function(){
+            System.bindObj(self);
+        });
+    }
+    
     prev_jql="";
     doOpenJQL(){
         var win = window.open("https://paega2.atlassian.net/issues/?jql=", '_blank');

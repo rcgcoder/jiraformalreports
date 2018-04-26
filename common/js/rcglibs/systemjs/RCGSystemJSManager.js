@@ -43,6 +43,9 @@ class RCGSystemJSManager{
 				if (typeof angObj.name!=="undefined"){
 					var objHtml=this.getAngularDomObject(angObj.name,angObj.constructor.name);
 					objHtml[0].angObject=angObj;
+				} else if (typeof angObj.id!=="undefined"){
+					var objHtml=this.getAngularDomObject(angObj.id,angObj.constructor.name);
+					objHtml[0].angObject=angObj;
 				}
 			}
 			System.getAngularDomObject(sNameOrId,sClassName){

@@ -44,7 +44,7 @@ export class TabStructure {
                         ,"valida"
                         ,"es validado por"
                         ];
-        var arrResult={};
+        var arrResult=[];
         for (var i=0;i<arrValues.length;i++){
             var vAux=arrValues[i];
             arrResult.push({key:vAux,name:vAux});

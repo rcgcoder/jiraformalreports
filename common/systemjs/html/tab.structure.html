@@ -15,22 +15,40 @@
     			 atlassianObjectFunction="getFields"
 
 -->
-	<advSelector id="selBillingField" 
-				 name="selBillingField" 
-    			 typeDescriptor="Field to bind Billing" 
+	<advSelector id="selBillingFields" 
+				 name="selBillingFields" 
+    			 typeDescriptor="Fields to bind Billing" 
     			 maxCharsInSelect=50
     			 multiple="true"
     			 (onRetrieveData)='onGetBillingFields($event)'
     			 >
 	</advSelector>
 	<br>
-	<advSelector id="selBillingRelationship" 
-				 name="selBillingRelationship" 
-    			 typeDescriptor="Relationship to bind Billing" 
+	<advSelector id="selBillingRelationships" 
+				 name="selBillingRelationships" 
+    			 typeDescriptor="Relationships to bind Billing" 
     			 maxCharsInSelect=50
     			 multiple="true"
     			 (onRetrieveData)='onGetBillingRelationships($event)'
     			 >
-		</advSelector>
+	</advSelector>
+	<br>
+	<advSelector id="selAdvanceFields" 
+				 name="selAdvanceFields" 
+    			 typeDescriptor="Fields to bind Advance" 
+    			 maxCharsInSelect=50
+    			 multiple="true"
+    			 (onRetrieveData)='onGetBillingFields($event)'
+    			 >
+	</advSelector>
+	<br>
+	<advSelector id="selAdvanceRelationships" 
+				 name="selAdvanceRelationships" 
+    			 typeDescriptor="Relationship to bind Advance" 
+    			 maxCharsInSelect=50
+    			 multiple="true"
+    			 (onRetrieveData)='onGetBillingRelationships($event)'
+    			 >
+	</advSelector>
 
 </div>

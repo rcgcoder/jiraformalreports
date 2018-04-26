@@ -548,6 +548,7 @@ class RCGTaskManager{
 		var task;
 		if ((typeof sForkType!=="undefined")&&(sForkType.toUpperCase()=="GLOBAL_RUN")){
 			var frkGlobalRun=self.addGlobalFork(method,barrier,obj,description,progressMin,progressMax,totalWeight,methodWeight);
+			frkGlobalRun.callMethod();
 			return frkGlobalRun;
 		} else if ((typeof sForkType!=="undefined")&&(sForkType.toUpperCase()=="INNER")){
 			return self.addInnerFork(method,barrier,obj,description,progressMin,progressMax,totalWeight,methodWeight);

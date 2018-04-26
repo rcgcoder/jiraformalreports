@@ -181,7 +181,6 @@ export class advSelector {
             self.getValuesAsync(theDlgSelector);
             log("launched get values async:"+self.name);
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
-        fork.callMethod();
 //        System.webapp.continueTask();
     }
 }

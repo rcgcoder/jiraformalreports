@@ -188,6 +188,10 @@ class RCGAtlassian{
 		self.pushCallback(function(response,xhr,sUrl,headers){
 			log("Api Call Response of "+(newSubPath==""?"Jira":appInfo.subPath) 
 					+ " final url:"+sTargetUrl+" --> Bytes:"+response.length);
+			if (typeof xhr==="undefined"){
+				log("ERROR: xhr is undefined.... " );
+				log(response);
+			}
 			if (xhr.status == 429){
 				var millis=Math.round(((Math.random()*5)+10)*1000);
 				log("too many request.... have to wait "+(Math.round(millis/10)/100)+" secs");

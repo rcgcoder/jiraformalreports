@@ -7,6 +7,7 @@ class RCGAtlassian{
 		self.app=app;
 		self.confluence="";//new RCGConfluence();
 		self.jira="";
+		self.initialized=true;
 		taskManager.extendObject(self);
 	}
 	getJira(){

@@ -40,6 +40,10 @@ class ZipWebApp{
 						 ]; //test
 			self.loadRemoteFiles(arrFiles);
 		});
+		self.addStep("Setting <initialized=false> Atlassian Engine.... ",function(){
+			var atl=self.getAtlassian();
+			atl.initialized=false;
+		});  
 		self.addStep("Launching Systemjs.... ",function(){
 			var sjs=self.getSystemjs();
 			sjs.loadEngine();
@@ -47,10 +51,6 @@ class ZipWebApp{
 		);
 
 		
-		self.addStep("Setting <initizing> Atlassian Engine.... ",function(){
-			var atl=self.getAtlassian();
-			atl.initialized=false;
-		});  
 		
 		self.addStep("Getting All Issues.... ",function(){
 			var jira=self.getJira();
@@ -104,7 +104,7 @@ class ZipWebApp{
 	}
 	getListIssueTypes(){
 		var self=this;
-		if (self.getAtlassian.initilized==false){
+		if (self.getAtlassian().initialized==false){
 			
 		} else {
 	        var jira=self.getJira();
@@ -118,7 +118,7 @@ class ZipWebApp{
 	}
 	getListProjects(){
 		var self=this;
-		if (self.getAtlassian.initilized==false){
+		if (self.getAtlassian().initialized==false){
 			
 		} else {
 	        var jira=self.getJira();
@@ -132,7 +132,7 @@ class ZipWebApp{
 	}
 	getListEpics(){
 		var self=this;
-		if (self.getAtlassian.initilized==false){
+		if (self.getAtlassian().initialized==false){
 			
 		} else {
 	        var jira=self.getJira();
@@ -146,7 +146,7 @@ class ZipWebApp{
 	}
 	getListFilters(){
 		var self=this;
-		if (self.getAtlassian.initilized==false){
+		if (self.getAtlassian().initialized==false){
 			
 		} else {
 	        var jira=self.getJira();
@@ -160,7 +160,7 @@ class ZipWebApp{
 	}
 	getListLabels(){
 		var self=this;
-		if (self.getAtlassian.initilized==false){
+		if (self.getAtlassian().initialized==false){
 			
 		} else {
 	        var jira=self.getJira();
@@ -174,7 +174,7 @@ class ZipWebApp{
 	}
 	getListFields(){
 		var self=this;
-		if (self.getAtlassian.initilized==false){
+		if (self.getAtlassian().initialized==false){
 			
 		} else {
 	        var jira=self.getJira();

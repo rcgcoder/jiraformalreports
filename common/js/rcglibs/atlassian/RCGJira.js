@@ -95,7 +95,10 @@ class RCGJira{
 	}
 	getAllLabels(){
 		var self=this;
-		self.pushCallback(function(response,xhr,sUrl,headers){
+		self.addStep("Getting All Labels", function(){
+			self.getFullList("/rest/api/2/search?jql=labels is not empty","issues");//,"GET",data);
+		});
+		self.addStep("Processing all Labels", function(response,xhr,sUrl,headers){
 			for (var i=0;i<response.length;i++){
 				var issue=response[i];
 				for (var j=0;j<issue.fields.labels.length;j++){
@@ -114,16 +117,19 @@ class RCGJira{
 			}
 			self.popCallback([self.labels]);
 		});
-		self.getFullList("/rest/api/2/search?jql=labels is not empty","issues");//,"GET",data);
+		self.continueTask();
 	}
 	getAllEpics(){
 		var self=this;
-		self.pushCallback(function(response,xhr,sUrl,headers){
+		self.addStep("Getting All Epics", function(){
+			self.getFullList("/rest/api/2/search?jql=issueType=epic","issues");//,"GET",data);
+		});
+		self.addStep("Processing all Epics", function(response,xhr,sUrl,headers){
 			log("getAllEpics:"+response);
 			self.epics=response;
 			self.popCallback([self.epics]);
 		});
-		self.getFullList("/rest/api/2/search?jql=issueType=epic","issues");//,"GET",data);
+		self.continueTask();
 	}
 	getAllFilters(){
 		var self=this;
@@ -139,18 +145,24 @@ class RCGJira{
 	}
 	getAllIssues(){
 		var self=this;
-		self.pushCallback(function(response,xhr,sUrl,headers){
+		self.addStep("Getting All Issues", function(){
+			self.getFullList("/rest/api/2/search?expand=changelog","issues");
+		});
+		self.addStep("Processing all Issues", function(response,xhr,sUrl,headers){
 			self.popCallback();
 		});
+		self.continueTask();
 //		self.apiCall("/plugins/servlet/applinks/proxy?appId=d1015b5f-d448-3745-a3d3-3dff12863286&path=https://rcgcoder.atlassian.net/rest/api/2/search");
-		self.getFullList("/rest/api/2/search?expand=changelog","issues");
 		//expand=changelog&jql=updateddate>'2018/03/01'
 	}
 	getJQLIssues(jql){
 		var self=this;
-		self.pushCallback(function(response,xhr,sUrl,headers){
+		self.addStep("Getting All Issues from JQL", function(){
+			self.getFullList("/rest/api/2/search?jql="+jql,"issues");
+		});
+		self.addStep("Processing all Issues from JQL", function(response,xhr,sUrl,headers){
 			self.popCallback([response]);
 		});
-		self.getFullList("/rest/api/2/search?jql="+jql,"issues");
+		self.continueTask();
 	}
 }

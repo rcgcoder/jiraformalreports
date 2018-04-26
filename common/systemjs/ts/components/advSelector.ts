@@ -115,7 +115,9 @@ export class advSelector {
         var self=this;
         if (self.onRetrieveData.observers.length>0){
             System.webapp.addStep("Getting Async options for "+self.name, function(){
+                log("onRetrieveData to emit:"+self.name);
                 self.onRetrieveData.emit(self);
+                log("onRetrieveData emitted:"+self.name);
             });
             System.webapp.addStep("Retrieving options once they are loaded for "+self.name,
                 function(optionList){
@@ -171,7 +173,7 @@ export class advSelector {
         var self=this;
         System.webapp.addStep("Getting values", function(){
             self.getValuesAsync(theDlgSelector);
-        },0,1,undefined,undefined,undefined,"INNER",undefined);
+        },0,1,undefined,undefined,undefined,"GLOBAL",undefined);
         System.webapp.continueTask();
     }
 }

@@ -10,16 +10,18 @@ export class jqlSelector {
     @Input() multiple: string = "false";
     @Input() maxCharsInSelect: integer = 17;
     @Input() openDialogCaption: string = '...';
+    @Input() jql: string = '';
     ngOnInit() {
         var self=this;
         System.addPostProcess(function(){
             System.bindObj(self);
+            var theJQLBox=self.getJQLBox()[0];
+            theJQLBox.value=self.jql;
         });
     }
     
-    prev_jql="";
     doOpenJQL(){
-        var win = window.open("https://paega2.atlassian.net/issues/?jql=", '_blank');
+        var win = window.open("https://paega2.atlassian.net/issues/?jql=" + this.jql, '_blank');
         win.focus();
     }
     getJQLBox(){
@@ -30,17 +32,17 @@ export class jqlSelector {
         log("Retrieving table data on jqlSelector");
         var theJQLBox=self.getJQLBox()[0];
         var sJQL=theJQLBox.value;
-        if (sJQL==""){
+        if ((sJQL=="")||(self.jql=="")){
             log("Empty JQL is not allowed");
             System.webapp.continueTask([[]]);
             return;
         }
-        if (self.prev_jql==sJQL){
+        if (self.jql==sJQL){
             log("Same jql:"+sJQL);
             System.webapp.continueTask();
         } else {
             log("Diferent jql:"+sJQL);
-            self.prev_jql=sJQL;
+            self.jql=sJQL;
             System.webapp.addStep("Getting issues from JQL:"+sJQL, function(){
                 System.webapp.getJQLIssues(sJQL);
             });

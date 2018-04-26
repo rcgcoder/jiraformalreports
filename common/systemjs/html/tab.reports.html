@@ -9,22 +9,34 @@ lorem ipsum
 	<button (click)="doOpenJQL()" class="aui-button">Open JQL Tab</button>
 	<jqlExtendedParser name="testJQL"></jqlExtendedParser>
     
-    Projects <advSelector name="selProjects" typeDescriptor="Projects">
+    Projects <advSelector name="selProjects" typeDescriptor="Projects"
+    			 (onRetrieveData)='selProjects_getData($event)'
+    		>
     </advSelector>
 	<br>    
-    Issue Types <advSelector name="selTypes" typeDescriptor="Types">
+    Issue Types <advSelector name="selTypes" typeDescriptor="Types"
+    			 (onRetrieveData)='selTypes_getData($event)'
+    		>
     </advSelector>
     <br>
-    Labels <advSelector name="selLabels" typeDescriptor="Labels">
+    Labels <advSelector name="selLabels" typeDescriptor="Labels"
+    			 (onRetrieveData)='selLabels_getData($event)'
+    		>
     </advSelector>
     <br>
-    Epics <advSelector name="selEpics" typeDescriptor="Epics" multiple="true">
+    Epics <advSelector name="selEpics" typeDescriptor="Epics" multiple="true"
+    			 (onRetrieveData)='selEpics_getData($event)'
+    		>
     </advSelector>
     <br>
-    Filters <advSelector name="selFilters" typeDescriptor="Filters">
+    Filters <advSelector name="selFilters" typeDescriptor="Filters"
+    			 (onRetrieveData)='selFilters_getData($event)'
+    		>
     </advSelector>
     <br>
-    Fields <advSelector name="selFields" typeDescriptor="Fields">
+    Fields <advSelector name="selFields" typeDescriptor="Fields"
+    			 (onRetrieveData)='selFields_getData($event)'
+    		>
     </advSelector>
     <br>
     <aui-label for="sync-product-single-select">Choose your product synchronously:</aui-label>

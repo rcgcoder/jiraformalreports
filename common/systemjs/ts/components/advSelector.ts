@@ -152,7 +152,7 @@ export class advSelector {
                 }
                 if (typeof theDlgSelector!=='undefined'){
                     theDlgSelector.populateTable(arrTable);
-                    theDlgSelector.endPopulate();
+                    theDlgSelector.endPopulating();
                 }
                 System.webapp.continueTask();
             });

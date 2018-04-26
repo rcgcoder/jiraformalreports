@@ -5,6 +5,11 @@ import {advSelector} from "../components/advSelector";
   templateUrl: System.composeUrl('systemjs/html/atlassianComponents/jqlSelector.html'),
 })
 export class jqlSelector {
+    @Input() name: string = 'advSelection';
+    @Input() typeDescriptor: string = 'elements';
+    @Input() multiple: string = "false";
+    @Input() maxCharsInSelect: integer = 17;
+    @Input() openDialogCaption: string = '...';
     prev_jql="";
     doOpenJQL(){
         var win = window.open("https://paega2.atlassian.net/issues/?jql=", '_blank');

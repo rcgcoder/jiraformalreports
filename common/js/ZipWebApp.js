@@ -56,7 +56,8 @@ class ZipWebApp{
 		self.addStep("Getting All Issues.... ",function(){
 			var jira=self.getJira();
 			jira.getAllIssues();
-		});  
+		},0,1,undefined,undefined,undefined,"INNER",undefined
+		);  
 
 		self.addStep("Getting All Project, issuetypes and field info.... ",function(){
 			var jira=self.getJira();

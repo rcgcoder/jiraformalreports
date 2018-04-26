@@ -32,7 +32,9 @@ export class advSelector {
                 theSelect.attr("multiple",self.multiple);
             }
             theSelect.auiSelect2();
+            log("Default...onRetrieveTableData:"+self.name);
             self.onRetrieveTableData();
+            log("called onRetrieveTableData:"+self.name);
         });
     }
     
@@ -171,8 +173,10 @@ export class advSelector {
         
     onRetrieveTableData(theDlgSelector){
         var self=this;
-        System.webapp.addStep("Getting values", function(){
+        System.webapp.addStep("Getting values:"+self.name, function(){
+            log("processing step Getting Values(get values async):"+self.name);
             self.getValuesAsync(theDlgSelector);
+            log("launched get values async:"+self.name);
         },0,1,undefined,undefined,undefined,"GLOBAL",undefined);
         System.webapp.continueTask();
     }

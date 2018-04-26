@@ -23,6 +23,5 @@ class RCGConfluence{
 			self.popCallback();
 		});
 		self.apiCall("/rest/api/content/search?cql=type=page");
-		
 	}
 }

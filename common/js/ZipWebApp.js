@@ -45,45 +45,51 @@ class ZipWebApp{
 			atl.initialized=false;
 			self.continueTask();
 		});  
-		self.addStep("Launching Systemjs.... ",function(){
-			var sjs=self.getSystemjs();
-			sjs.loadEngine();
-		},0,1,undefined,undefined,undefined,"INNER",undefined
-		);
-		
-		self.addStep("Getting All Issues.... ",function(){
-			var jira=self.getJira();
-			jira.getAllIssues();
-		}// without thread,0,1,undefined,undefined,undefined,"INNER",undefined
-		);  
+		self.addStep("launching de engines and get atlassian base information.... "
+					,function(){
 
-		self.addStep("Getting All Project, issuetypes and field info.... ",function(){
-			var jira=self.getJira();
-			jira.getProjectsAndMetaInfo();
-		});
+			self.addStep("Launching Systemjs.... ",function(){
+				var sjs=self.getSystemjs();
+				sjs.loadEngine();
+			},0,1,undefined,undefined,undefined,"INNER",undefined
+			);
 
-		self.addStep("Getting All Epics  to do a list.... ",function(){
-			var jira=self.getJira();
-			jira.getAllEpics();
-		});
-		
-		self.addStep("Getting All Labels.... ",function(){
-			var jira=self.getJira();
-			jira.getAllLabels()
-		});
-		self.addStep("Getting All Filters.... ",function(){
-			var jira=self.getJira();
-			jira.getAllFilters();
-		});
-		/*
-		self.addStep("Getting All Epics.... ",function(){
-			var jira=self.getJira();
-			jira.getAllEpics();
-		});
-		*/
-		self.addStep("Testing Confluence Api Integrations.... ",function(){
-			var cfc=self.getConfluence();
-			cfc.getAllPages();
+			self.addStep("Getting All Issues.... ",function(){
+				var jira=self.getJira();
+				jira.getAllIssues();
+			},0,1,undefined,undefined,undefined,"INNER",undefined
+			);  
+
+			self.addStep("Getting All Project, issuetypes and field info.... ",function(){
+				var jira=self.getJira();
+				jira.getProjectsAndMetaInfo();
+			});
+	
+			self.addStep("Getting All Epics  to do a list.... ",function(){
+				var jira=self.getJira();
+				jira.getAllEpics();
+			});
+			
+			self.addStep("Getting All Labels.... ",function(){
+				var jira=self.getJira();
+				jira.getAllLabels()
+			});
+
+			self.addStep("Getting All Filters.... ",function(){
+				var jira=self.getJira();
+				jira.getAllFilters();
+			});
+			/*
+			self.addStep("Getting All Epics.... ",function(){
+				var jira=self.getJira();
+				jira.getAllEpics();
+			});
+			*/
+			self.addStep("Testing Confluence Api Integrations.... ",function(){
+				var cfc=self.getConfluence();
+				cfc.getAllPages();
+			});
+			self.continueTask();
 		});
 		self.addStep("Setting <initized> Atlassian Engine.... ",function(){
 			var atl=self.getAtlassian();

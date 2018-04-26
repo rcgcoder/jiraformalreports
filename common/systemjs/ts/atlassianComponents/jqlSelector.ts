@@ -5,7 +5,7 @@ import {advSelector} from "../components/advSelector";
   templateUrl: System.composeUrl('systemjs/html/atlassianComponents/jqlSelector.html'),
 })
 export class jqlSelector {
-    @Input() name: string = 'advSelection';
+    @Input() name: string = 'jqlSelector';
     @Input() typeDescriptor: string = 'elements';
     @Input() multiple: string = "false";
     @Input() maxCharsInSelect: integer = 17;

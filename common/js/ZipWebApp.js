@@ -162,7 +162,7 @@ class ZipWebApp{
 		var self=this;
 		self.addStep("Initializing engines.... ",self.initialize);
 		self.addStep("Populating components.... ",function(){
-            System.getAngularObject('advSelector[name="selProjects"]').fillOptions(self.getListProjects());
+/*            System.getAngularObject('advSelector[name="selProjects"]').fillOptions(self.getListProjects());
             System.getAngularObject('advSelector[name="selTypes"]').fillOptions(self.getListIssueTypes());
             System.getAngularObject('advSelector[name="selLabels"]').fillOptions(self.getListLabels());
             System.getAngularObject('advSelector[name="selEpics"]').fillOptions(self.getListEpics());
@@ -171,6 +171,7 @@ class ZipWebApp{
 //            System.getAngularObject('select[name="tabStructure"]').fillBillingFields(self.getListFields());
             var objTestJQL=System.getAngularObject('jqlextendedparser[name="testJQL"]');
             objTestJQL.fillFields(self.getListFields());
+*/
 /*            System.getAngularObject('advSelector[name="selProjects"]').testNearley();
 */			$("#appMain").css('visibility','visible');
 			self.continueTask();

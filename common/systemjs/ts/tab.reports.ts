@@ -27,25 +27,25 @@ export class TabReports {
         win.focus();
     }   
     selProjects_getData($event){
-        return System.webapp.getListProjects();
+        System.webapp.continueTask([System.webapp.getListProjects()]);
     }
     selTypes_getData($event){
-        return System.webapp.getListIssueTypes();
+        System.webapp.continueTask([System.webapp.getListIssueTypes()]);
         
     }
     selLabels_getData($event){
-        return System.webapp.getListLabels();
+        System.webapp.continueTask([System.webapp.getListLabels()]);
         
     }
     selEpics_getData($event){
-        return System.webapp.getListEpics();
+        System.webapp.continueTask([System.webapp.getListEpics()]);
         
     }
     selFilters_getData($event){
-        return System.webapp.getListFilters();
+        System.webapp.continueTask([System.webapp.getListFilters()]);
     }
     selFields_getData($event){
-        return System.webapp.getListFields();
+        System.webapp.continueTask([System.webapp.getListFields()]);
     }
 
     @Input() header: string = 'this is header';   

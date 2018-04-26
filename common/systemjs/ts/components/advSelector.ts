@@ -173,11 +173,12 @@ export class advSelector {
         
     onRetrieveTableData(theDlgSelector){
         var self=this;
+        log("Event onRetrieveTableData:"+self.name);
         System.webapp.addStep("Getting values:"+self.name, function(){
             log("processing step Getting Values(get values async):"+self.name);
             self.getValuesAsync(theDlgSelector);
             log("launched get values async:"+self.name);
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
-        System.webapp.continueTask();
+//        System.webapp.continueTask();
     }
 }

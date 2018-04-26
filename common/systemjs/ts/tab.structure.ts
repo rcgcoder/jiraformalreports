@@ -26,5 +26,6 @@ export class TabStructure {
     }
     onGetBillingFields(event){
         log("structure fields event.... onGetBillingFields");
+        System.webapp.continueTask();
     }
 }

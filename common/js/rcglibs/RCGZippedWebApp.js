@@ -1003,7 +1003,7 @@ class RCGZippedApp{
 			}
 			var sHtml="";
 			for (var i=0;i<allTasksInfo.length;i++){
-				sHtml+=fncAddProgressItem(allTasksInfo[0]);
+				sHtml+=fncAddProgressItem(allTasksInfo[i]);
 			}
 			var list= $("<ul id='ProgressList' class='tm-ProgressList'>"+
 						sHtml+

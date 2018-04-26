@@ -127,8 +127,8 @@ export class advSelector {
                     for (var i=0;i<optionList.length;i++){
                         var opt=optionList[i];
                         options.push({key:opt.key,
-                                      name:opt.fields.summary,
-                                      description:opt.fields.summary});
+                                      name:opt.name,
+                                      description:opt.description});
                     }
                     self.fillOptions(options);
                 }

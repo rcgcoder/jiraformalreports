@@ -109,8 +109,8 @@ export class advSelector {
         theSelect.val(selectedKeys);
         theSelect.trigger('change'); // Notify any JS components that the value changed
     }
-        
-    onRetrieveTableData(theDlgSelector){
+    
+    getValuesAsync(theDlgSelector){
         var self=this;
         System.webapp.addStep("Getting options", function(){
             if (self.onRetrieveData.observers.length>0){
@@ -152,6 +152,14 @@ export class advSelector {
                 }
                 System.webapp.continueTask();
             });
+        System.webapp.continueTask();
+    }
+        
+    onRetrieveTableData(theDlgSelector){
+        var self=this;
+        System.webapp.addStep("Getting values", function(){
+            self.getValuesAsync(theDlgSelector);
+        },0,1,undefined,undefined,undefined,"INNER",undefined);
         System.webapp.continueTask();
     }
 }

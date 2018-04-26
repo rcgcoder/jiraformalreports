@@ -15,6 +15,7 @@ export class TabStructure {
     }
  */
     onGetBillingRelationships(event){
+        log("GettingRelationships");
         var arrValues=[
                         "es implementado por"
                         ,"causa"

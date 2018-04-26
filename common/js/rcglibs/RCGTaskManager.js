@@ -40,6 +40,7 @@ class RCGTask{
 		self.method="";
 		self.isCallBack=false;
 		self.isFork=false;
+		self.isGlobalFork=false;
 		self.parent="";
 		self.forkId="";
 		self.actStep=-1;
@@ -439,6 +440,7 @@ class RCGTaskManager{
 		fork.parent="";
 		fork.forkId=self.newForkId();
 		fork.isFork=true;
+		fork.isGlobalFork=true;
 		var iTotalWeight=0;
 		var iMethodWeight=0;
 		if (typeof totalWeight!=="undefined"){
@@ -454,22 +456,25 @@ class RCGTaskManager{
 			fork.barrier.add(fork);
 		}
 		self.globalForks.push(fork);
-		runningTask.steps.push(fork);
+/*		runningTask.steps.push(fork);
 		if (typeof barrier!=="undefined"){
 			fork.pushCallback(function(){
 				barrier.reach(self.getRunningTask());
 				fork.popCallback();
 			});
-		}
+		}*/
 		return fork;
 	}
-	addInnerFork(method,barrier,obj,description,progressMin,progressMax,totalWeight,methodWeight){
+	addInnerFork(method,barrier,obj,description,progressMin,progressMax,totalWeight,methodWeight,isGlobalFork){
 		var self=this;
 		var runningTask=self.getRunningTask();
 		var fork=self.newTask(method,obj,description,progressMin,progressMax,totalWeight,methodWeight);
 
 		fork.forkId=self.newForkId();
 		fork.isFork=true;
+		if ((typeof isGlobalFork!=="undefined")&&(isGlobalFork==true)){
+			fork.isGlobalFork=true;
+		}
 
 		var iTotalWeight=-1;
 		var iMethodWeight=-1;
@@ -482,32 +487,34 @@ class RCGTaskManager{
 		fork.weight=iTotalWeight;
 		fork.methodWeight=iMethodWeight;
 		runningTask.innerForks.push(fork);
-		self.innerForks.push(fork);
 		runningTask.steps.push(fork);
-		if (typeof barrier!=="undefined"){
-			fork.barrier=barrier;
-			fork.barrier.add(fork);
-			// there is not necesary to include a reach callback.... the next method launches automatically
-			/*fork.pushCallback(function(){
-				barrier.reach(fork);
-				fork.popCallback();
-			});*/
-		}
-		var innerBarrier;
-		if (runningTask.barrier==""){
-			var fncBarrierOpen=function(){
-				self.setRunningTask(runningTask);
-				runningTask.running=false;
-				runningTask.done();
-				self.next();
+		if (!fork.isGlobalFork){ // the Global Forks does not use barrier
+			self.innerForks.push(fork);
+			if (typeof barrier!=="undefined"){
+				fork.barrier=barrier;
+				fork.barrier.add(fork);
+				// there is not necesary to include a reach callback.... the next method launches automatically
+				/*fork.pushCallback(function(){
+					barrier.reach(fork);
+					fork.popCallback();
+				});*/
 			}
-			innerBarrier=new RCGBarrier(fncBarrierOpen);
-			innerBarrier.add(runningTask); // to reach the barrier at the end of the last step of the task
-			runningTask.barrier=innerBarrier;
-		} else {
-			innerBarrier=runningTask.barrier;
+			var innerBarrier;
+			if (runningTask.barrier==""){
+				var fncBarrierOpen=function(){
+					self.setRunningTask(runningTask);
+					runningTask.running=false;
+					runningTask.done();
+					self.next();
+				}
+				innerBarrier=new RCGBarrier(fncBarrierOpen);
+				innerBarrier.add(runningTask); // to reach the barrier at the end of the last step of the task
+				runningTask.barrier=innerBarrier;
+			} else {
+				innerBarrier=runningTask.barrier;
+			}
+			innerBarrier.add(fork);
 		}
-		innerBarrier.add(fork);
 /*		self.setRunningTask(fork);
 		self.pushCallback(function(){
 			self.setRunningTask(runningTask);
@@ -539,10 +546,12 @@ class RCGTaskManager{
 	addStep(method,obj,sForkType,barrier,description,progressMin,progressMax,totalWeight,methodWeight){
 		var self=this;
 		var task;
-		if ((typeof sForkType!=="undefined")&&(sForkType.toUpperCase()=="GLOBAL")){
+		if ((typeof sForkType!=="undefined")&&(sForkType.toUpperCase()=="GLOBAL_RUN")){
 			return self.addGlobalFork(method,barrier,obj,description,progressMin,progressMax,totalWeight,methodWeight);
 		} else if ((typeof sForkType!=="undefined")&&(sForkType.toUpperCase()=="INNER")){
 			return self.addInnerFork(method,barrier,obj,description,progressMin,progressMax,totalWeight,methodWeight);
+		} else if ((typeof sForkType!=="undefined")&&(sForkType.toUpperCase()=="GLOBAL")){
+			return self.addInnerFork(method,barrier,obj,description,progressMin,progressMax,totalWeight,methodWeight,true);
 		} else {
 			task=self.newTask(method,obj,description,progressMin,progressMax,totalWeight,methodWeight);
 		}
@@ -603,7 +612,11 @@ class RCGTaskManager{
 			iSubStep=stepRunning.actStep;			
 			bWithSubSteps=(nSteps>0);
 			if (iSubStep>=nSteps){ // the actual task is reached the end of de steps
-				if ((!stepRunning.isDone)&&((stepRunning.innerForks.length>0)||(stepRunning.barrier!=""))){
+				if ((!stepRunning.isDone)&&
+					((stepRunning.innerForks.length>0)
+						||
+					 (stepRunning.barrier!=""))
+					){
 					stepRunning.changeStatus();
 					return stepRunning.barrier.reach(stepRunning);
 				} else {
@@ -679,7 +692,7 @@ class RCGTaskManager{
 		}
 		if (bLocated){
 			var taskToRun=stepRunning;
-			if (taskToRun.isFork){ // if the step is a fork.... 
+			if (taskToRun.isFork){ // if the step is a fork.... maybe inner or global
 				// remove the step..... and continue
 				log ("Next running task is fork: " + taskToRun.description + "("+taskToRun.forkId+")");
 				var parent=taskToRun.parent;
@@ -689,6 +702,10 @@ class RCGTaskManager{
 						log("Impossible situation.... the fork has to be in the step array of the parent");
 					} else { // remove the fork from the parent step
 						parent.steps.splice(iStep, 1);
+						if (taskToRun.isGlobalFork){
+							taskToRun.parent="";
+							self.globalForks.push(taskToRun);
+						}
 						var nextTask=parent;
 						if (parent.actStep<parent.steps.length){
 							nextTask=parent.steps[parent.actStep];

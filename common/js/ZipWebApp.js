@@ -107,7 +107,7 @@ class ZipWebApp{
 		});
 
 		
-		self.continueTask();
+//		self.continueTask();
 	}
 	getListIssueTypes(){
 		var self=this;

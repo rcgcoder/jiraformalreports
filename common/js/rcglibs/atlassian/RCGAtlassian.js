@@ -102,7 +102,10 @@ class RCGAtlassian{
 			//progressMin,progressMax,newObj,totalWeight,methodWeight,sForkType,barrier){
 
 			var frkTask=self.addStep("Getting "+resultName+" ["+nLast+","+nTotal+"]",function(){
-					self.pushCallback(function(response,xhr,sUrl,headers){
+					self.addStep("Calling "+sTarget+ " "+nLast, function(){
+						self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,undefined,callback,arrHeaders);
+					});
+					self.addStep("Procesing the Call "+sTarget+ " "+nLast,function(response,xhr,sUrl,headers){
 						var objResp;
 						if (typeof response=="string"){
 							objResp=JSON.parse(response);
@@ -111,9 +114,9 @@ class RCGAtlassian{
 						}
 						arrResults=arrResults.concat(objResp[resultName]);
 						log("Retrieved "+resultName+":"+arrResults.length);
-						self.popCallback([arrResults]);
+						self.continueTask([arrResults]);
 					});
-					self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,undefined,callback,arrHeaders);
+					self.continueTask();
 			},0,nBlockItems,undefined,undefined,undefined,"INNER",undefined
 			);
 		};

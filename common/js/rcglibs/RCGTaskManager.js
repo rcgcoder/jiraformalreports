@@ -488,17 +488,12 @@ class RCGTaskManager{
 		fork.methodWeight=iMethodWeight;
 		runningTask.innerForks.push(fork);
 		runningTask.steps.push(fork);
-		if (!fork.isGlobalFork){ // the Global Forks does not use barrier
+		if (typeof barrier!=="undefined"){
+			fork.barrier=barrier;
+			fork.barrier.add(fork);
+		}
+		if (!fork.isGlobalFork){ // the Global Forks does not use inner barrier
 			self.innerForks.push(fork);
-			if (typeof barrier!=="undefined"){
-				fork.barrier=barrier;
-				fork.barrier.add(fork);
-				// there is not necesary to include a reach callback.... the next method launches automatically
-				/*fork.pushCallback(function(){
-					barrier.reach(fork);
-					fork.popCallback();
-				});*/
-			}
 			var innerBarrier;
 			if (runningTask.barrier==""){
 				var fncBarrierOpen=function(){
@@ -515,19 +510,8 @@ class RCGTaskManager{
 			}
 			innerBarrier.add(fork);
 		}
-/*		self.setRunningTask(fork);
-		self.pushCallback(function(){
-			self.setRunningTask(runningTask);
-			log("fork:" + fork.forkId+" has reached the finish Barrier");
-			innerBarrier.reach(fork);
-			if (typeof barrier!=="undefined"){
-				barrier.reach(fork);
-			}
-		});
-		self.setRunningTask(runningTask);
-*/		return fork;
+		return fork;
 	}
-	
 	
 	searchForFork(forkId){
 		var self=this;

@@ -20,7 +20,6 @@ export class jqlSelector {
     }
     onAdvSelectorRetrieveData(theAdvSelector){
         var self=this;
-        var theSuper=_super;
         log("Retrieving table data on jqlSelector");
         var theJQLBox=self.getJQLBox()[0];
         var sJQL=theJQLBox.value;

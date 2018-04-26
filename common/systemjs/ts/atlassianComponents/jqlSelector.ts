@@ -14,6 +14,7 @@ export class jqlSelector {
     ngOnInit() {
         var self=this;
         System.addPostProcess(function(){
+            log("PostProcessing:"+self.name);
             System.bindObj(self);
             var theJQLBox=self.getJQLBox()[0];
             theJQLBox.value=self.jql;

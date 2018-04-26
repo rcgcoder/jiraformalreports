@@ -25,6 +25,7 @@ export class advSelector {
     ngOnInit() {
         var self=this;
         System.addPostProcess(function(){
+            log("PostProcessing:"+self.name);
             System.bindObj(self);
             var theSelect=self.getSelect();
             if (self.multiple.toUpperCase()=="TRUE"){

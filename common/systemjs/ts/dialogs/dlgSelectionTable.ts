@@ -41,6 +41,7 @@ export class dlgSelectionTable {
             self.hideButton();
         }
         System.addPostProcess(function(){
+            log("PostProcessing:"+self.name);
             System.bindObj(self);
         });
     }

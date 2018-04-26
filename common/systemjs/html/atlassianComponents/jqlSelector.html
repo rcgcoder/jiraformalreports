@@ -1,11 +1,10 @@
 {{typeDescriptor}}
-<select name="{{name}}-select"></select>
-<dlgSelectionTable name="{{name}}-SelTable" typeDescriptor="{{typeDescriptor}}" openDialogCaption="{{openDialogCaption}}"
-	(onSelected)="onSelected($event)"
-	(onRetrieveTableData)="onRetrieveTableData($event)"
-	(onRetrievePreviousSelectedKeys)="onRetrievePreviousSelectedKeys($event)"
->
-</dlgSelectionTable>
+<advSelector name="{{name}}-advSelector" 
+   			 typeDescriptor="{{typeDescriptor}}" 
+   			 openDialogCaption="{{openDialogCaption}}"
+   			 (onRetrieveData)='onAdvSelectorRetrieveData($event)'
+   			 >
+</advSelector>
 <textarea class="textarea" name="{{name}}-jqlEdit"
               id="{{name}}-jqlEdit" placeholder="Your jql here..."></textarea>    
 

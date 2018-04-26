@@ -4,7 +4,7 @@ import {advSelector} from "../components/advSelector";
   selector: 'jqlSelector',
   templateUrl: System.composeUrl('systemjs/html/atlassianComponents/jqlSelector.html'),
 })
-export class jqlSelector extends advSelector {
+export class jqlSelector {
     prev_jql="";
     doOpenJQL(){
         var win = window.open("https://paega2.atlassian.net/issues/?jql=", '_blank');
@@ -13,25 +13,22 @@ export class jqlSelector extends advSelector {
     getJQLBox(){
         return AJS.$('[name="'+this.name+'-jqlEdit"]');
     }
-    
-    onRetrieveTableData(theDlgSelector){
+    onAdvSelectorRetrieveData(theAdvSelector){
         var self=this;
         var theSuper=_super;
         log("Retrieving table data on jqlSelector");
-        var theSelect=self.getSelect();
         var theJQLBox=self.getJQLBox()[0];
         var sJQL=theJQLBox.value;
         if (sJQL==""){
             log("Empty JQL is not allowed");
-            this.getDialog().hide();
+            System.webapp.continueTask([[]]);
             return;
         }
         if (self.prev_jql==sJQL){
             log("Same jql:"+sJQL);
-            super.onRetrieveTableData(theDlgSelector);
+            System.webapp.continueTask();
         } else {
             log("Diferent jql:"+sJQL);
-            self.setDialogWaiting(true);
             self.prev_jql=sJQL;
             System.webapp.addStep("Getting issues from JQL:"+sJQL, function(){
                 System.webapp.getJQLIssues(sJQL);
@@ -43,9 +40,7 @@ export class jqlSelector extends advSelector {
                     var issue=issueList[i];
                     arrIssues.push({key:issue.key,name:issue.fields.summary,description:issue.fields.summary});
                 }
-                self.fillOptions(arrIssues);
-                theSuper.prototype.onRetrieveTableData.call(self, theDlgSelector);
-                System.webapp.continueTask();
+                System.webapp.continueTask([arrIssues]);
             });
             System.webapp.continueTask();
         }

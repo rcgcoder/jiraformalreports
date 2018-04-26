@@ -185,7 +185,7 @@ class RCGAtlassian{
 		var sTargetUrl=newSubPath+sTarget+sTokenParam;
 		log("Calling api of "+(newSubPath==""?"Jira":appInfo.subPath) + " final url:"+sTargetUrl);
 		self.pushCallback(function(response,xhr,sUrl,headers){
-			log("Api Call Response:"+response.length);
+			log("Api Call Response of "+((newSubPath==""?"Jira":appInfo.subPath) + " final url:"+sTargetUrl+" --> Bytes:"+response.length);
 			if (xhr.status == 429){
 				var millis=Math.round(((Math.random()*5)+10)*1000);
 				log("too many request.... have to wait "+(Math.round(millis/10)/100)+" secs");

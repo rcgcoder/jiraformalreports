@@ -112,25 +112,27 @@ export class advSelector {
     
     getValuesAsync(theDlgSelector){
         var self=this;
-        System.webapp.addStep("Getting options", function(){
+        System.webapp.addStep("Getting options for "+self.name, function(){
             if (self.onRetrieveData.observers.length>0){
                 self.onRetrieveData.emit(self);
             } else {
-                System.webapp.continueTask([]);
+                System.webapp.continueTask([[]]);
             }
         });
-        System.webapp.addStep("Retrieving options once they are loaded",
+        System.webapp.addStep("Retrieving options once they are loaded for "+self.name,
             function(optionList){
-                log(optionList.length);
-                var options=[];
-                for (var i=0;i<issueList.length;i++){
-                    var issue=issueList[i];
-                    options.push({key:issue.key,name:issue.fields.summary,description:issue.fields.summary});
+                if (typeof optionList!=="undefined"){
+                    log(optionList.length);
+                    var options=[];
+                    for (var i=0;i<issueList.length;i++){
+                        var issue=issueList[i];
+                        options.push({key:issue.key,name:issue.fields.summary,description:issue.fields.summary});
+                    }
+                    self.fillOptions(options);
                 }
-                self.fillOptions(options);
                 System.webapp.continueTask();
             });
-        System.webapp.addStep("Populating the table",function(){
+        System.webapp.addStep("Populating the table of "+self.name,function(){
                 var theSelect=self.getSelect();
                 var nOps=theSelect[0].length; 
                 var arrTable=[];

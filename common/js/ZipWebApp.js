@@ -105,9 +105,7 @@ class ZipWebApp{
 			 ]; //test
 			self.loadRemoteFiles(arrFiles);
 		});
-
-		
-//		self.continueTask();
+		self.continueTask();
 	}
 	getListIssueTypes(){
 		var self=this;

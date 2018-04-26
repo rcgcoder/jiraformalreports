@@ -943,7 +943,8 @@ class RCGZippedApp{
 			}
 			pDiv.empty();
 			var allTasksInfo=self.getTaskManagerStatus();
-			var fncAddProgressItem=function(item){
+			var maxDeep=3;
+			var fncAddProgressItem=function(item,currentDeep){
 				if (item.done) return "";
 				if (!item.running) return "";
 				var perc100=(Math.round(item.perc*1000))/10;
@@ -993,17 +994,21 @@ class RCGZippedApp{
 				var sSubItems="";
 				if (item.detail.length>0) { 
 					for (var i=0;i<item.detail.length;i++){
-						var sSubItem=fncAddProgressItem(item.detail[i]);
+						var sSubItem=fncAddProgressItem(item.detail[i],currentDeep+1);
 						sSubItems+=sSubItem;
 					}
 					sSubItems="<ul class='tm-ulSubItems'>"+sSubItems+"</ul>";
 				}
-				sItem='<li class="tm-progress">'+sItem+' '+sSubItems+'</li>';
+				if (currentDeep<=maxDeep){
+					sItem='<li class="tm-progress">'+sItem+' '+sSubItems+'</li>';
+				} else {
+					sItem='';
+				}
 				return sItem;
 			}
 			var sHtml="";
 			for (var i=0;i<allTasksInfo.length;i++){
-				sHtml+=fncAddProgressItem(allTasksInfo[i]);
+				sHtml+=fncAddProgressItem(allTasksInfo[i],0);
 			}
 			var list= $("<ul id='ProgressList' class='tm-ProgressList'>"+
 						sHtml+

@@ -124,9 +124,11 @@ export class advSelector {
                 if (typeof optionList!=="undefined"){
                     log(optionList.length);
                     var options=[];
-                    for (var i=0;i<issueList.length;i++){
-                        var issue=issueList[i];
-                        options.push({key:issue.key,name:issue.fields.summary,description:issue.fields.summary});
+                    for (var i=0;i<optionList.length;i++){
+                        var opt=optionList[i];
+                        options.push({key:opt.key,
+                                      name:opt.fields.summary,
+                                      description:opt.fields.summary});
                     }
                     self.fillOptions(options);
                 }

@@ -9,6 +9,7 @@ lorem ipsum
 	<button (click)="doOpenJQL()" class="aui-button">Open JQL Tab</button>
 	<jqlExtendedParser name="testJQL"></jqlExtendedParser>
     
+    <br>
     <atlassianSelector name="selProjects" 
     				   typeDescriptor="Projects"
     				    atlassianAplication="webapp"
@@ -16,30 +17,44 @@ lorem ipsum
     		>
     </atlassianSelector >
   	<br>    
-    Issue Types <advSelector name="selTypes" typeDescriptor="Types"
-    			 (onRetrieveData)='selTypes_getData($event)'
+    <atlassianSelector name="selTypes" 
+    				   typeDescriptor="Issue Types"
+    				    atlassianAplication="webapp"
+    				    atlassianObjectFunction="getListIssueTypes"
     		>
-    </advSelector>
+    </atlassianSelector >
+
     <br>
-    Labels <advSelector name="selLabels" typeDescriptor="Labels"
-    			 (onRetrieveData)='selLabels_getData($event)'
+    <atlassianSelector name="selLabels" 
+    				   typeDescriptor="Labels"
+    				    atlassianAplication="webapp"
+    				    atlassianObjectFunction="getListLabels"
     		>
-    </advSelector>
+    </atlassianSelector >
+
     <br>
-    Epics <advSelector name="selEpics" typeDescriptor="Epics" multiple="true"
-    			 (onRetrieveData)='selEpics_getData($event)'
+    <atlassianSelector name="selEpics" 
+    				   typeDescriptor="Epics"
+    				   multiple="true"
+    				    atlassianAplication="webapp"
+    				    atlassianObjectFunction="getListEpics"
     		>
-    </advSelector>
+    </atlassianSelector >
     <br>
-    Filters <advSelector name="selFilters" typeDescriptor="Filters"
-    			 (onRetrieveData)='selFilters_getData($event)'
+    <atlassianSelector name="selFilters" 
+    				   typeDescriptor="Filters"
+    				   multiple="true"
+    				    atlassianAplication="webapp"
+    				    atlassianObjectFunction="getListFilters"
     		>
-    </advSelector>
+    </atlassianSelector >
     <br>
-    Fields <advSelector name="selFields" typeDescriptor="Fields"
-    			 (onRetrieveData)='selFields_getData($event)'
+    <atlassianSelector name="selFields" 
+    				   typeDescriptor="Issue Fields"
+    				    atlassianAplication="webapp"
+    				    atlassianObjectFunction="getListFields"
     		>
-    </advSelector>
+    </atlassianSelector >
     <br>
     <aui-label for="sync-product-single-select">Choose your product synchronously:</aui-label>
     <p>

@@ -26,34 +26,4 @@ export class TabReports {
         var win = window.open("https://paega2.atlassian.net/issues/?jql=", '_blank');
         win.focus();
     }   
-    selProjects_getData($event){
-        log("getListProjects");
-        System.webapp.continueTask([System.webapp.getListProjects()]);
-    }
-    selTypes_getData($event){
-        log("getListIssueTypes");
-        System.webapp.continueTask([System.webapp.getListIssueTypes()]);
-        
-    }
-    selLabels_getData($event){
-        log("getListLabels");
-        System.webapp.continueTask([System.webapp.getListLabels()]);
-        
-    }
-    selEpics_getData($event){
-        log("getListEpics");
-        System.webapp.continueTask([System.webapp.getListEpics()]);
-        
-    }
-    selFilters_getData($event){
-        log("getListFilters");
-        System.webapp.continueTask([System.webapp.getListFilters()]);
-    }
-    selFields_getData($event){
-        log("getListFields");
-        System.webapp.continueTask([System.webapp.getListFields()]);
-    }
-
-    @Input() header: string = 'this is header';   
-    @Input() footer: string = 'this is footer';
 }

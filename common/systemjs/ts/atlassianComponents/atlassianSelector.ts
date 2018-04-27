@@ -7,6 +7,11 @@ export class atlassianSelector {
     @Input() atlassianObjectProperty: string = undefined;
     @Input() atlassianObjectFunction: string = undefined;
     @Input() atlassianAplication: string = undefined;
+    @Input() name: string = 'advSelection';
+    @Input() typeDescriptor: string = 'elements';
+    @Input() multiple: string = "false";
+    @Input() maxCharsInSelect: integer = 17;
+    @Input() openDialogCaption: string = '...';
 
     getPropertyValues(){
         var obj;

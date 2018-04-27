@@ -3,6 +3,7 @@
 	    <atlassianSelector name="childField" 
 	    				   typeDescriptor="Child Field"
 	    				   multiple="false"
+	    				   maxCharsInSelect=50
 	    				    atlassianAplication="webapp"
 	    				    atlassianObjectFunction="getListFields"
 	    		>
@@ -11,30 +12,25 @@
 	    <atlassianSelector name="parentField" 
 	    				   typeDescriptor="Parent Field"
 	    				   multiple="false"
+	    				   maxCharsInSelect=50
 	    				    atlassianAplication="webapp"
 	    				    atlassianObjectFunction="getListFields"
 	    		>
 	    </atlassianSelector >
 	    <button>+</button>
 	    <br>
-	    <atlassianSelector name="childField2" 
-	    				   typeDescriptor="Child Field"
+	    <atlassianSelector name="childLink" 
+	    				   typeDescriptor="Child Link"
 	    				   multiple="false"
+	    				   maxCharsInSelect=50
 	    				    atlassianAplication="webapp"
-	    				    atlassianObjectFunction="getListFields"
+	    				    atlassianObjectFunction="getListRelations"
 	    		>
 	    </atlassianSelector >
-	    =
-	    <atlassianSelector name="parentField2" 
-	    				   typeDescriptor="Parent Field"
-	    				   multiple="false"
-	    				    atlassianAplication="webapp"
-	    				    atlassianObjectFunction="getListFields"
-	    		>
-	    </atlassianSelector >
+	    = ID Parent
 	    <button>+</button>
     </div>
     <div class="aui-item">
-		<textarea style="width:100%;"></textarea>
+		<textarea rows=6 style="width:100%;"></textarea>
     </div>
 </div>

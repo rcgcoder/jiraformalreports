@@ -1,6 +1,14 @@
 <div class="aui-group">
     <div class="aui-item">
-	    <atlassianSelector name="childField" 
+		<textarea name="{{name}}-text" rows=6 style="width:100%;"></textarea>
+    </div>
+    <div class="aui-item">
+	    <button>+</button>
+	    <select id="{{name}}-addOrField">
+	    	<option value="and">and</option>
+	    	<option value="or">or</option>
+	   	</select>
+	    <atlassianSelector name="{{name}}-childField" 
 	    				   typeDescriptor="Child Field"
 	    				   multiple="false"
 	    				   maxCharsInSelect=50
@@ -9,7 +17,7 @@
 	    		>
 	    </atlassianSelector >
 	    =
-	    <atlassianSelector name="parentField" 
+	    <atlassianSelector name="{{name}}-parentField" 
 	    				   typeDescriptor="Parent Field"
 	    				   multiple="false"
 	    				   maxCharsInSelect=50
@@ -17,9 +25,13 @@
 	    				    atlassianObjectFunction="getListFields"
 	    		>
 	    </atlassianSelector >
-	    <button>+</button>
 	    <br>
-	    <atlassianSelector name="childLink" 
+	    <button>+</button> 
+	    <select id="{{name}}-addOrLink">
+	    	<option value="and">and</option>
+	    	<option value="or">or</option>
+	   	</select>
+	    <atlassianSelector name="{{name}}-childLink" 
 	    				   typeDescriptor="Child Link"
 	    				   multiple="false"
 	    				   maxCharsInSelect=50
@@ -28,9 +40,5 @@
 	    		>
 	    </atlassianSelector >
 	    = ID Parent
-	    <button>+</button>
-    </div>
-    <div class="aui-item">
-		<textarea rows=6 style="width:100%;"></textarea>
     </div>
 </div>

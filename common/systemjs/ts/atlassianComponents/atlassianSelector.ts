@@ -8,14 +8,6 @@ export class atlassianSelector extends advSelector {
     @Input() atlassianObjectProperty: string = undefined;
     @Input() atlassianObjectFunction: string = undefined;
     @Input() atlassianAplication: string = undefined;
-    @Output() onRetrieveData = new EventEmitter<{}>();
-    ngOnInit() {
-        super.ngOnInit();
-        var self=this;
-        System.addPostProcess(function(){
-            self.onRetrieveTableData();
-        });
-    }
 
     getPropertyValues(){
         var obj;
@@ -23,6 +15,8 @@ export class atlassianSelector extends advSelector {
             obj=System.webapp.getJira();
         } else if (this.atlassianAplication.toUpperCase()=="CONFLUENCE"){
             obj=System.webapp.getConfluence();
+        } else if (this.atlassianAplication.toUpperCase()=="WEBAPP"){
+            obj=System.webapp;
         }
         if (typeof this.atlassianObjectProperty!=="undefined"){
             return obj[this.atlassianObjectProperty];
@@ -30,10 +24,9 @@ export class atlassianSelector extends advSelector {
             return obj[this.atlassianObjectFunction]();
         }
     }
-    
-    onRetrieveTableData(theDlgSelector){
+    onGetOptions(event){
         var self=this;
-        log("Retrieving table data on jiraSelector");
+        log("Retrieving table data on atlassianSelector");
         var theSelect=self.getSelect();
         var arrOptions=[];
         if ((typeof self.atlassianObjectProperty!=="undefined") 
@@ -43,13 +36,7 @@ export class atlassianSelector extends advSelector {
             (typeof self.atlassianAplication!=="undefined")
             ){
             arrOptions=self.getPropertyValues();
-        } else {
-            this.onRetrieveData.emit();
-            return;
         }
-        self.fillOptions(arrOptions);
-        if (typeof theDlgSelector!=="undefined"){
-            super.onRetrieveTableData(theDlgSelector);
-        }
-    }
+        System.webapp.continueTask([arrOptions]);
+     }
 }

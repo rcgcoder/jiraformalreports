@@ -1,8 +1,9 @@
-{{typeDescriptor}}
-<select name="{{name}}-select"></select>
-<dlgSelectionTable name="{{name}}-SelTable" typeDescriptor="{{typeDescriptor}}" openDialogCaption="{{openDialogCaption}}"
-	(onSelected)="onSelected($event)"
-	(onRetrieveTableData)="onRetrieveTableData($event)"
-	(onRetrievePreviousSelectedKeys)="onRetrievePreviousSelectedKeys($event)"
->
-</dlgSelectionTable>
+	<advSelector id="{{name}}-atlSelector" 
+				 name="{{name}}-atlSelector" 
+    			 typeDescriptor="{{typeDescriptor}}" 
+    			 maxCharsInSelect={{maxCharsInSelect}}
+    			 multiple="{{multiple}}"
+    			 openDialogCaption="{{openDialogCaption}}"
+    			 (onRetrieveData)='onGetOptions($event)'
+    			 >
+	</advSelector>

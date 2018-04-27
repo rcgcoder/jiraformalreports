@@ -9,10 +9,12 @@ lorem ipsum
 	<button (click)="doOpenJQL()" class="aui-button">Open JQL Tab</button>
 	<jqlExtendedParser name="testJQL"></jqlExtendedParser>
     
-    Projects <advSelector name="selProjects" typeDescriptor="Projects"
-    			 (onRetrieveData)='selProjects_getData($event)'
+    <atlassianSelector name="selProjects" 
+    				   typeDescriptor="Projects"
+    				    atlassianAplication="webapp"
+    				    atlassianObjectFunction="getListProjects"
     		>
-    </advSelector>
+    </atlassianSelector >
   	<br>    
     Issue Types <advSelector name="selTypes" typeDescriptor="Types"
     			 (onRetrieveData)='selTypes_getData($event)'

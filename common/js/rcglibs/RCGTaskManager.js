@@ -13,7 +13,7 @@ class RCGBarrier{
 	}
 	reach(task){
 		var self=this;
-		log("reached task:["+task.forkId+" - "+task.description+"]");
+		log("Barrier reached task:["+task.forkId+" - "+task.description+"] - "+self.nItems);
 		self.tasksReached.push(task); // to debug activity
 		task.done();
 		task.running=false;
@@ -29,6 +29,7 @@ class RCGBarrier{
 	}
 	add(task){
 		var self=this;
+		log("Barrier added task:["+task.forkId+" - "+task.description+"] - "+self.nItems);
 		self.tasksBarried.push(task); // to debug barrier activity
 		if (self.fixedItem) return;
 		self.nItems++;

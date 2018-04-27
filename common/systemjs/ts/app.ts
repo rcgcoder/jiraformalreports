@@ -13,6 +13,7 @@ import {dlgSelectionTable} from './dialogs/dlgSelectionTable';
 import {jqlExtendedParser} from './components/jqlExtendedParser';
 import {jqlSelector} from "./atlassianComponents/jqlSelector";
 import {atlassianSelector} from "./atlassianComponents/atlassianSelector";
+import {jiraCorrelator} from "./atlassianComponents/jiraCorrelator";
 
 
 @Component({
@@ -78,7 +79,8 @@ class App {
                     advSelector,
                     jqlExtendedParser,
                     jqlSelector,
-                    atlassianSelector
+                    atlassianSelector,
+                    jiraCorrelator
                 ],
   bootstrap: [ App ]
 })

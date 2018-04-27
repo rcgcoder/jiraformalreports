@@ -114,12 +114,13 @@ export class advSelector {
         theSelect.trigger('change'); // Notify any JS components that the value changed
     }
     isSomeOneObserving(){
+        log("Observers:"+self.onRetrieveData.observers.length);
         return (self.onRetrieveData.observers.length>0);
     }
     
     getValuesAsync(theDlgSelector){
         var self=this;
-        log("Running getValuesAsync of "+self.name+" observers"+self.onRetrieveData.observers.length);
+        log("Running getValuesAsync of "+self.name);
         if (self.isSomeOneObserving()){
             System.webapp.addStep("Getting Async options for "+self.name, function(){
                 log("onRetrieveData to emit:"+self.name);

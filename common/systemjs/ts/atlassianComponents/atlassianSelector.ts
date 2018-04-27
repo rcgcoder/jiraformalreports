@@ -24,10 +24,14 @@ export class atlassianSelector extends advSelector {
             return obj[this.atlassianObjectFunction]();
         }
     }
+    isSomeOneObserving(){
+        return true;
+    }
+    
+
     onGetOptions(event){
         var self=this;
         log("Retrieving table data on atlassianSelector");
-        var theSelect=self.getSelect();
         var arrOptions=[];
         if ((typeof self.atlassianObjectProperty!=="undefined") 
                 || 

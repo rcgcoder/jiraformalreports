@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import {advSelector} from "../components/advSelector";
 @Component({
   selector: 'atlassianSelector',
   templateUrl: System.composeUrl('systemjs/html/atlassianComponents/atlassianSelector.html'),
 })
-export class atlassianSelector extends advSelector {
+export class atlassianSelector {
     @Input() atlassianObjectProperty: string = undefined;
     @Input() atlassianObjectFunction: string = undefined;
     @Input() atlassianAplication: string = undefined;

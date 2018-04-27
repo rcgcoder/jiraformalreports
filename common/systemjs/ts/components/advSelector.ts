@@ -114,6 +114,7 @@ export class advSelector {
         theSelect.trigger('change'); // Notify any JS components that the value changed
     }
     isSomeOneObserving(){
+        var self=this;
         log("Observers:"+self.onRetrieveData.observers.length);
         return (self.onRetrieveData.observers.length>0);
     }

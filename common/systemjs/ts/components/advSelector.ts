@@ -10,7 +10,7 @@ export class advSelector {
     @Input() maxCharsInSelect: integer = 17;
     @Input() openDialogCaption: string = '...';
     @Output() onRetrieveData = new EventEmitter<{}>();
-    initialized:false;
+    initialized: boolean = false;
     elements: [] = [];
     getSelect(){
         return AJS.$('[name="'+this.name+'-select"]');

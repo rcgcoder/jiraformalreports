@@ -3,6 +3,7 @@ class RCGBarrier{
 		var self=this;
 		self.callback=callback;
 		self.nItems=0;
+		self.id=self.newId();
 		self.fixedItems=false;
 		if (typeof nItems!=="undefined"){
 			self.nItems==nItems;
@@ -11,9 +12,13 @@ class RCGBarrier{
 		self.tasksBarried=[]; // to debug barrier activity
 		self.tasksReached=[]; // to debug barrier activity
 	}
+	newId(){
+		var newId="bid-"+(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
+		return newId;
+	}
 	reach(task){
 		var self=this;
-		log("Barrier reached task:["+task.forkId+" - "+task.description+"] - "+self.nItems);
+		log("Barrier "+self.id+" reached task:["+task.forkId+" - "+task.description+"] - "+self.nItems);
 		self.tasksReached.push(task); // to debug activity
 		task.done();
 		task.running=false;
@@ -29,7 +34,7 @@ class RCGBarrier{
 	}
 	add(task){
 		var self=this;
-		log("Barrier added task:["+task.forkId+" - "+task.description+"] - "+self.nItems);
+		log("Barrier "+self.id+" added task:["+task.forkId+" - "+task.description+"] - "+self.nItems);
 		self.tasksBarried.push(task); // to debug barrier activity
 		if (self.fixedItem) return;
 		self.nItems++;

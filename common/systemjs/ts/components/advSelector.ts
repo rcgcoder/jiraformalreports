@@ -10,6 +10,7 @@ export class advSelector {
     @Input() maxCharsInSelect: integer = 17;
     @Input() openDialogCaption: string = '...';
     @Output() onRetrieveData = new EventEmitter<{}>();
+    initiliazed:false;
     elements: [] = [];
     getSelect(){
         return AJS.$('[name="'+this.name+'-select"]');
@@ -175,12 +176,14 @@ export class advSelector {
     onRetrieveTableData(theDlgSelector){
         var self=this;
         log("Event onRetrieveTableData:"+self.name);
-        var fork=
-        System.webapp.addStep("Getting values:"+self.name, function(){
+        var fork=System.webapp.addStep("Getting values:"+self.name, function(){
             log("processing step Getting Values(get values async):"+self.name);
             self.getValuesAsync(theDlgSelector);
             log("launched get values async:"+self.name);
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
+        if (self.initialized==false){
+           System.webapp.initializationBarrier.add(fork);
+        }
 //        System.webapp.continueTask();
     }
 }

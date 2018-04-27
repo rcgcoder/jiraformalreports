@@ -111,8 +111,6 @@ class ZipWebApp{
 			self.loadRemoteFiles(arrFiles);
 		});
 		
-		self.addStep("Waiting for angular objects to load values",function(){
-		});
 		self.continueTask();
 	}
 	getListIssueTypes(){

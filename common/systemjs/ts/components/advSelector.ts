@@ -179,14 +179,15 @@ export class advSelector {
     onRetrieveTableData(theDlgSelector){
         var self=this;
         log("Event onRetrieveTableData:"+self.name);
+        var barrierAux;
+        if (self.initialized==false){
+           barrierAux=System.webapp.initializationBarrier;
+        }
         var fork=System.webapp.addStep("Getting values:"+self.name, function(){
             log("processing step Getting Values(get values async):"+self.name);
             self.getValuesAsync(theDlgSelector);
             log("launched get values async:"+self.name);
-        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
-        if (self.initialized==false){
-           System.webapp.initializationBarrier.add(fork);
-        }
+        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",barrierAux);
 //        System.webapp.continueTask();
     }
 }

@@ -13,6 +13,7 @@ class RCGBarrier{
 	}
 	reach(task){
 		var self=this;
+		log("reached task:["+task.forkId+" - "+task.description+"]");
 		self.tasksReached.push(task); // to debug activity
 		task.done();
 		task.running=false;

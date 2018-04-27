@@ -16,7 +16,7 @@ export class TabStructure {
  */
     onGetBillingRelationships(event){
         log("GettingRelationships");
-        System.webapp.continueTask([arrResult]);
+        System.webapp.continueTask([System.webapp.getListRelations()]);
     }
     onGetBillingFields(event){
        log("structure fields event.... onGetBillingFields");

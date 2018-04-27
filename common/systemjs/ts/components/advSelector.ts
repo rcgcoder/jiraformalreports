@@ -168,6 +168,9 @@ export class advSelector {
                     theDlgSelector.populateTable(arrTable);
                     theDlgSelector.endPopulating();
                 }
+                if (!self.initialized){
+                   self.initialized=true;
+                }   
                 System.webapp.continueTask();
             });
         System.webapp.continueTask();

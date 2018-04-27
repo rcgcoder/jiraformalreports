@@ -5,6 +5,7 @@ class ZipWebApp{
 		self.twoParam="Coche";
 		self.atlassian="";
 		self.systemjs="";
+		self.initializationBarrier;
 	}
 	getAtlassian(){
 		var self=this;
@@ -27,6 +28,10 @@ class ZipWebApp{
 			self.systemjs=new RCGSystemJSManager(self);
 		}
 		return self.systemjs;
+	}
+	initializing(obj){
+		var self=this;
+		self.waitForInitializing.push(obj);
 	}
 	initialize(){
 		var self=this;
@@ -104,6 +109,9 @@ class ZipWebApp{
 				"js/libs/grammar/grammar.js"
 			 ]; //test
 			self.loadRemoteFiles(arrFiles);
+		});
+		
+		self.addStep("Waiting for angular objects to load values",function(){
 		});
 		self.continueTask();
 	}
@@ -199,8 +207,13 @@ class ZipWebApp{
 	run(){
 		log("starting ZipWebApp");
 		var self=this;
+		self.initializationBarrier=new RCGBarrier(self.createManagedCallback(function(){
+			$("#appMain").css('visibility','visible');
+			self.continueTask();
+		}));
+		self.initializationBarrier.add(self.getRunningTask());
 		self.addStep("Initializing engines.... ",self.initialize);
-		self.addStep("Populating components.... ",function(){
+		self.addStep("Default Config.... ",function(){
 /*            System.getAngularObject('advSelector[name="selProjects"]').fillOptions(self.getListProjects());
             System.getAngularObject('advSelector[name="selTypes"]').fillOptions(self.getListIssueTypes());
             System.getAngularObject('advSelector[name="selLabels"]').fillOptions(self.getListLabels());
@@ -212,8 +225,8 @@ class ZipWebApp{
             objTestJQL.fillFields(self.getListFields());
 */
 /*            System.getAngularObject('advSelector[name="selProjects"]').testNearley();
-*/			$("#appMain").css('visibility','visible');
-			self.continueTask();
+*/		
+			self.initializationBarrier.reach(self.getRunningTask());
 		});
 		
 		self.continueTask();

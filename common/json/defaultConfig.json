@@ -1,0 +1,8 @@
+{
+jqlRootIssues:"id=BENT-330",
+billingBindFields:["customfield_10004"],
+billingBindRelations:["es implementado por"],
+advanceBindFields:["customfield_10004"],
+advanceBindRelations:["depende de","es implementado por"],
+
+}

@@ -116,7 +116,7 @@ export class advSelector {
     
     getValuesAsync(theDlgSelector){
         var self=this;
-        log("Running getValuesAsync of "+self.name);
+        log("Running getValuesAsync of "+self.name+" observers"+self.onRetrieveData.observers.length);
         if (self.onRetrieveData.observers.length>0){
             System.webapp.addStep("Getting Async options for "+self.name, function(){
                 log("onRetrieveData to emit:"+self.name);

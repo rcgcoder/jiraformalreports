@@ -1007,7 +1007,7 @@ class RCGZippedApp{
 				return sItem;
 			}
 			var sHtml="";
-			if (allTasksInfo.lengt>=0){
+			if (allTasksInfo.length>=0){
 				for (var i=0;i<allTasksInfo.length;i++){
 					sHtml+=fncAddProgressItem(allTasksInfo[i],0);
 				}

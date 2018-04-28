@@ -12,7 +12,7 @@ export class advSelector {
     @Output() onRetrieveData = new EventEmitter<{}>();
     initialized: boolean = false;
     elements: [] = [];
-    valuesSelected: [];
+    valuesSelected: [] = [];
     getSelect(){
         return AJS.$('[name="'+this.name+'-select"]');
     }

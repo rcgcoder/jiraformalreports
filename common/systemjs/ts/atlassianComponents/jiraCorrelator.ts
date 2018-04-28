@@ -41,7 +41,7 @@ export class jiraCorrelator {
         var sAntVal=txtArea.val();
         if (sAntVal!=""){
             var andObj=System.getAngularDomObject(self.name+"-addOrField");
-            sAntVal="\n"+andObj.val()+"\n"+sAntVal;
+            sAntVal="\n"+(andObj.val()=="and"?"&&":"||")+"\n"+sAntVal;
         }
         var childFlds=self.getChildFieldSelectedValues();
         var parentFlds=self.getParentFieldSelectedValues();
@@ -59,7 +59,7 @@ export class jiraCorrelator {
         var sAntVal=txtArea.val();
         if (sAntVal!=""){
             var andObj=System.getAngularDomObject(self.name+"-addOrLink");
-            sAntVal="\n"+andObj.val()+"\n"+sAntVal;
+            sAntVal="\n"+(andObj.val()=="and"?"&&":"||")+"\n"+sAntVal;
         }
         var childLinks=self.getChildLinkSelectedValues();
         var chldLnk=childLinks[0];

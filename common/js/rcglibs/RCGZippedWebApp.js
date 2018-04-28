@@ -9,7 +9,7 @@ Class for download a Zip File with a lot of js files.
  * 
  */
 
-var formatLog(sText){
+function formatLog(sText){
 	var sLogFormatted="";
 	var tm=taskManager;
 	if ((typeof tm!=="undefined")&&(tm!=null)&&(tm!="")){

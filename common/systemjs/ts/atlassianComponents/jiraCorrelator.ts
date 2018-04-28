@@ -17,6 +17,13 @@ export class jiraCorrelator {
     
     addField(){
         log("adding Field hierarchy");
+        var txtArea=System.getAngularDomObject(self.name+"-text");
+        txtArea=$(txtArea);
+        var sAntVal=txtArea.val();
+        if (sAntVal!=""){
+            sAntVal+="\n";
+        }
+        txtArea.val(sAntVal+" and " + " fieldX*333");
     }
     addLink(){
         log("adding Link hierarchy");

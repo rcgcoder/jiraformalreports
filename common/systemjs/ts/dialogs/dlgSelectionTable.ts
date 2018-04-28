@@ -72,7 +72,7 @@ export class dlgSelectionTable {
         arrToggles.change(function(e){
             var tgl=e.currentTarget;
             var chgKey=$(e.currentTarget).attr("itemkey");
-            alert("toggle Changed:"+chgKey);
+            log("toggle Changed:"+chgKey + " new value:"+tgl.checked);
             if (self.multiple.toUpperCase()!="TRUE"){
                 if (tgl.checked){
                     var auxKey;

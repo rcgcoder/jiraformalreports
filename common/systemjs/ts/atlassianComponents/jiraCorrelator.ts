@@ -12,7 +12,8 @@ export class jiraCorrelator {
     addLink(){
         log("adding Link hierarchy");
     }
-    textAreaChanged(){
+    textAreaChanged(event){
+        
         log("TextArea Changed")
     }
 }

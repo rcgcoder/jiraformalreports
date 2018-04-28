@@ -11,7 +11,7 @@
 {{caption}}
 <div class="aui-group">
     <div class="aui-item">
-		<textarea (change)="textAreaChanged()" name="{{name}}-text" rows=6 style="width:100%;"></textarea>
+		<textarea (change)="textAreaChanged($event)" name="{{name}}-text" rows=6 style="width:100%;"></textarea>
     </div>
     <div class="aui-item">
 	    <button (click)="addField()">+</button>

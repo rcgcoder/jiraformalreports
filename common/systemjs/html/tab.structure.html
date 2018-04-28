@@ -1,4 +1,8 @@
 <div tab-structure id={{name}}>
+<!--  -->
+	<button (click)="loadDefaultReport()" class="aui-button">load default Report</button>
+	<button (click)="saveDefaultReport()" class="aui-button">Save as default Report</button>
+	<button (click)="executeReport()" class="aui-button">Execute the Report</button>
 	<!-- onSelectedProjects($event) -->
       <jqlSelector 
       			 id="selIssuesToReport" 

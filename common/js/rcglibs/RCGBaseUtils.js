@@ -102,15 +102,13 @@ function isObject(obj){
 
 
 var undefinedValue;
-function fncVacia(){
-}
 function fncEmpty(){
 }
 
 class RCGBaseUtils{
 }
 
-if (bInNodeJS) { // the global parameters has to be created explicity
+if (isInNodeJS()) { // the global parameters has to be created explicity
 	if (isUndefined(global.getUrlParameter)){
 		global.getUrlParameter=getUrlParameter;
 	}

@@ -1007,10 +1007,10 @@ class RCGZippedApp{
 				return sItem;
 			}
 			var sHtml="";
-			if (allTasksInfo.length>=0){
-				for (var i=0;i<allTasksInfo.length;i++){
-					sHtml+=fncAddProgressItem(allTasksInfo[i],0);
-				}
+			for (var i=0;i<allTasksInfo.length;i++){
+				sHtml+=fncAddProgressItem(allTasksInfo[i],0);
+			}
+			if (sHtml!=""){
 				var list= $("<ul id='ProgressList' class='tm-ProgressList'>"+
 							sHtml+
 							"</ul>"

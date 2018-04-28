@@ -21,9 +21,11 @@ export class jiraCorrelator {
         txtArea=$(txtArea);
         var sAntVal=txtArea.val();
         if (sAntVal!=""){
-            sAntVal+="\n";
+            var andObj=System.getAngularDomObject(this.name+"-addOrField");
+            sAntVal=andObj.value+"\n"+sAntVal;
         }
-        txtArea.val(sAntVal+" and " + " fieldX*333");
+        txtArea.val(sAntVal);
+        changeVisibilityAndOr();
     }
     addLink(){
         log("adding Link hierarchy");

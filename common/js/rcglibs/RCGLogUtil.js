@@ -82,12 +82,12 @@ class RCGLogUtils{
 			self.bAutoTrace=false;
 		}
 	}
-	log(sTraza){
+	log(sText){
 		var self=loggerFactory.getLogger();
 		if (self.logToBuffer){
-			self.logText+="\n"+sTraza;
+			self.logText+="\n"+sText;
 		} else {
-			console.log(sTraza);
+			console.log(sText);
 		}
 	}
 	logPush(){
@@ -113,7 +113,7 @@ class RCGLogUtils{
 var loggerFactory=new LoggerFactory(); 	
 var logUtils=new RCGLogUtils();
 var log=logUtils.log;
-if (bInNodeJS){
+if (isInNodeJS()){
 	global.loggerFactory=new LoggerFactory(); 	
 	module.exports=RCGLogUtils;
 }

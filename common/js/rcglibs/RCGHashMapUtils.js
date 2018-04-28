@@ -35,7 +35,7 @@ class RCGHashMapFactory{
 			obj.refreshChildNumber=this.refreshChildNumber;
 			obj.updateChildNumber=this.updateChildNumber;
 			obj.trace=this.trace;
-			obj.traceTodo=this.traceTodo;
+			obj.traceAll=this.traceAll;
 			obj.walk=this.walk;
 			obj.walkAsync=this.walkAsync;
 			obj.check=this.check;
@@ -1535,10 +1535,13 @@ class RCGHashMapFactory{
 					return pos;
 				}
 			}
-	}	 
-
-global.hashmapFactory=new RCGHashMapFactory(); 	
-
+	}
+var hashmapFactory;
+if (isInNodeJS()){
+	global.hashmapFactory=new RCGHashMapFactory(); 	
+} else {
+	hashmapFactory=new RCGHashMapFactory(); 
+}
 class HashMapUtils{
 	constructor(){
 		log("Creating ChronoUtils");
@@ -1549,5 +1552,6 @@ class HashMapUtils{
 	}
 }
 
-
-module.exports=RCGHashMapUtils;
+if (isInNodeJS()){
+	module.exports=RCGHashMapUtils;
+}

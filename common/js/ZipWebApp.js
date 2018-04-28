@@ -42,7 +42,8 @@ class ZipWebApp{
 							"js/rcglibs/atlassian/RCGAtlassian.js",
 							"js/rcglibs/atlassian/RCGConfluence.js",
 							"js/rcglibs/atlassian/RCGJira.js",
-							"js/rcglibs/RCGBaseUtils.js"
+							"js/rcglibs/RCGBaseUtils.js",
+							"js/rcglibs/RCGLogUtils.js"
 						 ]; //test
 			self.loadRemoteFiles(arrFiles);
 		});

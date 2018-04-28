@@ -114,7 +114,10 @@ export class advSelector {
         for (var i=0;i<nOps;i++){
             var opt=theSelect[0][i];
             var key=opt.value;
-            arrResults.push(key);
+            var isSelected=opt.selected;
+            if (isSelected) {
+                arrResults.push(key);
+            }
         }
         return arrResults;
     }

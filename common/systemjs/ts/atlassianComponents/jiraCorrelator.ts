@@ -56,8 +56,8 @@ export class jiraCorrelator {
             sAntVal="\n"+andObj.val()+"\n"+sAntVal;
         }
         var childLinks=self.getChildLinkSelectedValues();
-        var chldFld=childFlds[0];
-        txtArea.val("(child.fieldValue('"+chldFld.key+"') /*"+chldFld.name+"*/==parent.id)" +sAntVal);
+        var chldLnk=childLinks[0];
+        txtArea.val("(child.linkValue('"+chldLnk.key+"')==parent.id)" +sAntVal);
         self.changeVisibilityAndOr();
     }
     changeVisibilityAndOr(){

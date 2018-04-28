@@ -14,6 +14,12 @@ export class jiraCorrelator {
             self.changeVisibilityAndOr();
         });
     }
+    getChildLinkSelectedValues(){
+        var self=this;
+        var selChild=System.getAngularObject(self.name+"-childLink",true);
+        var result=selChild.getSelectedValues();
+        return result;
+    }
     getChildFieldSelectedValues(){
         var self=this;
         var selChild=System.getAngularObject(self.name+"-childField",true);

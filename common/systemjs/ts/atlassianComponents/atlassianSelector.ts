@@ -12,7 +12,11 @@ export class atlassianSelector {
     @Input() multiple: string = "false";
     @Input() maxCharsInSelect: integer = 17;
     @Input() openDialogCaption: string = '...';
-
+    getValuesSelected(){
+        var self=this;
+        var objSel=System.getgetAngularObject(self.name+"-atlSelector");
+        return objSel.getValuesSelected();
+    }
     getPropertyValues(){
         var obj;
         if (this.atlassianAplication.toUpperCase()=="JIRA"){
@@ -31,7 +35,6 @@ export class atlassianSelector {
     isSomeOneObserving(){
         return true;
     }
-    
 
     onGetOptions(event){
         var self=this;

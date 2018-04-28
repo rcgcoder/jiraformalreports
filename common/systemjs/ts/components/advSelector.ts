@@ -12,6 +12,7 @@ export class advSelector {
     @Output() onRetrieveData = new EventEmitter<{}>();
     initialized: boolean = false;
     elements: [] = [];
+    valuesSelected: [];
     getSelect(){
         return AJS.$('[name="'+this.name+'-select"]');
     }
@@ -107,8 +108,13 @@ export class advSelector {
             }
         }
     }
+    getSelectedValues(){
+        return this.valuesSelected;
+    }
     onSelected(selectedKeys: []) {
         log("Processing selection event");
+        var self=this;
+        self.valuesSelected=selectedKeys;
         var theSelect=this.getSelect();
         theSelect.val(selectedKeys);
         theSelect.trigger('change'); // Notify any JS components that the value changed

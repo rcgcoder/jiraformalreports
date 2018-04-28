@@ -1007,13 +1007,17 @@ class RCGZippedApp{
 				return sItem;
 			}
 			var sHtml="";
-			for (var i=0;i<allTasksInfo.length;i++){
-				sHtml+=fncAddProgressItem(allTasksInfo[i],0);
+			if (allTasksInfo.lengt>=0){
+				for (var i=0;i<allTasksInfo.length;i++){
+					sHtml+=fncAddProgressItem(allTasksInfo[i],0);
+				}
+				var list= $("<ul id='ProgressList' class='tm-ProgressList'>"+
+							sHtml+
+							"</ul>"
+							).appendTo(pDiv);
+			} else {
+				pDiv.hide();
 			}
-			var list= $("<ul id='ProgressList' class='tm-ProgressList'>"+
-						sHtml+
-						"</ul>"
-						).appendTo(pDiv);
 		}
 	}
 	run(){

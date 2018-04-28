@@ -12,7 +12,6 @@ export class advSelector {
     @Output() onRetrieveData = new EventEmitter<{}>();
     initialized: boolean = false;
     elements: [] = [];
-    valuesSelected: [] = [];
     getSelect(){
         return AJS.$('[name="'+this.name+'-select"]');
     }
@@ -109,7 +108,15 @@ export class advSelector {
         }
     }
     getSelectedValues(){
-        return this.valuesSelected;
+        var theSelect=this.getSelect();
+        var nOps=theSelect[0].length; 
+        var arrResults=[];
+        for (var i=0;i<nOps;i++){
+            var opt=theSelect[0][i];
+            var key=opt.value;
+            arrResults.push(key);
+        }
+        return arrResults;
     }
     onSelected(selectedKeys: []) {
         log("Processing selection event");

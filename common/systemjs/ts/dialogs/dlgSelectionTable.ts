@@ -47,8 +47,9 @@ export class dlgSelectionTable {
     }
 
     populateTable(tableData){
+        var self=this;
         log("Populating table");
-        var tbl=this.getTable();
+        var tbl=self.getTable();
         tbl.find("tr:gt(0)").remove();
         for (var i=0;i<tableData.length;i++){
             var item=tableData[i];
@@ -67,9 +68,26 @@ export class dlgSelectionTable {
                         <td>`+item.name+`</td></tr>`
                 );
         }
-        var arrToggles=this.getDialog().$el.find("aui-toggle");
+        var arrToggles=self.getDialog().$el.find("aui-toggle");
         arrToggles.change(function(e){
-            alert("toggle Changed");
+            var tgl=e.currentTarget;
+            var chgKey=$(e.currentTarget).attr("itemkey");
+            alert("toggle Changed:"+chgKey);
+            if (self.multiple.toUpperCase()!="TRUE"){
+                if (tgl.checked){
+                    var auxKey;
+                    var auxTgl;
+                    for (var i=0;i<arrToggles.length;i++){
+                        auxTgl=arrToggles[i];
+                        if (auxTgl.checked){
+                            auxKey=$(auxTgl).attr("itemkey");
+                            if (auxKey!=chgKey){
+                                auxTgl.checked=false;
+                            }
+                        }
+                    }
+                }
+            }
         );
     }
     doShowDialog(){

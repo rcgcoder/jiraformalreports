@@ -9,14 +9,20 @@ Class for download a Zip File with a lot of js files.
  * 
  */
 
-
-function log(sText){
+var formatLog(sText){
+	var sLogFormatted="";
 	var tm=taskManager;
 	if ((typeof tm!=="undefined")&&(tm!=null)&&(tm!="")){
-		console.log(tm.getRunningForkId()+" - "+sText);
+		sLogFormatted=(tm.getRunningForkId()+" - "+sText);
 	} else {
-		console.log("Error in getrootforkid");
+		sLogFormatted=("Error in getrootforkid");
 	}
+	return sLogFormatted;
+}
+
+
+function log(sText){
+		console.log(formatLog(sText));
 }
 function isChrome() {
   var isChromium = window.chrome,

@@ -84,10 +84,15 @@ class RCGLogUtils{
 	}
 	log(sText){
 		var self=loggerFactory.getLogger();
+		var sFormated=sText;
+		if (typeof formatLog!=="undefined"){
+			sFormated=formatLog(sText);
+		}
+
 		if (self.logToBuffer){
-			self.logText+="\n"+sText;
+			self.logText+="\n"+sFormated;
 		} else {
-			console.log(sText);
+			console.log(sFormated);
 		}
 	}
 	logPush(){

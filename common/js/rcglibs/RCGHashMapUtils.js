@@ -1537,10 +1537,13 @@ class RCGHashMapFactory{
 			}
 	}
 var hashmapFactory;
+var newHashMap;
 if (isInNodeJS()){
 	global.hashmapFactory=new RCGHashMapFactory(); 	
 } else {
-	hashmapFactory=new RCGHashMapFactory(); 
+	hashmapFactory=new RCGHashMapFactory();
+	newHashMap=function(){return hashmapFactory.newHashMap();};
+
 }
 class HashMapUtils{
 	constructor(){

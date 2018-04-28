@@ -1015,6 +1015,7 @@ class RCGZippedApp{
 							sHtml+
 							"</ul>"
 							).appendTo(pDiv);
+				$(pDiv).show();
 			} else {
 				$(pDiv).hide();
 			}

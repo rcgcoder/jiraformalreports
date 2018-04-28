@@ -57,7 +57,6 @@ export class dlgSelectionTable {
                     <td>
                         <aui-toggle id="toggle_`+item.key+`" 
                         itemKey="`+item.key+`"
-                        change="function(tgl){alert('togled');}"
                         tooltip-on="Selected"
                         tooltip-off="Unselected"
                         label="Select `+item.key+`"
@@ -68,6 +67,10 @@ export class dlgSelectionTable {
                         <td>`+item.name+`</td></tr>`
                 );
         }
+        var arrToggles=this.getDialog().$el.find("aui-toggle");
+        arrToggles.change(function(e){
+            alert("toggle Changed");
+        );
     }
     doShowDialog(){
         var self=this;

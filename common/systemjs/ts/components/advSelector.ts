@@ -114,9 +114,14 @@ export class advSelector {
         for (var i=0;i<nOps;i++){
             var opt=theSelect[0][i];
             var key=opt.value;
+            var elem=self.findElement(key);
+            if (elem==""){
+                log("Error.....the "+key+" element is not exists in elements array");
+            }
+            var name=elem.name;
             var isSelected=opt.selected;
             if (isSelected) {
-                arrResults.push(key);
+                arrResults.push({key:key,name:name});
             }
         }
         return arrResults;

@@ -35,11 +35,13 @@ export class jiraCorrelator {
         var sAntVal=txtArea.val();
         if (sAntVal!=""){
             var andObj=System.getAngularDomObject(self.name+"-addOrField");
-            sAntVal=andObj.val()+"\n"+sAntVal;
+            sAntVal="\n"+andObj.val()+"\n"+sAntVal;
         }
         var childFlds=self.getChildFieldSelectedValues();
         var parentFlds=self.getParentFieldSelectedValues();
-        txtArea.val("(child.fieldValue('"+childFlds[0]+"')==parent.field('"+parentFlds[0]+"')"+")" +sAntVal);
+        chldFld=childFlds[0];
+        prntFld=parentFlds[0];
+        txtArea.val("(child.fieldValue('"+chldFld.key+"') /*"+chldFld.name+"*/==parent.field('"+prntFld.key+"') /*"+prntFld.name+"*/"+")" +sAntVal);
         self.changeVisibilityAndOr();
     }
     addLink(){

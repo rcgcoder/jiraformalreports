@@ -11,6 +11,7 @@ export class jqlSelector {
     @Input() maxCharsInSelect: integer = 17;
     @Input() openDialogCaption: string = '...';
     @Input() jql: string = '';
+    internal_issueList: []=[];
     ngOnInit() {
         var self=this;
         System.addPostProcess(function(){
@@ -40,7 +41,7 @@ export class jqlSelector {
         }
         if (self.jql==sJQL){
             log("Same jql:"+sJQL);
-            System.webapp.continueTask();
+            System.webapp.continueTask([self.internal_issueList]);
         } else {
             log("Diferent jql:"+sJQL);
             self.jql=sJQL;
@@ -54,6 +55,7 @@ export class jqlSelector {
                     var issue=issueList[i];
                     arrIssues.push({key:issue.key,name:issue.fields.summary,description:issue.fields.summary});
                 }
+                self.internal_issueList=arrIssues;
                 System.webapp.continueTask([arrIssues]);
             });
             System.webapp.continueTask();

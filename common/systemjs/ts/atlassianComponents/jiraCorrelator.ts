@@ -23,13 +23,14 @@ export class jiraCorrelator {
     }
     changeVisibilityAndOr(){
         var self=this;
-        var txtArea=AJS.$("#"+self.name+"-text");
+        var txtArea=System.getAngularDomObject(self.name+"-text");
+        txtArea=$(txtArea);
         if (txtArea.val()!=""){
-            AJS.$("#"+self.name+"-addOrField").show();
-            AJS.$("#"+self.name+"-addOrLink").show();
+            $(System.getAngularDomObject(self.name+"-addOrField")).show();
+            $(System.getAngularDomObject(self.name+"-addOrLink")).show();
         } else {
-            AJS.$("#"+self.name+"-addOrField").hide();
-            AJS.$("#"+self.name+"-addOrLink").hide();
+            $(System.getAngularDomObject(self.name+"-addOrField")).hide();
+            $(System.getAngularDomObject(self.name+"-addOrLink")).hide();
         }
         
     }

@@ -39,8 +39,8 @@ export class jiraCorrelator {
         }
         var childFlds=self.getChildFieldSelectedValues();
         var parentFlds=self.getParentFieldSelectedValues();
-        chldFld=childFlds[0];
-        prntFld=parentFlds[0];
+        var chldFld=childFlds[0];
+        var prntFld=parentFlds[0];
         txtArea.val("(child.fieldValue('"+chldFld.key+"') /*"+chldFld.name+"*/==parent.field('"+prntFld.key+"') /*"+prntFld.name+"*/"+")" +sAntVal);
         self.changeVisibilityAndOr();
     }

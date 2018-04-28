@@ -81,8 +81,9 @@ export class dlgSelectionTable {
         self.setWaiting(false);
     }
     doAction(){
+        var self=this;
         log("It´s Clicked do action");
-        var arrSelected=AJS.$("aui-toggle");
+        var arrSelected=this.getDialog().$el.find("aui-toggle");
         var arrResult=[];
         for (var i=0;i<arrSelected.length;i++){
             var tglAux=arrSelected[i];

@@ -70,6 +70,7 @@ class RCGSystemJSManager{
 				return objHtml;
 			}
 			System.getAngularObject=function(selector,bByNameOrId){
+				var self=this;
 				var arrElements;
 				if ((typeof bByNameOrId==="undefined")||
 				    ((typeof bByNameOrId!=="undefined")&&(bByNameOrId==false))

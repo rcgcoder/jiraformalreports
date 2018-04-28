@@ -20,10 +20,10 @@ export class atlassianSelector {
         });
     }
 
-    getValuesSelected(){
+    getSelectedValues(){
         var self=this;
         var objSel=System.getAngularObject(self.name+"-atlSelector",true);
-        return objSel.getValuesSelected();
+        return objSel.getSelectedValues();
     }
     getPropertyValues(){
         var obj;

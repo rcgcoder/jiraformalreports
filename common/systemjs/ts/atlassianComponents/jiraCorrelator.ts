@@ -14,16 +14,16 @@ export class jiraCorrelator {
             self.changeVisibilityAndOr();
         });
     }
-    getChildFieldValuesSelected(){
+    getChildFieldSelectedValues(){
         var self=this;
         var selChild=System.getAngularObject(self.name+"-childField",true);
-        var result=selChild.getValuesSelected();
+        var result=selChild.getSelectedValues();
         return result;
     }
-    getParenFieldValuesSelected(){
+    getParentFieldSelectedValues(){
         var self=this;
         var selParent=System.getAngularObject(self.name+"-parentField",true);
-        var result=selParent.getValuesSelected();
+        var result=selParent.getSelectedValues();
         return result;
     }
     
@@ -37,8 +37,8 @@ export class jiraCorrelator {
             var andObj=System.getAngularDomObject(self.name+"-addOrField");
             sAntVal=andObj.val()+"\n"+sAntVal;
         }
-        var childFlds=self.getChildFieldValuesSelected();
-        var parentFlds=self.getParenFieldValuesSelected();
+        var childFlds=self.getChildFieldSelectedValues();
+        var parentFlds=self.getParentFieldSelectedValues();
         txtArea.val(sAntVal);
         self.changeVisibilityAndOr();
     }

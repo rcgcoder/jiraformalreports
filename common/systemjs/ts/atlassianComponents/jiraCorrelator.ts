@@ -23,7 +23,8 @@ export class jiraCorrelator {
     }
     changeVisibilityAndOr(){
         var self=this;
-        if (AJS.$("#"+self.name+"-text").value!=""){
+        var txtArea=AJS.$("#"+self.name+"-text");
+        if (txtArea.val()!=""){
             AJS.$("#"+self.name+"-addOrField").show();
             AJS.$("#"+self.name+"-addOrLink").show();
         } else {

@@ -1016,7 +1016,7 @@ class RCGZippedApp{
 							"</ul>"
 							).appendTo(pDiv);
 			} else {
-				pDiv.hide();
+				$(pDiv).hide();
 			}
 		}
 	}

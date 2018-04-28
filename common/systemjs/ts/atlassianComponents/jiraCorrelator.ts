@@ -25,6 +25,8 @@ export class jiraCorrelator {
             var andObj=System.getAngularDomObject(self.name+"-addOrField");
             sAntVal=andObj.value+"\n"+sAntVal;
         }
+        var selChild=System.getAngularDomObject(self.name+"-childField");
+        var selParent=System.getAngularDomObject(self.name+"-parentField");
         txtArea.val(sAntVal);
         self.changeVisibilityAndOr();
     }

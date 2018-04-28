@@ -11,10 +11,10 @@
 {{caption}}
 <div class="aui-group">
     <div class="aui-item">
-		<textarea name="{{name}}-text" rows=6 style="width:100%;"></textarea>
+		<textarea (change)="textAreaChanged()" name="{{name}}-text" rows=6 style="width:100%;"></textarea>
     </div>
     <div class="aui-item">
-	    <button (onClick)="addField($event)">+</button>
+	    <button (click)="addField()">+</button>
 	    <select id="{{name}}-addOrField">
 	    	<option value="and">and</option>
 	    	<option value="or">or</option>
@@ -37,7 +37,7 @@
 	    		>
 	    </atlassianSelector >
 	    <br>
-	    <button (onClick)="addLink($event)">+</button>
+	    <button (click)="addLink()">+</button>
 	    <select id="{{name}}-addOrLink">
 	    	<option value="and">and</option>
 	    	<option value="or">or</option>

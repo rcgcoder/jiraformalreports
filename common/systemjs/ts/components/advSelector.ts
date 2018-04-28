@@ -108,6 +108,7 @@ export class advSelector {
         }
     }
     getSelectedValues(){
+        var self=this;
         var theSelect=this.getSelect();
         var nOps=theSelect[0].length; 
         var arrResults=[];

@@ -7,11 +7,19 @@ export class atlassianSelector {
     @Input() atlassianObjectProperty: string = undefined;
     @Input() atlassianObjectFunction: string = undefined;
     @Input() atlassianAplication: string = undefined;
-    @Input() name: string = 'advSelection';
+    @Input() name: string = 'atlassSelection';
     @Input() typeDescriptor: string = 'elements';
     @Input() multiple: string = "false";
     @Input() maxCharsInSelect: integer = 17;
     @Input() openDialogCaption: string = '...';
+    ngOnInit() {
+        var self=this;
+        System.addPostProcess(function(){
+            log("PostProcessing:"+self.name);
+            System.bindObj(self);
+        });
+    }
+
     getValuesSelected(){
         var self=this;
         var objSel=System.getgetAngularObject(self.name+"-atlSelector");

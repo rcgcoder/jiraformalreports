@@ -57,6 +57,7 @@ export class dlgSelectionTable {
                     <td>
                         <aui-toggle id="toggle_`+item.key+`" 
                         itemKey="`+item.key+`"
+                        change="function(tgl){alert('togled');}"
                         tooltip-on="Selected"
                         tooltip-off="Unselected"
                         label="Select `+item.key+`"

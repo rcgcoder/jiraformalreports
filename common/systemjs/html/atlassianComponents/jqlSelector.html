@@ -1,14 +1,20 @@
-<advSelector id="{{name}}-advSelector" 
-			 name="{{name}}-advSelector" 
-   			 typeDescriptor="{{typeDescriptor}}" 
-   			 openDialogCaption="{{openDialogCaption}}"
-   			 multiple="{{multiple}}"
-   			 maxCharsInSelect="{{maxCharsInSelect}}"
-   			 openDialogCaption="{{openDialogCaption}}"
-   			 (onRetrieveData)='onAdvSelectorRetrieveData($event)'
-   			 >
-</advSelector>
-<textarea class="textarea" name="{{name}}-jqlEdit"
-              id="{{name}}-jqlEdit" placeholder="Your jql here..."></textarea>    
-
-<button (click)="doOpenJQL()" class="aui-button">Open JQL Tab</button>
+<div class="aui-group">
+    <div class="aui-item">
+		<advSelector id="{{name}}-advSelector" 
+					 name="{{name}}-advSelector" 
+		   			 typeDescriptor="{{typeDescriptor}}" 
+		   			 openDialogCaption="{{openDialogCaption}}"
+		   			 multiple="{{multiple}}"
+		   			 maxCharsInSelect="{{maxCharsInSelect}}"
+		   			 openDialogCaption="{{openDialogCaption}}"
+		   			 (onRetrieveData)='onAdvSelectorRetrieveData($event)'
+		   			 >
+		</advSelector>
+	</div>
+    <div class="aui-item">
+		<textarea class="textarea" name="{{name}}-jqlEdit" rows=3 style="width:100%;"
+		              id="{{name}}-jqlEdit" placeholder="Your jql here..."></textarea>    
+		<br>
+		<button (click)="doOpenJQL()" class="aui-button">Open JQL Tab</button>
+	</div>
+</div>

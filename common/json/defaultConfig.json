@@ -1,8 +1,13 @@
 {
 jqlRootIssues:"id=BENT-330",
-billingBindFields:["customfield_10004"],
-billingBindRelations:["es implementado por"],
-advanceBindFields:["customfield_10004"],
-advanceBindRelations:["depende de","es implementado por"],
+rootIssues:["BENT-330"],
+billingHierarchyRules:"(child.linkValue('detecta')==parent.id)
+&&
+(child.fieldValue('fixVersions') /*Versión(es) Correctora(s)*/==parent.field('description') /*Descripción*/)
+||
+(child.fieldValue('project') /*Proyecto*/==parent.field('priority') /*Prioridad*/)",
+advanceHierarchyRules:"(child.linkValue('bloquea a')==parent.id)
+||
+(child.fieldValue('customfield_11002') /*Ubicación*/==parent.field('customfield_11001') /*Tipo Seguimiento*/)"
 
 }

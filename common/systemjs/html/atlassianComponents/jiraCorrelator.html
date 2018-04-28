@@ -14,7 +14,7 @@
 		<textarea (change)="textAreaChanged($event)" name="{{name}}-text" rows=6 style="width:100%;"></textarea>
     </div>
     <div class="aui-item">
-	    <button (click)="addField()">+</button>
+	    <button (click)="addField()" class="aui-button">+</button>
 	    <select id="{{name}}-addOrField">
 	    	<option value="and">and</option>
 	    	<option value="or">or</option>
@@ -37,9 +37,9 @@
 	    		>
 	    </atlassianSelector >
 	    <br>
-	    <button (click)="addLink()">+</button>
+	    <button (click)="addLink()" class="aui-button">+</button>
 	    <select id="{{name}}-addOrLink">
-	    	<option value="and">and</option>
+	    	<option value="and" selected>and</option>
 	    	<option value="or">or</option>
 	   	</select>
 	    <atlassianSelector name="{{name}}-childLink" 

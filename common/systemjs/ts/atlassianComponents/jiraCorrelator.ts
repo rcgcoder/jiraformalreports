@@ -15,11 +15,13 @@ export class jiraCorrelator {
         });
     }
     getChildFieldValuesSelected(){
+        var self=this;
         var selChild=System.getAngularObject(self.name+"-childField",true);
         var result=selChild.getValuesSelected();
         return result;
     }
     getParenFieldValuesSelected(){
+        var self=this;
         var selParent=System.getAngularObject(self.name+"-parentField",true);
         var result=selParent.getValuesSelected();
         return result;

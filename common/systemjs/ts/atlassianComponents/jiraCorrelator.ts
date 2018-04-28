@@ -39,7 +39,7 @@ export class jiraCorrelator {
         }
         var childFlds=self.getChildFieldSelectedValues();
         var parentFlds=self.getParentFieldSelectedValues();
-        txtArea.val(sAntVal);
+        txtArea.val("(child.fieldValue('"+childFlds[0]+"')==parent.field('"+parentFlds[0]+"')"+")" +sAntVal);
         self.changeVisibilityAndOr();
     }
     addLink(){

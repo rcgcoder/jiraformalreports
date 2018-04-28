@@ -22,12 +22,13 @@ export class jiraCorrelator {
         log("adding Link hierarchy");
     }
     changeVisibilityAndOr(){
-        if ($("#"+self.name+"-text").value!=""){
-            $("#"+self.name+"-addOrField").show();
-            $("#"+self.name+"-addOrLink").show();
+        var self=this;
+        if (AJS.$("#"+self.name+"-text").value!=""){
+            AJS.$("#"+self.name+"-addOrField").show();
+            AJS.$("#"+self.name+"-addOrLink").show();
         } else {
-            $("#"+self.name+"-addOrField").hide();
-            $("#"+self.name+"-addOrLink").hide();
+            AJS.$("#"+self.name+"-addOrField").hide();
+            AJS.$("#"+self.name+"-addOrLink").hide();
         }
         
     }

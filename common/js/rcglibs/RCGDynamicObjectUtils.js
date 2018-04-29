@@ -93,7 +93,7 @@ class factoryObjects{
 */		
 	newFactory(name,isGlobal,arrAttributeList,arrAttributes,arrAttributesPercs){
 		var self=this;
-		var obj=new DynamicObject(self,name,arrAttributeList,arrAttributes,arrAttributesPercs);
+		var obj=new RCGDynamicObject(self,name,arrAttributeList,arrAttributes,arrAttributesPercs);
 		self.nfactorys++;
 		if (isDefined(isGlobal)&&isGlobal){
 			this.addfactoryGlobal(obj);

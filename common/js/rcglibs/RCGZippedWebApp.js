@@ -958,12 +958,14 @@ class RCGZippedApp{
 			log("end testing hashmaps");
 			
 
-			var coches=newDynamicObjectFactory([{name:"L1",description:"Elementos L1",type:"Number"},
+			var cars=newDynamicObjectFactory([{name:"L1",description:"Elementos L1",type:"Number"},
 												{name:"L2",description:"Elementos L2",type:"Value"},
 												{name:"L3",description:"Elementos L3",type:"Date"},
 											   ],["A1","A2","A3"],["P1","P2"]);
-			var coche=coches.new("ZX");
-			coches.trace();
+			var car=cars.new("ZX");
+			car.setA1("ValueForA1");
+			car.setP2(0.2);
+			cars.trace();
 
 			
 			

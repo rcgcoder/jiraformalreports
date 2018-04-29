@@ -15,9 +15,9 @@ class RCGUtils{
     		"RCGLogUtils.js",
     		"RCGListUtils.js",
     		"RCGAsyncUtils.js",
-    		"RCGChronoUtils.js"/*,
+    		"RCGChronoUtils.js",
+    		"RCGHashMapUtils.js"/*,
     		"ExcelUtils.js",
-    		"HashMapUtils.js",
     		"DynamicObjectUtils.js"*/
     	//	,"MongoUtils.js"
     		];

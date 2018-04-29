@@ -933,7 +933,7 @@ class RCGZippedApp{
 			var hsTest=newHashMap();
 			var iMax=256;
 			for (var i=0;i<iMax;i++){
-				var sKey="key-"+fillCharsLeft(3,""+Math.round(Math.random()*iMax);
+				var sKey="key-"+fillCharsLeft(3,""+Math.round(Math.random()*iMax)
 								,'0');
 				hsTest.add(sKey,{key:sKey,value:"value for "+sKey});
 			}

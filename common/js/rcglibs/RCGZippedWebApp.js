@@ -928,6 +928,16 @@ class RCGZippedApp{
 		var self=this;
 		self.pushCallback(function(){
 //			var webapp = new window[self.mainClass]();
+			
+			log("Testing hashmaps");
+			var hsTest=newHashMap();
+			for (var i=0;i<1000;i++){
+				var sKey="key"+i;
+				hsTest.add(sKey,{key:sKey,value:"value for "+sKey});
+			}
+			hsTest.swing();
+			
+			
 			var webapp=new ZipWebApp();
 			self.extendFromObject(webapp);
 			self.run();

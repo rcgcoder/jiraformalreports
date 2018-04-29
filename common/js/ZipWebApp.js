@@ -51,13 +51,6 @@ class ZipWebApp{
 		self.addStep("Setting <initialized=false> Atlassian Engine.... ",function(){
 			var atl=self.getAtlassian();
 			atl.initialized=false;
-			
-			var hsTest=newHashMap();
-			for (var i=0;i<1000;i++){
-				var sKey="key"+i;
-				hsTest.add(sKey,{key:sKey,value:"value for "+sKey});
-			}
-			hsTest.swing();
 			self.continueTask();
 		});  
 		self.addStep("launching de engines and get atlassian base information.... "

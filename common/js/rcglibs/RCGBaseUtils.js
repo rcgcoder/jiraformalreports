@@ -54,7 +54,7 @@ function objEquals(aObj,bObj){
 }
 function makeGlobals(obj){
 	var arrProperties;
-	if (typeof obj==="class"){
+	if (typeof obj==="function"){ // a class is a function... "constructor"
 		arrProperties=Object.getOwnPropertyNames(obj.prototype);
 	} else {
 		arrProperties=Object.getOwnPropertyNames(obj.__proto__);

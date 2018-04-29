@@ -59,7 +59,7 @@ class ZipWebApp{
 			}
 
 			var rcgUtils=new RCGUtils(true,"js/rcglibs/",self.createManagedCallback(fncLoadRCGUtilFile));
-			rcgUtils.loadUtils(bMakeGlobals);
+			rcgUtils.loadUtils(true);
 		});
 		self.addStep("Setting <initialized=false> Atlassian Engine.... ",function(){
 			var atl=self.getAtlassian();

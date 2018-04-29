@@ -1,7 +1,9 @@
-'use strict';
-var math;
-if (isInNodeJS()){
-	var math = require('mathjs');
+if (typeof math==="undefined"){
+	if (isInNodeJS()){
+		math = require('mathjs');
+	} else {
+		windows["math"]=math;
+	}
 }
 /*
 All of the libs are allready loaded
@@ -1424,7 +1426,7 @@ function initMath(){
 initMath();
 
 
-if (isUndefined(baseDynamicObjectFactory)){
+if (typeof baseDynamicObjectFactory==="undefined"){
 	if (isInNodeJS()){
 		global.baseDynamicObjectFactory=new factoryObjects();	
 	} else {

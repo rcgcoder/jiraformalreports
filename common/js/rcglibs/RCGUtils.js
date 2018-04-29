@@ -41,13 +41,18 @@ class RCGUtils{
     	var self=this;
     	self.requireLibs(bMakeGlobals,self.arrLibs);
     }
-
+    makeGlobals(bMakeGlobals,obj){
+    	if (isUndefined(bMakeGlobals)) return;
+    	if (!bMakeGlobals) return;
+    	if (isUndefined(obj)) return;
+    	makeGlobals(obj);
+    }
 	requireLib(bMakeGlobals,sNameLib){
     	var self=this;
 		console.log(sNameLib);
 		var vLib=self.require(sNameLib);
 		var obj=new vLib();
-		if (bMakeGlobals) makeGlobals(obj);
+		self.makeGlobals(bMakeGlobals,obj);
 	}
 	
 	requireLibs(bMakeGlobals,arrLibs){

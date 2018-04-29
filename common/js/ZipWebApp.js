@@ -50,6 +50,17 @@ class ZipWebApp{
 */						 ]; //test
 			self.loadRemoteFiles(arrFiles);
 		});
+		self.addStep("Initialize RCG utils engine.... ",function(){
+			var fncLoadRCGUtilFile=function(sRelativePath){
+				self.addStep("Load and process:"+sRelativePath,function(){
+					self.loadRemoteFile(sRelativePath);
+				}
+				self.continueTask();
+			}
+
+			var rcgUtils=new RCGUtils(true,"js/rcglibs/",self.createManagedCallback(fncLoadRCGUtilFile));
+			rcgUtils.loadUtils(bMakeGlobals);
+		});
 		self.addStep("Setting <initialized=false> Atlassian Engine.... ",function(){
 			var atl=self.getAtlassian();
 			atl.initialized=false;

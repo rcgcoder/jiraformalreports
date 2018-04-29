@@ -112,7 +112,7 @@ class factoryObjects{
 	getById(id){
 			var node=this.list.find(id);
 			if (node!=""){
-				return node.Value;
+				return node.value;
 			}
 			return node;
 			//return getFromListaById(this.list,id);re
@@ -120,7 +120,7 @@ class factoryObjects{
 	get(ind){
 			var node=this.list.findByInd(ind);
 			if (node!=""){
-				return node.Value;
+				return node.value;
 			}
 			return node;
 		}
@@ -257,7 +257,7 @@ class factoryObjects{
 					if (bFormula){
 						this["attr_"+vNameAttribute]={formula:value,nodeMath:"",code:"",symbols:""};
 					} else if ((typeof value==="object") && (value.isObjValue==true)){
-						this["attr_"+vNameAttribute]=value.Value;
+						this["attr_"+vNameAttribute]=value.value;
 						if (!bWithoutMinMaxMargins){
 							this["attr_"+vNameAttribute+"Min"]=value.min;
 							this["attr_"+vNameAttribute+"Max"]=value.max;
@@ -293,7 +293,7 @@ class factoryObjects{
 						if (typeAttr.type=="List"){
 							valAttr=this["get"+vNameAttribute+"s"]();
 							if (valAttr.length()>0){
-								valAttr=valAttr.getFirst().Value.id;
+								valAttr=valAttr.getFirst().value.id;
 							} else {
 								valAttr="";
 							}
@@ -475,7 +475,7 @@ class factoryObjects{
 					var valueMax="";
 					if ((typeof value==="object") && (value.isObjValue==true)){
 						this["attr_"+sNameAttr+"Margins"]=value.margins;
-						value=value.Value;
+						value=value.value;
 						valueMin=value.min;
 						valueMax=value.max;
 					}
@@ -515,7 +515,7 @@ class factoryObjects{
 					var valueMax="";
 					if ((typeof value==="object") && (value.isObjValue==true)){
 						this["attr_"+sNameAttr+"Margins"]=value.margins;
-						value=value.Value;
+						value=value.value;
 						valueMin=value.min;
 						valueMax=value.max;
 					}
@@ -724,9 +724,9 @@ class factoryObjects{
 				var nodAux=this.functions.getFirst();
 				while (nodAux!=""){
 					if (nodAux.brothers.length>0){
-						factory[nodAux.key]=nodAux.brothers[nodAux.brothers.length-1].Value;
+						factory[nodAux.key]=nodAux.brothers[nodAux.brothers.length-1].value;
 					} else {
-						factory[nodAux.key]=nodAux.Value;
+						factory[nodAux.key]=nodAux.value;
 					}
 					nodAux=nodAux.next;
 				}
@@ -867,10 +867,10 @@ class factoryObjects{
 			var item=this.list.getFirst();
 			var sAux;
 			while (item!=""){
-				sAux=item.Value["get"+attributeName]();
+				sAux=item.value["get"+attributeName]();
 				sAux=prepareComparation(sAux,bCaseInsensitive,bWithoutAccents);
 				if (sAux==sValue){
-					arrResults.push(item.Value);
+					arrResults.push(item.value);
 				}
 				item=item.next;
 			}
@@ -1099,7 +1099,7 @@ class factoryObjects{
 
 					 idField=node.key;
 					 idSubField="";
-					 field=node.Value;
+					 field=node.value;
 					 type=field.type;
 					 subType=field.subType;
 					 subFields=field.subFields;
@@ -1108,7 +1108,7 @@ class factoryObjects{
 					 
 					 while (subNode!=""){
 						 idSubField=subNode.key;
-						 vValue=subNode.Value;
+						 vValue=subNode.value;
 						 if (vValue!=""){
 							if (type=="Value"){
 								if (subType=="Number"){

@@ -931,7 +931,7 @@ class RCGZippedApp{
 			
 			log("Testing hashmaps");
 			var hsTest=newHashMap();
-			for (var i=0;i<10;i++){
+			for (var i=0;i<20;i++){
 				var sKey="key-"+Math.round(Math.random()*10);
 				hsTest.add(sKey,{key:sKey,value:"value for "+sKey});
 			}

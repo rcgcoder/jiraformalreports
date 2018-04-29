@@ -941,7 +941,7 @@ class RCGZippedApp{
 			log("Trace HashMap");
 			log("--------------------")
 			hsTest.traceAll();
-/*			hsTest.swing();
+			hsTest.swing();
 			log("--------------------")
 			log("Trace After swing");
 			log("--------------------")
@@ -949,7 +949,7 @@ class RCGZippedApp{
 			log("--------------------")
 			log("--------------------")
 			log("--------------------")
-	*/		
+			
 			log("end testing hashmaps");
 			
 			var webapp=new ZipWebApp();

@@ -569,7 +569,7 @@ class RCGHashMapFactory{
 				var callEnd;
 				var callBlock;
 				var callItem;
-				var segsLoop;
+				var secsLoop;
 				var bFirst=true;
 				var bFinish=false;
 				var vResult;
@@ -580,7 +580,7 @@ class RCGHashMapFactory{
 					objStep=hashmapFactory.pilaAsyncCalls.top();
 					if (bFirst){
 						callEnd=objStep.callEnd;
-						segsLoop=objStep.segsLoop;
+						secsLoop=objStep.secsLoop;
 						callItem=objStep.callItem;
 						type=objStep.type;
 						indAct=objStep.index;
@@ -621,7 +621,7 @@ class RCGHashMapFactory{
 						}
 						bStop=(nLevels!=hashmapFactory.stackAsyncCalls.length());
 						if (!bStop){
-							bStop=((new Date().getTime()-initTimestamp)>segsLoop);
+							bStop=((new Date().getTime()-initTimestamp)>secsLoop);
 						}
 					}
 				}
@@ -731,7 +731,7 @@ class RCGHashMapFactory{
 			var totalTime=(new Date().getTime()-objStep.initTimestamp)/1000;
 	/*		var totalLastBlock=(new Date().getTime()-objStep.lastBlockTime)/1000;
 		*/	var timeBlock=(new Date().getTime()-objStep.lastBlockTime)/1000;
-			if (timeBlock>objStep.segsLoop){
+			if (timeBlock>objStep.secsLoop){
 				objStep.nBlockTime++;
 				objStep.bLaunchBlockTime=true;
 				objStep.lastBlockTime=new Date().getTime();
@@ -766,7 +766,7 @@ class RCGHashMapFactory{
 				}
 			}
 		}
-		walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,segsLoop,hsOtherParams,barrier){
+		walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
 			if (isDefined(barrier)){
 				barrier.start(this);
 			}
@@ -775,8 +775,8 @@ class RCGHashMapFactory{
 			}
 			var nodAux=this.getFirst();
 			var sBloq=3;
-			if (typeof segsLoop!=="undefined"){
-				sBloq=segsLoop;
+			if (typeof secsLoop!=="undefined"){
+				sBloq=secsLoop;
 			}
 			var auxCallBlockPercent=hashmapFactory.asyncDefaultCallBlockPercent;
 			var auxCallBlockTime=hashmapFactory.asyncDefaultCallBlockTime;
@@ -807,7 +807,7 @@ class RCGHashMapFactory{
 							,lastBlockTime:0
 							,callBlockPercent:auxCallBlockPercent
 							,callBlockTime:auxCallBlockTime
-							,segsLoop:sBloq
+							,secsLoop:sBloq
 							,porcProcessed:0.0
 							,lastBlockPercent:0.0						
 							,opsPerSec:0
@@ -826,8 +826,8 @@ class RCGHashMapFactory{
 			hashmapFactory.stepAsync();
 //			});
 		}
-		bucleAsync(sName,initIndex,lastIndex,callItem,callEnd
-										,callBlockPercent,callBlockTime,segsLoop,hsOtherParams,barrier){
+		loopAsync(sName,initIndex,lastIndex,callItem,callEnd
+										,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
 			if (isDefined(barrier)){
 				barrier.start(this);
 			}
@@ -835,8 +835,8 @@ class RCGHashMapFactory{
 				hashmapFactory.stackAsyncCalls=newHashMap();
 			}
 			var sBlk=3;
-			if (typeof segsLoop!=="undefined"){
-				sBlk=segsLoop;
+			if (typeof secsLoop!=="undefined"){
+				sBlk=secsLoop;
 			}
 			var auxCallBlockPercent=hashmapFactory.asyncDefaultCallBlockPercent;
 			var auxCallBlockTime=hashmapFactory.asyncDefaultCallBlockTime;
@@ -863,7 +863,7 @@ class RCGHashMapFactory{
 							,lastBlockTime:0
 							,callBlockPercent:auxCallBlockPercent
 							,callBlockTime:auxCallBlockTime
-							,segsLoop:sBlk
+							,secsLoop:sBlk
 							,porcProcessed:0.0
 							,lastBlockPercent:0.0						
 							,opsPerSec:0

@@ -931,11 +931,22 @@ class RCGZippedApp{
 			
 			log("Testing hashmaps");
 			var hsTest=newHashMap();
-			for (var i=0;i<1000;i++){
-				var sKey="key"+i;
+			for (var i=0;i<10;i++){
+				var sKey="key-"+Math.round(Math.random()*10);
 				hsTest.add(sKey,{key:sKey,value:"value for "+sKey});
 			}
+			log("--------------------")
+			log("Trace before swing");
+			log("--------------------")
+			hsTest.traceAll();
 			hsTest.swing();
+			log("--------------------")
+			log("Trace After swing");
+			log("--------------------")
+			hsTest.traceAll();
+			log("--------------------")
+			log("--------------------")
+			log("--------------------")
 			
 			log("end testing hashmaps");
 			

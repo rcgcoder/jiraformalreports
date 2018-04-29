@@ -957,6 +957,16 @@ class RCGZippedApp{
 			
 			log("end testing hashmaps");
 			
+
+			var coches=newDynamicObjectFactory([{nombre:"L1",descripcion:"Elementos L1",tipo:"Numero"},
+																{nombre:"L2",descripcion:"Elementos L2",tipo:"Valor"},
+																{nombre:"L3",descripcion:"Elementos L3",tipo:"Fecha"},
+																],["A1","A2","A3"],["P1","P2"]);
+			var coche=coches.new("ZX");
+			coches.traza();
+
+			
+			
 			var webapp=new ZipWebApp();
 			self.extendFromObject(webapp);
 			self.run();

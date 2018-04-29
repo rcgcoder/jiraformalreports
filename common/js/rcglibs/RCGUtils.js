@@ -24,7 +24,7 @@ class RCGUtils{
     	if (isInNodeJS()){
     		self.require=require;
     	} else {
-	    	if (isDefined(customRequireFunction){
+	    	if (isDefined(customRequireFunction)){
 	    		self.require=customRequireFunction;
 	    	} else {
 	    		self.require=function(sLibName){

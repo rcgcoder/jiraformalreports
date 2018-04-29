@@ -931,15 +931,17 @@ class RCGZippedApp{
 			
 			log("Testing hashmaps");
 			var hsTest=newHashMap();
-			for (var i=0;i<32;i++){
-				var sKey="key-"+fillCharsLeft(3,""+i,'0');//Math.round(Math.random()*10);
+			var iMax=256;
+			for (var i=0;i<iMax;i++){
+				var sKey="key-"+fillCharsLeft(3,""+Math.round(Math.random()*iMax);
+								,'0');
 				hsTest.add(sKey,{key:sKey,value:"value for "+sKey});
 			}
 			log("--------------------")
-			log("Trace before swing");
+			log("Trace HashMap");
 			log("--------------------")
 			hsTest.traceAll();
-			hsTest.swing();
+/*			hsTest.swing();
 			log("--------------------")
 			log("Trace After swing");
 			log("--------------------")
@@ -947,7 +949,7 @@ class RCGZippedApp{
 			log("--------------------")
 			log("--------------------")
 			log("--------------------")
-			
+	*/		
 			log("end testing hashmaps");
 			
 			var webapp=new ZipWebApp();

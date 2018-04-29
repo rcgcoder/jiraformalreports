@@ -963,7 +963,7 @@ class RCGZippedApp{
 																{nombre:"L3",descripcion:"Elementos L3",tipo:"Fecha"},
 																],["A1","A2","A3"],["P1","P2"]);
 			var coche=coches.new("ZX");
-			coches.traza();
+			coches.trace();
 
 			
 			

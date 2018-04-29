@@ -86,7 +86,7 @@ class factoryObjects{
 	addfactoryGlobal(factory){
 		this.hsFactoriesGlobal.add(factory.name,factory);
 	}
-/*		,attrTypes:factoryHashMaps.newHashMap()  // lista de types de Atributo
+/*		,attrTypes:factoryHashMaps.newHashMap()  // lista de types de Attribute
 		,attributes:factoryHashMaps.newHashMap()  // lista total de attributes del theObject
 		,functions:factoryHashMaps.newHashMap()  // lista de functions asociadas al theObject
 		,list:factoryHashMaps.newHashMap()
@@ -798,7 +798,7 @@ class factoryObjects{
 				
 				if (attrType=="List"){
 					var list=obj["get"+attrName+"s"]();
-					log (sCad+"Atributo:"+attrName+" ["+attrType+"]:"+list.length());
+					log (sCad+"Attribute:"+attrName+" ["+attrType+"]:"+list.length());
 					list.walk(obj.factory.traceItem,iDeep+1);
 				} else if (attrType=="Reference"){
 					var attrReference=attribute.reference;
@@ -810,7 +810,7 @@ class factoryObjects{
 					var vPercValueMin=obj["get"+attrName+"PercMin"]();
 					var vPercValueMax=obj["get"+attrName+"PercMax"]();
 					var vPercValueMargins=obj["get"+attrName+"PercMargins"]();
-					log (sCad+"Atributo:"+attrName+" ["+attrType+"]:"+
+					log (sCad+"Attribute:"+attrName+" ["+attrType+"]:"+
 								vValue+ "["+vValueMin+" -> "+vValueMax+"] "+ (vValueMargins*100).toFixed(2)+"%"
 								+" percs:"+(attrReference==""?"":attrReference+" ")+(vPercValue*100).toFixed(2)+"%"
 								+" ["+(vPercValueMin*100).toFixed(2)+"%"
@@ -825,11 +825,11 @@ class factoryObjects{
 						vValue=vValue.id+" - "+vValue.name;
 					}
 					if ((vValue+""+vValueMin+""+vValueMax+""+ vValueMargins)!=""){
-						log (sCad+"Atributo:"+attrName+" ["+attrType+"]:"+
+						log (sCad+"Attribute:"+attrName+" ["+attrType+"]:"+
 									vValue+ "["+vValueMin+" -> "+vValueMax+"] "+ (vValueMargins*100).toFixed(2)+"%");
 					}
 				} else {
-					log (sCad+"Atributo:"+attrName+" no tiene type:"+attrType);
+					log (sCad+"Attribute:"+attrName+" has no type:"+attrType);
 				}
 			},iDeep+1);
 		}

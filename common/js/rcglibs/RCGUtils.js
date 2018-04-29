@@ -41,29 +41,13 @@ class RCGUtils{
     	var self=this;
     	self.requireLibs(bMakeGlobals,self.arrLibs);
     }
-    makeGlobals(bMakeGlobals,obj){
-    	var self=this;
-		if (isUndefined(bMakeGlobals)) return;
-		if (bMakeGlobals==true){
-			var arrProperties=Object.getOwnPropertyNames(obj.__proto__);
-			for (var i=0;i<arrProperties.length;i++){
-				var vPropName=arrProperties[i];
-				if (vPropName!=="constructor"){
-					var vPropValue=obj[vPropName];
-					if (isMethod(vPropValue)){
-						global[vPropName]=vPropValue;
-					}
-				}
-			}
-	    }		
-	}
 
 	requireLib(bMakeGlobals,sNameLib){
     	var self=this;
 		console.log(sNameLib);
 		var vLib=self.require(sNameLib);
 		var obj=new vLib();
-	    self.makeGlobals(bMakeGlobals,obj);
+		if (bMakeGlobals) makeGlobals(obj);
 	}
 	
 	requireLibs(bMakeGlobals,arrLibs){

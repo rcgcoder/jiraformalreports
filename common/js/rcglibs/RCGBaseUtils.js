@@ -25,6 +25,7 @@ function clone(srcObj){
 	}
 	return result;
 }
+
 function objEquals(aObj,bObj){
 	var arrAProperties=Object.getOwnPropertyNames(aObj);
 	var arrBProperties=Object.getOwnPropertyNames(bObj);
@@ -51,6 +52,23 @@ function objEquals(aObj,bObj){
 	}
 	return bEquals;
 }
+function makeGlobals(obj){
+	var arrProperties=Object.getOwnPropertyNames(obj.__proto__);
+	for (var i=0;i<arrProperties.length;i++){
+		var vPropName=arrProperties[i];
+		if (vPropName!=="constructor"){
+			var vPropValue=obj[vPropName];
+			if (isMethod(vPropValue)){
+				if (isInNodeJS()){
+					global[vPropName]=vPropValue;
+				} else {
+					window[vPropName]=vPropValue;
+				}
+			}
+		}
+	}
+}
+
 
 function executeSystemCommand(sCommand,callback){
 	var objResult=shell.exec(sCommand);

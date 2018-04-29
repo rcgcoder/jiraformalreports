@@ -41,25 +41,12 @@ class ZipWebApp{
 							"js/rcglibs/systemjs/RCGSystemJSManager.js",
 							"js/rcglibs/atlassian/RCGAtlassian.js",
 							"js/rcglibs/atlassian/RCGConfluence.js",
-							"js/rcglibs/atlassian/RCGJira.js",
-							"js/rcglibs/RCGBaseUtils.js",
-							"js/rcglibs/RCGUtils.js",
+							"js/rcglibs/atlassian/RCGJira.js"
 /*							"js/rcglibs/RCGLogUtils.js",
 							"js/rcglibs/RCGChronoUtils.js",
 							"js/rcglibs/RCGHashMapUtils.js"
 */						 ]; //test
 			self.loadRemoteFiles(arrFiles);
-		});
-		self.addStep("Initialize RCG utils engine.... ",function(){
-			var fncLoadRCGUtilFile=function(sRelativePath){
-				self.addStep("Load and process:"+sRelativePath,function(){
-					self.loadRemoteFile(sRelativePath);
-				});
-				self.continueTask();
-			}
-			log("loading RCG UTILS"); //another push
-			var rcgUtils=new RCGUtils(true,"js/rcglibs/",self.createManagedCallback(fncLoadRCGUtilFile));
-			rcgUtils.loadUtils(true);
 		});
 		self.addStep("Setting <initialized=false> Atlassian Engine.... ",function(){
 			var atl=self.getAtlassian();

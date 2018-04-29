@@ -13,10 +13,10 @@ class RCGUtils{
     		"RCGMathUtils.js",
     		"RCGDateUtils.js",
     		"RCGLogUtils.js",
-    		"RCGListUtils.js"/*,
-    		"AsyncUtils.js",
+    		"RCGListUtils.js",
+    		"RCGAsyncUtils.js",
+    		"RCGChronoUtils.js"/*,
     		"ExcelUtils.js",
-    		"ChronoUtils.js",
     		"HashMapUtils.js",
     		"DynamicObjectUtils.js"*/
     	//	,"MongoUtils.js"

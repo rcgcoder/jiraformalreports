@@ -53,7 +53,12 @@ function objEquals(aObj,bObj){
 	return bEquals;
 }
 function makeGlobals(obj){
-	var arrProperties=Object.getOwnPropertyNames(obj.__proto__);
+	var arrProperties;
+	if (typeof obj==="class"){
+		arrProperties=Object.getOwnPropertyNames(obj.prototype);
+	} else {
+		arrProperties=Object.getOwnPropertyNames(obj.__proto__);
+	}
 	for (var i=0;i<arrProperties.length;i++){
 		var vPropName=arrProperties[i];
 		if (vPropName!=="constructor"){

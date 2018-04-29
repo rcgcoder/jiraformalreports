@@ -54,15 +54,17 @@ function objEquals(aObj,bObj){
 }
 function makeGlobals(obj){
 	var arrProperties;
+	var baseObj;
 	if (typeof obj==="function"){ // a class is a function... "constructor"
-		arrProperties=Object.getOwnPropertyNames(obj.prototype);
+		baseObj=obj.prototype;
 	} else {
-		arrProperties=Object.getOwnPropertyNames(obj.__proto__);
+		baseObj=obj;
 	}
+	arrProperties=Object.getOwnPropertyNames(baseObj);
 	for (var i=0;i<arrProperties.length;i++){
 		var vPropName=arrProperties[i];
 		if (vPropName!=="constructor"){
-			var vPropValue=obj[vPropName];
+			var vPropValue=baseObj[vPropName];
 			if (isMethod(vPropValue)){
 				if (isInNodeJS()){
 					global[vPropName]=vPropValue;

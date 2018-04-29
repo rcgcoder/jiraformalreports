@@ -702,7 +702,7 @@ class RCGZippedApp{
 					var auxArrLibs=[];
 			    	for (var i=0;i<rcgUtilsManager.arrLibs.length;i++){
 				    	var sNameLib=rcgUtilsManager.arrLibs[i];
-						self.addStep("Processing RCG Util:"+sNameLib,function(sNameLib){
+						self.addStep("Processing RCG Util:"+sNameLib,function(){
 					    	var sFileUrl=rcgUtilsManager.basePath+sNameLib;
 				    		self.addStep("Loading "+sFileUrl,function(){
 					    		self.pushCallback(function(){
@@ -715,6 +715,7 @@ class RCGZippedApp{
 					    			});
 				    			self.loadRemoteFile(sFileUrl);
 				    			});
+				    		self.continueTask();
 						});
 				    }
 		    		self.continueTask();

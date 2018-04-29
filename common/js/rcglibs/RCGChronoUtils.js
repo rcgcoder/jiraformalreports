@@ -356,6 +356,7 @@ class ChronoFactory{
 		}
 	}
 }
+var chronoFactory=new ChronoFactory();
 
 class RCGChronoUtils{
 	constructor(){
@@ -392,7 +393,7 @@ class RCGChronoUtils{
 }
 if (isInNodeJS()){
 	if (isUndefined(global.chronoFactory)){
-		global.chronoFactory=new ChronoFactory();
+		global.chronoFactory=chronoFactory;
 	}
 }
 registerClass(RCGChronoUtils);

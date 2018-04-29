@@ -937,6 +937,7 @@ class RCGZippedApp{
 			}
 			hsTest.swing();
 			
+			log("end testing hashmaps");
 			
 			var webapp=new ZipWebApp();
 			self.extendFromObject(webapp);

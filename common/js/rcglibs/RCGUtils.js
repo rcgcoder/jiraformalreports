@@ -31,9 +31,9 @@ class RCGUtils{
 	    			log("Require is no used for "+sLibName);
 	    		}
 	    	}
-    		window.require=function(sLibName){
+/*    		window.require=function(sLibName){
     			self.require(self.basePath+sLibName);
-    		}
+    		}*/
     	}
 	}
 

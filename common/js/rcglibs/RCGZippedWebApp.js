@@ -700,10 +700,11 @@ class RCGZippedApp{
 				var rcgUtilsManager=new RCGUtils();
 				rcgUtilsManager.requireLibs=self.createManagedCallback(function(bMakeGlobals,arrLibs){
 					var auxArrLibs=[];
-					var fncRequireSteps=self.createManagedCallback(function(sNameLib){
+					self.addStep("Processing RCG Util:"+sNameLib,function(sNameLib){
 				    	var sFileUrl=rcgUtilsManager.basePath+sNameLib;
 			    		self.addStep("Loading "+sFileUrl,function(){
 				    		self.pushCallback(function(){
+				    			log("processing:"+sNameLib);
 				    			var className=sNameLib.split(".")[0];
 				    			// Instantiate the object using the class name string
 				    			var auxObj = new window[className](); 

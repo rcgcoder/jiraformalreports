@@ -722,7 +722,6 @@ class RCGZippedApp{
 				});
 				rcgUtilsManager.basePath="js/rcglibs/";
 				rcgUtilsManager.loadUtils(true);
-				self.popCallback();
 			});
 			var arrFiles=["css/RCGTaskManager.css",
 				          "js/libs/zip/zip.js",

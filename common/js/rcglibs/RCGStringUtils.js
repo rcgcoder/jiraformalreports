@@ -52,7 +52,7 @@ class RCGStringUtils{
 		return numAux;
 	};
 	
-	fillCharsLeft (iNumChars,sString,sCharFill){
+	fillCharsLeft(iNumChars,sString,sCharFill){
 		var sChar="0";
 		if (typeof sCharFill!=="undefined"){
 			sChar=sCharFill;

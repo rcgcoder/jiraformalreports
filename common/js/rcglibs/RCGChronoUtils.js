@@ -357,7 +357,7 @@ class ChronoFactory{
 	}
 }
 
-class ChronoUtils{
+class RCGChronoUtils{
 	constructor(){
 		log("Creating ChronoUtils");
 	}
@@ -394,5 +394,5 @@ if (isInNodeJS()){
 	if (isUndefined(global.chronoFactory)){
 		global.chronoFactory=new ChronoFactory();
 	}
-	module.exports=ChronoUtils;
+	module.exports=RCGChronoUtils;
 }

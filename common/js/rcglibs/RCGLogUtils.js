@@ -1,9 +1,7 @@
+'use strict';
 var process;
 if (isInNodeJS()){
-	'use strict';
 	process = require('process');
-} else {
-	// process will be undefined
 }
 
 function getProcessPid(){
@@ -116,8 +114,6 @@ class RCGLogUtils{
 	}
 }
 var loggerFactory=new LoggerFactory(); 	
-var logUtils=new RCGLogUtils();
-var log=logUtils.log;
 if (isInNodeJS()){
 	global.loggerFactory=new LoggerFactory(); 	
 	module.exports=RCGLogUtils;

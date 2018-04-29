@@ -932,10 +932,14 @@ class RCGZippedApp{
 			log("Testing hashmaps");
 			var hsTest=newHashMap();
 			var iMax=256;
-			for (var i=0;i<iMax;i++){
-				var sKey="key-"+fillCharsLeft(3,""+Math.round(Math.random()*iMax)
+			while (hsTest.length()<iMax){
+				var sKey="key-"+fillCharsLeft(5,""+Math.round(Math.random()*(iMax*10))
 								,'0');
-				hsTest.add(sKey,{key:sKey,value:"value for "+sKey});
+				if (!hsTest.exists(sKey)){
+					hsTest.add(sKey,{key:sKey,value:"value for "+sKey});
+				} else {
+					log("node exists:"+sKey);
+				}
 			}
 			log("--------------------")
 			log("Trace HashMap");

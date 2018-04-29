@@ -960,8 +960,12 @@ class RCGZippedApp{
 
 			var cars=newDynamicObjectFactory([{name:"L1",description:"Elementos L1",type:"Number"},
 												{name:"L2",description:"Elementos L2",type:"Value"},
-												{name:"L3",description:"Elementos L3",type:"Date"},
-											   ],["A1","A2","A3"],["P1","P2"]);
+												{name:"L3",description:"Elementos L3",type:"Date"}
+											   ],["A1","A2","A3"],[
+												   {name:"P1",description:"Elementos P1",type:"Number"},
+													{name:"P2",description:"Elementos P2",type:"Number"},
+													{name:"P3",description:"Elementos P3",type:"Number"}
+												   ]);
 			var car=cars.new("ZX");
 			car.setA1("ValueForA1");
 			car.setP2(0.2);

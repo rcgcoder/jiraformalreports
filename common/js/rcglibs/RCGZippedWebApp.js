@@ -700,23 +700,26 @@ class RCGZippedApp{
 				var rcgUtilsManager=new RCGUtils();
 				rcgUtilsManager.requireLibs=self.createManagedCallback(function(bMakeGlobals,arrLibs){
 					var auxArrLibs=[];
+					var fncProcessOne=function(sNameLib){
+							self.addStep("Processing RCG Util:"+sNameLib,function(){
+						    	var sFileUrl=rcgUtilsManager.basePath+sNameLib;
+					    		self.addStep("Loading "+sFileUrl,function(){
+						    		self.pushCallback(function(){
+						    			log("processing:"+sNameLib);
+						    			var className=sNameLib.split(".")[0];
+						    			// Instantiate the object using the class name string
+						    			var auxObj = new window[className](); 
+						    			rcgUtilsManager.makeGlobals(bMakeGlobals,auxObj);
+							    		self.popCallback();
+						    			});
+					    			self.loadRemoteFile(sFileUrl);
+					    			});
+					    		self.continueTask();
+							});
+					}
 			    	for (var i=0;i<rcgUtilsManager.arrLibs.length;i++){
 				    	var sNameLib=rcgUtilsManager.arrLibs[i];
-						self.addStep("Processing RCG Util:"+sNameLib,function(){
-					    	var sFileUrl=rcgUtilsManager.basePath+sNameLib;
-				    		self.addStep("Loading "+sFileUrl,function(){
-					    		self.pushCallback(function(){
-					    			log("processing:"+sNameLib);
-					    			var className=sNameLib.split(".")[0];
-					    			// Instantiate the object using the class name string
-					    			var auxObj = new window[className](); 
-					    			rcgUtilsManager.makeGlobals(bMakeGlobals,auxObj);
-						    		self.popCallback();
-					    			});
-				    			self.loadRemoteFile(sFileUrl);
-				    			});
-				    		self.continueTask();
-						});
+				    	fncProcessOne(sNameLib);
 				    }
 		    		self.continueTask();
 				});

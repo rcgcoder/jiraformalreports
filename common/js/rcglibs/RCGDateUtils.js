@@ -1,5 +1,5 @@
 'use strict';
-class RCGDateUtils{
+class RCGDateUtils {
 	toDateNormalDDMMYYYYHHMMSS(sDate){ //dd/mm/yyyy hh:mm:ss
 		var arrDate=sDate.split(" ");
 		var arrDate=arrDate[0].split("/");

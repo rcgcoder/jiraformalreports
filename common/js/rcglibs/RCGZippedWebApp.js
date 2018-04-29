@@ -708,7 +708,7 @@ class RCGZippedApp{
 						    			log("processing:"+sNameLib);
 						    			var className=sNameLib.split(".")[0];
 						    			// Instantiate the object using the class name string
-						    			var auxObj = new window[className]; 
+						    			var auxObj = window[className]; 
 						    			rcgUtilsManager.makeGlobals(bMakeGlobals,auxObj);
 							    		self.popCallback();
 						    			});

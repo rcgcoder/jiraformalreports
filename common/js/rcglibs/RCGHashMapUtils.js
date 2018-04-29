@@ -455,7 +455,7 @@ class RCGHashMapFactory{
 		//			chronoStopFunction();
 				}
 			}
-		trace(node,iProf,sIoD,callValor){
+		trace(node,iProf,sIoD,callValue){
 				if (node=="") return;
 				var iDeep=0;
 				if (typeof iProf!=="undefined"){
@@ -537,11 +537,17 @@ class RCGHashMapFactory{
 				this.trace(node.right,iDeep+1,"D",callValue);
 			}
 		traceAll(callValue){
+				var auxCallValue=callValue;
+				if (typeof callValue==="undefined"){
+					auxCallValue=function(nodeValue,iDeep,sPrefix){
+						
+					}
+				}
 				var vUndef;
 				log("============ Hash Map ==========");
 				log("==                            ==");
 				log("==                            ==");
-				this.trace(this.root,vUndef,vUndef,callValue);
+				this.trace(this.root,vUndef,vUndef,auxCallValue);
 				log("==                            ==");
 				log("==                            ==");
 				log("================================");

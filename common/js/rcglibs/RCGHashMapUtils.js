@@ -1545,9 +1545,9 @@ if (isInNodeJS()){
 	newHashMap=function(){return hashmapFactory.newHashMap();};
 
 }
-class HashMapUtils{
+class RCGHashMapUtils{
 	constructor(){
-		log("Creating ChronoUtils");
+		log("Creating HashMapUtils");
 	}
 	newHashMap(){
 //		log("Start Chrono:"+sName);

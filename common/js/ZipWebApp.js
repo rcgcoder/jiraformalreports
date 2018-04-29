@@ -54,7 +54,7 @@ class ZipWebApp{
 			var fncLoadRCGUtilFile=function(sRelativePath){
 				self.addStep("Load and process:"+sRelativePath,function(){
 					self.loadRemoteFile(sRelativePath);
-				}
+				});
 				self.continueTask();
 			}
 

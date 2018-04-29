@@ -1,119 +1,119 @@
 'use strict';
-var process = require('process');
-var BaseUtils=require("./BaseUtils.js");
-var StringUtils=require("./StringUtils.js");
-var LogUtils=require("./LogUtils.js");
+//var process = require('process');
+//var BaseUtils=require("./BaseUtils.js");
+//var StringUtils=require("./StringUtils.js");
+//var LogUtils=require("./LogUtils.js");
 
 class ChronoInfo{
 	constructor(process){
 		var self=this;
 		self.process=process;
 		self.start=0;
-		self.desperdiciado=0;
-		self.ciclo=0;
-		self.startCiclo=0;
+		self.wasted=0;
+		self.cycle=0;
+		self.startCycle=0;
 	}
-	run(tInicioDesperdiciado){
+	run(tInitWasted){
 		if (!this.process.enabled) return;
-		var auxDesperdiciado=tInicioDesperdiciado;
+		var auxWasted=tInitWasted;
 		var tNow=new Date().getTime();
-		if (isUndefined(tInicioDesperdiciado)){
+		if (isUndefined(tInitWasted)){
 			this.start=tNow;
-			auxDesperdiciado=this.start;
+			auxWasted=this.start;
 		} else {
-			this.start=tInicioDesperdiciado;
-			auxDesperdiciado=tInicioDesperdiciado;
+			this.start=tInitWasted;
+			auxWasted=tInitWasted;
 		}
-		this.startCiclo=this.start;
+		this.startCycle=this.start;
 		tNow=new Date().getTime();
-		this.desperdiciado=(tNow-auxDesperdiciado);
+		this.wasted=(tNow-auxWasted);
 	}
-    newCiclo(){
+    newCycle(){
 	   if (!this.process.enabled) return;
-	   this.ciclo++;
-	   this.startCiclo=new Date().getTime();
+	   this.cycle++;
+	   this.startCycle=new Date().getTime();
     }
-    getCuantoLleva(){
+    getHowMuch(){
 		if (!this.process.enabled) return;
-		var tActual=new Date().getTime();
-		var tLleva=tActual-this.start;
-		return tLleva;
+		var tNow=new Date().getTime();
+		var tAux=tNow-this.start;
+		return tAux;
     }
-    getCuantoLlevaCiclo(){
+    getHowMuchCycle(){
 		if (!this.process.enabled) return;
-		var tActual=new Date().getTime();
-		var tLlevaCiclo=tActual-this.startCiclo;
-		return tLlevaCiclo;
+		var tNow=new Date().getTime();
+		var tAux=tNow-this.startCycle;
+		return tAux;
     }
 }
 
 class Chrono{
-	constructor(sNombreCompleto,sNombre,nivelAnidamiento,padre){
+	constructor(sFullName,sName,nestingLevel,parent){
 		var self=this;
-		self.nombre=sNombreCompleto;
-		self.nombreCorto=sNombre;
-		self.acumulado=0;
-		self.cronos=[];
-		self.profundidad=0;
-		self.veces=0;
-		self.anidamiento=nivelAnidamiento+0;
-		self.padre=padre;
-		self.hijos=[];
-		self.desperdiciado=0;
+		self.name=sFullName;
+		self.shortName=sName;
+		self.accumulated=0;
+		self.chronos=[];
+		self.deep=0;
+		self.times=0;
+		self.nesting=nestingLevel+0;
+		self.parent=parent;
+		self.childs=[];
+		self.wasted=0;
 	}
-	getTotalDesperdiciado(){
-		var iDesp=this.desperdiciado;
-		for (var i=0;i<this.hijos.length;i++){
-			iDesp+=this.hijos[i].getTotalDesperdiciado();
+	getTotalWasted(){
+		var iAcum=this.wasted;
+		for (var i=0;i<this.childs.length;i++){
+			iAcum+=this.childs[i].getTotalWasted();
 		}
-		return iDesp;
+		return iAcum;
 	}
 }
 
 class processChronos{
-	constructor(enabled,withInfoAuxiliar,withNombreCompleto,listaProfundidadMaxima){
+	constructor(enabled,withAuxiliarInfo,withFullName,listMaxDeep){
 		var self=this;
 		self.enabled=enabled;
-		self.withNombreCompleto=withNombreCompleto;
-		self.withInfoAuxiliar=withInfoAuxiliar;
-		self.listaProfundidadMaxima;
-		self.prependNumCronos=false;
-		self.totalCronos=0;
+		self.withFullName=withFullName;
+		self.withAuxiliarInfo=withAuxiliarInfo;
+		self.listMaxDeep;
+		self.prependChronoNumber=false;
+		self.totalChronos=0;
 		self.tTotal=0;
-		self.cronosOpen=[];
+		self.chronosOpen=[];
 		self.pathChrono="";
-		self.allCronos=[];
-		self.lastCrono=[];
-		self.mapCronos={};
-		self.nivelAnidamiento=0;
+		self.allChronos=[];
+		self.lastChrono=[];
+		self.mapChronos={};
+		self.nestingLevel=0;
 	}
-	prepareNames(nombre,sInfoAuxiliar){
-		var sNombreCompleto="";
-		var sNombre=nombre;
-		if (this.prependNumCronos) {
-			sNombre=fillLetrasLeft(5,this.totalCronos)+"_"+sNombre;
+	prepareNames(name,sAuxiliarInfo){
+		var sFullName="";
+		var sName=name;
+		if (this.prependChronoNumber) {
+			sName=fillCharsLeft(5,this.totalChronos)+"_"+sName;
 		}
-		if ((this.withInfoAuxiliar)&&(isDefined(sInfoAuxiliar))){
-			sNombre+="_"+sInfoAuxiliar;
+		if ((this.withAuxiliarInfo)&&(isDefined(sAuxiliarInfo))){
+			sName+="_"+sAuxiliarInfo;
 		}
-		this.nivelAnidamiento++;
-		if (this.withNombreCompleto){
-			this.totalCronos++;
-			this.cronosOpen.push(this.pathChrono);
-			sNombreCompleto=this.pathChrono;
-			sNombreCompleto+="_"+sNombre;
-			this.pathChrono=sNombreCompleto;
+		this.nestingLevel++;
+		if (this.withFullName){
+			this.totalChronos++;
+			this.chronosOpen.push(this.pathChrono);
+			sFullName=this.pathChrono;
+			sFullName+="_"+sName;
+			this.pathChrono=sFullName;
 		} else {
-			sNombreCompleto=sNombre;
+			sFullName=sName;
 		}
-		return [sNombre,sNombreCompleto];
+		return [sName,sFullName];
 	}
-	chronoStartFunction(sInfoAuxiliar,nIndex){
+	chronoStartFunction(sAuxiliarInfo,nIndex){
 		var newIndex=1
 		if (isDefined(nIndex)){
 			newIndex+=nIndex;
 		}
-		return this.chronoStart("",sInfoAuxiliar,newIndex);
+		return this.chronoStart("",sAuxiliarInfo,newIndex);
 	}
 	chronoStopFunction(){
 		var newIndex=1
@@ -122,79 +122,79 @@ class processChronos{
 		}
 		return this.chronoStop("",newIndex);
 	}
-	chronoStart(theName,sInfoAuxiliar,iFuncName){
+	chronoStart(theName,sAuxiliarInfo,iFuncName){
 		if (!this.enabled) return;
-		var tInicio=new Date().getTime();
-		var nombre=theName;
+		var tInit=new Date().getTime();
+		var name=theName;
 		if (isDefined(iFuncName)){
-			nombre=getFunctionName(iFuncName+1);
+			name=getFunctionName(iFuncName+1);
 		} 
-		var arrNames=this.prepareNames(nombre,sInfoAuxiliar);
-		var sNombre=arrNames[0];
-		var sNombreCompleto=arrNames[1];
-		if (isUndefined(this.mapCronos[sNombreCompleto])){
-			var padre="";
-			if (this.cronosOpen.length>0){
-				padre=this.cronosOpen[this.cronosOpen.length-1];
-				if (padre!=""){
-					padre=this.mapCronos[padre];
+		var arrNames=this.prepareNames(name,sAuxiliarInfo);
+		var sName=arrNames[0];
+		var sFullName=arrNames[1];
+		if (isDefined(this.mapChronos[sFullName])){
+			var parent="";
+			if (this.chronosOpen.length>0){
+				parent=this.chronosOpen[this.chronosOpen.length-1];
+				if (parent!=""){
+					parent=this.mapChronos[parent];
 				}
 			}
-			this.mapCronos[sNombreCompleto]=new Chrono(sNombreCompleto,
-														sNombre,
-														this.nivelAnidamiento,
-														padre);
-			if (padre!=""){
-				padre.hijos.push(this.mapCronos[sNombreCompleto]);
+			this.mapChronos[sFullName]=new Chrono(sFullName,
+														sName,
+														this.nestingLevel,
+														parent);
+			if (parent!=""){
+				parent.childs.push(this.mapChronos[sFullName]);
 			}
 			
-			this.allCronos.push(this.mapCronos[sNombreCompleto]);
+			this.allChronos.push(this.mapChronos[sFullName]);
 		}
-		var acumCronos=this.mapCronos[sNombreCompleto];
-		this.lastCrono.push(acumCronos);
-		var cronos=acumCronos.cronos;
-		var crono=new ChronoInfo(this);
-		cronos.push(crono);
-		if (cronos.length>acumCronos.profundidad){
-			acumCronos.profundidad=cronos.length;
+		var accumChronos=this.mapChronos[sFullName];
+		this.lastChrono.push(accumChronos);
+		var chronos=accumChronos.chronos;
+		var chrono=new ChronoInfo(this);
+		chronos.push(chrono);
+		if (chronos.length>accumChronos.deep){
+			accumChronos.deep=chronos.length;
 		}
-		crono.run(tInicio);
-		return crono;
+		chrono.run(tInit);
+		return chrono;
 	}
 	chronoStop(theName,iFuncName){
 		if (!this.enabled) return;
-		var tInicio=new Date().getTime();
-		var nombre=theName;
+		var tInit=new Date().getTime();
+		var name=theName;
 		if (isDefined(iFuncName)){
-			nombre=getFunctionName(iFuncName+1);
+			name=getFunctionName(iFuncName+1);
 		} 
-		var lastChrono=this.lastCrono.pop();
-		var sNombre=lastChrono.nombreCorto;
-		if (isDefined(nombre)){
-			if (nombre!=sNombre){
-				log("Error haciendo Stop. Nombre:"+nombre+" lastCrono Nombre Corto:"+sNombre);
+		var lastChrono=this.lastChrono.pop();
+		var sName=lastChrono.shortName;
+		if (isDefined(name)){
+			if (name!=sName){
+				log("Error haciendo Stop. name:"+name+" lastChrono name Corto:"+sName);
 			}
-			sNombre=lastChrono.nombre;
+			sName=lastChrono.name;
 		}
-		var sNombreCompleto="";
-		this.nivelAnidamiento--;
-		if (this.withNombreCompleto){
-			sNombreCompleto=this.pathChrono;
-			this.pathChrono=this.cronosOpen.pop();
+		var sFullName="";
+		this.nestingLevel--;
+		if (this.withFullName){
+			sFullName=this.pathChrono;
+			this.pathChrono=this.chronosOpen.pop();
 		} else {
-			sNombreCompleto=sNombre;
+			sFullName=sName;
 		}
 		
-		var acumCronos=this.mapCronos[sNombreCompleto];
-		acumCronos.veces++;
+		var accumChronos=this.mapChronos[sFullName];
+		accumChronos.times++;
 		
-		var cronos=acumCronos.cronos;
-		var crono=cronos.pop();
+		var chronos=accumChronos.chronos;
+		var chrono=chronos.pop();
 		var timeAct=new Date().getTime();
-		var tResult=timeAct-crono.start;
-		acumCronos.acumulado+=tResult;
-		acumCronos.desperdiciado+=((timeAct-tInicio)+crono.desperdiciado);
-		if (acumCronos.acumulado<acumCronos.desperdiciado){
+		var tResult=timeAct-chrono.start;
+		accumChronos.accumulated+=tResult;
+		accumChronos.wasted+=((timeAct-tInit)+chrono.wasted);
+		if (accumChronos.accumulated<accumChronos.wasted){
 			log("No coinciden");
 		}
 		return tResult;
@@ -206,17 +206,17 @@ class ChronoFactory{
 		var self=this;
 		self.chronos=[];
 		self.enabled=false;
-		self.listaSoloRaices=true;
-		self.withNombreCompleto=true;
-		self.withInfoAuxiliar=false;
-		self.listaProfundidadMaxima=100;
+		self.listRootsOnly=true;
+		self.withFullName=true;
+		self.withAuxiliarInfo=false;
+		self.listMaxDeep=100;
 	}
 	getChronos(){
 		var self=this;
 		var sPID=process.pid;
 		var pChronos;
 		if (isUndefined(self.chronos[sPID])){
-			pChronos=new processChronos(self.enabled,self.withInfoAuxiliar,self.withNombreCompleto);
+			pChronos=new processChronos(self.enabled,self.withAuxiliarInfo,self.withFullName);
 			self.chronos[sPID]=pChronos;
 		} else {
 			pChronos=self.chronos[sPID];
@@ -227,12 +227,12 @@ class ChronoFactory{
 		var sPID=process.pid;
 		this.chronos[sPID]=undefinedValue;
 	}
-	chronoStartFunction(sInfoAuxiliar,nIndex){
+	chronoStartFunction(sAuxiliarInfo,nIndex){
 		var newIndex=1
 		if (isDefined(nIndex)){
 			newIndex+=nIndex;
 		}
-		return this.getChronos().chronoStart("",sInfoAuxiliar,newIndex);
+		return this.getChronos().chronoStart("",sAuxiliarInfo,newIndex);
 	}
 	chronoStopFunction(nIndex){
 		var newIndex=1
@@ -241,11 +241,11 @@ class ChronoFactory{
 		}
 		return this.getChronos().chronoStop("",newIndex);
 	}
-	chronoStart(nombre,sInfoAuxiliar){
-		return this.getChronos().chronoStart(nombre,sInfoAuxiliar);
+	chronoStart(name,sAuxiliarInfo){
+		return this.getChronos().chronoStart(name,sAuxiliarInfo);
 	}
-	chronoStop(nombre){
-		return this.getChronos().chronoStop(nombre);
+	chronoStop(name){
+		return this.getChronos().chronoStop(name);
 	}
 	traceBlock(sLabel,sValue,sMeasure){
 		var sRowSeparator=", ";
@@ -255,91 +255,91 @@ class ChronoFactory{
 				+sFieldSeparator+(isDefined(sValue)?sValue:"")
 				+sFieldSeparator+(isDefined(sMeasure)?sMeasure:"");
 	}
-	listaCrono(acumCronos){
+	listChrono(accumChronos){
 		if (!this.enabled) return;
 		var pChronos=this.getChronos();
 		var nMultip=0;
-		var porcPadre=0;
-		var porcTotal=0;
+		var percParent=0;
+		var percTotal=0;
 		var sTabs=" ";
-		var padre=acumCronos.padre;
-		var iProf=1;
-		if (padre!=""){		
-			porcPadre=(acumCronos.acumulado/padre.acumulado);
-			nMultip=acumCronos.veces/padre.veces;
-			var cronoPadre=padre;
-			while (cronoPadre!=""){
-				iProf++;				
+		var parent=accumChronos.parent;
+		var iDeep=1;
+		if (parent!=""){		
+			percParent=(accumChronos.accumulated/parent.accumulated);
+			nMultip=accumChronos.times/parent.times;
+			var chronoParent=parent;
+			while (chronoParent!=""){
+				iDeep++;				
 				sTabs+="   ";
-				cronoPadre=cronoPadre.padre;
+				chronoParent=chronoParent.parent;
 			}
 		} 
-		var tDespTotal=acumCronos.getTotalDesperdiciado();
-		var tDespHijos=tDespTotal-acumCronos.desperdiciado;
+		var tTotalWasted=accumChronos.getTotalWasted();
+		var tChildsWasted=tTotalWasted-accumChronos.wasted;
 		
-		porcTotal=acumCronos.acumulado/pChronos.tTotal;
+		percTotal=accumChronos.accumulated/pChronos.tTotal;
 				
-		var tReal=acumCronos.acumulado-tDespTotal;
-		var porcDesp=tDespTotal/acumCronos.acumulado;
+		var tReal=accumChronos.accumulated-tTotalWasted;
+		var porcDesp=tTotalWasted/accumChronos.accumulated;
 		
-		var sLog=sTabs+ acumCronos.nombreCorto+" ("+acumCronos.veces+"),";
-		sLog+=this.traceBlock("Operaciones",acumCronos.veces);
+		var sLog=sTabs+ accumChronos.shortName+" ("+accumChronos.times+"),";
+		sLog+=this.traceBlock("Ops",accumChronos.times);
 		sLog+=this.traceBlock("T Real",inSeconds(tReal,false));
-		sLog+=this.traceBlock("T Acum",inSeconds(acumCronos.acumulado,false));
-		sLog+=this.traceBlock("% Acum",inPercent(porcTotal));
-		sLog+=this.traceBlock("T Desp",inSeconds(tDespTotal,false));
-		if (acumCronos.hijos.length>0){
-			sLog+=this.traceBlock("T Desp Hijos",inSeconds(tDespHijos,false));
+		sLog+=this.traceBlock("T Accum",inSeconds(accumChronos.accumulated,false));
+		sLog+=this.traceBlock("% Accum",inPercent(percTotal));
+		sLog+=this.traceBlock("T Wasted",inSeconds(tTotalWasted,false));
+		if (accumChronos.childs.length>0){
+			sLog+=this.traceBlock("T Wasted by childs",inSeconds(tChildsWasted,false));
 		} else {
 			sLog+=this.traceBlock();
 		}
-		sLog+=this.traceBlock("% Desp",inPercent(porcDesp));
-		if (padre!=""){
-			sLog+=this.traceBlock("% Padre",inPercent(porcPadre));
+		sLog+=this.traceBlock("% Wasted",inPercent(porcDesp));
+		if (parent!=""){
+			sLog+=this.traceBlock("% parent",inPercent(percParent));
 			sLog+=this.traceBlock("Multip",nMultip.toFixed(2));
 		} else {
 			sLog+=this.traceBlock();
 			sLog+=this.traceBlock();
 		}
-		sLog+=this.traceBlock("Rend Real(op/s)",(acumCronos.veces*1000/tReal).toFixed(2),"op/s");
-		sLog+=this.traceBlock("Rend Real(ms/op)",(tReal/acumCronos.veces).toFixed(5),"ms/op");
-		sLog+=this.traceBlock("Rend (op/s)",(acumCronos.veces*1000/acumCronos.acumulado).toFixed(2),"op/s");
-		sLog+=this.traceBlock("Rend (ms/op)",(acumCronos.acumulado/acumCronos.veces).toFixed(5),"ms/op");
-		sLog+=this.traceBlock("Deep Max",acumCronos.profundidad);
-		sLog+=this.traceBlock("Act",acumCronos.cronos.length);
-		sLog+=this.traceBlock("Anid",acumCronos.anidamiento);
+		sLog+=this.traceBlock("Perf Real(op/s)",(accumChronos.times*1000/tReal).toFixed(2),"op/s");
+		sLog+=this.traceBlock("Perf Real(ms/op)",(tReal/accumChronos.times).toFixed(5),"ms/op");
+		sLog+=this.traceBlock("Perf (op/s)",(accumChronos.times*1000/accumChronos.accumulated).toFixed(2),"op/s");
+		sLog+=this.traceBlock("Perf (ms/op)",(accumChronos.accumulated/accumChronos.times).toFixed(5),"ms/op");
+		sLog+=this.traceBlock("Deep Max",accumChronos.deep);
+		sLog+=this.traceBlock("Act",accumChronos.chronos.length);
+		sLog+=this.traceBlock("Nesting",accumChronos.nesting);
 		sLog=replaceAll(sLog, "\\.", ","); 
 		log(sLog);
-		if (iProf<=this.listaProfundidadMaxima) {
-			for (var i=0;i<acumCronos.hijos.length;i++){
-				this.listaCrono(acumCronos.hijos[i]);
+		if (iDeep<=this.listMaxDeep) {
+			for (var i=0;i<accumChronos.childs.length;i++){
+				this.listChrono(accumChronos.childs[i]);
 			}
 		}
 	}
-	listar(){
+	list(){
 		if (!this.enabled) return;
 		var tTotal=0;
 		var pChronos=this.getChronos();
-		for (var i=0;i<pChronos.allCronos.length;i++){
-			var acumCronos=pChronos.allCronos[i];
-			if (acumCronos.padre==""){
-				tTotal+=acumCronos.acumulado;
+		for (var i=0;i<pChronos.allChronos.length;i++){
+			var accumChronos=pChronos.allChronos[i];
+			if (accumChronos.parent==""){
+				tTotal+=accumChronos.accumulated;
 			}
 		}
 		pChronos.tTotal=tTotal;
-		log("Listando "+pChronos.allCronos.length +" cronometros ("+inSeconds(tTotal)+")");
-/*		this.allCronos.sort(function(a,b){
-			if (this.withNombreCompleto) {
-				if (a.nombre<b.nombre){
+		log("Listing "+pChronos.allChronos.length +" chronos ("+inSeconds(tTotal)+")");
+/*		this.allChronos.sort(function(a,b){
+			if (this.withFullName) {
+				if (a.name<b.name){
 					return -1;
-				} else if (a.nombre>b.nombre){
+				} else if (a.name>b.name){
 					return +1;
 				} 
 				return 0;
 			} else {
-				if (a.acumulado<b.acumulado){
+				if (a.accumulated<b.accumulated){
 					return 1;
-				} else if (a.acumulado>b.acumulado){
+				} else if (a.accumulated>b.accumulated){
 					return -1;
 				} 
 				return 0;
@@ -347,11 +347,11 @@ class ChronoFactory{
 		});
 	*/		
 
-		for (var i=0;i<pChronos.allCronos.length;i++){
-			var acumCronos=pChronos.allCronos[i];
-			var padre=acumCronos.padre;
-			if (padre==""){
-				this.listaCrono(acumCronos);
+		for (var i=0;i<pChronos.allChronos.length;i++){
+			var accumChronos=pChronos.allChronos[i];
+			var parent=accumChronos.parent;
+			if (parent==""){
+				this.listChrono(accumChronos);
 			}
 		}
 	}
@@ -364,26 +364,26 @@ class ChronoUtils{
 	constructor(){
 		log("Creating ChronoUtils");
 	}
-	chronoStartFunction(sInfoAuxiliar){
-		return chronoFactory.chronoStartFunction(sInfoAuxiliar,1);
+	chronoStartFunction(sAuxiliarInfo){
+		return chronoFactory.chronoStartFunction(sAuxiliarInfo,1);
 	}
 	chronoStopFunction(){
 		return chronoFactory.chronoStopFunction(1);
 	}
-	chronoStart(sNombre,sExtraInfo){
-//		log("Start Chrono:"+sNombre);
-		chronoFactory.chronoStart(sNombre,sExtraInfo);
+	chronoStart(sName,sExtraInfo){
+//		log("Start Chrono:"+sName);
+		chronoFactory.chronoStart(sName,sExtraInfo);
 	}
-	chronoStop(sNombre){
-//		log("Stop Chrono:"+sNombre);
-		chronoFactory.chronoStop(sNombre);
+	chronoStop(sName){
+//		log("Stop Chrono:"+sName);
+		chronoFactory.chronoStop(sName);
 	}
-	chronoList(acumChronos){
+	chronoList(accumChronos){
 //		log("List Chronos");
-		if (isDefined(acumChronos)){
-			chronoFactory.listaCrono(acumChronos);
+		if (isDefined(accumChronos)){
+			chronoFactory.listChrono(accumChronos);
 		} else {
-			chronoFactory.listar();
+			chronoFactory.list();
 		}
 	}
 	chronoEnable(){

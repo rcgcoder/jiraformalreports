@@ -728,6 +728,7 @@ class RCGZippedApp{
 			});
 			var arrFiles=["css/RCGTaskManager.css",
 				          "js/libs/zip/zip.js",
+				          "https://cdnjs.cloudflare.com/ajax/libs/mathjs/4.0.1/math.min.js",
 						  "js/rcglibs/RCGBaseUtils.js",
 						  "js/rcglibs/RCGUtils.js"
 		//	, 

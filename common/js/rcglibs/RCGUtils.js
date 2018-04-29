@@ -10,8 +10,8 @@ class RCGUtils{
 		}
     	self.arrLibs=[
     		"RCGStringUtils.js",
-    		"RCGMathUtils.js"/*,
-    		"DateUtils.js",
+    		"RCGMathUtils.js",
+    		"RCGDateUtils.js"/*,
     		"LogUtils.js",
     		"ListUtils.js",
     		"AsyncUtils.js",

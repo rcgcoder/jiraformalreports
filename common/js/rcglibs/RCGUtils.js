@@ -16,9 +16,9 @@ class RCGUtils{
     		"RCGListUtils.js",
     		"RCGAsyncUtils.js",
     		"RCGChronoUtils.js",
-    		"RCGHashMapUtils.js"/*,
-    		"ExcelUtils.js",
-    		"DynamicObjectUtils.js"*/
+    		"RCGHashMapUtils.js",
+//    		"ExcelUtils.js",
+    		"DynamicObjectUtils.js"
     	//	,"MongoUtils.js"
     		];
     	if (isInNodeJS()){

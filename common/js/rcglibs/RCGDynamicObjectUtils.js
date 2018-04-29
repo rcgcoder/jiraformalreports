@@ -1,5 +1,8 @@
 'use strict';
-var math = require('mathjs');
+var math;
+if (isInNodeJS()){
+	var math = require('mathjs');
+}
 /*
 All of the libs are allready loaded
 var BaseUtils=require("./BaseUtils.js");
@@ -8,142 +11,142 @@ var LogUtils=require("./LogUtils.js");
 var ChronoUtils=require("./ChronoUtils.js");
 var HashMapUtils=require("./HashMapUtils.js");
 */
-class DynamicObject{
-	constructor(theFactory,nombre,arrAtributosListado,arrAtributos,arrAtributosPorcs){
+class RCGDynamicObject{
+	constructor(theFactory,name,arrAttributeList,arrAttributes,arrAttributesPercs){
 		var self=this;
-		var factoria=theFactory;
-		self.factoria=factoria;
+		var factory=theFactory;
+		self.factory=factory;
 		self.parentFactorys=[];
-		self.parentFactorys.push(factoria);
-		self.extend=factoria.extend;
-		self.getParentAttribute=factoria.getParentAttribute;
-		self.getParentMethod=factoria.getParentMethod;
-		self.executeParentMethod=factoria.executeParentMethod;
-		self.nombre=nombre;
+		self.parentFactorys.push(factory);
+		self.extend=factory.extend;
+		self.getParentAttribute=factory.getParentAttribute;
+		self.getParentMethod=factory.getParentMethod;
+		self.executeParentMethod=factory.executeParentMethod;
+		self.name=name;
 		self.global=global;
-		self.tiposAtributos=newHashMap(); // lista de nombres de atributos, tipo, etc
-		self.atributos=newHashMap();  // lista total de atributos del Objeto
-		self.funciones=newHashMap();  // lista de funciones asociadas al objeto
-		self.listado=newHashMap();
-		self.getById=factoria.getById;									
-		self.get=factoria.get;
-		self.findByAttribute=factoria.findByAttribute;
-		self.interno_construyeId=factoria.interno_construyeId;			
-		self.interno_getMaxId=factoria.interno_getMaxId;		
-		self.interno_getId=factoria.interno_getId;
-		self.interno_getNombre=factoria.interno_getNombre;
-		self.getNewId=factoria.getNewId;
-		self.interno_addIndividualAttr=factoria.interno_addIndividualAttr;
-		self.addAtributo=factoria.addAtributo;
-		self.addAtributoLista=factoria.addAtributoLista;			
-		self.addAtributoWithPorc=factoria.addAtributoWithPorc;		
-		self.interno_getFactoria=factoria.interno_getFactoria;			
-		self.interno_setID=factoria.interno_setID;		
-		self.updateAtributosFunciones=factoria.updateAtributosFunciones;
-		self.newObject=factoria.newObject;
-		self.nuevo=factoria.nuevo;							
-		self.procesarTodosAtributos=factoria.procesarTodosAtributos;						
-		self.trazaItem=factoria.trazaItem;
-		self.traza=factoria.traza;
-		self.balancear=factoria.balancear;
-		self.configFromExcel=factoria.configFromExcel;
-		self.loadFromExcel=factoria.loadFromExcel;
-		self.loadFromExceAsync=factoria.loadFromExceAsync;
-		self.generarTipos=factoria.generarTipos;
-		self.interno_execFunction=factoria.interno_execFunction;
-		self.vaciar=factoria.vaciar;
-		var auxAttsListado=[];
-		var auxAttsValor=[];
-		var auxAttsPorcs=[];
-		if (isDefined(arrAtributosListado)){
-			auxAttsListado=arrAtributosListado;
+		self.attrTypes=newHashMap(); // lista de names de attributes, type, etc
+		self.attributes=newHashMap();  // lista total de attributes del theObject
+		self.functions=newHashMap();  // lista de functions asociadas al theObject
+		self.list=newHashMap();
+		self.getById=factory.getById;									
+		self.get=factory.get;
+		self.findByAttribute=factory.findByAttribute;
+		self.internal_buildId=factory.internal_buildId;			
+		self.internal_getMaxId=factory.internal_getMaxId;		
+		self.internal_getId=factory.internal_getId;
+		self.internal_getName=factory.internal_getName;
+		self.getNewId=factory.getNewId;
+		self.internal_addIndividualAttr=factory.internal_addIndividualAttr;
+		self.addAttribute=factory.addAttribute;
+		self.addAttributeList=factory.addAttributeList;			
+		self.addAttributeWithPerc=factory.addAttributeWithPerc;		
+		self.internal_getFactory=factory.internal_getFactory;			
+		self.internal_setID=factory.internal_setID;		
+		self.updateAttributesFunctions=factory.updateAttributesFunctions;
+		self.newObject=factory.newObject;
+		self.new=factory.new;							
+		self.processAllAttributes=factory.processAllAttributes;						
+		self.traceItem=factory.traceItem;
+		self.trace=factory.trace;
+		self.swing=factory.swing;
+		self.configFromExcel=factory.configFromExcel;
+		self.loadFromExcel=factory.loadFromExcel;
+		self.loadFromExceAsync=factory.loadFromExceAsync;
+		self.generateTypes=factory.generateTypes;
+		self.internal_execFunction=factory.internal_execFunction;
+		self.clear=factory.clear;
+		var auxAttslist=[];
+		var auxAttsValues=[];
+		var auxAttsPercs=[];
+		if (isDefined(arrAttributeList)){
+			auxAttslist=arrAttributeList;
 		}
-		if (isDefined(arrAtributos)){
-			auxAttsValor=arrAtributos;
+		if (isDefined(arrAttributes)){
+			auxAttsValues=arrAttributes;
 		}
-		if (isDefined(arrAtributosPorcs)){
-			auxAttsPorcs=arrAtributosPorcs;
+		if (isDefined(arrAttributesPercs)){
+			auxAttsPercs=arrAttributesPercs;
 		}
-		self.procesarTodosAtributos(auxAttsListado,auxAttsValor,auxAttsPorcs);
+		self.processAllAttributes(auxAttslist,auxAttsValues,auxAttsPercs);
 	}
 }
 
-class FactoriaObjetos{
+class factoryObjects{
 	constructor(){
 		var self=this;
-		self.nFactorias=0;
-		self.hsFactoriasGlobales=newHashMap();
+		self.nfactorys=0;
+		self.hsFactoriesGlobal=newHashMap();
 		
 	}
-	getFactoriaGlobal(nombre){
-		return this.hsFactoriasGlobales.getValor(nombre);
+	getFactoryGlobal(name){
+		return this.hsFactoriesGlobal.getValue(name);
 	}
-	addFactoriaGlobal(factoria){
-		this.hsFactoriasGlobales.add(factoria.nombre,factoria);
+	addfactoryGlobal(factory){
+		this.hsFactoriesGlobal.add(factory.name,factory);
 	}
-/*		,tiposAtributos:factoriaHashMaps.newHashMap()  // lista de Tipos de Atributo
-		,atributos:factoriaHashMaps.newHashMap()  // lista total de atributos del Objeto
-		,funciones:factoriaHashMaps.newHashMap()  // lista de funciones asociadas al objeto
-		,listado:factoriaHashMaps.newHashMap()
+/*		,attrTypes:factoryHashMaps.newHashMap()  // lista de types de Atributo
+		,attributes:factoryHashMaps.newHashMap()  // lista total de attributes del theObject
+		,functions:factoryHashMaps.newHashMap()  // lista de functions asociadas al theObject
+		,list:factoryHashMaps.newHashMap()
 */		
-	nuevaFactoria(nombre,isGlobal,arrAtributosListado,arrAtributos,arrAtributosPorcs){
+	newFactory(name,isGlobal,arrAttributeList,arrAttributes,arrAttributesPercs){
 		var self=this;
-		var obj=new DynamicObject(self,nombre,arrAtributosListado,arrAtributos,arrAtributosPorcs);
-		self.nFactorias++;
+		var obj=new DynamicObject(self,name,arrAttributeList,arrAttributes,arrAttributesPercs);
+		self.nfactorys++;
 		if (isDefined(isGlobal)&&isGlobal){
-			this.addFactoriaGlobal(obj);
+			this.addfactoryGlobal(obj);
 		}
 		return obj;
 	}
-	vaciar(){
-			this.listado.vaciar();
+	clear(){
+			this.list.clear();
 	}
-	interno_getId(){
+	internal_getId(){
 			return this.id;
 		}
-	interno_getNombre(){
-			return this.nombre;
+	internal_getName(){
+			return this.name;
 		}
 	getById(id){
-			var nodo=this.listado.find(id);
-			if (nodo!=""){
-				return nodo.valor;
+			var node=this.list.find(id);
+			if (node!=""){
+				return node.Value;
 			}
-			return nodo;
-			//return getFromListaById(this.listado,id);re
+			return node;
+			//return getFromListaById(this.list,id);re
 		}
 	get(ind){
-			var nodo=this.listado.findByInd(ind);
-			if (nodo!=""){
-				return nodo.valor;
+			var node=this.list.findByInd(ind);
+			if (node!=""){
+				return node.Value;
 			}
-			return nodo;
+			return node;
 		}
-	interno_construyeId(sIdBase,nId){
+	internal_buildId(sIdBase,nId){
 			var sNewId="";
 			if (sIdBase!=""){
 /*				if (nId==0){
 					sNewId=sIdBase;
 				} else {
 					*/
-					sNewId=sIdBase+"_"+fillLetrasLeft(6,nId);
+					sNewId=sIdBase+"_"+fillCharsLeft(6,nId);
 //				}
 			} else {
-				sNewId=fillLetrasLeft(6,nId);
+				sNewId=fillCharsLeft(6,nId);
 			}
 			return sNewId;
 		}
-	interno_getMaxId(sIdBase,iLimiteInferior,iLimiteSuperior){
-	//			log("GetMaxID:"+sIdBase+"[" + iLimiteInferior + "," + iLimiteSuperior+"]");
-				if (iLimiteInferior>=iLimiteSuperior) {
-					return iLimiteSuperior;
+	internal_getMaxId(sIdBase,iLowerLimit,iHigherLimit){
+	//			log("GetMaxID:"+sIdBase+"[" + iLowerLimit + "," + iHigherLimit+"]");
+				if (iLowerLimit>=iHigherLimit) {
+					return iHigherLimit;
 				}
-				var nId=Math.floor((iLimiteSuperior-iLimiteInferior)/2)+iLimiteInferior;
-				var sNewId=this.interno_construyeId(sIdBase,nId);
+				var nId=Math.floor((iHigherLimit-iLowerLimit)/2)+iLowerLimit;
+				var sNewId=this.internal_buildId(sIdBase,nId);
 				if (this.getById(sNewId)=="") {
-					return this.interno_getMaxId(sIdBase,iLimiteInferior,nId);
+					return this.internal_getMaxId(sIdBase,iLowerLimit,nId);
 				} else {
-					return this.interno_getMaxId(sIdBase,nId+1,iLimiteSuperior);
+					return this.internal_getMaxId(sIdBase,nId+1,iHigherLimit);
 				}
 			}
 	getNewId(idBase){
@@ -153,609 +156,609 @@ class FactoriaObjetos{
 				sIdBase=idBase;
 			}
 			var sNewId=sIdBase;
-			var iLimSup=this.listado.length();
+			var iLimSup=this.list.length();
 			var iLimInf=0;
 			var me=this;
-			var iLastId=this.interno_getMaxId(sIdBase,0,iLimSup);
+			var iLastId=this.internal_getMaxId(sIdBase,0,iLimSup);
 			nId=iLastId-1;
-			sNewId=this.interno_construyeId(sIdBase,iLastId);
+			sNewId=this.internal_buildId(sIdBase,iLastId);
 			while (this.getById(sNewId)!="") {
 				nId++;
-				sNewId=this.interno_construyeId(sIdBase,nId);
+				sNewId=this.internal_buildId(sIdBase,nId);
 			}
-	//		log("LastID:"+iLastId +" nuevo ID:"+ sNewId);
+	//		log("LastID:"+iLastId +" new ID:"+ sNewId);
 			return sNewId;
 		}
-	procesaFormula(sFormula,objeto){
-			var auxMathData=this["math_"+sOperacion];
-			if (auxMathData.codigo==""){
-				var expr=this["get"+sOperacion]()+"";
+	processFormula(sFormula,theObject){
+			var auxMathData=this["math_"+sOperation];
+			if (auxMathData.code==""){
+				var expr=this["get"+sOperation]()+"";
 				expr=replaceAll(expr,"“",'"');
 				expr=replaceAll(expr,"”",'"');
 				var node = math.parse(expr);      // parse expression into a node tree
 				var symbols= math.extractSymbols(node);
 				var code = node.compile();        // compile the node tree
-				auxMathData.nodoMath=node;
-				auxMathData.codigo=code;
-				auxMathData.simbolos=symbols;
+				auxMathData.nodeMath=node;
+				auxMathData.code=code;
+				auxMathData.symbols=symbols;
 		//		var result = code.eval([scope]);  // evaluate the code with an optional scope
 			}
-			var scope=math.genScope(auxMathData.simbolos,objeto);
-			var result=auxMathData.codigo.eval(scope);
+			var scope=math.genScope(auxMathData.symbols,theObject);
+			var result=auxMathData.code.eval(scope);
 			return result;
 		}
 
-	interno_addIndividualAttr(vNombreAtributoDetail){
-			this.atributos.add("attr_"+vNombreAtributoDetail,function(){return "";});
-			this.funciones.add("get"+vNombreAtributoDetail,function(){
-					var valAttr=this["attr_"+vNombreAtributoDetail];
+	internal_addIndividualAttr(vNameAttributeDetail){
+			this.attributes.add("attr_"+vNameAttributeDetail,function(){return "";});
+			this.functions.add("get"+vNameAttributeDetail,function(){
+					var valAttr=this["attr_"+vNameAttributeDetail];
 					return valAttr;
 				});
-			this.funciones.add("set"+vNombreAtributoDetail,function(valAttr){
-					this["attr_"+vNombreAtributoDetail]=valAttr;
+			this.functions.add("set"+vNameAttributeDetail,function(valAttr){
+					this["attr_"+vNameAttributeDetail]=valAttr;
 				});
 		}
 		
-	addAtributo(vNombreAtributo,vDescripcion,vTipoDato){
-			if (typeof vNombreAtributo==="undefined") return;
-			if (typeof vNombreAtributo==="string"){
-				if (!this.tiposAtributos.exists(vNombreAtributo)){
-					this.tiposAtributos.add(vNombreAtributo,{tipo:"Valor",nombre:vNombreAtributo,descripcion:vDescripcion,subTipo:vTipoDato});
+	addAttribute(vNameAttribute,vDescription,vDataType){
+			if (typeof vNameAttribute==="undefined") return;
+			if (typeof vNameAttribute==="string"){
+				if (!this.attrTypes.exists(vNameAttribute)){
+					this.attrTypes.add(vNameAttribute,{type:"Value",name:vNameAttribute,description:vDescription,subType:vDataType});
 				}
-				this.interno_addIndividualAttr(vNombreAtributo);
-				var bSinMinMaxHorq=true;
-				var bFormula=(vTipoDato=="Formula");
-				if ((vTipoDato=="Numero")||
-					(vTipoDato=="Fecha")||
-					(vTipoDato=="Formula")||
-					(vTipoDato=="%")||
-					(vTipoDato=="FechaDiaMes")
+				this.internal_addIndividualAttr(vNameAttribute);
+				var bWithoutMinMaxMargins=true;
+				var bFormula=(vDataType=="Formula");
+				if ((vDataType=="Number")||
+					(vDataType=="Date")||
+					(vDataType=="Formula")||
+					(vDataType=="%")||
+					(vDataType=="DateMonthDay")
 					){
-					bSinMinMaxHorq=false;
+					bWithoutMinMaxMargins=false;
 				}
-				if (!bSinMinMaxHorq){
-					this.interno_addIndividualAttr(vNombreAtributo+"Min");
-					this.interno_addIndividualAttr(vNombreAtributo+"Max");
-					this.interno_addIndividualAttr(vNombreAtributo+"Horq");
+				if (!bWithoutMinMaxMargins){
+					this.internal_addIndividualAttr(vNameAttribute+"Min");
+					this.internal_addIndividualAttr(vNameAttribute+"Max");
+					this.internal_addIndividualAttr(vNameAttribute+"Margins");
 				}
-				this.funciones.add("get"+vNombreAtributo,function(param1){ // machaca la funcion por defecto
-					var valAttr=this["attr_"+vNombreAtributo];
+				this.functions.add("get"+vNameAttribute,function(param1){ // machaca la funcion por defecto
+					var valAttr=this["attr_"+vNameAttribute];
 					var valMin="";
 					var valMax="";
-					var nHorquilla=0; 
-					if (!bSinMinMaxHorq){
-						valMin=this["attr_"+vNombreAtributo+"Min"];
-						valMax=this["attr_"+vNombreAtributo+"Max"];
-						nHorquilla=this["get"+vNombreAtributo+"Horq"](); 
+					var nMargins=0; 
+					if (!bWithoutMinMaxMargins){
+						valMin=this["attr_"+vNameAttribute+"Min"];
+						valMax=this["attr_"+vNameAttribute+"Max"];
+						nMargins=this["get"+vNameAttribute+"Margins"](); 
 					}
 
 					if (typeof valAttr==="object") return valAttr;
 					if ((valMin=="")&&(valMax=="")) {
 						if (typeof valAttr==="string") return valAttr;
 					}
-					nHorquilla=1+((nHorquilla/2)-nHorquilla);
+					nMargins=1+((nMargins/2)-nMargins);
 					if (valAttr==""){
-						valMin=valMin*nHorquilla;
-						valMax=valMax*nHorquilla;
+						valMin=valMin*nMargins;
+						valMax=valMax*nMargins;
 						if ((valMin!="")&&(valMax!="")){
 							return rndMinMax(valMin,valMax,true);
 						} else if (valMax!=""){
-							return rndMinMax(0,valMax*(1+(Math.random()*nHorquilla)),true);
+							return rndMinMax(0,valMax*(1+(Math.random()*nMargins)),true);
 						} else {
 							return rndMinMax(valMin,valMin*10,true);
 						}
 					} else {
-						return valAttr*nHorquilla;
+						return valAttr*nMargins;
 					}
 				});
-				this.funciones.add("set"+vNombreAtributo,function(value){
+				this.functions.add("set"+vNameAttribute,function(value){
 					if (bFormula){
-						this["attr_"+vNombreAtributo]={formula:value,nodoMath:"",codigo:"",simbolos:""};
-					} else if ((typeof value==="object") && (value.isObjValor==true)){
-						this["attr_"+vNombreAtributo]=value.valor;
-						if (!bSinMinMaxHorq){
-							this["attr_"+vNombreAtributo+"Min"]=value.min;
-							this["attr_"+vNombreAtributo+"Max"]=value.max;
-							this["attr_"+vNombreAtributo+"Horq"]=value.horquilla;
+						this["attr_"+vNameAttribute]={formula:value,nodeMath:"",code:"",symbols:""};
+					} else if ((typeof value==="object") && (value.isObjValue==true)){
+						this["attr_"+vNameAttribute]=value.Value;
+						if (!bWithoutMinMaxMargins){
+							this["attr_"+vNameAttribute+"Min"]=value.min;
+							this["attr_"+vNameAttribute+"Max"]=value.max;
+							this["attr_"+vNameAttribute+"Margins"]=value.margins;
 						}
-					} else if ((vTipoDato!="Texto")&&(bSinMinMaxHorq)){ //es un objeto
-						this["attr_"+vNombreAtributo]=value;
-						var factoria=this.factoria;
-						var nombreTipoSingular=factoria.nombre.substring(0,this.factoria.nombre.length-1);
-						var sNombreFuncion="add"+nombreTipoSingular;
-						var fncAdd=value[sNombreFuncion];
+					} else if ((vDataType!="Text")&&(bWithoutMinMaxMargins)){ //es un theObject
+						this["attr_"+vNameAttribute]=value;
+						var factory=this.factory;
+						var nameTypeSingular=factory.name.substring(0,this.factory.name.length-1);
+						var sNameFunction="add"+nameTypeSingular;
+						var fncAdd=value[sNameFunction];
 						if (typeof fncAdd!=="undefined"){
-							value[sNombreFuncion](this);
+							value[sNameFunction](this);
 						} else {
-							sNombreFuncion="set"+nombreTipoSingular;
-							var fncSet=value[sNombreFuncion];
+							sNameFunction="set"+nameTypeSingular;
+							var fncSet=value[sNameFunction];
 							if (typeof fncSet!=="undefined"){
-								value[sNombreFuncion](this);
+								value[sNameFunction](this);
 							}
 						}
 					} else {
-						this["attr_"+vNombreAtributo]=value;
-						if (!bSinMinMaxHorq){
-							this["attr_"+vNombreAtributo+"Min"]="";
-							this["attr_"+vNombreAtributo+"Max"]="";
+						this["attr_"+vNameAttribute]=value;
+						if (!bWithoutMinMaxMargins){
+							this["attr_"+vNameAttribute+"Min"]="";
+							this["attr_"+vNameAttribute+"Max"]="";
 						}
 					}
 				});
 				if (bFormula){
-					this.funciones.add("eval"+vNombreAtributo,function(objeto){ 
-						var valAttr=this["attr_"+vNombreAtributo];
-/*						var tipoAttr=objeto.factoria.tiposAtributos.getValor(vNombreAtributo);
-						if (tipoAttr.tipo=="Listado"){
-							valAttr=this["get"+vNombreAtributo+"s"]();
+					this.functions.add("eval"+vNameAttribute,function(theObject){ 
+						var valAttr=this["attr_"+vNameAttribute];
+/*						var typeAttr=theObject.factory.attrTypes.getValue(vNameAttribute);
+						if (typeAttr.type=="List"){
+							valAttr=this["get"+vNameAttribute+"s"]();
 							if (valAttr.length()>0){
-								valAttr=valAttr.getPrimero().valor.id;
+								valAttr=valAttr.getFirst().Value.id;
 							} else {
 								valAttr="";
 							}
 						}*/
 						if (valAttr=="") return "";
 						if (valAttr.formula=="") return "";
-						if (valAttr.codigo==""){
+						if (valAttr.code==""){
 							var expr=valAttr.formula+"";
 							expr=replaceAll(expr,"“",'"');
 							expr=replaceAll(expr,"”",'"');
 							var node = math.parse(expr);      // parse expression into a node tree
 							var symbols= math.extractSymbols(node);
 							var code = node.compile();        // compile the node tree
-							valAttr.nodoMath=node;
-							valAttr.codigo=code;
-							valAttr.simbolos=symbols;
+							valAttr.nodeMath=node;
+							valAttr.code=code;
+							valAttr.symbols=symbols;
 							//var result = code.eval([scope]);  // evaluate the code with an optional scope
 						}
-						var scope=math.genScope(valAttr.simbolos,objeto); // param1 es un objeto 
-						return valAttr.codigo.eval(scope);						
+						var scope=math.genScope(valAttr.symbols,theObject); // param1 es un theObject 
+						return valAttr.code.eval(scope);						
 					});
 				}
-			} else if (Array.isArray(vNombreAtributo)){
-				for (var i=0;i<vNombreAtributo.length;i++){
-					if (typeof vNombreAtributo[i]==="string"){
-						this.addAtributo(vNombreAtributo[i]);
+			} else if (Array.isArray(vNameAttribute)){
+				for (var i=0;i<vNameAttribute.length;i++){
+					if (typeof vNameAttribute[i]==="string"){
+						this.addAttribute(vNameAttribute[i]);
 					} else {
-						this.addAtributo(vNombreAtributo[i].nombre,vNombreAtributo[i].descripcion,vNombreAtributo[i].tipo);
+						this.addAttribute(vNameAttribute[i].name,vNameAttribute[i].description,vNameAttribute[i].type);
 					}
 				}
 			}
 		}
-	addAtributoLista(vNombreAtributo,vDescripcion,vTipoDato){
-			if (typeof vNombreAtributo==="undefined") return;
+	addAttributeList(vNameAttribute,vDescription,vDataType){
+			if (typeof vNameAttribute==="undefined") return;
 			var me=this;
-			if (typeof vNombreAtributo==="string"){
-				if (!this.tiposAtributos.exists(vNombreAtributo)){
-					this.tiposAtributos.add
-								(vNombreAtributo,
-									{tipo:"Lista"
-									,nombre:vNombreAtributo
-									,descripcion:vDescripcion
-									,subTipo:vTipoDato});
+			if (typeof vNameAttribute==="string"){
+				if (!this.attrTypes.exists(vNameAttribute)){
+					this.attrTypes.add
+								(vNameAttribute,
+									{type:"List"
+									,name:vNameAttribute
+									,description:vDescription
+									,subType:vDataType});
 				}
 
-				this.atributos.add("lista_"+vNombreAtributo+"s",function(){return newHashMap();});
-				this.funciones.add("add"+vNombreAtributo,function(objVal){
-					this["lista_"+vNombreAtributo+"s"].add(objVal.id,objVal);
-					if (typeof objVal["listaPadres_"+me.nombre] === "undefined"){ //nombre de la factoria
-						objVal["listaPadres_"+me.nombre]=newHashMap();
+				this.attributes.add("list_"+vNameAttribute+"s",function(){return newHashMap();});
+				this.functions.add("add"+vNameAttribute,function(objVal){
+					this["list_"+vNameAttribute+"s"].add(objVal.id,objVal);
+					if (typeof objVal["listParents_"+me.name] === "undefined"){ //name de la factory
+						objVal["listParents_"+me.name]=newHashMap();
 					}
-					var nodAux=objVal["listaPadres_"+me.nombre].find(this.id);
+					var nodAux=objVal["listParents_"+me.name].find(this.id);
 					if (nodAux==""){
-						objVal["listaPadres_"+me.nombre].add(this.id,this);
+						objVal["listParents_"+me.name].add(this.id,this);
 					}
 					return objVal;
 				});
-				this.funciones.add("count"+vNombreAtributo+"s",function(){
-					return this["lista_"+vNombreAtributo+"s"].nNodos;
+				this.functions.add("count"+vNameAttribute+"s",function(){
+					return this["list_"+vNameAttribute+"s"].nNodes;
 				});
-				this.funciones.add("get"+vNombreAtributo+"s",function(){
-					return this["lista_"+vNombreAtributo+"s"];
+				this.functions.add("get"+vNameAttribute+"s",function(){
+					return this["list_"+vNameAttribute+"s"];
 				});
-				this.funciones.add("get"+vNombreAtributo,function(indice){
-					return this["lista_"+vNombreAtributo+"s"].findByInd(indice);
+				this.functions.add("get"+vNameAttribute,function(indice){
+					return this["list_"+vNameAttribute+"s"].findByInd(indice);
 				});
-				this.funciones.add("get"+vNombreAtributo+"ById",function(id){
-					//return getFromListaById(this["lista"+vNombreAtributo+"s"],id);
-					return this["lista_"+vNombreAtributo+"s"].getValor(id);
+				this.functions.add("get"+vNameAttribute+"ById",function(id){
+					//return getFromListaById(this["List"+vNameAttribute+"s"],id);
+					return this["list_"+vNameAttribute+"s"].getValue(id);
 				});
-			} else if (Array.isArray(vNombreAtributo)){
-				for (var i=0;i<vNombreAtributo.length;i++){
-					if (typeof vNombreAtributo[i]==="string"){
-						this.addAtributo(vNombreAtributo[i]);
+			} else if (Array.isArray(vNameAttribute)){
+				for (var i=0;i<vNameAttribute.length;i++){
+					if (typeof vNameAttribute[i]==="string"){
+						this.addAttribute(vNameAttribute[i]);
 					} else {
-						this.addAtributoLista(vNombreAtributo[i].nombre,vNombreAtributo[i].descripcion,vNombreAtributo[i].tipo);
+						this.addAttributeList(vNameAttribute[i].name,vNameAttribute[i].description,vNameAttribute[i].type);
 					}
 				}
 			}
 		}
-	addAtributoWithPorc(vNombreAtributo,vDescripcion,vTipoDato){
-			if (typeof vNombreAtributo==="undefined") return;
-			if (typeof vNombreAtributo==="string"){
-				this.addAtributo(vNombreAtributo); // atributo, min, max horq
-			} else if (Array.isArray(vNombreAtributo)){
-				for (var i=0;i<vNombreAtributo.length;i++){
-					this.addAtributoWithPorc(vNombreAtributo[i].nombre,vNombreAtributo[i].descripcion,vNombreAtributo[i].tipo);
+	addAttributeWithPerc(vNameAttribute,vDescription,vDataType){
+			if (typeof vNameAttribute==="undefined") return;
+			if (typeof vNameAttribute==="string"){
+				this.addAttribute(vNameAttribute); // attribute, min, max Margins
+			} else if (Array.isArray(vNameAttribute)){
+				for (var i=0;i<vNameAttribute.length;i++){
+					this.addAttributeWithPerc(vNameAttribute[i].name,vNameAttribute[i].description,vNameAttribute[i].type);
 				}
-			} else if (typeof vNombreAtributo==="object"){
-				var objReferencia=/*{
-						  tipoDoc:refTipoDoc
-						  ,fase:refFase
-						  ,subfase:refSubFase
-					  }*/ vNombreAtributo.referencia;
-				var sNombreAtr=vNombreAtributo.nombreAtributo;
-				if (!this.tiposAtributos.exists(sNombreAtr)){
-					this.tiposAtributos.add(sNombreAtr,
-							{tipo:"Referencia",
-							nombre:sNombreAtr,
-							referencia:objReferencia,
-							descripcion:vDescripcion,
-							subTipo:vTipoDato});
+			} else if (typeof vNameAttribute==="object"){
+				var objReference=/*{
+						  typeDoc:refTypeDoc
+						  ,phase:refPhase
+						  ,subPhase:refSubPhase
+					  }*/ vNameAttribute.reference;
+				var sNameAttr=vNameAttribute.nameAttribute;
+				if (!this.attrTypes.exists(sNameAttr)){
+					this.attrTypes.add(sNameAttr,
+							{type:"Reference",
+							name:sNameAttr,
+							reference:objReference,
+							description:vDescription,
+							subType:vDataType});
 				}
-				this.addAtributo(sNombreAtr,vDescripcion,vTipoDato); //atributo mas min,max,horq
-				this.addAtributo(sNombreAtr+"Porc",vDescripcion,vTipoDato); // porc min max horq
-				this.interno_addIndividualAttr(sNombreAtr+"TipoDocumentoReferencia");
-				this.interno_addIndividualAttr(sNombreAtr+"FaseReferencia");
-//				this.interno_addIndividualAttr(sNombreAtr+"FaseReferencia");
-				this.interno_addIndividualAttr(sNombreAtr+"SubFaseReferencia");
-				this.interno_addIndividualAttr(sNombreAtr+"CargaPapel");
-				this.interno_addIndividualAttr(sNombreAtr+"CargaElectronico");
-				this.interno_addIndividualAttr(sNombreAtr+"CostePapel");
-				this.interno_addIndividualAttr(sNombreAtr+"CosteElectronico");
-				this.interno_addIndividualAttr(sNombreAtr+"TrabajoGestorPapel");
-				this.interno_addIndividualAttr(sNombreAtr+"TrabajoGestorElectronico");
-				this.funciones.add("set"+sNombreAtr+"Horq",function(value){
-					this["attr_"+sNombreAtr+"Horq"]=value;
-					this["attr_"+sNombreAtr+"PorcHorq"]=value;
+				this.addAttribute(sNameAttr,vDescription,vDataType); //attribute mas min,max,Margins
+				this.addAttribute(sNameAttr+"Perc",vDescription,vDataType); // perc min max Margins
+				this.internal_addIndividualAttr(sNameAttr+"TypeDocumentReference");
+				this.internal_addIndividualAttr(sNameAttr+"PhaseReference");
+//				this.internal_addIndividualAttr(sNameAttr+"PhaseReference");
+				this.internal_addIndividualAttr(sNameAttr+"subPhaseReference");
+				this.internal_addIndividualAttr(sNameAttr+"WeightPaper");
+				this.internal_addIndividualAttr(sNameAttr+"WeightDigital");
+				this.internal_addIndividualAttr(sNameAttr+"CostPaper");
+				this.internal_addIndividualAttr(sNameAttr+"CostDigital");
+				this.internal_addIndividualAttr(sNameAttr+"workHumanPaper");
+				this.internal_addIndividualAttr(sNameAttr+"workHumanDigital");
+				this.functions.add("set"+sNameAttr+"Margins",function(value){
+					this["attr_"+sNameAttr+"Margins"]=value;
+					this["attr_"+sNameAttr+"PercMargins"]=value;
 				});
-				//this["set"+sNombreAtr+"Horq"](0);
-				this.funciones.add("set"+sNombreAtr+"Ref",function(newValue){
-					/* new Value tiene que ser un objeto referencia
-					{tipoDoc,fase,subfase}
+				//this["set"+sNameAttr+"Margins"](0);
+				this.functions.add("set"+sNameAttr+"Ref",function(newValue){
+					/* new Value tiene que ser un theObject Reference
+					{typeDoc,phase,subPhase}
 					*/
 					if (newValue==""){
-						this["set"+sNombreAtr+"TipoDocumentoReferencia"]("");
-						this["set"+sNombreAtr+"FaseReferencia"]("");
-						this["set"+sNombreAtr+"SubFaseReferencia"]("");
+						this["set"+sNameAttr+"TypeDocumentReference"]("");
+						this["set"+sNameAttr+"PhaseReference"]("");
+						this["set"+sNameAttr+"SubPhaseReference"]("");
 					} else {
-						var tipoDoc=newValue.tipoDoc;
-						var fase=newValue.fase;
-						var subfase=newValue.subfase;
-						if (tipoDoc!=""){
-							var objTipoDoc=tiposDocumento.getValor(tipoDoc);
-							if (tipoDoc==""){
-								log("El tipo de documento:"+tipoDoc+" no existe en la lista de tipos");
-								alert("El tipo de documento:"+tipoDoc+" no existe en la lista de tipos");
-								tiposDocumento.traza();
+						var typeDoc=newValue.typeDoc;
+						var phase=newValue.phase;
+						var subPhase=newValue.subPhase;
+						if (typeDoc!=""){
+							var objTypeDoc=typesDocument.getValue(typeDoc);
+							if (typeDoc==""){
+								log("El type de documento:"+typeDoc+" no existe en la lista de types");
+								alert("El type de documento:"+typeDoc+" no existe en la lista de types");
+								typesDocument.trace();
 							}
-							tipoDoc=objTipoDoc;
+							typeDoc=objTypeDoc;
 						}
-						if (fase!=""){
-							var proc=this.getProcedimiento();
-							var fases=proc.getFases();
-							var arrFases=[];
-							fases.listado.recorrer(function(objFase){
-								var bSeleccionado=false;
-								if (objFase.getTipo()==fase){
-									if (subfase==""){
-										bSeleccionado=true;
-									} else if (subfase==objFase.getSubTipo()){
-										bSeleccionado=true;
+						if (phase!=""){
+							var proc=this.getProcedure();
+							var phases=proc.getPhases();
+							var arrPhases=[];
+							phases.list.walk(function(objPhase){
+								var bSelected=false;
+								if (objPhase.getType()==phase){
+									if (subPhase==""){
+										bSelected=true;
+									} else if (subPhase==objPhase.getSubType()){
+										bSelected=true;
 									}
 								}
-								if ((bSeleccionado)&&(tipoDoc!="")){
-									if (objFase.getTipoResultado().nombre!=tipoDoc.nombre){
-										bSeleccionado=false;
+								if ((bSelected)&&(typeDoc!="")){
+									if (objPhase.getTypeResultado().name!=typeDoc.name){
+										bSelected=false;
 									}
 								}
-								if (bSeleccionado){
-									arrFases.push(objFase);
+								if (bSelected){
+									arrPhases.push(objPhase);
 								}
-								if (arrFases.length<=0){
-									log("Existe un error en la identificacion de la fase:"+fase+" subfase:"+subfase);
-									alert("Existe un error en la identificacion de la fase:"+fase+" subfase:"+subfase);
+								if (arrPhases.length<=0){
+									log("Existe un error en la identificacion de la phase:"+phase+" subPhase:"+subPhase);
+									alert("Existe un error en la identificacion de la phase:"+phase+" subPhase:"+subPhase);
 								} else {
-									fase=arrFases;
+									phase=arrPhases;
 								}
 							});
 						}
-						this["set"+sNombreAtr+"TipoDocumentoReferencia"](tipoDoc);
-						this["set"+sNombreAtr+"FaseReferencia"](fase);
-						this["set"+sNombreAtr+"SubFaseReferencia"](subfase);
+						this["set"+sNameAttr+"TypeDocumentReference"](typeDoc);
+						this["set"+sNameAttr+"PhaseReference"](phase);
+						this["set"+sNameAttr+"SubPhaseReference"](subPhase);
 					}
 				});
-				this.funciones.add("set"+sNombreAtr+"Porc",function(newValue){
+				this.functions.add("set"+sNameAttr+"Perc",function(newValue){
 					var value=newValue;
 					var valueMin="";
 					var valueMax="";
-					if ((typeof value==="object") && (value.isObjValor==true)){
-						this["attr_"+sNombreAtr+"Horq"]=value.horquilla;
-						value=value.valor;
+					if ((typeof value==="object") && (value.isObjValue==true)){
+						this["attr_"+sNameAttr+"Margins"]=value.margins;
+						value=value.Value;
 						valueMin=value.min;
 						valueMax=value.max;
 					}
-					this["attr_"+sNombreAtr+"Porc"]=value;
-					this["attr_"+sNombreAtr+"PorcMin"]=valueMin;
-					this["attr_"+sNombreAtr+"PorcMax"]=valueMax;
+					this["attr_"+sNameAttr+"Perc"]=value;
+					this["attr_"+sNameAttr+"PercMin"]=valueMin;
+					this["attr_"+sNameAttr+"PercMax"]=valueMax;
 					/*
-					var valRef=this["attr_"+sNombreRef];
-					var valRefMin=this["attr_"+sNombreRef+"Min"];
-					var valRefMax=this["attr_"+sNombreRef+"Max"];
+					var valRef=this["attr_"+sNameRef];
+					var valRefMin=this["attr_"+sNameRef+"Min"];
+					var valRefMax=this["attr_"+sNameRef+"Max"];
 					if (valRef!=""){
 						if (value!=""){
-							this["attr_"+sNombreAtr]=value*valRef;
-							this["attr_"+sNombreAtr+"Min"]="";
-							this["attr_"+sNombreAtr+"Max"]="";
+							this["attr_"+sNameAttr]=value*valRef;
+							this["attr_"+sNameAttr+"Min"]="";
+							this["attr_"+sNameAttr+"Max"]="";
 						} else {
-							this["attr_"+sNombreAtr]="";
-							this["attr_"+sNombreAtr+"Min"]=valueMin*valRef;
-							this["attr_"+sNombreAtr+"Max"]=valueMax*valRef;
+							this["attr_"+sNameAttr]="";
+							this["attr_"+sNameAttr+"Min"]=valueMin*valRef;
+							this["attr_"+sNameAttr+"Max"]=valueMax*valRef;
 						}
 					} else {
 						if (value!=""){
-							this["attr_"+sNombreAtr]="";
-							this["attr_"+sNombreAtr+"Min"]=value*valRefMin;
-							this["attr_"+sNombreAtr+"Max"]=value*valRefMax;
+							this["attr_"+sNameAttr]="";
+							this["attr_"+sNameAttr+"Min"]=value*valRefMin;
+							this["attr_"+sNameAttr+"Max"]=value*valRefMax;
 						} else {
-							this["attr_"+sNombreAtr]="";
-							this["attr_"+sNombreAtr+"Min"]=valueMin*valRefMin;
-							this["attr_"+sNombreAtr+"Max"]=valueMax*valRefMax;
+							this["attr_"+sNameAttr]="";
+							this["attr_"+sNameAttr+"Min"]=valueMin*valRefMin;
+							this["attr_"+sNameAttr+"Max"]=valueMax*valRefMax;
 						}
 					}
 					*/
 				});
-				this.funciones.add("set"+sNombreAtr,function(newValue){
+				this.functions.add("set"+sNameAttr,function(newValue){
 					var value=newValue;
 					var valueMin="";
 					var valueMax="";
-					if ((typeof value==="object") && (value.isObjValor==true)){
-						this["attr_"+sNombreAtr+"Horq"]=value.horquilla;
-						value=value.valor;
+					if ((typeof value==="object") && (value.isObjValue==true)){
+						this["attr_"+sNameAttr+"Margins"]=value.margins;
+						value=value.Value;
 						valueMin=value.min;
 						valueMax=value.max;
 					}
-					this["attr_"+vNombreAtributo]=value;
-					this["attr_"+vNombreAtributo+"Min"]=valueMin;
-					this["attr_"+vNombreAtributo+"Max"]=valueMax;
+					this["attr_"+vNameAttribute]=value;
+					this["attr_"+vNameAttribute+"Min"]=valueMin;
+					this["attr_"+vNameAttribute+"Max"]=valueMax;
 					/*
-					var valRef=this["attr_"+sNombreRef];
-					var valRefMin=this["attr_"+sNombreRef+"Min"];
-					var valRefMax=this["attr_"+sNombreRef+"Max"];
+					var valRef=this["attr_"+sNameRef];
+					var valRefMin=this["attr_"+sNameRef+"Min"];
+					var valRefMax=this["attr_"+sNameRef+"Max"];
 					if (valRef!=""){
 						if (value!=""){
-							this["attr_"+vNombreAtributo+"Porc"]=value/valRef;
-							this["attr_"+vNombreAtributo+"PorcMin"]="";
-							this["attr_"+vNombreAtributo+"PorcMax"]="";
+							this["attr_"+vNameAttribute+"Perc"]=value/valRef;
+							this["attr_"+vNameAttribute+"PercMin"]="";
+							this["attr_"+vNameAttribute+"PercMax"]="";
 						} else {
-							this["attr_"+vNombreAtributo+"Porc"]="";
-							this["attr_"+vNombreAtributo+"MinPorc"]=valueMin/valRef;
-							this["attr_"+vNombreAtributo+"MaxPorc"]=valueMax/valRef;
+							this["attr_"+vNameAttribute+"Perc"]="";
+							this["attr_"+vNameAttribute+"MinPerc"]=valueMin/valRef;
+							this["attr_"+vNameAttribute+"Maxperc"]=valueMax/valRef;
 						}
 					} else {
 						if (value!=""){
-							this["attr_"+vNombreAtributo+"Porc"]="";
-							this["attr_"+vNombreAtributo+"PorcMin"]=value/valRefMax;
-							this["attr_"+vNombreAtributo+"PorcMax"]=value/valRefMin;
+							this["attr_"+vNameAttribute+"Perc"]="";
+							this["attr_"+vNameAttribute+"PercMin"]=value/valRefMax;
+							this["attr_"+vNameAttribute+"PercMax"]=value/valRefMin;
 						} else {
-							this["attr_"+vNombreAtributo]="";
-							this["attr_"+vNombreAtributo+"PorcMin"]=valueMin/valRefMax;
-							this["attr_"+vNombreAtributo+"PorcMax"]=valueMax/valRefMin;
+							this["attr_"+vNameAttribute]="";
+							this["attr_"+vNameAttribute+"PercMin"]=valueMin/valRefMax;
+							this["attr_"+vNameAttribute+"PercMax"]=valueMax/valRefMin;
 						}
 					}
 					*/
 				});
-				this.funciones.add("get"+sNombreAtr,function(newValue){
+				this.functions.add("get"+sNameAttr,function(newValue){
 					// sobreescribe el GET normal.... 
 					var numResult="";
-					var porcResult="";
+					var percResult="";
 					var lstDocsResult=newHashMap();
-					var lstDocsOrigen=newHashMap();
-					var bSinDocs=true;
+					var lstDocsOrigin=newHashMap();
+					var bWithoutDocs=true;
 					
-					// primero se evalua si hay algun valor fijado valor o [min,max]
-					var valAttr=this["attr_"+sNombreAtr];
-					var valMin=this["attr_"+sNombreAtr+"Min"];
-					var valMax=this["attr_"+sNombreAtr+"Max"];
-					var nHorquilla=this["attr_"+sNombreAtr+"Horq"]; 
-					if (nHorquilla==""){
-						nHorquilla=1;
+					// primero se evalua si hay algun Value fijado Value o [min,max]
+					var valAttr=this["attr_"+sNameAttr];
+					var valMin=this["attr_"+sNameAttr+"Min"];
+					var valMax=this["attr_"+sNameAttr+"Max"];
+					var nMargins=this["attr_"+sNameAttr+"Margins"]; 
+					if (nMargins==""){
+						nMargins=1;
 					} else {
 						//0,25 1+(0,12-0,25)=   0,12 ->-0,12
-						nHorquilla=1+((nHorquilla/2)-nHorquilla)+(Math.random()*nHorquilla);
+						nMargins=1+((nMargins/2)-nMargins)+(Math.random()*nMargins);
 					}
 					
 					
 					if (valAttr!=""){
-						valAttr*=nHorquilla;
+						valAttr*=nMargins;
 						numResult=valAttr;
 					} else if ((valMin!="")&&(valMax!="")){
-						numResult=rndMinMax(valMin*nHorquilla,valMax*nHorquilla,true);
+						numResult=rndMinMax(valMin*nMargins,valMax*nMargins,true);
 					} else if (valMax!=""){
-						numResult=rndMinMax(0,valMax*nHorquilla,true);
+						numResult=rndMinMax(0,valMax*nMargins,true);
 					} else if (valMin!=""){
-						numResult=rndMinMax(valMin,valMin*nHorquilla*10,true);
+						numResult=rndMinMax(valMin,valMin*nMargins*10,true);
 					}
 					
-					var porc=1.0;
+					var perc=1.0;
 					if (numResult==""){
-						// Sin no hay algun valor fijado valor o [min,max]... se mira a ver si hay un porcentaje
-						valAttr=this["attr_"+sNombreAtr+"Porc"];
-						valMin=this["attr_"+sNombreAtr+"PorcMin"];
-						valMax=this["attr_"+sNombreAtr+"PorcMax"];
+						// Sin no hay algun Value fijado Value o [min,max]... se mira a ver si hay un percent
+						valAttr=this["attr_"+sNameAttr+"Perc"];
+						valMin=this["attr_"+sNameAttr+"PercMin"];
+						valMax=this["attr_"+sNameAttr+"PercMax"];
 						if ((valAttr+""+valMin+""+valMax)==""){
-							//log("no se ha establecido correctamente un porcentaje en el campo "+sNombreAtr+"... se consideran todos");
+							//log("no se ha establecido correctamente un percent en el field "+sNameAttr+"... se consideran todos");
 						} else {
 							if (valAttr!=""){
-								porc=valAttr*nHorquilla;
+								perc=valAttr*nMargins;
 							} else if ((valMin!="")&&(valMax!="")){
-								porc=rndMinMax(valMin*nHorquilla,valMax*nHorquilla,true);
+								perc=rndMinMax(valMin*nMargins,valMax*nMargins,true);
 							} else if (valMax!=""){
-								porc=rndMinMax(0,valMax*nHorquilla,true);
+								perc=rndMinMax(0,valMax*nMargins,true);
 							} else if (valMin!=""){
-								porc=rndMinMax(valMin,valMin*nHorquilla*10,true);
+								perc=rndMinMax(valMin,valMin*nMargins*10,true);
 							}
 						}
-						porcResult=porc;
+						percResult=perc;
 					}
 					
-					// ya tenemos el porcentaje y/o el numero... ahora hay que obtener la lista de documentos.
+					// ya tenemos el percent y/o el Number... ahora hay que obtener la lista de documents.
 					
-					var proc=this.getProcedimiento();
+					var proc=this.getProcedure();
 					var nDocs=0;
-					var nDocsOrigen=0;
-					var tipoDoc=this["get"+sNombreAtr+"TipoDocumentoReferencia"]();
-					var sFase=this["get"+sNombreAtr+"FaseReferencia"]();
-					var subFase=this["get"+sNombreAtr+"SubFaseReferencia"]();
+					var nDocsOrigin=0;
+					var typeDoc=this["get"+sNameAttr+"PhaseReference"]();
+					var sPhase=this["get"+sNameAttr+"PhaseReference"]();
+					var subPhase=this["get"+sNameAttr+"SubPhaseReference"]();
 
-					if (!((sFase=="")&&(tipoDoc==""))){ // si esta definido algun elemento de referencia
+					if (!((sPhase=="")&&(typeDoc==""))){ // si esta definido algun elemento de Reference
 						var fncAddDoc=function(auxDoc){
-							lstDocsOrigen.add(auxDoc.id,auxDoc);
-							nDocsOrigen++;
-							if (porcResult!=""){
-								if (Math.random()<=porcResult){
+							lstDocsOrigin.add(auxDoc.id,auxDoc);
+							nDocsOrigin++;
+							if (percResult!=""){
+								if (Math.random()<=percResult){
 									lstDocsResult.add(auxDoc.id,auxDoc);
 									nDocs++;
-									bSinDocs=false;
+									bWithoutDocs=false;
 								}
 							}
 						}
-						if (sFase!=""){
-							var arrFases=proc.getFases().getValorByAttr("getTipo",arrFases);
-							for (var i=0;i<arrFases.length;i++){
-								var fase=arrFases[i];
-								if ((subFase=="")
+						if (sPhase!=""){
+							var arrPhases=proc.getPhases().getValueByAttr("getType",arrPhases);
+							for (var i=0;i<arrPhases.length;i++){
+								var phase=arrPhases[i];
+								if ((subPhase=="")
 									||
-									((subFase!="")&&
-									 (fase.getSubTipo()==subFase))
+									((subPhase!="")&&
+									 (phase.getSubType()==subPhase))
 									){
-									var docs=fase.getDocumentos();
-									docs.recorrer(function(auxDoc){
-										if (tipoDoc==""){
+									var docs=phase.getDocuments();
+									docs.walk(function(auxDoc){
+										if (typeDoc==""){
 											fncAddDoc(auxDoc);
-										} else if (auxDoc.objeto.getTipo().id==tipoDoc){
+										} else if (auxDoc.theObject.getType().id==typeDoc){
 											fncAddDoc(auxDoc);
 										}
 									});
 								}
 							}
 						} else {
-							var docs=proc.getDocumentos();
-							docs.recorrer(function(auxDoc){
-								if (tipoDoc==""){
+							var docs=proc.getDocuments();
+							docs.walk(function(auxDoc){
+								if (typeDoc==""){
 									fncAddDoc(auxDoc);
-								} else if (auxDoc.objeto.getTipo().id==tipoDoc){
+								} else if (auxDoc.theObject.getType().id==typeDoc){
 									fncAddDoc(auxDoc);
 								}
 							});
 						}
-						lstDocsOrigen.balancear();
-						if (porcResult!=""){
+						lstDocsOrigin.swing();
+						if (percResult!=""){
 							numResult=nDocs;
 						} else if (numResult!="") {
-							if (numResult>nDocsOrigen){
-								numResult=nDocsOrigen;
-								porcResult=1.0;
-								lstDocsResult.documentos=lstDocsOrigen; // se cogen todos
-								bSinDocs=false;
-							} else { // hay que coger un numero aleatorio
-								porcResult=numResult/nDocsOrigen;
+							if (numResult>nDocsOrigin){
+								numResult=nDocsOrigin;
+								percResult=1.0;
+								lstDocsResult.documents=lstDocsOrigin; // se cogen todos
+								bWithoutDocs=false;
+							} else { // hay que coger un Number aleatorio
+								percResult=numResult/nDocsOrigin;
 								nDocs=0;
-								lstDocsOrigen.recorrer(function(auxDoc){
-									if (Math.random()<=porcResult){
+								lstDocsOrigin.walk(function(auxDoc){
+									if (Math.random()<=percResult){
 										lstDocsResult.add(auxDoc.id,auxDoc);
 										nDocs++;
 									}
 								});
-								lstDocsResult.balancear();
+								lstDocsResult.swing();
 								numResult=nDocs;
-								bSinDocs=false;
+								bWithoutDocs=false;
 							}
 						} else {
-							numResult=nDocsOrigen;
-							porcResult=1.0;
-							lstDocsResult.documentos=lstDocsOrigen; // se cogen todos
-							bSinDocs=false;
+							numResult=nDocsOrigin;
+							percResult=1.0;
+							lstDocsResult.documents=lstDocsOrigin; // se cogen todos
+							bWithoutDocs=false;
 						}
 					}
-					lstDocsResult.balancear();
-					lstDocsOrigen.balancear();
+					lstDocsResult.swing();
+					lstDocsOrigin.swing();
 					var objResult={
-						numero:numResult,
-						porcentaje:porcResult,
-						documentos:lstDocsResult,
-						documentosReferencia:lstDocsOrigen,
-						sinDocumentos:bSinDocs
+						number:numResult,
+						percent:percResult,
+						documents:lstDocsResult,
+						documentsreference:lstDocsOrigin,
+						withoutDocuments:bWithoutDocs
 					};
 					return objResult;
 				});
 			}
 		}
-	interno_getFactoria(){
-				return this.factoria;
+	internal_getFactory(){
+				return this.factory;
 			}
-	interno_setID(id){
-				var factoria=this.getFactoria();
-				var nodThis=factoria.listado.remove(this.id); // eliminamos del arbol el nodo 
+	internal_setID(id){
+				var factory=this.getFactory();
+				var nodThis=factory.list.remove(this.id); // eliminamos del arbol el node 
 				this.id=id;
-				nodThis.clave=id;
-				factoria.listado.addNodo(factoria.listado.raiz,nodThis);
-				factoria.listado.nNodos++;
+				nodThis.key=id;
+				factory.list.addNode(factory.list.root,nodThis);
+				factory.list.nNodes++;
 			}
-	updateAtributosFunciones(factoria){
+	updateAttributesFunctions(factory){
 			chronoStartFunction();
 
-			if (this.atributos.nNodos>0){
-				var nodAux=this.atributos.getPrimero();
+			if (this.attributes.nNodes>0){
+				var nodAux=this.attributes.getFirst();
 				while (nodAux!=""){
-					if (nodAux.hermanos.length>0){
-						factoria[nodAux.clave]=nodAux.hermanos[nodAux.hermanos.length-1].valor();
+					if (nodAux.brothers.length>0){
+						factory[nodAux.key]=nodAux.brothers[nodAux.brothers.length-1].Value();
 					} else {
-						factoria[nodAux.clave]=nodAux.valor();
+						factory[nodAux.key]=nodAux.Value();
 					}
-					nodAux=nodAux.siguiente;
+					nodAux=nodAux.next;
 				}
 			}
-			if (this.funciones.nNodos>0){
-				var nodAux=this.funciones.getPrimero();
+			if (this.functions.nNodes>0){
+				var nodAux=this.functions.getFirst();
 				while (nodAux!=""){
-					if (nodAux.hermanos.length>0){
-						factoria[nodAux.clave]=nodAux.hermanos[nodAux.hermanos.length-1].valor;
+					if (nodAux.brothers.length>0){
+						factory[nodAux.key]=nodAux.brothers[nodAux.brothers.length-1].Value;
 					} else {
-						factoria[nodAux.clave]=nodAux.valor;
+						factory[nodAux.key]=nodAux.Value;
 					}
-					nodAux=nodAux.siguiente;
+					nodAux=nodAux.next;
 				}
 			}
 			chronoStopFunction();
 		}
-	newObject(sNombre){
+	newObject(sName){
 			chronoStartFunction();
 			var me=this;
 			var sNewID=this.getNewId();
 			var newObj={};
 			newObj.id=sNewID;
-			newObj.setID=this.interno_setID;
-			newObj.execFunction=this.interno_execFunction;
-			newObj.nombre=sNombre;
-			newObj.factoria=this;
-			newObj.getFactoria=this.interno_getFactoria;
-			newObj.getId=this.interno_getId;
-			newObj.getNombre=this.interno_getNombre;
-			newObj.generarTipos=this.generarTipos;
+			newObj.setID=this.internal_setID;
+			newObj.execFunction=this.internal_execFunction;
+			newObj.name=sName;
+			newObj.factory=this;
+			newObj.getFactory=this.internal_getFactory;
+			newObj.getId=this.internal_getId;
+			newObj.getName=this.internal_getName;
+			newObj.generateTypes=this.generateTypes;
 			
-			this.listado.add(newObj.id,newObj);
-	/*		newObj.addAtributoLista=this.objAddAtributoLista;
-			newObj.addAtributo=this.objAddAtributo;
-			newObj.addAtributoWithPorc=this.objAddAtributoWithPorc;
+			this.list.add(newObj.id,newObj);
+	/*		newObj.addAttributeList=this.objaddAttributeList;
+			newObj.addAttribute=this.objaddAttribute;
+			newObj.addAttributeWithPerc=this.objaddAttributeWithPerc;
 	*/		
 
-			this.updateAtributosFunciones(newObj);
+			this.updateAttributesFunctions(newObj);
 			chronoStopFunction();
 			return newObj;
 		}
-	nuevo(nombre,id){
+	new(name,id){
 			chronoStartFunction();
-			var objNew=this.newObject(nombre);
+			var objNew=this.newObject(name);
 			if (typeof id!=="undefined"){
 				objNew.setID(id);
 			}
@@ -763,422 +766,422 @@ class FactoriaObjetos{
 				objNew.theConstructor=this.childConstructor;
 				objNew.theConstructor();
 			} else {
-				objNew.factoria.executeParentMethod("childConstructor");
+				objNew.factory.executeParentMethod("childConstructor");
 			}
 			chronoStopFunction();
 			return objNew;
 		}
-	procesarTodosAtributos(attrsListado,attrsValor,attrsPorcs){
-			this.addAtributoLista(attrsListado);
-			this.addAtributo(attrsValor);
-			this.addAtributoWithPorc(attrsPorcs);
+	processAllAttributes(attrsList,attrsValue,attrsPercs){
+			this.addAttributeList(attrsList);
+			this.addAttribute(attrsValue);
+			this.addAttributeWithPerc(attrsPercs);
 		}
-	interno_execFunction(sNombreFuncion){
-				if (typeof this["get"+sNombreFuncion+"Min"]!=="undefined"){
-					return this["get"+sNombreFuncion+"Min"]();
+	internal_execFunction(sNameFunction){
+				if (typeof this["get"+sNameFunction+"Min"]!=="undefined"){
+					return this["get"+sNameFunction+"Min"]();
 				} else {
 					return "";
 				}
 			}
-	trazaItem(obj,iProf){
-			var sCad=fillLetrasLeft(3*iProf,""," ");
-			log(sCad+obj.id+"-"+obj.nombre);
-			if (typeof obj.objeto!=="undefined"){
-				obj=obj.objeto;
+	traceItem(obj,iDeep){
+			var sCad=fillCharsLeft(3*iDeep,""," ");
+			log(sCad+obj.id+"-"+obj.name);
+			if (typeof obj.theObject!=="undefined"){
+				obj=obj.theObject;
 			}
-			obj.factoria.tiposAtributos.recorrer(function(atributo,iProf){
-				var sCad=fillLetrasLeft(3*iProf,""," ");
-				var attrNombre=atributo.nombre;
-				var attrTipo=atributo.tipo;
+			obj.factory.attrTypes.walk(function(attribute,iDeep){
+				var sCad=fillCharsLeft(3*iDeep,""," ");
+				var attrName=attribute.name;
+				var attrType=attribute.type;
 				
-				if (attrTipo=="Lista"){
-					var listado=obj["get"+attrNombre+"s"]();
-					log (sCad+"Atributo:"+attrNombre+" ["+attrTipo+"]:"+listado.length());
-					listado.recorrer(obj.factoria.trazaItem,iProf+1);
-				} else if (attrTipo=="Referencia"){
-					var attrReferencia=atributo.referencia;
-					var vValor=obj["get"+attrNombre]();
-					var vValorMin=obj.execFunction("get"+attrNombre+"Min");
-					var vValorMax=obj.execFunction("get"+attrNombre+"Max");
-					var vValorHorq=obj.execFunction("get"+attrNombre+"Horq");
-					var vPorcValor=obj["get"+attrNombre+"Porc"]();
-					var vPorcValorMin=obj["get"+attrNombre+"PorcMin"]();
-					var vPorcValorMax=obj["get"+attrNombre+"PorcMax"]();
-					var vPorcValorHorq=obj["get"+attrNombre+"PorcHorq"]();
-					log (sCad+"Atributo:"+attrNombre+" ["+attrTipo+"]:"+
-								vValor+ "["+vValorMin+" -> "+vValorMax+"] "+ (vValorHorq*100).toFixed(2)+"%"
-								+" Porcs:"+(attrReferencia==""?"":attrReferencia+" ")+(vPorcValor*100).toFixed(2)+"%"
-								+" ["+(vPorcValorMin*100).toFixed(2)+"%"
-								+" -> "+(vPorcValorMax*100).toFixed(2)+"%] "
-								+ (vPorcValorHorq*100).toFixed(2)+"%");
-				} else if (attrTipo=="Valor"){
-					var vValor=obj["get"+attrNombre]();
-					var vValorMin=obj.execFunction("get"+attrNombre+"Min");
-					var vValorMax=obj.execFunction("get"+attrNombre+"Max");
-					var vValorHorq=obj.execFunction("get"+attrNombre+"Horq");
-					if (typeof vValor.nombre!=="undefined"){
-						vValor=vValor.id+" - "+vValor.nombre;
+				if (attrType=="List"){
+					var list=obj["get"+attrName+"s"]();
+					log (sCad+"Atributo:"+attrName+" ["+attrType+"]:"+list.length());
+					list.walk(obj.factory.traceItem,iDeep+1);
+				} else if (attrType=="Reference"){
+					var attrReference=attribute.reference;
+					var vValue=obj["get"+attrName]();
+					var vValueMin=obj.execFunction("get"+attrName+"Min");
+					var vValueMax=obj.execFunction("get"+attrName+"Max");
+					var vValueMargins=obj.execFunction("get"+attrName+"Margins");
+					var vPercValue=obj["get"+attrName+"Perc"]();
+					var vPercValueMin=obj["get"+attrName+"PercMin"]();
+					var vPercValueMax=obj["get"+attrName+"PercMax"]();
+					var vPercValueMargins=obj["get"+attrName+"PercMargins"]();
+					log (sCad+"Atributo:"+attrName+" ["+attrType+"]:"+
+								vValue+ "["+vValueMin+" -> "+vValueMax+"] "+ (vValueMargins*100).toFixed(2)+"%"
+								+" percs:"+(attrReference==""?"":attrReference+" ")+(vPercValue*100).toFixed(2)+"%"
+								+" ["+(vPercValueMin*100).toFixed(2)+"%"
+								+" -> "+(vPercValueMax*100).toFixed(2)+"%] "
+								+ (vPercValueMargins*100).toFixed(2)+"%");
+				} else if (attrType=="Value"){
+					var vValue=obj["get"+attrName]();
+					var vValueMin=obj.execFunction("get"+attrName+"Min");
+					var vValueMax=obj.execFunction("get"+attrName+"Max");
+					var vValueMargins=obj.execFunction("get"+attrName+"Margins");
+					if (typeof vValue.name!=="undefined"){
+						vValue=vValue.id+" - "+vValue.name;
 					}
-					if ((vValor+""+vValorMin+""+vValorMax+""+ vValorHorq)!=""){
-						log (sCad+"Atributo:"+attrNombre+" ["+attrTipo+"]:"+
-									vValor+ "["+vValorMin+" -> "+vValorMax+"] "+ (vValorHorq*100).toFixed(2)+"%");
+					if ((vValue+""+vValueMin+""+vValueMax+""+ vValueMargins)!=""){
+						log (sCad+"Atributo:"+attrName+" ["+attrType+"]:"+
+									vValue+ "["+vValueMin+" -> "+vValueMax+"] "+ (vValueMargins*100).toFixed(2)+"%");
 					}
 				} else {
-					log (sCad+"Atributo:"+attrNombre+" no tiene tipo:"+attrTipo);
+					log (sCad+"Atributo:"+attrName+" no tiene type:"+attrType);
 				}
-			},iProf+1);
+			},iDeep+1);
 		}
-	traza(iProf){
-			var iProfAux=0;
-			if (typeof iProf!=="undefined"){
-				iProfAux=iProf;
+	trace(iDeep){
+			var iDeepAux=0;
+			if (typeof iDeep!=="undefined"){
+				iDeepAux=iDeep;
 			}
-			log("Factoria:"+this.nombre);
-			this.listado.recorrer(this.trazaItem,iProfAux);
-			log("Fin Factoria:"+this.nombre);
+			log("walk factory:"+this.name);
+			this.list.walk(this.traceItem,iDeepAux);
+			log("end walk factory:"+this.name);
 		}
 	getCell(row,col){
-			var sCelda=excelColRowToA1(col,row);
-			var desired_cell = this[sCelda];
+			var sCell=excelColRowToA1(col,row);
+			var desired_cell = this[sCell];
 			if (desired_cell){
 				return desired_cell.v;
 			}
 			return "";
 		}
-	balancear(){
-			this.tiposAtributos.balancear();
-			this.listado.balancear();
+	swing(){
+			this.attrTypes.swing();
+			this.list.swing();
 			var me=this;
-			this.tiposAtributos.recorrer(function(atributo){
-				if (atributo.tipo=="Lista"){
-					me["get"+atributo.nombre+"s"]().balancear();
+			this.attrTypes.walk(function(attribute){
+				if (attribute.type=="List"){
+					me["get"+attribute.name+"s"]().swing();
 				}
 			});
 			
 		}
-	findByAttribute(attributeName,refValue,bCaseInsensitive,bSinAcentos){
-			var sValue=prepareComparation(refValue,bCaseInsensitive,bSinAcentos);
+	findByAttribute(attributeName,refValue,bCaseInsensitive,bWithoutAccents){
+			var sValue=prepareComparation(refValue,bCaseInsensitive,bWithoutAccents);
 			var arrResults=[];
-			var item=this.listado.getPrimero();
+			var item=this.list.getFirst();
 			var sAux;
 			while (item!=""){
-				sAux=item.valor["get"+attributeName]();
-				sAux=prepareComparation(sAux,bCaseInsensitive,bSinAcentos);
+				sAux=item.Value["get"+attributeName]();
+				sAux=prepareComparation(sAux,bCaseInsensitive,bWithoutAccents);
 				if (sAux==sValue){
-					arrResults.push(item.valor);
+					arrResults.push(item.Value);
 				}
-				item=item.siguiente;
+				item=item.next;
 			}
 			return arrResults;
 		}
 	configFromExcel(excelWorkBook){
-			  var shtAct = excelWorkBook.Sheets[this.nombre];
-			  shtAct.getCell=this.factoria.getCell;
+			  var shtAct = excelWorkBook.Sheets[this.name];
+			  shtAct.getCell=this.factory.getCell;
 			  var iRow=4;
 			  var iCol=0;
 			  var sVal=shtAct.getCell(iRow,iCol);
 			  var iColId=-1;
-			  var iColNombre=-1;
-			  var sCampoAnt="";
+			  var iColname=-1;
+			  var sPrevField="";
 			  
-			  var camposReferencia=newHashMap();
+			  var fieldReferences=newHashMap();
 
 			  
 			  while (sVal!=""){
 				  if (sVal=="id"){
-					  // si la columna es el id la marcamos.... los campos id y nombre existen por defecto en los elementos de las factorias
+					  // si la columna es el id la marcamos.... los fields id y name existen por defecto en los elementos de las factorys
 					  //iColId=iCol;
-				  } else if (sVal=="nombre"){
-					  // si la columna es el nombre la marcamos
-					  //iColNombre=iCol;
+				  } else if (sVal=="name"){
+					  // si la columna es el name la marcamos
+					  //iColname=iCol;
 				  } else {
-					  // es el nombre de un campo.... hay que identificar el tipo.
-					  var sAttrTipo=shtAct.getCell(0,iCol);
-					  var sAttrSubTipo=shtAct.getCell(1,iCol);
-					  var sAttrDescripcion=shtAct.getCell(2,iCol);
-					  var sAttrSubCampo=shtAct.getCell(3,iCol);
-					  var sAttrNombre=sVal;
-					  if (sAttrNombre=="AyudaAutomatizacion"){
-						  log("Configurando:"+sAttrNombre);
+					  // es el name de un field.... hay que identificar el type.
+					  var sAttrType=shtAct.getCell(0,iCol);
+					  var sAttrSubType=shtAct.getCell(1,iCol);
+					  var sAttrDescription=shtAct.getCell(2,iCol);
+					  var sAttrSubField=shtAct.getCell(3,iCol);
+					  var sAttrName=sVal;
+					  if (sAttrName=="AyudaAutomatizacion"){
+						  log("Configurando:"+sAttrName);
 					  }
-					  if ((sAttrTipo=="Valor")&& (sVal!=sCampoAnt)){
-						 this.addAtributo(sAttrNombre,sAttrDescripcion,sAttrSubTipo);
-						 if (sAttrSubTipo=="%"){
-							 this.addAtributo(sAttrNombre+"Porc",sAttrDescripcion,sAttrSubTipo);
+					  if ((sAttrType=="Value")&& (sVal!=sPrevField)){
+						 this.addAttribute(sAttrName,sAttrDescription,sAttrSubType);
+						 if (sAttrSubType=="%"){
+							 this.addAttribute(sAttrName+"Perc",sAttrDescription,sAttrSubType);
 						 }
-					  } else if ((sAttrTipo=="Listado")&& (sVal!=sCampoAnt)){
-						 this.addAtributoLista(sAttrNombre,sAttrDescripcion,sAttrSubTipo);
-					  } else if (sAttrTipo=="Referencia"){
-//						 this.addAtributoWithPorc(sAttrNombre,sAttrDescripcion,sAttrSubTipo);
-						 var campo=camposReferencia.getValor(sAttrNombre);
-						 if (campo==""){
-							campo={
-									tipo:sAttrTipo
-									,campo:sAttrNombre
-									,subcampos:newHashMap()
+					  } else if ((sAttrType=="List")&& (sVal!=sPrevField)){
+						 this.addAttributeList(sAttrName,sAttrDescription,sAttrSubType);
+					  } else if (sAttrType=="Reference"){
+//						 this.addAttributeWithPerc(sAttrName,sAttrDescription,sAttrSubType);
+						 var field=fieldReferences.getValue(sAttrName);
+						 if (field==""){
+							field={
+									type:sAttrType
+									,field:sAttrName
+									,subFields:newHashMap()
 									};
-							camposReferencia.add(sAttrNombre,campo);
+							fieldReferences.add(sAttrName,field);
 						 }
-					     campo.subcampos.add(sAttrSubCampo,{
-										subtipo:sAttrSubTipo
-										,descripcion:sAttrDescripcion
+					     field.subFields.add(sAttrSubField,{
+										subType:sAttrSubType
+										,description:sAttrDescription
 										});
 					  }
 				  }
 				  iCol++;
-				  sCampoAnt=sVal;
+				  sPrevField=sVal;
 				  sVal=shtAct.getCell(iRow,iCol);
 			  }
-			  camposReferencia.trazaTodo();
-			  camposReferencia.recorrer(function(campoRef){
-				    log("----- subcampos de "+campoRef.campo+"-----");
-					campoRef.subcampos.trazaTodo();
+			  fieldReferences.traceAll();
+			  fieldReferences.walk(function(fieldRef){
+				    log("----- subFields de "+fieldRef.field+"-----");
+					fieldRef.subFields.traceAll();
 			  });
-			  if (camposReferencia.nNodos>0){
-				  var objRef=camposReferencia.getValor("NumDocumentosResultado");
+			  if (fieldReferences.nNodes>0){
+				  var objRef=fieldReferences.getValue("NumDocumentsResult");
 				  if (objRef!=""){
-					  var subCampos=objRef.subcampos;
-					  // primero obtenemos la referencia
-					  var refTipoDoc="";
-					  var objAux=subCampos.getValor("TipoDocumentoReferencia");
+					  var subFields=objRef.subFields;
+					  // primero obtenemos la Reference
+					  var refTypeDoc="";
+					  var objAux=subFields.getValue("TypeDocumentReference");
 					  if (objAux!=""){
-						  refTipoDoc=objAux;
+						  refTypeDoc=objAux;
 					  }
-					  var refFase="";
-					  objAux=subCampos.getValor("FaseReferencia");
+					  var refPhase="";
+					  objAux=subFields.getValue("PhaseReference");
 					  if (objAux!=""){
-						  refFase=objAux;
+						  refPhase=objAux;
 					  }
-					  var refSubFase="";
-					  objAux=subCampos.getValor("SubFaseReferencia");
+					  var refSubPhase="";
+					  objAux=subFields.getValue("SubPhaseReference");
 					  if (objAux!=""){
-						  refSubFase=objAux;
+						  refSubPhase=objAux;
 					  }
-					  var objReferencia={
-						  tipoDoc:refTipoDoc
-						  ,fase:refFase
-						  ,subfase:refSubFase
+					  var objReference={
+						  typeDoc:refTypeDoc
+						  ,phase:refPhase
+						  ,subPhase:refSubPhase
 					  }
-					  var objNuevoCampo={nombreAtributo:objRef.campo
-										,referencia:objReferencia};
-					  this.addAtributoWithPorc(objNuevoCampo,"descripcion temporal","%");
-					  camposReferencia.remove("NumDocumentosResultado");
+					  var objNewField={nameAttribute:objRef.field
+										,reference:objReference};
+					  this.addAttributeWithPerc(objNewField,"temporal description","%");
+					  fieldReferences.remove("NumDocumentsResult");
 				 }
 				 var me=this;
-				 camposReferencia.recorrer(function(objRef){
-					  var objNuevoCampo={nombreAtributo:objRef.campo
-										,referencia:""};
-					  me.addAtributoWithPorc(objNuevoCampo,"descripcion temporal","%");
+				 fieldReferences.walk(function(objRef){
+					  var objNewField={nameAttribute:objRef.field
+										,reference:""};
+					  me.addAttributeWithPerc(objNewField,"temporal description","%");
 				 });
 			  }
-			  this.listado.vaciar();
-			  this.tiposAtributos.balancear();
-			  this.tiposAtributos.trazaTodo();
-			  this.updateAtributosFunciones(this);
+			  this.list.clear();
+			  this.attrTypes.swing();
+			  this.attrTypes.traceAll();
+			  this.updateAttributesFunctions(this);
 		}
-	loadFromExcel(excelWorkBook,sNombreSheet){
-			  var shtNombreAux = this.nombre;
-			  if (typeof sNombreSheet!=="undefined"){
-				  shtNombreAux=sNombreSheet;
+	loadFromExcel(excelWorkBook,sNameSheet){
+			  var shtNameAux = this.name;
+			  if (typeof sNameSheet!=="undefined"){
+				  shtNameAux=sNameSheet;
 			  }
-			  var shtAct = excelWorkBook.Sheets[shtNombreAux];
-			  shtAct.getCell=this.factoria.getCell;
-			  var iRowCampos=4;
+			  var shtAct = excelWorkBook.Sheets[shtNameAux];
+			  shtAct.getCell=this.factory.getCell;
+			  var iRowFields=4;
 			  var iRow=6;
 			  var iCol=0;
 			  var sVal=shtAct.getCell(iRow,iCol); // sVal es el ID
-			  var sValNombre=shtAct.getCell(iRow,iCol+1); // nombre
-			  var sIdCampo="";
-			  var campoFijo="";
+			  var sValName=shtAct.getCell(iRow,iCol+1); // name
+			  var sIdField="";
+			  var fixedField="";
 			  if (shtAct.getCell(0,0)!=""){
-				  var sIdCampo=shtAct.getCell(0,0);
-				  var sValorCampo=shtAct.getCell(1,0);
-				  var infoCampo=this.tiposAtributos.getValor(sIdCampo);
-				  if (infoCampo==""){
-					  log("El campo "+sIdCampo+" no existe en la configuración de la factoria " + factoria.nombre);
-					  alert("El campo "+sIdCampo+" no existe en la configuración de la factoria " + factoria.nombre);
+				  var sIdField=shtAct.getCell(0,0);
+				  var sValueField=shtAct.getCell(1,0);
+				  var infoField=this.attrTypes.getValue(sIdField);
+				  if (infoField==""){
+					  log("El field "+sIdField+" no existe en la configuración de la factory " + factory.name);
+					  alert("El field "+sIdField+" no existe en la configuración de la factory " + factory.name);
 				  }
-				  var sTipo=infoCampo.tipo;
-				  var sSubTipo=infoCampo.subTipo;
-				  campoFijo={
-						tipo:sTipo
-						,subtipo:sSubTipo
-						,campo:sIdCampo
-						,subcampos:newHashMap()
+				  var sType=infoField.type;
+				  var sSubType=infoField.subType;
+				  fixedField={
+						type:sType
+						,subType:sSubType
+						,field:sIdField
+						,subFields:newHashMap()
 						};
-				 campoFijo.subcampos.add("",sValorCampo);
+				 fixedField.subFields.add("",sValueField);
 			  }
-			  while ((sVal!="")||(sValNombre!="")){
-				  sIdCampo=shtAct.getCell(iRowCampos,iCol);
+			  while ((sVal!="")||(sValName!="")){
+				  sIdField=shtAct.getCell(iRowFields,iCol);
 				  var sId="";
-				  var sNombre="";
-				  var campos=newHashMap();
-				  if (campoFijo!=""){
-					  campos.add(campoFijo.campo,campoFijo);
+				  var sName="";
+				  var fields=newHashMap();
+				  if (fixedField!=""){
+					  fields.add(fixedField.field,fixedField);
 				  }
-				  var arrValores=[];
-				  while (sIdCampo!=""){
+				  var arrValues=[];
+				  while (sIdField!=""){
 					  if (sVal!="") {
-						  if (sIdCampo=="id"){
+						  if (sIdField=="id"){
 							  sId=sVal;
-	//						  campos.add("id",sVal);
-						  } else if (sIdCampo=="nombre"){
-							  sNombre=sVal;
-	//						  campos.add("nombre",sVal);
+	//						  fields.add("id",sVal);
+						  } else if (sIdField=="name"){
+							  sName=sVal;
+	//						  fields.add("name",sVal);
 						  } else {
-							  var campo=campos.getValor(sIdCampo);
-							  var sSubCampo=shtAct.getCell(iRowCampos-1,iCol);
+							  var field=fields.getValue(sIdField);
+							  var sSubField=shtAct.getCell(iRowFields-1,iCol);
 							  
-							  var infoCampo=this.tiposAtributos.getValor(sIdCampo);
-							  if (infoCampo==""){
-								  log("El campo "+sIdCampo+" no existe en la configuración de la factoria " + factoria.nombre);
-								  alert("El campo "+sIdCampo+" no existe en la configuración de la factoria " + factoria.nombre);
+							  var infoField=this.attrTypes.getValue(sIdField);
+							  if (infoField==""){
+								  log("El field "+sIdField+" no existe en la configuración de la factory " + factory.name);
+								  alert("El field "+sIdField+" no existe en la configuración de la factory " + factory.name);
 							  }
-							  if (infoCampo.tipo=="Referencia"){
-								  log("Es una Referencia");
+							  if (infoField.type=="Reference"){
+								  log("Es una Reference");
 							  }
-							  var sTipo=infoCampo.tipo;
-							  var sSubTipo=infoCampo.subTipo;
+							  var sType=infoField.type;
+							  var sSubType=infoField.subType;
 							  
-							  if (campo==""){
-								  campo={
-										tipo:sTipo
-										,subtipo:sSubTipo
-										,campo:sIdCampo
-										,subcampos:newHashMap()
+							  if (field==""){
+								  field={
+										type:sType
+										,subType:sSubType
+										,field:sIdField
+										,subFields:newHashMap()
 										};
-								  campos.add(sIdCampo,campo);
+								  fields.add(sIdField,field);
 							  } else {
-								  sTipo=campo.tipo;
-								  sSubTipo=campo.subtipo;
+								  sType=field.type;
+								  sSubType=field.subType;
 							  }
-							  campo.subcampos.add(sSubCampo,sVal);
+							  field.subFields.add(sSubField,sVal);
 						  }
 					  }
 					  iCol++;
-					  sIdCampo=shtAct.getCell(iRowCampos,iCol);
+					  sIdField=shtAct.getCell(iRowFields,iCol);
 					  sVal=shtAct.getCell(iRow,iCol);
 				  }
-//				  if ((sId!="")||(sNombre!="")){
+//				  if ((sId!="")||(sName!="")){
 				 if (sId==""){
-					 sId=this.getNewId(this.nombre);
+					 sId=this.getNewId(this.name);
 				 }
-				 if (sNombre==""){
-					 sNombre=this.nombre+"_"+sId;
+				 if (sName==""){
+					 sName=this.name+"_"+sId;
 				 }
-				 var obj=this.nuevo(sNombre,sId);
-				 var nodo=campos.getPrimero();
-				 var idCampo;
-				 var idSubCampo;
-				 var vValor;
-				 var campo;
-				 var subCampos;
-				 var subNodo;
-				 var tipo;
-				 var subtipo;
+				 var obj=this.new(sName,sId);
+				 var node=fields.getFirst();
+				 var idField;
+				 var idSubField;
+				 var vValue;
+				 var field;
+				 var subFields;
+				 var subNode;
+				 var type;
+				 var subType;
 				 
-				 var bUnSoloResultado;
-				 var bUnResultadoPorSolicitud;
-				 var tipoDocReferencia;
-				 var faseReferencia;
-				 var subfaseReferencia;
-				 tipoDocReferencia="";
-				 faseReferencia="";
-				 subfaseReferencia="";
-				 while (nodo!=""){
-					 bUnSoloResultado=false;
-					 bUnResultadoPorSolicitud=true;
-					 tipoDocReferencia="";
-					 faseReferencia="";
-					 subfaseReferencia="";
+				 var bOnlyOneResult;
+				 var bOneResultPerRequest;
+				 var typeDocReference;
+				 var phaseReference;
+				 var subPhaseReference;
+				 typeDocReference="";
+				 phaseReference="";
+				 subPhaseReference="";
+				 while (node!=""){
+					 bOnlyOneResult=false;
+					 bOneResultPerRequest=true;
+					 typeDocReference="";
+					 phaseReference="";
+					 subPhaseReference="";
 
-					 idCampo=nodo.clave;
-					 idSubCampo="";
-					 campo=nodo.valor;
-					 tipo=campo.tipo;
-					 subtipo=campo.subtipo;
-					 subCampos=campo.subcampos;
-					 subNodo=subCampos.getPrimero();
+					 idField=node.key;
+					 idSubField="";
+					 field=node.Value;
+					 type=field.type;
+					 subType=field.subType;
+					 subFields=field.subFields;
+					 subNode=subFields.getFirst();
 					 
 					 
-					 while (subNodo!=""){
-						 idSubCampo=subNodo.clave;
-						 vValor=subNodo.valor;
-						 if (vValor!=""){
-							if (tipo=="Valor"){
-								if (subtipo=="Numero"){
-									obj["set"+idCampo+idSubCampo](parseFloat(vValor));
-								}else if ((subtipo=="FechaDiaMes")){
-									obj["set"+idCampo+idSubCampo](vValor);
-								}else if ((subtipo=="%")){
-									obj["set"+idCampo+idSubCampo](vValor);
-								}else if ((subtipo=="Formula")){
-									obj["set"+idCampo+idSubCampo](vValor);
-								}else if ((subtipo=="Texto")||(subtipo=="")){
-									obj["set"+idCampo+idSubCampo](vValor);
-								} else if (subtipo.indexOf("[")<0) { // no es un array
-									var oFactoria=this.factoria.getFactoriaGlobal(subtipo+"s");
-									if (oFactoria!=""){
-										var objRef=oFactoria.getById(vValor);
-										if (idCampo=="FormatoElectronico"){
-											log(idCampo);
+					 while (subNode!=""){
+						 idSubField=subNode.key;
+						 vValue=subNode.Value;
+						 if (vValue!=""){
+							if (type=="Value"){
+								if (subType=="Number"){
+									obj["set"+idField+idSubField](parseFloat(vValue));
+								}else if ((subType=="DateMonthDay")){
+									obj["set"+idField+idSubField](vValue);
+								}else if ((subType=="%")){
+									obj["set"+idField+idSubField](vValue);
+								}else if ((subType=="Formula")){
+									obj["set"+idField+idSubField](vValue);
+								}else if ((subType=="Text")||(subType=="")){
+									obj["set"+idField+idSubField](vValue);
+								} else if (subType.indexOf("[")<0) { // no es un array
+									var oFactory=this.factory.getFactoryGlobal(subType+"s");
+									if (oFactory!=""){
+										var objRef=oFactory.getById(vValue);
+										if (idField=="FormatoElectronico"){
+											log(idField);
 										}
 										if (objRef==""){
-											log("Error en fila ("+iCol+","+iRow+") al procesar la relacion con:"+vValor);
-											alert("Error en fila ("+iCol+","+iRow+") al procesar la relacion con:"+vValor);
+											log("Error en fila ("+iCol+","+iRow+") al procesar la relacion con:"+vValue);
+											alert("Error en fila ("+iCol+","+iRow+") al procesar la relacion con:"+vValue);
 										} else {
-											obj["set"+idCampo+idSubCampo](objRef);
+											obj["set"+idField+idSubField](objRef);
 										}
 									} else {
-										log("Error en fila ("+iCol+","+iRow+") al procesar no se localiza la factoria:"+subtipo+"s");
-										alert("Error en fila ("+iCol+","+iRow+") al procesar no se localiza la factoria:"+subtipo+"s");
+										log("Error en fila ("+iCol+","+iRow+") al procesar no se localiza la factory:"+subType+"s");
+										alert("Error en fila ("+iCol+","+iRow+") al procesar no se localiza la factory:"+subType+"s");
 									}
 								} else { // es un array JSON
-									var arrValores=JSON.parse(subtipo);
-									var bEncontrado=false;
+									var arrValues=JSON.parse(subType);
+									var bFound=false;
 									var iVal=0;
-									while ((!bEncontrado)&&(iVal<arrValores.length)){
-										if (arrValores[iVal]==vValor){
-											bEncontrado=true;
+									while ((!bFound)&&(iVal<arrValues.length)){
+										if (arrValues[iVal]==vValue){
+											bFound=true;
 										}
 										iVal++;
 									}
-									if (!bEncontrado){
-										log("Error en fila ("+iCol+","+iRow+") al procesar no se localiza el tipo:"+vValor+" en "+subtipo);
-										alert("Error en fila ("+iCol+","+iRow+") al procesar no se localiza el tipo:"+vValor+" en "+subtipo);
+									if (!bFound){
+										log("Error en fila ("+iCol+","+iRow+") al procesar no se localiza el type:"+vValue+" en "+subType);
+										alert("Error en fila ("+iCol+","+iRow+") al procesar no se localiza el type:"+vValue+" en "+subType);
 									} else {
-										obj["set"+idCampo+idSubCampo](vValor);
+										obj["set"+idField+idSubField](vValue);
 									}
 								}
-							} else if (tipo=="Referencia"){
-								obj["set"+idCampo+idSubCampo](vValor);
+							} else if (type=="Reference"){
+								obj["set"+idField+idSubField](vValue);
 							}
 						 }
-						 subNodo=subNodo.siguiente;
+						 subNode=subNode.next;
 					 }
-					 nodo=nodo.siguiente;
+					 node=node.next;
 				  }
 				  iRow++;
 				  iCol=0;
 				  sVal=shtAct.getCell(iRow,iCol); // sVal es el ID
-				  sValNombre=shtAct.getCell(iRow,iCol+1); // nombre
+				  sValName=shtAct.getCell(iRow,iCol+1); // name
 			  }
-			  this.balancear();
-			  this.traza();
+			  this.swing();
+			  this.trace();
 			  var me=this;
-			  if (typeof sNombreSheet==="undefined"){
-				  this.tiposAtributos.recorrer(function(attAux){
-					  if ((attAux.tipo=="Valor")&&(typeof attAux.subTipo!=="undefined")){
-						  if ((attAux.subTipo!="Numero")
-							  && (attAux.subTipo!="FechaDiaMes")
-							  && (attAux.subTipo!="Texto")
-							  && (attAux.subTipo.indexOf("[")<0)){ // es un objeto
-							  var shtDetalle=me.nombre + "_" + attAux.subTipo;
+			  if (typeof sNameSheet==="undefined"){
+				  this.attrTypes.walk(function(attAux){
+					  if ((attAux.type=="Value")&&(typeof attAux.subType!=="undefined")){
+						  if ((attAux.subType!="Number")
+							  && (attAux.subType!="DateMonthDay")
+							  && (attAux.subType!="Text")
+							  && (attAux.subType.indexOf("[")<0)){ // es un theObject
+							  var shtDetalle=me.name + "_" + attAux.subType;
 							  var arrSheets=excelWorkBook.SheetNames;
 							  var i=0;
 							  for (var i=0;(i<arrSheets.length);i++){
 								  var shtName=arrSheets[i];
-								  if (shtName.indexOf(shtDetalle)>=0){ // la hoja tiene el texto
+								  if (shtName.indexOf(shtDetalle)>=0){ // la hoja tiene el text
 									  me.loadFromExcel(excelWorkBook,shtName);
 								  }
 							  }
@@ -1189,13 +1192,13 @@ class FactoriaObjetos{
 			  }
 		}
 
-	loadFromExcelAsync(excelWorkBook,sNombreSheet,parameters /*
+	loadFromExcelAsync(excelWorkBook,sNameSheet,parameters /*
 																	{iRowIni:initial row,
 																	 iColEmptyEnd:if column is empty end loading
 																	 iColId:
 																	 iColName:
-																	 duplas:[{nombreAtributo:
-																			 ,iColAtributo:
+																	 duos:[{nameAttribute:
+																			 ,iColAttribute:
 																			 }
 																			]
 																			*/
@@ -1212,9 +1215,9 @@ class FactoriaObjetos{
 			var iRow=parameters.iRowIni;
 			var iColEmptyEnd=parameters.iColEmptyEnd;
 			
-			var shtNombreAux = this.nombre;
-			if (typeof sNombreSheet!=="undefined"){
-				shtNombreAux=sNombreSheet;
+			var shtNameAux = this.name;
+			if (typeof sNameSheet!=="undefined"){
+				shtNameAux=sNameSheet;
 			}
 			
 			var iColId=-1;
@@ -1228,8 +1231,8 @@ class FactoriaObjetos{
 			}
 			
 			
-			var shtAct = excelWorkBook.Sheets[shtNombreAux];
-			shtAct.getCell=factoriaObjetos.getCell;
+			var shtAct = excelWorkBook.Sheets[shtNameAux];
+			shtAct.getCell=factoryObjects.getCell;
 			var self=this;
 			var fncAsyncLoadRows=function(iRowAct){
 				var vEmpty=shtAct.getCell(iRowAct,iColEmptyEnd); // sVal es el ID
@@ -1242,31 +1245,32 @@ class FactoriaObjetos{
 				}
 				var sName;
 				if (iColName>=0){
-					sName=shtAct.getCell(iRowAct,iColName); // nombre
+					sName=shtAct.getCell(iRowAct,iColName); // name
 				}
 				
 				var newObj;
 				if ((iColName>=0)||(iColId>=0)){
-					newObj=self.nuevo(sName,sId);
-					for (var i=0;i<parameters.duplas.length;i++) {
-						var vAux=shtAct.getCell(iRowAct,parameters.duplas[i].iColAtributo); 
-						newObj["set"+parameters.duplas[i].nombreAtributo](vAux);
+					newObj=self.new(sName,sId);
+					for (var i=0;i<parameters.duos.length;i++) {
+						var vAux=shtAct.getCell(iRowAct,parameters.duos[i].iColAttribute); 
+						newObj["set"+parameters.duos[i].nameAttribute](vAux);
 					}
 				}
 				if (bCustomFunction){
 					fncRow(shtAct,iRowAct,newObj);
 				}
 			}
-			var fncEndAsyncLoadRows=function(iIndAct,nRendimiento,nDuracion,iIndMaximo,sAuxUnidades,nRendTotal,nDuracionTotal,nPorc,tEstimado){
-				self.balancear();
+			var fncEndAsyncLoadRows=function(iIndAct,nPerformance,nDuration,iIndMax
+												,sAuxUnits,nPerfTotal,nDurationTotal,nPerc,tEstimated){
+				self.swing();
 				if (typeof barrier!=="undefined"){
 					setTimeout(function(){barrier.finish(self);});
 				}
 				if (typeof fncEndCallback!=="undefined"){
-					fncEndCallback(iIndAct,nRendimiento,nDuracion,iIndMaximo,sAuxUnidades,nRendTotal,nDuracionTotal,nPorc,tEstimado);
+					fncEndCallback(iIndAct,nPerformance,nDuration,iIndMax,sAuxUnits,nPerfTotal,nDurationTotal,nPerc,tEstimated);
 				}
 			}
-			procesaOffline(iRow,vUndef,fncAsyncLoadRows,"Filas ("+this.nombre+")",fncEndAsyncLoadRows,vUndef,3);
+			processOffline(iRow,vUndef,fncAsyncLoadRows,"Rows ("+this.name+")",fncEndAsyncLoadRows,vUndef,3);
 		}
 	
 	extend(objLib){
@@ -1314,28 +1318,28 @@ class FactoriaObjetos{
 		return objResult;
 	}
 	
-	generarTipos(objParent){
-		this.listado.recorrer(function(dynobjTipo){
-			if (isDefined(dynobjTipo.generarTipo)){
-				dynobjTipo.generarTipo(objParent);
+	generateTypes(objParent){
+		this.list.walk(function(dynObjType){
+			if (isDefined(dynObjType.buildType)){
+				dynObjType.buildType(objParent);
 			} else {
-				dynobjTipo.factoria.executeParentMethod("generarTipo",[objParent]);
+				dynObjType.factory.executeParentMethod("buildType",[objParent]);
 			}
 		});
 	}
 
 
-/*	newPorcentaje(sCampoReferencia,sNuevoCampo){
-		return {nombreCampoReferencia:sCampoReferencia,
-				nombreAtributo:sNuevoCampo
+/*	newpercent(sCampoReference,snewCampo){
+		return {nameCamporeference:sCampoReference,
+				nameAttribute:snewCampo
 				};
 	}
-	newValor(valor,min,max,horquilla){
-		return {isObjValor:true,
-				valor:valor,
+	newValue(Value,min,max,margins){
+		return {isObjValue:true,
+				Value:Value,
 				min:min,
 				max:max,
-				horquilla:horquilla
+				margins:margins
 				};
 	}*/
 }
@@ -1343,76 +1347,76 @@ class FactoriaObjetos{
 
 
 function initMath(){
-	var texto=function(valor){
-		return ""+valor;
+	var text=function(Value){
+		return ""+Value;
 	}
-	var fncExists=function(valor, arrValores) {
-		for (var i=0;i<arrValores._size[0];i++){
-			if (arrValores._data[i]==valor){
+	var fncExists=function(Value, arrValues) {
+		for (var i=0;i<arrValues._size[0];i++){
+			if (arrValues._data[i]==Value){
 				return true;
 			}
 		}
 		return false;
 	}
-	var extractSymbols=function(nodoInicial){
+	var extractSymbols=function(initNode){
 		var hsSymbols=newHashMap();
-		var fncExtractSymbol=function(nodo){
-			if (nodo.type=="SymbolNode"){
-				if (!hsSymbols.exists(nodo.name)){
-					hsSymbols.add(nodo.name,nodo.name);
+		var fncExtractSymbol=function(node){
+			if (node.type=="SymbolNode"){
+				if (!hsSymbols.exists(node.name)){
+					hsSymbols.add(node.name,node.name);
 				}
 			}
-			if (typeof nodo.args!=="undefined"){
-				for (var i=0;i<nodo.args.length;i++){
-					var arg=nodo.args[i];
+			if (typeof node.args!=="undefined"){
+				for (var i=0;i<node.args.length;i++){
+					var arg=node.args[i];
 					fncExtractSymbol(arg);
 				}
 			}
-			if (typeof nodo.content!=="undefined"){
-					fncExtractSymbol(nodo.content);
+			if (typeof node.content!=="undefined"){
+					fncExtractSymbol(node.content);
 			}
 		}
-		fncExtractSymbol(nodoInicial);
+		fncExtractSymbol(initNode);
 		return hsSymbols;
 	}
-	var genScope=function(hsSymbols,objeto){
+	var genScope=function(hsSymbols,theObject){
 		var newScope={};
-		hsSymbols.recorrer(function(simbolo){
-			if (simbolo=="TiempoTramitacion"){
-			//	log(simbolo);
+		hsSymbols.walk(function(symbol){
+			if (symbol=="TiempoTramitacion"){
+			//	log(symbol);
 			}
-			var vSimbolo="";
-			var tipoAttr=objeto.factoria.tiposAtributos.getValor(simbolo);
-			if (tipoAttr.tipo=="Valor"){
-				vSimbolo=objeto["get"+simbolo]();
-				if (tipoAttr.subTipo=="Fecha"){
-					var fechaAux=soloFecha(vSimbolo);
-					vSimbolo=fechaAux;
-				} else if (!((tipoAttr.subTipo=="Fecha")||
- 							 (tipoAttr.subTipo=="Numero")||
-							 (tipoAttr.subTipo=="FechaDiaMes")||
-							 (tipoAttr.subTipo.indexOf("[")>=0)|| //  es un array
-							 (tipoAttr.subTipo=="%"))){
-					vSimbolo=vSimbolo.id;
+			var vSymbol="";
+			var typeAttr=theObject.factory.attrTypes.getValue(symbol);
+			if (typeAttr.type=="Value"){
+				vSymbol=theObject["get"+symbol]();
+				if (typeAttr.subType=="Date"){
+					var DateAux=onlyDate(vSymbol);
+					vSymbol=DateAux;
+				} else if (!((typeAttr.subType=="Date")||
+ 							 (typeAttr.subType=="Number")||
+							 (typeAttr.subType=="DateMonthDay")||
+							 (typeAttr.subType.indexOf("[")>=0)|| //  es un array
+							 (typeAttr.subType=="%"))){
+					vSymbol=vSymbol.id;
 				}
-			} else if (tipoAttr.tipo=="Lista") {
-				vSimbolo=objeto["get"+simbolo+"s"]();
-				var vUltimo=vSimbolo.getUltimo();
-				if (vUltimo!=""){
-					vSimbolo=vUltimo.clave;
+			} else if (typeAttr.type=="List") {
+				vSymbol=theObject["get"+symbol+"s"]();
+				var vLast=vSymbol.getLast();
+				if (vLast!=""){
+					vSymbol=vLast.key;
 				}
-			} else if (typeof objeto["get"+simbolo]==="function"){
-				vSimbolo=objeto["get"+simbolo]();
+			} else if (typeof theObject["get"+symbol]==="function"){
+				vSymbol=theObject["get"+symbol]();
 			} else {
-				vSimbolo="";
+				vSymbol="";
 			}
-			newScope[simbolo]=vSimbolo;
+			newScope[symbol]=vSymbol;
 		});
 		return newScope;
 	}
-	math.import({
+	math.import({	
 		  exists:fncExists
-		  ,texto:texto
+		  ,text:text
 		  ,genScope:genScope
 		  ,extractSymbols:extractSymbols
 		});
@@ -1420,20 +1424,23 @@ function initMath(){
 initMath();
 
 
-if (isUndefined(global.baseDynamicObjectFactory)){
-	global.baseDynamicObjectFactory=new FactoriaObjetos();	
+if (isUndefined(baseDynamicObjectFactory)){
+	if (isInNodeJS()){
+		global.baseDynamicObjectFactory=new factoryObjects();	
+	} else {
+		window["baseDynamicObjectFactory"]=new factoryObjects();
+	}
 }
- 
 
-class DynamicObjectUtils{
-	newDynamicObjectFactory(arrAtributosListado,arrAtributos,arrAtributosPorcs,globalName){
+class RCGDynamicObjectUtils{
+	newDynamicObjectFactory(arrAttributeList,arrAttributes,arrAttributesPercs,globalName){
 		var sName="";
 		var isGlobal=false;
 		if (isDefined(globalName)){
 			isGlobal=true;
 			sName=globalName;
 		}
-		var obj=baseDynamicObjectFactory.nuevaFactoria(sName,isGlobal,arrAtributosListado,arrAtributos,arrAtributosPorcs);
+		var obj=baseDynamicObjectFactory.newFactory(sName,isGlobal,arrAttributeList,arrAttributes,arrAttributesPercs);
 		return obj;
 	}
 	newDynamicObjectFactoryFromFile(sDefinitionFile,globalName){
@@ -1445,4 +1452,4 @@ class DynamicObjectUtils{
 	}
 }
 
-module.exports=DynamicObjectUtils;
+registerClass(RCGDynamicObjectUtils);

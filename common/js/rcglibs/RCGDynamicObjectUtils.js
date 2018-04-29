@@ -713,9 +713,9 @@ class factoryObjects{
 				var nodAux=this.attributes.getFirst();
 				while (nodAux!=""){
 					if (nodAux.brothers.length>0){
-						factory[nodAux.key]=nodAux.brothers[nodAux.brothers.length-1].Value();
+						factory[nodAux.key]=nodAux.brothers[nodAux.brothers.length-1].value();
 					} else {
-						factory[nodAux.key]=nodAux.Value();
+						factory[nodAux.key]=nodAux.value();
 					}
 					nodAux=nodAux.next;
 				}

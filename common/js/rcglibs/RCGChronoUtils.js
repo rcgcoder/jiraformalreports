@@ -356,9 +356,6 @@ class ChronoFactory{
 		}
 	}
 }
-if (isUndefined(global.chronoFactory)){
-	global.chronoFactory=new ChronoFactory();
-}
 
 class ChronoUtils{
 	constructor(){
@@ -393,5 +390,9 @@ class ChronoUtils{
 		chronoFactory.enabled=false;
 	}
 }
-
-module.exports=ChronoUtils;
+if (isInNodeJS()){
+	if (isUndefined(global.chronoFactory)){
+		global.chronoFactory=new ChronoFactory();
+	}
+	module.exports=ChronoUtils;
+}

@@ -1,10 +1,13 @@
 class RCGUtils{
-    constructor(bMakeGlobals) {
+    constructor(bMakeGlobals,basePath,customRequireFunction) {
     	var self=this;
 		if (!isInNodeJS()){
 			window.global=window;
 		}
     	self.basePath="./";
+		if (isDefined(basePath)){
+			self.basePath=basePath;
+		}
     	self.arrLibs=[
     		"RCGStringUtils.js",
     		"RCGMathUtils.js"/*,
@@ -18,17 +21,20 @@ class RCGUtils{
     		"DynamicObjectUtils.js"*/
     	//	,"MongoUtils.js"
     		];
-    	if (typeof require==="undefined"){
-    		self.require=function(sLibName){
-    			
-    		}
-    		window.require=function(sLibName){
-    			self.require(sLibName);
-    		}
-    	} else {
+    	if (isInNodeJS()){
     		self.require=require;
+    	} else {
+	    	if (isDefined(customRequireFunction){
+	    		self.require=customRequireFunction;
+	    	} else {
+	    		self.require=function(sLibName){
+	    			log("Require is no used for "+sLibName);
+	    		}
+	    	}
+    		window.require=function(sLibName){
+    			self.require(self.basePath+sLibName);
+    		}
     	}
-
 	}
 
     loadUtils(bMakeGlobals){
@@ -55,7 +61,7 @@ class RCGUtils{
 	requireLib(bMakeGlobals,sNameLib){
     	var self=this;
 		console.log(sNameLib);
-		var vLib=require(sNameLib);
+		var vLib=self.require(sNameLib);
 		var obj=new vLib();
 	    self.makeGlobals(bMakeGlobals,obj);
 	}

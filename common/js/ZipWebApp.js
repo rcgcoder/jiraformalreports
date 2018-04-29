@@ -43,10 +43,11 @@ class ZipWebApp{
 							"js/rcglibs/atlassian/RCGConfluence.js",
 							"js/rcglibs/atlassian/RCGJira.js",
 							"js/rcglibs/RCGBaseUtils.js",
-							"js/rcglibs/RCGLogUtils.js",
+							"js/rcglibs/RCGUtils.js",
+/*							"js/rcglibs/RCGLogUtils.js",
 							"js/rcglibs/RCGChronoUtils.js",
 							"js/rcglibs/RCGHashMapUtils.js"
-						 ]; //test
+*/						 ]; //test
 			self.loadRemoteFiles(arrFiles);
 		});
 		self.addStep("Setting <initialized=false> Atlassian Engine.... ",function(){

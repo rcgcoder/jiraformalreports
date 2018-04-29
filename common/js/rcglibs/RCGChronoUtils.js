@@ -1,5 +1,11 @@
 'use strict';
-//var process = require('process');
+var process;
+if (isInNodeJS()){
+	process = require('process');
+} else {
+	process={pid:0,enabled:false};
+}
+
 //var BaseUtils=require("./BaseUtils.js");
 //var StringUtils=require("./StringUtils.js");
 //var LogUtils=require("./LogUtils.js");

@@ -138,3 +138,4 @@ class RCGDateUtils {
 if (isInNodeJS()){
 	module.exports=RCGDateUtils;
 }
+log("executed RCGDateUtils");

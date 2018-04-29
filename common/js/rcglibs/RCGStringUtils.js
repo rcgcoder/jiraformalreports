@@ -93,8 +93,4 @@ class RCGStringUtils{
 			return sValue;
 	};
 }
-if (isInNodeJS()){
-	module.exports=RCGStringUtils;
-} else {
-	global['RCGStringUtils']=RCGStringUtils;
-}
+registerClass(RCGStringUtils);

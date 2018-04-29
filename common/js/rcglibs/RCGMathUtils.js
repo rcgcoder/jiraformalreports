@@ -16,3 +16,4 @@ if (isInNodeJS()){
 } else {
 	global['RCGMathUtils']=RCGMathUtils;
 }
+log("executed RCGDateUtils");

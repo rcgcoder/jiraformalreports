@@ -174,6 +174,4 @@ class RCGAsyncUtils{
 		return new RCGAsyncUtils_inner_Barrier(callback);
 	}
 }
-if (isInNodeJS()){
-	module.exports=RCGAsyncUtils;
-}
+registerClass(RCGAsyncUtils);

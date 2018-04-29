@@ -395,4 +395,7 @@ if (isInNodeJS()){
 		global.chronoFactory=new ChronoFactory();
 	}
 	module.exports=RCGChronoUtils;
+} else {
+	global['RCGChronoUtils']=RCGChronoUtils;
 }
+log("executed RCGChronoUtils");

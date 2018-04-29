@@ -73,6 +73,14 @@ function makeGlobals(obj){
 		}
 	}
 }
+function registerClass(clsObj){
+	if (isInNodeJS()){
+		module.exports=clsObj;
+	} else {
+		global[clsObj.name]=clsObj;
+	}
+	log("Registered class:"+clsObj.name);
+}
 
 
 function executeSystemCommand(sCommand,callback){

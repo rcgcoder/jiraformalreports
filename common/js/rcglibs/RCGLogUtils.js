@@ -118,3 +118,4 @@ if (isInNodeJS()){
 	global.loggerFactory=new LoggerFactory(); 	
 	module.exports=RCGLogUtils;
 }
+log("executed RCGLogUtils");

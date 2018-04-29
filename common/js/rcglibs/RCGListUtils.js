@@ -44,3 +44,4 @@ class RCGListUtils{
 if (isInNodeJS()){
 	module.exports=ListUtils;
 }
+log("executed RCGListUtils");

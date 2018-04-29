@@ -1558,3 +1558,4 @@ class HashMapUtils{
 if (isInNodeJS()){
 	module.exports=RCGHashMapUtils;
 }
+log("executed RCGHashMapUtils");

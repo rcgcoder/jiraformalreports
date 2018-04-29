@@ -11,8 +11,8 @@ class RCGUtils{
     	self.arrLibs=[
     		"RCGStringUtils.js",
     		"RCGMathUtils.js",
-    		"RCGDateUtils.js"/*,
-    		"LogUtils.js",
+    		"RCGDateUtils.js",
+    		"RCGLogUtils.js"/*,
     		"ListUtils.js",
     		"AsyncUtils.js",
     		"ExcelUtils.js",

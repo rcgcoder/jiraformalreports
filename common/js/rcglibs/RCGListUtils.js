@@ -41,7 +41,4 @@ class RCGListUtils{
 		return "";
 	}
 }
-if (isInNodeJS()){
-	module.exports=ListUtils;
-}
-log("executed RCGListUtils");
+registerClass(RCGListUtils);

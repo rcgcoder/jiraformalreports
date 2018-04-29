@@ -1554,8 +1554,4 @@ class HashMapUtils{
 		return hashmapFactory.newHashMap();
 	}
 }
-
-if (isInNodeJS()){
-	module.exports=RCGHashMapUtils;
-}
-log("executed RCGHashMapUtils");
+registerClass(RCGHashMapUtils);

@@ -11,9 +11,4 @@ class RCGMathUtils{
 		}
 	}
 }
-if (isInNodeJS()){
-	module.exports=RCGMathUtils;
-} else {
-	global['RCGMathUtils']=RCGMathUtils;
-}
-log("executed RCGDateUtils");
+registerClass(RCGMathUtils);

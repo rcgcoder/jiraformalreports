@@ -116,6 +116,5 @@ class RCGLogUtils{
 var loggerFactory=new LoggerFactory(); 	
 if (isInNodeJS()){
 	global.loggerFactory=new LoggerFactory(); 	
-	module.exports=RCGLogUtils;
 }
-log("executed RCGLogUtils");
+registerClass(RCGLogUtils);

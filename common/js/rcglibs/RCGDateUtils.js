@@ -135,7 +135,4 @@ class RCGDateUtils {
 		return dResult;
 	}
 }
-if (isInNodeJS()){
-	module.exports=RCGDateUtils;
-}
-log("executed RCGDateUtils");
+registerClass(RCGDateUtils);

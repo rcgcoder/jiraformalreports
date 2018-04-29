@@ -73,6 +73,7 @@ function makeGlobals(obj){
 		}
 	}
 }
+
 function registerClass(clsObj){
 	if (isInNodeJS()){
 		module.exports=clsObj;

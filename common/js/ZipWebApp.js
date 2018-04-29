@@ -57,7 +57,7 @@ class ZipWebApp{
 				});
 				self.continueTask();
 			}
-			log("loading RCG UTILS");
+			log("loading RCG UTILS"); //another push
 			var rcgUtils=new RCGUtils(true,"js/rcglibs/",self.createManagedCallback(fncLoadRCGUtilFile));
 			rcgUtils.loadUtils(true);
 		});

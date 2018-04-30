@@ -637,7 +637,6 @@ class RCGZippedApp{
 					arrStatus[iIntFile]={path:sRelativePath,content:fileContent,type:contentType};
 					self.popCallback();
 				});
-				self.continueTask();
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 //			}
 			);
@@ -658,13 +657,15 @@ class RCGZippedApp{
 				}
 				self.continueTask();
 			});
-//			},0,1,undefined,undefined,undefined,"INNER",undefined
 		}
 		self.pushCallback(function(){
 			self.addStep("Downloading "+arrRelativePaths.length+" files",function(){
 				for (var i=0;i<arrRelativePaths.length;i++){
 					fncAddStepDownloadRelativePath(i);
 				}
+				self.addStep("Downloading finished!",function(){
+					log("")
+				});
 				self.continueTask();
 			});
 			self.addStep("Processing "+arrRelativePaths.length+" files",function(){

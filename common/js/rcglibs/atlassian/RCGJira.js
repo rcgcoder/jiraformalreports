@@ -36,7 +36,7 @@ class RCGJira{
 		//		schema.type
 		var self=this;
 		var doFactory=self.fields;
-		if (!doFactoy.exists(itm.key)){
+		if (!doFactory.exists(itm.key)){
 			doItem=doFactory.new(itm.name,itm.key);
 			doItem.setType(itm.schema.type);
 		}
@@ -50,7 +50,7 @@ class RCGJira{
 		var self=this;
 		var doItem;
 		var doFactory=self.projects;
-		if (!doFactoy.exists(itm.key)){
+		if (!doFactory.exists(itm.key)){
 			doItem=doFactory.new(itm.name,itm.key);
 			doItem.setInnerId(itm.id);
 		}
@@ -66,7 +66,7 @@ class RCGJira{
 		var self=this;
 		var doItem;
 		var doFactory=self.issueTypes;
-		if (!doFactoy.exists(itm.id)){
+		if (!doFactory.exists(itm.id)){
 			doItem=doFactory.new(itm.name,itm.id);
 			doItem.setDescription(itm.description);
 			doItem.setIconUrl(itm.iconUrl);
@@ -79,7 +79,7 @@ class RCGJira{
 		var self=this;
 		var doItem;
 		var doFactory=self.labels;
-		if (!doFactoy.exists(lbl)){
+		if (!doFactory.exists(lbl)){
 			doItem=doFactory.new(lbl,lbl);
 		}
 	}

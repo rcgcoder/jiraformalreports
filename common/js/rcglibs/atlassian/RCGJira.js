@@ -22,7 +22,7 @@ class RCGJira{
 		self.issueTypes=newDynamicObjectFactory([],["Description","SubTask","IconUrl"],[]);
 
 		self.epics=[];
-		self.labels=[];
+		self.labels=newDynamicObjectFactory([],[],[]);
 		self.filters=[];
 	}
 	getFields(){
@@ -71,6 +71,16 @@ class RCGJira{
 			doItem.setDescription(itm.description);
 			doItem.setIconUrl(itm.iconUrl);
 			doItem.setSubTask(itm.subtask);
+		}
+	}
+	processJsonLabel(lbl){
+		// itm is String
+		
+		var self=this;
+		var doItem;
+		var doFactory=self.labels;
+		if (!doFactoy.exists(lbl)){
+			doItem=doFactory.new(lbl,lbl);
 		}
 	}
 	getProjectsAndMetaInfo(){
@@ -122,16 +132,7 @@ class RCGJira{
 				var issue=response[i];
 				for (var j=0;j<issue.fields.labels.length;j++){
 					var issLbl=issue.fields.labels[j];
-					var bExists=false;
-					for (var k=0;(!bExists)&&(k<self.labels.length);k++){
-						var lbl=self.labels[k];
-						if (lbl==issLbl){
-							bExists=true;
-						}
-					}
-					if (!bExists){
-						self.labels.push(issLbl);
-					}
+					self.processJsonLabel(issLbl);
 				}
 			}
 			self.popCallback([self.labels]);

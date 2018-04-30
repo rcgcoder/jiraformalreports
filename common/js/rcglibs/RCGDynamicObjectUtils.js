@@ -31,6 +31,7 @@ class RCGDynamicObject{
 		self.functions=newHashMap();  // lista de functions asociadas al theObject
 		self.list=newHashMap();
 		self.getById=factory.getById;									
+		self.exists=factory.exists;									
 		self.get=factory.get;
 		self.findByAttribute=factory.findByAttribute;
 		self.internal_buildId=factory.internal_buildId;			
@@ -118,6 +119,9 @@ class factoryObjects{
 			return node;
 			//return getFromListaById(this.list,id);re
 		}
+	exists(id){
+		return this.list.exists(id);
+	}
 	get(ind){
 			var node=this.list.findByInd(ind);
 			if (node!=""){

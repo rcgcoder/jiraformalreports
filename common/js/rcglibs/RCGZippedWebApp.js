@@ -627,7 +627,7 @@ class RCGZippedApp{
 				self.addStep("File:"+sFile+" ¿need to load from network?",function(sRelativePath,fileContent,contentType){
 					if (fileContent!=""){
 						log("File "+iIntFile+" "+sRelativePath+ " is in Storage");
-						return self.popCallback([sRelativePath,fileContent,contentType]);
+						return self.continueTask([sRelativePath,fileContent,contentType]);
 					}
 					log("File "+iIntFile+" "+sRelativePath+ " is not in Storage... loading from network");
 					self.loadFileFromNetwork(sRelativePath,fileContent,contentType);
@@ -635,11 +635,11 @@ class RCGZippedApp{
 				self.addStep("File:"+sFile+" fully loaded!",function(sRelativePath,fileContent,contentType){
 					log("File "+iIntFile+" "+sRelativePath+ " is loaded... updating status");
 					arrStatus[iIntFile]={path:sRelativePath,content:fileContent,type:contentType};
-					self.popCallback();
+					self.continueTask();
 				});
 				self.continueTask();
-			},0,1,undefined,undefined,undefined,"INNER",undefined
-//			}
+//			},0,1,undefined,undefined,undefined,"INNER",undefined
+			}
 			);
 		}
 		var fncAddStepProcessRelativePath=function(iFile,fileStatus){

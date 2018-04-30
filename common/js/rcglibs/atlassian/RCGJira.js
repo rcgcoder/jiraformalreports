@@ -27,7 +27,7 @@ class RCGJira{
 		log("Getting fields");
 		return this.fields;
 	}
-	processFields(arrFields){
+	processFields(arrItems){
 		// interest info
 		// 		key
 		//		name

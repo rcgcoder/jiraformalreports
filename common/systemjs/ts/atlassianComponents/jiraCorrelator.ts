@@ -38,14 +38,15 @@ export class jiraCorrelator {
         return txtArea;
     }
     getValue(){
-        return getTextArea().val();
-        
+        return this.getTextArea().val();
+    }
+    setValue(sVal){
+        this.getTextArea().val(sVal);
     }
     addField(){
         var self=this;
         log("adding Field hierarchy");
-        var txtArea=getTextArea();
-        var sAntVal=txtArea.val();
+        var sAntVal=self.getValue();
         if (sAntVal!=""){
             var andObj=System.getAngularDomObject(self.name+"-addOrField");
             sAntVal="\n"+(andObj.val()=="and"?"&&":"||")+"\n"+sAntVal;
@@ -54,30 +55,27 @@ export class jiraCorrelator {
         var parentFlds=self.getParentFieldSelectedValues();
         var chldFld=childFlds[0];
         var prntFld=parentFlds[0];
-        txtArea.val("(child.fieldValue('"+chldFld.key+"') /*"+chldFld.name+"*/==parent.field('"+prntFld.key+"') /*"+prntFld.name+"*/"+")" +sAntVal);
+        self.setValue("(child.fieldValue('"+chldFld.key+"') /*"+chldFld.name+"*/==parent.field('"+prntFld.key+"') /*"+prntFld.name+"*/"+")" +sAntVal);
         self.changeVisibilityAndOr();
     }
     addLink(){
         log("adding Link hierarchy");
         var self=this;
         log("adding Field hierarchy");
-        var txtArea=System.getAngularDomObject(self.name+"-text");
-        txtArea=$(txtArea);
-        var sAntVal=txtArea.val();
+        var sAntVal=self.getValue();
         if (sAntVal!=""){
             var andObj=System.getAngularDomObject(self.name+"-addOrLink");
             sAntVal="\n"+(andObj.val()=="and"?"&&":"||")+"\n"+sAntVal;
         }
         var childLinks=self.getChildLinkSelectedValues();
         var chldLnk=childLinks[0];
-        txtArea.val("(child.linkValue('"+chldLnk.key+"')==parent.id)" +sAntVal);
+        self.setValue("(child.linkValue('"+chldLnk.key+"')==parent.id)" +sAntVal);
         self.changeVisibilityAndOr();
     }
     changeVisibilityAndOr(){
         var self=this;
-        var txtArea=System.getAngularDomObject(self.name+"-text");
-        txtArea=$(txtArea);
-        if (txtArea.val()!=""){
+        var sAntVal=self.getValue();
+        if (sAntVal!=""){
             $(System.getAngularDomObject(self.name+"-addOrField")).show();
             $(System.getAngularDomObject(self.name+"-addOrLink")).show();
         } else {

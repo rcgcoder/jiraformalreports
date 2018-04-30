@@ -14,6 +14,16 @@
             }
 </style>
 <div class="flatpack-box">
+Interest Fields<br>
+    <atlassianSelector name="selInterestFields" 
+    				   typeDescriptor="Issue Fields needed for the Report"
+    				    atlassianAplication="webapp"
+    				    multiple="true"
+    				    atlassianObjectFunction="getListFields"
+    		>
+    </atlassianSelector >
+</div>
+<div class="flatpack-box">
 	JQL Billing Items Selection
 	<br>	
 	<!-- onSelectedProjects($event) -->
@@ -29,16 +39,6 @@
 	</jiraCorrelator>
 	<jiraCorrelator name="AdvanceHierarchy" caption="Advance hierarchy rules">
 	</jiraCorrelator>
-<div class="flatpack-box">
-Interest Fields<br>
-    <atlassianSelector name="selInterestFields" 
-    				   typeDescriptor="Issue Fields needed for the Report"
-    				    atlassianAplication="webapp"
-    				    multiple="true"
-    				    atlassianObjectFunction="getListFields"
-    		>
-    </atlassianSelector >
-</div>
 	<br>
 	<advSelector id="selBillingRelationships" 
 				 name="selBillingRelationships" 

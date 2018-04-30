@@ -619,15 +619,18 @@ class RCGZippedApp{
 		var arrStatus=[];
 		var fncAddStepDownloadRelativePath=function(iFile){
 			var sFile=arrRelativePaths[iFile];
-			self.addStep("Downloading file:"+ sFile,function(){
+			self.addStep("Downloading file:"+ sFile+ " pos:"+iFile,function(){
 				self.pushCallback(function(sRelativePath,fileContent,contentType){
+					log("File "+iFile+" "+sRelativePath+ " is loaded... updating status");
 					arrStatus[iFile]={path:sRelativePath,content:fileContent,type:contentType};
 					self.popCallback();
 				});
 				self.pushCallback(function(sRelativePath,fileContent,contentType){
 					if (fileContent!=""){
-						self.popCallback([sRelativePath,fileContent,contentType]);
+						log("File "+iFile+" "+sRelativePath+ " is in Storage");
+						return self.popCallback([sRelativePath,fileContent,contentType]);
 					}
+					log("File "+iFile+" "+sRelativePath+ " is not in Storage... loading from network");
 					self.loadFileFromNetwork(sRelativePath,fileContent,contentType);
 				});
 				self.loadFileFromStorage(sFile);

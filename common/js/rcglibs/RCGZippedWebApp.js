@@ -640,13 +640,13 @@ class RCGZippedApp{
 			);
 		}
 		var fncAddStepProcessRelativePath=function(iFile,fileStatus){
-			self.addStep(("Processing "+iFile+" file:"+fileStatus.path,function(){
+			self.addStep("Processing "+iFile+" file:"+fileStatus.path,function(){
 				self.processFile(fileStatus.path,
 								 fileStatus.content,
 								 fileStatus.type
 								);
 			});
-			self.addStep(("PostProcessing "+iFile+" file:"+fileStatus.path,function(){
+			self.addStep("PostProcessing "+iFile+" file:"+fileStatus.path,function(){
 				log("Processed "+iFile+" file:"+fileStatus.path+"...¿postProcessing?");
 				if (typeof fncPostProcessFile==="undefined"){
 					log("NO");

@@ -663,9 +663,6 @@ class RCGZippedApp{
 				for (var i=0;i<arrRelativePaths.length;i++){
 					fncAddStepDownloadRelativePath(i);
 				}
-				self.addStep("Downloading finished!",function(){
-					log("")
-				});
 				self.continueTask();
 			});
 			self.addStep("Processing "+arrRelativePaths.length+" files",function(){

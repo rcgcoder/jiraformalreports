@@ -719,28 +719,17 @@ class RCGZippedApp{
 				var rcgUtilsManager=new RCGUtils();
 				rcgUtilsManager.requireLibs=self.createManagedCallback(function(bMakeGlobals,arrLibs){
 					var auxArrLibs=[];
-					var fncProcessOne=function(sNameLib){
-							self.addStep("Processing RCG Util:"+sNameLib,function(){
-						    	var sFileUrl=rcgUtilsManager.basePath+sNameLib;
-					    		self.addStep("Loading "+sFileUrl,function(){
-						    		self.pushCallback(function(){
-						    			log("processing:"+sNameLib);
-						    			var className=sNameLib.split(".")[0];
-						    			// Instantiate the object using the class name string
-						    			var auxObj = window[className]; 
-						    			rcgUtilsManager.makeGlobals(bMakeGlobals,auxObj);
-							    		self.popCallback();
-						    			});
-					    			self.loadRemoteFile(sFileUrl);
-					    			});
-					    		self.continueTask();
-							});
+					for (var i=0;i<arrLibs.length;i++){
+						auxArrLibs.push(rcgUtilsManager.basePath+arrLibs[i]);
 					}
-			    	for (var i=0;i<rcgUtilsManager.arrLibs.length;i++){
-				    	var sNameLib=rcgUtilsManager.arrLibs[i];
-				    	fncProcessOne(sNameLib);
-				    }
-		    		self.continueTask();
+					var fncPostProcessFile=function(iFile){
+							var sFile=arrLibs[iFile];
+			    			var className=sFile.split(".")[0];
+							log("PostProcessing "+ iFile+" "+sFile+" className:"+className);
+			    			var auxObj = window[className]; 
+			    			rcgUtilsManager.makeGlobals(bMakeGlobals,auxObj);
+					}
+					self.loadRemoteFiles(auxArrLibs,fncPostProcessFile);
 				});
 				rcgUtilsManager.basePath="js/rcglibs/";
 				rcgUtilsManager.loadUtils(true);

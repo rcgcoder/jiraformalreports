@@ -40,12 +40,14 @@ export class TabStructure {
         var jql=auxObj.getJQLValue();
         arrValues=auxObj.getSelectedValues();
         dfReport["selIssuesToReport"]={jql:jql,values:arrValues};
-/*        auxObj=System.getAngularObject('BillingHierarchy',true);
-        dfReport["BillingHierarchy"]=auxObj.getValue();
+        auxObj=System.getAngularObject('BillingHierarchy',true);
+        var value=auxObj.getValue();
+        dfReport["BillingHierarchy"]=value;
         auxObj=System.getAngularObject('AdvanceHierarchy',true);
-        dfReport["AdvanceHierarchy"]=auxObj.getValue();
+        value=auxObj.getValue();
+        dfReport["AdvanceHierarchy"]=value;
         var fileName="defaultReportConfig.json";
         var contentType=System.webapp.getContentTypeFromExtension(fileName);
-        System.webapp.saveFileToStorage(fileName,JSON..stringify(),contentType);
-*/    }
+        System.webapp.saveFileToStorage(fileName,JSON.stringify(),contentType);
+    }
 }

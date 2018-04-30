@@ -48,7 +48,7 @@ class RCGJira{
 		self.pushCallback(function(sResponse,xhr,sUrl,headers){
 			self.processFields(inner_Fields);
 			self.popCallback([self.projects]);
-		}
+		});
 		self.pushCallback(function(sResponse,xhr,sUrl,headers){
 			//log("getAllProjects:"+response);
 			if (sResponse!=""){

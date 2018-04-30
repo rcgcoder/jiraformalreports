@@ -650,9 +650,9 @@ class RCGZippedApp{
 				log("Processed "+iFile+" file:"+fileStatus.path+"...¿postProcessing?");
 				if (typeof fncPostProcessFile==="undefined"){
 					log("NO");
-					return;
+				} else {
+					fncPostProcessFile(iFile);
 				}
-				return fncPostProcessFile(iFile);
 				self.continueTask();
 			});
 //			},0,1,undefined,undefined,undefined,"INNER",undefined

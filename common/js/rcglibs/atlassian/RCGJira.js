@@ -35,6 +35,7 @@ class RCGJira{
 		//		name
 		//		schema.type
 		var self=this;
+		var doItem;
 		var doFactory=self.fields;
 		if (!doFactory.exists(itm.key)){
 			doItem=doFactory.new(itm.name,itm.key);

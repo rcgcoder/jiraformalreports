@@ -646,7 +646,7 @@ class RCGZippedApp{
 								 fileStatus.type
 								);
 			});
-			self.addStep("PostProcessing "+iFile+" file:"+fileStatus.path,function(){
+			self.addStep("Processed "+iFile+" file:"+fileStatus.path,function(){
 				log("Processed "+iFile+" file:"+fileStatus.path+"...¿postProcessing?");
 				if (typeof fncPostProcessFile==="undefined"){
 					log("NO");
@@ -655,7 +655,6 @@ class RCGZippedApp{
 				return fncPostProcessFile(iFile);
 				self.continueTask();
 			});
-			self.continueTask();
 //			},0,1,undefined,undefined,undefined,"INNER",undefined
 		}
 		self.pushCallback(function(){

@@ -27,8 +27,28 @@ class RCGJira{
 		log("Getting fields");
 		return this.fields;
 	}
+	processFields(arrFields){
+		// interest info
+		// 		key
+		//		name
+		//		schema.type
+		var self=this;
+		var fields=newDynamicObjectFactory([],["key","name","type"],[]);
+		for (var i=0;i<arrFields.length;i++){
+			var fld=arrFields[i];
+			field=fields.new(fld.name,fld.key);
+			field.setType(fld.schema.type);
+		}
+	}
 	getProjectsAndMetaInfo(){
 		var self=this;
+		var inner_Projects=[];
+		var inner_Fields=[];
+		var inner_IssueTypes=[];
+		self.pushCallback(function(sResponse,xhr,sUrl,headers){
+			self.processFields(inner_Fields);
+			self.popCallback([self.projects]);
+		}
 		self.pushCallback(function(sResponse,xhr,sUrl,headers){
 			//log("getAllProjects:"+response);
 			if (sResponse!=""){
@@ -38,20 +58,13 @@ class RCGJira{
 					var prjKey=project.key;
 					var prjName=project.name;
 					var prjInnerId=project.id;
-					self.projects.push({key:prjKey,name:prjName,id:prjInnerId});
+					inner_Projects.push({key:prjKey,name:prjName,id:prjInnerId,jsonObj:project});
 					for (var j=0;j<project.issuetypes.length;j++){
 						var issuetype=project.issuetypes[j];
 						var itKey=issuetype.id;
 						var itName=issuetype.name;
-						var bExists=false;
-						for (var k=0;(!bExists)&&(k<self.issueTypes.length);k++){
-							var it=self.issueTypes[k];
-							if (it.key==itKey){
-								bExists=true;
-							}
-						}
-						if (!bExists){
-							self.issueTypes.push({key:itKey,name:itName});
+						if (!isInArray(inner_IssueTypes,itKey,"key")){
+							inner_IssueTypes.push({key:itKey,name:itName,jsonObj:issuetype});
 						}
 						var itSubtask=issuetype.subtask;
 						// the fields are not an array...
@@ -64,15 +77,8 @@ class RCGJira{
 								if (typeof field==="object"){
 									var fldName=field.name;
 									var fldKey=field.key;
-									bExists=false;
-									for (var m=0;(!bExists)&&(m<self.fields.length);m++){
-										var fld=self.fields[m];
-										if (fld.key==fldKey){
-											bExists=true;
-										}
-									}
-									if (!bExists){
-										self.fields.push({key:fldKey,name:fldName});
+									if (!isInArray(inner_Fields,fldKey,"key")){
+										inner_Fields.push({key:fldKey,name:fldName,jsonObj:field});
 									}
 								} 
 							}
@@ -80,7 +86,7 @@ class RCGJira{
 					}
 				}
 			}
-			self.popCallback([self.projects]);
+			self.popCallback();
 		});
 		self.apiCall("/rest/api/latest/issue/createmeta?expand=projects.issuetypes.fields");
 	}

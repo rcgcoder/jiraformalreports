@@ -134,6 +134,17 @@ function isObject(obj){
 	return ( (typeof obj === "object") && (obj !== null) && isDefined(obj) );
 }
 
+function isInArray(theArray,theKey,theField){
+	var bExists=false;
+	for (var k=0;(!bExists)&&(k<theArray.length);k++){
+		var it=theArray[k];
+		if (it[theField]==theKey){
+			return true;
+		}
+	}
+	return false;
+}
+
 
 var undefinedValue;
 function fncEmpty(){

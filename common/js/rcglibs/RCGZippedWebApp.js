@@ -640,9 +640,12 @@ class RCGZippedApp{
 		}
 		self.pushCallback(function(){
 			self.addStep("Downloading "+arrRelativePaths.length+" files",function(){
-				for (var i=0;i<arrRelativePaths.length;i++){
-					fncAddStepDownloadRelativePath(i);
-				}
+				self.addStep("Downloading each in pseudothread "+arrRelativePaths.length+" files",function(){
+					for (var i=0;i<arrRelativePaths.length;i++){
+						fncAddStepDownloadRelativePath(i);
+					}
+					self.continueTask();
+				});
 				self.continueTask();
 			});
 			self.addStep("Processing "+arrRelativePaths.length+" files",function(){

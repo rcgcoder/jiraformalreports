@@ -37,7 +37,7 @@ export class jqlSelector {
     onAdvSelectorRetrieveData(theAdvSelector){
         var self=this;
         log("Retrieving table data on jqlSelector");
-        var sJQL=self.gtJQLValue();
+        var sJQL=self.getJQLValue();
         if (sJQL==""){
             log("Empty JQL is not allowed");
             System.webapp.continueTask([[]]);

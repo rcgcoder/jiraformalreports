@@ -649,21 +649,22 @@ class RCGZippedApp{
 			self.addStep("Processing "+arrRelativePaths.length+" files",function(){
 				for (var i=0;i<arrRelativePaths.length;i++){
 					self.pushCallback(function(sRelativePath,auxContent){
-						log("Processed +"+i+" file:"+fileStatus.path+"...¿postProcessing?");
+						var iActual=0;
+						for (var j=0;j<arrRelativePaths.length;j++){
+							if (arrRelativePaths[j]==sRelativePath){
+								iActual=j;
+							}
+						}
+						
+						log("Processed "+iActual+" file:"+sRelativePath+"...¿postProcessing?");
 						if (typeof fncPostProcessFile==="undefined"){
 							log("NO");
 							return;
 						}
-						for (var j=0;j<arrRelativePaths.length;j++){
-							if (arrRelativePaths[j]==sRelativePath){
-								log("YES");
-								return fncPostProcessFile(j);
-							}
-						}
-						log("NO");
+						return fncPostProcessFile(iActual);
 					});
 					var fileStatus=arrStatus[i];
-					log("Processing +"+i+" file:"+fileStatus.path);
+					log("Processing "+i+" file:"+fileStatus.path);
 					self.processFile(fileStatus.path,
 									 fileStatus.content,
 									 fileStatus.type

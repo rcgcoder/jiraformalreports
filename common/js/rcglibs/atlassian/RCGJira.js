@@ -33,6 +33,7 @@ class RCGJira{
 		//		name
 		//		schema.type
 		var self=this;
+		var field;
 		var fields=newDynamicObjectFactory([],["key","name","type"],[]);
 		for (var i=0;i<arrFields.length;i++){
 			var fld=arrFields[i];

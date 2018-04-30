@@ -32,12 +32,19 @@ export class jiraCorrelator {
         var result=selParent.getSelectedValues();
         return result;
     }
-    
+    getTextArea(){
+        var txtArea=System.getAngularDomObject(self.name+"-text");
+        txtArea=$(txtArea);
+        return txtArea;
+    }
+    getValue(){
+        return getTextArea().val();
+        
+    }
     addField(){
         var self=this;
         log("adding Field hierarchy");
-        var txtArea=System.getAngularDomObject(self.name+"-text");
-        txtArea=$(txtArea);
+        var txtArea=getTextArea();
         var sAntVal=txtArea.val();
         if (sAntVal!=""){
             var andObj=System.getAngularDomObject(self.name+"-addOrField");

@@ -35,6 +35,12 @@ export class jqlSelector {
         var sJQL=theJQLBox.value;
         return sJQL;
     }
+    getSelectedValues(){
+        var self=this;
+        var objSel=System.getAngularObject(self.name+"-advSelector",true);
+        return objSel.getSelectedValues();
+    }
+
     onAdvSelectorRetrieveData(theAdvSelector){
         var self=this;
         log("Retrieving table data on jqlSelector");

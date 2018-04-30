@@ -655,6 +655,7 @@ class RCGZippedApp{
 				}
 				self.continueTask();
 			});
+			self.continueTask();
 		});
 		self.popCallback();
 	}

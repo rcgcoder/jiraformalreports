@@ -154,12 +154,11 @@ class ZipWebApp{
 			
 		} else {
 	        var jira=self.getJira();
-	        var arrEpics=[];
-	        for (var i=0;i<jira.epics.length;i++){
-	            var epic=jira.epics[i];
-	            arrEpics.push({key:epic.key,name:epic.fields.summary,description:epic.fields.summary});
-	        }
-	        return arrEpics; 
+			var arrResult=jira.fields.toArray([
+				 {doFieldName:"Id",resultFieldName:"key"},
+				 {doFieldName:"Name",resultFieldName:"name"}
+				 ]);
+	        return arrResult;
 		}
 	}
 	getListFilters(){

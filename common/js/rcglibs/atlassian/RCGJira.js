@@ -17,12 +17,12 @@ class RCGJira{
 			atlassian.apiGetFullList(self, sTarget, resultName,callType, data, callback,arrHeaders);
 			};
 
-		self.projects=newDynamicObjectFactory([],["InnerId"],[]);
-		self.fields=newDynamicObjectFactory([],["Type"],[]);
-		self.issueTypes=newDynamicObjectFactory([],["Description","SubTask","IconUrl"],[]);
+		self.projects=newDynamicObjectFactory([],["InnerId"],[],"Projects");
+		self.fields=newDynamicObjectFactory([],["Type"],[],"Fields");
+		self.issueTypes=newDynamicObjectFactory([],["Description","SubTask","IconUrl"],[],"IssueTypes");
 
-		self.epics=[];
-		self.labels=newDynamicObjectFactory([],[],[]);
+		self.epics=newDynamicObjectFactory([],[],[],"Epics");
+		self.labels=newDynamicObjectFactory([],[],[],"Labels");
 		self.filters=[];
 	}
 	getFields(){
@@ -82,6 +82,16 @@ class RCGJira{
 		var doFactory=self.labels;
 		if (!doFactory.exists(lbl)){
 			doItem=doFactory.new(lbl,lbl);
+		}
+	}
+	processJsonEpic(itm){
+		// itm is String
+		
+		var self=this;
+		var doItem;
+		var doFactory=self.epics;
+		if (!doFactory.exists(itm.id)){
+			doItem=doFactory.new(itm.name,itm.id);
 		}
 	}
 	getProjectsAndMetaInfo(){
@@ -147,7 +157,9 @@ class RCGJira{
 		});
 		self.addStep("Processing all Epics", function(response,xhr,sUrl,headers){
 			log("getAllEpics:"+response);
-			self.epics=response;
+			for (var i=0;i<response.length;i++){
+				self.processJsonEpic(response[i]);
+			}
 			self.popCallback([self.epics]);
 		});
 		self.continueTask();

@@ -48,6 +48,7 @@ export class TabStructure {
         dfReport["AdvanceHierarchy"]=value;
         var fileName="defaultReportConfig.json";
         var contentType=System.webapp.getContentTypeFromExtension(fileName);
+        contentType.isCacheable=true;
         var content=JSON.stringify(dfReport);
         System.webapp.saveFileToStorage(fileName,content,contentType);
     }

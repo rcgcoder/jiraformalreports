@@ -122,12 +122,12 @@ class ZipWebApp{
 			
 		} else {
 	        var jira=self.getJira();
-	        var arrIssueTypes=[];
-	        for (var i=0;i<jira.issueTypes.length;i++){
-	            var it=jira.issueTypes[i];
-	            arrIssueTypes.push({key:it.key,name:it.name});
-	        }
-	        return arrIssueTypes;
+			var arrResult=jira.issueTypes.toArray([
+				 {doFieldName:"Id",resultFieldName:"key"},
+				 {doFieldName:"Name",resultFieldName:"name"},
+				 {doFieldName:"Description",resultFieldName:"description"}
+				 ]);
+	        return arrResult;
 		}
 	}
 	getListProjects(){
@@ -136,12 +136,11 @@ class ZipWebApp{
 			
 		} else {
 	        var jira=self.getJira();
-	        var arrProjects=[];
-	        for (var i=0;i<jira.projects.length;i++){
-	            var prj=jira.projects[i];
-	            arrProjects.push({key:prj.key,name:prj.name});
-	        }
-	        return arrProjects;
+			var arrResult=jira.projects.toArray([
+				 {doFieldName:"Id",resultFieldName:"key"},
+				 {doFieldName:"Name",resultFieldName:"name"}
+				 ]);
+	        return arrResult;
 		}
 	}
 	getListEpics(){
@@ -192,12 +191,11 @@ class ZipWebApp{
 			
 		} else {
 	        var jira=self.getJira();
-	        var arrFields=[];
-	        for (var i=0;i<jira.fields.length;i++){
-	            var fld=jira.fields[i];
-	            arrFields.push({key:fld.key,name:fld.name});
-	        }
-	        return arrFields;
+			var arrResult=jira.projects.toArray([
+				 {doFieldName:"Id",resultFieldName:"key"},
+				 {doFieldName:"Name",resultFieldName:"name"}
+				 ]);
+	        return arrResult;
 		}
 	}
 	getListRelations(){

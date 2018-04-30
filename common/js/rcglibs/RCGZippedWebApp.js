@@ -725,7 +725,7 @@ class RCGZippedApp{
 					var fncPostProcessFile=function(iFile){
 							var sFile=arrLibs[iFile];
 			    			var className=sFile.split(".")[0];
-							log("PostProcessing "+ iFile+" "+sFile+" className:"+className);
+							log("Post-Processing "+ iFile+" "+sFile+" className:"+className);
 			    			var auxObj = window[className]; 
 			    			rcgUtilsManager.makeGlobals(bMakeGlobals,auxObj);
 					}

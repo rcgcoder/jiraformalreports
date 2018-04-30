@@ -31,7 +31,7 @@ export class TabStructure {
 //        System.webapp.continueTask();
         
     }
-    onSaveDefaultReport(){
+/*    onSaveDefaultReport(){
         var dfReport={};
         var auxObj=System.getAngularObject('selInterestFields',true);
         var arrValues=auxObj.getSelectedValues();
@@ -47,5 +47,5 @@ export class TabStructure {
         var fileName="defaultReportConfig.json";
         var contentType=System.webapp.getContentTypeFromExtension(fileName);
         System.webapp.saveFileToStorage(fileName,JSON..stringify(),contentType);
-    }
+    }*/
 }

@@ -35,6 +35,7 @@ class RCGJira{
 		var self=this;
 		var field;
 		var fields=newDynamicObjectFactory([],["Type"],[]);
+		self.fields=fields;
 		for (var i=0;i<arrFields.length;i++){
 			var fld=arrFields[i];
 			field=fields.new(fld.name,fld.key);

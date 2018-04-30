@@ -635,17 +635,15 @@ class RCGZippedApp{
 					self.loadFileFromNetwork(sRelativePath,fileContent,contentType);
 				});
 				self.loadFileFromStorage(sFile);
-			},0,1,undefined,undefined,undefined,"INNER",undefined
+//			},0,1,undefined,undefined,undefined,"INNER",undefined
+			}
 			);
 		}
 		self.pushCallback(function(){
 			self.addStep("Downloading "+arrRelativePaths.length+" files",function(){
-				self.addStep("Downloading each in pseudothread "+arrRelativePaths.length+" files",function(){
-					for (var i=0;i<arrRelativePaths.length;i++){
-						fncAddStepDownloadRelativePath(i);
-					}
-					self.continueTask();
-				});
+				for (var i=0;i<arrRelativePaths.length;i++){
+					fncAddStepDownloadRelativePath(i);
+				}
 				self.continueTask();
 			});
 			self.addStep("Processing "+arrRelativePaths.length+" files",function(){

@@ -85,13 +85,15 @@ class RCGJira{
 		}
 	}
 	processJsonEpic(itm){
-		// itm is String
+		// interest info
+		// key --> id
+		// fields.summary --> name
 		
 		var self=this;
 		var doItem;
 		var doFactory=self.epics;
-		if (!doFactory.exists(itm.id)){
-			doItem=doFactory.new(itm.name,itm.id);
+		if (!doFactory.exists(itm.key)){
+			doItem=doFactory.new(itm.fields.summary,itm.key);
 		}
 	}
 	getProjectsAndMetaInfo(){

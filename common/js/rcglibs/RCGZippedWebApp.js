@@ -657,8 +657,6 @@ class RCGZippedApp{
 			});
 			self.continueTask();
 //			},0,1,undefined,undefined,undefined,"INNER",undefined
-			}
-			);
 		}
 		self.pushCallback(function(){
 			self.addStep("Downloading "+arrRelativePaths.length+" files",function(){

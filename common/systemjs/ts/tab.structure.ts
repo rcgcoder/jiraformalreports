@@ -36,11 +36,11 @@ export class TabStructure {
         var auxObj=System.getAngularObject('selInterestFields',true);
         var arrValues=auxObj.getSelectedValues();
         dfReport["selInterestFields"]=arrValues;
-/*        auxObj=System.getAngularObject('selIssuesToReport',true);
+        auxObj=System.getAngularObject('selIssuesToReport',true);
         var jql=auxObj.getJQLValue();
         arrValues=auxObj.getSelectedValues();
         dfReport["selIssuesToReport"]={jql:jql,values:arrValues};
-        auxObj=System.getAngularObject('BillingHierarchy',true);
+/*        auxObj=System.getAngularObject('BillingHierarchy',true);
         dfReport["BillingHierarchy"]=auxObj.getValue();
         auxObj=System.getAngularObject('AdvanceHierarchy',true);
         dfReport["AdvanceHierarchy"]=auxObj.getValue();

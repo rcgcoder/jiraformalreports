@@ -31,4 +31,9 @@ export class TabStructure {
 //        System.webapp.continueTask();
         
     }
+    onSaveDefaultReport(){
+        var dfReport={};
+        var auxObj=System.getAngularObject('selInterestFields',true);
+        var arrValues=auxObj.getSelectedValues();
+    }
 }

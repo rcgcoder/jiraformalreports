@@ -29,11 +29,15 @@ export class jqlSelector {
     getJQLBox(){
         return AJS.$('[name="'+this.name+'-jqlEdit"]');
     }
+    getJQLValue(){
+        var theJQLBox=self.getJQLBox()[0];
+        var sJQL=theJQLBox.value;
+        return sJQL;
+    }
     onAdvSelectorRetrieveData(theAdvSelector){
         var self=this;
         log("Retrieving table data on jqlSelector");
-        var theJQLBox=self.getJQLBox()[0];
-        var sJQL=theJQLBox.value;
+        var sJQL=self.gtJQLValue();
         if (sJQL==""){
             log("Empty JQL is not allowed");
             System.webapp.continueTask([[]]);

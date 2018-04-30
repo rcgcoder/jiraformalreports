@@ -645,7 +645,7 @@ class RCGZippedApp{
 							fncPostProcessFile(j);
 						}
 					}
-				}
+				});
 				var fileStatus=arrStatus[i];
 				self.processFile(fileStatus.path,
 								 fileStatus.content,

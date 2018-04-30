@@ -39,7 +39,7 @@ class RCGJira{
 		for (var i=0;i<arrFields.length;i++){
 			var fld=arrFields[i];
 			field=fields.new(fld.name,fld.key);
-			field.setType(fld.schema.type);
+			field.setType(fld.jsonObj.schema.type);
 		}
 	}
 	getProjectsAndMetaInfo(){

@@ -638,8 +638,8 @@ class RCGZippedApp{
 					self.continueTask();
 				});
 				self.continueTask();
-//			},0,1,undefined,undefined,undefined,"INNER",undefined
-			}
+			},0,1,undefined,undefined,undefined,"INNER",undefined
+//			}
 			);
 		}
 		var fncAddStepProcessRelativePath=function(iFile,fileStatus){

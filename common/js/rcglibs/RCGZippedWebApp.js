@@ -624,6 +624,12 @@ class RCGZippedApp{
 					arrStatus[iFile]={path:sRelativePath,content:fileContent,type:contentType};
 					self.popCallback();
 				});
+				self.pushCallback(function(sRelativePath,fileContent,contentType){
+					if (fileContent!=""){
+						self.popCallback([sRelativePath,fileContent,contentType]);
+					}
+					self.loadFileFromNetwork(sRelativePath,fileContent,contentType);
+				});
 				self.loadFileFromStorage(sFile);
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 			);

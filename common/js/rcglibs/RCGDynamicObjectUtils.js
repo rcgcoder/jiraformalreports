@@ -869,6 +869,7 @@ class factoryObjects{
 			arrResult.push(elem);
 		}
 		this.list.walk(fncToItem);
+		return arrResult;
 	}
 	findByAttribute(attributeName,refValue,bCaseInsensitive,bWithoutAccents){
 			var sValue=prepareComparation(refValue,bCaseInsensitive,bWithoutAccents);

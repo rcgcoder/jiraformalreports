@@ -16,113 +16,89 @@ class RCGJira{
 		self.getFullList=function(sTarget,resultName,callType,data,callback,arrHeaders){
 			atlassian.apiGetFullList(self, sTarget, resultName,callType, data, callback,arrHeaders);
 			};
-		self.projects=[];
+
+		self.projects=newDynamicObjectFactory([],["InnerId"],[]);
+		self.fields=newDynamicObjectFactory([],["Type"],[]);
+		self.issueTypes=newDynamicObjectFactory([],["Description","SubTask","IconUrl"],[]);
+
 		self.epics=[];
-		self.issueTypes=[];
 		self.labels=[];
-		self.fields=[];
 		self.filters=[];
 	}
 	getFields(){
 		log("Getting fields");
 		return this.fields;
 	}
-	processFields(arrItems){
+	processJsonField(itm){
 		// interest info
 		// 		key
 		//		name
 		//		schema.type
 		var self=this;
-		var doItem;
-		var doFactory=newDynamicObjectFactory([],["Type"],[]);
-		self.fields=doFactory;
-		for (var i=0;i<arrItems.length;i++){
-			var itm=arrItems[i];
+		var doFactory=self.fields;
+		if (!doFactoy.exists(itm.key)){
 			doItem=doFactory.new(itm.name,itm.key);
-			doItem.setType(itm.jsonObj.schema.type);
+			doItem.setType(itm.schema.type);
 		}
 	}
-	processProjects(arrItems){
+	processJsonProject(itm){
 		// interest info
 		// 		key
 		//		name
-		//		InnerId
+		//		id --> InnerId
+		
 		var self=this;
 		var doItem;
-		var doFactory=newDynamicObjectFactory([],["InnerId"],[]);
-		self.projects=doFactory;
-		for (var i=0;i<arrItems.length;i++){
-			var itm=arrItems[i];
+		var doFactory=self.projects;
+		if (!doFactoy.exists(itm.key)){
 			doItem=doFactory.new(itm.name,itm.key);
 			doItem.setInnerId(itm.id);
 		}
 	}
-	processIssueTypes(arrItems){
+	processJsonIssueType(itm){
 		// interest info
-		// 		key
+		// 		id --> key
 		//		name
-		//		InnerId
+		//		description --> Description
+		//		iconUrl		--> IconUrl
+		//		subtask		--> SubTask
+		
 		var self=this;
 		var doItem;
-		var doFactory=newDynamicObjectFactory([],["Description","SubTask","IconUrl"],[]);
-		self.issueTypes=doFactory;
-		for (var i=0;i<arrItems.length;i++){
-			var itm=arrItems[i];
-			doItem=doFactory.new(itm.name,itm.key);
-			doItem.setDescription(itm.jsonObj.description);
-			doItem.setIconUrl(itm.jsonObj.iconUrl);
-			doItem.setSubTask(itm.jsonObj.subtask);
+		var doFactory=self.issueTypes;
+		if (!doFactoy.exists(itm.id)){
+			doItem=doFactory.new(itm.name,itm.id);
+			doItem.setDescription(itm.description);
+			doItem.setIconUrl(itm.iconUrl);
+			doItem.setSubTask(itm.subtask);
 		}
 	}
 	getProjectsAndMetaInfo(){
 		var self=this;
-		var inner_Projects=[];
-		var inner_Fields=[];
-		var inner_IssueTypes=[];
-		self.pushCallback(function(sResponse,xhr,sUrl,headers){
-			self.processFields(inner_Fields);
-			self.processProjects(inner_Projects);
-			self.processIssueTypes(inner_IssueTypes);
-			self.popCallback([self.projects]);
-		});
 		self.pushCallback(function(sResponse,xhr,sUrl,headers){
 			//log("getAllProjects:"+response);
 			if (sResponse!=""){
 				var response=JSON.parse(sResponse);
 				for (var i=0;i<response.projects.length;i++){
 					var project=response.projects[i];
-					var prjKey=project.key;
-					var prjName=project.name;
-					var prjInnerId=project.id;
-					inner_Projects.push({key:prjKey,name:prjName,id:prjInnerId,jsonObj:project});
+					self.processJsonProject(project);
 					for (var j=0;j<project.issuetypes.length;j++){
 						var issuetype=project.issuetypes[j];
-						var itKey=issuetype.id;
-						var itName=issuetype.name;
-						if (!isInArray(inner_IssueTypes,itKey,"key")){
-							inner_IssueTypes.push({key:itKey,name:itName,jsonObj:issuetype});
-						}
-						var itSubtask=issuetype.subtask;
-						// the fields are not an array...
-						
+						self.processJsonIssueType(issuetype);
 						var arrProperties=Object.getOwnPropertyNames(issuetype.fields.__proto__).concat(Object.getOwnPropertyNames(issuetype.fields));
 						for (var k=0;k<arrProperties.length;k++){
 							var vPropName=arrProperties[k];
 							if (vPropName!=="__proto__"){
 								var field=issuetype.fields[vPropName];
 								if (typeof field==="object"){
-									var fldName=field.name;
-									var fldKey=field.key;
-									if (!isInArray(inner_Fields,fldKey,"key")){
-										inner_Fields.push({key:fldKey,name:fldName,jsonObj:field});
-									}
+									self.processJsonField(field)
 								} 
 							}
 						}
 					}
 				}
 			}
-			self.popCallback();
+			self.popCallback([self.projects]);
 		});
 		self.apiCall("/rest/api/latest/issue/createmeta?expand=projects.issuetypes.fields");
 	}
@@ -141,6 +117,7 @@ class RCGJira{
 			self.getFullList("/rest/api/2/search?jql=labels is not empty","issues");//,"GET",data);
 		});
 		self.addStep("Processing all Labels", function(response,xhr,sUrl,headers){
+			
 			for (var i=0;i<response.length;i++){
 				var issue=response[i];
 				for (var j=0;j<issue.fields.labels.length;j++){

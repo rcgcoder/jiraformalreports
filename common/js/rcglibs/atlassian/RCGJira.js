@@ -33,13 +33,45 @@ class RCGJira{
 		//		name
 		//		schema.type
 		var self=this;
-		var field;
-		var fields=newDynamicObjectFactory([],["Type"],[]);
-		self.fields=fields;
-		for (var i=0;i<arrFields.length;i++){
-			var fld=arrFields[i];
-			field=fields.new(fld.name,fld.key);
-			field.setType(fld.jsonObj.schema.type);
+		var doItem;
+		var doFactory=newDynamicObjectFactory([],["Type"],[]);
+		self.fields=doFactory;
+		for (var i=0;i<arrItems.length;i++){
+			var itm=arrItems[i];
+			doItem=doFactory.new(itm.name,itm.key);
+			doItem.setType(itm.jsonObj.schema.type);
+		}
+	}
+	processProjects(arrItems){
+		// interest info
+		// 		key
+		//		name
+		//		InnerId
+		var self=this;
+		var doItem;
+		var doFactory=newDynamicObjectFactory([],["InnerId"],[]);
+		self.projects=doFactory;
+		for (var i=0;i<arrItems.length;i++){
+			var itm=arrItems[i];
+			doItem=doFactory.new(itm.name,itm.key);
+			doItem.setInnerId(itm.prjInnerId);
+		}
+	}
+	processIssueTypes(arrItems){
+		// interest info
+		// 		key
+		//		name
+		//		InnerId
+		var self=this;
+		var doItem;
+		var doFactory=newDynamicObjectFactory([],["Description","SubTask","IconUrl"],[]);
+		self.issueTypes=doFactory;
+		for (var i=0;i<arrItems.length;i++){
+			var itm=arrItems[i];
+			doItem=doFactory.new(itm.name,itm.key);
+			doItem.setDescription(itm.jsonObj.description);
+			doItem.setIconUrl(itm.jsonObj.iconUrl);
+			doItem.setSubTask(itm.jsonObj.subtask);
 		}
 	}
 	getProjectsAndMetaInfo(){

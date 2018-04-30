@@ -637,6 +637,7 @@ class RCGZippedApp{
 					arrStatus[iIntFile]={path:sRelativePath,content:fileContent,type:contentType};
 					self.popCallback();
 				});
+				self.continueTask();
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 //			}
 			);

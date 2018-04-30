@@ -623,7 +623,7 @@ class RCGZippedApp{
 				self.pushCallback(fuction(sRelativePath,fileContent,contentType){
 					arrStatus[iFile]={path:sRelativePath,content:fileContent,type:contentType};
 					self.popCallback();
-				}
+				});
 				self.loadFileFromStorage(sFile);
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 			);

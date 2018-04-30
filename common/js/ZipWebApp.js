@@ -191,7 +191,7 @@ class ZipWebApp{
 			
 		} else {
 	        var jira=self.getJira();
-			var arrResult=jira.projects.toArray([
+			var arrResult=jira.fields.toArray([
 				 {doFieldName:"Id",resultFieldName:"key"},
 				 {doFieldName:"Name",resultFieldName:"name"}
 				 ]);

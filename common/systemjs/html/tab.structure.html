@@ -29,14 +29,15 @@
 	</jiraCorrelator>
 	<jiraCorrelator name="AdvanceHierarchy" caption="Advance hierarchy rules">
 	</jiraCorrelator>
-	<advSelector id="selBillingFields" 
-				 name="selBillingFields" 
-    			 typeDescriptor="Fields to bind Billing" 
-    			 maxCharsInSelect=50
-    			 multiple="true"
-    			 (onRetrieveData)='onGetBillingFields($event)'
-    			 >
-	</advSelector>
+<div class="flatpack-box">
+Interest Fields
+    <atlassianSelector name="selInterestFields" 
+    				   typeDescriptor="Issue Fields needed for the Report"
+    				    atlassianAplication="webapp"
+    				    atlassianObjectFunction="getListFields"
+    		>
+    </atlassianSelector >
+</div>
 	<br>
 	<advSelector id="selBillingRelationships" 
 				 name="selBillingRelationships" 

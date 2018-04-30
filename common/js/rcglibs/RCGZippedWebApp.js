@@ -614,48 +614,47 @@ class RCGZippedApp{
 			self.popCallback([sRelativePath,""]);
 		}
 	}
-	loadRemoteFileIteration(arrRelativePaths,iFile){
+	loadRemoteFiles(arrRelativePaths,fncPostProcessFile){
 		var self=this;
-		var iFileAux=iFile;
-		if (iFileAux>=arrRelativePaths.length){
-			return self.popCallback([iFileAux-1]);
+		var arrStatus=[];
+		var fncAddStepDownloadRelativePath=function(iFile){
+			var sFile=arrRelativePaths(iFile);
+			self.addStep("Downloading file:"+ sFile,function(){
+				self.pushCallback(fuction(sRelativePath,fileContent,contentType){
+					arrStatus[iFile]={path:sRelativePath,content:fileContent,type:contentType};
+					self.popCallback();
+				}
+				self.loadFileFromStorage(sFile);
+			},0,1,undefined,undefined,undefined,"INNER",undefined
+			);
 		}
-		self.pushCallback(function(){
-			self.loadRemoteFileIteration(arrRelativePaths,(iFileAux+1));
-		})
-		self.pushCallback(self.loadFileFromNetwork);
-		self.loadFileFromStorage(arrRelativePaths[iFileAux]);
-	}
-	loadRemoteFileNewFork(sRelativePath,barrier){
-		var self=this;
-		var fncLoadFile=function(){
-			self.pushCallback(self.loadFileFromNetwork);
-			self.loadFileFromStorage(sRelativePath);
-		}
-		var cm=self.pushCallback(fncLoadFile,undefined,true,barrier);
-		cm.callMethod(); // start
-	}
-	loadRemoteFileForks(arrRelativePaths){
-		var self=this;
-		var actTask=taskManager.getRunningTask();
-		var fncBarrierFinish=function(){
-			log("Barrier Finished:" + actTask.forkId);
-			self.setRunningTask(actTask);
-			self.popCallback();
-		}
-		var barrier=new RCGBarrier(fncBarrierFinish,arrRelativePaths.length);
-		for (var i=0;i<arrRelativePaths.length;i++){
-			self.loadRemoteFileNewFork(arrRelativePaths[i],barrier);
-		}
-	}
-	loadRemoteFiles(arrRelativePaths){
-		var self=this;
-		var auxArr=[];
-		for (var i=0;i<arrRelativePaths.length;i++){
-			
-		}
-		self.loadRemoteFileIteration(arrRelativePaths,0);
-		//self.loadRemoteFileForks(arrRelativePaths);
+		self.addStep("Downloading "+arrRelativePaths.length+" files",function(){
+			for (var i=0;i<arrRelativePaths.length;i++){
+				fncAddStepDownloadRelativePath(i);
+			}
+			self.continueTask();
+		});
+		self.addStep("Processing "+arrRelativePaths.length+" files",function(){
+			for (var i=0;i<arrRelativePaths.length;i++){
+				self.pushCallback(function(sRelativePath,auxContent){
+					if (typeof fncPostProcessFile==="undefined"){
+						return;
+					}
+					for (var j=0;j<arrRelativePaths.length;j++){
+						if (arrRelativePaths[j]==sRelativePath){
+							fncPostProcessFile(j);
+						}
+					}
+				}
+				var fileStatus=arrStatus[i];
+				self.processFile(fileStatus.path,
+								 fileStatus.content,
+								 fileStatus.type
+								);
+			}
+			self.continueTask();
+		});
+		self.continueTask();
 	}
 	checkForDeploys(iFile){
 		var self=this;

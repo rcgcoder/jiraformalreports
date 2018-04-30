@@ -22,4 +22,13 @@ export class TabStructure {
        log("structure fields event.... onGetBillingFields");
        System.webapp.continueTask([System.webapp.getListFields()]);
     }
+    onLoadIssuesTest(event){
+        var self=this;
+        var fork=System.webapp.addStep("Testing Load Issues:"+self.name, function(){
+            log("Testing end:"+self.name);
+            System.webapp.continueTask();
+        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
+//        System.webapp.continueTask();
+        
+    }
 }

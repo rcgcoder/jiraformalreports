@@ -532,7 +532,7 @@ class RCGZippedApp{
 		var jsCompiled=self.tsCompiler.compile(tsContent);
 		self.addJavascriptString(jsCompiled);
 	}*/
-	processFile(content,xhr,contentType,sRelativePath){
+	processFile(sRelativePath,content,contentType){
 		log("Processing file:"+sRelativePath);
 		var self=this;
 		var auxContent=content;
@@ -547,16 +547,18 @@ class RCGZippedApp{
 	    }
 	    self.popCallback([sRelativePath,auxContent]);
 	}
-	loadFileFromNetwork(bLoadedFromStorage,sRelativePath,fileContent){
+	loadFileFromNetwork(sRelativePath,fileContent,contentType){
 		var self=this;
-		if (bLoadedFromStorage) {
+		if (fileContent!="") {
 			log(sRelativePath+" loaded from persistent storage");
-			return self.popCallback([sRelativePath,fileContent]);
-			
+			return self.popCallback([sRelativePath,fileContent,contentType]);
 		}
-		log(sRelativePath+" loaded from network");
+		log(sRelativePath+" loading from network");
 		var sUrl=self.composeUrl(sRelativePath);
-		self.pushCallback(self.processFile);
+		self.pushCallback(function(content,xhr,contentType,sRelativePath){
+			log(sRelativePath+" loaded from network");
+			self.popCallback([sRelativePath,content,contentType]);
+		});
     	self.downloadFile(sUrl,sRelativePath);
 	}
 	loadFileFromStorage(sRelativePath){
@@ -564,14 +566,14 @@ class RCGZippedApp{
 		var self=this;
 		if ((!self.bWithPersistentStorage)||(self.storage=="")||(self.github=="")){ // if there is not storage initialized or github is not used
 			log("There is not storage engine loaded");
-			return self.popCallback([false,sRelativePath]);
+			return self.popCallback([sRelativePath,""]);
 		}
 		// now there is storage and github
 		
 		// get the last commit id
 		var sCommitId=self.github.commitId;
 		if (sCommitId==""){ // imposible case.... all the repositories has one or more commits
-			return self.popCallback([false,sRelativePath]);
+			return self.popCallback([sRelativePath,""]);
 		}
 		
 		var sContentType=self.storage.get('#FILEINFO#'+sRelativePath);
@@ -587,37 +589,29 @@ class RCGZippedApp{
 			var sVersion=jsonContentType.commitId;
 			if (sCommitId==sVersion){ // if stored file version == github version are the same.... use the storage version
 				log("Loading from storage the File:"+sRelativePath);
-
-				self.pushCallback(function(sFileContent){
-					//var sFileContent=self.storage.get(sRelativePath);
-					self.pushCallback(function(sRelativePath,fileContents){
-							log("file "+sRelativePath+" Processed");
-							self.popCallback([true,sRelativePath,fileContents]);
-					});
-					return self.processFile(sFileContent,undefined,jsonContentType,sRelativePath);
-				});
 				return filesystem.ReadFile(sRelativePath,
 						self.createManagedCallback(function(sStringContent){
 							log("file "+sRelativePath +" readed from storage");
-							self.popCallback([sStringContent]);
+							self.popCallback([sRelativePath,sStringContent,jsonContentType]);
 						}),
 						self.createManagedCallback(function(e){
 							log("file "+sRelativePath +" Error reading from storage");
-							self.popCallback([""]);
+							self.popCallback([sRelativePath,""]);
 						})
 						);
 			}
 		}
-		return self.popCallback([false,sRelativePath]);
+		return self.popCallback([sRelativePath,""]);
 	}
 	
 	loadRemoteFile(sRelativePath){
 		var self=this;
+		self.pushCallback(self.processFile);
+		self.pushCallback(self.loadFileFromNetwork);
 		if (self.bWithPersistentStorage){
-			self.pushCallback(self.loadFileFromNetwork);
 			self.loadFileFromStorage(sRelativePath);
 		} else {
-			self.loadFileFromNetwork(false,sRelativePath);
+			self.popCallback([sRelativePath,""]);
 		}
 	}
 	loadRemoteFileIteration(arrRelativePaths,iFile){
@@ -656,6 +650,10 @@ class RCGZippedApp{
 	}
 	loadRemoteFiles(arrRelativePaths){
 		var self=this;
+		var auxArr=[];
+		for (var i=0;i<arrRelativePaths.length;i++){
+			
+		}
 		self.loadRemoteFileIteration(arrRelativePaths,0);
 		//self.loadRemoteFileForks(arrRelativePaths);
 	}

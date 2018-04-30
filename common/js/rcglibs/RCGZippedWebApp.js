@@ -649,7 +649,7 @@ class RCGZippedApp{
 			self.addStep("Processing "+arrRelativePaths.length+" files",function(){
 				for (var i=0;i<arrRelativePaths.length;i++){
 					self.pushCallback(function(sRelativePath,auxContent){
-						log("Processed +"+i+" file:"+fileStatus.path..."¿postProcessing?");
+						log("Processed +"+i+" file:"+fileStatus.path+"...¿postProcessing?");
 						if (typeof fncPostProcessFile==="undefined"){
 							log("NO");
 							return;

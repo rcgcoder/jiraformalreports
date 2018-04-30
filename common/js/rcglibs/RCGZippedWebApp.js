@@ -652,8 +652,9 @@ class RCGZippedApp{
 			self.addStep("Processed "+iFile+" file:"+fileStatus.path,function(){
 				log("Processed "+iFile+" file:"+fileStatus.path+"...¿postProcessing?");
 				if (typeof fncPostProcessFile==="undefined"){
-					log("NO");
+					log("NO postprocess file");
 				} else {
+					log("YES postprocess file");
 					fncPostProcessFile(iFile);
 				}
 				self.continueTask();

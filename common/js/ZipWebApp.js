@@ -154,7 +154,7 @@ class ZipWebApp{
 			
 		} else {
 	        var jira=self.getJira();
-			var arrResult=jira.fields.toArray([
+			var arrResult=jira.epics.toArray([
 				 {doFieldName:"Id",resultFieldName:"key"},
 				 {doFieldName:"Name",resultFieldName:"name"}
 				 ]);

@@ -862,11 +862,26 @@ class factoryObjects{
 			});
 			
 		}
-	toArray(){
+	toArray(arrFields){ //[{doFieldName:,resultFieldName},{}.{}]
 		// convert the list of objects to an array []
 		var arrResult=[]
 		var fncToItem=function(elem){
-			arrResult.push(elem);
+			var auxElem=elem;
+			if (isDefined(arrFields)){
+				auxElem={};
+				var auxField;
+				var doFieldName;
+				var doFieldValue;
+				var resultFieldName;
+				for (var i=0;i<arrFields.length;i++){
+					auxField=arrFields[i];
+					doFieldName=auxField.doFieldName;
+					doFieldValue=elem["get"+doFieldName]();
+					resultFieldName=auxField.resultFieldName;
+					auxElem[resultFieldName]=doFieldValue;
+				}
+			}
+			arrResult.push(auxElem);
 		}
 		this.list.walk(fncToItem);
 		return arrResult;

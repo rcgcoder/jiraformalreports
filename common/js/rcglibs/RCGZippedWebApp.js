@@ -966,15 +966,18 @@ class RCGZippedApp{
 													{name:"P2",description:"Element P2",type:"Number"},
 													{name:"P3",description:"Element P3",type:"Number"}
 												   ]);
-			var car=cars.new("ZX");
+			var car=cars.new("ZX","001");
 			car.setA1("ValueForA1");
 			car.setP2(0.2);
-			var car=cars.new("Golf");
+			var car=cars.new("Golf","002");
 			car.setA1("ValueForGolfA1");
 			car.setP2(0.5);
 			cars.trace();
-			var arrCars=cars.toArray();
-			
+			var arrCars=cars.toArray([
+									 {doFieldName:"Id",resultFieldName:"key"},
+									 {doFieldName:"Name",resultFieldName:"name"},
+									 {doFieldName:"A1",resultFieldName:"value"}
+									 ]);
 			var webapp=new ZipWebApp();
 			self.extendFromObject(webapp);
 			self.run();

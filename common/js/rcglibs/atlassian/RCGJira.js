@@ -81,6 +81,8 @@ class RCGJira{
 		var inner_IssueTypes=[];
 		self.pushCallback(function(sResponse,xhr,sUrl,headers){
 			self.processFields(inner_Fields);
+			self.processProjects(inner_Projects);
+			self.processIssueTypes(inner_IssueTypes);
 			self.popCallback([self.projects]);
 		});
 		self.pushCallback(function(sResponse,xhr,sUrl,headers){

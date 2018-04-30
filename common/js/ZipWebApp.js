@@ -182,12 +182,11 @@ class ZipWebApp{
 			
 		} else {
 	        var jira=self.getJira();
-	        var arrLabels=[];
-	        for (var i=0;i<jira.labels.length;i++){
-	            var lbl=jira.labels[i];
-	            arrLabels.push({key:lbl,name:lbl});
-	        }
-	        return arrLabels;
+			var arrResult=jira.issueTypes.toArray([
+				 {doFieldName:"Id",resultFieldName:"key"},
+				 {doFieldName:"Name",resultFieldName:"name"}
+				 ]);
+	        return arrResult;
 		}
 	}
 	getListFields(){

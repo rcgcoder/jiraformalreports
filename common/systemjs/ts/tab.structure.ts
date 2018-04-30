@@ -31,12 +31,12 @@ export class TabStructure {
 //        System.webapp.continueTask();
         
     }
-/*    onSaveDefaultReport(){
+    onSaveDefaultReport(){
         var dfReport={};
         var auxObj=System.getAngularObject('selInterestFields',true);
         var arrValues=auxObj.getSelectedValues();
         dfReport["selInterestFields"]=arrValues;
-        auxObj=System.getAngularObject('selIssuesToReport',true);
+/*        auxObj=System.getAngularObject('selIssuesToReport',true);
         var jql=auxObj.getJQLValue();
         arrValues=auxObj.getSelectedValues();
         dfReport["selIssuesToReport"]={jql:jql,values:arrValues};

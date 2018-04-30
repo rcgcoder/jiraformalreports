@@ -54,7 +54,7 @@ class RCGJira{
 		for (var i=0;i<arrItems.length;i++){
 			var itm=arrItems[i];
 			doItem=doFactory.new(itm.name,itm.key);
-			doItem.setInnerId(itm.prjInnerId);
+			doItem.setInnerId(itm.id);
 		}
 	}
 	processIssueTypes(arrItems){

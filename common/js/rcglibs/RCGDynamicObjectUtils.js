@@ -50,6 +50,7 @@ class RCGDynamicObject{
 		self.processAllAttributes=factory.processAllAttributes;						
 		self.traceItem=factory.traceItem;
 		self.trace=factory.trace;
+		self.toArray=factory.toArray;
 		self.swing=factory.swing;
 		self.configFromExcel=factory.configFromExcel;
 		self.loadFromExcel=factory.loadFromExcel;
@@ -861,6 +862,14 @@ class factoryObjects{
 			});
 			
 		}
+	toArray(){
+		// convert the list of objects to an array []
+		var arrResult=[]
+		var fncToItem=function(elem){
+			arrResult.push(elem);
+		}
+		this.list.walk(fncToItem);
+	}
 	findByAttribute(attributeName,refValue,bCaseInsensitive,bWithoutAccents){
 			var sValue=prepareComparation(refValue,bCaseInsensitive,bWithoutAccents);
 			var arrResults=[];

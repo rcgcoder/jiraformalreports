@@ -969,9 +969,11 @@ class RCGZippedApp{
 			var car=cars.new("ZX");
 			car.setA1("ValueForA1");
 			car.setP2(0.2);
+			var car=cars.new("Golf");
+			car.setA1("ValueForGolfA1");
+			car.setP2(0.5);
 			cars.trace();
-
-			
+			var arrCars=cars.toArray();
 			
 			var webapp=new ZipWebApp();
 			self.extendFromObject(webapp);

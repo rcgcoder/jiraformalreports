@@ -30,6 +30,7 @@ export class jqlSelector {
         return AJS.$('[name="'+this.name+'-jqlEdit"]');
     }
     getJQLValue(){
+        var self=this;
         var theJQLBox=self.getJQLBox()[0];
         var sJQL=theJQLBox.value;
         return sJQL;

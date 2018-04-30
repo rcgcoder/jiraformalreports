@@ -618,7 +618,7 @@ class RCGZippedApp{
 		var self=this;
 		var arrStatus=[];
 		var fncAddStepDownloadRelativePath=function(iFile){
-			var sFile=arrRelativePaths(iFile);
+			var sFile=arrRelativePaths[iFile];
 			self.addStep("Downloading file:"+ sFile,function(){
 				self.pushCallback(function(sRelativePath,fileContent,contentType){
 					arrStatus[iFile]={path:sRelativePath,content:fileContent,type:contentType};

@@ -33,6 +33,7 @@ export class jiraCorrelator {
         return result;
     }
     getTextArea(){
+        var self=this;
         var txtArea=System.getAngularDomObject(self.name+"-text");
         txtArea=$(txtArea);
         return txtArea;

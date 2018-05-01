@@ -272,6 +272,7 @@ class ZipWebApp{
 */
 /*            System.getAngularObject('advSelector[name="selProjects"]').testNearley();
 */		
+			self.continueTask();
 		});
 		
 		self.continueTask();

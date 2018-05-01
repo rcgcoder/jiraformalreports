@@ -255,6 +255,8 @@ class ZipWebApp{
 		self.initializationBarrier.add(self.getRunningTask());
 		self.addStep("Initializing engines.... ",self.initialize);
 		self.addStep("Default Config.... ",function(){
+			log("Default Config");
+			System.getAngularObject('tabStructure');
 /*            System.getAngularObject('advSelector[name="selProjects"]').fillOptions(self.getListProjects());
             System.getAngularObject('advSelector[name="selTypes"]').fillOptions(self.getListIssueTypes());
             System.getAngularObject('advSelector[name="selLabels"]').fillOptions(self.getListLabels());

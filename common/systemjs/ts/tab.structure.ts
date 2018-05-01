@@ -60,11 +60,7 @@ export class TabStructure {
         var jql=config.selIssuesToReport.jql;
         auxObj.setJQLValue(jql);
         var issuesToReport=auxObj;
-        System.webapp.addStep("Loading JQL Issues",function(){
-            System.webapp.addStep("Refreshing jql results",function(){
-                issuesToReport.refreshResults();
-            });
-        });
+        issuesToReport.refreshResults(); // this adds steps to refresh all results
         System.webapp.addStep("Selecting default issues",function(){
             issuesToReport.setSelectedValues(config.selIssuesToReport.values);
             System.webapp.continueTask();

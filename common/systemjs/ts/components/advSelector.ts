@@ -128,14 +128,17 @@ export class advSelector {
         return arrResults;
     }
     setSelectedValues(selectedElems: []) {
-        log("selecting "+selectedElems.length+" elements");
         var self=this;
-        var arrAux=selectedElems;
-        if (selectedElems.length>0){
-            if (typeof selectedElems[0]!=="string"){
-                arrAux=[];
-                for (var i=0;i<selectedElems.length;i++){
-                    arrAux.push(selectedElems[i].key);
+        var arrAux=[];
+        if (typeof selectedElems=="undefined"){
+            log("selecting "+selectedElems.length+" elements");
+            arrAux=selectedElems;
+            if (selectedElems.length>0){
+                if (typeof selectedElems[0]!=="string"){
+                    arrAux=[];
+                    for (var i=0;i<selectedElems.length;i++){
+                        arrAux.push(selectedElems[i].key);
+                    }
                 }
             }
         }

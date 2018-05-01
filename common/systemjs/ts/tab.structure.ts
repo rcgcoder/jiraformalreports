@@ -31,7 +31,7 @@ export class TabStructure {
 //        System.webapp.continueTask();
         
     }
-    onSaveDefaultReport(){
+    saveDefaultReport(){
         var dfReport={};
         var auxObj=System.getAngularObject('selInterestFields',true);
         var arrValues=auxObj.getSelectedValues();
@@ -51,5 +51,35 @@ export class TabStructure {
         contentType.isCacheable=true;
         var content=JSON.stringify(dfReport);
         System.webapp.saveFileToStorage(fileName,content,contentType);
+    }
+    loadDefaultReport(){
+        var dfReport={};
+/*        var auxObj=System.getAngularObject('selInterestFields',true);
+        var arrValues=auxObj.getSelectedValues();
+        dfReport["selInterestFields"]=arrValues;
+        auxObj=System.getAngularObject('selIssuesToReport',true);
+        var jql=auxObj.getJQLValue();
+        arrValues=auxObj.getSelectedValues();
+        dfReport["selIssuesToReport"]={jql:jql,values:arrValues};
+        auxObj=System.getAngularObject('BillingHierarchy',true);
+        var value=auxObj.getValue();
+        dfReport["BillingHierarchy"]=value;
+        auxObj=System.getAngularObject('AdvanceHierarchy',true);
+        value=auxObj.getValue();
+        dfReport["AdvanceHierarchy"]=value;*/
+        var fileName="defaultReportConfig.json";
+        var contentType=System.webapp.getContentTypeFromExtension(fileName);
+        contentType.isCacheable=true;
+        var content=JSON.stringify(dfReport);
+        System.webapp.addStep("Loading default config file from Storage",function(){
+            System.webapp.loadFileFromStorage(fileName);
+        });
+        System.webapp.addStep("Applying default config ",function(sRelativePath,content){
+            log(sRelativePath);
+            var vAux=content;
+            var fAut=sRelativePath;
+            System.webapp.continueTask();
+        });
+        System.webapp.continueTask();
     }
 }

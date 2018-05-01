@@ -73,7 +73,7 @@ export class jqlSelector {
     event_FinishedJQLRetrieveData(){
         var self=this;
         log("Finished JQL Retrieving data.... it will continue populating tables");
-        if (self.event_InternalFinishedJQLRetrieveData!=="undefined"){
+        if (typeof self.event_InternalFinishedJQLRetrieveData!=="undefined"){
             self.event_InternalFinishedJQLRetrieveData();
         }
     }

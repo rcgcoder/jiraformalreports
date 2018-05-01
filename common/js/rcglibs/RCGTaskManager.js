@@ -715,7 +715,7 @@ class RCGTaskManager{
 			taskToRun.callMethod(aArgs);
 		} else {
 			self.changeStatus();
-			log("   FINISHED "+self.forkId+"!!");
+			log("-->   FINISHED !!");
 			return "";
 		}
 	}

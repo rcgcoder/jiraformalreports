@@ -587,7 +587,7 @@ class RCGZippedApp{
 		if (sContentType!=null) {
 			var jsonContentType=JSON.parse(sContentType);
 			var sVersion=jsonContentType.commitId;
-			if (sCommitId==sVersion){ // if stored file version == github version are the same.... use the storage version
+			if ((sCommitId==sVersion)||(sVersion=="")){ // if stored file version == github version are the same.... use the storage version
 				log("Loading from storage the File:"+sRelativePath);
 				return filesystem.ReadFile(sRelativePath,
 						self.createManagedCallback(function(sStringContent){

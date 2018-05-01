@@ -64,7 +64,7 @@ export class TabStructure {
             issuesToReport.onAdvSelectorRetrieveData();
         });
         System.webapp.addStep("Selecting default issues",function(){
-            issuesToReport.setSelectedValues(config.selIssuesToReport.arrValues);
+            issuesToReport.setSelectedValues(config.selIssuesToReport.values);
             System.webapp.continueTask();
         });
         

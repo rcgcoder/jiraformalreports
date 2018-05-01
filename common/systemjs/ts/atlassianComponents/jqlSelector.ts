@@ -69,6 +69,9 @@ export class jqlSelector {
         var self=this;
         log("Refreshing Results of:"+self.name);
         var fork=System.webapp.addStep("Getting values:"+self.name, function(){
+            System.webapp.addStep("Empty step to avoid the autocontinue in getValuesAsync.",function(){
+                log("Empty Step");
+            });
             log("processing step Getting Values(get values async):"+self.name);
             self.getSelector().getValuesAsync();
             log("launched get values async:"+self.name);

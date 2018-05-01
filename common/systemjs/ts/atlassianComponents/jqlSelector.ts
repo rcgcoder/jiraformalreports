@@ -34,8 +34,7 @@ export class jqlSelector {
         return sJQL;
     }
     setJQLValue(sJQL){
-        var self=this;
-        self.getJQLBox().val(sJQL);
+        this.getJQLBox().val(sJQL);
     }
     getSelector(){
         var self=this;

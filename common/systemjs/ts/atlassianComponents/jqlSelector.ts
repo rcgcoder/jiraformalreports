@@ -35,10 +35,21 @@ export class jqlSelector {
         var sJQL=theJQLBox.value;
         return sJQL;
     }
+    setJQLValue(sJQL){
+        var self=this;
+        var theJQLBox=self.getJQLBox()[0];
+        $(theJQLBox).val(sJQL);
+    }
+    
     getSelectedValues(){
         var self=this;
         var objSel=System.getAngularObject(self.name+"-advSelector",true);
         return objSel.getSelectedValues();
+    }
+    setSelectedValues(selectedElems: []) {
+        var self=this;
+        var objSel=System.getAngularObject(self.name+"-atlSelector",true);
+        return objSel.setSelectedValues(selectedElems);
     }
 
     onAdvSelectorRetrieveData(theAdvSelector){

@@ -56,13 +56,20 @@ export class TabStructure {
         var self=this;
         var auxObj=System.getAngularObject('selInterestFields',true);
         auxObj.setSelectedValues(config.selInterestFields]);
-/*
-        var arrValues=auxObj.getSelectedValues();
-        dfReport["selInterestFields"]=arrValues;
         auxObj=System.getAngularObject('selIssuesToReport',true);
-        var jql=auxObj.getJQLValue();
-        arrValues=auxObj.getSelectedValues();
-        dfReport["selIssuesToReport"]={jql:jql,values:arrValues};
+        var jql=config.selIssuesToReport.jql;
+        auxObj.setJQLValue(jql);
+        var issuesToReport=auxObj;
+        System.webapp.addStep("Loading JQL Issues",function(){
+            issuesToReport.onAdvSelectorRetrieveData();
+        });
+        System.webapp.addStep("Selecting default issues",function(){
+            issuesToReport.setSelectedValues(config.selIssuesToReport.arrValues);
+        });
+        
+
+        
+        /*
         auxObj=System.getAngularObject('BillingHierarchy',true);
         var value=auxObj.getValue();
         dfReport["BillingHierarchy"]=value;

@@ -76,7 +76,6 @@ export class jqlSelector {
     }
     onAdvSelectorRetrieveData(theAdvSelector){
         var self=this;
-        self.internal_issueList=undefined;
         log("Retrieving table data on jqlSelector");
         var sJQL=self.getJQLValue();
         if (sJQL==""){

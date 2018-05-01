@@ -68,17 +68,13 @@ export class TabStructure {
     }
     loadDefaultReport(){
         var self=this;
-        var dfReport={};
         var fileName="defaultReportConfig.json";
-        var contentType=System.webapp.getContentTypeFromExtension(fileName);
-        contentType.isCacheable=true;
-        var content=JSON.stringify(dfReport);
         System.webapp.addStep("Loading default config file from Storage",function(){
             System.webapp.loadFileFromStorage(fileName);
         });
         System.webapp.addStep("Applying default config ",function(sRelativePath,content){
             if (content!=""){
-                dfReport=JSON.parse(content);
+                var dfReport=JSON.parse(content);
                 self.applyConfig(dfReport);
             }
             System.webapp.continueTask();

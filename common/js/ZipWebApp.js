@@ -253,8 +253,9 @@ class ZipWebApp{
 			self.continueTask();
 		}));
 		self.initializationBarrier.add(self.getRunningTask());
-		self.addStep("Waiting Initialization.... ",function(){
-			log("Waiting to initialization barrier fire");
+		self.addStep("Initializing engines.... ",self.initialize);
+		self.addStep("Waiting to Barrier Reach.... ",function(){
+			log("Waiting to reach!.... not continues");
 		});
 		self.addStep("Default Config.... ",function(){
 			log("Default Config");

@@ -626,14 +626,14 @@ class RCGZippedApp{
 				});
 				self.addStep("File:"+sFile+" ¿need to load from network?",function(sRelativePath,fileContent,contentType){
 					if (fileContent!=""){
-						log("File "+iIntFile+" "+sRelativePath+ " is in Storage");
+//						log("File "+iIntFile+" "+sRelativePath+ " is in Storage");
 						return self.continueTask([sRelativePath,fileContent,contentType]);
 					}
-					log("File "+iIntFile+" "+sRelativePath+ " is not in Storage... loading from network");
+//					log("File "+iIntFile+" "+sRelativePath+ " is not in Storage... loading from network");
 					self.loadFileFromNetwork(sRelativePath,fileContent,contentType);
 				});
 				self.addStep("File:"+sFile+" fully loaded!",function(sRelativePath,fileContent,contentType){
-					log("File "+iIntFile+" "+sRelativePath+ " is loaded... updating status");
+//					log("File "+iIntFile+" "+sRelativePath+ " is loaded... updating status");
 					arrStatus[iIntFile]={path:sRelativePath,content:fileContent,type:contentType};
 					self.continueTask();
 				});
@@ -650,11 +650,9 @@ class RCGZippedApp{
 								);
 			});
 			self.addStep("Processed "+iFile+" file:"+fileStatus.path,function(){
-				log("Processed "+iFile+" file:"+fileStatus.path+"...¿postProcessing?");
-				if (typeof fncPostProcessFile==="undefined"){
-					log("NO postprocess file");
-				} else {
-					log("YES postprocess file");
+//				log("Processed "+iFile+" file:"+fileStatus.path+"...¿postProcessing?");
+				if (typeof fncPostProcessFile!=="undefined"){
+//					log("YES postprocess file");
 					fncPostProcessFile(iFile);
 				}
 				self.continueTask();

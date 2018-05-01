@@ -68,16 +68,10 @@ export class TabStructure {
             System.webapp.continueTask();
         });
         
-
-        
-        /*
         auxObj=System.getAngularObject('BillingHierarchy',true);
-        var value=auxObj.getValue();
-        dfReport["BillingHierarchy"]=value;
+        auxObj.setValue(config.BillingHierarchy);
         auxObj=System.getAngularObject('AdvanceHierarchy',true);
-        value=auxObj.getValue();
-        dfReport["AdvanceHierarchy"]=value;
-*/        
+        auxObj.setValue(config.AdvanceHierarchy);
         System.webapp.continueTask();
     }
     loadDefaultReport(){

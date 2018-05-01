@@ -59,12 +59,7 @@ export class TabStructure {
         auxObj=System.getAngularObject('selIssuesToReport',true);
         var jql=config.selIssuesToReport.jql;
         auxObj.setJQLValue(jql);
-        var issuesToReport=auxObj;
-        issuesToReport.refreshResults(); // this adds steps to refresh all results
-        System.webapp.addStep("Selecting default issues",function(){
-            issuesToReport.setSelectedValues(config.selIssuesToReport.values);
-            System.webapp.continueTask();
-        });
+        auxObj.setSelectedValues(config.selIssuesToReport.values);
         
         auxObj=System.getAngularObject('BillingHierarchy',true);
         auxObj.setValue(config.BillingHierarchy);

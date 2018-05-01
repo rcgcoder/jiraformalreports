@@ -46,9 +46,18 @@ export class jqlSelector {
         return this.getSelector().getSelectedValues();
     }
     setSelectedValues(selectedElems: []) {
-        this.getSelector().setSelectedValues(selectedElems);
+        var self=this;
+        self.refreshResults(); // this adds steps to refresh all results
+        // when refreshresults finished select the issues
+        System.webapp.addStep("Selecting default issues",function(){
+            this.getSelector().setSelectedValues(selectedElems);
+            System.webapp.continueTask();
+        });
+        System.webapp.continueTask();
     }
     refreshResults(){
+        System.webapp.addStep("lost step... to avoid the default continueTask of getValuesAsync",function(){
+        });
         this.getSelector().getValuesAsync();
     }
 

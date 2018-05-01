@@ -2,11 +2,11 @@
 
 <div>
 <label id="{{name}}-lbl" for="{{name}}-text">{{typeDescriptor}}<span class="aui-icon icon-required">required</span></label>
-<input class="text" type="text" id="{{name}}-text" name="{{name}}-text" title="{{typeDescriptor}}">
+<textarea (change)="textAreaChanged($event)" name="{{name}}-text" rows=6 style="width:100%;"></textarea>
 <button>+</button> 
 </div>
 <div>
-<table id="{{name}}-tbl" class="aui">
+<table id="{{name}}-table" class="aui">
     <thead>
         <tr>
             <th></th>

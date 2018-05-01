@@ -65,7 +65,8 @@ export class dlgSelectionTable {
                         ></aui-toggle>
                     </td>
                         <td>`+item.key+`</td>
-                        <td>`+item.name+`</td></tr>`
+                        <td>`+item.name+`</td>
+                  </tr>`
                 );
         }
         var arrToggles=self.getDialog().$el.find("aui-toggle");

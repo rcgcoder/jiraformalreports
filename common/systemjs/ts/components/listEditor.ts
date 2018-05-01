@@ -19,4 +19,40 @@ export class listEditor {
             System.bindObj(self);
         });
     }
+    getTextArea(){
+        var self=this;
+        var txtArea=System.getAngularDomObject(self.name+"-text");
+        txtArea=$(txtArea);
+        return txtArea;
+    }
+    getTextValue(){
+        return this.getTextArea().val();
+    }
+    getTable(){
+        var self=this;
+        var domObj=System.getAngularDomObject(self.name+"-table");
+        domObj=$(domObj);
+        return domObj;
+    }
+
+    
+    textAreaChanged(event){
+        var self=this;
+        var txtInput=self.getTextValue();
+        var arrInput=txtInput.split("\n");
+        
+        var self=this;
+        log("Populating table");
+        var tbl=self.getTable();
+//        tbl.find("tr:gt(0)").remove();
+        for (var i=0;i<arrInput.length;i++){
+            var item=arrInput[i];
+            tbl.append(
+                `<tr>
+                    <td><button>-</button></td>
+                    <td>`+item+`</td>
+                  </tr>`
+                );
+        }
+    }
 }

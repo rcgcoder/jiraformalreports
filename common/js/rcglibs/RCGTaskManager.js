@@ -460,6 +460,7 @@ class RCGTaskManager{
 		fork.methodWeight=iMethodWeight;
 		if (typeof barrier!=="undefined"){
 			fork.barrier=barrier;
+			log("Global Fork added to Barrier:"+barrier.id);
 			fork.barrier.add(fork);
 		}
 		self.globalForks.push(fork);

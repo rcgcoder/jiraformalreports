@@ -226,11 +226,11 @@ export class advSelector {
         if (self.initialized==false){
            barrierAux=System.webapp.initializationBarrier;
         }
-        var fork=System.webapp.addStep("Getting values:"+self.name, function(){
+        var fork=System.webapp.addStep("Fork Getting values:"+self.name, function(){
             log("processing step Getting Values(get values async):"+self.name);
             self.getValuesAsync(theDlgSelector);
             log("launched get values async:"+self.name);
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",barrierAux);
-//        System.webapp.continueTask();
+        //System.webapp.continueTask();
     }
 }

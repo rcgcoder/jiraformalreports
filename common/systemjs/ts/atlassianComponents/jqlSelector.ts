@@ -52,20 +52,23 @@ export class jqlSelector {
         var self=this;
         self.refreshResults(); // this adds steps to refresh all results
         // when refreshresults finished select the issues
-/*        var fncAddSelectElementsStep=function(){
-            System.webapp.addStep("Selecting default issues",function(optionList){
-                if (typeof self.internal_issueList==="undefined"){
+        var fncAddSelectElementsStep=function(){
+            System.webapp.addStep("Trying to Select default issues",function(optionList){
+                if (typeof self.isRetrievingData){
                     log("The elements still arriving... push select step at the end again");
                     fncAddSelectElementsStep();
                 } else {
-                    log("The elements are arrived... selecting values");
-                    self.getSelector().setSelectedValues(selectedElems);
+                    log("The elements are arrived... append task to select values");
+                    System.webapp.addStep("Select default issues",function(){
+                        self.getSelector().setSelectedValues(selectedElems);
+                        System.webapp.continueTask([optionList]);
+                    });
                 }
-                System.webapp.continueTask();
+                System.webapp.continueTask([optionList]);
             });
         }
         fncAddSelectElementsStep();
- */       System.webapp.continueTask();
+        System.webapp.continueTask();
     }
     refreshResults(){
         System.webapp.addStep("lost step... to avoid the default continueTask of getValuesAsync",function(){

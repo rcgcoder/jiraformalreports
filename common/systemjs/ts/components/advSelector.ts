@@ -130,7 +130,7 @@ export class advSelector {
     setSelectedValues(selectedElems: []) {
         var self=this;
         var arrAux=[];
-        if (typeof selectedElems=="undefined"){
+        if (typeof selectedElems!=="undefined"){
             log("selecting "+selectedElems.length+" elements");
             arrAux=selectedElems;
             if (selectedElems.length>0){

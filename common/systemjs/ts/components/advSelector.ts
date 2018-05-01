@@ -11,6 +11,7 @@ export class advSelector {
     @Input() openDialogCaption: string = '...';
     @Output() onRetrieveData = new EventEmitter<{}>();
     elements: [] = [];
+    initialized: boolean = false;
     getSelect(){
         return AJS.$('[name="'+this.name+'-select"]');
     }

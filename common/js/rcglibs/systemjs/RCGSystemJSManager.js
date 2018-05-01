@@ -61,7 +61,7 @@ class RCGSystemJSManager{
 					objHtml=$(sFinder);
 				}
 				if (objHtml.length==0){
-					sFinder=sAuxClassName+'[id="'+theName+'"]';
+					sFinder=/*sAuxClassName+*/'[id="'+theName+'"]';
 					objHtml=$(sFinder);
 				}
 				if (objHtml.length==0){

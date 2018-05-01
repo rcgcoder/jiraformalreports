@@ -179,7 +179,7 @@ export class advSelector {
                                           description:opt.description});
                         }
                         self.fillOptions(options);
-                        System.webapp.continueTask();
+                        System.webapp.continueTask([optionList]);
                     } else {
                         var nSeconds=(Math.random()*2000)+3000;
                         log("The onRetrieveData function of "+ self.name+" returns undefined.... trying again in "+nSeconds+" millis");

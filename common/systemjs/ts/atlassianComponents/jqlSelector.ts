@@ -49,10 +49,18 @@ export class jqlSelector {
         var self=this;
         self.refreshResults(); // this adds steps to refresh all results
         // when refreshresults finished select the issues
-        System.webapp.addStep("Selecting default issues",function(){
-            self.getSelector().setSelectedValues(selectedElems);
-            System.webapp.continueTask();
-        });
+        var fncAddSelectElementsStep=function(){
+            System.webapp.addStep("Selecting default issues",function(optionList){
+                if (typeof optionList==="undefined"){
+                    log("The elements still arriving... push select step at the end again");
+                    fncAddSelectElementsStep();
+                } else {
+                    self.getSelector().setSelectedValues(selectedElems);
+                }
+                System.webapp.continueTask();
+            });
+        }
+        fncAddSelectElementsStep();
         System.webapp.continueTask();
     }
     refreshResults(){

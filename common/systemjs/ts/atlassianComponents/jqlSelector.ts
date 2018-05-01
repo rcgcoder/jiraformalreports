@@ -51,6 +51,10 @@ export class jqlSelector {
         var objSel=System.getAngularObject(self.name+"-advSelector",true);
         return objSel.setSelectedValues(selectedElems);
     }
+    refreshResults(){
+        var objSel=System.getAngularObject(self.name+"-advSelector",true);
+        objSel.getValuesAsync();
+    }
 
     onAdvSelectorRetrieveData(theAdvSelector){
         var self=this;

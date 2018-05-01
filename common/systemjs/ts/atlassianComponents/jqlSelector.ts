@@ -56,6 +56,7 @@ export class jqlSelector {
             System.webapp.addStep("Selecting Items",function(){
                 self.getSelector().setSelectedValues(selectedElems);
                 self.event_InternalFinishedJQLRetrieveData=undefined;
+                System.webapp.continueTask();
             });
         }
         self.event_InternalFinishedJQLRetrieveData=fncAddSelectElementsStep;

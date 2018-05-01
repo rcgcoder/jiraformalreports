@@ -248,6 +248,7 @@ class ZipWebApp{
 		log("starting ZipWebApp");
 		var self=this;
 		self.initializationBarrier=new RCGBarrier(self.createManagedCallback(function(){
+			log("Initialization finished");
 			$("#appMain").css('visibility','visible');
 			self.continueTask();
 		}));

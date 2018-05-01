@@ -50,7 +50,7 @@ export class jqlSelector {
         self.refreshResults(); // this adds steps to refresh all results
         // when refreshresults finished select the issues
         System.webapp.addStep("Selecting default issues",function(){
-            this.getSelector().setSelectedValues(selectedElems);
+            self.getSelector().setSelectedValues(selectedElems);
             System.webapp.continueTask();
         });
         System.webapp.continueTask();

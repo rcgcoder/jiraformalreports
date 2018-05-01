@@ -128,10 +128,10 @@ export class advSelector {
         return arrResults;
     }
     setSelectedValues(selectedElems: []) {
-        log("Processing selection event");
+        log("selecting "+selectedElems.length+" elements");
         var self=this;
         var arrAux=selectedElems;
-        if (selectedKeys.length>0){
+        if (selectedElems.length>0){
             if (typeof selectedElems[0]!=="string"){
                 arrAux=[];
                 for (var i=0;i<selectedElems.length;i++){

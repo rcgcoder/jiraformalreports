@@ -55,7 +55,7 @@ export class TabStructure {
     applyConfig(config){
         var self=this;
         var auxObj=System.getAngularObject('selInterestFields',true);
-        auxObj.onSelected(config.selInterestFields]);
+        auxObj.setSelectedValues(config.selInterestFields]);
 /*
         var arrValues=auxObj.getSelectedValues();
         dfReport["selInterestFields"]=arrValues;

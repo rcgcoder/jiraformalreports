@@ -53,6 +53,7 @@ export class TabStructure {
         System.webapp.saveFileToStorage(fileName,content,contentType);
     }
     applyConfig(config){
+        var self=this;
         var auxObj=System.getAngularObject('selInterestFields',true);
         auxObj.onSelected(config.selInterestFields]);
 /*
@@ -71,6 +72,7 @@ export class TabStructure {
 */        
     }
     loadDefaultReport(){
+        var self=this;
         var dfReport={};
         var fileName="defaultReportConfig.json";
         var contentType=System.webapp.getContentTypeFromExtension(fileName);

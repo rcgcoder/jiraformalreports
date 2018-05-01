@@ -937,55 +937,6 @@ class RCGZippedApp{
 		var self=this;
 		self.pushCallback(function(){
 //			var webapp = new window[self.mainClass]();
-			
-			log("Testing hashmaps");
-			var hsTest=newHashMap();
-			var iMax=256;
-			while (hsTest.length()<iMax){
-				var sKey="key-"+fillCharsLeft(5,""+Math.round(Math.random()*(iMax*10))
-								,'0');
-				if (!hsTest.exists(sKey)){
-					hsTest.add(sKey,{key:sKey,value:"value for "+sKey});
-				} else {
-					log("node exists:"+sKey);
-				}
-			}
-			log("--------------------")
-			log("Trace HashMap");
-			log("--------------------")
-			hsTest.traceAll();
-			hsTest.swing();
-			log("--------------------")
-			log("Trace After swing");
-			log("--------------------")
-			hsTest.traceAll();
-			log("--------------------")
-			log("--------------------")
-			log("--------------------")
-			
-			log("end testing hashmaps");
-			
-
-			var cars=newDynamicObjectFactory([{name:"L1",description:"Element L1",type:"Number"},
-												{name:"L2",description:"Element L2",type:"Value"},
-												{name:"L3",description:"Element L3",type:"Date"}
-											   ],["A1","A2","A3"],[
-												   {name:"P1",description:"Element P1",type:"Number"},
-													{name:"P2",description:"Element P2",type:"Number"},
-													{name:"P3",description:"Element P3",type:"Number"}
-												   ]);
-			var car=cars.new("ZX","001");
-			car.setA1("ValueForA1");
-			car.setP2(0.2);
-			var car=cars.new("Golf","002");
-			car.setA1("ValueForGolfA1");
-			car.setP2(0.5);
-			cars.trace();
-			var arrCars=cars.toArray([
-									 {doFieldName:"Id",resultFieldName:"key"},
-									 {doFieldName:"Name",resultFieldName:"name"},
-									 {doFieldName:"A1",resultFieldName:"value"}
-									 ]);
 			var webapp=new ZipWebApp();
 			self.extendFromObject(webapp);
 			self.run();

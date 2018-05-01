@@ -9,6 +9,7 @@ import {TabConfig} from './tab.config';
 import {TabStructure} from './tab.structure';
 import {TabResult} from './tab.result';
 import {advSelector} from "./components/advSelector";
+import {listEditor} from "./components/listEditor";
 import {dlgSelectionTable} from './dialogs/dlgSelectionTable';
 import {jqlExtendedParser} from './components/jqlExtendedParser';
 import {jqlSelector} from "./atlassianComponents/jqlSelector";
@@ -77,6 +78,7 @@ class App {
                     TabResult, 
                     dlgSelectionTable,
                     advSelector,
+                    listEditor,
                     jqlExtendedParser,
                     jqlSelector,
                     atlassianSelector,

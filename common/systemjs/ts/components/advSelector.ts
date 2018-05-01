@@ -10,8 +10,6 @@ export class advSelector {
     @Input() maxCharsInSelect: integer = 17;
     @Input() openDialogCaption: string = '...';
     @Output() onRetrieveData = new EventEmitter<{}>();
-    @Output() onFinishedRetrieveData = new EventEmitter<{}>();
-    initialized: boolean = false;
     elements: [] = [];
     getSelect(){
         return AJS.$('[name="'+this.name+'-select"]');
@@ -158,11 +156,6 @@ export class advSelector {
         log("Observers retrieve:"+self.onRetrieveData.observers.length);
         return (self.onRetrieveData.observers.length>0);
     }
-    isSomeOneObservingFinish(){
-        var self=this;
-        log("Observers retrieve finish:"+self.onFinishedRetrieveData.observers.length);
-        return (self.onFinishedRetrieveData.observers.length>0);
-    }
     
     getValuesAsync(theDlgSelector){
         var self=this;
@@ -221,7 +214,6 @@ export class advSelector {
                 if (!self.initialized){
                    self.initialized=true;
                 }   
-                self.onFinishedRetrieveData.emit(self);
                 System.webapp.continueTask();
             });
         System.webapp.continueTask();

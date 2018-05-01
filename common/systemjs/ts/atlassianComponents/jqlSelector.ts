@@ -11,8 +11,9 @@ export class jqlSelector {
     @Input() maxCharsInSelect: integer = 17;
     @Input() openDialogCaption: string = '...';
     @Input() jql: string = '';
-
     
+
+    isRetrievingData: boolean : false;
     internal_issueList: []=[];
     ngOnInit() {
         var self=this;
@@ -76,33 +77,36 @@ export class jqlSelector {
     }
     onAdvSelectorRetrieveData(theAdvSelector){
         var self=this;
+        self.isRetrievingData=true;
         log("Retrieving table data on jqlSelector");
         var sJQL=self.getJQLValue();
         if (sJQL==""){
             log("Empty JQL is not allowed");
-            System.webapp.continueTask([[]]);
-            return;
+            self.isRetrievingData=false;
+            self.internal_issueList=[];
+            return System.webapp.continueTask([self.internal_issueList]);
         }
         if (self.jql==sJQL){
             log("Same jql:"+sJQL);
-            System.webapp.continueTask([self.internal_issueList]);
-        } else {
-            log("Diferent jql:"+sJQL);
-            self.jql=sJQL;
-            System.webapp.addStep("Getting issues from JQL:"+sJQL, function(){
-                System.webapp.getJQLIssues(sJQL);
-            });
-            System.webapp.addStep("Retrieving issues once the search is done",function(issueList){
-                log(issueList.length);
-                var arrIssues=[];
-                for (var i=0;i<issueList.length;i++){
-                    var issue=issueList[i];
-                    arrIssues.push({key:issue.key,name:issue.fields.summary,description:issue.fields.summary});
-                }
-                self.internal_issueList=arrIssues;
-                System.webapp.continueTask([arrIssues]);
-            });
-            System.webapp.continueTask();
-        }
+            self.isRetrievingData=false;
+            return System.webapp.continueTask([self.internal_issueList]);
+        } 
+        log("Diferent jql:"+sJQL);
+        self.jql=sJQL;
+        System.webapp.addStep("Getting issues from JQL:"+sJQL, function(){
+            System.webapp.getJQLIssues(sJQL);
+        });
+        System.webapp.addStep("Retrieving issues once the search is done",function(issueList){
+            log(issueList.length);
+            var arrIssues=[];
+            for (var i=0;i<issueList.length;i++){
+                var issue=issueList[i];
+                arrIssues.push({key:issue.key,name:issue.fields.summary,description:issue.fields.summary});
+            }
+            self.internal_issueList=arrIssues;
+            self.isRetrievingData=false;
+            System.webapp.continueTask([arrIssues]);
+        });
+        System.webapp.continueTask();
     }
 }

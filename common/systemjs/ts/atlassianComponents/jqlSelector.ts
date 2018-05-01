@@ -53,21 +53,12 @@ export class jqlSelector {
         self.refreshResults(); // this adds steps to refresh all results
         // when refreshresults finished select the issues
         var fncAddSelectElementsStep=function(){
-            System.webapp.addStep("Trying to Select default issues",function(optionList){
-                if (typeof self.isRetrievingData){
-                    log("The elements still arriving... push select step at the end again");
-                    fncAddSelectElementsStep();
-                } else {
-                    log("The elements are arrived... append task to select values");
-                    System.webapp.addStep("Select default issues",function(){
-                        self.getSelector().setSelectedValues(selectedElems);
-                        System.webapp.continueTask([optionList]);
-                    });
-                }
-                System.webapp.continueTask([optionList]);
+            System.webapp.addStep("Selecting Items",function(){
+                self.getSelector().setSelectedValues(selectedElems);
+                self.event_InternalFinishedJQLRetrieveData=undefined;
             });
         }
-        fncAddSelectElementsStep();
+        self.event_InternalFinishedJQLRetrieveData=fncAddSelectElementsStep;
         System.webapp.continueTask();
     }
     refreshResults(){
@@ -75,8 +66,14 @@ export class jqlSelector {
         });
         this.getSelector().getValuesAsync();
     }
-    onFinishedAdvSelectorRetrieveData(theAdvSelector){
-        log("Finished Retrieving data");
+    event_InternalFinishedJQLRetrieveData(){
+        log("do nothing");
+    }
+    event_FinishedJQLRetrieveData(){
+        log("Finished JQL Retrieving data.... it will continue populating tables");
+        if (self.event_InternalFinishedJQLRetrieveData!=="undefined"){
+            self.event_InternalFinishedJQLRetrieveData();
+        }
     }
     onAdvSelectorRetrieveData(theAdvSelector){
         var self=this;
@@ -108,6 +105,7 @@ export class jqlSelector {
             }
             self.internal_issueList=arrIssues;
             self.isRetrievingData=false;
+            self.event_FinishedJQLRetrieveData();
             System.webapp.continueTask([arrIssues]);
         });
         System.webapp.continueTask();

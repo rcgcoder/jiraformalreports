@@ -259,8 +259,8 @@ class ZipWebApp{
 		});
 		self.addStep("Default Config.... ",function(){
 			log("Everything is initialized! now Config!");
-			var tbStructure=System.getAngularObject('tabStructure',true);
-			tbStructure.loadDefaultReport();
+//			var tbStructure=System.getAngularObject('tabStructure',true);
+//			tbStructure.loadDefaultReport();
 /*            System.getAngularObject('advSelector[name="selProjects"]').fillOptions(self.getListProjects());
             System.getAngularObject('advSelector[name="selTypes"]').fillOptions(self.getListIssueTypes());
             System.getAngularObject('advSelector[name="selLabels"]').fillOptions(self.getListLabels());

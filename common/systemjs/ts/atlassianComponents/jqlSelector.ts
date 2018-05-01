@@ -48,7 +48,7 @@ export class jqlSelector {
     }
     setSelectedValues(selectedElems: []) {
         var self=this;
-        var objSel=System.getAngularObject(self.name+"-atlSelector",true);
+        var objSel=System.getAngularObject(self.name+"-advSelector",true);
         return objSel.setSelectedValues(selectedElems);
     }
 

@@ -63,7 +63,6 @@ export class jqlSelector {
             });
 //        }
 //        self.event_InternalFinishedJQLRetrieveData=fncAddSelectElementsStep;
-        System.webapp.continueTask();
     }
     refreshResults(){
         var self=this;

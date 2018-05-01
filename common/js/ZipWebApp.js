@@ -259,7 +259,7 @@ class ZipWebApp{
 		});
 		self.addStep("Default Config.... ",function(){
 			log("Everything is initialized! now Config!");
-			self.addStep("Loading Config from Storage",function(){
+			self.addStep("Loading default config from Storage",function(){
 				var tbStructure=System.getAngularObject('tabStructure',true);
 				tbStructure.loadDefaultReport();
 			});

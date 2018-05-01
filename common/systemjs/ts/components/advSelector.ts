@@ -10,6 +10,7 @@ export class advSelector {
     @Input() maxCharsInSelect: integer = 17;
     @Input() openDialogCaption: string = '...';
     @Output() onRetrieveData = new EventEmitter<{}>();
+    @Output() onFinishedRetrieveData= new EventEmitter<{}>();
     initialized: boolean = false;
     elements: [] = [];
     getSelect(){
@@ -154,8 +155,13 @@ export class advSelector {
     }
     isSomeOneObserving(){
         var self=this;
-        log("Observers:"+self.onRetrieveData.observers.length);
+        log("Observers retrieve:"+self.onRetrieveData.observers.length);
         return (self.onRetrieveData.observers.length>0);
+    }
+    isSomeOneObservingFinish(){
+        var self=this;
+        log("Observers retrieve finish:"+self.onFinishedRetrieveData.observers.length);
+        return (self.onFinishedRetrieveData.observers.length>0);
     }
     
     getValuesAsync(theDlgSelector){
@@ -192,7 +198,7 @@ export class advSelector {
                     }
                 });
         }
-        System.webapp.addStep("Populating the table of "+self.name,function(){
+        System.webapp.addStep("Populating the table of "+self.name,function(optionList){
                 var theSelect=self.getSelect();
                 var nOps=theSelect[0].length; 
                 var arrTable=[];
@@ -215,6 +221,7 @@ export class advSelector {
                 if (!self.initialized){
                    self.initialized=true;
                 }   
+                self.onFinishedRetrieveData.emit(self);
                 System.webapp.continueTask();
             });
         System.webapp.continueTask();

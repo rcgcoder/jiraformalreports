@@ -1,4 +1,4 @@
-import { Component, Input, Output, OnInit } from '@angular/core';
+import { Component,EventEmitter, Input, Output, OnInit } from '@angular/core';
 import {advSelector} from "../components/advSelector";
 @Component({
   selector: 'jqlSelector',
@@ -11,6 +11,8 @@ export class jqlSelector {
     @Input() maxCharsInSelect: integer = 17;
     @Input() openDialogCaption: string = '...';
     @Input() jql: string = '';
+
+    
     internal_issueList: []=[];
     ngOnInit() {
         var self=this;
@@ -49,9 +51,9 @@ export class jqlSelector {
         var self=this;
         self.refreshResults(); // this adds steps to refresh all results
         // when refreshresults finished select the issues
-        var fncAddSelectElementsStep=function(){
+/*        var fncAddSelectElementsStep=function(){
             System.webapp.addStep("Selecting default issues",function(optionList){
-                if (typeof optionList==="undefined"){
+                if (typeof self.internal_issueList==="undefined"){
                     log("The elements still arriving... push select step at the end again");
                     fncAddSelectElementsStep();
                 } else {
@@ -62,16 +64,19 @@ export class jqlSelector {
             });
         }
         fncAddSelectElementsStep();
-        System.webapp.continueTask();
+ */       System.webapp.continueTask();
     }
     refreshResults(){
         System.webapp.addStep("lost step... to avoid the default continueTask of getValuesAsync",function(){
         });
         this.getSelector().getValuesAsync();
     }
-
+    onFinishedAdvSelectorRetrieveData(theAdvSelector){
+        log("Finished Retrieving data");
+    }
     onAdvSelectorRetrieveData(theAdvSelector){
         var self=this;
+        self.internal_issueList=undefined;
         log("Retrieving table data on jqlSelector");
         var sJQL=self.getJQLValue();
         if (sJQL==""){

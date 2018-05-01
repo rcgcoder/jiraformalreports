@@ -130,9 +130,18 @@ export class advSelector {
     onSelected(selectedKeys: []) {
         log("Processing selection event");
         var self=this;
-        self.valuesSelected=selectedKeys;
+        var arrAux=selectedKeys;
+        if (selectedKeys.length>0){
+            if (typeof selectedKeys[0]!=="string"){
+                arrAux=[];
+                for (var i=0;i<selectedKeys.length;i++){
+                    arrAux.push(selectedKeys[i].key);
+                }
+            }
+        }
+        self.valuesSelected=arrAux;
         var theSelect=this.getSelect();
-        theSelect.val(selectedKeys);
+        theSelect.val(arrAux);
         theSelect.trigger('change'); // Notify any JS components that the value changed
     }
     isSomeOneObserving(){

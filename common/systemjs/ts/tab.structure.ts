@@ -52,9 +52,10 @@ export class TabStructure {
         var content=JSON.stringify(dfReport);
         System.webapp.saveFileToStorage(fileName,content,contentType);
     }
-    loadDefaultReport(){
-        var dfReport={};
-/*        var auxObj=System.getAngularObject('selInterestFields',true);
+    applyConfig(config){
+        var auxObj=System.getAngularObject('selInterestFields',true);
+        auxObj.onSelected(config.selInterestFields]);
+/*
         var arrValues=auxObj.getSelectedValues();
         dfReport["selInterestFields"]=arrValues;
         auxObj=System.getAngularObject('selIssuesToReport',true);
@@ -66,7 +67,11 @@ export class TabStructure {
         dfReport["BillingHierarchy"]=value;
         auxObj=System.getAngularObject('AdvanceHierarchy',true);
         value=auxObj.getValue();
-        dfReport["AdvanceHierarchy"]=value;*/
+        dfReport["AdvanceHierarchy"]=value;
+*/        
+    }
+    loadDefaultReport(){
+        var dfReport={};
         var fileName="defaultReportConfig.json";
         var contentType=System.webapp.getContentTypeFromExtension(fileName);
         contentType.isCacheable=true;
@@ -75,9 +80,10 @@ export class TabStructure {
             System.webapp.loadFileFromStorage(fileName);
         });
         System.webapp.addStep("Applying default config ",function(sRelativePath,content){
-            log(sRelativePath);
-            var vAux=content;
-            var fAut=sRelativePath;
+            if (content!=""){
+                dfReport=JSON.parse(content);
+                self.applyConfig(dfReport);
+            }
             System.webapp.continueTask();
         });
         System.webapp.continueTask();

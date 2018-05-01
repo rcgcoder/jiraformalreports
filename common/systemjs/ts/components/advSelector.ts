@@ -10,7 +10,6 @@ export class advSelector {
     @Input() maxCharsInSelect: integer = 17;
     @Input() openDialogCaption: string = '...';
     @Output() onRetrieveData = new EventEmitter<{}>();
-    @Output() onFinishedRetrieveData= new EventEmitter<{}>();
     initialized: boolean = false;
     elements: [] = [];
     getSelect(){
@@ -221,7 +220,7 @@ export class advSelector {
                 if (!self.initialized){
                    self.initialized=true;
                 }   
-//                self.onFinishedRetrieveData.emit(self);
+                self.onFinishedRetrieveData.emit(self);
                 System.webapp.continueTask();
             });
         System.webapp.continueTask();

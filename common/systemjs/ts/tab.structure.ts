@@ -65,6 +65,7 @@ export class TabStructure {
         });
         System.webapp.addStep("Selecting default issues",function(){
             issuesToReport.setSelectedValues(config.selIssuesToReport.arrValues);
+            System.webapp.continueTask();
         });
         
 
@@ -77,6 +78,7 @@ export class TabStructure {
         value=auxObj.getValue();
         dfReport["AdvanceHierarchy"]=value;
 */        
+        System.webapp.continueTask();
     }
     loadDefaultReport(){
         var self=this;

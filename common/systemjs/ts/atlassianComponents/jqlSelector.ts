@@ -54,15 +54,10 @@ export class jqlSelector {
             self.refreshResults(); // this adds steps to refresh all results
         });
         
-        // when refreshresults finished select the issues
-//        var fncAddSelectElementsStep=function(){
-            System.webapp.addStep("Selecting Items",function(){
-                self.getSelector().setSelectedValues(selectedElems);
-//                self.event_InternalFinishedJQLRetrieveData=undefined;
-                System.webapp.continueTask();
-            });
-//        }
-//        self.event_InternalFinishedJQLRetrieveData=fncAddSelectElementsStep;
+        System.webapp.addStep("Selecting Items",function(){
+            self.getSelector().setSelectedValues(selectedElems);
+            System.webapp.continueTask();
+        });
     }
     refreshResults(){
         var self=this;
@@ -73,16 +68,6 @@ export class jqlSelector {
             log("launched get values async:"+self.name);
         },0,1,undefined,undefined,undefined,"INNER",undefined);
         System.webapp.continueTask();
-    }
-    event_InternalFinishedJQLRetrieveData(){
-        log("do nothing");
-    }
-    event_FinishedJQLRetrieveData(){
-        var self=this;
-        log("Finished JQL Retrieving data.... it will continue populating tables");
-        if (typeof self.event_InternalFinishedJQLRetrieveData!=="undefined"){
-            self.event_InternalFinishedJQLRetrieveData();
-        }
     }
     onAdvSelectorRetrieveData(theAdvSelector){
         var self=this;
@@ -114,7 +99,6 @@ export class jqlSelector {
             }
             self.internal_issueList=arrIssues;
             self.isRetrievingData=false;
-            self.event_FinishedJQLRetrieveData();
             System.webapp.continueTask([arrIssues]);
         });
         System.webapp.continueTask();

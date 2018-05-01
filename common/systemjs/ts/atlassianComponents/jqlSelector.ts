@@ -50,22 +50,29 @@ export class jqlSelector {
     }
     setSelectedValues(selectedElems: []) {
         var self=this;
-        self.refreshResults(); // this adds steps to refresh all results
+        System.webapp.addStep("Refressing values from jql",function(){
+            self.refreshResults(); // this adds steps to refresh all results
+        });
+        
         // when refreshresults finished select the issues
-        var fncAddSelectElementsStep=function(){
+//        var fncAddSelectElementsStep=function(){
             System.webapp.addStep("Selecting Items",function(){
                 self.getSelector().setSelectedValues(selectedElems);
-                self.event_InternalFinishedJQLRetrieveData=undefined;
+//                self.event_InternalFinishedJQLRetrieveData=undefined;
                 System.webapp.continueTask();
             });
-        }
-        self.event_InternalFinishedJQLRetrieveData=fncAddSelectElementsStep;
+//        }
+//        self.event_InternalFinishedJQLRetrieveData=fncAddSelectElementsStep;
         System.webapp.continueTask();
     }
     refreshResults(){
-        System.webapp.addStep("lost step... to avoid the default continueTask of getValuesAsync",function(){
-        });
-        this.getSelector().getValuesAsync();
+        var self=this;
+        log("Refreshing Results of:"+self.name);
+        var fork=System.webapp.addStep("Getting values:"+self.name, function(){
+            log("processing step Getting Values(get values async):"+self.name);
+            self.getSelector().getValuesAsync();
+            log("launched get values async:"+self.name);
+        },0,1,undefined,undefined,undefined,"INNER",undefined);
     }
     event_InternalFinishedJQLRetrieveData(){
         log("do nothing");

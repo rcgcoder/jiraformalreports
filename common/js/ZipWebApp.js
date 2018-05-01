@@ -253,7 +253,9 @@ class ZipWebApp{
 			self.continueTask();
 		}));
 		self.initializationBarrier.add(self.getRunningTask());
-		self.addStep("Initializing engines.... ",self.initialize);
+		self.addStep("Waiting Initialization.... ",function(){
+			log("Waiting to initialization barrier fire");
+		});
 		self.addStep("Default Config.... ",function(){
 			log("Default Config");
 			System.getAngularObject('tabStructure');

@@ -55,6 +55,7 @@ export class jqlSelector {
                     log("The elements still arriving... push select step at the end again");
                     fncAddSelectElementsStep();
                 } else {
+                    log("The elements are arrived... selecting values");
                     self.getSelector().setSelectedValues(selectedElems);
                 }
                 System.webapp.continueTask();

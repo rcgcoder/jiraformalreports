@@ -65,7 +65,6 @@ export class TabStructure {
         auxObj.setValue(config.BillingHierarchy);
         auxObj=System.getAngularObject('AdvanceHierarchy',true);
         auxObj.setValue(config.AdvanceHierarchy);
-        System.webapp.continueTask();
     }
     loadDefaultReport(){
         var self=this;

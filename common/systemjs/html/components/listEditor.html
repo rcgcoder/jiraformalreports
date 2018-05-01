@@ -1,23 +1,23 @@
-
-
-<div>
-<label id="{{name}}-lbl" for="{{name}}-text">{{typeDescriptor}}<span class="aui-icon icon-required">required</span></label>
-<textarea (change)="textAreaChanged($event)" name="{{name}}-text" rows=6 style="width:80%;"></textarea>
-<button>+</button> 
-</div>
-<div>
-<table id="{{name}}-table" class="aui">
-    <thead>
-        <tr>
-            <th></th>
-            <th>{{typeDescriptor}}</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><button>-</button></td>
-            <td>One {{typeDescriptor}}</td>
-        </tr>
-    </tbody>
-</table>
+<div class="aui-group">
+    <div class="aui-item">
+		<label id="{{name}}-lbl" for="{{name}}-text">{{typeDescriptor}}<span class="aui-icon icon-required">required</span></label>		<button>+</button> 
+		<br>
+		<textarea (change)="textAreaChanged($event)" name="{{name}}-text" rows=6 style="width:100%;"></textarea>
+    </div>
+    <div class="aui-item">
+		<table id="{{name}}-table" class="aui">
+		    <thead>
+		        <tr>
+		            <th></th>
+		            <th>{{typeDescriptor}}</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		        <tr>
+		            <td><button>-</button></td>
+		            <td>One {{typeDescriptor}}</td>
+		        </tr>
+		    </tbody>
+		</table>
+    </div>
 </div>

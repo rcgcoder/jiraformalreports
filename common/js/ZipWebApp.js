@@ -255,10 +255,10 @@ class ZipWebApp{
 //		self.initializationBarrier.add(self.getRunningTask());
 		self.addStep("Initializing engines.... ",self.initialize);
 		self.addStep("Waiting to Barrier Reach.... ",function(){
-			log("Waiting to reach!.... not continues");
+			log("Waiting to reach!.... not continues... it will continue when initialization barrier reachs all");
 		});
 		self.addStep("Default Config.... ",function(){
-			log("Default Config");
+			log("Everything is initialized! not Config!");
 			System.getAngularObject('tabStructure');
 /*            System.getAngularObject('advSelector[name="selProjects"]').fillOptions(self.getListProjects());
             System.getAngularObject('advSelector[name="selTypes"]').fillOptions(self.getListIssueTypes());
@@ -272,7 +272,6 @@ class ZipWebApp{
 */
 /*            System.getAngularObject('advSelector[name="selProjects"]').testNearley();
 */		
-			self.initializationBarrier.reach(self.getRunningTask());
 		});
 		
 		self.continueTask();

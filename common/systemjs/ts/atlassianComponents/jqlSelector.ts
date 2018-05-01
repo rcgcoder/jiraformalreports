@@ -27,33 +27,30 @@ export class jqlSelector {
         win.focus();
     }
     getJQLBox(){
-        return AJS.$('[name="'+this.name+'-jqlEdit"]');
+        return $(AJS.$('[name="'+this.name+'-jqlEdit"]')[0]);
     }
     getJQLValue(){
-        var self=this;
-        var theJQLBox=self.getJQLBox()[0];
-        var sJQL=theJQLBox.value;
+        var sJQL=this.getJQLBox().val();
         return sJQL;
     }
     setJQLValue(sJQL){
         var self=this;
-        var theJQLBox=self.getJQLBox()[0];
-        $(theJQLBox).val(sJQL);
+        self.getJQLBox().val(sJQL);
+    }
+    getSelector(){
+        var self=this;
+        var objSel=System.getAngularObject(self.name+"-advSelector",true);
+        return objSel;
     }
     
     getSelectedValues(){
-        var self=this;
-        var objSel=System.getAngularObject(self.name+"-advSelector",true);
-        return objSel.getSelectedValues();
+        return this.getSelector().getSelectedValues();
     }
     setSelectedValues(selectedElems: []) {
-        var self=this;
-        var objSel=System.getAngularObject(self.name+"-advSelector",true);
-        return objSel.setSelectedValues(selectedElems);
+        this.getSelector().setSelectedValues(selectedElems);
     }
     refreshResults(){
-        var objSel=System.getAngularObject(self.name+"-advSelector",true);
-        objSel.getValuesAsync();
+        this.getSelector().getValuesAsync();
     }
 
     onAdvSelectorRetrieveData(theAdvSelector){

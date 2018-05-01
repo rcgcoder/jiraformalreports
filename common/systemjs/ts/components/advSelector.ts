@@ -221,7 +221,7 @@ export class advSelector {
                 if (!self.initialized){
                    self.initialized=true;
                 }   
-                self.onFinishedRetrieveData.emit(self);
+//                self.onFinishedRetrieveData.emit(self);
                 System.webapp.continueTask();
             });
         System.webapp.continueTask();

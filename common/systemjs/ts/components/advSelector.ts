@@ -127,15 +127,15 @@ export class advSelector {
         }
         return arrResults;
     }
-    onSelected(selectedKeys: []) {
+    setSelectedValues(selectedElems: []) {
         log("Processing selection event");
         var self=this;
-        var arrAux=selectedKeys;
+        var arrAux=selectedElems;
         if (selectedKeys.length>0){
-            if (typeof selectedKeys[0]!=="string"){
+            if (typeof selectedElems[0]!=="string"){
                 arrAux=[];
-                for (var i=0;i<selectedKeys.length;i++){
-                    arrAux.push(selectedKeys[i].key);
+                for (var i=0;i<selectedElems.length;i++){
+                    arrAux.push(selectedElems[i].key);
                 }
             }
         }
@@ -143,6 +143,11 @@ export class advSelector {
         var theSelect=this.getSelect();
         theSelect.val(arrAux);
         theSelect.trigger('change'); // Notify any JS components that the value changed
+    }
+    onSelected(selectedKeys: []) {
+        log("Processing selection event");
+        var self=this;
+        self.setSelectedValues(selectedKeys);
     }
     isSomeOneObserving(){
         var self=this;

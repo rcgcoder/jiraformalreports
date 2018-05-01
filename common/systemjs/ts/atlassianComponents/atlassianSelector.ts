@@ -25,6 +25,11 @@ export class atlassianSelector {
         var objSel=System.getAngularObject(self.name+"-atlSelector",true);
         return objSel.getSelectedValues();
     }
+    setSelectedValues(selectedElems: []) {
+        var self=this;
+        var objSel=System.getAngularObject(self.name+"-atlSelector",true);
+        return objSel.setSelectedValues(selectedElems);
+    }
     getPropertyValues(){
         var obj;
         if (this.atlassianAplication.toUpperCase()=="JIRA"){

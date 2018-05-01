@@ -258,8 +258,9 @@ class ZipWebApp{
 			log("Waiting to reach!.... not continues... it will continue when initialization barrier reachs all");
 		});
 		self.addStep("Default Config.... ",function(){
-			log("Everything is initialized! not Config!");
-			System.getAngularObject('tabStructure');
+			log("Everything is initialized! now Config!");
+			var tbStructure=System.getAngularObject('tabStructure',true);
+			tbStructure.loadDefaultReport();
 /*            System.getAngularObject('advSelector[name="selProjects"]').fillOptions(self.getListProjects());
             System.getAngularObject('advSelector[name="selTypes"]').fillOptions(self.getListIssueTypes());
             System.getAngularObject('advSelector[name="selLabels"]').fillOptions(self.getListLabels());

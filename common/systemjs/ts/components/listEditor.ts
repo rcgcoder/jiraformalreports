@@ -63,8 +63,8 @@ export class listEditor {
             var sBtnName=self.name+"_btnDel_"+i;
             tbl.append(
                 `<tr>
-                    <td><button id="`+sBtnName+`" list_index="`+ i +`" class="aui-button">-</button></td>
-                    <td>`+item+`</td>
+                    <td><button id="`+sBtnName+`" list_index="`+ i +`" class="aui-button">-</button>
+                    `+item+`</td>
                   </tr>`
                 );
             var jqElem=$("#"+sBtnName);

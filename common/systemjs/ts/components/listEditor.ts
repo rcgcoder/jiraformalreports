@@ -11,6 +11,13 @@ export class listEditor {
     @Input() openDialogCaption: string = '...';
     @Output() onRetrieveData = new EventEmitter<{}>();
     elements: [] = [];
+    getElements(){
+        return this.elements();
+    }
+    setElements(arrNewElements){
+        this.elements=arrNewElements;
+        self.refreshTable();
+    }
     initialized: boolean = false;
     ngOnInit() {
         var self=this;
@@ -34,20 +41,16 @@ export class listEditor {
         domObj=$(domObj);
         return domObj;
     }
-
-    
-    textAreaChanged(event){
-        var self=this;
-        var txtInput=self.getTextValue();
-        var arrInput=txtInput.split("\n");
-        
-        var self=this;
-        log("Populating table");
+    onDeleteElement(index){
+        self.elements.splice(index, 1);
+        self.refreshTable();
+    }
+    refreshTable(){
+        log("Refreshing table");
         var tbl=self.getTable();
-//        tbl.find("tr:gt(0)").remove();
-        for (var i=0;i<arrInput.length;i++){
-            var item=arrInput[i];
-            self.elements.push(item);
+        tbl.find("tr:gt(0)").remove();
+        for (var i=0;i<self.elements.length;i++){
+            var item=self.elements[i];
             tbl.append(
                 `<tr>
                     <td><button (click)="onDeleteElement(`+(self.elements.length-1)+`)">-</button></td>
@@ -56,4 +59,37 @@ export class listEditor {
                 );
         }
     }
+    onTableToTextArea(){
+       var self=this;
+       var sTxt="";
+       for (var i=0;i<self.elements.length;i++){
+           if (i>0){
+              sTxt+="\n";
+           }
+           sTxt+=self.elements[i];
+       }
+       var tArea=getTextArea();
+       tArea.val(sTxt);
+    }
+    onReplaceTableFromTextArea(){
+        var self=this;
+        this.elements=[];
+        var tbl=self.getTable();
+        tbl.find("tr:gt(0)").remove();
+        self.onTableToTextArea();
+    }
+    onTableToTextArea(){
+        var self=this;
+        var txtInput=self.getTextValue();
+        var arrInput=txtInput.split("\n");
+        
+        var self=this;
+        for (var i=0;i<arrInput.length;i++){
+            var item=arrInput[i];
+            if (!isInArray(self.elements,item)){
+                self.elements.push(item);
+            }
+        }
+        self.refreshTable();
+    }   
 }

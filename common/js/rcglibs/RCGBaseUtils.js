@@ -138,8 +138,14 @@ function isInArray(theArray,theKey,theField){
 	var bExists=false;
 	for (var k=0;(!bExists)&&(k<theArray.length);k++){
 		var it=theArray[k];
-		if (it[theField]==theKey){
-			return true;
+		if (isDefined(theField)){
+			if (it[theField]==theKey){
+				return true;
+			}
+		} else {
+			if (it==theKey){
+				return true;
+			}
 		}
 	}
 	return false;

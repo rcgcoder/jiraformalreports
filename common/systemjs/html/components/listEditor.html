@@ -6,17 +6,21 @@
 		<br>
 		<textarea (change)="textAreaChanged($event)" name="{{name}}-text" rows=6 style="width:100%;"></textarea>
     </div>
-    <div class="aui-item" style="overflow-y: auto;height:150px;">
-		<table id="{{name}}-table" class="aui">
+    <div class="aui-item">
+		<table id="{{name}}-tableHead" class="aui">
 		    <thead>
 		        <tr>
 		            <th></th>
 		            <th>{{typeDescriptor}}</th>
 		        </tr>
 		    </thead>
-		    <tbody style="overflow-y: auto;height:150px;">
-		    </tbody>
 		</table>
+		<div style="overflow-y: auto;height:150px;">
+			<table id="{{name}}-table" class="aui">
+			    <tbody >
+			    </tbody>
+			</table>
+		</div>
     </div>
 </div>
 </div>

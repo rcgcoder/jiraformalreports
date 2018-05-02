@@ -50,7 +50,7 @@ export class dlgSelectionTable {
         var self=this;
         log("Populating table");
         var tbl=self.getTable();
-        tbl.find("tr").remove();
+        tbl.find("tr:gt(0)").remove();
         for (var i=0;i<tableData.length;i++){
             var item=tableData[i];
             tbl.append(

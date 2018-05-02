@@ -52,6 +52,12 @@ export class listEditor {
         log("Refreshing table");
         var tbl=self.getTable();
         tbl.find("tr:gt(0)").remove();
+        var fncAddClickEvent(jqlElement){
+            jqlElement.click(function(){
+                var indAux=jqlElement.attr("list_index");
+                self.onDeleteElement(indAux);
+            });
+        }
         for (var i=0;i<self.elements.length;i++){
             var item=self.elements[i];
             var sBtnName=self.name+"_btnDel_"+i;
@@ -62,11 +68,7 @@ export class listEditor {
                   </tr>`
                 );
             var jqElem=$("#"+sBtnName);
-            jqElem.click(function(){
-                var jqAux=jqElem;
-                var index=jqAux.attr("list_index");
-                self.onDeleteElement(index);
-            });
+            fncAddClickEvent(jqElem);
         }
     }
     onTableToTextArea(){

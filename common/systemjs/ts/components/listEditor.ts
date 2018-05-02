@@ -51,7 +51,7 @@ export class listEditor {
         var self=this;
         log("Refreshing table");
         var tbl=self.getTable();
-        tbl.find("tr:gt(0)").remove();
+        tbl.find("tr").remove();
         var fncAddClickEvent(jqlElement){
             jqlElement.click(function(){
                 var indAux=jqlElement.attr("list_index");

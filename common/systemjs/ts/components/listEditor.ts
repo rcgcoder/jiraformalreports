@@ -54,15 +54,18 @@ export class listEditor {
         tbl.find("tr:gt(0)").remove();
         for (var i=0;i<self.elements.length;i++){
             var item=self.elements[i];
+            var sBtnName=self.name+"_btnDel_"+i;
             tbl.append(
                 `<tr>
-                    <td><button onclick="function(){
-                            var objSel=System.getAngularObject('`+ self.name +`',true);
-                            objSel.onDeleteElement(`+(self.elements.length-1)+`
-                            }"  class="aui-button">-</button></td>
+                    <td><button id="`+sBtnName+`" list_index="`+ i +`" class="aui-button">-</button></td>
                     <td>`+item+`</td>
                   </tr>`
                 );
+            var jqElem=$("#sBtnName");
+            jqElem.click(function(){
+                var index=this.attr("list_index");
+                self.onDeleteElement(index);
+            });
         }
     }
     onTableToTextArea(){

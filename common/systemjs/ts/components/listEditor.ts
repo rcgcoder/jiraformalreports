@@ -61,7 +61,7 @@ export class listEditor {
                     <td>`+item+`</td>
                   </tr>`
                 );
-            var jqElem=$("#sBtnName");
+            var jqElem=$("#"+sBtnName);
             jqElem.click(function(){
                 var index=this.attr("list_index");
                 self.onDeleteElement(index);

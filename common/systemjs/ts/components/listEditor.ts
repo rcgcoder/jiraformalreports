@@ -56,7 +56,10 @@ export class listEditor {
             var item=self.elements[i];
             tbl.append(
                 `<tr>
-                    <td><button (click)="onDeleteElement(`+(self.elements.length-1)+`)"  class="aui-button">-</button></td>
+                    <td><button (click)="function(){
+                            var objSel=System.getAngularObject('`+ self.name +`',true);
+                            objSel.onDeleteElement(`+(self.elements.length-1)+`
+                            }"  class="aui-button">-</button></td>
                     <td>`+item+`</td>
                   </tr>`
                 );

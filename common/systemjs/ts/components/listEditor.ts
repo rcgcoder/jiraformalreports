@@ -63,7 +63,8 @@ export class listEditor {
                 );
             var jqElem=$("#"+sBtnName);
             jqElem.click(function(){
-                var index=this.attr("list_index");
+                var jqAux=jqElem;
+                var index=jqAux.attr("list_index");
                 self.onDeleteElement(index);
             });
         }

@@ -80,7 +80,7 @@ export class listEditor {
            }
            sTxt+=self.elements[i];
        }
-       var tArea=getTextArea();
+       var tArea=self.getTextArea();
        tArea.val(sTxt);
     }
     onReplaceTableFromTextArea(){

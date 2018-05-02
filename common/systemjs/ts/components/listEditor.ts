@@ -90,7 +90,7 @@ export class listEditor {
         tbl.find("tr:gt(0)").remove();
         self.onTableToTextArea();
     }
-    onTableToTextArea(){
+    onTextAreaToTable(){
         var self=this;
         var txtInput=self.getTextValue();
         var arrInput=txtInput.split("\n");

@@ -15,6 +15,7 @@ export class listEditor {
         return this.elements();
     }
     setElements(arrNewElements){
+        var self=this;
         this.elements=arrNewElements;
         self.refreshTable();
     }
@@ -42,10 +43,12 @@ export class listEditor {
         return domObj;
     }
     onDeleteElement(index){
+        var self=this;
         self.elements.splice(index, 1);
         self.refreshTable();
     }
     refreshTable(){
+        var self=this;
         log("Refreshing table");
         var tbl=self.getTable();
         tbl.find("tr:gt(0)").remove();

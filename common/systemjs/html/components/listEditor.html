@@ -1,13 +1,12 @@
 
 <div class="flatpack-box">
-
 <div class="aui-group">
     <div class="aui-item">
 		<label id="{{name}}-lbl" for="{{name}}-text">{{typeDescriptor}}<span class="aui-icon icon-required">required</span></label>		<button>+</button> 
 		<br>
 		<textarea (change)="textAreaChanged($event)" name="{{name}}-text" rows=6 style="width:100%;"></textarea>
     </div>
-    <div class="aui-item">
+    <div class="aui-item" style="overflow-y: auto;height:150px;">
 		<table id="{{name}}-table" class="aui">
 		    <thead>
 		        <tr>

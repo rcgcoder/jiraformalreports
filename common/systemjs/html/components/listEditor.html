@@ -3,8 +3,8 @@
 <div class="aui-group">
     <div class="aui-item">
 		<label id="{{name}}-lbl" for="{{name}}-text">{{typeDescriptor}}<span class="aui-icon icon-required">required</span></label>
-		<button (click)="onTableToTextArea()" >+</button> 
-		<button (click)="onReplaceTableFromTextArea()">Replace All Items</button> 
+		<button (click)="onTableToTextArea()" class="aui-button">+</button> 
+		<button (click)="onReplaceTableFromTextArea()" class="aui-button">Replace All Items</button> 
 		<br>
 		<textarea name="{{name}}-text" rows=6 style="width:100%;"></textarea>
     </div>

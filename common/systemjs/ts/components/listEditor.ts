@@ -52,7 +52,7 @@ export class listEditor {
         log("Refreshing table");
         var tbl=self.getTable();
         tbl.find("tr").remove();
-        var fncAddClickEvent(jqlElement){
+        var fncAddClickEvent=function(jqlElement){
             jqlElement.click(function(){
                 var indAux=jqlElement.attr("list_index");
                 self.onDeleteElement(indAux);

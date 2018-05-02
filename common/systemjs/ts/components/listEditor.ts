@@ -47,9 +47,10 @@ export class listEditor {
 //        tbl.find("tr:gt(0)").remove();
         for (var i=0;i<arrInput.length;i++){
             var item=arrInput[i];
+            self.elements.push(item);
             tbl.append(
                 `<tr>
-                    <td><button>-</button></td>
+                    <td><button (click)="onDeleteElement(`+(self.elements.length-1)+`)">-</button></td>
                     <td>`+item+`</td>
                   </tr>`
                 );

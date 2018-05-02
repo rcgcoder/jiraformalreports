@@ -2,7 +2,9 @@
 <div class="flatpack-box">
 <div class="aui-group">
     <div class="aui-item">
-		<label id="{{name}}-lbl" for="{{name}}-text">{{typeDescriptor}}<span class="aui-icon icon-required">required</span></label>		<button>+</button> 
+		<label id="{{name}}-lbl" for="{{name}}-text">{{typeDescriptor}}<span class="aui-icon icon-required">required</span></label>
+		<button (click)="onTableToTextArea()" >+</button> 
+		<button (click)="onReplaceTableFromTextArea()">Replace All Items</button> 
 		<br>
 		<textarea (change)="textAreaChanged($event)" name="{{name}}-text" rows=6 style="width:100%;"></textarea>
     </div>
@@ -10,7 +12,9 @@
 		<table id="{{name}}-tableHead" class="aui">
 		    <thead>
 		        <tr>
-		            <th></th>
+		            <th>	
+		            <button (click)="onTableToTextArea()" class="aui-button"><--</button>
+		            </th>
 		            <th>{{typeDescriptor}}</th>
 		        </tr>
 		    </thead>

@@ -87,8 +87,8 @@ export class listEditor {
         var self=this;
         this.elements=[];
         var tbl=self.getTable();
-        tbl.find("tr:gt(0)").remove();
-        self.onTableToTextArea();
+        tbl.find("tr").remove();
+        self.onTextAreaToTable();
     }
     onTextAreaToTable(){
         var self=this;

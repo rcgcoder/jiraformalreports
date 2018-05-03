@@ -63,6 +63,11 @@ export class TabStructure {
         auxObj=System.getAngularObject('selInterestFields',true);
         arrValues=auxObj.getSelectedValues();
         dfReport["useFields"]=arrValues;
+        auxObj=System.getAngularObject('selScope',true);
+        jql=auxObj.getJQLValue();
+        arrValues=auxObj.getSelectedValues();
+        dfReport["jqlScope"]={jql:jql,values:arrValues};
+
         auxObj=System.getAngularObject('selIssuesToReport',true);
         jql=auxObj.getJQLValue();
         arrValues=auxObj.getSelectedValues();
@@ -107,6 +112,14 @@ export class TabStructure {
             auxObj.setJQLValue(jql);
             auxObj.setSelectedValues(config.rootIssues.values);
         }
+        
+        auxObj=System.getAngularObject('selScope',true);
+        if (isDefined(config.jqlScope)) {
+            var jql=config.jqlScope.jql;
+            auxObj.setJQLValue(jql);
+            auxObj.setSelectedValues(config.jqlScope.values);
+        }
+
         auxObj=System.getAngularObject('BillingHierarchy',true);
         if (isDefined(config.billingHierarchy)) auxObj.setValue(config.billingHierarchy);
         auxObj=System.getAngularObject('AdvanceHierarchy',true);

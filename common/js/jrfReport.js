@@ -21,10 +21,15 @@ class jrfReport{
 	execute(){
 		var self=this;
 		// first launch all issue retrieve ...
-		self.addStep("Getting All Issues.... ",function(){
+		self.addStep("Getting All Issues in the Scope.... ",function(){
+			if (isDefined(self.config.jqlScope)){
+				if (isDefined(self.config.jqlScope.jql)){
+					return self.jira.getJQLIssues(self.config.jqlScope.jql);
+				}
+			} 
 			self.jira.getAllIssues();
 		});	
-		self.addStep("Getting All Issues.... ",function(allIssues){
+		self.addStep("Asigning all Issues in the scope.... ",function(allIssues){
 			self.allIssues=allIssues;
 			log("Report utilices "+ self.allIssues.length+ " issues");
 			self.continueTask();

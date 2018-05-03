@@ -46,9 +46,9 @@ export class TabStructure {
         auxObj=System.getAngularObject('AdvanceHierarchy',true);
         value=auxObj.getValue();
         dfReport["AdvanceHierarchy"]=value;
-        auxObj=System.getAngularObject('linkTypes',true);
+        auxObj=System.getAngularObject('linkTypesConfiguration',true);
         value=auxObj.getElements();
-        dfReport["linkTypes"]=value;
+        dfReport["linkTypesConfiguration"]=value;
         var fileName="defaultReportConfig.json";
         var contentType=System.webapp.getContentTypeFromExtension(fileName);
         contentType.isCacheable=true;
@@ -57,9 +57,13 @@ export class TabStructure {
     }
     applyConfig(config){
         var self=this;
-        var auxObj=System.getAngularObject('selInterestFields',true);
+        var auxObj;
+        auxObj=System.getAngularObject('linkTypesConfiguration',true);
+        auxObj.setElements(config.linkTypesConfiguration);
+        auxObj=System.getAngularObject('selInterestFields',true);
         auxObj.setSelectedValues(config.selInterestFields]);
         auxObj=System.getAngularObject('selIssuesToReport',true);
+        
         var jql=config.selIssuesToReport.jql;
         auxObj.setJQLValue(jql);
         auxObj.setSelectedValues(config.selIssuesToReport.values);
@@ -68,8 +72,6 @@ export class TabStructure {
         auxObj.setValue(config.BillingHierarchy);
         auxObj=System.getAngularObject('AdvanceHierarchy',true);
         auxObj.setValue(config.AdvanceHierarchy);
-        auxObj=System.getAngularObject('linkTypes',true);
-        auxObj.setElements(config.linkTypes);
     }
     loadDefaultReport(){
         var self=this;

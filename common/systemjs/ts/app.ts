@@ -10,6 +10,7 @@ import {TabStructure} from './tab.structure';
 import {TabResult} from './tab.result';
 import {advSelector} from "./components/advSelector";
 import {listEditor} from "./components/listEditor";
+import {dlgEditableList} from "./dialogs/dlgEditableList";
 import {dlgSelectionTable} from './dialogs/dlgSelectionTable';
 import {jqlExtendedParser} from './components/jqlExtendedParser';
 import {jqlSelector} from "./atlassianComponents/jqlSelector";
@@ -79,6 +80,7 @@ class App {
                     dlgSelectionTable,
                     advSelector,
                     listEditor,
+                    dlgEditableList,
                     jqlExtendedParser,
                     jqlSelector,
                     atlassianSelector,

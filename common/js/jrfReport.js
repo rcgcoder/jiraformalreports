@@ -23,6 +23,20 @@ class jrfReport{
 		var self=this;
 		// first launch all issue retrieve ...
 		self.addStep("Getting All Issues in the Scope.... ",function(){
+			// create a dynobj for store the issues.... 
+			var dynObj=newDynamicObjectFactory(
+								[]
+								//arrAttributeList
+								,
+								[]
+								//arrAttributes
+								,
+								[]
+								//arrAttributesPercs
+								,
+								scopeIssues);
+
+			
 			var fncGetBlock=self.createManagedCallback(function(blkResponse){
 				log("A block");
 				var jsonObj=JSON.parse(blkResponse);

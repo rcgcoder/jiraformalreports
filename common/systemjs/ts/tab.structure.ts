@@ -152,6 +152,10 @@ export class TabStructure {
         var self=this;
         System.webapp.addStep("Executing Report", function(){
             var theConfig=self.getActualReportConfig();
+            var auxObj=System.getAngularObject('selInterestFields',true);
+            theConfig["allFields"]=auxObj.elements;
+            var auxObj=System.getAngularObject('selInterestLinks',true);
+            theConfig["allLinks"]=auxObj.elements;
             var theReport=new jrfReport(theConfig);
             theReport.execute();
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);

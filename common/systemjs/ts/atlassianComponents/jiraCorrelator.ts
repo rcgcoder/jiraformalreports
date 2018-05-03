@@ -89,4 +89,9 @@ export class jiraCorrelator {
         log("TextArea Changed")
         this.changeVisibilityAndOr();
     }
+    updateIssueLinkTypes(){
+        var self=this;
+        var selIssueLinkTypes=System.getAngularObject(self.name+"-childLink");
+        selIssueLinkTypes.reloadItems();
+    }
 }

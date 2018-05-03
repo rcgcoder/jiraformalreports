@@ -61,8 +61,9 @@ export class TabStructure {
         auxObj=System.getAngularObject('linkTypesConfiguration',true);
         if (isDefined(config.linkTypesConfiguration)){
             auxObj.setElements(config.linkTypesConfiguration);
-            var jira=System.webapp.getJira();
-            jira.setIssueLinkTypes(config.linkTypesConfiguration); 
+            System.webapp.setIssueLinkTypes(config.linkTypesConfiguration); 
+            System.getAngularObject('BillingHierarchy',true).updateIssueLinkTypes();
+            System.getAngularObject('AdvanceHierarchy',true).updateIssueLinkTypes();
         }
         auxObj=System.getAngularObject('selInterestFields',true);
         if (isDefined(config.selInterestFields)) auxObj.setSelectedValues(config.selInterestFields]);

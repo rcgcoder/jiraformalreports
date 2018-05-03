@@ -63,4 +63,9 @@ export class atlassianSelector {
         }
         System.webapp.continueTask([arrOptions]);
      }
+    reloadItems(){
+        var self=this;
+        var objSel=System.getAngularObject(self.name+"-atlSelector",true);
+        return objSel.onRetrieveTableData();
+    }
 }

@@ -25,5 +25,6 @@ class jrfReport{
 		// assing childs and advance childs to root elements
 		// load report model and submodels
 		// replace the jrf Tokens
+		self.continueTask();
 	}
 }

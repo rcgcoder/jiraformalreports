@@ -209,7 +209,7 @@ class ZipWebApp{
 	setIssueLinkTypes(newIssueLinkTypes){
 		var self=this;
         var jira=self.getJira();
-        jira.setIssueLinkTypes(config.linkTypesConfiguration); 
+        jira.setIssueLinkTypes(newIssueLinkTypes); 
 	}
 	getJQLIssues(jql){
 		var self=this;

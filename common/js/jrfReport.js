@@ -3,6 +3,8 @@ class jrfReport{
 		var self=this;
 		self.config=theConfig;
 		self.rootElements=[];
+		var tm=System.webapp.getTaskManager();
+		tm.extendObject(self);
 	}
 	save(){
 		
@@ -11,6 +13,7 @@ class jrfReport{
 		
 	}
 	execute(){
+		var self=this;
 		var jira=System.webapp.getJira();
 		// first launch all issue retrieve ...
 		self.addStep("Getting All Issues.... ",function(){

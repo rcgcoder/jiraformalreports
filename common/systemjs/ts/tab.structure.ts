@@ -59,19 +59,19 @@ export class TabStructure {
         var self=this;
         var auxObj;
         auxObj=System.getAngularObject('linkTypesConfiguration',true);
-        auxObj.setElements(config.linkTypesConfiguration);
+        if (isDefined(config.linkTypesConfiguration)) auxObj.setElements(config.linkTypesConfiguration);
         auxObj=System.getAngularObject('selInterestFields',true);
-        auxObj.setSelectedValues(config.selInterestFields]);
+        if (isDefined(config.selInterestFields)) auxObj.setSelectedValues(config.selInterestFields]);
         auxObj=System.getAngularObject('selIssuesToReport',true);
-        
-        var jql=config.selIssuesToReport.jql;
-        auxObj.setJQLValue(jql);
-        auxObj.setSelectedValues(config.selIssuesToReport.values);
-        
+        if (isDefined(config.selIssuesToReport)) {
+            var jql=config.selIssuesToReport.jql;
+            auxObj.setJQLValue(jql);
+            auxObj.setSelectedValues(config.selIssuesToReport.values);
+        }
         auxObj=System.getAngularObject('BillingHierarchy',true);
-        auxObj.setValue(config.BillingHierarchy);
+        if (isDefined(config.BillingHierarchy)) auxObj.setValue(config.BillingHierarchy);
         auxObj=System.getAngularObject('AdvanceHierarchy',true);
-        auxObj.setValue(config.AdvanceHierarchy);
+        if (isDefined(config.AdvanceHierarchy)) auxObj.setValue(config.AdvanceHierarchy);
     }
     loadDefaultReport(){
         var self=this;

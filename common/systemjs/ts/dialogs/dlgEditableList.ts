@@ -18,7 +18,7 @@ export class dlgEditableList {
         return dlgObj;
     }
     getListEditor(){
-        var angObj=System.getAngularObject("lstEditor_"+self.name);
+        var angObj=System.getAngularObject("lstEditor_"+self.name,true);
         return angObj;
     }
     getElements(){

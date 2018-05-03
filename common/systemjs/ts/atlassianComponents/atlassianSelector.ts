@@ -22,7 +22,7 @@ export class atlassianSelector {
     getAllElements(){
         var self=this;
         var objSel=System.getAngularObject(self.name+"-atlSelector",true);
-        return self.elements;
+        return objSel.elements;
     }
     getSelectedValues(){
         var self=this;

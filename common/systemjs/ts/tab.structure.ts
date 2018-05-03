@@ -137,7 +137,7 @@ export class TabStructure {
     }
     executeReport(){
         var self=this;
-        self.addStep("Executing Report", function(){
+        System.webapp.addStep("Executing Report", function(){
             var theConfig=self.getActualReportConfig();
             var theReport=new jrfReport(theConfig);
             theReport.execute();

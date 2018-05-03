@@ -95,7 +95,9 @@ export class TabStructure {
     }
     onChangeIssueLinkTypesConfiguration(arrTypes){
         log("applying issue link types conf:"+arrTypes.length);
-        var jira=System.webapp.getJira();
-        jira.setIssueLinkTypes(arrTypes); 
+        System.webapp.setIssueLinkTypes(config.linkTypesConfiguration); 
+        System.getAngularObject('BillingHierarchy',true).updateIssueLinkTypes();
+        System.getAngularObject('AdvanceHierarchy',true).updateIssueLinkTypes();
+
     }
 }

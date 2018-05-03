@@ -13,20 +13,27 @@
 	<br>
 <div class="flatpack-box">
 Interest Elements<br>
-    <atlassianSelector name="selInterestFields" 
-    				   typeDescriptor="Issue Fields needed for the Report"
-    				    atlassianAplication="webapp"
-    				    multiple="true"
-    				    atlassianObjectFunction="getListFields"
-    		>
-    </atlassianSelector >
-    <atlassianSelector name="selInterestIssueLinkTypes" 
-    				   typeDescriptor="Issue Link Types needed for the Report"
-    				    atlassianAplication="webapp"
-    				    multiple="true"
-    				    atlassianObjectFunction="getIssueLinkTypes"
-    		>
-    </atlassianSelector >
+<div class="aui-group">
+    <div class="aui-item">
+	
+	    <atlassianSelector name="selInterestFields" 
+	    				   typeDescriptor="Issue Fields needed for the Report"
+	    				    atlassianAplication="webapp"
+	    				    multiple="true"
+	    				    atlassianObjectFunction="getListFields"
+	    		>
+	    </atlassianSelector >
+	</div>
+    <div class="aui-item">
+	    <atlassianSelector name="selInterestIssueLinkTypes" 
+	    				   typeDescriptor="Issue Link Types needed for the Report"
+	    				    atlassianAplication="webapp"
+	    				    multiple="true"
+	    				    atlassianObjectFunction="getIssueLinkTypes"
+	    		>
+	    </atlassianSelector >
+	</div>
+	</div>
     <button (click)="onLoadIssuesTest($event)" class="aui-button">Load Test</button>
 </div>
 <div class="flatpack-box">
@@ -36,7 +43,7 @@ Interest Elements<br>
 	
 	  <aui-toggle id="toggle_RootsByJQL" 
                         label="Select Report Roots by JQL"
-                        ></aui-toggle>By JQL
+                        ></aui-toggle><strong>By JQL</strong>
       <jqlSelector 
       			 id="selIssuesToReport" 
       			 name="selIssuesToReport" 
@@ -48,7 +55,7 @@ Interest Elements<br>
       <br>
 	  <aui-toggle id="toggle_RootsByProject" 
                         label="Select Report Roots by Projects"
-                        ></aui-toggle>By Projects
+                        ></aui-toggle><strong>By Projects</strong>
       <br>
       <atlassianSelector name="selProjectsToReport" 
 	    				   typeDescriptor="Project"

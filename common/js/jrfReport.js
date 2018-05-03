@@ -19,9 +19,13 @@ class jrfReport{
 		// first launch all issue retrieve ...
 		self.addStep("Getting All Issues.... ",function(){
 			self.jira.getAllIssues();
+		});	
+		// get root elements.... issues and/or projects
+		self.addStep("Getting root elements.... ",function(){
+			log("Getting root elements");
+			self.continueTask();
 		});
 		
-		// get root elements.... issues and/or projects
 		// assing childs and advance childs to root elements
 		// load report model and submodels
 		// replace the jrf Tokens

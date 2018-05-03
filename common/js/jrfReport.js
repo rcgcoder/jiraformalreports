@@ -1,16 +1,8 @@
 class jrfReport{
-	constructor(){
+	constructor(theConfig){
 		var self=this;
-		self.jqlRootIssues="id=BENT-330";
-		self.rootIssues=["BENT-330"];
-		self.billingHierarchyRules=`(child.linkValue('detecta')==parent.id)
-		&&
-		(child.fieldValue('fixVersions') /*Versión(es) Correctora(s)*/==parent.field('description') /*Descripción*/)
-		||
-		(child.fieldValue('project') /*Proyecto*/==parent.field('priority') /*Prioridad*/)`;
-		self.advanceHierarchyRules=`(child.linkValue('bloquea a')==parent.id)
-		||
-		(child.fieldValue('customfield_11002') /*Ubicación*/==parent.field('customfield_11001') /*Tipo Seguimiento*/)`;
+		self.config=theConfig;
+		self.rootElements=[];
 	}
 	save(){
 		
@@ -19,6 +11,16 @@ class jrfReport{
 		
 	}
 	execute(){
+		var jira=System.webapp.getJira();
+		// first launch all issue retrieve ...
+		self.addStep("Getting All Issues.... ",function(){
+			var jira=self.getJira();
+			jira.getAllIssues();
+		});
 		
+		// get root elements.... issues and/or projects
+		// assing childs and advance childs to root elements
+		// load report model and submodels
+		// replace the jrf Tokens
 	}
 }

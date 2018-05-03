@@ -32,6 +32,15 @@ export class TabStructure {
         
     }
     saveDefaultReport(){
+        var self=this;
+        var actualConfig=self.getActualReportConfig();
+        var fileName="defaultReportConfig.json";
+        var contentType=System.webapp.getContentTypeFromExtension(fileName);
+        contentType.isCacheable=true;
+        var content=JSON.stringify(dfReport);
+        System.webapp.saveFileToStorage(fileName,content,contentType);
+    }
+    getActualReportConfig(){
         var dfReport={};
         var auxObj;
         var arrValues;
@@ -67,11 +76,7 @@ export class TabStructure {
         auxObj=System.getAngularObject('linkTypesConfiguration',true);
         value=auxObj.getElements();
         dfReport["linkTypesConfiguration"]=value;
-        var fileName="defaultReportConfig.json";
-        var contentType=System.webapp.getContentTypeFromExtension(fileName);
-        contentType.isCacheable=true;
-        var content=JSON.stringify(dfReport);
-        System.webapp.saveFileToStorage(fileName,content,contentType);
+        return dfReport;
     }
     applyConfig(config){
         var self=this;
@@ -129,5 +134,11 @@ export class TabStructure {
         System.getAngularObject('AdvanceHierarchy',true).updateIssueLinkTypes();
         System.getAngularObject('selInterestIssueLinkTypes',true).reloadItems();
 
+    }
+    executeReport(){
+        var self=this;
+        var theConfig=self.getActualReportConfig();
+        var theReport=new jrfReport(theConfig);
+        theReport.execute();
     }
 }

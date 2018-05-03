@@ -38,9 +38,9 @@ export class TabStructure {
         var jql;
         var value;
         
-        auxObj=System.getAngularDomObject('toggle_RootsByJQL',true);
+        auxObj=$('#toggle_RootsByJQL');
         dfReport["toggle_RootsByJQL"]=auxObj.selected;
-        auxObj=System.getAngularDomObject('toggle_RootsByProject',true);
+        auxObj=$('#toggle_RootsByProject');
         dfReport["toggle_RootsByProject"]=auxObj.selected;
         
         auxObj=System.getAngularObject('selProjectsToReport',true);
@@ -76,9 +76,9 @@ export class TabStructure {
     applyConfig(config){
         var self=this;
         var auxObj;
-        auxObj=System.getAngularDomObject('toggle_RootsByJQL',true);
+        auxObj=$('#toggle_RootsByJQL');
         if(isDefined(config.toggle_RootsByJQL))auxObj.selected=config.toggle_RootsByJQL;
-        auxObj=System.getAngularDomObject('toggle_RootsByProject',true);
+        auxObj=$('#toggle_RootsByProject');
         if(isDefined(config.toggle_RootsByProject))auxObj.selected=config.toggle_RootsByProject;
 
         auxObj=System.getAngularObject('linkTypesConfiguration',true);

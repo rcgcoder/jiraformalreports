@@ -35,7 +35,7 @@ export class listEditor {
                                     </th>
                                 `);
             }
-        });
+        }); 
     }
     getTextArea(){
         var self=this;

@@ -26,7 +26,7 @@ class jrfReport{
 		});	
 		self.addStep("Getting All Issues.... ",function(allIssues){
 			self.allIssues=allIssues;
-			log("Report utilices "+ self.allIssues+ " issues");
+			log("Report utilices "+ self.allIssues.length+ " issues");
 			self.continueTask();
 		});	
 		// get root elements.... issues and/or projects
@@ -48,6 +48,7 @@ class jrfReport{
 							log("Issue:"+issue.key);
 							self.rootIssues.push(issue.key);
 						}
+						self.continueTask();
 					});
 				}
 			}
@@ -72,7 +73,7 @@ class jrfReport{
 			}
 			log("Resume Root issues:"+self.rootIssues.length +
 			    "		Root project:"+self.rootIssues.length+
-			    "		Issues in scope:"+ self.allIssues);
+			    "		Issues in scope:"+ self.allIssues.length);
 			self.continueTask();
 		});
 		// assing childs and advance childs to root elements

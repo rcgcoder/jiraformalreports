@@ -77,9 +77,9 @@ export class TabStructure {
         var self=this;
         var auxObj;
         auxObj=System.getAngularDomObject('toggle_RootsByJQL',true);
-        auxObj.selected=config.toggle_RootsByJQL;
+        if(isDefined(config.toggle_RootsByJQL))auxObj.selected=config.toggle_RootsByJQL;
         auxObj=System.getAngularDomObject('toggle_RootsByProject',true);
-        auxObj.selected=config.toggle_RootsByProject;
+        if(isDefined(config.toggle_RootsByProject))auxObj.selected=config.toggle_RootsByProject;
 
         auxObj=System.getAngularObject('linkTypesConfiguration',true);
         if (isDefined(config.linkTypesConfiguration)){

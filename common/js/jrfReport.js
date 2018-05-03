@@ -2,6 +2,7 @@ class jrfReport{
 	constructor(theConfig){
 		var self=this;
 		self.config=theConfig;
+		self.allIssues=[];
 		self.rootElements=[];
 		self.rootIssues=[];
 		self.rootProjects=[];
@@ -23,6 +24,11 @@ class jrfReport{
 		self.addStep("Getting All Issues.... ",function(){
 			self.jira.getAllIssues();
 		});	
+		self.addStep("Getting All Issues.... ",function(allIssues){
+			self.allIssues=allIssues;
+			log("Report utilices "+ self.allIssues+ " issues");
+			self.continueTask();
+		});	
 		// get root elements.... issues and/or projects
 		self.addStep("Getting root elements.... ",function(){
 			log("Getting root elements");
@@ -39,8 +45,8 @@ class jrfReport{
 					self.addStep("Setting as root issues all results of JQL:"+self.config.rootIssues.jql,function(arrIssues){
 						for (var i=0;i<arrIssues.length;i++){
 							var issue=arrIssues[i];
-							log("Issue:"+issue.id);
-							self.rootIssues.push(issue.id);
+							log("Issue:"+issue.key);
+							self.rootIssues.push(issue.key);
 						}
 					});
 				}
@@ -64,6 +70,9 @@ class jrfReport{
 			for (var i=0;i<self.rootProjects.length;i++){
 				log("Root Projects ["+i+"]: "+self.rootProjects[i]);
 			}
+			log("Resume Root issues:"+self.rootIssues.length +
+			    "		Root project:"+self.rootIssues.length+
+			    "		Issues in scope:"+ self.allIssues);
 			self.continueTask();
 		});
 		// assing childs and advance childs to root elements

@@ -196,7 +196,7 @@ class RCGJira{
 			self.getFullList("/rest/api/2/search?expand=changelog","issues");
 		});
 		self.addStep("Processing all Issues", function(response,xhr,sUrl,headers){
-			self.popCallback();
+			self.popCallback([response]);
 		});
 		self.continueTask();
 //		self.apiCall("/plugins/servlet/applinks/proxy?appId=d1015b5f-d448-3745-a3d3-3dff12863286&path=https://rcgcoder.atlassian.net/rest/api/2/search");

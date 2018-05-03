@@ -19,7 +19,11 @@ export class atlassianSelector {
             System.bindObj(self);
         });
     }
-
+    getAllElements(){
+        var self=this;
+        var objSel=System.getAngularObject(self.name+"-atlSelector",true);
+        return self.elements;
+    }
     getSelectedValues(){
         var self=this;
         var objSel=System.getAngularObject(self.name+"-atlSelector",true);

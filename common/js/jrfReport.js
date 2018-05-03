@@ -5,6 +5,8 @@ class jrfReport{
 		self.rootElements=[];
 		var tm=System.webapp.getTaskManager();
 		tm.extendObject(self);
+		self.jira=System.webapp.getJira();
+		self.confluence=System.webapp.getConfluence();
 	}
 	save(){
 		
@@ -14,11 +16,9 @@ class jrfReport{
 	}
 	execute(){
 		var self=this;
-		var jira=System.webapp.getJira();
 		// first launch all issue retrieve ...
 		self.addStep("Getting All Issues.... ",function(){
-			var jira=self.getJira();
-			jira.getAllIssues();
+			self.jira.getAllIssues();
 		});
 		
 		// get root elements.... issues and/or projects

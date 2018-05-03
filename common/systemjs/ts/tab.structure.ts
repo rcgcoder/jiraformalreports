@@ -46,6 +46,9 @@ export class TabStructure {
         auxObj=System.getAngularObject('AdvanceHierarchy',true);
         value=auxObj.getValue();
         dfReport["AdvanceHierarchy"]=value;
+        auxObj=System.getAngularObject('linkTypes',true);
+        value=auxObj.getElements();
+        dfReport["linkTypes"]=value;
         var fileName="defaultReportConfig.json";
         var contentType=System.webapp.getContentTypeFromExtension(fileName);
         contentType.isCacheable=true;
@@ -65,6 +68,8 @@ export class TabStructure {
         auxObj.setValue(config.BillingHierarchy);
         auxObj=System.getAngularObject('AdvanceHierarchy',true);
         auxObj.setValue(config.AdvanceHierarchy);
+        auxObj=System.getAngularObject('linkTypes',true);
+        auxObj.setElements(config.linkTypes);
     }
     loadDefaultReport(){
         var self=this;

@@ -51,6 +51,7 @@ export class dlgEditableList {
         log("Emmited event");
     }
     doCancel(){
+        var self=this;
         log("It´s Clicked do cancel");
         self.setElements(self.elements_backUp);
         this.getDialog().hide();

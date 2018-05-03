@@ -48,9 +48,9 @@ export class TabStructure {
         var value;
         
         auxObj=$('#toggle_RootsByJQL');
-        dfReport["rootsByJQL"]=auxObj.attr("checked");
+        dfReport["rootsByJQL"]=(auxObj.attr("checked")=="checked");
         auxObj=$('#toggle_RootsByProject');
-        dfReport["rootsByProject"]=auxObj.attr("checked");
+        dfReport["rootsByProject"]=(auxObj.attr("checked")=="checked");
         
         auxObj=System.getAngularObject('selProjectsToReport',true);
         arrValues=auxObj.getSelectedValues();
@@ -82,9 +82,9 @@ export class TabStructure {
         var self=this;
         var auxObj;
         auxObj=$('#toggle_RootsByJQL');
-        if(isDefined(config.rootsByJQL))auxObj.attr("checked",config.rootsByJQL);
+        if(isDefined(config.rootsByJQL)&&config.rootsByJQL)auxObj.attr("checked","checked");
         auxObj=$('#toggle_RootsByProject');
-        if(isDefined(config.rootsByProject))auxObj.attr("checked",config.rootsByProject);
+        if(isDefined(config.rootsByProject)&&config.rootsByProject)auxObj.attr("checked","checked");
 
         auxObj=System.getAngularObject('linkTypesConfiguration',true);
         if (isDefined(config.allIssueLinkTypes)){

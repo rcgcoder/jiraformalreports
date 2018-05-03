@@ -26,7 +26,7 @@ class jrfReport{
 		// get root elements.... issues and/or projects
 		self.addStep("Getting root elements.... ",function(){
 			log("Getting root elements");
-			if (self.config.rootByJQL){
+			if (self.config.rootsByJQL){
 				if (self.config.rootIssues.values.length>0){
 					self.rootIssues=self.config.rootIssues.values;
 				} else if (self.config.rootIssues.jql==""){
@@ -45,7 +45,7 @@ class jrfReport{
 					});
 				}
 			}
-			if (self.config.rootByProject){
+			if (self.config.rootsByProject){
 				if (self.config.rootProjects.length>0){
 					log("Loading projects selected to be roots");
 					self.rootProjects=self.config.rootProjects;

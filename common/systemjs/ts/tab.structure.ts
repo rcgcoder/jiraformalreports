@@ -37,6 +37,15 @@ export class TabStructure {
         var arrValues;
         var jql;
         var value;
+        
+        auxObj=System.getAngularDomObject('toggle_RootsByJQL',true);
+        dfReport["toggle_RootsByJQL"]=auxObj.selected;
+        auxObj=System.getAngularDomObject('toggle_RootsByProject',true);
+        dfReport["toggle_RootsByProject"]=auxObj.selected;
+        
+        auxObj=System.getAngularObject('selProjectsToReport',true);
+        arrValues=auxObj.getSelectedValues();
+        dfReport["selProjectsToReport"]=arrValues;
 
         auxObj=System.getAngularObject('selInterestIssueLinkTypes',true);
         arrValues=auxObj.getSelectedValues();
@@ -67,6 +76,11 @@ export class TabStructure {
     applyConfig(config){
         var self=this;
         var auxObj;
+        auxObj=System.getAngularDomObject('toggle_RootsByJQL',true);
+        auxObj.selected=config.toggle_RootsByJQL;
+        auxObj=System.getAngularDomObject('toggle_RootsByProject',true);
+        auxObj.selected=config.toggle_RootsByProject;
+
         auxObj=System.getAngularObject('linkTypesConfiguration',true);
         if (isDefined(config.linkTypesConfiguration)){
             auxObj.setElements(config.linkTypesConfiguration);
@@ -74,10 +88,13 @@ export class TabStructure {
             System.getAngularObject('BillingHierarchy',true).updateIssueLinkTypes();
             System.getAngularObject('selInterestIssueLinkTypes',true).reloadItems();
         }
+        auxObj=System.getAngularObject('selProjectsToReport',true);
+        if (isDefined(config.selProjectsToReport)) auxObj.setSelectedValues(config.selProjectsToReport);
+
         auxObj=System.getAngularObject('selInterestIssueLinkTypes',true);
-        if (isDefined(config.selInterestIssueLinkTypes)) auxObj.setSelectedValues(config.selInterestIssueLinkTypes]);
+        if (isDefined(config.selInterestIssueLinkTypes)) auxObj.setSelectedValues(config.selInterestIssueLinkTypes);
         auxObj=System.getAngularObject('selInterestFields',true);
-        if (isDefined(config.selInterestFields)) auxObj.setSelectedValues(config.selInterestFields]);
+        if (isDefined(config.selInterestFields)) auxObj.setSelectedValues(config.selInterestFields);
         auxObj=System.getAngularObject('selIssuesToReport',true);
         if (isDefined(config.selIssuesToReport)) {
             var jql=config.selIssuesToReport.jql;

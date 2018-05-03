@@ -91,8 +91,12 @@ export class TabStructure {
         auxObj=System.getAngularObject('selProjectsToReport',true);
         if (isDefined(config.selProjectsToReport)) auxObj.setSelectedValues(config.selProjectsToReport);
 
-        auxObj=System.getAngularObject('selInterestIssueLinkTypes',true);
-        if (isDefined(config.selInterestIssueLinkTypes)) auxObj.setSelectedValues(config.selInterestIssueLinkTypes);
+        System.webapp.addStep("setting Interest IssueLink Types from config",function(){
+            auxObj=System.getAngularObject('selInterestIssueLinkTypes',true);
+            if (isDefined(config.selInterestIssueLinkTypes)) auxObj.setSelectedValues(config.selInterestIssueLinkTypes);
+            System.webapp.continueTask();
+        });
+        
         auxObj=System.getAngularObject('selInterestFields',true);
         if (isDefined(config.selInterestFields)) auxObj.setSelectedValues(config.selInterestFields);
         auxObj=System.getAngularObject('selIssuesToReport',true);
@@ -126,6 +130,7 @@ export class TabStructure {
         System.webapp.setIssueLinkTypes(arrTypes); 
         System.getAngularObject('BillingHierarchy',true).updateIssueLinkTypes();
         System.getAngularObject('AdvanceHierarchy',true).updateIssueLinkTypes();
+        System.getAngularObject('selInterestIssueLinkTypes',true).reloadItems();
 
     }
 }

@@ -2,6 +2,7 @@ class jrfReport{
 	constructor(theConfig){
 		var self=this;
 		self.config=theConfig;
+		self.auxAllIssues=[];
 		self.allIssues=[];
 		self.rootElements=[];
 		self.rootIssues=[];
@@ -24,6 +25,9 @@ class jrfReport{
 		self.addStep("Getting All Issues in the Scope.... ",function(){
 			var fncGetBlock=self.createManagedCallback(function(blkResponse){
 				log("A block");
+				var jsonObj=JSON.parse(blkResponse);
+				var arrIssues=jsonObj.issues;
+				self.auxAllIssues=self.auxAllIssues.concat(arrIssues);
 			});
 			if (isDefined(self.config.jqlScope)){
 				if (isDefined(self.config.jqlScope.jql)){
@@ -81,7 +85,7 @@ class jrfReport{
 			}
 			log("Resume Root issues:"+self.rootIssues.length +
 			    "		Root project:"+self.rootProjects.length+
-			    "		Issues in scope:"+ self.allIssues.length);
+			    "		Issues in scope:"+ self.allIssues.length + " vs "+ self.auxAllIssues.length);
 			self.continueTask();
 		});
 		// assing childs and advance childs to root elements

@@ -132,7 +132,7 @@ class RCGJira{
 	}
 	setIssueLinkTypes(issueLinkTypes){
 		var self=this;
-		self.issueLinkTypes(issueLinkTypes);		
+		self.issueLinkTypes=issueLinkTypes;		
 	}
 	
 	getAllIssueLinkTypes(){

@@ -35,7 +35,7 @@ class jrfReport{
 								//arrAttributesPercs
 								,
 								"scopeIssues");
-
+			
 			
 			var fncGetBlock=self.createManagedCallback(function(blkResponse){
 				log("A block");

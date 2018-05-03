@@ -7,6 +7,8 @@ export class listEditor {
     @Input() name: string = 'listEditor';
     @Input() typeDescriptor: string = 'elements';
     @Input() multiple: string = "false";
+    @Input() columns: number = 1;
+    @Input() columnDefinitions: string={caption:"name"}
     @Input() maxCharsInSelect: integer = 17;
     @Input() openDialogCaption: string = '...';
     @Output() onRetrieveData = new EventEmitter<{}>();
@@ -25,6 +27,14 @@ export class listEditor {
         System.addPostProcess(function(){
             log("PostProcessing:"+self.name);
             System.bindObj(self);
+            var headers=self.getTableHeader().find("tr");
+            for (var i=0;i<self.columns;i++){
+                var column=self.columns[i];
+                headers.append(`    <th>
+                                        `+column.caption+`
+                                    </th>
+                                `);
+            }
         });
     }
     getTextArea(){
@@ -35,6 +45,12 @@ export class listEditor {
     }
     getTextValue(){
         return this.getTextArea().val();
+    }
+    getTableHeader(){
+        var self=this;
+        var domObj=System.getAngularDomObject(self.name+"-tableHead");
+        domObj=$(domObj);
+        return domObj;
     }
     getTable(){
         var self=this;

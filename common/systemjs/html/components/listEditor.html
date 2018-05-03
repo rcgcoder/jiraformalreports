@@ -8,17 +8,18 @@
 		<br>
 		<textarea name="{{name}}-text" rows=6 style="width:100%;"></textarea>
     </div>
+</div>
+<div class="aui-group">
     <div class="aui-item">
 		<table id="{{name}}-tableHead" class="aui">
 		    <thead>
-		        <tr>
-		            <th>	
-			            <button (click)="onTableToTextArea()" class="aui-button">
-			            	<--
-			            </button>
-			            {{typeDescriptor}}
-		            </th>
-		        </tr>
+		    	<tr>
+                   <th>    
+                       <button (click)="onTableToTextArea()" class="aui-button">
+                           <--
+                       </button>
+                   </th>
+               </tr>
 		    </thead>
 		</table>
 		<div style="overflow-y: auto;height:150px;">

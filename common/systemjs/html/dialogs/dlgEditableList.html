@@ -9,7 +9,12 @@
         </a>
     </header>
     <div class="aui-dialog2-content">
-		<listEditor name="lstEditor_{{name}}" id="lstEditor_{{name}}" typeDescriptor="{{typeDescriptor}}" ></listEditor>
+		<listEditor name="lstEditor_{{name}}" 
+					id="lstEditor_{{name}}" 
+					columns={{columns}}
+					columnDefinitions="{{columnDefinitions}}"
+					typeDescriptor="{{typeDescriptor}}" >
+		</listEditor>
     </div>
     <footer class="aui-dialog2-footer">
         <div class="aui-dialog2-footer-actions">

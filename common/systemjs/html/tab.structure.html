@@ -3,9 +3,17 @@
 	<button (click)="loadDefaultReport()" class="aui-button">load default Report</button>
 	<button (click)="saveDefaultReport()" class="aui-button">Save as default Report</button>
 	<dlgEditableList id="linkTypesConfiguration" name="linkTypesConfiguration" 
-		typeDescriptor="Issue Link Types .." 
+		typeDescriptor="Issue Link Types" 
 	    openDialogCaption="Issue Link Types Configuracion"
 		(onApply)="onChangeIssueLinkTypesConfiguration($event)"
+		>
+	</dlgEditableList>
+	<dlgEditableList id="manualFieldDefinitions" name="manualFieldDefinitions" 
+		typeDescriptor="Manual Field Definitions" 
+		columns=2
+		columnDefinitions="[{caption:'key'},{caption:'description'}]"
+	    openDialogCaption="Manual Issue Field Configuracion"
+		(onApply)="onChangeManualIssueFieldDefinitions($event)"
 		>
 	</dlgEditableList>
 

@@ -204,7 +204,12 @@ class ZipWebApp{
 	getIssueLinkTypes(){
 		var self=this;
         var jira=self.getJira();
-    	return jira.getIssueLinkTypes(); 
+        var arrLinkTypes=jira.getIssueLinkTypes(); 
+        var arrResult=[];
+        for (var i=0;i<arrLinkTypes.length;i++){
+        	arrResult.push({key:arrLinkTypes[i],name:arrLinkTypes[i]});
+        }
+        return arrResult;
     }
 	setIssueLinkTypes(newIssueLinkTypes){
 		var self=this;

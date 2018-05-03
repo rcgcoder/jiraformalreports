@@ -88,4 +88,7 @@ export class TabStructure {
         });
         System.webapp.continueTask();
     }
+    onChangeIssueLinkTypesConfiguration(event){
+        log("applying issue link types conf");
+    }
 }

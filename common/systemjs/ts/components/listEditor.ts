@@ -98,7 +98,7 @@ export class listEditor {
         var self=this;
         for (var i=0;i<arrInput.length;i++){
             var item=arrInput[i];
-            if (!isInArray(self.elements,item)){
+            if ((!isInArray(self.elements,item))&&(item!="")){
                 self.elements.push(item);
             }
         }

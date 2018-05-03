@@ -24,6 +24,7 @@ class RCGJira{
 		self.epics=newDynamicObjectFactory([],[],[],"Epics");
 		self.labels=newDynamicObjectFactory([],[],[],"Labels");
 		self.filters=[];
+		self.issueLinkTypes=[];
 	}
 	getFields(){
 		log("Getting fields");
@@ -125,7 +126,18 @@ class RCGJira{
 		});
 		self.apiCall("/rest/api/latest/issue/createmeta?expand=projects.issuetypes.fields");
 	}
+	getIssueLinkTypes(){
+		var self=this;
+		return self.issueLinkTypes;		
+	}
+	setIssueLinkTypes(issueLinkTypes){
+		var self=this;
+		self.issueLinkTypes(issueLinkTypes);		
+	}
 	
+	getAllIssueLinkTypes(){
+		
+	}
 	getAllProjects(){
 		var self=this;
 		self.pushCallback(function(response,xhr,sUrl,headers){

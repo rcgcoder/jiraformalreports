@@ -88,7 +88,9 @@ export class TabStructure {
         });
         System.webapp.continueTask();
     }
-    onChangeIssueLinkTypesConfiguration(event){
-        log("applying issue link types conf");
+    onChangeIssueLinkTypesConfiguration(arrTypes){
+        log("applying issue link types conf:"+arrTypes.length);
+        var jira=System.webapp.getJira();
+        jira.setIssueLinkTypes(arrTypes); 
     }
 }

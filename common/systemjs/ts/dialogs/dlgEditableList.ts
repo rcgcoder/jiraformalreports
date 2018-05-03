@@ -29,9 +29,6 @@ export class dlgEditableList {
     }
     ngOnInit() {
         var self=this;
-        if (self.multiple.toUpperCase()!="TRUE"){
-            self.hideButton();
-        }
         System.addPostProcess(function(){
             log("PostProcessing:"+self.name);
             System.bindObj(self);

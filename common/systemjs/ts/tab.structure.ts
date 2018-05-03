@@ -137,8 +137,10 @@ export class TabStructure {
     }
     executeReport(){
         var self=this;
-        var theConfig=self.getActualReportConfig();
-        var theReport=new jrfReport(theConfig);
-        theReport.execute();
+        self.addStep("Executing Report", function(){
+            var theConfig=self.getActualReportConfig();
+            var theReport=new jrfReport(theConfig);
+            theReport.execute();
+        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
     }
 }

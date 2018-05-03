@@ -95,7 +95,7 @@ export class TabStructure {
     }
     onChangeIssueLinkTypesConfiguration(arrTypes){
         log("applying issue link types conf:"+arrTypes.length);
-        System.webapp.setIssueLinkTypes(config.linkTypesConfiguration); 
+        System.webapp.setIssueLinkTypes(arrTypes); 
         System.getAngularObject('BillingHierarchy',true).updateIssueLinkTypes();
         System.getAngularObject('AdvanceHierarchy',true).updateIssueLinkTypes();
 

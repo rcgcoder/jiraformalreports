@@ -29,7 +29,7 @@ export class listEditor {
             System.bindObj(self);
             var headers=self.getTableHeader().find("tr");
             for (var i=0;i<self.columns;i++){
-                var column=self.columns[i];
+                var column=self.columnDefinitions[i];
                 headers.append(`    <th>
                                         `+column.caption+`
                                     </th>

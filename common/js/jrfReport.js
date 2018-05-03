@@ -23,7 +23,7 @@ class jrfReport{
 		// get root elements.... issues and/or projects
 		self.addStep("Getting root elements.... ",function(){
 			log("Getting root elements");
-			
+			if (self.config.rootByJQL)
 			self.continueTask();
 		});
 		

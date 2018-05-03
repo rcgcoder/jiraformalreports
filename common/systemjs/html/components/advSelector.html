@@ -1,5 +1,5 @@
 {{typeDescriptor}}
-<select name="{{name}}-select" id="{{name}}-select"></select>
+<select (change)="onChangeSelect($event)" name="{{name}}-select" id="{{name}}-select"></select>
 <dlgSelectionTable id="{{name}}-SelTable" name="{{name}}-SelTable" typeDescriptor="{{typeDescriptor}}" 
     openDialogCaption="{{openDialogCaption}}"
 	(onSelected)="onSelected($event)"

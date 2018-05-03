@@ -239,4 +239,8 @@ export class advSelector {
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",barrierAux);
         //System.webapp.continueTask();
     }
+    onChangeSelect(event){
+        log("Changed element "+event);
+    }
+                        
 }

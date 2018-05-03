@@ -33,15 +33,24 @@ export class TabStructure {
     }
     saveDefaultReport(){
         var dfReport={};
-        var auxObj=System.getAngularObject('selInterestFields',true);
-        var arrValues=auxObj.getSelectedValues();
+        var auxObj;
+        var arrValues;
+        var jql;
+        var value;
+
+        auxObj=System.getAngularObject('selInterestIssueLinkTypes',true);
+        arrValues=auxObj.getSelectedValues();
+        dfReport["selInterestIssueLinkTypes"]=arrValues;
+        
+        auxObj=System.getAngularObject('selInterestFields',true);
+        arrValues=auxObj.getSelectedValues();
         dfReport["selInterestFields"]=arrValues;
         auxObj=System.getAngularObject('selIssuesToReport',true);
-        var jql=auxObj.getJQLValue();
+        jql=auxObj.getJQLValue();
         arrValues=auxObj.getSelectedValues();
         dfReport["selIssuesToReport"]={jql:jql,values:arrValues};
         auxObj=System.getAngularObject('BillingHierarchy',true);
-        var value=auxObj.getValue();
+        value=auxObj.getValue();
         dfReport["BillingHierarchy"]=value;
         auxObj=System.getAngularObject('AdvanceHierarchy',true);
         value=auxObj.getValue();
@@ -63,8 +72,10 @@ export class TabStructure {
             auxObj.setElements(config.linkTypesConfiguration);
             System.webapp.setIssueLinkTypes(config.linkTypesConfiguration); 
             System.getAngularObject('BillingHierarchy',true).updateIssueLinkTypes();
-            System.getAngularObject('AdvanceHierarchy',true).updateIssueLinkTypes();
+            System.getAngularObject('selInterestIssueLinkTypes',true).reloadItems();
         }
+        auxObj=System.getAngularObject('selInterestIssueLinkTypes',true);
+        if (isDefined(config.selInterestIssueLinkTypes)) auxObj.setSelectedValues(config.selInterestIssueLinkTypes]);
         auxObj=System.getAngularObject('selInterestFields',true);
         if (isDefined(config.selInterestFields)) auxObj.setSelectedValues(config.selInterestFields]);
         auxObj=System.getAngularObject('selIssuesToReport',true);

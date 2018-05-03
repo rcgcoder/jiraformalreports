@@ -12,12 +12,19 @@
 	<button (click)="executeReport()" class="aui-button">Execute the Report</button>
 	<br>
 <div class="flatpack-box">
-Interest Fields<br>
+Interest Elements<br>
     <atlassianSelector name="selInterestFields" 
     				   typeDescriptor="Issue Fields needed for the Report"
     				    atlassianAplication="webapp"
     				    multiple="true"
     				    atlassianObjectFunction="getListFields"
+    		>
+    </atlassianSelector >
+    <atlassianSelector name="selInterestIssueLinkTypes" 
+    				   typeDescriptor="Issue Link Types needed for the Report"
+    				    atlassianAplication="webapp"
+    				    multiple="true"
+    				    atlassianObjectFunction="getIssueLinkTypes"
     		>
     </atlassianSelector >
     <button (click)="onLoadIssuesTest($event)" class="aui-button">Load Test</button>

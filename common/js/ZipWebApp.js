@@ -41,7 +41,8 @@ class ZipWebApp{
 							"js/rcglibs/systemjs/RCGSystemJSManager.js",
 							"js/rcglibs/atlassian/RCGAtlassian.js",
 							"js/rcglibs/atlassian/RCGConfluence.js",
-							"js/rcglibs/atlassian/RCGJira.js"
+							"js/rcglibs/atlassian/RCGJira.js",
+							"js/jrfReport.js"
 /*							"js/rcglibs/RCGLogUtils.js",
 							"js/rcglibs/RCGChronoUtils.js",
 							"js/rcglibs/RCGHashMapUtils.js"

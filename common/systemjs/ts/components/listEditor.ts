@@ -12,7 +12,7 @@ export class listEditor {
     @Output() onRetrieveData = new EventEmitter<{}>();
     elements: [] = [];
     getElements(){
-        return this.elements();
+        return this.elements;
     }
     setElements(arrNewElements){
         var self=this;

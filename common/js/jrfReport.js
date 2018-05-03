@@ -72,7 +72,7 @@ class jrfReport{
 				log("Root Projects ["+i+"]: "+self.rootProjects[i]);
 			}
 			log("Resume Root issues:"+self.rootIssues.length +
-			    "		Root project:"+self.rootIssues.length+
+			    "		Root project:"+self.rootProjects.length+
 			    "		Issues in scope:"+ self.allIssues.length);
 			self.continueTask();
 		});

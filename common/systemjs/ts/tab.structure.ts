@@ -37,7 +37,7 @@ export class TabStructure {
         var fileName="defaultReportConfig.json";
         var contentType=System.webapp.getContentTypeFromExtension(fileName);
         contentType.isCacheable=true;
-        var content=JSON.stringify(dfReport);
+        var content=JSON.stringify(actualConfig);
         System.webapp.saveFileToStorage(fileName,content,contentType);
     }
     getActualReportConfig(){

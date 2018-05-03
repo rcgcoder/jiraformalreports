@@ -30,9 +30,13 @@ Interest Elements<br>
     <button (click)="onLoadIssuesTest($event)" class="aui-button">Load Test</button>
 </div>
 <div class="flatpack-box">
-	JQL Billing Items Selection
+	Billing Items Selection
 	<br>	
 	<!-- onSelectedProjects($event) -->
+	
+	  <aui-toggle id="toggle_RootsByJQL" 
+                        label="Select Report Roots by JQL"
+                        ></aui-toggle>By JQL
       <jqlSelector 
       			 id="selIssuesToReport" 
       			 name="selIssuesToReport" 
@@ -40,7 +44,20 @@ Interest Elements<br>
     			 multiple="true"
     			 
     			 >
-    </jqlSelector>	
+      </jqlSelector>	
+      <br>
+	  <aui-toggle id="toggle_RootsByProject" 
+                        label="Select Report Roots by Projects"
+                        ></aui-toggle>By Projects
+      <atlassianSelector name="selProjectsToReport" 
+	    				   typeDescriptor="Project"
+	    				   multiple="false"
+	    				   maxCharsInSelect=50
+	    				    atlassianAplication="webapp"
+	    				    atlassianObjectFunction="getListProjects"
+	    		>
+	  </atlassianSelector >
+      
 </div>	
 	<jiraCorrelator name="BillingHierarchy" caption="Billing hierarchy rules">
 	</jiraCorrelator>

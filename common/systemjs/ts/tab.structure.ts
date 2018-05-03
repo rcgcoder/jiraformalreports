@@ -48,69 +48,69 @@ export class TabStructure {
         var value;
         
         auxObj=$('#toggle_RootsByJQL');
-        dfReport["toggle_RootsByJQL"]=auxObj.attr("checked");
+        dfReport["rootsByJQL"]=auxObj.attr("checked");
         auxObj=$('#toggle_RootsByProject');
-        dfReport["toggle_RootsByProject"]=auxObj.attr("checked");
+        dfReport["rootsByProject"]=auxObj.attr("checked");
         
         auxObj=System.getAngularObject('selProjectsToReport',true);
         arrValues=auxObj.getSelectedValues();
-        dfReport["selProjectsToReport"]=arrValues;
+        dfReport["rootProjects"]=arrValues;
 
         auxObj=System.getAngularObject('selInterestIssueLinkTypes',true);
         arrValues=auxObj.getSelectedValues();
-        dfReport["selInterestIssueLinkTypes"]=arrValues;
+        dfReport["useIssueLinkTypes"]=arrValues;
         
         auxObj=System.getAngularObject('selInterestFields',true);
         arrValues=auxObj.getSelectedValues();
-        dfReport["selInterestFields"]=arrValues;
+        dfReport["useFields"]=arrValues;
         auxObj=System.getAngularObject('selIssuesToReport',true);
         jql=auxObj.getJQLValue();
         arrValues=auxObj.getSelectedValues();
-        dfReport["selIssuesToReport"]={jql:jql,values:arrValues};
+        dfReport["rootIssues"]={jql:jql,values:arrValues};
         auxObj=System.getAngularObject('BillingHierarchy',true);
         value=auxObj.getValue();
-        dfReport["BillingHierarchy"]=value;
+        dfReport["billingHierarchy"]=value;
         auxObj=System.getAngularObject('AdvanceHierarchy',true);
         value=auxObj.getValue();
-        dfReport["AdvanceHierarchy"]=value;
+        dfReport["advanceHierarchy"]=value;
         auxObj=System.getAngularObject('linkTypesConfiguration',true);
         value=auxObj.getElements();
-        dfReport["linkTypesConfiguration"]=value;
+        dfReport["allIssueLinkTypes"]=value;
         return dfReport;
     }
     applyConfig(config){
         var self=this;
         var auxObj;
         auxObj=$('#toggle_RootsByJQL');
-        if(isDefined(config.toggle_RootsByJQL))auxObj.attr("checked",config.toggle_RootsByJQL);
+        if(isDefined(config.rootsByJQL))auxObj.attr("checked",config.rootsByJQL);
         auxObj=$('#toggle_RootsByProject');
-        if(isDefined(config.toggle_RootsByProject))auxObj.attr("checked",config.toggle_RootsByProject);
+        if(isDefined(config.rootsByProject))auxObj.attr("checked",config.rootsByProject);
 
         auxObj=System.getAngularObject('linkTypesConfiguration',true);
-        if (isDefined(config.linkTypesConfiguration)){
-            auxObj.setElements(config.linkTypesConfiguration);
-            System.webapp.setIssueLinkTypes(config.linkTypesConfiguration); 
+        if (isDefined(config.allIssueLinkTypes)){
+            auxObj.setElements(config.allIssueLinkTypes);
+            System.webapp.setIssueLinkTypes(config.allIssueLinkTypes); 
             System.getAngularObject('BillingHierarchy',true).updateIssueLinkTypes();
             System.getAngularObject('selInterestIssueLinkTypes',true).reloadItems();
         }
         auxObj=System.getAngularObject('selProjectsToReport',true);
-        if (isDefined(config.selProjectsToReport)) auxObj.setSelectedValues(config.selProjectsToReport);
+        if (isDefined(config.rootProjects)) auxObj.setSelectedValues(config.rootProjects);
 
         auxObj=System.getAngularObject('selInterestIssueLinkTypes',true);
-        if (isDefined(config.selInterestIssueLinkTypes)) auxObj.setSelectedValues(config.selInterestIssueLinkTypes);
+        if (isDefined(config.useIssueLinkTypes)) auxObj.setSelectedValues(config.useIssueLinkTypes);
         
         auxObj=System.getAngularObject('selInterestFields',true);
-        if (isDefined(config.selInterestFields)) auxObj.setSelectedValues(config.selInterestFields);
+        if (isDefined(config.useFields)) auxObj.setSelectedValues(config.useFields);
         auxObj=System.getAngularObject('selIssuesToReport',true);
-        if (isDefined(config.selIssuesToReport)) {
-            var jql=config.selIssuesToReport.jql;
+        if (isDefined(config.rootIssues)) {
+            var jql=config.rootIssues.jql;
             auxObj.setJQLValue(jql);
-            auxObj.setSelectedValues(config.selIssuesToReport.values);
+            auxObj.setSelectedValues(config.rootIssues.values);
         }
         auxObj=System.getAngularObject('BillingHierarchy',true);
-        if (isDefined(config.BillingHierarchy)) auxObj.setValue(config.BillingHierarchy);
+        if (isDefined(config.billingHierarchy)) auxObj.setValue(config.billingHierarchy);
         auxObj=System.getAngularObject('AdvanceHierarchy',true);
-        if (isDefined(config.AdvanceHierarchy)) auxObj.setValue(config.AdvanceHierarchy);
+        if (isDefined(config.advanceHierarchy)) auxObj.setValue(config.advanceHierarchy);
     }
     loadDefaultReport(){
         var self=this;

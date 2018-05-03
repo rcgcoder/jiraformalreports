@@ -91,11 +91,8 @@ export class TabStructure {
         auxObj=System.getAngularObject('selProjectsToReport',true);
         if (isDefined(config.selProjectsToReport)) auxObj.setSelectedValues(config.selProjectsToReport);
 
-        System.webapp.addStep("setting Interest IssueLink Types from config",function(){
-            auxObj=System.getAngularObject('selInterestIssueLinkTypes',true);
-            if (isDefined(config.selInterestIssueLinkTypes)) auxObj.setSelectedValues(config.selInterestIssueLinkTypes);
-            System.webapp.continueTask();
-        });
+        auxObj=System.getAngularObject('selInterestIssueLinkTypes',true);
+        if (isDefined(config.selInterestIssueLinkTypes)) auxObj.setSelectedValues(config.selInterestIssueLinkTypes);
         
         auxObj=System.getAngularObject('selInterestFields',true);
         if (isDefined(config.selInterestFields)) auxObj.setSelectedValues(config.selInterestFields);

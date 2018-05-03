@@ -127,6 +127,12 @@ export class advSelector {
         }
         return arrResults;
     }
+    updateSelected(){
+        var self=this;
+        var theSelect=this.getSelect();
+        theSelect.val(self.valuesSelected);
+        theSelect.trigger('change'); // Notify any JS components that the value changed
+    }
     setSelectedValues(selectedElems: []) {
         var self=this;
         var arrAux=[];
@@ -143,9 +149,7 @@ export class advSelector {
             }
         }
         self.valuesSelected=arrAux;
-        var theSelect=this.getSelect();
-        theSelect.val(arrAux);
-        theSelect.trigger('change'); // Notify any JS components that the value changed
+        self.updateSelected();
     }
     onSelected(selectedKeys: []) {
         log("Processing selection event");
@@ -214,7 +218,8 @@ export class advSelector {
                 }
                 if (!self.initialized){
                    self.initialized=true;
-                }   
+                }
+                self.updateSelected();
                 System.webapp.continueTask();
             });
         System.webapp.continueTask();

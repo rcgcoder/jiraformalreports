@@ -22,12 +22,15 @@ class jrfReport{
 		var self=this;
 		// first launch all issue retrieve ...
 		self.addStep("Getting All Issues in the Scope.... ",function(){
+			var fncGetBlock=self.createManagedCallback(function(blkResponse){
+				log("A block");
+			});
 			if (isDefined(self.config.jqlScope)){
 				if (isDefined(self.config.jqlScope.jql)){
-					return self.jira.getJQLIssues(self.config.jqlScope.jql);
+					return self.jira.getJQLIssues(self.config.jqlScope.jql,fncGetBlock);
 				}
 			} 
-			self.jira.getAllIssues();
+			self.jira.getAllIssues(fncGetBlock);
 		});	
 		self.addStep("Asigning all Issues in the scope.... ",function(allIssues){
 			self.allIssues=allIssues;

@@ -236,10 +236,15 @@ class RCGAtlassian{
 		if (typeof sResponseType!=="undefined"){
 			newResponseType=sResponseType;
 		}
-		var newCallback=callback;
-		var newErrorCallback=callback;
+		var newCallback;//=callback;
+		var newErrorCallback;//=callback;
 		if (typeof newCallback==="undefined"){
 			newCallback=self.createManagedCallback(function(responseObj){
+				if (isDefined(callback)){
+					setTimeout(function(){
+							callback(responseObj);
+					});
+				}
 			    self.popCallback([responseObj,self.JiraAPConnection]);
 			  });
 			newErrorCallback=self.createManagedCallback(function(xhr, statusText, errorThrown){

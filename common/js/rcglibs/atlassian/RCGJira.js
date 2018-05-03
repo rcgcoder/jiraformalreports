@@ -190,10 +190,10 @@ class RCGJira{
 		});
 		self.apiCall("/rest/api/2/filter");//,"GET",data);
 	}
-	getAllIssues(){
+	getAllIssues(cbBlock){
 		var self=this;
 		self.addStep("Getting All Issues", function(){
-			self.getFullList("/rest/api/2/search?expand=changelog","issues");
+			self.getFullList("/rest/api/2/search?expand=changelog","issues",undefined,undefined,cbBlock);
 		});
 		self.addStep("Processing all Issues", function(response,xhr,sUrl,headers){
 			self.popCallback([response]);
@@ -202,10 +202,10 @@ class RCGJira{
 //		self.apiCall("/plugins/servlet/applinks/proxy?appId=d1015b5f-d448-3745-a3d3-3dff12863286&path=https://rcgcoder.atlassian.net/rest/api/2/search");
 		//expand=changelog&jql=updateddate>'2018/03/01'
 	}
-	getJQLIssues(jql){
+	getJQLIssues(jql,cbBlock){
 		var self=this;
 		self.addStep("Getting All Issues from JQL", function(){
-			self.getFullList("/rest/api/2/search?jql="+jql,"issues");
+			self.getFullList("/rest/api/2/search?jql="+jql,"issues",undefined,undefined,cbBlock);
 		});
 		self.addStep("Processing all Issues from JQL", function(response,xhr,sUrl,headers){
 			self.popCallback([response]);

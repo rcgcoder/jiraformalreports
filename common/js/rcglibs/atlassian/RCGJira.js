@@ -116,7 +116,7 @@ class RCGJira{
 				issType=issue.fields.issuetype.name;
 				if (!hsTypes.exists(issType)){
 					hsTypes.add(issType,issue.fields.issuetype);
-					var arrProperties=getAllProperties(issue);
+					var arrProperties=getAllProperties(issue.fields);
 					for (var j=0;j<arrProperties.length;j++){
 						var vPropName=arrProperties[j];
 						if (!hsFields.exists(vPropName)){

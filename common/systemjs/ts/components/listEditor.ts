@@ -173,13 +173,25 @@ export class listEditor {
                 elem[j]=colVal;
             }
         }
+        var bInsertFirst=false;
+        if (self.elements.length>0){
+           bInsertFirst=true;
+        }
+       
         for (var i=0;i<auxElements.length;i++){
             var firstCol=auxElements[i][0];
+            var elemToAdd;
+            if (self.columns==1){
+                elemToAdd=firstCol;
+            } else {
+                elemToAdd=auxElements[i];
+             }
+        
             if ((!isInArray(self.elements,firstCol,(self.columns==1?undefined:0)))&&(firstCol!="")){
-               if (self.columns==1){
-                   self.elements.push(firstCol);
-               } else {
-                   self.elements.push(auxElements[i]);
+                if (bInsertFirst) {
+                    self.elements.unshift(elemToAdd);
+                } else {
+                    self.elements.push(elemToAdd);
                 }
             }
         }

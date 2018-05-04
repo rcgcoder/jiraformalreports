@@ -148,6 +148,9 @@ export class TabStructure {
         System.getAngularObject('selInterestIssueLinkTypes',true).reloadItems();
 
     }
+    onChangeManualIssueFieldDefinitions(arrFields){
+        log("applying custom field manual definitions");
+    }
     executeReport(){
         var self=this;
         System.webapp.addStep("Executing Report", function(){

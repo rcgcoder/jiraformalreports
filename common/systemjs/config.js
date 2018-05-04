@@ -31,7 +31,8 @@ System.config({
     '@angular/http/testing': 'npm:@angular/http/bundles/http-testing.umd.js',
     '@angular/router/testing': 'npm:@angular/router/bundles/router-testing.umd.js',
     'rxjs': 'npm:rxjs@5.5',
-    'typescript': 'npm:typescript@2.0.2/lib/typescript.js'
+//    'typescript': 'npm:typescript@2.0.2/lib/typescript.js'
+    'typescript': 'npm:typescript/lib/typescript.js'
   },
   //packages defines our app package
   packages: {

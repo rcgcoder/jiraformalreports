@@ -99,12 +99,12 @@ class RCGJira{
 	}
 	getFieldFullList(scopeJQL){
 		var self=this;
-		self.addStep("Getting all Issues on JQL:"+scopeJQL,function(){
-			var theJQL="";
-			if (isDefined(scopeJQL)){
-				theJQL=scopeJQL;
-			}
-			self.getJQLIssues(scopeJQL);
+		var jqlAux="";
+		if (isDefined(scopeJQL)){
+			jqlAux=scopeJQL;
+		}
+		self.addStep("Getting all Issues on JQL:["+jqlAux+"]",function(){
+			self.getJQLIssues(jqlAux);
 		});
 		self.addStep("Extracting all Field Keys",function(arrIssues){
 			var hsFields=newHashMap();

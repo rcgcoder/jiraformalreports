@@ -201,9 +201,9 @@ export class TabStructure {
             }
                 
             var fncProcessNode=System.webapp.createManagedCallback(function(objStep){
-                var objStepKey=objStep;
+                var objStepKey=objStep.actualNode.key;
                 if (!hsIdentified.exists(objStepKey)){
-                    arrRestField.push(objStep);
+                    arrRestField.push(objStepKey);
                 }
             });
             var fncProcessEnd=System.webapp.createManagedCallback(function(objStep){

@@ -106,7 +106,7 @@ export class listEditor {
                sHtml+=item+"</td>";
             } else {
                for (var j=0;j<self.columns;j++){
-                   itemCol=item[j];
+                   var itemCol=item[j];
                    sHtml+=itemCol+"</td><td>";
                }
                sHtml+="</td>";

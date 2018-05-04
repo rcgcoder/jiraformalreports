@@ -220,7 +220,7 @@ export class TabStructure {
             });
             hsFields.walkAsync("Removing duplicate fields...",fncProcessNode,fncProcessEnd,fncBlockPercent,fncBlockTime);
         });
-        System.webapp.addStep("Update selection table",function(arrRestFields){
+        System.webapp.addStep("Update selection table",function(hsResultFields){
             log("After discard identificied there is "+ hsResultFields.length()+"/"+hsAllFields.length()+" fields in all issues");
             var fieldDefs=System.getAngularObject('manualFieldDefinitions',true);
             var arrResultElements=[];

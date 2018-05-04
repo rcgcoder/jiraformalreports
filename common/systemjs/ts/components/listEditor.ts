@@ -39,6 +39,9 @@ export class listEditor {
                 if (i>0){
                     var sPostIndex="_"+i;
                     itemAddBox.append('<textarea name="{{name}}-text'+sPostIndex+'" rows=6 style="width:'+Math.round(100/self.columns)+'%;"></textarea>');
+                } else if (self.columns>1){
+                    var taAux=self.getTextArea(0);
+                    taAux.attr("style","width:"+Math.round(100/self.columns)+"%");
                 }
             }
         }); 

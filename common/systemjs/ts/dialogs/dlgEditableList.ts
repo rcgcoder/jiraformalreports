@@ -60,7 +60,7 @@ export class dlgEditableList {
         log("Showind the dialog");
         self.elements_backUp=self.getElements();
         var fillBtn=self.getFullFillButton();
-        if (isSomeOneObservingFullFillRequest()){
+        if (self.isSomeOneObservingFullFillRequest()){
             fillBtn.show();
         } else {
             fillBtn.hide();

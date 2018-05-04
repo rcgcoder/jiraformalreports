@@ -62,7 +62,7 @@ export class listEditor {
         var arrResult=[];
         for (var i=0;i<self.columns;i++){
             var auxTextArea=self.getTextArea(i);
-            arrResult=auxTextArea.val();
+            arrResult.push(auxTextArea.val());
         }
         return arrResult;
     }

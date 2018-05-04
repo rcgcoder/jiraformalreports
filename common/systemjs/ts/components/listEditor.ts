@@ -49,7 +49,7 @@ export class listEditor {
         var self=this;
         var indexAux;
         if ((index==0)||(typeof index==="undefined")){
-            indexAux="";
+            indexAux="_0";
         } else {
             indexAux="_"+index;
         }

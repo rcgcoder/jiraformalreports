@@ -6,7 +6,8 @@ System.config({
     emitDecoratorMetadata: true
   },
   paths: {
-    'npm:': 'https://cdn.jsdelivr.net/npm/'
+//    'npm:': 'https://cdn.jsdelivr.net/npm/'
+	    'npm:': 'https://unpkg.com/'
   },
   //map tells the System loader where to look for things
   map: {

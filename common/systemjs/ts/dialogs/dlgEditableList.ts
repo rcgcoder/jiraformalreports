@@ -80,4 +80,7 @@ export class dlgEditableList {
         self.setElements(self.elements_backUp);
         this.getDialog().hide();
     }
+    doRetrieveFullFill(){
+        log("Retrieving fullfill...");
+    }
 }

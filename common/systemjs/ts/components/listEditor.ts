@@ -102,21 +102,15 @@ export class listEditor {
         for (var i=0;i<self.elements.length;i++){
             var item=self.elements[i];
             var sBtnName=self.name+"_btnDel_"+i;
-            var sHtml=`<tr>
-                            <td>
-                                <button id="`+sBtnName+`" list_index="`+ i +`" class="aui-button">-</button>
-                      `;
-
+            var sHtml='<button id="'+sBtnName+'" list_index="'+ i +'" class="aui-button">-</button>';
             if (self.columns==1){
-               sHtml+=item+"</td>";
+               sHtml+="<td>"+item+"</td>";
             } else {
                for (var j=0;j<self.columns;j++){
                    var itemCol=item[j];
-                   sHtml+=itemCol+"</td><td>";
+                   sHtml+="<td>"+itemCol+"</td>";
                }
-               sHtml+="</td>";
             }
-            sHtml+="</tr>";
                   
             tbl.append("<tr>"+sHtml+"</tr>");
             var jqElem=$("#"+sBtnName);

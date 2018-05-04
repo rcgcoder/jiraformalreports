@@ -21,9 +21,9 @@ class RCGSystemJSManager{
 			var arrFiles=[
 				"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css",
 //		        "https://unpkg.com/zone.js/dist/zone.js",
-		        "https://cdn.jsdelivr.net/npm/zone.js/dist/zone.js",
+		        "https://cdn.jsdelivr.net/npm/zone.js@0.8.20/dist/zone.js",
 //		        "https://unpkg.com/zone.js/dist/long-stack-trace-zone.js",
-		        "https://cdn.jsdelivr.net/npm/zone.js/dist/long-stack-trace-zone.js",
+		        "https://cdn.jsdelivr.net/npm/zone.js@0.8.20/dist/long-stack-trace-zone.js",
 //		        "https://unpkg.com/reflect-metadata/Reflect.js",
 //		        "https://unpkg.com/systemjs/dist/system.js",
 //		        "https://unpkg.com/reflect-metadata@0.1.3/Reflect.js",

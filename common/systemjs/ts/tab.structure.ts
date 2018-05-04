@@ -161,4 +161,7 @@ export class TabStructure {
             theReport.execute();
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
     }
+    onGetFullListOfFields($event){
+        log("getting the total list of fields.....");
+    }
 }

@@ -81,6 +81,8 @@ export class dlgEditableList {
         this.getDialog().hide();
     }
     doRetrieveFullFill(){
+        var self=this;
         log("Retrieving fullfill...");
+        self.onFullFillRequest.emit(self);
     }
 }

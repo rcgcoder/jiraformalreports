@@ -59,7 +59,7 @@ export class listEditor {
     }
     getTextValue(indexColumn){
         var self=this;
-        var auxTextArea=self.getTextArea(i);
+        var auxTextArea=self.getTextArea(indexColumn);
         return auxTextArea.val();
     }
     getTextValues(){

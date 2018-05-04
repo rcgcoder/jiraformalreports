@@ -195,7 +195,7 @@ export class TabStructure {
             var arrAllFields=intFields.getAllElements();
             var hsIdentified=newHashMap();
             var arrRestField=[];
-            log("There is "+ hsFields.count()+" fields in all issues");
+            log("There is "+ hsFields.length()+" fields in all issues");
             for (var i=0;i<arrAllFields.length;i++){
                 hsIdentified.add(arrAllFields[i].key,arrAllFields[i]);
             }
@@ -221,7 +221,7 @@ export class TabStructure {
             hsFields.walkAsync("Removing duplicate fields...",fncProcessNode,fncProcessEnd,fncBlockPercent,fncBlockTime);
         });
         System.webapp.addStep("Update selection table",function(arrRestFields){
-            log("After discard identificied there is "+ arrRestFields.length+"/"+hsAllFields.count()+" fields in all issues");
+            log("After discard identificied there is "+ arrRestFields.length+"/"+hsAllFields.length()+" fields in all issues");
             var fieldDefs=System.getAngularObject('manualFieldDefinitions',true);
             fieldDefs.setElements(arrRestFields);
         });

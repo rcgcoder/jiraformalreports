@@ -8,7 +8,7 @@ export class listEditor {
     @Input() typeDescriptor: string = 'elements';
     @Input() multiple: string = "false";
     @Input() columns: number = 1;
-    @Input() columnDefinitions: string="[{'caption':'Name'}]"
+    @Input() columnDefinitions: string='[{"caption":"Name"}]'
     @Input() maxCharsInSelect: integer = 17;
     @Input() openDialogCaption: string = '...';
     @Output() onRetrieveData = new EventEmitter<{}>();

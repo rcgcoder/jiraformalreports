@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class dlgEditableList {
     @Input() name: string = 'dlgEditableList';
     @Input() columns: number = 1;
-    @Input() columnDefinitions: string="[{'caption':'Name'}]";
+    @Input() columnDefinitions: string='[{"caption":"Name"}]';
     @Input() typeDescriptor: string = 'elements';
     @Input() openDialogCaption: string = '...';
     @Output() onApply = new EventEmitter<[]>();

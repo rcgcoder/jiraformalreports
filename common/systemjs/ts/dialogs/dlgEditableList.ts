@@ -47,10 +47,10 @@ export class dlgEditableList {
         System.addPostProcess(function(){
             log("PostProcessing:"+self.name);
             System.bindObj(self);
-            if(self.isSomeOneObservingFullFillRequest()){
+/*            if(self.isSomeOneObservingFullFillRequest()){
                 var actionBar=System.getAngularObject("dlg_"+self.name+"_actionBar",true);
                 actionBar.prepend("<button>test</button>");
-            }
+            }*/
         });
     }
 

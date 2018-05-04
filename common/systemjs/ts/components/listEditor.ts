@@ -27,24 +27,43 @@ export class listEditor {
         System.addPostProcess(function(){
             log("PostProcessing:"+self.name);
             System.bindObj(self);
+            self.columnDefinitions=JSON.parse(self.columnDefinitions);
             var headers=self.getTableHeader().find("tr");
+            var itemAddBox=System.getAngularDomObject(self.name+"-itemAddBox");
             for (var i=0;i<self.columns;i++){
                 var column=self.columnDefinitions[i];
                 headers.append(`    <th>
                                         `+column.caption+`
                                     </th>
                                 `);
+                var sPostIndex="";
+                if (i>0){
+                    sPostIndex="_"+i;
+                }
+                itemAddBox.append('<textarea name="{{name}}-text'+sPostIndex+'" rows=6 style="width:'+Math.round(100/self.columns)+'%;"></textarea>');
             }
         }); 
     }
-    getTextArea(){
+    getTextArea(index){
         var self=this;
-        var txtArea=System.getAngularDomObject(self.name+"-text");
+        var indexAux;
+        if ((index==0)||(typeof index==="undefined")){
+            indexAux="";
+        } else {
+            indexAux="_"+index;
+        }
+        var txtArea=System.getAngularDomObject(self.name+"-text"+indexAux);
         txtArea=$(txtArea);
         return txtArea;
     }
     getTextValue(){
-        return this.getTextArea().val();
+        var self=this;
+        var arrResult=[];
+        for (var i=0;i<self.columns;i++){
+            var auxTextArea=self.getTextArea(i);
+            arrResult=auxTextArea.val();
+        }
+        return arrResult;
     }
     getTableHeader(){
         var self=this;
@@ -77,27 +96,54 @@ export class listEditor {
         for (var i=0;i<self.elements.length;i++){
             var item=self.elements[i];
             var sBtnName=self.name+"_btnDel_"+i;
-            tbl.append(
-                `<tr>
-                    <td><button id="`+sBtnName+`" list_index="`+ i +`" class="aui-button">-</button>
-                    `+item+`</td>
-                  </tr>`
-                );
+            var sHtml=`<tr>
+                            <td>
+                                <button id="`+sBtnName+`" list_index="`+ i +`" class="aui-button">-</button>
+                      `;
+
+            if (self.columns==1){
+               sHtml+=item+"</td>";
+            } else {
+               for (var j=0;j<self.columns;j++){
+                   itemCol=item[j];
+                   sHtml+=itemCol+"</td><td>";
+               }
+               sHtml+="</td>";
+            }
+            sHtml+="</tr>";
+                  
+            tbl.append("<tr>"+sHtml+"</tr>");
             var jqElem=$("#"+sBtnName);
             fncAddClickEvent(jqElem);
         }
     }
     onTableToTextArea(){
        var self=this;
-       var sTxt="";
-       for (var i=0;i<self.elements.length;i++){
-           if (i>0){
-              sTxt+="\n";
-           }
-           sTxt+=self.elements[i];
+       var sTxt;
+       var sTexts=[];
+       while(sTexts.length<self.columns){
+           sTexts.push("");
        }
-       var tArea=self.getTextArea();
-       tArea.val(sTxt);
+       var elem;
+       for (var i=0;i<self.elements.length;i++){
+           elem=self.elements[i];
+           for (var j=0;j<self.columns;j++){
+               sTxt=sTexts[j];
+               if (i>0){
+                  sTxt+="\n";
+               }
+               if (self.columns==1){
+                  sTxt+=elem;
+               } else {
+                  sTxt+=elem[j];
+               }
+               sTexts[j]=sTxt;
+           }
+       }
+       for (var j=0;j<self.columns;j++){
+           var tArea=self.getTextArea(j);
+           tArea.val(sTexts[j]);
+       }
     }
     onReplaceTableFromTextArea(){
         var self=this;
@@ -108,14 +154,36 @@ export class listEditor {
     }
     onTextAreaToTable(){
         var self=this;
-        var txtInput=self.getTextValue();
-        var arrInput=txtInput.split("\n");
+        var auxElements=[];
+        while(auxElements.length<self.columns){
+               sTexts.push("");
+        }
+        var elem;
+        var colVal;
         
-        var self=this;
-        for (var i=0;i<arrInput.length;i++){
-            var item=arrInput[i];
-            if ((!isInArray(self.elements,item))&&(item!="")){
-                self.elements.push(item);
+        for (var j=0;j<self.columns;i++){
+            var txtInput=self.getTextValue(j);
+            var arrInput=txtInput.split("\n");
+            while(auxElements.length<arrInput.length){
+               auxElements.push([]);
+            }
+            for (var i=0;i<arrInput.length;i++){
+                elem=auxElements[i];
+                while(elem.length<self.columns){
+                   elem.push("");
+                }
+                colVal=arrInput[i];
+                elem[i]=colVal;
+            }
+        }
+        for (var i=0;i<auxElements.length;i++){
+            var firstCol=auxElements[i][0];
+            if ((!isInArray(self.elements,firstCol,(self.columns==1?undefined:0)))&&(firstCol!="")){
+               if (self.columns==1){
+                   self.elements.push(firstCol);
+               } else {
+                   self.elements.push(auxElements[i]);
+                }
             }
         }
         self.refreshTable();

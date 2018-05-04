@@ -52,6 +52,28 @@ function objEquals(aObj,bObj){
 	}
 	return bEquals;
 }
+function getAllProperties(obj){
+	var arrProperties;
+	var arrResult=[];
+	var baseObj;
+	if (typeof obj==="function"){ // a class is a function... "constructor"
+		baseObj=obj.prototype;
+	} else {
+		baseObj=obj;
+	}
+	arrProperties=Object.getOwnPropertyNames(baseObj);
+	for (var i=0;i<arrProperties.length;i++){
+		var vPropName=arrProperties[i];
+		if (vPropName!=="constructor"){
+			var vPropValue=baseObj[vPropName];
+			if (!isMethod(vPropValue)){
+				arrResult.push(vPropName);
+			}
+		}
+	}
+	return arrResult;
+}
+
 function makeGlobals(obj){
 	var arrProperties;
 	var baseObj;

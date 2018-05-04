@@ -97,6 +97,37 @@ class RCGJira{
 			doItem=doFactory.new(itm.fields.summary,itm.key);
 		}
 	}
+	getFieldFullList(scopeJQL){
+		var self=this;
+		self.addStep("Getting all Issues on JQL",function(){
+			self.getJQLIssues(scopeJQL);
+		});
+		self.addStep("Extracting all Field Keys",function(arrIssues){
+			var hsFields=newHashMap();
+			var hsTypes=newHashMap();
+			var issue;
+			var issType;
+			for (var i=0;i<arrIssues.length;i++){
+				issue=arrIssues[i];
+				issType=issue.fields.issuetype.name;
+				if (!hsTypes.exists(issType)){
+					hsTypes.add(issType,issue.fields.issuetype);
+					var arrProperties=getAllProperties(issue);
+					for (var j=0;j<arrProperties.length;j++){
+						var vPropName=arrProperties[j];
+						if (!hsFields.exists(vPropName)){
+							var vPropType=typeof issue[vPropName];
+							hsFields.add(vPropName,{name:vPropName,type:vPropType});
+						}
+					}
+					hsFields.swing();
+					hsTypes.swing();
+				}
+			}
+			self.continueTask([hsFields]);
+		});
+		self.continueTask();
+	}
 	getProjectsAndMetaInfo(){
 		var self=this;
 		self.pushCallback(function(sResponse,xhr,sUrl,headers){

@@ -51,6 +51,7 @@ class RCGHashMapFactory{
 			obj.changeParent=this.changeParent;
 			obj.remove=this.remove;
 			obj.length=this.length;
+			obj.toArray=this.toArray;
 			
 			return obj;
 		}
@@ -1542,7 +1543,31 @@ class RCGHashMapFactory{
 					return pos;
 				}
 			}
-	}
+		toArray(arrFields){ //[{doFieldName:,resultFieldName},{}.{}]
+			// convert the list of objects to an array []
+			var arrResult=[]
+			var fncToItem=function(elem){
+				var auxElem=elem;
+				if (isDefined(arrFields)){
+					auxElem={};
+					var auxField;
+					var doFieldName;
+					var doFieldValue;
+					var resultFieldName;
+					for (var i=0;i<arrFields.length;i++){
+						auxField=arrFields[i];
+						doFieldName=auxField.doFieldName;
+						doFieldValue=elem.doFieldName;
+						resultFieldName=auxField.resultFieldName;
+						auxElem[resultFieldName]=doFieldValue;
+					}
+				}
+				arrResult.push(auxElem);
+			}
+			this.walk(fncToItem);
+			return arrResult;
+		}
+}
 var hashmapFactory;
 var newHashMap;
 if (isInNodeJS()){

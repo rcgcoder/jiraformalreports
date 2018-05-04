@@ -194,7 +194,7 @@ export class TabStructure {
             hsAllFields=hsFields;
             var arrAllFields=intFields.getAllElements();
             var hsIdentified=newHashMap();
-            var arrRestField=[];
+            var hsResultFields=newHashMap();
             log("There is "+ hsFields.length()+" fields in all issues");
             for (var i=0;i<arrAllFields.length;i++){
                 hsIdentified.add(arrAllFields[i].key,arrAllFields[i]);
@@ -203,12 +203,12 @@ export class TabStructure {
             var fncProcessNode=System.webapp.createManagedCallback(function(objStep){
                 var objStepKey=objStep.actualNode.key;
                 if (!hsIdentified.exists(objStepKey)){
-                    arrRestField.push(objStepKey);
+                    hsResultFields.add(objStepKey,objStepKey);
                 }
             });
             var fncProcessEnd=System.webapp.createManagedCallback(function(objStep){
                 var objStepEnd=objStep;
-                System.webapp.continueTask([arrRestField]);
+                System.webapp.continueTask([hsResultFields]);
             });
             var fncBlockPercent=System.webapp.createManagedCallback(function(objStep){
                 var objStepEnd=objStep;
@@ -221,9 +221,14 @@ export class TabStructure {
             hsFields.walkAsync("Removing duplicate fields...",fncProcessNode,fncProcessEnd,fncBlockPercent,fncBlockTime);
         });
         System.webapp.addStep("Update selection table",function(arrRestFields){
-            log("After discard identificied there is "+ arrRestFields.length+"/"+hsAllFields.length()+" fields in all issues");
+            log("After discard identificied there is "+ hsResultFields.length()+"/"+hsAllFields.length()+" fields in all issues");
             var fieldDefs=System.getAngularObject('manualFieldDefinitions',true);
-            fieldDefs.setElements(arrRestFields);
+            var arrResultElements=[];
+            var fncToItem=function(elem){
+                arrResultElements.push([elem,elem]);
+            }
+            hsResultFields.walk(fncToItem);
+            fieldDefs.setElements(arrResultElements);
         });
         System.webapp.continueTask();
     }

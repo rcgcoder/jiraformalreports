@@ -38,10 +38,10 @@ export class listEditor {
                                 `);
                 if (i>0){
                     var sPostIndex="_"+i;
-                    itemAddBox.append('<textarea name="{{name}}-text'+sPostIndex+'" rows=6 style="width:'+Math.round(100/self.columns)+'%;"></textarea>');
+                    itemAddBox.append('<textarea name="{{name}}-text'+sPostIndex+'" rows=6 ></textarea>');
                 }   
-                var taAux=self.getTextArea(0);
-                taAux.width((Math.round(100/self.columns)-5)+"%");
+                var taAux=self.getTextArea(i);
+                taAux.width((Math.round(100/self.columns)-10)+"%");
             }
         }); 
     }

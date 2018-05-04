@@ -229,6 +229,8 @@ export class TabStructure {
             }
             hsResultFields.walk(fncToItem);
             fieldDefs.setElements(arrResultElements);
+            System.webapp.continueTask();
+                
         });
         System.webapp.continueTask();
     }

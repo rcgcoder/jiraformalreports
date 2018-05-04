@@ -57,7 +57,12 @@ export class listEditor {
         txtArea=$(txtArea);
         return txtArea;
     }
-    getTextValue(){
+    getTextValue(indexColumn){
+        var self=this;
+        var auxTextArea=self.getTextArea(i);
+        return auxTextArea.val();
+    }
+    getTextValues(){
         var self=this;
         var arrResult=[];
         for (var i=0;i<self.columns;i++){

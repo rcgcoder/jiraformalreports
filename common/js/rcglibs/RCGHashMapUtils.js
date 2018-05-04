@@ -566,7 +566,7 @@ class RCGHashMapFactory{
 			}
 		}
 		stepAsync(){
-			var nLevels=hashmapFactory.pilaAsyncCalls.length();
+			var nLevels=hashmapFactory.stackAsyncCalls.length();
 			if (nLevels>0) { 
 				var bStop=false;
 				var initTimestamp=new Date().getTime();
@@ -583,7 +583,7 @@ class RCGHashMapFactory{
 				var nodAux; // para tipos recorre
 				var indAct=0,indMin,indMax; // para tipos bucle 
 				while ((!bStop)&&(!bFinish)){
-					objStep=hashmapFactory.pilaAsyncCalls.top();
+					objStep=hashmapFactory.stackAsyncCalls.top();
 					if (bFirst){
 						callEnd=objStep.callEnd;
 						secsLoop=objStep.secsLoop;
@@ -610,7 +610,7 @@ class RCGHashMapFactory{
 						objStep.index++;
 						indAct++;
 						nElements++;
-						//factoriaHashMaps.pilaAsyncCalls.push(objStep);
+						//factoriaHashMaps.stackAsyncCalls.push(objStep);
 						// tiene que devolver true o false (true:continua, false:finaliza)
 						// si no devuelve nada entonces se entiende que continua
 						if (type==0) {

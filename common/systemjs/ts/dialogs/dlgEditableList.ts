@@ -39,7 +39,7 @@ export class dlgEditableList {
     
     getFullFillButton(){
         var self=this;
-        return System.getAngularDomObject("dlg_"+self.name+"_fullfillButton",true);
+        return System.getAngularDomObject("dlg_"+self.name+"_fullfillButton");
     }
 
     ngOnInit() {

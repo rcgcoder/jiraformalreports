@@ -156,9 +156,6 @@ export class listEditor {
     onTextAreaToTable(){
         var self=this;
         var auxElements=[];
-        while(auxElements.length<self.columns){
-               sTexts.push("");
-        }
         var elem;
         var colVal;
         

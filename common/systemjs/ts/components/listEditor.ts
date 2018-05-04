@@ -41,7 +41,7 @@ export class listEditor {
                     itemAddBox.append('<textarea name="{{name}}-text'+sPostIndex+'" rows=6 style="width:'+Math.round(100/self.columns)+'%;"></textarea>');
                 }   
                 var taAux=self.getTextArea(0);
-                taAux.width(Math.round(100/self.columns)+"%");
+                taAux.width((Math.round(100/self.columns)-5)+"%");
             }
         }); 
     }

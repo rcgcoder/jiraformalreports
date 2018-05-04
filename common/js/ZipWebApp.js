@@ -54,7 +54,7 @@ class ZipWebApp{
 			atl.initialized=false;
 			self.continueTask();
 		});  
-		self.addStep("launching de engines and get atlassian base information.... "
+		self.addStep("launching the engines and get atlassian base information.... "
 					,function(){
 
 			self.addStep("Launching Systemjs.... ",function(){

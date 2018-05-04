@@ -22,8 +22,10 @@ class RCGSystemJSManager{
 				"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css",
 		        "https://unpkg.com/zone.js/dist/zone.js",
 		        "https://unpkg.com/zone.js/dist/long-stack-trace-zone.js",
-		        "https://unpkg.com/reflect-metadata@0.1.3/Reflect.js",
-		        "https://unpkg.com/systemjs@0.19.31/dist/system.js",
+		        "https://unpkg.com/reflect-metadata/Reflect.js",
+		        "https://unpkg.com/systemjs/dist/system.js",
+//		        "https://unpkg.com/reflect-metadata@0.1.3/Reflect.js",
+//		        "https://unpkg.com/systemjs@0.19.31/dist/system.js",
 //		        "https://cdn.jsdelivr.net/npm/reflect-metadata@0.1.3/Reflect.js",
 //		        "https://cdn.jsdelivr.net/npm/systemjs@0.19.31/dist/system.js",
 				"systemjs/config.js"

@@ -36,6 +36,10 @@ export class dlgEditableList {
         log("Observers retrieve:"+self.onFullFillRequest.observers.length);
         return (self.onFullFillRequest.observers.length>0);
     }
+    
+    getFullFillButton(){
+        return System.getAngularDomObject("dlg_"+self.name+"_fullfillButton",true);
+    }
 
     ngOnInit() {
         var self=this;
@@ -54,7 +58,13 @@ export class dlgEditableList {
         log("it´s clicked show button");
         log("Showind the dialog");
         self.elements_backUp=self.getElements();
-        this.getDialog().show();
+        var fillBtn=self.getFullFillButton();
+        if (isSomeOneObservingFullFillRequest()){
+            fillBtn.show();
+        } else {
+            fillBtn.hide();
+        }
+        self.getDialog().show();
     }
     doAction(){
         var self=this;

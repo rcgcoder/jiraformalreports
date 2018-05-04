@@ -159,7 +159,7 @@ export class listEditor {
         var elem;
         var colVal;
         
-        for (var j=0;j<self.columns;j++){
+        for (var j=0;j<self.columns;++){
             var txtInput=self.getTextValue(j);
             var arrInput=txtInput.split("\n");
             while(auxElements.length<arrInput.length){
@@ -171,7 +171,7 @@ export class listEditor {
                    elem.push("");
                 }
                 colVal=arrInput[i];
-                elem[i]=colVal;
+                elem[j]=colVal;
             }
         }
         for (var i=0;i<auxElements.length;i++){

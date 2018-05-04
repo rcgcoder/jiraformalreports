@@ -36,11 +36,10 @@ export class listEditor {
                                         `+column.caption+`
                                     </th>
                                 `);
-                var sPostIndex="";
                 if (i>0){
-                    sPostIndex="_"+i;
+                    var sPostIndex="_"+i;
+                    itemAddBox.append('<textarea name="{{name}}-text'+sPostIndex+'" rows=6 style="width:'+Math.round(100/self.columns)+'%;"></textarea>');
                 }
-                itemAddBox.append('<textarea name="{{name}}-text'+sPostIndex+'" rows=6 style="width:'+Math.round(100/self.columns)+'%;"></textarea>');
             }
         }); 
     }

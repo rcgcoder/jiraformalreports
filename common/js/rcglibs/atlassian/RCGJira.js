@@ -113,7 +113,8 @@ class RCGJira{
 			var type;
 			var inward;
 			var outward;
-			var fncProcessIssue=System.webapp.createManagedCallback(function(issue){
+			var fncProcessIssue=System.webapp.createManagedCallback(function(issueIndex){
+				var issue=arrIssues[issueIndex];
 				for (var j=0;j<issue.fields.issuelinks.length;j++){
 					issueLink=issue.fields.issuelinks[j];
 					type=issueLink.type;

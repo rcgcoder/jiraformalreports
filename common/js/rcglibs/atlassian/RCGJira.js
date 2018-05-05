@@ -115,8 +115,8 @@ class RCGJira{
 			var outward;
 			for (var i=0;i<arrIssues.length;i++){
 				issue=arrIssues[i];
-				for (var j=0;j<issue.issuelinks.length;j++){
-					issueLink=issue.issuelinks[j];
+				for (var j=0;j<issue.fields.issuelinks.length;j++){
+					issueLink=issue.fields.issuelinks[j];
 					type=issueLink.type;
 					inward=type.inward;
 					outward=type.outward;

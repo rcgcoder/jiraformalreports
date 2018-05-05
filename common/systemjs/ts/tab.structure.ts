@@ -161,34 +161,36 @@ export class TabStructure {
             theReport.execute();
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
     }
+    getScopeNormalizedJQL(){
+        log("getting the list of issues in the Scope.....");
+        var auxObj=System.getAngularObject('selScope',true);
+        var jql=auxObj.getJQLValue();
+        var arrValues=auxObj.getSelectedValues();
+        if ((arrValues.length==0)&&(jql!="")){
+            return jql;
+        } else if ((arrValues.length==0)&&(jql=="")){
+            return "";
+        } else {
+            var sIssues="";
+            for (var i=0;i<arrValues.length;i++){
+                if (i<0){
+                   sIssues+=",";
+                }
+                sIssues+=arrValues[i].key;
+            }
+            return "id in ("+sIssues+")";
+        }
+    }
     onGetFullListOfFields($event){
         log("getting the total list of fields.....");
         var self=this;
         var jira=System.webapp.getJira();
-        var auxObj=System.getAngularObject('selScope',true);
-        var jql=auxObj.getJQLValue();
         var hsAllFields;
-        var arrValues=auxObj.getSelectedValues();
-        if ((arrValues.length==0)&&(jql!="")){
-            System.webapp.addStep("Getting all field names of jql:"+jql,function(){
-                jira.getFieldFullList(jql);
-            });
-        } else if ((arrValues.length==0)&&(jql=="")){
-            System.webapp.addStep("Getting all field names of ALL ISSUES",function(){
-                jira.getFieldFullList();
-            });
-        } else {
-            System.webapp.addStep("Getting all field names of the list",function(){
-                var sIssues="";
-                for (var i=0;i<arrValues.length;i++){
-                    if (i<0){
-                       sIssues+=",";
-                    }
-                    sIssues+=arrValues[i].key;
-                }
-                jira.getFieldFullList("id in ("+sIssues+")");
-            });
-        }
+        System.webapp.addStep("Getting all field names from scope issues",function(){
+            var jql=self.getScopeNormalizedJQL();
+            log("Scope Normalized jql:["+jql+"]");
+            jira.getFieldFullList(jql);
+        });
         System.webapp.addStep("Getting all field names of the list",function(hsFields){
             var intFields=System.getAngularObject('selInterestFields',true);
             hsAllFields=hsFields;
@@ -238,30 +240,12 @@ export class TabStructure {
         log("getting the total list of issue link types.....");
         var self=this;
         var jira=System.webapp.getJira();
-        var auxObj=System.getAngularObject('selScope',true);
-        var jql=auxObj.getJQLValue();
         var hsAllFields;
-        var arrValues=auxObj.getSelectedValues();
-        if ((arrValues.length==0)&&(jql!="")){
-            System.webapp.addStep("Getting all issue link types of jql:"+jql,function(){
-                jira.getIssueLinkFullList(jql);
-            });
-        } else if ((arrValues.length==0)&&(jql=="")){
-            System.webapp.addStep("Getting all issue link types of ALL ISSUES",function(){
-                jira.getIssueLinkFullList();
-            });
-        } else {
-            System.webapp.addStep("Getting all issue link types of the list",function(){
-                var sIssues="";
-                for (var i=0;i<arrValues.length;i++){
-                    if (i<0){
-                       sIssues+=",";
-                    }
-                    sIssues+=arrValues[i].key;
-                }
-                jira.getFieldFullList("id in ("+sIssues+")");
-            });
-        }
+        System.webapp.addStep("Getting all issue link types of Scope",function(){
+            var jql=self.getScopeNormalizedJQL();
+            log("Scope Normalized jql:["+jql+"]");
+            jira.getIssueLinkFullList(jql);
+        });
         System.webapp.addStep("Update selection table",function(hsLinkTypes){
             var selLinkTypes=System.getAngularObject('linkTypesConfiguration',true);
             var arrResultElements=[];

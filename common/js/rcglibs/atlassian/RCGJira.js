@@ -279,7 +279,6 @@ class RCGJira{
 				log("Process Array Issues of block of JQL ["+jqlAux+"]");
 				self.processArrayIssues(blkIssues,auxCbProcessIssue,fncEndBlock,auxCbProcessBlock);
 			});
-			self.continueTask();
 		});
 		self.addStep("Fetching Issues"+" of JQL ["+jqlAux+"]",function(){
 			self.getJQLIssues(jqlAux,fncProcessDownloadedBlock);

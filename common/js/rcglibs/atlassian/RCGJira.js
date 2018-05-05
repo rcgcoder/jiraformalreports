@@ -301,7 +301,11 @@ class RCGJira{
 	processJQLIssues(jql,fncProcessIssue,returnVariable,cbEndProcess,cbDownloadBlock,cbProcessBlock){
 		var self=this;
 		self.addStep("Fetching Issues",function(){
-			self.getJQLIssues(jql,self.createManagedCallback(cbDownloadBlock));
+			var auxCbBlock;
+			if (isDefined(cbDownloadBlock)){
+				auxCbBlock=self.createManagedCallback(cbDownloadBlock);
+			}
+			self.getJQLIssues(jql,auxCbBlock);
 		});
 		self.addStep("Processing Issues",function(arrIssues){
 			var fncEnd;

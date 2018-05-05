@@ -97,6 +97,18 @@ class RCGJira{
 			doItem=doFactory.new(itm.fields.summary,itm.key);
 		}
 	}
+	processArrayIssues(arrIssues,fncProcessIssue,fncEndCallback){
+		var self=this;
+		var fncItem=self.createManagedCallback(fncProcessIssue);
+		var fncEnd=self.createManagedCallback(function(){
+			log("Processed max index:"+maxIndex+" of array length:"+arrIssues.length);
+			fncEndCallback();
+		});
+		var fncBlock=self.createManagedCallback(function(){
+			log("A block");
+		});
+		processOffline(0,arrIssues.length,fncItem,"issues",fncEnd,fncBlock);
+	}
 	getIssueLinkFullList(scopeJQL){
 		var self=this;
 		var jqlAux="";
@@ -114,7 +126,7 @@ class RCGJira{
 			var inward;
 			var outward;
 			var maxIndex=-1;
-			var fncProcessIssue=System.webapp.createManagedCallback(function(issueIndex){
+			var fncProcessIssue=function(issueIndex){
 				if (maxIndex<issueIndex){
 					maxIndex=issueIndex;
 				}
@@ -131,15 +143,12 @@ class RCGJira{
 						hsTypes.add(outward,outward);
 					}
 				}
-			});
-			var fncEnd=System.webapp.createManagedCallback(function(){
-				log("Processed max index:"+maxIndex+" of array length:"+arrIssues.length);
-				self.continueTask([hsTypes]);
-			});
-			var fncBlock=System.webapp.createManagedCallback(function(){
-				log("A block");
-			});
-			processOffline(0,arrIssues.length,fncProcessIssue,"issues",fncEnd,fncBlock);
+			};
+			var fncEnd=function(){
+				hsTypes.swing();
+				self.continueTask([hsTypes]);				
+			}
+			self.processArrayIssues(arrIssues,fncProcessIssue,fncEnd);
 		});
 		self.continueTask();
 	}
@@ -157,8 +166,8 @@ class RCGJira{
 			var hsTypes=newHashMap();
 			var issue;
 			var issType;
-			for (var i=0;i<arrIssues.length;i++){
-				issue=arrIssues[i];
+			var fncProcessIssue=function(issueIndex){
+				issue=arrIssues[issueIndex];
 				issType=issue.fields.issuetype.name;
 				if (!hsTypes.exists(issType)){
 					hsTypes.add(issType,issue.fields.issuetype);
@@ -174,7 +183,7 @@ class RCGJira{
 					hsTypes.swing();
 				}
 			}
-			self.continueTask([hsFields]);
+			self.processArrayIssues(arrIssues,fncProcessIssue,function(){self.continueTask([hsFields])});
 		});
 		self.continueTask();
 	}

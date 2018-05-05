@@ -113,7 +113,11 @@ class RCGJira{
 			var type;
 			var inward;
 			var outward;
+			var maxIndex=-1;
 			var fncProcessIssue=System.webapp.createManagedCallback(function(issueIndex){
+				if (maxIndex<issueIndex){
+					maxIndex=issueIndex;
+				}
 				var issue=arrIssues[issueIndex];
 				for (var j=0;j<issue.fields.issuelinks.length;j++){
 					issueLink=issue.fields.issuelinks[j];
@@ -129,6 +133,7 @@ class RCGJira{
 				}
 			});
 			var fncEnd=System.webapp.createManagedCallback(function(){
+				log("Processed max index:"+maxIndex+" of array length:"+arrIssues.length);
 				self.continueTask([hsTypes]);
 			});
 			var fncBlock=System.webapp.createManagedCallback(function(){

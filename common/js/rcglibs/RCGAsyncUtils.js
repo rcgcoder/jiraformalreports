@@ -143,7 +143,7 @@ class offlineProcesor{
 		self.callBlock(theStepInfo);
 		if (((self.iIndAct>=self.iIndMax)&&(self.iIndMax>self.iIndMin))||(bFinish)) {
 			if (isDefined(self.theCallback)){
-				self.theCallback(theStep);
+				self.theCallback(theStepInfo);
 			}
 			if (isDefined(self.RCGAsyncUtils_inner_Barrier)){
 				setTimeout(function(){

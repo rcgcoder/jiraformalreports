@@ -320,7 +320,7 @@ class RCGJira{
 					}
 				};
 			}
-			processArrayIssues(arrIssues,fncProcessIssue,fncEnd,cbProcessBlock);
+			self.processArrayIssues(arrIssues,fncProcessIssue,fncEnd,cbProcessBlock);
 		});
 		self.continueTask();
 	}

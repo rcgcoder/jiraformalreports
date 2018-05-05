@@ -160,34 +160,28 @@ class RCGJira{
 		if (isDefined(scopeJQL)){
 			jqlAux=scopeJQL;
 		}
-		self.addStep("Getting all Issues on JQL:["+jqlAux+"]",function(){
-			self.getJQLIssues(jqlAux);
-		});
-		self.addStep("Extracting all Field Keys",function(arrIssues){
-			var hsFields=newHashMap();
-			var hsTypes=newHashMap();
-			var issue;
-			var issType;
-			var fncProcessIssue=function(issueIndex){
-				issue=arrIssues[issueIndex];
-				issType=issue.fields.issuetype.name;
-				if (!hsTypes.exists(issType)){
-					hsTypes.add(issType,issue.fields.issuetype);
-					var arrProperties=getAllProperties(issue.fields);
-					for (var j=0;j<arrProperties.length;j++){
-						var vPropName=arrProperties[j];
-						if (!hsFields.exists(vPropName)){
-							var vPropType=typeof issue[vPropName];
-							hsFields.add(vPropName,{name:vPropName,type:vPropType});
-						}
+		var hsFields=newHashMap();
+		var hsTypes=newHashMap();
+		var issue;
+		var issType;
+		var fncProcessIssue=function(issueIndex){
+			issue=arrIssues[issueIndex];
+			issType=issue.fields.issuetype.name;
+			if (!hsTypes.exists(issType)){
+				hsTypes.add(issType,issue.fields.issuetype);
+				var arrProperties=getAllProperties(issue.fields);
+				for (var j=0;j<arrProperties.length;j++){
+					var vPropName=arrProperties[j];
+					if (!hsFields.exists(vPropName)){
+						var vPropType=typeof issue[vPropName];
+						hsFields.add(vPropName,{name:vPropName,type:vPropType});
 					}
-					hsFields.swing();
-					hsTypes.swing();
 				}
+				hsFields.swing();
+				hsTypes.swing();
 			}
-			self.processArrayIssues(arrIssues,fncProcessIssue,function(){self.continueTask([hsFields])});
-		});
-		self.continueTask();
+		}
+		self.processJQLIssues(jqlAux,fncProcessIssue,hsFields);
 	}
 	getProjectsAndMetaInfo(){
 		var self=this;
@@ -299,9 +293,31 @@ class RCGJira{
 		self.addStep("Getting All Issues from JQL", function(){
 			self.getFullList("/rest/api/2/search?jql="+jql,"issues",undefined,undefined,cbBlock);
 		});
-		self.addStep("Processing all Issues from JQL", function(response,xhr,sUrl,headers){
+		self.addStep("Returning all Issues from JQL", function(response,xhr,sUrl,headers){
 			self.popCallback([response]);
 		});
 		self.continueTask();
 	}
+	processJQLIssues(jql,fncProcessIssue,returnVariable,cbEndProcess,cbDownloadBlock,cbProcessBlock){
+		var self=this;
+		self.addStep("Fetching Issues",function(){
+			self.getJQLIssues(jql,self.createManagedCallback(cbDownloadBlock));
+		});
+		self.addStep("Processing Issues",function(arrIssues){
+			var fncEnd;
+			if (isDefined(cbEndProcess)){
+				fncEnd=cbEndProcess;
+			} else {
+				fncEnd=function(){
+					if (isDefined(returnVariable)){
+						self.continueTask([returnVariable]);
+					} else {
+						self.continueTask();
+					}
+				};
+			}
+			processArrayIssues(arrIssues,fncProcessIssue,fncEnd,cbProcessBlock);
+		});
+	}
+
 }

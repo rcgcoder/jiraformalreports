@@ -97,6 +97,41 @@ class RCGJira{
 			doItem=doFactory.new(itm.fields.summary,itm.key);
 		}
 	}
+	getIssueLinkFullList(scopeJQL){
+		var self=this;
+		var jqlAux="";
+		if (isDefined(scopeJQL)){
+			jqlAux=scopeJQL;
+		}
+		self.addStep("Getting all Issues on JQL:["+jqlAux+"]",function(){
+			self.getJQLIssues(jqlAux);
+		});
+		self.addStep("Extracting all IssueLink Keys",function(arrIssues){
+			var hsTypes=newHashMap();
+			var issue;
+			var issueLink;
+			var type;
+			var inward;
+			var outward;
+			for (var i=0;i<arrIssues.length;i++){
+				issue=arrIssues[i];
+				for (var j=0;j<issue.issuelinks.length;j++){
+					issueLink=issue.issuelinks[j];
+					type=issueLink.type;
+					inward=type.inward;
+					outward=type.outward;
+					if (!hsTypes.exists(inward)){
+						hsTypes.add(inward,inward);
+					}
+					if (!hsTypes.exists(outward)){
+						hsTypes.add(outward,outward);
+					}
+				}
+			}
+			self.continueTask([hsTypes]);
+		});
+		self.continueTask();
+	}
 	getFieldFullList(scopeJQL){
 		var self=this;
 		var jqlAux="";

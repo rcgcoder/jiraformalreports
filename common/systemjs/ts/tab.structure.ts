@@ -184,7 +184,7 @@ export class TabStructure {
                     if (i<0){
                        sIssues+=",";
                     }
-                    sIssues+=arrValues[i];
+                    sIssues+=arrValues[i].key;
                 }
                 jira.getFieldFullList("id in ("+sIssues+")");
             });
@@ -231,6 +231,46 @@ export class TabStructure {
             fieldDefs.setElements(arrResultElements);
             System.webapp.continueTask();
                 
+        });
+        System.webapp.continueTask();
+    }
+    onGetFullListOfIssueTypes(){
+        log("getting the total list of issue link types.....");
+        var self=this;
+        var jira=System.webapp.getJira();
+        var auxObj=System.getAngularObject('selScope',true);
+        var jql=auxObj.getJQLValue();
+        var hsAllFields;
+        var arrValues=auxObj.getSelectedValues();
+        if ((arrValues.length==0)&&(jql!="")){
+            System.webapp.addStep("Getting all issue link types of jql:"+jql,function(){
+                jira.getIssueLinkFullList(jql);
+            });
+        } else if ((arrValues.length==0)&&(jql=="")){
+            System.webapp.addStep("Getting all issue link types of ALL ISSUES",function(){
+                jira.getIssueLinkFullList();
+            });
+        } else {
+            System.webapp.addStep("Getting all issue link types of the list",function(){
+                var sIssues="";
+                for (var i=0;i<arrValues.length;i++){
+                    if (i<0){
+                       sIssues+=",";
+                    }
+                    sIssues+=arrValues[i].key;
+                }
+                jira.getFieldFullList("id in ("+sIssues+")");
+            });
+        }
+        System.webapp.addStep("Update selection table",function(hsLinkTypes){
+            var selLinkTypes=System.getAngularObject('linkTypesConfiguration',true);
+            var arrResultElements=[];
+            var fncToItem=function(elem){
+                arrResultElements.push(elem);
+            }
+            hsLinkTypes.walk(fncToItem);
+            selLinkTypes.setElements(arrResultElements);
+            System.webapp.continueTask();
         });
         System.webapp.continueTask();
     }

@@ -264,14 +264,14 @@ class RCGJira{
 		
 		var fncProcessDownloadedBlock=self.createManagedCallback(function(blkIssues){
 			innerBarrier.add(self.getRunningTask());
-			self.addStep("Processing Issues block",function(){
+			self.addStep("Processing Issues block: "+blkIssues.length,function(){
 				if (isDefined(auxCbDownBlock)) auxCbDownBlock(blkIssues);
 				var auxCbProcessIssue=function(issueIndex){
 					var issue=blkIssues[issueIndex];
 					fncProcessIssue(issue);
 				}
 				var fncEndBlock=self.createManagedCallback(function(){
-					innerBarrier.reach(self.getRunningTask());
+					self.continueTask();
 				});
 				self.processArrayIssues(arrIssues,auxCbProcessIssue,fncEndBlock,auxCbProcessBlock);
 			});

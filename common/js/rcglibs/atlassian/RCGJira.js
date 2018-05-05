@@ -263,25 +263,29 @@ class RCGJira{
 		var innerBarrier=new RCGBarrier(fncEndBarrier);
 		
 		var fncProcessDownloadedBlock=self.createManagedCallback(function(blkIssues){
+			log("Process downloaded block of JQL ["+jqlAux+"]");
 			innerBarrier.add(self.getRunningTask());
-			self.addStep("Processing Issues block: "+blkIssues.length,function(){
+			self.addStep("Processing Issues block: "+blkIssues.length +" of JQL ["+jqlAux+"]",function(){
 				if (isDefined(auxCbDownBlock)) auxCbDownBlock(blkIssues);
 				var auxCbProcessIssue=function(issueIndex){
+					log("Process Issue "+issueIndex+" of JQL ["+jqlAux+"]");
 					var issue=blkIssues[issueIndex];
 					fncProcessIssue(issue);
 				}
 				var fncEndBlock=self.createManagedCallback(function(){
+					log("End block of JQL ["+jqlAux+"]");
 					self.continueTask();
 				});
+				log("Process Array Issues of block of JQL ["+jqlAux+"]");
 				self.processArrayIssues(blkIssues,auxCbProcessIssue,fncEndBlock,auxCbProcessBlock);
 			});
 			self.continueTask();
 		});
-		self.addStep("Fetching Issues",function(){
+		self.addStep("Fetching Issues"+" of JQL ["+jqlAux+"]",function(){
 			self.getJQLIssues(jqlAux,fncProcessDownloadedBlock);
 		});
 		
-		self.addStep("Returning Variable",function(){
+		self.addStep("Returning Variable"+" of JQL ["+jqlAux+"]",function(){
 			var fncEnd;
 			if (isDefined(cbEndProcess)){
 				fncEnd=cbEndProcess;

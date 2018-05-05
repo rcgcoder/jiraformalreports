@@ -97,16 +97,18 @@ class RCGJira{
 			doItem=doFactory.new(itm.fields.summary,itm.key);
 		}
 	}
-	processArrayIssues(arrIssues,fncProcessIssue,fncEndCallback){
+	processArrayIssues(arrIssues,fncProcessIssue,fncEndCallback,fncCustomBlockCallback){
 		var self=this;
 		var fncItem=self.createManagedCallback(fncProcessIssue);
-		var fncEnd=self.createManagedCallback(function(){
-			log("Processed max index:"+maxIndex+" of array length:"+arrIssues.length);
-			fncEndCallback();
-		});
-		var fncBlock=self.createManagedCallback(function(){
-			log("A block");
-		});
+		var fncEnd=self.createManagedCallback(fncEndCallback);
+		var fncBlock;
+		if (isDefined(fncCustomBlockCallback)){
+			fncBlock=self.createManagedCallback(fncCustomBlockCallback);
+		} else {
+			fncBlock=self.createManagedCallback(function(){
+				log("A block");
+			});
+		}
 		processOffline(0,arrIssues.length,fncItem,"issues",fncEnd,fncBlock);
 	}
 	getIssueLinkFullList(scopeJQL){

@@ -162,10 +162,8 @@ class RCGJira{
 		}
 		var hsFields=newHashMap();
 		var hsTypes=newHashMap();
-		var issue;
 		var issType;
-		var fncProcessIssue=function(issueIndex){
-			issue=arrIssues[issueIndex];
+		var fncProcessIssue=function(issue){
 			issType=issue.fields.issuetype.name;
 			if (!hsTypes.exists(issType)){
 				hsTypes.add(issType,issue.fields.issuetype);
@@ -320,7 +318,11 @@ class RCGJira{
 					}
 				};
 			}
-			self.processArrayIssues(arrIssues,fncProcessIssue,fncEnd,cbProcessBlock);
+			var fncIndividualProcess=function(issueIndex){
+				var issue=arrIssues[issueIndex];
+				fncProcessIssue(issue);
+			}
+			self.processArrayIssues(arrIssues,fncIndividualProcess,fncEnd,cbProcessBlock);
 		});
 		self.continueTask();
 	}

@@ -262,7 +262,14 @@ class RCGJira{
 		});
 		var innerBarrier=new RCGBarrier(fncEndBarrier);
 		
-		var fncProcessDownloadedBlock=self.createManagedCallback(function(blkIssues){
+		var fncProcessDownloadedBlock=self.createManagedCallback(function(jsonBlkIssues){
+			var blkIssues=[];
+			if (typeof jsonBlkIssues==="string"){
+				var objJson=JSON.parse(jsonBlkIssues);
+				blkIssues=objJson.issues;
+			} else {
+				blkIssues=jsonBlkIssues;
+			}
 			log("Process downloaded block of JQL ["+jqlAux+"]");
 			innerBarrier.add(self.getRunningTask());
 			self.addStep("Processing Issues block: "+blkIssues.length +" of JQL ["+jqlAux+"]",function(){

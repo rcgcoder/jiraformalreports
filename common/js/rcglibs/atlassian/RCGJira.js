@@ -113,53 +113,29 @@ class RCGJira{
 	}
 	getIssueLinkFullList(scopeJQL){
 		var self=this;
-		var jqlAux="";
-		if (isDefined(scopeJQL)){
-			jqlAux=scopeJQL;
-		}
-		self.addStep("Getting all Issues on JQL:["+jqlAux+"]",function(){
-			self.getJQLIssues(jqlAux);
-		});
-		self.addStep("Extracting all IssueLink Keys",function(arrIssues){
-			var hsTypes=newHashMap();
-			var issue;
-			var issueLink;
-			var type;
-			var inward;
-			var outward;
-			var maxIndex=-1;
-			var fncProcessIssue=function(issueIndex){
-				if (maxIndex<issueIndex){
-					maxIndex=issueIndex;
+		var hsTypes=newHashMap();
+		var issueLink;
+		var type;
+		var inward;
+		var outward;
+		var fncProcessIssue=function(issue){
+			for (var j=0;j<issue.fields.issuelinks.length;j++){
+				issueLink=issue.fields.issuelinks[j];
+				type=issueLink.type;
+				inward=type.inward;
+				outward=type.outward;
+				if (!hsTypes.exists(inward)){
+					hsTypes.add(inward,inward);
 				}
-				var issue=arrIssues[issueIndex];
-				for (var j=0;j<issue.fields.issuelinks.length;j++){
-					issueLink=issue.fields.issuelinks[j];
-					type=issueLink.type;
-					inward=type.inward;
-					outward=type.outward;
-					if (!hsTypes.exists(inward)){
-						hsTypes.add(inward,inward);
-					}
-					if (!hsTypes.exists(outward)){
-						hsTypes.add(outward,outward);
-					}
+				if (!hsTypes.exists(outward)){
+					hsTypes.add(outward,outward);
 				}
-			};
-			var fncEnd=function(){
-				hsTypes.swing();
-				self.continueTask([hsTypes]);				
 			}
-			self.processArrayIssues(arrIssues,fncProcessIssue,fncEnd);
-		});
-		self.continueTask();
+		};
+		self.processJQLIssues(scopeJQL,fncProcessIssue,hsTypes);
 	}
 	getFieldFullList(scopeJQL){
 		var self=this;
-		var jqlAux="";
-		if (isDefined(scopeJQL)){
-			jqlAux=scopeJQL;
-		}
 		var hsFields=newHashMap();
 		var hsTypes=newHashMap();
 		var issType;
@@ -179,7 +155,7 @@ class RCGJira{
 				hsTypes.swing();
 			}
 		}
-		self.processJQLIssues(jqlAux,fncProcessIssue,hsFields);
+		self.processJQLIssues(scopeJQL,fncProcessIssue,hsFields);
 	}
 	getProjectsAndMetaInfo(){
 		var self=this;
@@ -298,12 +274,16 @@ class RCGJira{
 	}
 	processJQLIssues(jql,fncProcessIssue,returnVariable,cbEndProcess,cbDownloadBlock,cbProcessBlock){
 		var self=this;
+		var jqlAux="";
+		if (isDefined(jql)){
+			jqlAux=jql;
+		}
 		self.addStep("Fetching Issues",function(){
 			var auxCbBlock;
 			if (isDefined(cbDownloadBlock)){
 				auxCbBlock=self.createManagedCallback(cbDownloadBlock);
 			}
-			self.getJQLIssues(jql,auxCbBlock);
+			self.getJQLIssues(jqlAux,auxCbBlock);
 		});
 		self.addStep("Processing Issues",function(arrIssues){
 			var fncEnd;

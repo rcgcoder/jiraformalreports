@@ -273,7 +273,7 @@ class RCGJira{
 				var fncEndBlock=self.createManagedCallback(function(){
 					self.continueTask();
 				});
-				self.processArrayIssues(arrIssues,auxCbProcessIssue,fncEndBlock,auxCbProcessBlock);
+				self.processArrayIssues(blkIssues,auxCbProcessIssue,fncEndBlock,auxCbProcessBlock);
 			});
 			self.continueTask();
 		});

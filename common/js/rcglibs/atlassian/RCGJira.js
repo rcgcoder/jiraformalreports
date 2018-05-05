@@ -259,7 +259,7 @@ class RCGJira{
 		}
 		var fncEndBarrier=self.createManagedCallback(function(){
 			self.continueTask();
-		}
+		});
 		var innerBarrier=new RCGBarrier(fncEndBarrier);
 		
 		var fncProcessDownloadedBlock=self.createManagedCallback(function(blkIssues){

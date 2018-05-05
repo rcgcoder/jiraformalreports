@@ -113,8 +113,7 @@ class RCGJira{
 			var type;
 			var inward;
 			var outward;
-			for (var i=0;i<arrIssues.length;i++){
-				issue=arrIssues[i];
+			var fncProcessIssue=System.webapp.createManagedCallback(function(issue){
 				for (var j=0;j<issue.fields.issuelinks.length;j++){
 					issueLink=issue.fields.issuelinks[j];
 					type=issueLink.type;
@@ -127,8 +126,14 @@ class RCGJira{
 						hsTypes.add(outward,outward);
 					}
 				}
-			}
-			self.continueTask([hsTypes]);
+			});
+			var fncEnd=System.webapp.createManagedCallback(function(){
+				self.continueTask([hsTypes]);
+			});
+			var fncBlock=System.webapp.createManagedCallback(function(){
+				log("A block");
+			});
+			processOffline(0,arrIssues.length,fncProcessIssue,"issues",fncEnd,fncBlock);
 		});
 		self.continueTask();
 	}

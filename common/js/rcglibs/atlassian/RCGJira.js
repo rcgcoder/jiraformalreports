@@ -75,28 +75,6 @@ class RCGJira{
 			doItem.setSubTask(itm.subtask);
 		}
 	}
-	processJsonLabel(lbl){
-		// itm is String
-		
-		var self=this;
-		var doItem;
-		var doFactory=self.labels;
-		if (!doFactory.exists(lbl)){
-			doItem=doFactory.new(lbl,lbl);
-		}
-	}
-	processJsonEpic(itm){
-		// interest info
-		// key --> id
-		// fields.summary --> name
-		
-		var self=this;
-		var doItem;
-		var doFactory=self.epics;
-		if (!doFactory.exists(itm.key)){
-			doItem=doFactory.new(itm.fields.summary,itm.key);
-		}
-	}
 	processArrayIssues(arrIssues,fncProcessIssue,fncEndCallback,fncCustomBlockCallback){
 		var self=this;
 		var fncItem=self.createManagedCallback(fncProcessIssue);
@@ -208,35 +186,28 @@ class RCGJira{
 	}
 	getAllLabels(){
 		var self=this;
-		self.addStep("Getting All Labels", function(){
-			self.getFullList("/rest/api/2/search?jql=labels is not empty","issues");//,"GET",data);
-		});
-		self.addStep("Processing all Labels", function(response,xhr,sUrl,headers){
-			
-			for (var i=0;i<response.length;i++){
-				var issue=response[i];
-				for (var j=0;j<issue.fields.labels.length;j++){
-					var issLbl=issue.fields.labels[j];
-					self.processJsonLabel(issLbl);
+		var doItem;
+		var doFactory=self.labels;
+		var fncProcessIssue=function(issue){
+			for (var j=0;j<issue.fields.labels.length;j++){
+				var issLbl=issue.fields.labels[j];
+				if (!doFactory.exists(issLbl)){
+					doItem=doFactory.new(issLbl,issLbl);
 				}
 			}
-			self.popCallback([self.labels]);
-		});
-		self.continueTask();
+		}
+		self.processJQLIssues("labels is not empty",fncProcessIssue,doFactory);
 	}
 	getAllEpics(){
 		var self=this;
-		self.addStep("Getting All Epics", function(){
-			self.getFullList("/rest/api/2/search?jql=issueType=epic","issues");//,"GET",data);
-		});
-		self.addStep("Processing all Epics", function(response,xhr,sUrl,headers){
-			log("getAllEpics:"+response);
-			for (var i=0;i<response.length;i++){
-				self.processJsonEpic(response[i]);
+		var doItem;
+		var doFactory=self.epics; 
+		var fncProcessIssue=function(itm){
+			if (!doFactory.exists(itm.key)){
+				doItem=doFactory.new(itm.fields.summary,itm.key);
 			}
-			self.popCallback([self.epics]);
-		});
-		self.continueTask();
+		}
+		self.processJQLIssues("issueType=epic",fncProcessIssue,doFactory);
 	}
 	getAllFilters(){
 		var self=this;

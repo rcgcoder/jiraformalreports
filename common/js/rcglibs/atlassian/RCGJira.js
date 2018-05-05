@@ -322,6 +322,7 @@ class RCGJira{
 			}
 			processArrayIssues(arrIssues,fncProcessIssue,fncEnd,cbProcessBlock);
 		});
+		self.continueTask();
 	}
 
 }

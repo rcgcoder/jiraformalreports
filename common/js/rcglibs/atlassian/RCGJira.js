@@ -249,31 +249,52 @@ class RCGJira{
 		if (isDefined(jql)){
 			jqlAux=jql;
 		}
-		self.addStep("Fetching Issues",function(){
-			var auxCbBlock;
-			if (isDefined(cbDownloadBlock)){
-				auxCbBlock=self.createManagedCallback(cbDownloadBlock);
-			}
-			self.getJQLIssues(jqlAux,auxCbBlock);
+		var auxCbDownBlock;
+		if (isDefined(cbDownloadBlock)){
+			auxCbDownBlock=self.createManagedCallback(cbDownloadBlock);
+		}
+		var auxCbProcessBlock;
+		if (isDefined(cbProcessBlock)){
+			auxCbProcessBlock=self.createManagedCallback(cbProcessBlock);
+		}
+		var fncEndBarrier=self.createManagedCallback(function(){
+			self.continueTask();
+		}
+		var innerBarrier=new RCGBarrier(fncEndBarrier);
+		
+		var fncProcessDownloadedBlock=self.createManagedCallback(function(blkIssues){
+			innerBarrier.add(self.getRunningTask());
+			self.addStep("Processing Issues block",function(){
+				if (isDefined(auxCbDownBlock)) auxCbDownBlock(blkIssues);
+				var auxCbProcessIssue=function(issueIndex){
+					var issue=blkIssues[issueIndex];
+					fncProcessIssue(issue);
+				}
+				var fncEndBlock=self.createManagedCallback(function(){
+					innerBarrier.reach(self.getRunningTask());
+				});
+				self.processArrayIssues(arrIssues,auxCbProcessIssue,fncEndBlock,auxCbProcessBlock);
+			});
+			self.continueTask();
 		});
-		self.addStep("Processing Issues",function(arrIssues){
+		self.addStep("Fetching Issues",function(){
+			self.getJQLIssues(jqlAux,fncProcessDownloadedBlock);
+		});
+		
+		self.addStep("Returning Variable",function(){
 			var fncEnd;
 			if (isDefined(cbEndProcess)){
 				fncEnd=cbEndProcess;
 			} else {
-				fncEnd=function(){
-					if (isDefined(returnVariable)){
-						self.continueTask([returnVariable]);
+				fncEnd=function(vReturn){
+					if (isDefined(vReturn)){
+						self.continueTask([vReturn]);
 					} else {
 						self.continueTask();
 					}
 				};
 			}
-			var fncIndividualProcess=function(issueIndex){
-				var issue=arrIssues[issueIndex];
-				fncProcessIssue(issue);
-			}
-			self.processArrayIssues(arrIssues,fncIndividualProcess,fncEnd,cbProcessBlock);
+			fncEnd(returnVariable);
 		});
 		self.continueTask();
 	}

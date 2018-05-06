@@ -312,7 +312,7 @@ class RCGJira{
 		//		}
 				);
 				log("Step Process downloaded block of JQL ["+jqlAux+"] added to "+self.getRunningTask().forkId);
-//				innerFork.callMethod();
+//				innerFork.callMethod(); 
 //				log("Running InnerFork "+innerFork.forkId+ "of JQL ["+jqlAux+"]");
 			});
 			self.addStep("Fetching Issues"+" of JQL ["+jqlAux+"]",function(){

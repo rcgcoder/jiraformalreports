@@ -35,24 +35,17 @@ class jrfReport{
 								//arrAttributesPercs
 								,
 								"scopeIssues");
+			var fncProcessIssue=function(issue){
+				dynObj.add(issue.key,issuefields.summary);
+			}
 			
-			
-			var fncGetBlock=self.createManagedCallback(function(blkResponse){
-				log("A block");
-				var jsonObj=JSON.parse(blkResponse);
-				var arrIssues=jsonObj.issues;
-				self.auxAllIssues=self.auxAllIssues.concat(arrIssues);
-			});
-			if (isDefined(self.config.jqlScope)){
-				if (isDefined(self.config.jqlScope.jql)){
-					return self.jira.getJQLIssues(self.config.jqlScope.jql,fncGetBlock);
-				}
-			} 
-			self.jira.getAllIssues(fncGetBlock);
+			self.jiraprocessJQLIssues(self.config.jqlScope,
+									  fncProcessIssue,
+									  dynObj);
 		});	
 		self.addStep("Asigning all Issues in the scope.... ",function(allIssues){
 			self.allIssues=allIssues;
-			log("Report utilices "+ self.allIssues.length+ " issues");
+			log("Report utilices "+ self.allIssues.length()+ " issues");
 			self.continueTask();
 		});	
 		// get root elements.... issues and/or projects

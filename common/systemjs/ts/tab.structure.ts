@@ -90,7 +90,7 @@ export class TabStructure {
         auxObj=System.getAngularObject('manualFieldDefinitions',true);
         value=auxObj.getElements();
         dfReport["otherFieldDefinitions"]=value;
-        
+
         return dfReport;
     }
     applyConfig(config){
@@ -140,8 +140,9 @@ export class TabStructure {
             auxObj.setElements(config.otherFieldDefinitions);
             System.webapp.setIssueOtherFields(config.otherFieldDefinitions); 
             System.getAngularObject('selInterestOtherFields',true).reloadItems();
-            
         }
+        auxObj=System.getAngularObject('selInterestOtherFields',true);
+        if (isDefined(config.useOtherFields)) auxObj.setSelectedValues(config.useOtherFields);
     
     }
     loadDefaultReport(){

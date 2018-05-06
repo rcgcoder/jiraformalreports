@@ -258,59 +258,49 @@ class RCGJira{
 		if (isDefined(jql)){
 			jqlAux=jql;
 		}
-		var auxCbDownBlock;
-		if (isDefined(cbDownloadBlock)){
-			auxCbDownBlock=self.createManagedCallback(cbDownloadBlock);
-		}
-		var auxCbProcessBlock;
-		if (isDefined(cbProcessBlock)){
-			auxCbProcessBlock=self.createManagedCallback(cbProcessBlock);
-		}
-		var fncEndBarrier=self.createManagedCallback(function(){
-			self.continueTask();
-		});
-		var innerBarrier=new RCGBarrier(fncEndBarrier);
-		
-		var fncProcessDownloadedBlock=self.createManagedCallback(function(jsonBlkIssues){
-			var blkIssues=[];
-			if (typeof jsonBlkIssues==="string"){
-				var objJson=JSON.parse(jsonBlkIssues);
-				blkIssues=objJson.issues;
-			} else {
-				blkIssues=jsonBlkIssues;
-			}
-			log("Process downloaded block of JQL ["+jqlAux+"]");
-			innerBarrier.add(self.getRunningTask());
-			self.addStep("Processing Issues block: "+blkIssues.length +" of JQL ["+jqlAux+"]",function(){
-				if (isDefined(auxCbDownBlock)) auxCbDownBlock(blkIssues);
-				var auxCbProcessIssue=function(issueIndex){
-					log("Process Issue "+issueIndex+" of JQL ["+jqlAux+"]");
-					var issue=blkIssues[issueIndex];
-					fncProcessIssue(issue);
-				}
-				var fncEndBlock=self.createManagedCallback(function(){
-					log("End block of JQL ["+jqlAux+"]");
-					innerBarrier.reach(self.getRunningTask());
-					//self.continueTask();
-				});
-				log("Process Array Issues of block of JQL ["+jqlAux+"]");
-				self.processArrayIssues(blkIssues,auxCbProcessIssue,fncEndBlock,auxCbProcessBlock);
-			},0,1,undefined,undefined,undefined,"INNER",undefined
-	//		}
-			);
-			log("Step Process downloaded block of JQL ["+jqlAux+"] added to "+self.getRunningTask().forkId);
-		});
-		innerBarrier.add(self.getRunningTask());
 		self.addStep("Fetching And Process Issues"+" of JQL ["+jqlAux+"]",function(){
+			var auxCbDownBlock;
+			if (isDefined(cbDownloadBlock)){
+				auxCbDownBlock=self.createManagedCallback(cbDownloadBlock);
+			}
+			var auxCbProcessBlock;
+			if (isDefined(cbProcessBlock)){
+				auxCbProcessBlock=self.createManagedCallback(cbProcessBlock);
+			}
+			
+			var fncProcessDownloadedBlock=self.createManagedCallback(function(jsonBlkIssues){
+				var blkIssues=[];
+				if (typeof jsonBlkIssues==="string"){
+					var objJson=JSON.parse(jsonBlkIssues);
+					blkIssues=objJson.issues;
+				} else {
+					blkIssues=jsonBlkIssues;
+				}
+				log("Process downloaded block of JQL ["+jqlAux+"]");
+				innerBarrier.add(self.getRunningTask());
+				self.addStep("Processing Issues block: "+blkIssues.length +" of JQL ["+jqlAux+"]",function(){
+					if (isDefined(auxCbDownBlock)) auxCbDownBlock(blkIssues);
+					var auxCbProcessIssue=function(issueIndex){
+						log("Process Issue "+issueIndex+" of JQL ["+jqlAux+"]");
+						var issue=blkIssues[issueIndex];
+						fncProcessIssue(issue);
+					}
+					var fncEndBlock=self.createManagedCallback(function(){
+						log("End block of JQL ["+jqlAux+"]");
+						innerBarrier.reach(self.getRunningTask());
+						//self.continueTask();
+					});
+					log("Process Array Issues of block of JQL ["+jqlAux+"]");
+					self.processArrayIssues(blkIssues,auxCbProcessIssue,fncEndBlock,auxCbProcessBlock);
+				},0,1,undefined,undefined,undefined,"INNER",undefined
+		//		}
+				);
+				log("Step Process downloaded block of JQL ["+jqlAux+"] added to "+self.getRunningTask().forkId);
+			});
 			self.addStep("Fetching Issues"+" of JQL ["+jqlAux+"]",function(){
 				self.getJQLIssues(jqlAux,fncProcessDownloadedBlock);
 			});
 			self.continueTask();
-		});
-		// the getJQLIssues always does a continuetask call.... 
-		self.addStep("Wait for finish the process of all fetched Issues"+" of JQL ["+jqlAux+"]",function(){
-			log("getJQLIssues is finished.... now have to wait the end of process all arrays");
-			innerBarrier.reach(self.getRunningTask());
 		});
 		self.addStep("Returning Variable"+" of JQL ["+jqlAux+"]",function(){
 			var fncEnd;

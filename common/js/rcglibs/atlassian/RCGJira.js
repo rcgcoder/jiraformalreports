@@ -120,15 +120,6 @@ class RCGJira{
 		var issType;
 		var fncProcessIssue=function(issue){
 			issType=issue.fields.issuetype.name;
-			var tNow=new Date();
-			while(((new Date())-tNow)<2000){
-				log("Waiting.... its a long process");
-				var tNowAux=new Date()
-				while(((new Date())-tNowAux)<1000){
-					//do nothing
-				}
-				
-			}
 			if (!hsTypes.exists(issType)){
 				hsTypes.add(issType,issue.fields.issuetype);
 				var arrProperties=getAllProperties(issue.fields);
@@ -292,6 +283,15 @@ class RCGJira{
 						log("Process Issue "+issueIndex+" of JQL ["+jqlAux+"]");
 						var issue=blkIssues[issueIndex];
 						fncProcessIssue(issue);
+						var tNow=new Date();
+						while(((new Date())-tNow)<2000){
+							log("Waiting.... its a long process");
+							var tNowAux=new Date()
+							while(((new Date())-tNowAux)<1000){
+								//do nothing
+							}
+							
+						}
 					}
 					var fncEndBlock=self.createManagedCallback(function(){
 						log("End block of JQL ["+jqlAux+"]");

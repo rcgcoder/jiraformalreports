@@ -275,7 +275,7 @@ class RCGJira{
 				}
 			});
 			
-			var fncProcessDownloadedBlock=self.createManagedCallback(function(jsonBlkIssues){
+			var fncProcessDownloadedBlock=function(jsonBlkIssues){
 				var blkIssues=[];
 				if (typeof jsonBlkIssues==="string"){
 					var objJson=JSON.parse(jsonBlkIssues);
@@ -299,10 +299,10 @@ class RCGJira{
 							}
 						}*/
 					}
-					var fncEndBlock=self.createManagedCallback(function(){
+					var fncEndBlock=function(){
 						log("End block of JQL ["+jqlAux+"]");
 						self.continueTask();
-					});
+					};
 					log("Process Array Issues of block of JQL ["+jqlAux+"]");
 					self.processArrayIssues(blkIssues
 											,auxCbProcessIssue
@@ -314,9 +314,9 @@ class RCGJira{
 				log("Step Process downloaded block of JQL ["+jqlAux+"] added to "+self.getRunningTask().forkId);
 //				innerFork.callMethod(); 
 //				log("Running InnerFork "+innerFork.forkId+ "of JQL ["+jqlAux+"]");
-			});
+			};
 			self.addStep("Fetching Issues"+" of JQL ["+jqlAux+"]",function(){
-				self.getJQLIssues(jqlAux,fncProcessDownloadedBlock);
+				self.getJQLIssues(jqlAux,self.createManagedCallback(fncProcessDownloadedBlock));
 			});
 			self.continueTask();
 		});

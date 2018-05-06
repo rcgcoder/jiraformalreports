@@ -259,21 +259,21 @@ class RCGJira{
 			jqlAux=jql;
 		}
 		self.addStep("Fetching And Process Issues"+" of JQL ["+jqlAux+"]",function(){
-			var auxCbDownBlock=self.createManagedCallback(function(blkIssues){
+			var auxCbDownBlock=function(blkIssues){
 				var bExists=isDefined(cbDownloadBlock);
 				log("Callback Download Block exists:"+bExists +" number of issues:" +blkIssues.length);
 				if (bExists){
 					cbDownloadBlock(blkIssues);
 				}
-			});
-			var auxCbProcessBlock=self.createManagedCallback(function(objStep){
+			};
+			var auxCbProcessBlock=function(objStep){
 				var bExists=isDefined(cbProcessBlock);
 				log("Callback process Block exists:"+bExists);
 				objStep.log();
 				if (bExists){
 					cbProcessBlock(objStep);
 				}
-			});
+			};
 			
 			var fncProcessDownloadedBlock=function(jsonBlkIssues){
 				var blkIssues=[];
@@ -285,7 +285,8 @@ class RCGJira{
 				}
 				log("Process downloaded block of JQL ["+jqlAux+"]");
 				var innerFork=self.addStep("Processing Issues block: "+blkIssues.length +" of JQL ["+jqlAux+"]",function(){
-					auxCbDownBlock(blkIssues);
+					var cbManaged=self.createManagedCallback(auxCbDownBlock);
+					cbManaged(blkIssues);
 					var auxCbProcessIssue=function(issueIndex){
 						log("Process Issue "+issueIndex+" of JQL ["+jqlAux+"]");
 						var issue=blkIssues[issueIndex];

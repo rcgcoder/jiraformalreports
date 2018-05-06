@@ -300,8 +300,6 @@ class RCGJira{
 			innerBarrier.add(self.getRunningTask());
 			self.getJQLIssues(jqlAux,fncProcessDownloadedBlock);
 		});
-		self.addStep("Waiting to process all issues "+" of JQL ["+jqlAux+"]",function(){
-		});
 		
 		self.addStep("Returning Variable"+" of JQL ["+jqlAux+"]",function(){
 			var fncEnd;

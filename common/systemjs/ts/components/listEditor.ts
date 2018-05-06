@@ -103,11 +103,11 @@ export class listEditor {
             var item=self.elements[i];
             var sBtnName=self.name+"_btnDel_"+i;
             var sHtml='<button id="'+sBtnName+'" list_index="'+ i +'" class="aui-button">-</button>';
-            if (self.columns==1){
-               sHtml+="<td>"+item+"</td>";
-            } else {
-               for (var j=0;j<self.columns;j++){
-                   var itemCol=item[j];
+            for (var j=0;j<self.columns;j++){
+               var itemCol=item[j];
+               if (j==0){
+                   sHtml="<td>"+sHtml+itemCol+"</td>";
+               } else {
                    sHtml+="<td>"+itemCol+"</td>";
                }
             }

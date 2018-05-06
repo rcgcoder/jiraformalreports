@@ -234,7 +234,7 @@ class ZipWebApp{
         var arrFields=jira.getIssueOtherFields(); 
         var arrResult=[];
         for (var i=0;i<arrFields.length;i++){
-        	arrResult.push({key:arrFields[i],name:arrFields[i]});
+        	arrResult.push({key:arrFields[i][0],name:arrFields[i][1]});
         }
         return arrResult;
     }

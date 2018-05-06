@@ -49,7 +49,7 @@ class offlineStepInfo{
 		self.nPerc=nPerc;
 		self.tEstimated=tEstimated;
 	}
-	log(){
+	getTrace(){
 		var self=this;
 		var sCad;
 		if (self.iOps>=self.iIndMax){
@@ -61,7 +61,11 @@ class offlineStepInfo{
 			  "  Block:"+ " " +self.nDuration+ " s (" + Math.round(self.nPerformance) + " "+self.sUnits+" /s)"+
 			  "  Total:" +self.nDurationTotal+ " s (" + Math.round(self.sPerfTotal) + " "+self.sUnits+" /s)" +
 			  "  Time to end:" + self.tEstimated;
-		log(sCad);
+		return sCad;
+	}
+	log(){
+		var self=this;
+		log(self.getTrace());
 	}
 }
 class offlineProcesor{

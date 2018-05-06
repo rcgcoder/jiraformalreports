@@ -258,64 +258,65 @@ class RCGJira{
 		if (isDefined(jql)){
 			jqlAux=jql;
 		}
-		self.addStep("Fetching And Process Issues"+" of JQL ["+jqlAux+"]",function(){
-			var auxCbDownBlock=function(blkIssues){
-				var bExists=isDefined(cbDownloadBlock);
-				log("Callback Download Block exists:"+bExists +" number of issues:" +blkIssues.length);
-				if (bExists){
-					cbDownloadBlock(blkIssues);
-				}
-			};
-			var auxCbProcessBlock=function(objStep){
-				var bExists=isDefined(cbProcessBlock);
-				log("Callback process Block exists:"+bExists);
-				objStep.log();
-				if (bExists){
-					cbProcessBlock(objStep);
-				}
-			};
-			
-			var fncProcessDownloadedBlock=function(jsonBlkIssues){
-				var blkIssues=[];
-				if (typeof jsonBlkIssues==="string"){
-					var objJson=JSON.parse(jsonBlkIssues);
-					blkIssues=objJson.issues;
-				} else {
-					blkIssues=jsonBlkIssues;
-				}
-				log("Process downloaded block of JQL ["+jqlAux+"]");
-				var innerFork=self.addStep("Processing Issues block: "+blkIssues.length +" of JQL ["+jqlAux+"]",function(){
-					var cbManaged=self.createManagedCallback(auxCbDownBlock);
-					cbManaged(blkIssues);
-					var auxCbProcessIssue=function(issueIndex){
-//						log("Process Issue "+issueIndex+" of JQL ["+jqlAux+"]");
-						var issue=blkIssues[issueIndex];
-						fncProcessIssue(issue);
+		var auxCbDownBlock=function(blkIssues){
+			var bExists=isDefined(cbDownloadBlock);
+			log("Callback Download Block exists:"+bExists +" number of issues:" +blkIssues.length);
+			if (bExists){
+				cbDownloadBlock(blkIssues);
+			}
+		};
+		var auxCbProcessBlock=function(objStep){
+			var bExists=isDefined(cbProcessBlock);
+			log("Callback process Block exists:"+bExists);
+			log("Block for jql ["+jqlAux+"] ->"+objStep.getTrace());
+			if (bExists){
+				cbProcessBlock(objStep);
+			}
+		};
+		
+		var fncProcessDownloadedBlock=function(jsonBlkIssues){
+			var blkIssues=[];
+			if (typeof jsonBlkIssues==="string"){
+				var objJson=JSON.parse(jsonBlkIssues);
+				blkIssues=objJson.issues;
+			} else {
+				blkIssues=jsonBlkIssues;
+			}
+			log("Process downloaded block of JQL ["+jqlAux+"]");
+			var innerFork=self.addStep("Processing Issues block: "+blkIssues.length +" of JQL ["+jqlAux+"]",function(){
+				var cbManaged=self.createManagedCallback(auxCbDownBlock);
+				cbManaged(blkIssues);
+				var auxCbProcessIssue=function(issueIndex){
+//					log("Process Issue "+issueIndex+" of JQL ["+jqlAux+"]");
+					var issue=blkIssues[issueIndex];
+					fncProcessIssue(issue);
 /*						var tNow=new Date();
-						while(((new Date())-tNow)<2000){
-							log("Waiting.... its a long process");
-							var tNowAux=new Date()
-							while(((new Date())-tNowAux)<1000){
-								//do nothing
-							}
-						}*/
-					}
-					var fncEndBlock=function(){
-						log("End block of JQL ["+jqlAux+"]");
-						self.continueTask();
-					};
-					log("Process Array Issues of block of JQL ["+jqlAux+"]");
-					self.processArrayIssues(blkIssues
-											,auxCbProcessIssue
-											,fncEndBlock
-											,auxCbProcessBlock);
-				},0,1,undefined,undefined,undefined,"INNER",undefined
-		//		}
-				);
-				log("Step Process downloaded block of JQL ["+jqlAux+"] added to "+self.getRunningTask().forkId);
-				innerFork.callMethod(); 
-				log("Running InnerFork "+innerFork.forkId+ "of JQL ["+jqlAux+"]");
-			};
+					while(((new Date())-tNow)<2000){
+						log("Waiting.... its a long process");
+						var tNowAux=new Date()
+						while(((new Date())-tNowAux)<1000){
+							//do nothing
+						}
+					}*/
+				}
+				var fncEndBlock=function(){
+					log("End block of JQL ["+jqlAux+"]");
+					self.continueTask();
+				};
+				log("Process Array Issues of block of JQL ["+jqlAux+"]");
+				self.processArrayIssues(blkIssues
+										,auxCbProcessIssue
+										,fncEndBlock
+										,auxCbProcessBlock);
+			},0,1,undefined,undefined,undefined,"INNER",undefined
+	//		}
+			);
+			log("Step Process downloaded block of JQL ["+jqlAux+"] added to "+self.getRunningTask().forkId);
+			innerFork.callMethod(); 
+			log("Running InnerFork "+innerFork.forkId+ "of JQL ["+jqlAux+"]");
+		};
+
+		self.addStep("Fetching And Process Issues"+" of JQL ["+jqlAux+"]",function(){
 			self.addStep("Fetching Issues"+" of JQL ["+jqlAux+"]",function(){
 				self.getJQLIssues(jqlAux,self.createManagedCallback(fncProcessDownloadedBlock));
 			});

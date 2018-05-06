@@ -269,6 +269,7 @@ class RCGJira{
 			var auxCbProcessBlock=self.createManagedCallback(function(objStep){
 				var bExists=isDefined(cbProcessBlock);
 				log("Callback process Block exists:"+bExists);
+				objStep.log();
 				if (bExists){
 					cbProcessBlock(objStep);
 				}

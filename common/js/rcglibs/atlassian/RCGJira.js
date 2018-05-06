@@ -174,9 +174,12 @@ class RCGJira{
 		self.issueLinkTypes=issueLinkTypes;		
 	}
 	setIssueOtherFields(issueOtherTypes){
-		var self=this;
+		var self=this; 
 		self.issueOtherFields=issueOtherTypes;		
 		
+	}
+	getIssueOtherFields(){
+		return this.issueOtherFields;
 	}
 	
 	getAllIssueLinkTypes(){

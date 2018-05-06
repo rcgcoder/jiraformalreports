@@ -298,17 +298,14 @@ class RCGJira{
 			});
 			self.continueTask();
 		});
-		self.addStep("Fetch and Process Issues"+" of JQL ["+jqlAux+"]",function(){
-			innerBarrier.add(self.getRunningTask());
-			self.addStep("Fetching Issues"+" of JQL ["+jqlAux+"]",function(){
-				self.getJQLIssues(jqlAux,fncProcessDownloadedBlock);
-			});
-			// the getJQLIssues always does a continuetask call.... 
-			self.addStep("Wait for fetching Issues"+" of JQL ["+jqlAux+"]",function(){
-				log("getJQLIssues is finished.... now have to wait the end of process all arrays");
-				innerBarrier.reach(self.getRunningTask());
-			});
-			self.continueTask();
+		innerBarrier.add(self.getRunningTask());
+		self.addStep("Fetching Issues"+" of JQL ["+jqlAux+"]",function(){
+			self.getJQLIssues(jqlAux,fncProcessDownloadedBlock);
+		});
+		// the getJQLIssues always does a continuetask call.... 
+		self.addStep("Wait for finish the process of all fetched Issues"+" of JQL ["+jqlAux+"]",function(){
+			log("getJQLIssues is finished.... now have to wait the end of process all arrays");
+			innerBarrier.reach(self.getRunningTask());
 		});
 		self.addStep("Returning Variable"+" of JQL ["+jqlAux+"]",function(){
 			var fncEnd;

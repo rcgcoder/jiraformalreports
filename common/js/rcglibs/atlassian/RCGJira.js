@@ -302,10 +302,10 @@ class RCGJira{
 			self.addStep("Fetching Issues"+" of JQL ["+jqlAux+"]",function(){
 				self.getJQLIssues(jqlAux,fncProcessDownloadedBlock);
 			});
-/*			self.addStep("Wait for fetching Issues"+" of JQL ["+jqlAux+"]",function(){
+			self.addStep("Wait for fetching Issues"+" of JQL ["+jqlAux+"]",function(){
 				innerBarrier.reach(self.getRunningTask());
 			});
-*/			self.continueTask();
+			self.continueTask();
 		});
 		self.addStep("Returning Variable"+" of JQL ["+jqlAux+"]",function(){
 			var fncEnd;

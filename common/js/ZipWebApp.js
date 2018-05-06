@@ -223,6 +223,21 @@ class ZipWebApp{
         var jira=self.getJira();
         jira.setIssueLinkTypes(newIssueLinkTypes); 
 	}
+	setIssueOtherFields(otherFieldNames){
+		var self=this;
+        var jira=self.getJira();
+        jira.setIssueOtherFields(otherFieldNames); 
+	}
+	getIssueOtherFields(){
+		var self=this;
+        var jira=self.getJira();
+        var arrFields=jira.getIssueOtherFields(); 
+        var arrResult=[];
+        for (var i=0;i<arrFields.length;i++){
+        	arrResult.push({key:arrFields[i],name:arrFields[i]});
+        }
+        return arrResult;
+    }
 	getJQLIssues(jql){
 		var self=this;
         var jira=self.getJira();

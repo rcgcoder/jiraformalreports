@@ -25,6 +25,7 @@ class RCGJira{
 		self.labels=newDynamicObjectFactory([],[],[],"Labels");
 		self.filters=[];
 		self.issueLinkTypes=[];
+		self.issueOtherFields=[];
 	}
 	getFields(){
 		log("Getting fields");
@@ -171,6 +172,11 @@ class RCGJira{
 	setIssueLinkTypes(issueLinkTypes){
 		var self=this;
 		self.issueLinkTypes=issueLinkTypes;		
+	}
+	setIssueOtherFields(issueOtherTypes){
+		var self=this;
+		self.issueOtherFields=issueOtherTypes;		
+		
 	}
 	
 	getAllIssueLinkTypes(){

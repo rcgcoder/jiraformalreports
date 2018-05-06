@@ -63,6 +63,11 @@ export class TabStructure {
         auxObj=System.getAngularObject('selInterestFields',true);
         arrValues=auxObj.getSelectedValues();
         dfReport["useFields"]=arrValues;
+        
+        auxObj=System.getAngularObject('selInterestOtherFields',true);
+        arrValues=auxObj.getSelectedValues();
+        dfReport["useOtherFields"]=arrValues;
+        
         auxObj=System.getAngularObject('selScope',true);
         jql=auxObj.getJQLValue();
         arrValues=auxObj.getSelectedValues();
@@ -81,6 +86,11 @@ export class TabStructure {
         auxObj=System.getAngularObject('linkTypesConfiguration',true);
         value=auxObj.getElements();
         dfReport["allIssueLinkTypes"]=value;
+
+        auxObj=System.getAngularObject('manualFieldDefinitions',true);
+        value=auxObj.getElements();
+        dfReport["otherFieldDefinitions"]=value;
+        
         return dfReport;
     }
     applyConfig(config){
@@ -124,6 +134,15 @@ export class TabStructure {
         if (isDefined(config.billingHierarchy)) auxObj.setValue(config.billingHierarchy);
         auxObj=System.getAngularObject('AdvanceHierarchy',true);
         if (isDefined(config.advanceHierarchy)) auxObj.setValue(config.advanceHierarchy);
+
+        auxObj=System.getAngularObject('manualFieldDefinitions',true);
+        if (isDefined(config.otherFieldDefinitions)){
+            auxObj.setElements(config.otherFieldDefinitions);
+            System.webapp.setIssueOtherFields(config.otherFieldDefinitions); 
+            System.getAngularObject('selInterestOtherFields',true).reloadItems();
+            
+        }
+    
     }
     loadDefaultReport(){
         var self=this;

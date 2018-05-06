@@ -297,7 +297,10 @@ class RCGJira{
 			});
 		});
 		self.addStep("Fetching Issues"+" of JQL ["+jqlAux+"]",function(){
+			innerBarrier.add(self.getRunningTask());
 			self.getJQLIssues(jqlAux,fncProcessDownloadedBlock);
+		});
+		self.addStep("Waiting to process all issues "+" of JQL ["+jqlAux+"]",function(){
 		});
 		
 		self.addStep("Returning Variable"+" of JQL ["+jqlAux+"]",function(){

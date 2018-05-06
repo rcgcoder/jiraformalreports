@@ -94,7 +94,7 @@ class jrfReport{
 			}
 			log("Resume Root issues:"+self.rootIssues.length() +
 			    "		Root project:"+self.rootProjects.length()+
-			    "		Issues in scope:"+ self.allIssues.length());
+			    "		Issues in scope:"+ self.allIssues.list.length());
 			self.continueTask();
 		});
 		// assing childs and advance childs to root elements

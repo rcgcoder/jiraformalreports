@@ -291,7 +291,7 @@ class RCGJira{
 				var fncEndBlock=self.createManagedCallback(function(){
 					log("End block of JQL ["+jqlAux+"]");
 					innerBarrier.reach(self.getRunningTask());
-					self.continueTask();
+					//self.continueTask();
 				});
 				log("Process Array Issues of block of JQL ["+jqlAux+"]");
 				self.processArrayIssues(blkIssues,auxCbProcessIssue,fncEndBlock,auxCbProcessBlock);

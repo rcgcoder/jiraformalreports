@@ -87,15 +87,15 @@ class ZipWebApp{
 			self.addStep("Getting All Labels.... ",function(){
 				var jira=self.getJira();
 				jira.getAllLabels()
-//			},0,1,undefined,undefined,undefined,"INNER",undefined
-			}
+			},0,1,undefined,undefined,undefined,"INNER",undefined
+//			}
 			);
 
 			self.addStep("Getting All Filters.... ",function(){
 				var jira=self.getJira();
 				jira.getAllFilters();
-//			},0,1,undefined,undefined,undefined,"INNER",undefined
-			}
+			},0,1,undefined,undefined,undefined,"INNER",undefined
+//			}
 			);
 			/*
 			self.addStep("Getting All Epics.... ",function(){

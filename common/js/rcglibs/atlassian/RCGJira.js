@@ -259,13 +259,19 @@ class RCGJira{
 			jqlAux=jql;
 		}
 		self.addStep("Fetching And Process Issues"+" of JQL ["+jqlAux+"]",function(){
-			var auxCbDownBlock;
-			if (isDefined(cbDownloadBlock)){
-				auxCbDownBlock=self.createManagedCallback(cbDownloadBlock);
-			}
-			var auxCbProcessBlock;
-			if (isDefined(cbProcessBlock)){
-				auxCbProcessBlock=self.createManagedCallback(cbProcessBlock);
+			var auxCbDownBlock=self.createManagedCallback(function(blkIssues){
+				var bExists=isDefined(cbDownloadBlock);
+				log("Callback Download Block exists:"+bExists +" number of issues:" +blkIssues.length);
+				if (bExists){
+					cbDownloadBlock(blkIssues);
+				}
+			});
+			var auxCbProcessBlock=self.createManagedCallback(function(objStep){
+				var bExists=isDefined(cbProcessBlock);
+				log("Callback process Block exists:"+bExists);
+				if (bExists){
+					cbProcessBlock(objStep);
+				}
 			}
 			
 			var fncProcessDownloadedBlock=self.createManagedCallback(function(jsonBlkIssues){
@@ -278,7 +284,7 @@ class RCGJira{
 				}
 				log("Process downloaded block of JQL ["+jqlAux+"]");
 				var innerFork=self.addStep("Processing Issues block: "+blkIssues.length +" of JQL ["+jqlAux+"]",function(){
-					if (isDefined(auxCbDownBlock)) auxCbDownBlock(blkIssues);
+					auxCbDownBlock(blkIssues);
 					var auxCbProcessIssue=function(issueIndex){
 						log("Process Issue "+issueIndex+" of JQL ["+jqlAux+"]");
 						var issue=blkIssues[issueIndex];
@@ -290,7 +296,6 @@ class RCGJira{
 							while(((new Date())-tNowAux)<1000){
 								//do nothing
 							}
-							
 						}
 					}
 					var fncEndBlock=self.createManagedCallback(function(){
@@ -298,7 +303,10 @@ class RCGJira{
 						self.continueTask();
 					});
 					log("Process Array Issues of block of JQL ["+jqlAux+"]");
-					self.processArrayIssues(blkIssues,auxCbProcessIssue,fncEndBlock,auxCbProcessBlock);
+					self.processArrayIssues(blkIssues
+											,auxCbProcessIssue
+											,fncEndBlock
+											,auxCbProcessBlock);
 				},0,1,undefined,undefined,undefined,"INNER",undefined
 		//		}
 				);

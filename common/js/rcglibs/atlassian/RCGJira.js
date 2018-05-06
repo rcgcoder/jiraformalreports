@@ -295,12 +295,16 @@ class RCGJira{
 				});
 				log("Process Array Issues of block of JQL ["+jqlAux+"]");
 				self.processArrayIssues(blkIssues,auxCbProcessIssue,fncEndBlock,auxCbProcessBlock);
-			});
+			},0,1,undefined,undefined,undefined,"INNER",undefined
+	//		}
+			);
 			log("Step Process downloaded block of JQL ["+jqlAux+"] added to "+self.getRunningTask().forkId);
 		});
 		innerBarrier.add(self.getRunningTask());
-		self.addStep("Fetching Issues"+" of JQL ["+jqlAux+"]",function(){
-			self.getJQLIssues(jqlAux,fncProcessDownloadedBlock);
+		self.addStep("Fetching And Process Issues"+" of JQL ["+jqlAux+"]",function(){
+			self.addStep("Fetching Issues"+" of JQL ["+jqlAux+"]",function(){
+				self.getJQLIssues(jqlAux,fncProcessDownloadedBlock);
+			});
 		});
 		// the getJQLIssues always does a continuetask call.... 
 		self.addStep("Wait for finish the process of all fetched Issues"+" of JQL ["+jqlAux+"]",function(){

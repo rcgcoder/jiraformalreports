@@ -288,7 +288,7 @@ class RCGJira{
 					var cbManaged=self.createManagedCallback(auxCbDownBlock);
 					cbManaged(blkIssues);
 					var auxCbProcessIssue=function(issueIndex){
-						log("Process Issue "+issueIndex+" of JQL ["+jqlAux+"]");
+//						log("Process Issue "+issueIndex+" of JQL ["+jqlAux+"]");
 						var issue=blkIssues[issueIndex];
 						fncProcessIssue(issue);
 /*						var tNow=new Date();

@@ -290,14 +290,14 @@ class RCGJira{
 						log("Process Issue "+issueIndex+" of JQL ["+jqlAux+"]");
 						var issue=blkIssues[issueIndex];
 						fncProcessIssue(issue);
-						var tNow=new Date();
+/*						var tNow=new Date();
 						while(((new Date())-tNow)<2000){
 							log("Waiting.... its a long process");
 							var tNowAux=new Date()
 							while(((new Date())-tNowAux)<1000){
 								//do nothing
 							}
-						}
+						}*/
 					}
 					var fncEndBlock=self.createManagedCallback(function(){
 						log("End block of JQL ["+jqlAux+"]");

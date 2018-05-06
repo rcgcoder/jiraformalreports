@@ -73,12 +73,11 @@ class jrfReport{
 				} else {
 					var fncProcessIssue=function(issue){
 						self.rootIssues.add(issue.key,issue);
-						dynObj.new(issue.key,issue.fields.summary);
 					}
 					self.addStep("Executing jql:"+self.config.rootIssues.jql,function(){
-						self.jira.processJQLIssues(self.config.jqlScope.jql,
-								  fncProcessIssue,
-								  dynObj);
+						self.jira.processJQLIssues(
+										self.config.jqlScope.jql,
+										fncProcessIssue);
 					});
 					self.continueTask();
 				}

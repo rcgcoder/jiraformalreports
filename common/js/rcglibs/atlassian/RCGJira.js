@@ -277,7 +277,6 @@ class RCGJira{
 					blkIssues=jsonBlkIssues;
 				}
 				log("Process downloaded block of JQL ["+jqlAux+"]");
-				innerBarrier.add(self.getRunningTask());
 				self.addStep("Processing Issues block: "+blkIssues.length +" of JQL ["+jqlAux+"]",function(){
 					if (isDefined(auxCbDownBlock)) auxCbDownBlock(blkIssues);
 					var auxCbProcessIssue=function(issueIndex){
@@ -287,8 +286,7 @@ class RCGJira{
 					}
 					var fncEndBlock=self.createManagedCallback(function(){
 						log("End block of JQL ["+jqlAux+"]");
-						innerBarrier.reach(self.getRunningTask());
-						//self.continueTask();
+						self.continueTask();
 					});
 					log("Process Array Issues of block of JQL ["+jqlAux+"]");
 					self.processArrayIssues(blkIssues,auxCbProcessIssue,fncEndBlock,auxCbProcessBlock);

@@ -45,7 +45,7 @@ class jrfReport{
 		});	
 		self.addStep("Asigning all Issues in the scope.... ",function(allIssues){
 			self.allIssues=allIssues;
-			log("Report utilices "+ self.allIssues.length()+ " issues");
+			log("Report utilices "+ self.allIssues.list.length()+ " issues");
 			self.continueTask();
 		});	
 		// get root elements.... issues and/or projects

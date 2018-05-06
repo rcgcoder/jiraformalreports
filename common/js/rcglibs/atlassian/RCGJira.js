@@ -287,7 +287,7 @@ class RCGJira{
 				var innerFork=self.addStep("Processing Issues block: "+blkIssues.length +" of JQL ["+jqlAux+"]",function(){
 					auxCbDownBlock(blkIssues);
 					var auxCbProcessIssue=function(issueIndex){
-						log("Process Issue "+issueIndex+" of JQL ["+jqlAux+"]");
+						//log("Process Issue "+issueIndex+" of JQL ["+jqlAux+"]");
 						var issue=blkIssues[issueIndex];
 						fncProcessIssue(issue);
 /*						var tNow=new Date();

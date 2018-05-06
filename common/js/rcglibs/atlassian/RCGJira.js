@@ -277,7 +277,7 @@ class RCGJira{
 					blkIssues=jsonBlkIssues;
 				}
 				log("Process downloaded block of JQL ["+jqlAux+"]");
-				self.addStep("Processing Issues block: "+blkIssues.length +" of JQL ["+jqlAux+"]",function(){
+				var innerFork=self.addStep("Processing Issues block: "+blkIssues.length +" of JQL ["+jqlAux+"]",function(){
 					if (isDefined(auxCbDownBlock)) auxCbDownBlock(blkIssues);
 					var auxCbProcessIssue=function(issueIndex){
 						log("Process Issue "+issueIndex+" of JQL ["+jqlAux+"]");
@@ -294,6 +294,8 @@ class RCGJira{
 		//		}
 				);
 				log("Step Process downloaded block of JQL ["+jqlAux+"] added to "+self.getRunningTask().forkId);
+				innerFork.callMethod();
+				log("Running InnerFork "+innerFork.forkId+ "of JQL ["+jqlAux+"]");
 			});
 			self.addStep("Fetching Issues"+" of JQL ["+jqlAux+"]",function(){
 				self.getJQLIssues(jqlAux,fncProcessDownloadedBlock);

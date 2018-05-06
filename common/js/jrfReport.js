@@ -39,7 +39,7 @@ class jrfReport{
 				dynObj.add(issue.key,issuefields.summary);
 			}
 			
-			self.jiraprocessJQLIssues(self.config.jqlScope.jql,
+			self.jira.processJQLIssues(self.config.jqlScope.jql,
 									  fncProcessIssue,
 									  dynObj);
 		});	

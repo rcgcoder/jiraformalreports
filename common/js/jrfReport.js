@@ -86,12 +86,12 @@ class jrfReport{
 		});
 		self.addStep("Processing root elements.... ",function(){
 			if (self.bFinishReport) return self.continueTask();
-			for (var i=0;i<self.rootIssues.length;i++){
-				log("Root Issue ["+i+"]: "+self.rootIssues[i]);
-			}
-			for (var i=0;i<self.rootProjects.length;i++){
-				log("Root Projects ["+i+"]: "+self.rootProjects[i]);
-			}
+			self.rootIssues.walk(function(value,iProf,key){
+				log("Root Issue: "+key);
+			})
+			self.rootProjects.walk(function(value,iProf,key){
+				log("Root Project: "+key);
+			})
 			log("Resume Root issues:"+self.rootIssues.length() +
 			    "		Root project:"+self.rootProjects.length()+
 			    "		Issues in scope:"+ self.allIssues.list.length());

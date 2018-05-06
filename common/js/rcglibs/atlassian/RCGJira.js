@@ -272,7 +272,7 @@ class RCGJira{
 				if (bExists){
 					cbProcessBlock(objStep);
 				}
-			}
+			});
 			
 			var fncProcessDownloadedBlock=self.createManagedCallback(function(jsonBlkIssues){
 				var blkIssues=[];

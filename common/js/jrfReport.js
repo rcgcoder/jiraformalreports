@@ -79,7 +79,6 @@ class jrfReport{
 										self.config.jqlScope.jql,
 										fncProcessIssue);
 					});
-					self.continueTask();
 				}
 			}
 			self.continueTask();

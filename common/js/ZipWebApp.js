@@ -106,8 +106,8 @@ class ZipWebApp{
 			self.addStep("Testing Confluence Api Integrations.... ",function(){
 				var cfc=self.getConfluence();
 				cfc.getAllPages();
-//			},0,1,undefined,undefined,undefined,"INNER",undefined
-			}
+			},0,1,undefined,undefined,undefined,"INNER",undefined
+//			}
 			);
 			self.continueTask();
 		});

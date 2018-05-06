@@ -305,6 +305,7 @@ class RCGJira{
 			self.addStep("Fetching Issues"+" of JQL ["+jqlAux+"]",function(){
 				self.getJQLIssues(jqlAux,fncProcessDownloadedBlock);
 			});
+			self.continueTask();
 		});
 		// the getJQLIssues always does a continuetask call.... 
 		self.addStep("Wait for finish the process of all fetched Issues"+" of JQL ["+jqlAux+"]",function(){

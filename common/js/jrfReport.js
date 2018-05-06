@@ -2,11 +2,10 @@ class jrfReport{
 	constructor(theConfig){
 		var self=this;
 		self.config=theConfig;
-		self.auxAllIssues=[];
-		self.allIssues=[];
-		self.rootElements=[];
-		self.rootIssues=[];
-		self.rootProjects=[];
+		self.allIssues;
+		self.rootElements=newHashMap();
+		self.rootIssues=newHashMap();
+		self.rootProjects=newHashMap();
 		self.bFinishReport=false;
 		var tm=System.webapp.getTaskManager();
 		tm.extendObject(self);
@@ -51,33 +50,37 @@ class jrfReport{
 		// get root elements.... issues and/or projects
 		self.addStep("Getting root elements.... ",function(){
 			log("Getting root elements");
+			if (self.config.rootsByProject){
+				if (self.config.rootProjects.length>0){
+					log("Loading projects selected to be roots");
+					self.config.rootProjects.forEach(function(projectId) {
+						self.rootProjects.add(projectId,projectId);
+					});
+
+				} else {
+					log("there is not projects selected to do a report");
+					self.bFinishReport=true;
+				}
+			}
 			if (self.config.rootsByJQL){
 				if (self.config.rootIssues.values.length>0){
-					self.rootIssues=self.config.rootIssues.values;
+					self.config.rootIssues.values.forEach(function(issueId) {
+						self.rootIssues.add(issueId,issueId);
+					});
 				} else if (self.config.rootIssues.jql==""){
 					log("there is not root issues nor jql to do a report");
 					self.bFinishReport=true;
 				} else {
+					var fncProcessIssue=function(issue){
+						self.rootIssues.add(issue.key,issue);
+						dynObj.new(issue.key,issue.fields.summary);
+					}
 					self.addStep("Executing jql:"+self.config.rootIssues.jql,function(){
-						self.jira.getJQLIssues(self.config.rootIssues.jql);
+						self.jira.processJQLIssues(self.config.jqlScope.jql,
+								  fncProcessIssue,
+								  dynObj);
 					});
-					self.addStep("Setting as root issues all results of JQL:"+self.config.rootIssues.jql,function(arrIssues){
-						for (var i=0;i<arrIssues.length;i++){
-							var issue=arrIssues[i];
-							log("Issue:"+issue.key);
-							self.rootIssues.push(issue.key);
-						}
-						self.continueTask();
-					});
-				}
-			}
-			if (self.config.rootsByProject){
-				if (self.config.rootProjects.length>0){
-					log("Loading projects selected to be roots");
-					self.rootProjects=self.config.rootProjects;
-				} else {
-					log("there is not projects selected to do a report");
-					self.bFinishReport=true;
+					self.continueTask();
 				}
 			}
 			self.continueTask();
@@ -90,9 +93,9 @@ class jrfReport{
 			for (var i=0;i<self.rootProjects.length;i++){
 				log("Root Projects ["+i+"]: "+self.rootProjects[i]);
 			}
-			log("Resume Root issues:"+self.rootIssues.length +
-			    "		Root project:"+self.rootProjects.length+
-			    "		Issues in scope:"+ self.allIssues.length + " vs "+ self.auxAllIssues.length);
+			log("Resume Root issues:"+self.rootIssues.length() +
+			    "		Root project:"+self.rootProjects.length()+
+			    "		Issues in scope:"+ self.allIssues.length());
 			self.continueTask();
 		});
 		// assing childs and advance childs to root elements

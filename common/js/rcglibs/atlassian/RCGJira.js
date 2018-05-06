@@ -296,6 +296,7 @@ class RCGJira{
 				log("Process Array Issues of block of JQL ["+jqlAux+"]");
 				self.processArrayIssues(blkIssues,auxCbProcessIssue,fncEndBlock,auxCbProcessBlock);
 			});
+			log("Step Process downloaded block of JQL ["+jqlAux+"] added to "+self.getRunningTask().forkId);
 		});
 		innerBarrier.add(self.getRunningTask());
 		self.addStep("Fetching Issues"+" of JQL ["+jqlAux+"]",function(){

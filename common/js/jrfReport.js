@@ -74,9 +74,9 @@ class jrfReport{
 					var fncProcessIssue=function(issue){
 						self.rootIssues.add(issue.key,issue);
 					}
-					self.addStep("Executing jql:"+self.config.rootIssues.jql,function(){
+					self.addStep("Processing jql to get root issues:"+self.config.rootIssues.jql,function(){
 						self.jira.processJQLIssues(
-										self.config.jqlScope.jql,
+										self.config.rootIssues.jql,
 										fncProcessIssue);
 					});
 				}

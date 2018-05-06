@@ -297,12 +297,15 @@ class RCGJira{
 				self.processArrayIssues(blkIssues,auxCbProcessIssue,fncEndBlock,auxCbProcessBlock);
 			});
 		});
-		self.addStep("Fetching Issues"+" of JQL ["+jqlAux+"]",function(){
+		self.addStep("Fetch and Process Issues"+" of JQL ["+jqlAux+"]",function(){
 			innerBarrier.add(self.getRunningTask());
-			self.getJQLIssues(jqlAux,fncProcessDownloadedBlock);
-		});
-		self.addStep("Wait for fetching Issues"+" of JQL ["+jqlAux+"]",function(){
-			innerBarrier.reach(self.getRunningTask());
+			self.addStep("Fetching Issues"+" of JQL ["+jqlAux+"]",function(){
+				self.getJQLIssues(jqlAux,fncProcessDownloadedBlock);
+			});
+/*			self.addStep("Wait for fetching Issues"+" of JQL ["+jqlAux+"]",function(){
+				innerBarrier.reach(self.getRunningTask());
+			});
+*/			self.continueTask();
 		});
 		self.addStep("Returning Variable"+" of JQL ["+jqlAux+"]",function(){
 			var fncEnd;

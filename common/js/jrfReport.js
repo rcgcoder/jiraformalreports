@@ -36,7 +36,7 @@ class jrfReport{
 								,
 								"scopeIssues");
 			var fncProcessIssue=function(issue){
-				dynObj.add(issue.key,issue.fields.summary);
+				dynObj.new(issue.key,issue.fields.summary);
 			}
 			
 			self.jira.processJQLIssues(self.config.jqlScope.jql,

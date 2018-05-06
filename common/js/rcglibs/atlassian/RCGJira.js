@@ -290,6 +290,7 @@ class RCGJira{
 				}
 				var fncEndBlock=self.createManagedCallback(function(){
 					log("End block of JQL ["+jqlAux+"]");
+					innerBarrier.reach(self.getRunningTask());
 					self.continueTask();
 				});
 				log("Process Array Issues of block of JQL ["+jqlAux+"]");
@@ -300,7 +301,9 @@ class RCGJira{
 			innerBarrier.add(self.getRunningTask());
 			self.getJQLIssues(jqlAux,fncProcessDownloadedBlock);
 		});
-		
+		self.addStep("Wait for fetching Issues"+" of JQL ["+jqlAux+"]",function(){
+			innerBarrier.reach(self.getRunningTask());
+		});
 		self.addStep("Returning Variable"+" of JQL ["+jqlAux+"]",function(){
 			var fncEnd;
 			if (isDefined(cbEndProcess)){

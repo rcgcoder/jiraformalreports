@@ -23,12 +23,12 @@ class RCGBarrier{
 		task.done();
 		task.running=false;
 		if (self.nItems<=0) {
-			log("You reached to barrier but no items asigned to. It´s a bug in your program... no callback is launched");
+			log("Barrier "+self.id+" You reached to barrier but no items asigned to. It´s a bug in your program... no callback is launched");
 			return;
 		}
 		self.nItems--;
 		if (self.nItems<=0){
-			log("Barrier reached!");
+			log("Barrier "+self.id+" Barrier reached!");
 			setTimeout(self.callback);
 		} 
 	}

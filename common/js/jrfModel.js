@@ -90,7 +90,7 @@ class jrfModel{
 					auxTag.setTagText(sTagAttribs);
 					
 					if (indWithCloseTag<0) { // there is not a close tag...... there is tags inside actual
-						oAdvance=self.processRecursive(arrJRFs,auxIndex+1,auxTag,sTagRest); // the rest text without </jrf> if where in 
+						var oAdvance=self.processRecursive(arrJRFs,auxIndex+1,auxTag,sTagRest); // the rest text without </jrf> if where in 
 						sTagRest=oAdvance.text;
 						auxIndex=oAdvance.actIndex;			
 					}

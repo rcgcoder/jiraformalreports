@@ -92,7 +92,7 @@ class jrfModel{
 					auxTag.setTagText(sTagAttribs);
 					
 					if (indWithCloseTag<0) { // there is not a close tag...... there is tags inside actual
-						oAdvance=fncProcessRecursive(arrJRFs,auxIndex+1,auxTag,sTagRest); // the rest text without </jrf> if where in 
+						oAdvance=self.processRecursive(arrJRFs,auxIndex+1,auxTag,sTagRest); // the rest text without </jrf> if where in 
 						sTagRest=oAdvance.text;
 						auxIndex=oAdvance.actIndex;			
 					}
@@ -126,7 +126,7 @@ class jrfModel{
 		if (sModel.indexOf("<JRF")==0){
 			arrJRFs.unshift(""); // added a first element.....
 		}
-		var sRestText=processRecursive(arrJRFs,1,parentTag,arrJRFs[0]);
+		var sRestText=self.processRecursive(arrJRFs,1,parentTag,arrJRFs[0]);
 		parentTag.setPostHTML(sRestText);
 	}
 	process(){

@@ -4,6 +4,7 @@ class jrfReport{
 		self.config=theConfig;
 		self.config.model=System.webapp.model;
 		self.allIssues;
+		self.issuesInTree=newHashMap();
 		self.rootElements=newHashMap();
 		self.rootIssues=newHashMap();
 		self.rootProjects=newHashMap();
@@ -19,32 +20,29 @@ class jrfReport{
 	load(){
 		
 	}
+	constructIssueFactory(){
+		var self=this;
+		// create a dynobj for store the issues.... 
+		self.allIssues=newIssueFactory(self);
+	}
 	execute(){
 		var self=this;
+		self.addStep("Construct Issue Dynamic Object.... ",function(){
+			self.cons
+			self.continueTask();
+		});
 		// first launch all issue retrieve ...
 		self.addStep("Getting All Issues in the Scope.... ",function(){
-			// create a dynobj for store the issues.... 
-			var dynObj=newDynamicObjectFactory(
-								[]
-								//arrAttributeList
-								,
-								[]
-								//arrAttributes
-								,
-								[]
-								//arrAttributesPercs
-								,
-								"scopeIssues");
 			var fncProcessIssue=function(issue){
-				dynObj.new(issue.key,issue.fields.summary);
+				var oIssue=self.allIssues.new(issue.key,issue.fields.summary);
+				oIssue.setJiraObject(oIssue);
+				oIssue.updateInfo();
 			}
 			
 			self.jira.processJQLIssues(self.config.jqlScope.jql,
-									  fncProcessIssue,
-									  dynObj);
+									  fncProcessIssue);
 		});	
-		self.addStep("Asigning all Issues in the scope.... ",function(allIssues){
-			self.allIssues=allIssues;
+		self.addStep("Asigning all Issues in the scope.... ",function(){
 			log("Report utilices "+ self.allIssues.list.length()+ " issues");
 			self.continueTask();
 		});	
@@ -88,6 +86,8 @@ class jrfReport{
 			if (self.bFinishReport) return self.continueTask();
 			self.rootIssues.walk(function(value,iProf,key){
 				log("Root Issue: "+key);
+				var issue=self.allIssues.getById(key);
+				self.issuesInTree.add(key,issue);
 			})
 			self.rootProjects.walk(function(value,iProf,key){
 				log("Root Project: "+key);
@@ -98,14 +98,26 @@ class jrfReport{
 			self.continueTask();
 		});
 		// assing childs and advance childs to root elements
+		self.addStep("Assign Childs and Advance",function(){
+			self.allIssues.list.walk(function(issueChild){
+				self.issuesInTree.walk(function(issueParent){
+					var formulaChild=`(child.linkValue('implementa')==parent.id)
+									||
+								 	(child.fieldValue('customfield_10002') /*Epic Link*/==parent.field('customfield_10004') /*Epic Name*/)`;
+					var formulaAdvance=`(child.linkValue('implementa')==parent.id)
+									||
+									(child.fieldValue('customfield_10002') /*Epic Link*/==parent.field('customfield_10004') /*Epic Name*/)`;
+				});
+			});
+			self.continueTask();
+		});
 		// load report model and submodels
-		// replace the jrf Tokens
+		// Process Model with The Report
 		self.addStep("Processing Model",function(){
 			var theModel=new jrfModel(self);
 			var sModelProcessed=theModel.process();
 	        var jqResult=$("#ReportResult");
 	        jqResult.html(sModelProcessed);
-			
 			self.continueTask();
 		});
 		self.continueTask();

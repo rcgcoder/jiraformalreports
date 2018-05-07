@@ -67,7 +67,7 @@ class jrfModel{
 		 *  3> <D/> </jrf> <E/> </jrf> <F/>
 		 *  4> <G/> </jrf> <H/>
 		 */
-		var fncProcessRecursive=function(arrJRFs,indexAct,parentTag,prependTextAct){
+		var fncProcessRecursive=function(indexAct,parentTag,prependTextAct){
 			var sNewPrepend=prependTextAct;				
 			var auxIndex=indexAct;
 			while (auxIndex<arrJRFs.length){
@@ -116,7 +116,7 @@ class jrfModel{
 				auxIndex++;
 			}
 		}
-		fncProcessRecursive(rootJRF,1,rootJRF,prependText);
+		fncProcessRecursive(1,rootJRF,prependText);
 
 	}
 }

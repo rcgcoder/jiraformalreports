@@ -116,6 +116,7 @@ class jrfModel{
 		return {text:sTagRest,actIndex:auxIndex}; // return al text of </jrf>
 	}
 	traceTag(sTag){
+		if ((sTag=="")||(isUndefined(sTag))) return "";
 		var jqTag=$(sTag);
 		var sResult="";
 		jqTag.attr().each(function(index, element) {

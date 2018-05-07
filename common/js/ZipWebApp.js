@@ -112,6 +112,7 @@ class ZipWebApp{
 					var jsonObj=JSON.parse(content);
 					var sContent=jsonObj.body.storage.value;
 					var sHtml=he.decode(sContent);
+					var theHtml=$(sHtml);
 				});
 				cfc.getContent("388137744");
 			},0,1,undefined,undefined,undefined,"INNER",undefined

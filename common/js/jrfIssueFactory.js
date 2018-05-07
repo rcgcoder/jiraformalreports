@@ -1,5 +1,6 @@
 function newIssueFactory(report){
 	var theReport=report;
+	var allFieldDefinitions=theReport.config.useFields.concat(theReport.config.useOtherFields);
 	var dynObj=newDynamicObjectFactory(
 			[{name:"Child",description:"SubIssues for Billing",type:"object"},
 			 {name:"AdvanceChild",description:"SubIssues for advance calculation",type:"object"},
@@ -7,7 +8,7 @@ function newIssueFactory(report){
 			]
 			//arrAttributeList
 			,
-			["JiraObject"]
+			allFieldDefinitions.concat(["JiraObject"]);
 			//arrAttributes
 			,
 			[]
@@ -23,8 +24,6 @@ function newIssueFactory(report){
 	dynObj.functions.add("getReport",function(){
 		return theReport;
 	});
-	dynObj.addAttribute(theReport.config.useFields);
-	dynObj.addAttribute(theReport.config.useOtherFields);
 	var useLinks=therReport.config.useIssueLinkTypes;
 	useLinks.forEach(function(element){
 		dynObj.addLinkType(element.key,newHashMap());

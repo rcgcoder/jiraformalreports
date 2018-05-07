@@ -21,13 +21,12 @@ function newIssueFactory(report){
 	dynObj.functions.add("getReport",function(){
 		return theReport;
 	});
-	var useLinks=theReport.config.useIssueLinkTypes;
-	useLinks.forEach(function(element){
-		dynObj.addLinkType(element.key,newHashMap());
-	});
 	dynObj.functions.add("addLinkValue",function(sLinkTypeId,value){
 		var self=this;
-		var hsLinks=self.getLinkType(sLinkTypeId);
+		if (!self.getLinkTypes().exists(sLinkTypeId)){
+			self.addLinkType({id:sLinkTypeId,issues:newHashMap()});
+		}
+		var hsLinks=self.getLinkTypeById(sLinkTypeId);
 		hsLinks.add(value);
 	});
 	dynObj.functions.add("setAttributeValueByName",function(attrName,value){

@@ -108,6 +108,7 @@ class ZipWebApp{
 				//cfc.getAllPages();
 				self.addStep("Manipulating Content",function(content){
 					log(content);
+					var jsonObj=JSON.parse(content);
 				});
 				cfc.getContent("388137744");
 			},0,1,undefined,undefined,undefined,"INNER",undefined

@@ -12,7 +12,7 @@ class jrfModel{
 				["Childs"]
 				//arrAttributeList
 				,
-				["PreviousHTML"], /* 		rootjrf
+				["PreviousHTML", /* 		rootjrf
 				 					...html (previous>...<jrf> 
 												...(previous).. <jrf/> 
 												...(previous).. <jrf> 
@@ -27,8 +27,8 @@ class jrfModel{
 											...(postHtml).. </jrf> 
 									...(postHTML) html....
 									*/
-				["PostHTML"],
-				["TagText"]
+				"PostHTML",
+				"TagText"]
 				//arrAttributes
 				,
 				[]
@@ -57,6 +57,7 @@ class jrfModel{
 		   		<G/> 
 		   </jrf> 
 		   <H/>
+		*/
 		// in array
 		/*
 		 *  <A/>
@@ -65,7 +66,7 @@ class jrfModel{
 		 *  3> <D/> </jrf> <E/> </jrf> <F/>
 		 *  4> <G/> </jrf> <H/>
 		 */
-		var fncProcessRecursive(arrJRFs,indexAct,parentTag,prependTextAct){
+		var fncProcessRecursive=function(arrJRFs,indexAct,parentTag,prependTextAct){
 			var sNewPrepend=prependTextAct;				
 			var auxIndex=indexAct;
 			while (auxIndex<arrJRFs.length){

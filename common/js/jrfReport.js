@@ -102,7 +102,10 @@ class jrfReport{
 		// replace the jrf Tokens
 		self.addStep("Processing Model",function(){
 			var theModel=new jrfModel(self);
-			theModel.process();
+			var sModelProcessed=theModel.process();
+	        var jqResult=$("#ReportResult");
+	        jqResult.html(sModelProcessed);
+			
 			self.continueTask();
 		});
 		self.continueTask();

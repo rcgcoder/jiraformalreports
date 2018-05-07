@@ -115,7 +115,18 @@ class jrfModel{
 		}
 		return {text:sTagRest,actIndex:auxIndex}; // return al text of </jrf>
 	}
-	
+	encode(parentTag){
+		var self=this;
+		var sHTML="";
+		sHTML+=parentTag.getPreviousHTML();
+		sHTML+="<!-  child list start       -->";
+		parentTag.getChilds().walk(function(tagElem){
+			sHTML+=self.encode(tagElem);
+		});
+		sHTML+="<!-  child list stop       -->";
+		sHTML+=parentTag.getPostHTML();
+		return sHTML;
+	}
 	parse(html,parentTag){
 		var self=this;
 		var sModel=replaceAll(html,"<jRf","<JRF",true);
@@ -137,5 +148,6 @@ class jrfModel{
 		var sModel=self.report.config.model;
 		var rootJRF=self.tagFactory.new();
 		self.parse(sModel,rootJRF);
+		return self.encode(rootJRF);
 	}
 }

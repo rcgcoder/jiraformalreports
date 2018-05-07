@@ -21,7 +21,7 @@ function newIssueFactory(report){
 	dynObj.functions.add("getReport",function(){
 		return theReport;
 	});
-	var useLinks=therReport.config.useIssueLinkTypes;
+	var useLinks=theReport.config.useIssueLinkTypes;
 	useLinks.forEach(function(element){
 		dynObj.addLinkType(element.key,newHashMap());
 	});

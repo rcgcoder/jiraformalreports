@@ -100,7 +100,7 @@ class jrfModel{
 					if (indWithCloseTag>=0){
 						sNewPostText=sTagRest.substring(0,indWithCloseTag);
 						auxTag.setPostHTML(sNewPostText);
-						sTagRest=sTagRest.subString(indWithCloseTag+6,sTagRest.length); // extract text before </jrf>
+						sTagRest=sTagRest.substring(indWithCloseTag+6,sTagRest.length); // extract text before </jrf>
 					}
 				}
 				indWithCloseTag=sTagRest.indexOf("</JRF>");

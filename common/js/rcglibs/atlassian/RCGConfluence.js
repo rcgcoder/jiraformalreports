@@ -31,5 +31,4 @@ class RCGConfluence{
 		});
 		self.apiCall("/rest/api/content/"+contentId+"?expand=body.storage");
 	}
-	https://paega2.atlassian.net/wiki/rest/api/content/388137744
 }

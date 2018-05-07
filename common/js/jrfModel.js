@@ -120,12 +120,13 @@ class jrfModel{
 		var jqTag=$(sTag);
 		var sResult="";
 		var attrs=jqTag[0].attributes;
-		attrs.each(function(index, element) {
+		for (var i=0;i<attrs.length;i++){
+			var element=attrs[i];
 			if (sResult!=""){
 				sResult+="\n";
 			}
-			sResult+=index+" - Name:"+element.name+" Value:"+element.value;
-		});
+			sResult+=i+" - Name:"+element.name+" Value:"+element.value;
+		}
 	}
 	encode(parentTag){
 		var self=this;

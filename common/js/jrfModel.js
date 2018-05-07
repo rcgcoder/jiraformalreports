@@ -10,8 +10,7 @@ class jrfModel{
 		sModel=replaceAll(sModel,"jrf>","JRF>",true);
 		var arrJRFs=sModel.split("<JRF");
 		var tagFactory=newDynamicObjectFactory(
-				["Childs"]
-				//arrAttributeList
+				[{name:"Child",description:"subTags",type:"object"}]
 				,
 				["PreviousHTML", /* 		rootjrf
 				 					...html (previous>...<jrf> 
@@ -72,7 +71,7 @@ class jrfModel{
 			var auxIndex=indexAct;
 			while (auxIndex<arrJRFs.length){
 				var auxTag=tagFactory.new();
-				parentTag.addChild(auxTag);
+				parentTag.getChilds.add(auxTag);
 
 				var sTagText=arrJRFs[auxIndex];
 				var sNewPostText="";

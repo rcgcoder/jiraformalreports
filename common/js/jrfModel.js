@@ -57,9 +57,7 @@ class jrfModel{
 	 */
 	processRecursive(arrJRFs,indexAct,parentTag,sInitialPrependText){
 		var auxIndex=indexAct;
-		var sNewPrepend=sInitialPrependText;
-		var sTagRest="";
-		var sInnerHtml="";
+		var sTagRest=sInitialPrependText;
 		var sTagAttribs="";
 		
 		while (auxIndex<arrJRFs.length){
@@ -74,7 +72,7 @@ class jrfModel{
 			var indEmptyTag=sTagText.indexOf("/>");
 			var indWithCloseTag=sTagText.indexOf("</JRF>");
 			
-			auxTag.setPreviousHTML(sNewPrepend);
+			auxTag.setPreviousHTML(sTagRest);
 			
 			if (indCloseTag>=0){ // the tag closes
 				if ((indEmptyTag<indCloseTag)&&(indEmptyTag>=0)){ // the tag closes with "/>"
@@ -84,7 +82,6 @@ class jrfModel{
 					auxTag.setTagText(sTagAttribs);
 					auxTag.setPostHTML("");
 					sTagRest=sTagText.substring(indEmptyTag+2,sTagText.length);
-					
 				} else {
 					sTagAttribs=sTagText.substring(0,indCloseTag);
 					sTagAttribs="<JRF "+ sTagAttribs +" />";
@@ -108,8 +105,6 @@ class jrfModel{
 				indWithCloseTag=sTagRest.indexOf("</JRF>");
 				if (indWithCloseTag>=0){ // there is </jrf> .... closes parents... 
 					return {text:sTagRest,actIndex:auxIndex}; // return al text of </jrf>
-				} else { // there is not </jrf>..... the tag is ended.... or the text is a prepend text of another tag
-					sNewPrepend=sTagRest;
 				}
 			} else {
 				log("ERROR PARSING MODEL HTML");
@@ -117,17 +112,24 @@ class jrfModel{
 			}
 			auxIndex++;
 		}
+		return {text:sTagRest,actIndex:auxIndex}; // return al text of </jrf>
 	}
 	
 	parse(html,parentTag){
+		var self=this;
 		var sModel=replaceAll(html,"<jRf","<JRF",true);
 		sModel=replaceAll(sModel,"jrF>","JRF>",true);
 		var arrJRFs=sModel.split("<JRF");
 		if (sModel.indexOf("<JRF")==0){
 			arrJRFs.unshift(""); // added a first element.....
 		}
-		var sRestText=self.processRecursive(arrJRFs,1,parentTag,arrJRFs[0]);
-		parentTag.setPostHTML(sRestText);
+		var oAdvance=self.processRecursive(arrJRFs,1,parentTag,arrJRFs[0]);
+		if (oAdvance.actIndex<arrJRFs.length){
+			log("ERROR THERE IS NOT ALL TAG CLOSED");
+		} else {
+			var sTagRest=oAdvance.text;
+			parentTag.setPostHTML(sTagRest);
+		}
 	}
 	process(){
 		var self=this;

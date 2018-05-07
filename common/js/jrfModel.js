@@ -119,7 +119,8 @@ class jrfModel{
 		if ((sTag=="")||(isUndefined(sTag))) return "";
 		var jqTag=$(sTag);
 		var sResult="";
-		jqTag.attr().each(function(index, element) {
+		var attrs=jqTag.attr();
+		attrs.each(function(index, element) {
 			if (sResult!=""){
 				sResult+="\n";
 			}

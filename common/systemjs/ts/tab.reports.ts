@@ -26,4 +26,7 @@ export class TabReports {
         var win = window.open("https://paega2.atlassian.net/issues/?jql=", '_blank');
         win.focus();
     }   
+    doProcessModel(){
+        var model=System.webapp.model;
+    }
 }

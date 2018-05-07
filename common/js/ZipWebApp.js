@@ -6,6 +6,7 @@ class ZipWebApp{
 		self.atlassian="";
 		self.systemjs="";
 		self.initializationBarrier;
+		self.model="";
 	}
 	getAtlassian(){
 		var self=this;
@@ -112,7 +113,8 @@ class ZipWebApp{
 					var jsonObj=JSON.parse(content);
 					var sContent=jsonObj.body.storage.value;
 					var sHtml=he.decode(sContent);
-					var theHtml=$(sHtml);
+					self.model=sHtml;
+//					var theHtml=$(sHtml);
 				});
 				cfc.getContent("388137744");
 			},0,1,undefined,undefined,undefined,"INNER",undefined

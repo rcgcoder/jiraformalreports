@@ -127,6 +127,7 @@ class jrfModel{
 			}
 			sResult+=i+" - Name:"+element.name+" Value:"+element.value;
 		}
+		return sResult;
 	}
 	encode(parentTag){
 		var self=this;

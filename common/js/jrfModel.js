@@ -4,7 +4,7 @@ class jrfModel{
 		self.report=theReport;
 	}
 	process(){
-		var sModel=self.report.config.model
+		var sModel=self.report.config.model;
 		sModel=replaceAll(sModel,"<jrf","<JRF",true);
 		sModel=replaceAll(sModel,"jrf>","JRF>",true);
 		var arrJRFs=sModel.split("<JRF");

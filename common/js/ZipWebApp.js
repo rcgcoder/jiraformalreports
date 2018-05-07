@@ -114,6 +114,7 @@ class ZipWebApp{
 					var sContent=jsonObj.body.storage.value;
 					var sHtml=he.decode(sContent);
 					self.model=sHtml;
+					self.continueTask();
 //					var theHtml=$(sHtml);
 				});
 				cfc.getContent("388137744");

@@ -24,4 +24,12 @@ class RCGConfluence{
 		});
 		self.apiCall("/rest/api/content/search?cql=type=page");
 	}
+	getContent(contentId){
+		var self=this;
+		self.pushCallback(function(response,xhr,sUrl,headers){
+			self.popCallback([response]);
+		});
+		self.apiCall("/rest/api/content/"+contentId+"?expand=body.storage");
+	}
+	https://paega2.atlassian.net/wiki/rest/api/content/388137744
 }

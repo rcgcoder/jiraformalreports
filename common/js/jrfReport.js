@@ -2,6 +2,7 @@ class jrfReport{
 	constructor(theConfig){
 		var self=this;
 		self.config=theConfig;
+		self.config.model=System.webapp.model;
 		self.allIssues;
 		self.rootElements=newHashMap();
 		self.rootIssues=newHashMap();
@@ -99,6 +100,11 @@ class jrfReport{
 		// assing childs and advance childs to root elements
 		// load report model and submodels
 		// replace the jrf Tokens
+		self.addStep("Processing Model",function(){
+			var theModel=new jrfModel(self);
+			theModel.process();
+			self.continueTask();
+		});
 		self.continueTask();
 	}
 }

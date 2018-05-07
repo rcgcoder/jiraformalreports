@@ -64,8 +64,12 @@ class RCGStringUtils{
 		return sResult;
 	};
 	
-	replaceAll(str, find, replace) {
-		  return str.replace(new RegExp(find, 'g'), replace);
+	replaceAll(str, find, replace, bInsensitive) {
+		  var bModulator='g';
+		  if (isDefined(bInsensitive)&&(bInsensitive)){
+			  bModulator="i"+bModulator;
+		  }
+		  return str.replace(new RegExp(find, bModulator), replace);
 	};
 
 	prepareComparation(str,bCaseInsensitive,bRemoveSpecials){

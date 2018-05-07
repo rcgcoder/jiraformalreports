@@ -29,6 +29,7 @@ export class TabReports {
     doProcessModel(){
         var model=System.webapp.model;
         var jqResult=$("#ReportResult");
+        var trs=System.translate(model);
         jqResult.html(model);
     }
 }

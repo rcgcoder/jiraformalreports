@@ -1,14 +1,13 @@
 function newIssueFactory(report){
 	var theReport=report;
-//	var allFieldDefinitions=theReport.config.useFields.concat(theReport.config.useOtherFields);
+	var allFieldDefinitions=[];//theReport.config.useFields.concat(theReport.config.useOtherFields);
 	var dynObj=newDynamicObjectFactory(
 			[{name:"Child",description:"SubIssues for Billing",type:"object"},
 			 {name:"AdvanceChild",description:"SubIssues for advance calculation",type:"object"},
 			 {name:"LinkType",description:"Relation Types",type:"object"}
 			]
 			,
-//			allFieldDefinitions.concat(["JiraObject"]);
-			[]
+			allFieldDefinitions.concat(["JiraObject"]);
 			,
 			[]
 			,

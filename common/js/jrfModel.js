@@ -3,7 +3,9 @@ class jrfModel{
 		var self=this;
 		self.report=theReport;
 		self.tagFactory=newDynamicObjectFactory(
-				[{name:"Child",description:"subTags",type:"object"}]
+				[{name:"Child",description:"subTags",type:"object"},
+				 {name:"Attribute",description:"Attributes of the Item",type:"String"}
+					]
 				,
 				["PreviousHTML", /* 		rootjrf
 				 					...html (previous>...<jrf> 
@@ -29,7 +31,20 @@ class jrfModel{
 				,
 				"jrfTags");
 	}
-	
+	updateAttributes(tag){
+		var sTag=tag.getTagText();
+		if ((sTag=="")||(isUndefined(sTag))) return;
+		var jqTag=$(sTag);
+		var sResult="";
+		var attrs=jqTag[0].attributes;
+		for (var i=0;i<attrs.length;i++){
+			var element=attrs[i];
+			if (sResult!=""){
+				sResult+="\n";
+			}
+			tag.addAttribute({id:element.name,value:element.value});
+		}
+	}
 	/* 
 	   <A/>
 	   <jrf 1 /> 
@@ -115,17 +130,14 @@ class jrfModel{
 		}
 		return {text:sTagRest,actIndex:auxIndex}; // return al text of </jrf>
 	}
-	traceTag(sTag){
-		if ((sTag=="")||(isUndefined(sTag))) return "";
-		var jqTag=$(sTag);
+	traceTag(tag){
 		var sResult="";
-		var attrs=jqTag[0].attributes;
-		for (var i=0;i<attrs.length;i++){
-			var element=attrs[i];
+		tag.getAttributes().walk(function(attr)){
 			if (sResult!=""){
 				sResult+="\n";
 			}
-			sResult+=i+" - Name:"+element.name+" Value:"+element.value;
+			sResult+=i+" - Name:"+attr.id+" Value:"+attr.value;
+			
 		}
 		return sResult;
 	}
@@ -134,7 +146,7 @@ class jrfModel{
 		var sHTML="";
 		sHTML+=parentTag.getPreviousHTML();
 		sHTML+=parentTag.getTagText();
-		sHTML+="<!--" + self.traceTag(parentTag.getTagText())+ "-->";
+		sHTML+="<!--" + self.traceTag(parentTag)+ "-->";
 		if (parentTag.countChilds()>0){
 			sHTML+="<!-  child list start       -->";
 			parentTag.getChilds().walk(function(tagElem){

@@ -1,6 +1,12 @@
 function newIssueFactory(report){
 	var theReport=report;
-	var allFieldDefinitions=theReport.config.useFields.concat(theReport.config.useOtherFields);
+	var allFieldDefinitions=[];
+	theReport.config.useFields.forEach(function(element){
+		allFieldDefinitions.push({name:element.key,description:element.name});
+	});
+	theReport.config.useOtherFields.forEach(function(element){
+		allFieldDefinitions.push({name:element.key,description:element.name});
+	});
 	var dynObj=newDynamicObjectFactory(
 			[{name:"Child",description:"SubIssues for Billing",type:"object"},
 			 {name:"AdvanceChild",description:"SubIssues for advance calculation",type:"object"},

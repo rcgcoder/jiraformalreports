@@ -32,15 +32,15 @@ function newIssueFactory(report){
 		var self=this;
 		var hsLinks=self.getLinkType(sLinkTypeId);
 		hsLinks.add(value);
-	})
+	});
 	dynObj.functions.add("setAttributeValueByName",function(attrName,value){
 		var self=this;
 		self["set"+attrName](value);
-	})
+	});
 	dynObj.functions.add("getAttributeValueByName",function(attrName){
 		var self=this;
 		return self["get"+attrName]();
-	})
+	});
 	dynObj.functions.add("updateInfo",function(){
 		var self=this;
 		var jiraObject=self.getJiraObject();

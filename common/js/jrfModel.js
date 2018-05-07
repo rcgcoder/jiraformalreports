@@ -71,7 +71,7 @@ class jrfModel{
 			var auxIndex=indexAct;
 			while (auxIndex<arrJRFs.length){
 				var auxTag=tagFactory.new();
-				parentTag.getChilds.add(auxTag);
+				parentTag.addChild(auxTag);
 
 				var sTagText=arrJRFs[auxIndex];
 				var sNewPostText="";

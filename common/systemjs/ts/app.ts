@@ -16,6 +16,7 @@ import {jqlExtendedParser} from './components/jqlExtendedParser';
 import {jqlSelector} from "./atlassianComponents/jqlSelector";
 import {atlassianSelector} from "./atlassianComponents/atlassianSelector";
 import {jiraCorrelator} from "./atlassianComponents/jiraCorrelator";
+import {jrf} from "./modelProcessor/jrf";
 
 
 @Component({
@@ -84,7 +85,8 @@ class App {
                     jqlExtendedParser,
                     jqlSelector,
                     atlassianSelector,
-                    jiraCorrelator
+                    jiraCorrelator,
+                    jrf
                 ],
   bootstrap: [ App ]
 })

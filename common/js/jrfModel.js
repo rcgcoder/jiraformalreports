@@ -133,7 +133,7 @@ class jrfModel{
 	traceTag(tag){
 		var sResult="";
 		var i=0;
-		tag.getAttributes().walk(function(attr)){
+		tag.getAttributes().walk(function(attr){
 			if (sResult!=""){
 				sResult+="\n";
 			}

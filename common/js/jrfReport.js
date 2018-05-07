@@ -28,7 +28,7 @@ class jrfReport{
 	execute(){
 		var self=this;
 		self.addStep("Construct Issue Dynamic Object.... ",function(){
-			self.cons
+			self.allIssues=newIssueFactory(self);
 			self.continueTask();
 		});
 		// first launch all issue retrieve ...

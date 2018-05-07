@@ -4,6 +4,7 @@ class jrfModel{
 		self.report=theReport;
 	}
 	process(){
+		var self=this;
 		var sModel=self.report.config.model;
 		sModel=replaceAll(sModel,"<jrf","<JRF",true);
 		sModel=replaceAll(sModel,"jrf>","JRF>",true);

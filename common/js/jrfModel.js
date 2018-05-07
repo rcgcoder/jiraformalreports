@@ -9,7 +9,7 @@ class jrfModel{
 		sModel=replaceAll(sModel,"<jrf","<JRF",true);
 		sModel=replaceAll(sModel,"jrf>","JRF>",true);
 		var arrJRFs=sModel.split("<JRF");
-		newDynamicObjectFactory(
+		var tagFactory=newDynamicObjectFactory(
 				["Childs"]
 				//arrAttributeList
 				,
@@ -36,7 +36,7 @@ class jrfModel{
 				//arrAttributesPercs
 				,
 				"jrfTags");
-		var rootJRF=jrfTags.new();
+		var rootJRF=tagFactory.new();
 		var prependText=arrJRFs[0];
 		var sTagRest="";
 		var sInnerHtml="";
@@ -71,7 +71,7 @@ class jrfModel{
 			var sNewPrepend=prependTextAct;				
 			var auxIndex=indexAct;
 			while (auxIndex<arrJRFs.length){
-				var auxTag=jrfTags.new();
+				var auxTag=tagFactory.new();
 				parentTag.addChild(auxTag);
 
 				var sTagText=arrJRFs[auxIndex];

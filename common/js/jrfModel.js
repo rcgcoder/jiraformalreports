@@ -120,11 +120,13 @@ class jrfModel{
 		var sHTML="";
 		sHTML+=parentTag.getPreviousHTML();
 		sHTML+=parentTag.getTagText();
-		sHTML+="<!-  child list start       -->";
-		parentTag.getChilds().walk(function(tagElem){
-			sHTML+=self.encode(tagElem);
-		});
-		sHTML+="<!-  child list stop       -->";
+		if (parentTag.countChilds()>0){
+			sHTML+="<!-  child list start       -->";
+			parentTag.getChilds().walk(function(tagElem){
+				sHTML+=self.encode(tagElem);
+			});
+			sHTML+="<!-  child list stop       -->";
+		}
 		sHTML+=parentTag.getPostHTML();
 		return sHTML;
 	}

@@ -56,6 +56,7 @@ class jrfModel{
 	 *  4> <G/> </jrf> <H/>
 	 */
 	processRecursive(arrJRFs,indexAct,parentTag,sInitialPrependText){
+		var self=this;
 		var auxIndex=indexAct;
 		var sTagRest=sInitialPrependText;
 		var sTagAttribs="";

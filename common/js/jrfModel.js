@@ -132,7 +132,7 @@ class jrfModel{
 	process(){
 		var self=this;
 		var sModel=self.report.config.model;
-		var rootJRF=tagFactory.new();
+		var rootJRF=self.tagFactory.new();
 		self.parse(sModel,rootJRF);
 	}
 }

@@ -35,7 +35,7 @@ class jrfReport{
 		self.addStep("Getting All Issues in the Scope.... ",function(){
 			var fncProcessIssue=function(issue){
 				var oIssue=self.allIssues.new(issue.key,issue.fields.summary);
-				oIssue.setJiraObject(oIssue);
+				oIssue.setJiraObject(issue);
 				oIssue.updateInfo();
 			}
 			

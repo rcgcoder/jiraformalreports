@@ -80,7 +80,7 @@ class jrfModel{
 				var indWithCloseTag=sTagText.indexOf("</JRF>");
 				auxTag.setPreviousHTML(sNewPrepend);
 				if (indCloseTag>=0){ // the tag closes
-					if (indEmptyTag<indCloseTag){ // the tag closes with "/>"
+					if ((indEmptyTag<indCloseTag)&&(indEmptyTag>=0)){ // the tag closes with "/>"
 						// the tag does not have inner html it closes with />
 						sTagAttribs=sTagText.substring(0,indEmptyTag);
 						sTagRest=sTagText.substring(indEmptyTag+2,sTagText.length);

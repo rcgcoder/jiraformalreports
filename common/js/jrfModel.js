@@ -115,11 +115,22 @@ class jrfModel{
 		}
 		return {text:sTagRest,actIndex:auxIndex}; // return al text of </jrf>
 	}
+	traceTag(sTag){
+		var jqTag=$(sTag);
+		var sResult="";
+		jqTag.attr().each(function(index, element) {
+			if (sResult!=""){
+				sResult+="\n";
+			}
+			sResult+=index+" - Name:"+element.name+" Value:"+element.value;
+		});
+	}
 	encode(parentTag){
 		var self=this;
 		var sHTML="";
 		sHTML+=parentTag.getPreviousHTML();
 		sHTML+=parentTag.getTagText();
+		sHTML+="<!--" + self.traceTag(parentTag.getTagText())+ "-->";
 		if (parentTag.countChilds()>0){
 			sHTML+="<!-  child list start       -->";
 			parentTag.getChilds().walk(function(tagElem){

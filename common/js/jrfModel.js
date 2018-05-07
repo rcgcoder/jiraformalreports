@@ -132,13 +132,13 @@ class jrfModel{
 	}
 	traceTag(tag){
 		var sResult="";
+		var i=0;
 		tag.getAttributes().walk(function(attr)){
 			if (sResult!=""){
 				sResult+="\n";
 			}
-			sResult+=i+" - Name:"+attr.id+" Value:"+attr.value;
-			
-		}
+			sResult+=(i++)+" - Name:"+attr.id+" Value:"+attr.value;
+		});
 		return sResult;
 	}
 	encode(parentTag){

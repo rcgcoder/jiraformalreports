@@ -119,6 +119,7 @@ class jrfModel{
 		var self=this;
 		var sHTML="";
 		sHTML+=parentTag.getPreviousHTML();
+		sHTML+=parentTag.getTagText();
 		sHTML+="<!-  child list start       -->";
 		parentTag.getChilds().walk(function(tagElem){
 			sHTML+=self.encode(tagElem);

@@ -37,6 +37,7 @@ function newIssueFactory(report){
 	});
 	dynObj.functions.add("setAttributeValueByName",function(attrName,value){
 		var self=this;
+		if (isNull(value)) return;
 		self["set"+attrName](value);
 	});
 	dynObj.functions.add("getAttributeValueByName",function(attrName){

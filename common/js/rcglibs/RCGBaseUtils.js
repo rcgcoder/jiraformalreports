@@ -146,6 +146,15 @@ function isUndefined(variable){
 function isDefined(variable){
 	return (typeof variable!=="undefined");
 }
+function isDefined(variable){
+	return (typeof variable!=="undefined");
+}
+function isNull(variable){
+	return (variable===null);
+}
+function isNotNull(variable){
+	return (variable!==null);
+}
 function isString(variable){
 	return (typeof variable==="string");
 }

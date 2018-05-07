@@ -42,6 +42,7 @@ class ZipWebApp{
 							"js/rcglibs/atlassian/RCGAtlassian.js",
 							"js/rcglibs/atlassian/RCGConfluence.js",
 							"js/rcglibs/atlassian/RCGJira.js",
+							"js/libs/he.js",
 							"js/jrfReport.js"
 /*							"js/rcglibs/RCGLogUtils.js",
 							"js/rcglibs/RCGChronoUtils.js",
@@ -109,6 +110,8 @@ class ZipWebApp{
 				self.addStep("Manipulating Content",function(content){
 					log(content);
 					var jsonObj=JSON.parse(content);
+					var sContent=jsonObj.body.storage.value;
+					var sHtml=he.decode(sContent);
 				});
 				cfc.getContent("388137744");
 			},0,1,undefined,undefined,undefined,"INNER",undefined

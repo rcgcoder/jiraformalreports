@@ -80,7 +80,7 @@ function newIssueFactory(report){
 					self.addLinkValue(element,linkedIssueKey);
 				} else if (typeLink.outward==element.key){
 					linkedIssueKey=link.outwardIssue.key;
-					self.addLinkValue(element,linkedIssueKey);
+					self.addLinkValue(element.key,linkedIssueKey);
 				}
 			})
 		});

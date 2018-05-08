@@ -116,7 +116,7 @@ class jrfReport{
 					}
 					var bIsAdvPart=fncIsAdvPart(issueChild,issueParent);
 					if (bIsAdvPart){
-						issueParent.AdvanceChild(issueChild);
+						issueParent.addAdvanceChild(issueChild);
 					}
 				});
 			});

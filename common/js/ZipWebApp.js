@@ -261,12 +261,12 @@ class ZipWebApp{
 	
 	run(){
 		log("starting ZipWebApp");
-		var fncAux=function(child,parent){
+		var fncAux=Function(`function(child,parent){
 			var bResult=(child.isLinkedTo(parent,'implementa'))
 							||
 						(child.fieldValue('customfield_10002') /*Epic Link*/==parent.fieldValue('customfield_10004') /*Epic Name*/) ;
 			return bResult;
-			}
+			}`);
 		var self=this;
 		self.initializationBarrier=new RCGBarrier(self.createManagedCallback(function(){
 			log("Initialization finished");

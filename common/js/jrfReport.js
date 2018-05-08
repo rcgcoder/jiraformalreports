@@ -107,6 +107,9 @@ class jrfReport{
 			var fncIsAdvPart=Function("child","parent",sFncFormulaAdv);
 			self.allIssues.list.walk(function(issueChild){
 				self.issuesInTree.walk(function(issueParent){
+					if (issueChild.id=="BENT-242"){
+						log("Testing "+issueChild.id);
+					}
 					var bIsChild=fncIsChild(issueChild,issueParent);
 					if (bIsChild){
 						issueParent.addChild(issueChild);

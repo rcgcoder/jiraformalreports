@@ -206,7 +206,7 @@ export class TabStructure {
         var values=auxObj.getElements();
         var bKeyExists=false;
         values.forEach(function(value){
-            if (value.key=="key"){
+            if (value[0]=="key"){
                 bKeyExists=true;
             }
         });

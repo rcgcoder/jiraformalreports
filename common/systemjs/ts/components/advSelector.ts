@@ -168,7 +168,7 @@ export class advSelector {
         log("Processing selection event");
         var self=this;
         self.setSelectedValues(selectedKeys);
-        self.onSelect.emit(selectedKeys);
+        self.onSelected.emit(selectedKeys);
     }
     isSomeOneObserving(){
         var self=this;

@@ -56,7 +56,7 @@ export class jiraCorrelator {
         var parentFlds=self.getParentFieldSelectedValues();
         var chldFld=childFlds[0];
         var prntFld=parentFlds[0];
-        self.setValue("(child.fieldValue('"+chldFld.key+"') /*"+chldFld.name+"*/==parent.field('"+prntFld.key+"') /*"+prntFld.name+"*/"+")" +sAntVal);
+        self.setValue("(child.fieldValue('"+chldFld.key+"') /*"+chldFld.name+"*/==parent.fieldValue('"+prntFld.key+"') /*"+prntFld.name+"*/"+")" +sAntVal);
         self.changeVisibilityAndOr();
     }
     addLink(){

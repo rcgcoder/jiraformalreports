@@ -211,7 +211,7 @@ export class TabStructure {
             }
         });
         if (!bKeyExists){
-            values.push(["key","Issue Key"]);
+            values.unshift(["key","Issue Key"]);
         }
         System.webapp.setIssueOtherFields(values); 
         auxObj.setElements(values);

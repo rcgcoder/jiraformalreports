@@ -45,7 +45,7 @@ function newIssueFactory(report){
 		var self=this;
 		return self["get"+attrName]();
 	});
-	dynObj.functions.add("isLinkedTo",function(linkName,issue){
+	dynObj.functions.add("isLinkedTo",function(issue,linkName){
 		var self=this;
 		var hsLinks=self.getLinkType(linkName);
 		if (hsLinks=="") return false;

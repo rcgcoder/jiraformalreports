@@ -101,6 +101,12 @@ class jrfReport{
 		self.addStep("Assign Childs and Advance",function(){
 			var formulaChild=self.config.billingHierarchy;
 			var formulaAdvance=self.config.advanceHierarchy;
+			var fncAux=function(child,parent){
+							var bResult=(child.isLinkedTo(parent,'implementa'))
+											||
+										(child.fieldValue('customfield_10002') /*Epic Link*/==parent.fieldValue('customfield_10004') /*Epic Name*/) ;
+							return bResult;
+							}
 			var sFncFormulaChild="function(child,parent){var bResult="+formulaChild+"; return bResult;}";
 			var sFncFormulaAdv="function(child,parent){var bResult="+formulaAdvance+"; return bResult;}";
 			var fncIsChild=Function(sFncFormulaChild);

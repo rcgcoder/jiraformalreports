@@ -150,6 +150,7 @@ export class TabStructure {
     updateCorrelators(){
         var fldsManualArray=System.webapp.getIssueOtherFields(); 
         var arrAcumFields=System.webapp.getListFields();
+        arrAcumFields.unshift({key:"key",name:"Issue Key"});
         fldsManualArray.forEach(function(element){
             // key ---> the issue key
             // name ---> the name of the issue

@@ -135,8 +135,8 @@ export class advSelector {
         theSelect.val(self.valuesSelected);
         theSelect.trigger('change'); // Notify any JS components that the value changed
         var objSel=System.getAngularDomObject(self.name+"-tooMuch");
-        if (self.valuesSelected.count>10){
-            objSel.value(self.valuesSelected.count+" items selected");
+        if (self.getSelectedValues().count>10){
+            objSel.value(self.getSelectedValues().length+" items selected");
             objSel.show();
         } else {
             objSel.hide();

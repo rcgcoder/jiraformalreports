@@ -10,23 +10,19 @@
 	    	<option value="and">and</option>
 	    	<option value="or">or</option>
 	   	</select>
-	    <atlassianSelector name="{{name}}-childField" 
+	    <advSelector name="{{name}}-childField" 
 	    				   typeDescriptor="Child Field"
 	    				   multiple="false"
 	    				   maxCharsInSelect=50
-	    				    atlassianAplication="webapp"
-	    				    atlassianObjectFunction="getListFields"
 	    		>
-	    </atlassianSelector >
+	    </advSelector >
 	    =
-	    <atlassianSelector name="{{name}}-parentField" 
+	    <advSelector name="{{name}}-parentField" 
 	    				   typeDescriptor="Parent Field"
 	    				   multiple="false"
 	    				   maxCharsInSelect=50
-	    				    atlassianAplication="webapp"
-	    				    atlassianObjectFunction="getListFields"
 	    		>
-	    </atlassianSelector >
+	    </advSelector >
 	    <br>
 	    <button (click)="addLink()" class="aui-button">+</button>
 	    <select id="{{name}}-addOrLink">

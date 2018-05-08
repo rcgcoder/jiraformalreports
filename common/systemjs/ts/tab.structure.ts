@@ -96,6 +96,7 @@ export class TabStructure {
     applyConfig(config){
         var self=this;
         var auxObj;
+
         auxObj=$('#toggle_RootsByJQL');
         if(isDefined(config.rootsByJQL)&&config.rootsByJQL)auxObj.attr("checked","checked");
         auxObj=$('#toggle_RootsByProject');
@@ -105,7 +106,6 @@ export class TabStructure {
         if (isDefined(config.allIssueLinkTypes)){
             auxObj.setElements(config.allIssueLinkTypes);
             System.webapp.setIssueLinkTypes(config.allIssueLinkTypes); 
-            System.getAngularObject('BillingHierarchy',true).updateIssueLinkTypes();
             System.getAngularObject('selInterestIssueLinkTypes',true).reloadItems();
         }
         auxObj=System.getAngularObject('selProjectsToReport',true);
@@ -139,11 +139,28 @@ export class TabStructure {
         if (isDefined(config.otherFieldDefinitions)){
             auxObj.setElements(config.otherFieldDefinitions);
             System.webapp.setIssueOtherFields(config.otherFieldDefinitions); 
-            System.getAngularObject('selInterestOtherFields',true).reloadItems();
         }
+        
         auxObj=System.getAngularObject('selInterestOtherFields',true);
         if (isDefined(config.useOtherFields)) auxObj.setSelectedValues(config.useOtherFields);
-    
+
+        self.updateCorrelators();
+        
+    }
+    updateCorrelators(){
+        var arrAcumFields=[];
+        var fldsManualArray=System.webapp.getIssueOtherFields(); 
+        var auxFields=System.webapp.getListFields();
+        fldsManualArray.forEach(function(element){
+            // key ---> the issue key
+            // name ---> the name of the issue
+            // description --> for the table
+            arrAcumFields.push(element);
+        });
+        System.getAngularObject('BillingHierarchy',true).fillFields(arrAcumFields);
+        System.getAngularObject('AdvanceHierarchy',true).fillFields(arrAcumFields);
+        System.getAngularObject('BillingHierarchy',true).updateIssueLinkTypes();
+        System.getAngularObject('AdvanceHierarchy',true).updateIssueLinkTypes();
     }
     loadDefaultReport(){
         var self=this;
@@ -161,15 +178,20 @@ export class TabStructure {
         System.webapp.continueTask();
     }
     onChangeIssueLinkTypesConfiguration(arrTypes){
+        var self=this;
         log("applying issue link types conf:"+arrTypes.length);
         System.webapp.setIssueLinkTypes(arrTypes); 
-        System.getAngularObject('BillingHierarchy',true).updateIssueLinkTypes();
-        System.getAngularObject('AdvanceHierarchy',true).updateIssueLinkTypes();
         System.getAngularObject('selInterestIssueLinkTypes',true).reloadItems();
-
+        self.updateCorrelators();
     }
     onChangeManualIssueFieldDefinitions(arrFields){
+        var self=this;
         log("applying custom field manual definitions");
+        var auxObj=System.getAngularObject('manualFieldDefinitions',true);
+        var value=auxObj.getElements();
+        System.webapp.setIssueOtherFields(value); 
+        auxObj.setElements(value);
+        self.updateCorrelators();
     }
     executeReport(){
         var self=this;

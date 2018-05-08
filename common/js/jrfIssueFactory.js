@@ -76,11 +76,15 @@ function newIssueFactory(report){
 			issueLinks.forEach(function(link){
 				typeLink=link.type;
 				if (typeLink.inward==element.key){
-					linkedIssueKey=link.inwardIssue.key;
-					self.addLinkValue(element,linkedIssueKey);
+					if (isDefined(link.inwardIssue)){
+						linkedIssueKey=link.inwardIssue.key;
+						self.addLinkValue(element,linkedIssueKey);
+					}
 				} else if (typeLink.outward==element.key){
-					linkedIssueKey=link.outwardIssue.key;
-					self.addLinkValue(element.key,linkedIssueKey);
+					if (isDefined(link.outwardIssue)){
+						linkedIssueKey=link.outwardIssue.key;
+						self.addLinkValue(element.key,linkedIssueKey);
+					}
 				}
 			})
 		});

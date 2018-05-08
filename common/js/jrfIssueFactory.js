@@ -45,6 +45,14 @@ function newIssueFactory(report){
 		var self=this;
 		return self["get"+attrName]();
 	});
+	dynObj.functions.add("isLinkedTo",function(linkName,issue){
+		var self=this;
+		var hsLinks=self.getLinkType(linkName);
+		if (hsLinks=="") return false;
+		if (!hsLinks.exists(issue.id)) return false;
+		return true;
+	});
+	
 	dynObj.functions.add("updateInfo",function(){
 		var self=this;
 		var jiraObject=self.getJiraObject();

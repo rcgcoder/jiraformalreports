@@ -70,7 +70,7 @@ export class jiraCorrelator {
         }
         var childLinks=self.getChildLinkSelectedValues();
         var chldLnk=childLinks[0];
-        self.setValue("(child.linkValue('"+chldLnk.key+"')==parent.id)" +sAntVal);
+        self.setValue("(child.isLinkedTo(parent,'"+chldLnk.key+"'))" +sAntVal);
         self.changeVisibilityAndOr();
     }
     changeVisibilityAndOr(){

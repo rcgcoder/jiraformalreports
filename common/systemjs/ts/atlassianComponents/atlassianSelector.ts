@@ -12,6 +12,11 @@ export class atlassianSelector {
     @Input() multiple: string = "false";
     @Input() maxCharsInSelect: integer = 17;
     @Input() openDialogCaption: string = '...';
+    @Output() onSelected = new EventEmitter<{}>();
+
+    onSelectedEvent(selectedKeys: []) {
+        self.onSelect.emit(selectedKeys);
+    }
     ngOnInit() {
         var self=this;
         System.addPostProcess(function(){

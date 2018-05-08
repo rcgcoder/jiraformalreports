@@ -31,6 +31,7 @@
 	    				    atlassianAplication="webapp"
 	    				    multiple="true"
 	    				    atlassianObjectFunction="getListFields"
+							(onSelected)="onChangeInterest($event)"
 	    		>
 	    </atlassianSelector >
 	    <br>
@@ -40,6 +41,7 @@
    				     atlassianAplication="webapp"
    				     multiple="true"
    				     atlassianObjectFunction="getIssueOtherFields"
+ 					 (onSelected)="onChangeInterest($event)"
 	    		>
 	    </atlassianSelector>
 	</div>
@@ -49,6 +51,7 @@
 	    				    atlassianAplication="webapp"
 	    				    multiple="true"
 	    				    atlassianObjectFunction="getIssueLinkTypes"
+	    				    (onSelected)="onChangeInterest($event)"
 	    		>
 	    </atlassianSelector >
 	</div>

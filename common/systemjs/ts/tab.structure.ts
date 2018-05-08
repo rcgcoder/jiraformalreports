@@ -148,6 +148,9 @@ export class TabStructure {
         self.updateCorrelators();
         
     }
+    onChangeInterest(event){
+        this.updateCorrelators();
+    }
     updateCorrelators(){
         var arrFields=[];
         var auxObj=System.getAngularObject('selInterestIssueLinkTypes',true);

@@ -10,6 +10,7 @@ export class advSelector {
     @Input() maxCharsInSelect: integer = 17;
     @Input() openDialogCaption: string = '...';
     @Output() onRetrieveData = new EventEmitter<{}>();
+    @Output() onSelected = new EventEmitter<{}>();
     elements: [] = [];
     initialized: boolean = false;
     getSelect(){
@@ -163,10 +164,11 @@ export class advSelector {
         self.valuesSelected=arrAux;
         self.updateSelected();
     }
-    onSelected(selectedKeys: []) {
+    onSelectedEvent(selectedKeys: []) {
         log("Processing selection event");
         var self=this;
         self.setSelectedValues(selectedKeys);
+        self.onSelect.emit(selectedKeys);
     }
     isSomeOneObserving(){
         var self=this;

@@ -4,6 +4,7 @@
     			 maxCharsInSelect={{maxCharsInSelect}}
     			 multiple="{{multiple}}"
     			 openDialogCaption="{{openDialogCaption}}"
+			     (onSelected)="onSelectedEvent($event)"
     			 (onRetrieveData)='onGetOptions($event)'
     			 >
 	</advSelector>

@@ -15,7 +15,7 @@ export class atlassianSelector {
     @Output() onSelected = new EventEmitter<{}>();
 
     onSelectedEvent(selectedKeys: []) {
-        self.onSelect.emit(selectedKeys);
+        self.onSelected.emit(selectedKeys);
     }
     ngOnInit() {
         var self=this;

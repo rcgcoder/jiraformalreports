@@ -137,7 +137,7 @@ export class advSelector {
         var objTooMuch=System.getAngularDomObject(self.name+"-tooMuch");
         var objSel=System.getAngularDomObject("s2id_"+self.name+"-select");
         if (self.getSelectedValues().length>10){
-            objTooMuch.html("<br><em>["self.getSelectedValues().length+" items selected]</em>");
+            objTooMuch.html("<br><em>["+self.getSelectedValues().length+" items selected]</em>");
             objTooMuch.show();
             objSel.hide(); 
         } else {

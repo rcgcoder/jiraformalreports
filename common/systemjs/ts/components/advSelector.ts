@@ -134,14 +134,15 @@ export class advSelector {
         var theSelect=this.getSelect();
         theSelect.val(self.valuesSelected);
         theSelect.trigger('change'); // Notify any JS components that the value changed
-        var objSel=System.getAngularDomObject(self.name+"-tooMuch");
+        var objTooMuch=System.getAngularDomObject(self.name+"-tooMuch");
+        var objSel=System.getAngularDomObject(self.name+"-select");
         if (self.getSelectedValues().length>10){
-            objSel.text(self.getSelectedValues().length+" items selected");
-            objSel.show();
-            theSelect.hide();
-        } else {
+            objTooMuch.text(self.getSelectedValues().length+" items selected");
+            objTooMuch.show();
             objSel.hide();
-            theSelect.show();
+        } else {
+            objTooMuch.hide();
+            objSel.show();
         }
     }
     setSelectedValues(selectedElems: []) {

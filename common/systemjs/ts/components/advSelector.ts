@@ -28,7 +28,7 @@ export class advSelector {
         System.addPostProcess(function(){
             log("PostProcessing:"+self.name);
             System.bindObj(self);
-            var objSel=System.getAngularDomObject(self.name+"-tooMuch",true);
+            var objSel=System.getAngularDomObject(self.name+"-tooMuch");
             objSel.hide();
             var theSelect=self.getSelect();
             if (self.multiple.toUpperCase()=="TRUE"){
@@ -134,7 +134,7 @@ export class advSelector {
         var theSelect=this.getSelect();
         theSelect.val(self.valuesSelected);
         theSelect.trigger('change'); // Notify any JS components that the value changed
-        var objSel=System.getAngularDomObject(self.name+"-tooMuch",true);
+        var objSel=System.getAngularDomObject(self.name+"-tooMuch");
         if (self.valuesSelected.count>10){
             objSel.value(self.valuesSelected.count+" items selected");
             objSel.show();

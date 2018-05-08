@@ -108,7 +108,13 @@ class jrfReport{
 			self.allIssues.list.walk(function(issueChild){
 				self.issuesInTree.walk(function(issueParent){
 					var bIsChild=fncIsChild(issueChild,issueParent);
+					if (bIsChild){
+						issueParent.addChild(issueChild);
+					}
 					var bIsAdvPart=fncIsAdvPart(issueChild,issueParent);
+					if (bIsAdvPart){
+						issueParent.AdvanceChild(issueChild);
+					}
 				});
 			});
 			self.continueTask();

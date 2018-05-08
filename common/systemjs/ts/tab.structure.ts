@@ -148,9 +148,8 @@ export class TabStructure {
         
     }
     updateCorrelators(){
-        var arrAcumFields=[];
         var fldsManualArray=System.webapp.getIssueOtherFields(); 
-        var auxFields=System.webapp.getListFields();
+        var arrAcumFields=System.webapp.getListFields();
         fldsManualArray.forEach(function(element){
             // key ---> the issue key
             // name ---> the name of the issue

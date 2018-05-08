@@ -29,7 +29,8 @@ function newIssueFactory(report){
 	});
 	dynObj.functions.add("addLinkValue",function(sLinkTypeId,value){
 		var self=this;
-		if (!self.getLinkTypes().exists(sLinkTypeId)){
+		var hsLinkTypes=self.getLinkTypes();
+		if (!hsLinkTypes.exists(sLinkTypeId)){
 			self.addLinkType({id:sLinkTypeId,issues:newHashMap()});
 		}
 		var hsLinks=self.getLinkTypeById(sLinkTypeId);

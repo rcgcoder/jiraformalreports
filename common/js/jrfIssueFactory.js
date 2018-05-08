@@ -35,6 +35,14 @@ function newIssueFactory(report){
 		var hsLinks=self.getLinkTypeById(sLinkTypeId);
 		hsLinks.add(value);
 	});
+	dynObj.functions.add("isLinkedTo",function(issue,linkName){
+		var self=this;
+		var hsLinks=self.getLinkTypeById(linkName);
+		if (hsLinks=="") return false;
+		if (!hsLinks.exists(issue.id)) return false;
+		return true;
+	});
+
 	dynObj.functions.add("setAttributeValueByName",function(attrName,value){
 		var self=this;
 		if (isNull(value)) return;
@@ -44,13 +52,6 @@ function newIssueFactory(report){
 	dynObj.functions.add("getAttributeValueByName",function(attrName){
 		var self=this;
 		return self["get"+attrName]();
-	});
-	dynObj.functions.add("isLinkedTo",function(issue,linkName){
-		var self=this;
-		var hsLinks=self.getLinkType(linkName);
-		if (hsLinks=="") return false;
-		if (!hsLinks.exists(issue.id)) return false;
-		return true;
 	});
 	
 	dynObj.functions.add("updateInfo",function(){

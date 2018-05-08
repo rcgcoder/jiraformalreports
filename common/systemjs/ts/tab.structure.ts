@@ -149,7 +149,20 @@ export class TabStructure {
         
     }
     updateCorrelators(){
-        var fldsManualArray=System.webapp.getIssueOtherFields(); 
+        var arrFields=[];
+        var auxObj=System.getAngularObject('selInterestIssueLinkTypes',true);
+        var arrValues=auxObj.getSelectedValues();
+        arrFields=arrFields.concat(arrValues);
+        
+        auxObj=System.getAngularObject('selInterestFields',true);
+        arrValues=auxObj.getSelectedValues();
+        arrFields=arrFields.concat(arrValues);
+        
+        auxObj=System.getAngularObject('selInterestOtherFields',true);
+        arrValues=auxObj.getSelectedValues();
+        arrFields=arrFields.concat(arrValues);
+
+/*        var fldsManualArray=System.webapp.getIssueOtherFields(); 
         var arrAcumFields=System.webapp.getListFields();
         arrAcumFields.unshift({key:"key",name:"Issue Key"});
         fldsManualArray.forEach(function(element){
@@ -158,8 +171,9 @@ export class TabStructure {
             // description --> for the table
             arrAcumFields.push(element);
         });
-        System.getAngularObject('BillingHierarchy',true).fillFields(arrAcumFields);
-        System.getAngularObject('AdvanceHierarchy',true).fillFields(arrAcumFields);
+*/      
+        System.getAngularObject('BillingHierarchy',true).fillFields(arrFields);
+        System.getAngularObject('AdvanceHierarchy',true).fillFields(arrFields);
         System.getAngularObject('BillingHierarchy',true).updateIssueLinkTypes();
         System.getAngularObject('AdvanceHierarchy',true).updateIssueLinkTypes();
     }
@@ -189,9 +203,18 @@ export class TabStructure {
         var self=this;
         log("applying custom field manual definitions");
         var auxObj=System.getAngularObject('manualFieldDefinitions',true);
-        var value=auxObj.getElements();
-        System.webapp.setIssueOtherFields(value); 
-        auxObj.setElements(value);
+        var values=auxObj.getElements();
+        var bKeyExists=false;
+        values.forEach(function(value){
+            if (value.key=="key"){
+                bKeyExists=true;
+            }
+        });
+        if (!bKeyExists){
+            values.push(["key","Issue Key"]);
+        }
+        System.webapp.setIssueOtherFields(values); 
+        auxObj.setElements(values);
         self.updateCorrelators();
     }
     executeReport(){

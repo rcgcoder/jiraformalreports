@@ -14,7 +14,7 @@ export class jiraCorrelator {
             self.changeVisibilityAndOr();
         });
     }
-    fillLinsk(arrLinks){
+    fillLinks(arrLinks){
         var self=this;
         // key ---> the issue key
         // name ---> the name of the issue

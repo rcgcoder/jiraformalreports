@@ -139,7 +139,7 @@ export class advSelector {
         if (self.getSelectedValues().length>10){
             objTooMuch.text(self.getSelectedValues().length+" items selected");
             objTooMuch.show();
-            objSel.hide();
+            objSel.hide(); 
         } else {
             objTooMuch.hide();
             objSel.show();

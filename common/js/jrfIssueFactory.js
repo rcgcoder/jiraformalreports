@@ -78,9 +78,10 @@ function newIssueFactory(report){
 				if (typeLink.inward==element.key){
 					if (isDefined(link.inwardIssue)){
 						linkedIssueKey=link.inwardIssue.key;
-						self.addLinkValue(element,linkedIssueKey);
+						self.addLinkValue(element.key,linkedIssueKey);
 					}
-				} else if (typeLink.outward==element.key){
+				} 
+				if (typeLink.outward==element.key){
 					if (isDefined(link.outwardIssue)){
 						linkedIssueKey=link.outwardIssue.key;
 						self.addLinkValue(element.key,linkedIssueKey);

@@ -34,7 +34,7 @@ class jrfReport{
 		// first launch all issue retrieve ...
 		self.addStep("Getting All Issues in the Scope.... ",function(){
 			var fncProcessIssue=function(issue){
-				var oIssue=self.allIssues.new(issue.key,issue.fields.summary);
+				var oIssue=self.allIssues.new(issue.fields.summary,issue.key);
 				oIssue.setJiraObject(issue);
 				oIssue.updateInfo();
 			}

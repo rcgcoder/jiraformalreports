@@ -138,8 +138,10 @@ export class advSelector {
         if (self.getSelectedValues().length>10){
             objSel.text(self.getSelectedValues().length+" items selected");
             objSel.show();
+            theSelect.hide();
         } else {
             objSel.hide();
+            theSelect.show();
         }
     }
     setSelectedValues(selectedElems: []) {

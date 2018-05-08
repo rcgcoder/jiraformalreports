@@ -101,10 +101,10 @@ class jrfReport{
 		self.addStep("Assign Childs and Advance",function(){
 			var formulaChild=self.config.billingHierarchy;
 			var formulaAdvance=self.config.advanceHierarchy;
-			var sFncFormulaChild="function(child,parent){var bResult="+formulaChild+"; return bResult;}";
-			var sFncFormulaAdv="function(child,parent){var bResult="+formulaAdvance+"; return bResult;}";
-			var fncIsChild=Function(sFncFormulaChild);
-			var fncIsAdvPart=Function(sFncFormulaAdv);
+			var sFncFormulaChild="var bResult="+formulaChild+"; return bResult;";
+			var sFncFormulaAdv="var bResult="+formulaAdvance+"; return bResult;";
+			var fncIsChild=Function("child","parent",sFncFormulaChild);
+			var fncIsAdvPart=Function("child","parent",sFncFormulaAdv);
 			self.allIssues.list.walk(function(issueChild){
 				self.issuesInTree.walk(function(issueParent){
 					var bIsChild=fncIsChild(issueChild,issueParent);

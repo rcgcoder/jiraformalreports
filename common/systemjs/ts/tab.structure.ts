@@ -139,6 +139,7 @@ export class TabStructure {
         if (isDefined(config.otherFieldDefinitions)){
             auxObj.setElements(config.otherFieldDefinitions);
             System.webapp.setIssueOtherFields(config.otherFieldDefinitions); 
+            System.getAngularObject('selInterestOtherFields',true).reloadItems();
         }
         
         auxObj=System.getAngularObject('selInterestOtherFields',true);

@@ -34,13 +34,13 @@ function newIssueFactory(report){
 			self.addLinkType({id:sLinkTypeId,issues:newHashMap()});
 		}
 		var hsLinks=self.getLinkTypeById(sLinkTypeId);
-		hsLinks.add(value);
+		hsLinks.issues.add(value);
 	});
 	dynObj.functions.add("isLinkedTo",function(issue,linkName){
 		var self=this;
 		var hsLinks=self.getLinkTypeById(linkName);
 		if (hsLinks=="") return false;
-		if (!hsLinks.exists(issue.id)) return false;
+		if (!hsLinks.issues.exists(issue.id)) return false;
 		return true;
 	});
 

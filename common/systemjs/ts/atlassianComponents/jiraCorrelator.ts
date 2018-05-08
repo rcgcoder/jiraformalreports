@@ -14,6 +14,14 @@ export class jiraCorrelator {
             self.changeVisibilityAndOr();
         });
     }
+    fillLinsk(arrLinks){
+        var self=this;
+        // key ---> the issue key
+        // name ---> the name of the issue
+        // description --> for the table
+        var selLinks=System.getAngularObject(self.name+"-childLink",true);
+        selLinks.fillOptions(arrLinks);
+    }
     fillFields(arrFields){
         var self=this;
         // key ---> the issue key

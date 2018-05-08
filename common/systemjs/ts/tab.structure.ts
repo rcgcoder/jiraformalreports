@@ -153,32 +153,22 @@ export class TabStructure {
     }
     updateCorrelators(){
         var arrFields=[];
-        var auxObj=System.getAngularObject('selInterestIssueLinkTypes',true);
-        var arrValues=auxObj.getSelectedValues();
-        arrFields=arrFields.concat(arrValues);
         
-        auxObj=System.getAngularObject('selInterestFields',true);
-        arrValues=auxObj.getSelectedValues();
+        var auxObj=System.getAngularObject('selInterestFields',true);
+        var arrValues=auxObj.getSelectedValues();
         arrFields=arrFields.concat(arrValues);
         
         auxObj=System.getAngularObject('selInterestOtherFields',true);
         arrValues=auxObj.getSelectedValues();
         arrFields=arrFields.concat(arrValues);
 
-/*        var fldsManualArray=System.webapp.getIssueOtherFields(); 
-        var arrAcumFields=System.webapp.getListFields();
-        arrAcumFields.unshift({key:"key",name:"Issue Key"});
-        fldsManualArray.forEach(function(element){
-            // key ---> the issue key
-            // name ---> the name of the issue
-            // description --> for the table
-            arrAcumFields.push(element);
-        });
-*/      
+        auxObj=System.getAngularObject('selInterestIssueLinkTypes',true);
+        var arrLinks=auxObj.getSelectedValues();
+        
         System.getAngularObject('BillingHierarchy',true).fillFields(arrFields);
         System.getAngularObject('AdvanceHierarchy',true).fillFields(arrFields);
-        System.getAngularObject('BillingHierarchy',true).updateIssueLinkTypes();
-        System.getAngularObject('AdvanceHierarchy',true).updateIssueLinkTypes();
+        System.getAngularObject('BillingHierarchy',true).fillLinks(arrLinks);
+        System.getAngularObject('AdvanceHierarchy',true).fillLinks(arrLinks);
     }
     loadDefaultReport(){
         var self=this;

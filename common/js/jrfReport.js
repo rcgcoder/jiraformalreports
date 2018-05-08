@@ -99,14 +99,16 @@ class jrfReport{
 		});
 		// assing childs and advance childs to root elements
 		self.addStep("Assign Childs and Advance",function(){
+			var formulaChild=self.config.billingHierarchy;
+			var formulaAdvance=self.config.advanceHierarchy;
+			var sFncFormulaChild="function(child,parent){var bResult "+formulaChild+"; return bResult;)";
+			var sFncFormulaAdv="function(child,parent){var bResult "+formulaAdvance+"; return bResult;)";
+			var fncIsChild=Function(sFncFormulaChild);
+			var fncIsAdvPart=Function(sFncFormulaAdv);
 			self.allIssues.list.walk(function(issueChild){
 				self.issuesInTree.walk(function(issueParent){
-					var formulaChild=`(child.linkValue('implementa')==parent.id)
-									||
-								 	(child.fieldValue('customfield_10002') /*Epic Link*/==parent.field('customfield_10004') /*Epic Name*/)`;
-					var formulaAdvance=`(child.linkValue('implementa')==parent.id)
-									||
-									(child.fieldValue('customfield_10002') /*Epic Link*/==parent.field('customfield_10004') /*Epic Name*/)`;
+					var bIsChild=fncIsChild(issueChild,issueParent);
+					var bIsAdvPart=fncIsAdvPart(issueChild,issueParent);
 				});
 			});
 			self.continueTask();

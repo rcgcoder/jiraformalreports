@@ -104,8 +104,10 @@ class jrfReport{
 			var fncIsChild=Function("child","parent",sFncFormulaChild);
 			var fncIsAdvPart=Function("child","parent",sFncFormulaAdv);
 			var issuesAdded=newHashMap();
-			self.rootIssues.walk(function(issue){
-				issuesAdded.add(issue.getKey(),issue);
+			self.rootIssues.walk(function(value,iProf,key){
+				log("Root Issue: "+key);
+				var issue=self.allIssues.getById(key);
+				issuesAdded.add(key,issue);
 			});
 			var treeIssues=self.rootIssues.toArray([{doFieldName:"self",resultFieldName:"issue"}]);
 			while(treeIssues.length>0){

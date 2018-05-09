@@ -106,7 +106,7 @@ class jrfReport{
 			var issuesAdded=newHashMap();
 			self.rootIssues.walk(function(issue){
 				issuesAdded.add(issue.getKey(),issue);
-			}
+			});
 			var treeIssues=self.rootIssues.toArray([{doFieldName:"self",resultFieldName:"issue"}];
 			while(treeIssues.length>0){
 				var issueParent=treeIssues.pop().issue;

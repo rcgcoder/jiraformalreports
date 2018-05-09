@@ -137,7 +137,7 @@ class jrfModel{
 
 			var sTagText=arrJRFs[auxIndex];
 			var sNewPostText="";
-			//sTagText=self.removeInnerTags(sTagText);
+			sTagText=self.removeInnerTags(sTagText);
 			
 			var indCloseTag=sTagText.indexOf(">");
 			var indEmptyTag=sTagText.indexOf("/>");

@@ -26,20 +26,21 @@ class jrfForEach{
 		self.addHtml("<!-- END PREVIOUSHTML IN FOREACH JRF TOKEN -->");
 		var nItem=0;
 		self.elemsInForEach.walk(function(newParent){
+			self.addHtml("<!-- START INNER LOOP OF ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
 			self.tag.getChilds().walk(function(childTag){
-				var nItemBck=nItem;
 				self.addHtml("<!-- START "+childTag.id +" CHILD LIST ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
 				self.addHtml(self.model.applyTag(childTag,newParent));
 				self.addHtml("<!-- END "+childTag.id +" CHILD LIST ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
-				self.addHtml("<!-- START "+childTag.id +" POSTHTML ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
-				self.addHtml(self.tag.getPostHTML());
-				self.addHtml("<!-- END "+childTag.id +" POSTHTML "+ (nItem) + " IN FOREACH JRF TOKEN -->");
-				if ((self.subType=="row")&&(self.elemsInForEach.getLast().value.getKey()
-											!=newParent.getKey())){
-					self.addHtml("</td></tr><tr><td>");
-				}
-				nItem++;
 			});
+			self.addHtml("<!-- START "+childTag.id +" POSTHTML ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
+			self.addHtml(self.tag.getPostHTML());
+			self.addHtml("<!-- END "+childTag.id +" POSTHTML "+ (nItem) + " IN FOREACH JRF TOKEN -->");
+			if ((self.subType=="row")&&(self.elemsInForEach.getLast().value.getKey()
+										!=newParent.getKey())){
+				self.addHtml("</td></tr><tr><td>");
+			}
+			self.addHtml("<!-- END INNER LOOP OF ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
+			nItem++;
 		});
 		return self.popHtmlBuffer();
 	}

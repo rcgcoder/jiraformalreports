@@ -12,7 +12,7 @@ class jrfFormula{
 		self.addHtml(self.tag.getPreviousHTML());
 		// processing inner childs
 		self.pushHtmlBuffer();
-		nChild=0;
+		var nChild=0;
 		self.tag.getChilds().walk(function(childTag){
 			self.addHtml("<!-- START "+childTag.id +" CHILD ("+nChild+") LIST ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
 			self.addHtml(self.model.applyTag(childTag,self.reportElem));

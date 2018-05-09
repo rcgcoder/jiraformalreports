@@ -71,6 +71,30 @@ class jrfModel{
 	 *  3> <D/> </jrf> <E/> </jrf> <F/>
 	 *  4> <G/> </jrf> <H/>
 	 */
+	removeInnerTags(sHtml,sTag){
+		var sTagText=sHtml;
+		var indCloseTag=sTagText.indexOf(">");
+		var indParagraphTag=sTagText.indexOf(sTag);
+		if ((indParagraphTag>=0)&&(indParagraphTag<indCloseTag)){// there is </p> into the jrf tag
+			var arrParagraphs=sTagText.split(sTag);
+			sTagText="";
+			var i=0;
+			indCloseTag=arrParagraphs[i].indexOf(">");
+			while (indCloseTag<0){// there is no > in the block.... where a </p>
+				sTagText+=arrParagraphs;
+				i++;
+				indCloseTag=arrParagraphs[i].indexOf(">");
+			}
+			// > located.... the rest </p> returns where OK
+			sTagText+=arrParagraphs[i];
+			i++;
+			while(i<arrParagraphs.length){
+				sTagText+=sTag+arrParagraphs[i];
+				i++;
+			}
+		}
+		return sTagText;
+	}
 	processRecursive(arrJRFs,indexAct,parentTag,sInitialPrependText){
 		var self=this;
 		var auxIndex=indexAct;
@@ -81,36 +105,19 @@ class jrfModel{
 
 			var auxTag=self.tagFactory.new();
 			parentTag.addChild(auxTag);
+			
+			auxTag.setPreviousHTML(sTagRest);
+			
 
 			var sTagText=arrJRFs[auxIndex];
 			var sNewPostText="";
+			sTagText=removeInnerTags(sTagText,"</p>");
+			sTagText=removeInnerTags(sTagText,"<p>");
+			sTagText=removeInnerTags(sTagText,"<p/>");
 			
 			var indCloseTag=sTagText.indexOf(">");
 			var indEmptyTag=sTagText.indexOf("/>");
 			var indWithCloseTag=sTagText.indexOf("</JRF>");
-			var indParagraphTag=sTagText.indexOf("</p>");
-			if ((indParagraphTag>=0)&&(indParagraphTag<indCloseTag)){// there is </p> into the jrf tag
-				var arrParagraphs=sTagText.split("</p>");
-				sTagText="";
-				var i=0;
-				indCloseTag=arrParagraphs[i].indexOf(">");
-				while (indCloseTag<0){// there is no > in the block.... where a </p>
-					sTagText+=arrParagraphs;
-					i++;
-					indCloseTag=arrParagraphs[i].indexOf(">");
-				}
-				// > located.... the rest </p> returns where OK
-				sTagText+=arrParagraphs[i];
-				i++;
-				while(i<arrParagraphs.length){
-					sTagText+="</p>"+arrParagraphs[i];
-					i++;
-				}
-				indCloseTag=sTagText.indexOf(">");
-				indEmptyTag=sTagText.indexOf("/>");
-				indWithCloseTag=sTagText.indexOf("</JRF>");
-			}
-			auxTag.setPreviousHTML(sTagRest);
 			
 			if (indCloseTag>=0){ // the tag closes
 				if ((indEmptyTag<indCloseTag)&&(indEmptyTag>=0)){ // the tag closes with "/>"

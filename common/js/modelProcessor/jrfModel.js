@@ -34,6 +34,13 @@ class jrfModel{
 				,
 				"jrfTags");
 	}
+	extendObj(obj){
+		var self=this;
+		obj.pushHtmlBuffer=function(){self.pushHtmlBuffer();};
+		obj.popHtmlBuffer=function(){self.popHtmlBuffer();};
+		obj.addHtml=function(sHtml){self.addHtml(sHtml);};
+		obj.getAttrVal=self.model.getAttrVal;
+	}
 	pushHtmlBuffer(){
 		var self=this;
 		self.htmlStack.push(self.html);

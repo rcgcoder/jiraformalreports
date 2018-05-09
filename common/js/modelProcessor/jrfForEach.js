@@ -1,9 +1,10 @@
 class jrfForEach{
 	constructor(tag,reportElem,model){
 		var self=this;
+		self.model=model;
+		model.extendObj(self);
 		self.tag=tag;
 		self.reportElem=reportElem;
-		self.model=model;
 		self.type=self.getAttrVal("type");
 		self.subType=self.getAttrVal("subtype");
 		self.where=self.getAttrVal("where");
@@ -16,10 +17,6 @@ class jrfForEach{
 		} else {
 			self.elemsInForEach=newHashMap();
 		}
-		self.pushHtmlBuffer=function(){this.model.pushHtmlBuffer();};
-		self.popHtmlBuffer=function(){return this.model.popHtmlBuffer();};
-		self.addHtml=function(sHtml){this.model.addHtml(sHtml);};
-		self.getAttrVal=this.model.getAttrVal;
 	}
 	apply(){
 		var self=this;

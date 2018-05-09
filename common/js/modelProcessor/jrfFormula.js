@@ -14,14 +14,14 @@ class jrfFormula{
 		self.pushHtmlBuffer();
 		var nChild=0;
 		self.tag.getChilds().walk(function(childTag){
-			self.addHtml("<!-- START "+childTag.id +" CHILD ("+nChild+") LIST ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
+			self.addHtml("<!-- START "+childTag.id +" CHILD ("+nChild+") LIST ITEM "+ (nItem) + " IN FORMULA JRF TOKEN -->");
 			self.addHtml(self.model.applyTag(childTag,self.reportElem));
-			self.addHtml("<!-- END "+childTag.id +" CHILD ("+nChild+") LIST ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
+			self.addHtml("<!-- END "+childTag.id +" CHILD ("+nChild+") LIST ITEM "+ (nItem) + " IN FORMULA JRF TOKEN -->");
 			nChild++;
 		});
-		self.addHtml("<!-- START POSTHTML ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
+		self.addHtml("<!-- START POSTHTML IN FORMULA JRF TOKEN -->");
 		self.addHtml(self.tag.getPostHTML());
-		self.addHtml("<!-- END POSTHTML ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
+		self.addHtml("<!-- END POSTHTML  IN FORMULA JRF TOKEN -->");
 		
 		var sContent=self.popHtmlBuffer();
 		sContent=self.model.removeInnerTags(sContent);

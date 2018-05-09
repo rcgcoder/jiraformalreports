@@ -38,6 +38,7 @@ class jrfReport{
 		self.addStep("Loading report model engine.... ",function(){
 			var arrFiles=[	//"ts/demo.ts",
 							"js/jrfIssueFactory.js",
+							"js/libs/showdown.js",
 							"js/modelProcessor/jrfModel.js",
 							"js/modelProcessor/jrfForEach.js",
 							"js/modelProcessor/jrfField.js"

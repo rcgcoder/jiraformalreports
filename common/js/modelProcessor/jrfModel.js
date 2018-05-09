@@ -1,6 +1,7 @@
 class jrfModel{
 	constructor(theReport){
 		var self=this;
+		self.markdownConverter = new showdown.Converter();
 		self.report=theReport;
 		self.tagFactory=newDynamicObjectFactory(
 				[{name:"Child",description:"subTags",type:"object"},

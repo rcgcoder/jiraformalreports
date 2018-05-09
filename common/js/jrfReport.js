@@ -37,7 +37,7 @@ class jrfReport{
 							"js/rcglibs/RCGChronoUtils.js",
 							"js/rcglibs/RCGHashMapUtils.js"
 */						 ]; //test
-			self.loadRemoteFiles(arrFiles);
+			System.webapp.loadRemoteFiles(arrFiles);
 		});
 
 		self.addStep("Construct Issue Dynamic Object.... ",function(){

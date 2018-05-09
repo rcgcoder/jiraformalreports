@@ -26,7 +26,7 @@ class jrfFormula{
 		var sContent=self.popHtmlBuffer();
 		sContent=self.model.removeInnerTags(sContent);
 		var sFncFormula="var result="+sContent+"; return result;";
-		var fncFormula=Function("elem","root",sFncFormulaChild);
+		var fncFormula=Function("elem","root",sFncFormula);
 		var sValue=fncFormula(self.reportElem,self.model.processingRoot);
 		if (self.inFormat=="markdown"){
 			sValue=self.model.markdownConverter.makeHtml(sValue); 

@@ -39,7 +39,8 @@ class jrfReport{
 			var arrFiles=[	//"ts/demo.ts",
 							"js/jrfIssueFactory.js",
 							"js/modelProcessor/jrfModel.js",
-							"js/modelProcessor/jrfForEach.js"
+							"js/modelProcessor/jrfForEach.js",
+							"js/modelProcessor/jrfField.js"
 /*							"js/rcglibs/RCGLogUtils.js",
 							"js/rcglibs/RCGChronoUtils.js",
 							"js/rcglibs/RCGHashMapUtils.js"

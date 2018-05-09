@@ -35,9 +35,9 @@ class jrfForEach{
 				self.addHtml("<!-- END "+childTag.id +" CHILD ("+nChild+") LIST ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
 				nChild++;
 			});
-			self.addHtml("<!-- START "+childTag.id +" POSTHTML ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
+			self.addHtml("<!-- START POSTHTML ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
 			self.addHtml(self.tag.getPostHTML());
-			self.addHtml("<!-- END "+childTag.id +" POSTHTML ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
+			self.addHtml("<!-- END POSTHTML ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
 			if ((self.subType=="row")&&(self.elemsInForEach.getLast().value.getKey()
 										!=newParent.getKey())){
 				self.addHtml("</td></tr><tr><td>");

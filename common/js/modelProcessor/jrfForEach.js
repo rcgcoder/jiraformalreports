@@ -1,5 +1,6 @@
 class jrfForEach{
 	getAttrVal(idAttr){
+		var self=this;
 		var attr=self.tag.getAttributeById(idAttr);
 		if (isDefined(attr)){
 			return attr.value;
@@ -12,8 +13,8 @@ class jrfForEach{
 		self.reportElem=reportElem;
 		self.model=model;
 		self.type=self.getAttrVal("type");
-		self.subType=tag.getAttrVal("subtype");
-		self.where=tag.getAttrVal("where");
+		self.subType=self.getAttrVal("subtype");
+		self.where=self.getAttrVal("where");
 		if (self.type="root"){
 			self.elemsInForEach=self.model.report.childs;
 		} else if (self.type="child"){

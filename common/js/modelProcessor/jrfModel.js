@@ -154,7 +154,7 @@ class jrfModel{
 		if (tagAttrs.exists("foreach")){
 			tagApplier=new jrfForEach(tag,reportElem,self);
 		} else if (tagAttrs.exists("field")){
-				tagApplier=new jrfForEach(tag,reportElem,self);
+			tagApplier=new jrfField(tag,reportElem,self);
 		}
 		if (isDefined(tagApplier)){ // if tag is defined... it manages the childs...
 			sHTML+=tagApplier.apply(); 

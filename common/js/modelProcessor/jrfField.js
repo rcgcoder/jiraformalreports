@@ -1,4 +1,4 @@
-class jrfForEach{
+class jrfField{
 	constructor(tag,reportElem,model){
 		var self=this;
 		self.tag=tag;

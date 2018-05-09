@@ -46,7 +46,7 @@ class ZipWebApp{
 							"js/libs/he.js",
 							"js/jrfIssueFactory.js",
 							"js/jrfReport.js",
-							"js/jrfModelProcessor/jrfModel.js"
+							"js/modelProcessor/jrfModel.js"
 /*							"js/rcglibs/RCGLogUtils.js",
 							"js/rcglibs/RCGChronoUtils.js",
 							"js/rcglibs/RCGHashMapUtils.js"

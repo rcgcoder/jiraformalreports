@@ -4,7 +4,6 @@ class jrfReport{
 		self.config=theConfig;
 		self.config.model=System.webapp.model;
 		self.allIssues;
-		self.issuesInTree=newHashMap();
 		self.rootElements=newHashMap();
 		self.rootIssues=newHashMap();
 		self.rootProjects=newHashMap();
@@ -87,7 +86,6 @@ class jrfReport{
 			self.rootIssues.walk(function(value,iProf,key){
 				log("Root Issue: "+key);
 				var issue=self.allIssues.getById(key);
-				self.issuesInTree.add(key,issue);
 			})
 			self.rootProjects.walk(function(value,iProf,key){
 				log("Root Project: "+key);
@@ -105,21 +103,35 @@ class jrfReport{
 			var sFncFormulaAdv="var bResult="+formulaAdvance+"; return bResult;";
 			var fncIsChild=Function("child","parent",sFncFormulaChild);
 			var fncIsAdvPart=Function("child","parent",sFncFormulaAdv);
-			self.allIssues.list.walk(function(issueChild){
-				self.issuesInTree.walk(function(issueParent){
+			var issuesAdded=newHashMap();
+			self.rootIssues.walk(function(issue){
+				issuesAdded.add(issue.getKey(),issue);
+			}
+			var treeIssues=self.rootIssues.toArray([{doFieldName:"self",resultFieldName:"issue"}];
+			while(treeIssues.length>0){
+				var issueParent=treeIssues.pop().issue;
+				self.allIssues.list.walk(function(issueChild){
 					if (issueChild.id=="BENT-242"){
 						log("Testing "+issueChild.id);
 					}
 					var bIsChild=fncIsChild(issueChild,issueParent);
 					if (bIsChild){
 						issueParent.addChild(issueChild);
+						if (!issuesAdded.exists(issueChild.getKey())){
+							issuesAdded.add(issueChild.getKey(),issueChild);
+							treeIssues.push({issue:issueChild});
+						}
 					}
 					var bIsAdvPart=fncIsAdvPart(issueChild,issueParent);
 					if (bIsAdvPart){
 						issueParent.addAdvanceChild(issueChild);
+						if (!issuesAdded.exists(issueChild.getKey())){
+							issuesAdded.add(issueChild.getKey(),issueChild);
+							treeIssues.push({issue:issueChild});
+						}
 					}
 				});
-			});
+			}
 			self.continueTask();
 		});
 		// load report model and submodels

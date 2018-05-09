@@ -1556,9 +1556,14 @@ class RCGHashMapFactory{
 					var resultFieldName;
 					for (var i=0;i<arrFields.length;i++){
 						auxField=arrFields[i];
-						doFieldName=auxField.doFieldName;
-						doFieldValue=elem.doFieldName;
 						resultFieldName=auxField.resultFieldName;
+
+						doFieldName=auxField.doFieldName;
+						if (doFieldName.toUpperCase()=="SELF"){
+							doFieldValue=elem;
+						} else {
+							doFieldValue=elem[doFieldName];
+						}
 						auxElem[resultFieldName]=doFieldValue;
 					}
 				}

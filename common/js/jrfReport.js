@@ -109,7 +109,7 @@ class jrfReport{
 				var issue=self.allIssues.getById(key);
 				issuesAdded.add(key,issue);
 			});
-			var treeIssues=self.issuesAdded.toArray([{doFieldName:"self",resultFieldName:"issue"}]);
+			var treeIssues=issuesAdded.toArray([{doFieldName:"self",resultFieldName:"issue"}]);
 			while(treeIssues.length>0){
 				var issueParent=treeIssues.pop().issue;
 				self.allIssues.list.walk(function(issueChild){

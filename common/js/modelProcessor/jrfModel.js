@@ -71,27 +71,15 @@ class jrfModel{
 	 *  3> <D/> </jrf> <E/> </jrf> <F/>
 	 *  4> <G/> </jrf> <H/>
 	 */
-	removeInnerTags(sHtml,sTag){
+	removeInnerTags(sHtml){
 		var sTagText=sHtml;
 		var indCloseTag=sTagText.indexOf(">");
-		var indParagraphTag=sTagText.indexOf(sTag);
-		if ((indParagraphTag>=0)&&(indParagraphTag<indCloseTag)){// there is </p> into the jrf tag
+		var indOpenTag=sTagText.indexOf("<");
+		if ((indOpenTag>=0)&&(indOpenTag<indCloseTag)){// there is </p> into the jrf tag
 			var arrParagraphs=sTagText.split(sTag);
-			sTagText="";
-			var i=0;
-			indCloseTag=arrParagraphs[i].indexOf(">");
-			while (indCloseTag<0){// there is no > in the block.... where a </p>
-				sTagText+=arrParagraphs;
-				i++;
-				indCloseTag=arrParagraphs[i].indexOf(">");
-			}
-			// > located.... the rest </p> returns where OK
-			sTagText+=arrParagraphs[i];
-			i++;
-			while(i<arrParagraphs.length){
-				sTagText+=sTag+arrParagraphs[i];
-				i++;
-			}
+			sTagText=sTagText.substring(0,indOpenTag)+sTagText.substring(indCloseTag,sTagText.length);
+			indCloseTag=sTagText.indexOf(">");
+			indOpenTag=sTagText.indexOf("<");
 		}
 		return sTagText;
 	}
@@ -111,9 +99,7 @@ class jrfModel{
 
 			var sTagText=arrJRFs[auxIndex];
 			var sNewPostText="";
-			sTagText=self.removeInnerTags(sTagText,"</p>");
-			sTagText=self.removeInnerTags(sTagText,"<p>");
-			sTagText=self.removeInnerTags(sTagText,"<p/>");
+			sTagText=self.removeInnerTags(sTagText);
 			
 			var indCloseTag=sTagText.indexOf(">");
 			var indEmptyTag=sTagText.indexOf("/>");

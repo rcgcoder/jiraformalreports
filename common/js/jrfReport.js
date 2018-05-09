@@ -109,7 +109,7 @@ class jrfReport{
 				var issue=self.allIssues.getById(key);
 				issuesAdded.add(key,issue);
 			});
-			var treeIssues=self.rootIssues.toArray([{doFieldName:"self",resultFieldName:"issue"}]);
+			var treeIssues=self.issuesAdded.toArray([{doFieldName:"self",resultFieldName:"issue"}]);
 			while(treeIssues.length>0){
 				var issueParent=treeIssues.pop().issue;
 				self.allIssues.list.walk(function(issueChild){
@@ -120,7 +120,7 @@ class jrfReport{
 					if (bIsChild){
 						issueParent.addChild(issueChild);
 						if (!issuesAdded.exists(issueChild.getKey())){
-							issuesAdded.add(issueChild.getKey(),issueChild);
+							issuesAdded.add(issueChild.getId(),issueChild);
 							treeIssues.push({issue:issueChild});
 						}
 					}
@@ -128,7 +128,7 @@ class jrfReport{
 					if (bIsAdvPart){
 						issueParent.addAdvanceChild(issueChild);
 						if (!issuesAdded.exists(issueChild.getKey())){
-							issuesAdded.add(issueChild.getKey(),issueChild);
+							issuesAdded.add(issueChild.getId(),issueChild);
 							treeIssues.push({issue:issueChild});
 						}
 					}

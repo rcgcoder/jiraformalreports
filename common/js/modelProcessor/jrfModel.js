@@ -37,7 +37,7 @@ class jrfModel{
 	extendObj(obj){
 		var self=this;
 		obj.pushHtmlBuffer=function(){self.pushHtmlBuffer();};
-		obj.popHtmlBuffer=function(){self.popHtmlBuffer();};
+		obj.popHtmlBuffer=function(){return self.popHtmlBuffer();};
 		obj.addHtml=function(sHtml){self.addHtml(sHtml);};
 		obj.getAttrVal=self.getAttrVal;
 	}
@@ -55,9 +55,8 @@ class jrfModel{
 	}
 	addHtml(sText){
 		var self=this;
-		var newText="\n"+sText;
-		log(newText);
-		self.html+=newText;
+		log(sText);
+		self.html+="\n"+sText;
 	}
 	getAttrVal(idAttr){
 		var self=this;

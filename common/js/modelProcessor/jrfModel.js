@@ -55,7 +55,9 @@ class jrfModel{
 	}
 	addHtml(sText){
 		var self=this;
-		self.html+=("\n"+sText);
+		var newText="\n"+sText;
+		log(newText);
+		self.html+=newText;
 	}
 	getAttrVal(idAttr){
 		var self=this;

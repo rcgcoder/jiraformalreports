@@ -44,7 +44,7 @@ class jrfForEach{
 				sHTML+="<!-- START POSTHTML IN FOREACH JRF TOKEN -->";
 				sHTML+=self.tag.getPostHTML();
 				sHTML+="<!-- END POSTHTML IN FOREACH JRF TOKEN -->";
-				if ((self.subType=="row")&&(self.elemsInForEach.getLast().getKey()!=childTag.getKey())){
+				if ((self.subType=="row")&&(self.elemsInForEach.getLast().value.getKey()!=childTag.getKey())){
 					sHTML+="</td></tr><tr><td>";
 				}
 			});

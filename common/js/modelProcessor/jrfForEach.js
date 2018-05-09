@@ -18,6 +18,7 @@ class jrfForEach{
 		}
 	}
 	apply(){
+		var self=this;
 		var sHTML="";
 		sHTML+="<!-- START PREVIOUSHTML IN FOREACH JRF TOKEN -->";
 		sHTML+=self.tag.getPreviousHTML();

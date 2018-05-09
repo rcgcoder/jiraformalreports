@@ -17,7 +17,7 @@ class jrfField{
 		self.reportElem=reportElem;
 		self.model=model;
 		self.fieldName=self.getAttrVal("field");
-		self.inFormat=self.getAttrVal("inFormat");
+		self.inFormat=self.getAttrVal("informat");
 	}
 	apply(){
 		var self=this;

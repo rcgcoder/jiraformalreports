@@ -36,6 +36,7 @@ class jrfReport{
 				var oIssue=self.allIssues.new(issue.fields.summary,issue.key);
 				oIssue.setJiraObject(issue);
 				oIssue.updateInfo();
+				oIssue.setId(issue.key);
 			}
 			
 			self.jira.processJQLIssues(self.config.jqlScope.jql,
@@ -119,7 +120,7 @@ class jrfReport{
 					var bIsChild=fncIsChild(issueChild,issueParent);
 					if (bIsChild){
 						issueParent.addChild(issueChild);
-						if (!issuesAdded.exists(issueChild.getKey())){
+						if (!issuesAdded.exists(issueChild.getId())){
 							issuesAdded.add(issueChild.getId(),issueChild);
 							treeIssues.push({issue:issueChild});
 						}
@@ -127,7 +128,7 @@ class jrfReport{
 					var bIsAdvPart=fncIsAdvPart(issueChild,issueParent);
 					if (bIsAdvPart){
 						issueParent.addAdvanceChild(issueChild);
-						if (!issuesAdded.exists(issueChild.getKey())){
+						if (!issuesAdded.exists(issueChild.getId())){
 							issuesAdded.add(issueChild.getId(),issueChild);
 							treeIssues.push({issue:issueChild});
 						}

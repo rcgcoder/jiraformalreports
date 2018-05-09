@@ -149,7 +149,7 @@ class jrfReport{
 					}
 				});
 			}
-			self.childs.list.walk(function(parentIssue){
+			self.childs.walk(function(parentIssue){
 				fncGetIssueChilds(parentIssue);
 			});
 			self.continueTask();

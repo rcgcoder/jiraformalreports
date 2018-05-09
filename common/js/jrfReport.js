@@ -42,7 +42,7 @@ class jrfReport{
 							"js/libs/showdown.js",
 							"js/modelProcessor/jrfModel.js",
 							"js/modelProcessor/jrfForEach.js",
-							"js/modelProcessor/jrfField.js"
+							"js/modelProcessor/jrfField.js",
 							"js/modelProcessor/jrfFormula.js"
 /*							"js/rcglibs/RCGLogUtils.js",
 							"js/rcglibs/RCGChronoUtils.js",

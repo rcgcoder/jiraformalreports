@@ -76,7 +76,6 @@ class jrfModel{
 		var indCloseTag=sTagText.indexOf(">");
 		var indOpenTag=sTagText.indexOf("<");
 		if ((indOpenTag>=0)&&(indOpenTag<indCloseTag)){// there is </p> into the jrf tag
-			var arrParagraphs=sTagText.split(sTag);
 			sTagText=sTagText.substring(0,indOpenTag)+sTagText.substring(indCloseTag,sTagText.length);
 			indCloseTag=sTagText.indexOf(">");
 			indOpenTag=sTagText.indexOf("<");

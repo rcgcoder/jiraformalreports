@@ -49,7 +49,7 @@ class ZipWebApp{
 							"js/rcglibs/RCGChronoUtils.js",
 							"js/rcglibs/RCGHashMapUtils.js"
 */						 ]; //test
-			self.loadRemoteFiles(arrFiles);
+			System.webapp.loadRemoteFiles(arrFiles);
 		});
 		self.addStep("Setting <initialized=false> Atlassian Engine.... ",function(){
 			var atl=self.getAtlassian();

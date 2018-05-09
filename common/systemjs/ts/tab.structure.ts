@@ -199,12 +199,12 @@ export class TabStructure {
         var values=auxObj.getElements();
         var bKeyExists=false;
         values.forEach(function(value){
-            if (value[0]=="Id"){
+            if (value[0]=="key"){
                 bKeyExists=true;
             }
         });
         if (!bKeyExists){
-            values.unshift(["Id","Issue Key"]);
+            values.unshift(["key","Issue Key"]);
         }
         System.webapp.setIssueOtherFields(values); 
         auxObj.setElements(values);

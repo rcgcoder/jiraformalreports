@@ -167,7 +167,7 @@ class jrfModel{
 			rptElem=self.report;
 		}
 		sHTML+=parentTag.getPreviousHTML();
-		self.applyTag(tagElem,rptElem);
+		self.applyTag(parentTag,rptElem);
 		if (parentTag.countChilds()>0){
 			sHTML+="<!-  child list start       -->";
 			parentTag.getChilds().walk(function(tagElem){

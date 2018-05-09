@@ -28,6 +28,18 @@ class jrfReport{
 	}
 	execute(){
 		var self=this;
+		
+		self.addStep("Loading report model engine.... ",function(){
+			var arrFiles=[	//"ts/demo.ts",
+							"js/jrfIssueFactory.js",
+							"js/modelProcessor/jrfModel.js"
+/*							"js/rcglibs/RCGLogUtils.js",
+							"js/rcglibs/RCGChronoUtils.js",
+							"js/rcglibs/RCGHashMapUtils.js"
+*/						 ]; //test
+			self.loadRemoteFiles(arrFiles);
+		});
+
 		self.addStep("Construct Issue Dynamic Object.... ",function(){
 			self.allIssues=newIssueFactory(self);
 			self.continueTask();

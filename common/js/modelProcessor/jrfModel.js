@@ -148,18 +148,25 @@ class jrfModel{
 		var sHTML="";
 		sHTML+="<!--" + tag.getTagText()+"-->";
 		sHTML+="<!--" + self.traceTag(tag)+ "-->";
-		var sResult="";
 		var i=0;
 		var tagApplier;
 		var tagAttrs=tag.getAttributes();
 		if (tagAttrs.exists("forEachRoot")){
 			tagApplier=new jrfForEach(tag,reportElem,self);
 		}
-		if (isDefined(tagApplier)){
-			sResult=tagApplier.apply();
+		if (isDefined(tagApplier)){ // if tag is defined... it manages the childs...
+			sHTML+=tagApplier.apply(); 
+		} else { // if tag is not defined ... show the childs..... for test
+			if (parentTag.countChilds()>0){
+				sHTML+="<!-  child list start       -->";
+				parentTag.getChilds().walk(function(tagElem){
+					sHTML+=self.encode(tagElem,reportElem);
+				});
+				sHTML+="<!-  child list stop       -->";
+			}
+			sHTML+=parentTag.getPostHTML();
 		}
-		return sResult;
-		
+		return sHTML;
 	}
 	encode(parentTag,reportElement){
 		var self=this;
@@ -169,14 +176,6 @@ class jrfModel{
 			reportElem=self.report;
 		}
 		self.applyTag(parentTag,reportElem);
-		if (parentTag.countChilds()>0){
-			sHTML+="<!-  child list start       -->";
-			parentTag.getChilds().walk(function(tagElem){
-				sHTML+=self.encode(tagElem,reportElem);
-			});
-			sHTML+="<!-  child list stop       -->";
-		}
-		sHTML+=parentTag.getPostHTML();
 		return sHTML;
 	}
 	parse(html,parentTag){

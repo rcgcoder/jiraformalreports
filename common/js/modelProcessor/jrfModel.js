@@ -58,15 +58,20 @@ class jrfModel{
 //		log(sText);
 		self.html+="\n"+sText;
 	}
-	getAttrVal(idAttr){
+	getAttrVal(idAttr,objSrc){
 		var self=this;
-		var attr=self.tag.getAttributeById(idAttr.toLowerCase());
-		if (isDefined(attr)){
-			var vAux=attr.value;
-			if (isUndefined(vAux)){
-				vAux="";
+		if (self.tag.getAttributes().exists(idAttr)){
+			var attr=self.tag.getAttributeById(idAttr.toLowerCase());
+			if (isDefined(attr)){
+				var vAux=attr.value;
+				if (isUndefined(vAux)){
+					vAux="";
+				}
+				return vAux;
 			}
-			return vAux;
+		} else if (self.model.report.allFieldNames.exists(idAttr)){
+			var sNewId=self.model.report.allFieldNames.getValue(idAttr);
+			return self.getAttrVal(sNewId);
 		}
 		return "";
 	}

@@ -1,6 +1,7 @@
 class jrfReport{
 	constructor(theConfig){
 		var self=this;
+		self.allFieldNames=newHashMap();
 		self.config=theConfig;
 		self.config.model=System.webapp.model;
 		self.childs=newHashMap();
@@ -177,6 +178,14 @@ class jrfReport{
 		// load report model and submodels
 		// Process Model with The Report
 		self.addStep("Processing Model",function(){
+			var hsFieldNames=self.allFieldNames;
+			hsFieldNames.clear();
+			self.config.useFields.forEach(function(element){
+				hsFieldNames.add(element.name,element.key); // to do a reverse search
+			});
+			self.config.useOtherFields.forEach(function(element){
+				hsFieldNames.add(element.name,element.key); // to do a reverse search
+			});
 			var theModel=new jrfModel(self);
 			var sModelProcessed=theModel.process();
 	        var jqResult=$("#ReportResult");

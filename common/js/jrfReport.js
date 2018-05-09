@@ -15,6 +15,12 @@ class jrfReport{
 		self.jira=System.webapp.getJira();
 		self.confluence=System.webapp.getConfluence();
 	}
+	getChilds(){
+		return this.childs;
+	}
+	getAdvanceChilds(){
+		return this.advanceChilds;
+	}
 	save(){
 		
 	}

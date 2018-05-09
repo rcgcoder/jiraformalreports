@@ -152,7 +152,7 @@ class jrfModel{
 		var tagApplier;
 		var tagAttrs=tag.getAttributes();
 		if (tagAttrs.exists("forEachRoot")){
-			tagApplier=new jrfForEach(tag,reportElem);
+			tagApplier=new jrfForEach(tag,reportElem,self);
 		}
 		if (isDefined(tagApplier)){
 			sResult=tagApplier.apply();
@@ -167,7 +167,6 @@ class jrfModel{
 		if (isUndefined(reportElem)){
 			reportElem=self.report;
 		}
-		sHTML+=parentTag.getPreviousHTML();
 		self.applyTag(parentTag,reportElem);
 		if (parentTag.countChilds()>0){
 			sHTML+="<!-  child list start       -->";

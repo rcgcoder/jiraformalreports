@@ -345,17 +345,24 @@ class factoryObjects{
 				}
 
 				this.attributes.add("list_"+vNameAttribute+"s",function(){return newHashMap();});
+				this.functions.add("countParents"+vNameAttribute,function(){
+					if (typeof this["listParents_"+vNameAttribute]==="undefined"){
+						return 0;
+					} else {
+						return this["getListParents"+vNameAttribute]().length();
+					}
+				});
 				this.functions.add("add"+vNameAttribute,function(objVal){
 					this["list_"+vNameAttribute+"s"].add(objVal.id,objVal);
 					if (typeof objVal["listParents_"+vNameAttribute] === "undefined"){ //name de la factory
 						objVal["listParents_"+vNameAttribute]=newHashMap();
-						objVal["getListParents_"+vNameAttribute]=function(){
+						objVal["getListParents"+vNameAttribute]=function(){
 							return this["listParents_"+vNameAttribute];
 						}
 					}
-					var nodAux=objVal["getListParents_"+vNameAttribute]().find(this.id);
+					var nodAux=objVal["getListParents"+vNameAttribute]().find(this.id);
 					if (nodAux==""){
-						objVal["getListParents_"+vNameAttribute]().add(this.id,this);
+						objVal["getListParents"+vNameAttribute]().add(this.id,this);
 					}
 					return objVal;
 				});

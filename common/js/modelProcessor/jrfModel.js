@@ -111,9 +111,9 @@ class jrfModel{
 
 			var sTagText=arrJRFs[auxIndex];
 			var sNewPostText="";
-			sTagText=removeInnerTags(sTagText,"</p>");
-			sTagText=removeInnerTags(sTagText,"<p>");
-			sTagText=removeInnerTags(sTagText,"<p/>");
+			sTagText=self.removeInnerTags(sTagText,"</p>");
+			sTagText=self.removeInnerTags(sTagText,"<p>");
+			sTagText=self.removeInnerTags(sTagText,"<p/>");
 			
 			var indCloseTag=sTagText.indexOf(">");
 			var indEmptyTag=sTagText.indexOf("/>");

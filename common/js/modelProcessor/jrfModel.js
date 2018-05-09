@@ -157,14 +157,16 @@ class jrfModel{
 		if (isDefined(tagApplier)){ // if tag is defined... it manages the childs...
 			sHTML+=tagApplier.apply(); 
 		} else { // if tag is not defined ... show the childs..... for test
-			if (parentTag.countChilds()>0){
+			sHTML+=tag.getPreviousHTML();
+			sHTML+="<!--"+self.traceTag(tag)+"-->";
+			if (tag.countChilds()>0){
 				sHTML+="<!-  child list start       -->";
-				parentTag.getChilds().walk(function(tagElem){
+				tag.getChilds().walk(function(tagElem){
 					sHTML+=self.encode(tagElem,reportElem);
 				});
 				sHTML+="<!-  child list stop       -->";
 			}
-			sHTML+=parentTag.getPostHTML();
+			sHTML+=tag.getPostHTML();
 		}
 		return sHTML;
 	}

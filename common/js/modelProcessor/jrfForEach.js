@@ -1,12 +1,19 @@
 class jrfForEach{
+	getAttrVal(idAttr){
+		var attr=self.tag.getAttributeById(idAttr);
+		if (isDefined(attr)){
+			return attr.value;
+		}
+		return "";
+	}
 	constructor(tag,reportElem,model){
 		var self=this;
 		self.tag=tag;
 		self.reportElem=reportElem;
 		self.model=model;
-		self.type=tag.getAttribute("type");
-		self.subType=tag.getAttribute("subtype");
-		self.where=tag.getAttribute("where");
+		self.type=self.getAttrVal("type");
+		self.subType=tag.getAttrVal("subtype");
+		self.where=tag.getAttrVal("where");
 		if (self.type="root"){
 			self.elemsInForEach=self.model.report.childs;
 		} else if (self.type="child"){

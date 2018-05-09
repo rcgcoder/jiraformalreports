@@ -126,7 +126,8 @@ class jrfReport{
 				self.childs.add(key,issue);
 			});
 //			var treeIssues=issuesAdded.toArray([{doFieldName:"self",resultFieldName:"issue"}]);
-			var fncProcessChild=function(issueChild,issueParent){
+			var fncProcessChild=function(objStep,issueParent){
+				var issueChild=objStep.value;
 				if (issueChild.id=="BENT-242"){
 					log("Testing "+issueChild.id);
 				}

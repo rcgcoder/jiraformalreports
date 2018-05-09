@@ -21,7 +21,7 @@ function newIssueFactory(report){
 	dynObj.functions.add("fieldValue",function(sFieldName){
 		var fncAux=this["get"+sFieldName];
 		if (isDefined(fncAux)){
-			return fncAux();
+			return this["get"+sFieldName]();
 		} else {
 			return "Undefined getter for fieldName:["+sFieldName+"]";
 		}

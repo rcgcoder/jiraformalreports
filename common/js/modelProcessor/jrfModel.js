@@ -55,7 +55,7 @@ class jrfModel{
 	}
 	addHtml(sText){
 		var self=this;
-		log(sText);
+//		log(sText);
 		self.html+="\n"+sText;
 	}
 	getAttrVal(idAttr){
@@ -256,6 +256,8 @@ class jrfModel{
 		var sModel=self.report.config.model;
 		var rootJRF=self.tagFactory.new();
 		self.parse(sModel,rootJRF);
-		return self.encode(rootJRF);
+		var sHtml=self.encode(rootJRF);
+		log(sHtml);
+		return sHtml;
 	}
 }

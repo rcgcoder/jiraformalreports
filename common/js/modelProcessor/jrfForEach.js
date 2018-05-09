@@ -3,7 +3,11 @@ class jrfForEach{
 		var self=this;
 		var attr=self.tag.getAttributeById(idAttr);
 		if (isDefined(attr)){
-			return attr.value;
+			var vAux=attr.value;
+			if (isUndefined(vAux)){
+				vAux="";
+			}
+			return vAux;
 		}
 		return "";
 	}

@@ -143,18 +143,19 @@ class jrfModel{
 		});
 		return sResult;
 	}
-	applyTag(tag){
+	applyTag(tag,reportElem){
 		var self=this;
 		sHTML+="<!--" + tag.getTagText()+"-->";
 		sHTML+="<!--" + self.traceTag(tag)+ "-->";
 		var sResult="";
 		var i=0;
+		var tagApplier;
 		var tagAttrs=tag.getAttributes();
 		if (tagAttrs.exists("forEachRoot")){
-			var childRoots=self.report.childs();
-			childRoots.walk(function(root){
-				
-			});
+			tagApplier=new jrfForEach(tag,reportElem);
+		}
+		if (isDefined(tagApplier)){
+			sResult=tagApplier.apply();
 		}
 		return sResult;
 		
@@ -162,16 +163,16 @@ class jrfModel{
 	encode(parentTag,reportElement){
 		var self=this;
 		var sHTML="";
-		var rptElem=reportElement;
-		if (isUndefined(rptElem)){
-			rptElem=self.report;
+		var reportElem=reportElement;
+		if (isUndefined(reportElem)){
+			reportElem=self.report;
 		}
 		sHTML+=parentTag.getPreviousHTML();
-		self.applyTag(parentTag,rptElem);
+		self.applyTag(parentTag,reportElem);
 		if (parentTag.countChilds()>0){
 			sHTML+="<!-  child list start       -->";
 			parentTag.getChilds().walk(function(tagElem){
-				sHTML+=self.encode(tagElem,rptElem);
+				sHTML+=self.encode(tagElem,reportElem);
 			});
 			sHTML+="<!-  child list stop       -->";
 		}

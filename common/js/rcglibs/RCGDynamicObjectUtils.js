@@ -347,12 +347,15 @@ class factoryObjects{
 				this.attributes.add("list_"+vNameAttribute+"s",function(){return newHashMap();});
 				this.functions.add("add"+vNameAttribute,function(objVal){
 					this["list_"+vNameAttribute+"s"].add(objVal.id,objVal);
-					if (typeof objVal["listParents_"+me.name] === "undefined"){ //name de la factory
-						objVal["listParents_"+me.name]=newHashMap();
+					if (typeof objVal["listParents_"+vNameAttribute] === "undefined"){ //name de la factory
+						objVal["listParents_"+vNameAttribute]=newHashMap();
+						objVal["getListParents_"+vNameAttribute]=function(){
+							return this["listParents_"+vNameAttribute];
+						}
 					}
-					var nodAux=objVal["listParents_"+me.name].find(this.id);
+					var nodAux=objVal["getListParents_"+vNameAttribute]().find(this.id);
 					if (nodAux==""){
-						objVal["listParents_"+me.name].add(this.id,this);
+						objVal["getListParents_"+vNameAttribute]().add(this.id,this);
 					}
 					return objVal;
 				});

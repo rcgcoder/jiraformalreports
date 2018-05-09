@@ -687,21 +687,21 @@ class RCGHashMapFactory{
 			hashmapFactory.asyncLogBlock(objStep);
 		}
 		asyncLogBlock(objStep){
-			var sCad=objStep.type+" "+objStep.nombre+" ind. Actual:"+objStep.index+ " ["+objStep.indMin+","+objStep.indMax+"] "
-					+ "\n Operaciones Procesadas:"+objStep.opsProcesadas
-					+ "\n Avance:"+objStep.lastBloquePorc.toFixed(2)+" % "
+			var sCad=objStep.type+" "+objStep.name+" ind. Actual:"+objStep.index+ " ["+objStep.indMin+","+objStep.indMax+"] "
+					+ "\n Operaciones Procesadas:"+objStep.opsProcessed
+					+ "\n Avance:"+objStep.lastBlockPorc.toFixed(2)+" % "
 					+ "\n Rendimiento:"+objStep.opsPerSec.toFixed(2) + " Ops/s "
 					+ "\n Tiempo/op:"+objStep.secsPerOp.toFixed(2) + " Secs/Ops"
 					+ "\n Inicio:"+formatDate(new Date(objStep.initTimestamp),4)
 					+ "\n Duracion:"+enEuros(((new Date().getTime()-objStep.initTimestamp)/1000),false) + " s"
-					+ "\n T. Restante:"+enEuros(objStep.tiempoEstimado,false) + " s"
-					+ "\n Bloques Tiempo:"+objStep.nBloqueTime+ (objStep.nBloqueTime>0?" ("+(objStep.opsProcesadas/objStep.nBloqueTime).toFixed(2)+" ops/blq)":"")
-					+ "\n Bloques Porcentaje:"+objStep.nBloquePorc+ (objStep.nBloquePorc>0?" ("+(objStep.opsProcesadas/objStep.nBloquePorc).toFixed(2)+" ops/%)":"")
-					+ "\n Anidamiento:"+objStep.profundidad;
+					+ "\n T. Restante:"+enEuros(objStep.estimatedTime,false) + " s"
+					+ "\n Bloques Tiempo:"+objStep.nBlockTime+ (objStep.nBlockTime>0?" ("+(objStep.opsProcessed/objStep.nBlockTime).toFixed(2)+" ops/blq)":"")
+					+ "\n Bloques Porcentaje:"+objStep.nBloquePerc+ (objStep.nBloquePerc>0?" ("+(objStep.opsProcessed/objStep.nBloquePerc).toFixed(2)+" ops/%)":"")
+					+ "\n Anidamiento:"+objStep.deep;
 			var sDeep="";
 			hashmapFactory.stackAsyncCalls.walk(function(stepAux){
 				if (stepAux.deep<objStep.deep){
-					sDeep+="["+stepAux.type+" "+stepAux.nombre+"("+stepAux.index+")]";
+					sDeep+="["+stepAux.type+" "+stepAux.name+"("+stepAux.index+")]";
 				}
 			});
 			sCad=sDeep+sCad;

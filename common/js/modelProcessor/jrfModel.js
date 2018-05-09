@@ -177,7 +177,7 @@ class jrfModel{
 		if (isUndefined(reportElem)){
 			reportElem=self.report;
 		}
-		self.applyTag(parentTag,reportElem);
+		sHTML=self.applyTag(parentTag,reportElem);
 		return sHTML;
 	}
 	parse(html,parentTag){

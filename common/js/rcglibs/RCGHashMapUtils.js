@@ -721,10 +721,10 @@ class RCGHashMapFactory{
 			if (total>0) {
 				nOpsRemain=total-nOps;
 				objStep.percProcessed=Math.round(100*nOps/total);
-				if ((objStep.percProcessed-objStep.lastBlockPercentent)>1){
+				if ((objStep.percProcessed-objStep.lastBlockPercent)>1){
 					objStep.nBlockPercent++;
 					objStep.bLaunchBlockPercent=true;
-					objStep.lastBlockPercentent=objStep.percProcessed;
+					objStep.lastBlockPercent=objStep.percProcessed;
 				} else {
 					objStep.bLaunchBlockPercent=false;
 				}
@@ -749,7 +749,7 @@ class RCGHashMapFactory{
 				objStep.bLaunchBlockTime=true;
 				objStep.bLaunchBlockPercent=true;
 				objStep.nBlockPercent++;
-				objStep.lastBlockPercentent=100;
+				objStep.lastBlockPercent=100;
 				objStep.nBlockTime++;
 				objStep.lastBlockTime=new Date().getTime();
 			}
@@ -816,7 +816,7 @@ class RCGHashMapFactory{
 							,callBlockTime:auxCallBlockTime
 							,secsLoop:sBloq
 							,percProcessed:0.0
-							,lastBlockPercentent:0.0						
+							,lastBlockPercent:0.0						
 							,opsPerSec:0
 							,secsPerOp:0
 							,estimatedTime:0

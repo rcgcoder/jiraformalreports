@@ -40,7 +40,7 @@ class jrfForEach{
 			self.tag.getChilds().walk(function(childTag){
 				sHTML+="<!-- START CHILD LIST ITEM "+ (nItem++) + " IN FOREACH JRF TOKEN -->";
 				sHTML+=self.model.applyTag(childTag,newParent);
-				sHTML+="<!-- END CHILD LIST ITEM "+ (nItem++) + " IN FOREACH JRF TOKEN -->";
+				sHTML+="<!-- END CHILD LIST ITEM "+ (nItem++) + " IN FOREACH JRF TOKEN -->"
 				sHTML+="<!-- START POSTHTML IN FOREACH JRF TOKEN -->";
 				sHTML+=self.tag.getPostHTML();
 				sHTML+="<!-- END POSTHTML IN FOREACH JRF TOKEN -->";

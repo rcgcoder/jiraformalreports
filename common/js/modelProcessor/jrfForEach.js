@@ -27,16 +27,18 @@ class jrfForEach{
 		var nItem=0;
 		self.elemsInForEach.walk(function(newParent){
 			self.tag.getChilds().walk(function(childTag){
-				self.addHtml("<!-- START CHILD LIST ITEM "+ (nItem++) + " IN FOREACH JRF TOKEN -->");
+				var nItemBck=nItem;
+				self.addHtml("<!-- START CHILD LIST ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
 				self.addHtml(self.model.applyTag(childTag,newParent));
-				self.addHtml("<!-- END CHILD LIST ITEM "+ (nItem++) + " IN FOREACH JRF TOKEN -->");
-				self.addHtml("<!-- START POSTHTML IN FOREACH JRF TOKEN -->");
+				self.addHtml("<!-- END CHILD LIST ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
+				self.addHtml("<!-- START POSTHTML ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
 				self.addHtml(self.tag.getPostHTML());
-				self.addHtml("<!-- END POSTHTML IN FOREACH JRF TOKEN -->");
+				self.addHtml("<!-- END POSTHTML "+ (nItem) + " IN FOREACH JRF TOKEN -->");
 				if ((self.subType=="row")&&(self.elemsInForEach.getLast().value.getKey()
 											!=newParent.getKey())){
 					self.addHtml("</td></tr><tr><td>");
 				}
+				nItem++;
 			});
 		});
 		return self.popHtmlBuffer();

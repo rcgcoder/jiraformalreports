@@ -88,7 +88,28 @@ class jrfModel{
 			var indCloseTag=sTagText.indexOf(">");
 			var indEmptyTag=sTagText.indexOf("/>");
 			var indWithCloseTag=sTagText.indexOf("</JRF>");
-			
+			var indParagraphTag=sTagText.indexOf("</p>");
+			if ((indParagraphTag>=0)&&(indParagraphTag<indCloseTag)){// there is </p> into the jrf tag
+				var arrParagraphs=sTagText.split("</p>");
+				sTagText="";
+				var i=0;
+				indCloseTag=arrParagraphs[i].indexOf(">");
+				while (indCloseTag<0){// there is no > in the block.... where a </p>
+					sTagText+=arrParagraphs;
+					i++;
+					indCloseTag=arrParagraphs[i].indexOf(">");
+				}
+				// > located.... the rest </p> returns where OK
+				sTagText+=arrParagraphs[i];
+				i++;
+				while(i<arrParagraphs.length){
+					sTagText+="</p>"+arrParagraphs[i];
+					i++;
+				}
+				indCloseTag=sTagText.indexOf(">");
+				indEmptyTag=sTagText.indexOf("/>");
+				indWithCloseTag=sTagText.indexOf("</JRF>");
+			}
 			auxTag.setPreviousHTML(sTagRest);
 			
 			if (indCloseTag>=0){ // the tag closes

@@ -1,6 +1,8 @@
 class jrfModel{
 	constructor(theReport){
 		var self=this;
+		self.htmlStack=newHashMap();
+		self.html="";
 		self.markdownConverter = new showdown.Converter();
 		self.report=theReport;
 		self.tagFactory=newDynamicObjectFactory(
@@ -32,6 +34,35 @@ class jrfModel{
 				,
 				"jrfTags");
 	}
+	pushHtmlBuffer(){
+		var self=this;
+		self.htmlStack.push(self.html);
+		self.html="";
+	}
+	popHtmlBuffer(){
+		var self=this;
+		var htmlAnt=self.html;
+		var html=self.htmlStack.pop();
+		self.html=html;
+		return htmlAnt;
+	}
+	addHtml(sText){
+		var self=this;
+		self.html+=("\n"+sText);
+	}
+	getAttrVal(idAttr){
+		var self=this;
+		var attr=self.tag.getAttributeById(idAttr.toLowerCase());
+		if (isDefined(attr)){
+			var vAux=attr.value;
+			if (isUndefined(vAux)){
+				vAux="";
+			}
+			return vAux;
+		}
+		return "";
+	}
+
 	updateAttributes(tag){
 		var sTag=tag.getTagText();
 		if ((sTag=="")||(isUndefined(sTag))) return;
@@ -159,9 +190,9 @@ class jrfModel{
 	}
 	applyTag(tag,reportElem){
 		var self=this;
-		var sHTML="";
-		sHTML+="<!--" + tag.getTagText()+"-->";
-		sHTML+="<!--" + self.traceTag(tag)+ "-->";
+		self.pushHtmlBuffer();
+		self.addHtml("<!-- " + tag.getTagText()+" -->");
+		self.addHtml("<!-- " + self.traceTag(tag)+ " -->");
 		var i=0;
 		var tagApplier;
 		var tagAttrs=tag.getAttributes();
@@ -171,30 +202,30 @@ class jrfModel{
 			tagApplier=new jrfField(tag,reportElem,self);
 		}
 		if (isDefined(tagApplier)){ // if tag is defined... it manages the childs...
-			sHTML+=tagApplier.apply(); 
+			self.addHtml(tagApplier.apply()); 
 		} else { // if tag is not defined ... show the childs..... for test
-			sHTML+=tag.getPreviousHTML();
-			sHTML+="<!--"+self.traceTag(tag)+"-->";
+			self.addHtml(tag.getPreviousHTML());
+			self.addHtml("<!-- "+self.traceTag(tag)+" -->");
 			if (tag.countChilds()>0){
-				sHTML+="<!-  child list start       -->";
+				self.addHtml("<!-  child list start       -->");
 				tag.getChilds().walk(function(tagElem){
-					sHTML+=self.encode(tagElem,reportElem);
+					self.addHtml(self.encode(tagElem,reportElem));
 				});
-				sHTML+="<!-  child list stop       -->";
+				self.addHtml("<!-  child list stop       -->");
 			}
-			sHTML+=tag.getPostHTML();
+			self.addHtml(tag.getPostHTML());
 		}
-		return sHTML;
+		return self.popHtmlBuffer();
 	}
 	encode(parentTag,reportElement){
 		var self=this;
-		var sHTML="";
+		self.pushHtmlBuffer();
 		var reportElem=reportElement;
 		if (isUndefined(reportElem)){
 			reportElem=self.report;
 		}
-		sHTML=self.applyTag(parentTag,reportElem);
-		return sHTML;
+		self.addHtml(self.applyTag(parentTag,reportElem));
+		return self.popHtmlBuffer();
 	}
 	parse(html,parentTag){
 		var self=this;

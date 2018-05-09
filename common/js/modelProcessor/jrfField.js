@@ -1,16 +1,4 @@
 class jrfField{
-	getAttrVal(idAttr){
-		var self=this;
-		var attr=self.tag.getAttributeById(idAttr.toLowerCase());
-		if (isDefined(attr)){
-			var vAux=attr.value;
-			if (isUndefined(vAux)){
-				vAux="";
-			}
-			return vAux;
-		}
-		return "";
-	}
 	constructor(tag,reportElem,model){
 		var self=this;
 		self.tag=tag;
@@ -18,18 +6,22 @@ class jrfField{
 		self.model=model;
 		self.fieldName=self.getAttrVal("field");
 		self.inFormat=self.getAttrVal("informat");
+		self.pushHtmlBuffer=function(){this.model.pushHtmlBuffer();};
+		self.popHtmlBuffer=function(){return this.model.popHtmlBuffer();};
+		self.addHtml=function(sHtml){this.model.addHtml(sHtml);};
+		self.getAttrVal=this.model.getAttrVal;
 	}
 	apply(){
 		var self=this;
-		var sHTML="";
-		sHTML+=self.tag.getPreviousHTML();
+		self.pushHtmlBuffer();
+		self.addHtml(self.tag.getPreviousHTML());
 		var sValue=self.reportElem.fieldValue(self.fieldName);
 		if (self.inFormat=="markdown"){
 			sValue=self.model.markdownConverter.makeHtml(sValue); 
 		}
-		sHTML+=sValue;
-		sHTML+=self.tag.getPostHTML();
-		return sHTML;
+		self.addHtml(sValue);
+		self.addHtml(self.tag.getPostHTML());
+		return self.popHtmlBuffer();
 	}
 
 }

@@ -1,16 +1,4 @@
 class jrfForEach{
-	getAttrVal(idAttr){
-		var self=this;
-		var attr=self.tag.getAttributeById(idAttr);
-		if (isDefined(attr)){
-			var vAux=attr.value;
-			if (isUndefined(vAux)){
-				vAux="";
-			}
-			return vAux;
-		}
-		return "";
-	}
 	constructor(tag,reportElem,model){
 		var self=this;
 		self.tag=tag;
@@ -28,29 +16,33 @@ class jrfForEach{
 		} else {
 			self.elemsInForEach=newHashMap();
 		}
+		self.pushHtmlBuffer=function(){this.model.pushHtmlBuffer();};
+		self.popHtmlBuffer=function(){return this.model.popHtmlBuffer();};
+		self.addHtml=function(sHtml){this.model.addHtml(sHtml);};
+		self.getAttrVal=this.model.getAttrVal;
 	}
 	apply(){
 		var self=this;
-		var sHTML="";
-		sHTML+="<!-- START PREVIOUSHTML IN FOREACH JRF TOKEN -->";
-		sHTML+=self.tag.getPreviousHTML();
-		sHTML+="<!-- END PREVIOUSHTML IN FOREACH JRF TOKEN -->";
+		self.pushHtmlBuffer();
+		self.addHtml("<!-- START PREVIOUSHTML IN FOREACH JRF TOKEN -->");
+		self.addHtml(self.tag.getPreviousHTML());
+		self.addHtml("<!-- END PREVIOUSHTML IN FOREACH JRF TOKEN -->");
 		var nItem=0;
 		self.elemsInForEach.walk(function(newParent){
 			self.tag.getChilds().walk(function(childTag){
-				sHTML+="<!-- START CHILD LIST ITEM "+ (nItem++) + " IN FOREACH JRF TOKEN -->";
-				sHTML+=self.model.applyTag(childTag,newParent);
-				sHTML+="<!-- END CHILD LIST ITEM "+ (nItem++) + " IN FOREACH JRF TOKEN -->"
-				sHTML+="<!-- START POSTHTML IN FOREACH JRF TOKEN -->";
-				sHTML+=self.tag.getPostHTML();
-				sHTML+="<!-- END POSTHTML IN FOREACH JRF TOKEN -->";
+				self.addHtml("<!-- START CHILD LIST ITEM "+ (nItem++) + " IN FOREACH JRF TOKEN -->");
+				self.addHtml(self.model.applyTag(childTag,newParent));
+				self.addHtml("<!-- END CHILD LIST ITEM "+ (nItem++) + " IN FOREACH JRF TOKEN -->");
+				self.addHtml("<!-- START POSTHTML IN FOREACH JRF TOKEN -->");
+				self.addHtml(self.tag.getPostHTML());
+				self.addHtml("<!-- END POSTHTML IN FOREACH JRF TOKEN -->");
 				if ((self.subType=="row")&&(self.elemsInForEach.getLast().value.getKey()
 											!=newParent.getKey())){
-					sHTML+="</td></tr><tr><td>";
+					self.addHtml("</td></tr><tr><td>");
 				}
 			});
 		});
-		return sHTML;
+		return self.popHtmlBuffer();
 	}
 
 }

@@ -689,14 +689,14 @@ class RCGHashMapFactory{
 		asyncLogBlock(objStep){
 			var sCad=objStep.type+" "+objStep.name+" ind. Actual:"+objStep.index+ " ["+objStep.indMin+","+objStep.indMax+"] "
 					+ "\n Operaciones Procesadas:"+objStep.opsProcessed
-					+ "\n Avance:"+objStep.lastBlockPorc.toFixed(2)+" % "
+					+ "\n Avance:"+objStep.lastBlockPercent.toFixed(2)+" % "
 					+ "\n Rendimiento:"+objStep.opsPerSec.toFixed(2) + " Ops/s "
 					+ "\n Tiempo/op:"+objStep.secsPerOp.toFixed(2) + " Secs/Ops"
 					+ "\n Inicio:"+formatDate(new Date(objStep.initTimestamp),4)
 					+ "\n Duracion:"+enEuros(((new Date().getTime()-objStep.initTimestamp)/1000),false) + " s"
 					+ "\n T. Restante:"+enEuros(objStep.estimatedTime,false) + " s"
 					+ "\n Bloques Tiempo:"+objStep.nBlockTime+ (objStep.nBlockTime>0?" ("+(objStep.opsProcessed/objStep.nBlockTime).toFixed(2)+" ops/blq)":"")
-					+ "\n Bloques Porcentaje:"+objStep.nBloquePerc+ (objStep.nBloquePerc>0?" ("+(objStep.opsProcessed/objStep.nBloquePerc).toFixed(2)+" ops/%)":"")
+					+ "\n Bloques Porcentaje:"+objStep.nBlockPercent+ (objStep.nBlockPercent>0?" ("+(objStep.opsProcessed/objStep.nBlockPercent).toFixed(2)+" ops/%)":"")
 					+ "\n Anidamiento:"+objStep.deep;
 			var sDeep="";
 			hashmapFactory.stackAsyncCalls.walk(function(stepAux){
@@ -720,11 +720,11 @@ class RCGHashMapFactory{
 			var nOpsRemain=0;
 			if (total>0) {
 				nOpsRemain=total-nOps;
-				objStep.porcProcessed=Math.round(100*nOps/total);
-				if ((objStep.porcProcessed-objStep.lastBlockPercent)>1){
+				objStep.percProcessed=Math.round(100*nOps/total);
+				if ((objStep.percProcessed-objStep.lastBlockPercentent)>1){
 					objStep.nBlockPercent++;
 					objStep.bLaunchBlockPercent=true;
-					objStep.lastBlockPercent=objStep.porcProcessed;
+					objStep.lastBlockPercentent=objStep.percProcessed;
 				} else {
 					objStep.bLaunchBlockPercent=false;
 				}
@@ -749,7 +749,7 @@ class RCGHashMapFactory{
 				objStep.bLaunchBlockTime=true;
 				objStep.bLaunchBlockPercent=true;
 				objStep.nBlockPercent++;
-				objStep.lastBlockPercent=100;
+				objStep.lastBlockPercentent=100;
 				objStep.nBlockTime++;
 				objStep.lastBlockTime=new Date().getTime();
 			}
@@ -815,8 +815,8 @@ class RCGHashMapFactory{
 							,callBlockPercent:auxCallBlockPercent
 							,callBlockTime:auxCallBlockTime
 							,secsLoop:sBloq
-							,porcProcessed:0.0
-							,lastBlockPercent:0.0						
+							,percProcessed:0.0
+							,lastBlockPercentent:0.0						
 							,opsPerSec:0
 							,secsPerOp:0
 							,estimatedTime:0
@@ -871,7 +871,7 @@ class RCGHashMapFactory{
 							,callBlockPercent:auxCallBlockPercent
 							,callBlockTime:auxCallBlockTime
 							,secsLoop:sBlk
-							,porcProcessed:0.0
+							,percProcessed:0.0
 							,lastBlockPercent:0.0						
 							,opsPerSec:0
 							,secsPerOp:0

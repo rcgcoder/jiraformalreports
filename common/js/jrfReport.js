@@ -43,6 +43,7 @@ class jrfReport{
 							"js/modelProcessor/jrfModel.js",
 							"js/modelProcessor/jrfForEach.js",
 							"js/modelProcessor/jrfField.js"
+							"js/modelProcessor/jrfFormula.js"
 /*							"js/rcglibs/RCGLogUtils.js",
 							"js/rcglibs/RCGChronoUtils.js",
 							"js/rcglibs/RCGHashMapUtils.js"

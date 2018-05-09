@@ -5,6 +5,7 @@ class jrfModel{
 		self.html="";
 		self.markdownConverter = new showdown.Converter();
 		self.report=theReport;
+		self.processingRoot="";
 		self.tagFactory=newDynamicObjectFactory(
 				[{name:"Child",description:"subTags",type:"object"},
 				 {name:"Attribute",description:"Attributes of the Item",type:"String"}
@@ -211,8 +212,12 @@ class jrfModel{
 		var tagAttrs=tag.getAttributes();
 		if (tagAttrs.exists("foreach")){
 			tagApplier=new jrfForEach(tag,reportElem,self);
+		} else if (tagAttrs.exists("formula")){
+			tagApplier=new jrfFormula(tag,reportElem,self);
 		} else if (tagAttrs.exists("field")){
 			tagApplier=new jrfField(tag,reportElem,self);
+		} else if (tagAttrs.exists("formula")){
+			tagApplier=new jrfFormula(tag,reportElem,self);
 		}
 		if (isDefined(tagApplier)){ // if tag is defined... it manages the childs...
 			self.addHtml(tagApplier.apply()); 

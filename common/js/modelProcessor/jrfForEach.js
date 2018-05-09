@@ -15,11 +15,11 @@ class jrfForEach{
 		self.type=self.getAttrVal("type");
 		self.subType=self.getAttrVal("subtype");
 		self.where=self.getAttrVal("where");
-		if (self.type="root"){
+		if (self.type=="root"){
 			self.elemsInForEach=self.model.report.childs;
-		} else if (self.type="child"){
+		} else if (self.type=="child"){
 			self.elemsInForEach=self.reportElem.getChilds();
-		} else if (self.type="advchild"){
+		} else if (self.type=="advchild"){
 			self.elemsInForEach=self.reportElem.getAdvanceChilds();
 		} else {
 			self.elemsInForEach=newHashMap();

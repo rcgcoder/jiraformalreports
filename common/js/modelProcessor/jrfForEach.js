@@ -41,10 +41,13 @@ class jrfForEach{
 				sHTML+="<!-- START CHILD LIST ITEM "+ (nItem++) + " IN FOREACH JRF TOKEN -->";
 				sHTML+=self.model.applyTag(childTag,newParent);
 				sHTML+="<!-- END CHILD LIST ITEM "+ (nItem++) + " IN FOREACH JRF TOKEN -->";
+				sHTML+="<!-- START POSTHTML IN FOREACH JRF TOKEN -->";
+				sHTML+=self.tag.getPostHTML();
+				sHTML+="<!-- END POSTHTML IN FOREACH JRF TOKEN -->";
+				if ((self.subType=="row")&&(self.elemsInForEach.getLast().getKey()!=childTag.getKey())){
+					sHTML+="</td></tr><tr><td>";
+				}
 			});
-			sHTML+="<!-- START POSTHTML IN FOREACH JRF TOKEN -->";
-			sHTML+=self.tag.getPostHTML();
-			sHTML+="<!-- END POSTHTML IN FOREACH JRF TOKEN -->";
 		});
 		return sHTML;
 	}

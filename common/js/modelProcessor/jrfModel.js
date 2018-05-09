@@ -145,6 +145,7 @@ class jrfModel{
 	}
 	applyTag(tag,reportElem){
 		var self=this;
+		var sHTML="";
 		sHTML+="<!--" + tag.getTagText()+"-->";
 		sHTML+="<!--" + self.traceTag(tag)+ "-->";
 		var sResult="";

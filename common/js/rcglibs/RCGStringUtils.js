@@ -13,24 +13,7 @@ class RCGStringUtils{
 		}
 		return x1 + x2;
 	};
-	
-    inSeconds(number,bClearZero){
-    	var sAux=inEuros((number/1000.0),false,bClearZero);
-    	if ((sAux=="")&&(bClearZero)){
-    		return "";
-    	}
-    	sAux+="s";
-    	return sAux;
-    }	
-    inPercent(number,bClearZero){
-    	var sAux=inEuros((number*100.0),false,bClearZero);
-    	if ((sAux=="")&&(bClearZero)){
-    		return "";
-    	}
-    	sAux+="%";
-    	return sAux;
-    }	
-	inEuros(number,bWithMoneySign,bClearZero){
+    normalFormatNumber(number,bClearZero){
 		var numAux=number+""; // por si es un string
 		if (numAux==""){
 			numAux=0;
@@ -41,15 +24,51 @@ class RCGStringUtils{
 				if (bClearZero){
 					return "";
 				}
+			} else {
+				return "0,00";
 			}
 		}
 		numAux=number_format(numAux,2,",",".");
+		return numAux;
+    }
+	
+    inSeconds(number,bClearZero){
+    	var sAux=normalFormatNumber((number/1000.0),bClearZero);
+    	if (bClearZero){
+    		if ((sAux=="")||(sAux=="0,00")) {
+    			return "";
+    		}
+    	}
+    	sAux+="s";
+    	return sAux;
+    }	
+    inPercent(number,bClearZero){
+    	var sAux=normalFormatNumber((number*100.0),bClearZero);
+    	if (bClearZero){
+    		if ((sAux=="")||(sAux=="0,00")) {
+    			return "";
+    		}
+    	}
+    	sAux+="%";
+    	return sAux;
+    }	
+	inEuros(number,bWithMoneySign,bClearZero,sMoneyChars){
+		var sAux=normalFormatNumber(number,bClearZero); // por si es un string
+    	if (bClearZero){
+    		if ((sAux=="")||(sAux=="0,00")) {
+    			return "";
+    		}
+    	}
 		if (typeof bWithMoneySign!=="undefined"){
 			if (bWithMoneySign){
-				numAux+=" €";
+				if (typeof sMoneyChars!=="undefined"){
+					sAux+=" "+sMoneyChars;
+				} else {
+					sAux+=" €";
+				}
 			}
 		}
-		return numAux;
+		return sAux;
 	};
 	
 	fillCharsLeft(iNumChars,sString,sCharFill){

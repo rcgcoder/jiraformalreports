@@ -693,8 +693,8 @@ class RCGHashMapFactory{
 					+ "\n Rendimiento:"+objStep.opsPerSec.toFixed(2) + " Ops/s "
 					+ "\n Tiempo/op:"+objStep.secsPerOp.toFixed(2) + " Secs/Ops"
 					+ "\n Inicio:"+formatDate(new Date(objStep.initTimestamp),4)
-					+ "\n Duracion:"+enEuros(((new Date().getTime()-objStep.initTimestamp)/1000),false) + " s"
-					+ "\n T. Restante:"+enEuros(objStep.estimatedTime,false) + " s"
+					+ "\n Duracion:"+inSeconds(((new Date().getTime()-objStep.initTimestamp)/1000))
+					+ "\n T. Restante:"+inSeconds(objStep.estimatedTime)
 					+ "\n Bloques Tiempo:"+objStep.nBlockTime+ (objStep.nBlockTime>0?" ("+(objStep.opsProcessed/objStep.nBlockTime).toFixed(2)+" ops/blq)":"")
 					+ "\n Bloques Porcentaje:"+objStep.nBlockPercent+ (objStep.nBlockPercent>0?" ("+(objStep.opsProcessed/objStep.nBlockPercent).toFixed(2)+" ops/%)":"")
 					+ "\n Anidamiento:"+objStep.deep;

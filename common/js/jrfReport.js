@@ -126,32 +126,42 @@ class jrfReport{
 				self.childs.add(key,issue);
 			});
 //			var treeIssues=issuesAdded.toArray([{doFieldName:"self",resultFieldName:"issue"}]);
-			var fncGetIssueChilds=function(issueParent){
-				self.allIssues.list.walk(function(issueChild){
-					if (issueChild.id=="BENT-242"){
-						log("Testing "+issueChild.id);
+			var fncProcessChild=function(issueChild,issueParent){
+				if (issueChild.id=="BENT-242"){
+					log("Testing "+issueChild.id);
+				}
+				var bIsChild=fncIsChild(issueChild,issueParent);
+				if (bIsChild){
+					issueParent.addChild(issueChild);
+					if (!issuesAdded.exists(issueChild.getKey())){
+						issuesAdded.add(issueChild.getKey(),issueChild);
+						fncGetIssueChilds(issueChild);
 					}
-					var bIsChild=fncIsChild(issueChild,issueParent);
-					if (bIsChild){
-						issueParent.addChild(issueChild);
-						if (!issuesAdded.exists(issueChild.getKey())){
-							issuesAdded.add(issueChild.getKey(),issueChild);
-							fncGetIssueChilds(issueChild);
-						}
+				}
+				var bIsAdvPart=fncIsAdvPart(issueChild,issueParent);
+				if (bIsAdvPart){
+					issueParent.addAdvanceChild(issueChild);
+					if (!issuesAdded.exists(issueChild.getKey())){
+						issuesAdded.add(issueChild.getKey(),issueChild);
+						fncGetIssueChilds(issueChild);
 					}
-					var bIsAdvPart=fncIsAdvPart(issueChild,issueParent);
-					if (bIsAdvPart){
-						issueParent.addAdvanceChild(issueChild);
-						if (!issuesAdded.exists(issueChild.getKey())){
-							issuesAdded.add(issueChild.getKey(),issueChild);
-							fncGetIssueChilds(issueChild);
-						}
-					}
-				});
+				}
 			}
+			var fncGetIssueChilds=function(issueParent){
+				self.addStep("Getting childs for issue:"+issueParent.getKey()+ "....",function(){
+				//walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
+					self.allIssues.list.walkAsync("Getting childs for issue:"+issueParent.getKey()
+												,self.createManagedCallback(function(issueChild){fncProcessChild(issueChild,issueParent)})
+												,self.createManagedCallback(function(){self.continueTask();})
+												);
+				},0,1,undefined,undefined,undefined,"INNER",undefined
+				);
+			}
+
 			self.childs.walk(function(parentIssue){
 				fncGetIssueChilds(parentIssue);
 			});
+			
 			self.continueTask();
 		});
 		// load report model and submodels

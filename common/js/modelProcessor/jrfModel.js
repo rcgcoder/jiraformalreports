@@ -115,7 +115,7 @@ class jrfModel{
 		var indCloseTag=sTagText.indexOf(">");
 		var indOpenTag=sTagText.indexOf("<");
 		while ((indOpenTag>=0)&&(indOpenTag<indCloseTag)){// there is </p> into the jrf tag
-			sTagText=sTagText.substring(0,indOpenTag)+sTagText.substring(indCloseTag+1,sTagText.length);
+			sTagText=sTagText.substring(0,indOpenTag)+ " " +sTagText.substring(indCloseTag+1,sTagText.length);
 			indCloseTag=sTagText.indexOf(">");
 			indOpenTag=sTagText.indexOf("<");
 		}

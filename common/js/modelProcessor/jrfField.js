@@ -1,7 +1,7 @@
 class jrfField{
 	getAttrVal(idAttr){
 		var self=this;
-		var attr=self.tag.getAttributeById(idAttr);
+		var attr=self.tag.getAttributeById(idAttr.toLowerCase());
 		if (isDefined(attr)){
 			var vAux=attr.value;
 			if (isUndefined(vAux)){

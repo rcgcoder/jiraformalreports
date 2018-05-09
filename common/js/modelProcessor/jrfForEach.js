@@ -22,7 +22,7 @@ class jrfForEach{
 		var self=this;
 		self.pushHtmlBuffer();
 		var bAllRoots=false;
-		if (typeof self.reportElem==="jrfReport"){
+		if (self.reportElem==self.model.report){
 			bAllRoots=true;
 		}
 		self.addHtml("<!-- START PREVIOUSHTML IN FOREACH JRF TOKEN -->");

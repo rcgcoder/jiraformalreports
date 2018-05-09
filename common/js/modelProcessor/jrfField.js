@@ -4,7 +4,7 @@ class jrfField{
 		self.tag=tag;
 		self.reportElem=reportElem;
 		self.model=model;
-		self.fieldName=tag.getAttributeById("field");
+		self.fieldName=tag.getAttributeById("field").value;
 	}
 	apply(){
 		var self=this;

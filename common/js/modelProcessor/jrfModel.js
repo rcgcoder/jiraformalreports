@@ -151,7 +151,7 @@ class jrfModel{
 		var i=0;
 		var tagApplier;
 		var tagAttrs=tag.getAttributes();
-		if (tagAttrs.exists("forEachRoot")){
+		if (tagAttrs.exists("forEach")){
 			tagApplier=new jrfForEach(tag,reportElem,self);
 		}
 		if (isDefined(tagApplier)){ // if tag is defined... it manages the childs...

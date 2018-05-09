@@ -24,7 +24,7 @@ class jrfFormula{
 		self.addHtml("<!-- END POSTHTML  IN FORMULA JRF TOKEN -->");
 		
 		var sContent=self.popHtmlBuffer();
-		sContent=self.model.removeInnerTags(sContent);
+		sContent=self.model.removeInnerTags(sContent,true);
 		var sFncFormula="var result="+sContent+"; return result;";
 		var fncFormula=Function("elem","root",sFncFormula);
 		var sValue=fncFormula(self.reportElem,self.model.processingRoot);

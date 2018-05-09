@@ -19,7 +19,12 @@ function newIssueFactory(report){
 			,
 			undefined);
 	dynObj.functions.add("fieldValue",function(sFieldName){
-		return this["get"+sFieldName]();
+		var fncAux=this["get"+sFieldName];
+		if (isDefined(fncAux)){
+			return fncAux();
+		} else {
+			return "Undefined getter for fieldName:["+sFieldName+"]";
+		}
 	});
 	dynObj.functions.add("linkValue",function(sLinkName){
 		return this["get"+sLinkName]();

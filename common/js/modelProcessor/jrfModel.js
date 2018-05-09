@@ -143,16 +143,35 @@ class jrfModel{
 		});
 		return sResult;
 	}
-	encode(parentTag){
+	applyTag(tag){
+		var self=this;
+		sHTML+="<!--" + tag.getTagText()+"-->";
+		sHTML+="<!--" + self.traceTag(tag)+ "-->";
+		var sResult="";
+		var i=0;
+		var tagAttrs=tag.getAttributes();
+		if (tagAttrs.exists("forEachRoot")){
+			var childRoots=self.report.childs();
+			childRoots.walk(function(root){
+				
+			});
+		}
+		return sResult;
+		
+	}
+	encode(parentTag,reportElement){
 		var self=this;
 		var sHTML="";
+		var rptElem=reportElement;
+		if (isUndefined(rptElem)){
+			rptElem=self.report;
+		}
 		sHTML+=parentTag.getPreviousHTML();
-		sHTML+=parentTag.getTagText();
-		sHTML+="<!--" + self.traceTag(parentTag)+ "-->";
+		self.applyTag(tagElem,rptElem);
 		if (parentTag.countChilds()>0){
 			sHTML+="<!-  child list start       -->";
 			parentTag.getChilds().walk(function(tagElem){
-				sHTML+=self.encode(tagElem);
+				sHTML+=self.encode(tagElem,rptElem);
 			});
 			sHTML+="<!-  child list stop       -->";
 		}

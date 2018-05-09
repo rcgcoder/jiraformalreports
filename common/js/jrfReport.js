@@ -3,7 +3,9 @@ class jrfReport{
 		var self=this;
 		self.config=theConfig;
 		self.config.model=System.webapp.model;
-		self.allIssues;
+		self.childs=newHashMap();
+		self.advanceChilds=newHashMap();
+		self.treeIssues=newHashMap();
 		self.rootElements=newHashMap();
 		self.rootIssues=newHashMap();
 		self.rootProjects=newHashMap();
@@ -109,10 +111,10 @@ class jrfReport{
 				log("Root Issue: "+key);
 				var issue=self.allIssues.getById(key);
 				issuesAdded.add(key,issue);
+				self.childs.add(key,issue);
 			});
-			var treeIssues=issuesAdded.toArray([{doFieldName:"self",resultFieldName:"issue"}]);
-			while(treeIssues.length>0){
-				var issueParent=treeIssues.pop().issue;
+//			var treeIssues=issuesAdded.toArray([{doFieldName:"self",resultFieldName:"issue"}]);
+			var fncGetIssueChilds=function(parentIssue){
 				self.allIssues.list.walk(function(issueChild){
 					if (issueChild.id=="BENT-242"){
 						log("Testing "+issueChild.id);
@@ -122,7 +124,7 @@ class jrfReport{
 						issueParent.addChild(issueChild);
 						if (!issuesAdded.exists(issueChild.getKey())){
 							issuesAdded.add(issueChild.getKey(),issueChild);
-							treeIssues.push({issue:issueChild});
+							fncGetIssueChilds(issueChild);
 						}
 					}
 					var bIsAdvPart=fncIsAdvPart(issueChild,issueParent);
@@ -130,11 +132,14 @@ class jrfReport{
 						issueParent.addAdvanceChild(issueChild);
 						if (!issuesAdded.exists(issueChild.getKey())){
 							issuesAdded.add(issueChild.getKey(),issueChild);
-							treeIssues.push({issue:issueChild});
+							fncGetIssueChilds(issueChild);
 						}
 					}
 				});
 			}
+			self.childs.list.walk(function(parentIssue){
+				fncGetIssueChilds(parentIssue);
+			});
 			self.continueTask();
 		});
 		// load report model and submodels

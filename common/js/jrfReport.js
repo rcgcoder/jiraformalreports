@@ -46,7 +46,7 @@ class jrfReport{
 				var sHtml=he.decode(sContent);
 				//self.model=sHtml;
 				self.config.model=sHtml;
-				self.continueTask();
+				self.continueTask(); 
 //				var theHtml=$(sHtml);
 			});
 			cfc.getContent("388137744");

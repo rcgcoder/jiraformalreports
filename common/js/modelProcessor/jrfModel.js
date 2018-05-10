@@ -1,8 +1,8 @@
 class jrfModel{
 	constructor(theReport){
 		var self=this;
-		self.tokenBase=new jrfToken(self);
 		self.variables=new RCGVarEngine();
+		self.tokenBase=new jrfToken(self);
 		self.htmlStack=newHashMap();
 		self.html="";
 		self.markdownConverter = new showdown.Converter();

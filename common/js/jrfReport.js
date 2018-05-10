@@ -68,18 +68,30 @@ class jrfReport{
 			self.allIssues.functions.add("fieldValue",function(sFieldName){
 				var fncAux=this["get"+sFieldName];
 				var sFieldKey="";
+				var bDefined=false;
+				var fieldValue="";
 				if (isDefined(fncAux)){
-					return this["get"+sFieldName]();
+					bDefined=true;
+					fieldValue=this["get"+sFieldName]();
 				} else if (hsFieldNames.exists(sFieldName)) {
 					sFieldKey=hsFieldNames.getValue(sFieldName);
 					if (sFieldKey!=""){
 						fncAux=this["get"+sFieldKey];
 						if (isDefined(fncAux)){
-							return this["get"+sFieldKey]();
+							bDefined=true;
+							fieldValue=this["get"+sFieldKey]();
 						}
 					}
 				}
-				return "Undefined getter for fieldName:["+sFieldName+"]/["+sFieldKey+"]";
+				if (!bDefined){
+					return "Undefined getter for fieldName:["+sFieldName+"]/["+sFieldKey+"]";
+				} else {
+					if (typeof fieldValue==="object"){
+						return fieldValue.name;
+					} else {
+						return fieldValue;
+					}
+				}
 			});			
 
 			self.continueTask();

@@ -120,8 +120,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			sValAux=self.popHtmlBuffer();
 			self.pushHtmlBuffer();
 		}
-		if (self.outFormat=="markdown"){
-			sValAux=self.model.markdownConverter.makeHtml(sValAux); 
+		if (self.outFormat=="money"){
+			sValAux=inEuros(sValAux,true); 
 		}
 		self.addHtml(sValAux);
 		return sValAux;

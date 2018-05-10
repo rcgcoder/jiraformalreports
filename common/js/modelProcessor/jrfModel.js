@@ -1,4 +1,4 @@
-class jrfModel{
+var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 	constructor(theReport){
 		var self=this;
 		self.variables=new RCGVarEngine();

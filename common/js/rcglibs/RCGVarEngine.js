@@ -1,4 +1,4 @@
-class RCGVarEngine{
+var RCGVarEngine=class RCGVarEngine{ //this kind of definition allows to hot-reload
 	constructor(){
 		var self=this;
 		self.localVars=newHashMap();

@@ -1,4 +1,4 @@
-class jrfToken{
+var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	constructor(model){
 		var self=this;
 		self.model=model;

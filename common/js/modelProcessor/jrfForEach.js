@@ -1,4 +1,4 @@
-class jrfForEach{
+var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 	constructor(tag,reportElem,model){
 		var self=this;
 		model.extendToken(self,tag,reportElem);

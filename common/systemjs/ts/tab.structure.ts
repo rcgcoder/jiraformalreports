@@ -212,12 +212,23 @@ export class TabStructure {
     }
     executeReport(){
         var self=this;
-        System.webapp.addStep("Executing Report", function(){
-            var theConfig=self.getActualReportConfig();
-            var auxObj=System.getAngularObject('selInterestFields',true);
-            theConfig["allFields"]=auxObj.getAllElements();
-            var theReport=new jrfReport(theConfig);
-            theReport.execute();
+        System.webapp.addStep("Updating and processing report...", function(){
+            System.webapp.addStep("Refresh de Commit Id for update de report class", function(){
+                System.webapp.updateLastCommit()
+            });
+            System.webapp.addStep("Dynamic load de report class", function(){
+                var arrFiles=[                  
+                             "js/jrfReport.js"
+                             ]; //test
+                System.webapp.loadRemoteFiles(arrFiles);
+            });
+            System.webapp.addStep("Executing Report", function(){
+                var theConfig=self.getActualReportConfig();
+                var auxObj=System.getAngularObject('selInterestFields',true);
+                theConfig["allFields"]=auxObj.getAllElements();
+                var theReport=new jrfReport(theConfig);
+                theReport.execute();
+            });
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
     }
     getScopeNormalizedJQL(){

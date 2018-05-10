@@ -122,6 +122,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		}
 		if (self.outFormat!=""){
 			var arrFormats=self.outFormat.split(",");
+			var sFormat;
 			for (var i=0;i<arrFormats.length;i++){
 				sFormat=arrFormats[i];
 				if (sFormat=="money"){

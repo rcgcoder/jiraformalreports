@@ -55,8 +55,10 @@ class jrfModel{
 	}
 	addHtml(sText){
 		var self=this;
-		log(sText.substring(0,150));
-		self.html+="\n"+sText;
+		if ((isDefined(sText) && (sText!=null)){
+			log(sText.substring(0,150));
+			self.html+="\n"+sText;
+		}
 	}
 
 	updateAttributes(tag){

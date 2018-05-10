@@ -2,7 +2,7 @@ class jrfForEach{
 	constructor(tag,reportElem,model){
 		var self=this;
 		model.extendToken(self,tag,reportElem);
-		self.endApplyToken=self.internal_endApplyToken();
+		self.endApplyToken=self.internal_endApplyToken;
 		self.type=self.getAttrVal("type");
 		self.subType=self.getAttrVal("subtype");
 		self.where=self.getAttrVal("where");

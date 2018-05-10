@@ -42,6 +42,7 @@ class jrfModel{
 		obj.addHtml=function(sHtml){self.addHtml(sHtml);};
 		obj.getAttrVal=self.getAttrVal;
 	}
+
 	pushHtmlBuffer(){
 		var self=this;
 		self.htmlStack.push(self.html);

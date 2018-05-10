@@ -116,7 +116,13 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		if (isDefined(bClear)&&bClear){
 			sInnerChar="";
 		}
-		while ((indOpenTag>=0)&&(indOpenTag<indCloseTag)){// there is </p> into the jrf tag
+		while ((indOpenTag>=0)&&(indOpenTag<indCloseTag)){// there is <  and > into the jrf tag
+			var sPart=sTagText.substring(indOpenTag+1,indCloseTag); // maybe < < > >
+			while (sPart.indexOf("<")>=0){
+				indOpenTag=sPart.indexOf("<");
+				sPart=sTagText.substring(indOpenTag+1,indCloseTag); // maybe < < > >
+			}
+			// if there is not more "<" remove the pair <  ... >
 			sTagText=sTagText.substring(0,indOpenTag)+ sInnerChar +sTagText.substring(indCloseTag+1,sTagText.length);
 			indCloseTag=sTagText.indexOf(">");
 			indOpenTag=sTagText.indexOf("<");

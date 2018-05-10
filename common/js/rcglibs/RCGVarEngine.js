@@ -72,6 +72,7 @@ var RCGVarEngine=class RCGVarEngine{ //this kind of definition allows to hot-rel
 		self.getVarsGlobal(varName).push(value);
 	}
 	getVarsGlobal(varName){
+		var self=this;
 		return self.globalVars.getValue(varName);
 	}
 	getVarGlobal(varName){

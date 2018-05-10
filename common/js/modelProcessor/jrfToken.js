@@ -20,8 +20,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.addPostHtml=self.addPostHtml;
 		obj.startApplyToken=self.startApplyToken;
 		obj.endApplyToken=self.endApplyToken;
-		obj.processInFormat=self.processInFormat;
-		obj.processOutFormat=self.processOutFormat;
+		obj.applyInFormat=self.applyInFormat;
+		obj.applyOutFormat=self.applyOutFormat;
+		obj.applyInitVars=self.applyInitVars;
+		obj.applyPushVars=self.applyPushVars;
+		obj.applySetVars=self.applySetVars;
 		
 		obj.initVars=obj.getAttrVal("initVar");
 		obj.pushVars=obj.getAttrVal("pushVar");
@@ -62,7 +65,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		return self.popHtmlBuffer();
 	}
 	
-	initVars(){
+	applyInitVars(){
 		var self=this;
 		if (self.initVars!=""){
 			var arrVars=self.initVars.split(",");
@@ -76,7 +79,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			}
 		}
 	}
-	setVars(){
+	applySetVars(){
 		var self=this;
 		var sValAux=self.getHtmlBuffer();
 
@@ -100,7 +103,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			}
 		}
 	}
-	pushVars(){
+	applyPushVars(){
 		var self=this;
 		var sValAux=self.getHtmlBuffer();
 
@@ -123,13 +126,13 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	startApplyToken(){
 		var self=this;
 		self.pushHtmlBuffer();
-		self.initVars();
+		self.applyInitVars();
 	}
 	endApplyToken(){
 		var self=this;
 		self.processInFormat();
-		self.setVars();
-		self.pushVars();
+		self.applySetVars();
+		self.applyPushVars();
 		self.processOutFormat();
 		var sAux="";
 		sAux=self.popHtmlBuffer();
@@ -161,7 +164,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		return "";
 	}
 	
-	processInFormat(){
+	applyInFormat(){
 		var self=this;
 		var sValAux=self.popHtmlBuffer();
 		self.pushHtmlBuffer();
@@ -170,7 +173,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		}
 		self.addHtml(sValAux);
 	}
-	processOutFormat(){
+	applyOutFormat(){
 		var self=this;
 		var sValAux=self.popHtmlBuffer();
 		self.pushHtmlBuffer();

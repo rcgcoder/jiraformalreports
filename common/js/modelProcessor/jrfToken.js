@@ -129,7 +129,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					var sValAdjusted=replaceAll(sValAux+"",",",".");
 					sValAux=inEuros(sValAdjusted,true); 
 				} else if (sFormat=="hh"){
-					sValAux=normalFormatNumber(sValAux); 
+					var sValAdjusted=replaceAll(sValAux+"",",",".");
+					sValAux=(parseFloat(sValAdjusted).toFixed(2) * 22.1).toFixed(2); 
+				} else if (sFormat=="hours"){
+					var sValAdjusted=replaceAll(sValAux+"",",",".");
+					sValAux=normalFormatNumber(sValAdjusted/3600); 
 				}
 			}
 		}

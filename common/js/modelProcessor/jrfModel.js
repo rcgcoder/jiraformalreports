@@ -55,7 +55,7 @@ class jrfModel{
 	}
 	addHtml(sText){
 		var self=this;
-//		log(sText);
+		log(sText.substring(0,150));
 		self.html+="\n"+sText;
 	}
 

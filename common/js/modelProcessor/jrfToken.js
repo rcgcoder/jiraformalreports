@@ -108,7 +108,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			self.pushHtmlBuffer();
 		}
 		if (self.inFormat=="markdown"){
-			sValAux=self.model.markdownConverter.makeHtml(sValue); 
+			sValAux=self.model.markdownConverter.makeHtml(sValAux); 
 		}
 		self.addHtml(sValAux);
 		return sValAux;
@@ -121,7 +121,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			self.pushHtmlBuffer();
 		}
 		if (self.outFormat=="markdown"){
-			sValAux=self.model.markdownConverter.makeHtml(sValue); 
+			sValAux=self.model.markdownConverter.makeHtml(sValAux); 
 		}
 		self.addHtml(sValAux);
 		return sValAux;

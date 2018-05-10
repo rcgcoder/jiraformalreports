@@ -220,6 +220,8 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			tagApplier=new jrfField(tag,reportElem,self);
 		} else if (tagAttrs.exists("formula")){
 			tagApplier=new jrfFormula(tag,reportElem,self);
+		} else if (tagAttrs.exists("getvar")){
+			tagApplier=new jrfGetVar(tag,reportElem,self);
 		}
 		if (isDefined(tagApplier)){ // if tag is defined... it manages the childs...
 			self.addHtml(tagApplier.encode()); 

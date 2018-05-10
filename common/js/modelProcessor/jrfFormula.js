@@ -14,7 +14,7 @@ var jrfFormula=class jrfFormula{//this kind of definition allows to hot-reload
 		var sContent=self.popHtmlBuffer(); // getting the formula with possible html tags inside
 		
 		sContent=self.model.removeInnerTags(sContent,true); // remove al tags.... there are not allowed
-		
+		sContent=replaceAll(sContent,"\n"," ");
 		var sFncFormula="var result="+sContent+"; return result;";
 		var fncFormula=Function("elem","root",sFncFormula);
 		var sValue=fncFormula(self.reportElem,self.model.processingRoot);

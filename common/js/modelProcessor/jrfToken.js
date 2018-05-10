@@ -19,6 +19,10 @@ class jrfToken{
 		obj.addPostHtml=self.addPostHtml;
 		obj.startApplyToken=self.startApplyToken;
 		obj.endApplyToken=self.endApplyToken;
+		obj.processInFormat=self.processInFormat;
+		obj.processOutFormat=self.processOutFormat;
+
+		
 		obj.inFormat=obj.getAttrVal("informat");
 		obj.outFormat=obj.getAttrVal("format");
 	}

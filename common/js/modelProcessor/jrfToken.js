@@ -120,8 +120,17 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			sValAux=self.popHtmlBuffer();
 			self.pushHtmlBuffer();
 		}
-		if (self.outFormat=="money"){
-			sValAux=inEuros(sValAux,true); 
+		if (self.outFormat!=""){
+			var arrFormats=self.outFormat.split(",");
+			for (var i=0;i<arrFormats.length;i++){
+				sFormat=arrFormats[i];
+				if (sFormat=="money"){
+					var sValAdjusted=replaceAll(sValAux+"",",",".");
+					sValAux=inEuros(sValAdjusted,true); 
+				} else if (sFormat=="hh"){
+					sValAux=normalFormatNumber(sValAux); 
+				}
+			}
 		}
 		self.addHtml(sValAux);
 		return sValAux;

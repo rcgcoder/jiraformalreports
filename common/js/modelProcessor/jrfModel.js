@@ -57,7 +57,7 @@ class jrfModel{
 		var self=this;
 		if ((isDefined(sText)) && (sText!=null)){
 			try {
-				log(sText.substring(0,150));
+				log((""+sText).substring(0,150));
 			}
 			catch(err) {
 			    log("Mega Error");

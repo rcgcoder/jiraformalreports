@@ -66,9 +66,9 @@ class jrfToken{
 	}
 	endApplyToken(){
 		var self=this;
-		self.processInFormat();
-		self.processOutFormat();
 		if ((self.inFormat!="")||(self.outFormat!="")){
+			self.processInFormat();
+			self.processOutFormat();
 			var sAux="";
 			sAux=self.popHtmlBuffer();
 			self.addHtml(sAux);

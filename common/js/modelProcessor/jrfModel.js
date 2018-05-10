@@ -120,7 +120,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			var sPart=sTagText.substring(indOpenTag+1,indCloseTag); // maybe < < > >
 			while (sPart.indexOf("<")>=0){
 				indOpenTag=sPart.indexOf("<");
-				sPart=sTagText.substring(indOpenTag+1,indCloseTag); // maybe < < > >
+				sPart=sPart.substring(indOpenTag+1,indCloseTag); // maybe < < > >
 			}
 			// if there is not more "<" remove the pair <  ... >
 			sTagText=sTagText.substring(0,indOpenTag)+ sInnerChar +sTagText.substring(indCloseTag+1,sTagText.length);

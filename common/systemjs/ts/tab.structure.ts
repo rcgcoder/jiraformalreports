@@ -213,13 +213,7 @@ export class TabStructure {
     executeReport(){
         var self=this;
         System.webapp.addStep("Updating and processing report...", function(){
-            System.webapp.addStep("Refresh de Commit Id for update de report class", function(){
-                System.webapp.pushCallback(function(){
-                   log("commit updated");
-                   System.webapp.continueTask();
-                });
-                System.webapp.github.updateLastCommit();
-            });
+            System.webapp.addStep(System.webapp.github.updateLastCommit,undefined,System.webapp.github);
             System.webapp.addStep("Dynamic load de report class", function(){
                 var arrFiles=[                  
                              "js/jrfReport.js"

@@ -1,5 +1,6 @@
 class jrfToken{
 	constructor(model){
+		var self=this;
 		self.model=model;
 	}
 	extendObj(obj,tag,reportElem){

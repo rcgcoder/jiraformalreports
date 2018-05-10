@@ -1,4 +1,4 @@
-var jrfReport=class jrfReport{
+var jrfReport=class {
 	constructor(theConfig){
 		var self=this;
 //		self.allFieldNames=newHashMap();

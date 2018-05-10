@@ -229,6 +229,7 @@ export class TabStructure {
                 var theReport=new jrfReport(theConfig);
                 theReport.execute();
             });
+            System.webapp.continueTask();
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
     }
     getScopeNormalizedJQL(){

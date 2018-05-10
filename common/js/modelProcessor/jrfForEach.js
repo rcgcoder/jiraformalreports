@@ -2,7 +2,7 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 	constructor(tag,reportElem,model){
 		var self=this;
 		model.extendToken(self,tag,reportElem);
-		self.endApplyToken=self.internal_endApplyToken;
+		self.autoAddPostHtml=false;
 		self.type=self.getAttrVal("type");
 		self.subType=self.getAttrVal("subtype");
 		self.where=self.getAttrVal("where");
@@ -14,16 +14,6 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 			self.elemsInForEach=self.reportElem.getAdvanceChilds();
 		} else {
 			self.elemsInForEach=newHashMap();
-		}
-	}
-	internal_endApplyToken(){
-		var self=this;
-		if ((self.inFormat!="")||(self.outFormat!="")){
-			self.processInFormat();
-			self.processOutFormat();
-			var sAux="";
-			sAux=self.popHtmlBuffer();
-			self.addHtml(sAux);
 		}
 	}
 	

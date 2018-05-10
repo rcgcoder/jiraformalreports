@@ -2,17 +2,7 @@ var jrfFormula=class jrfFormula{//this kind of definition allows to hot-reload
 	constructor(tag,reportElem,model){
 		var self=this;
 		model.extendToken(self,tag,reportElem);
-		self.endApplyToken=self.internal_endApplyToken;
-	}
-	internal_endApplyToken(){
-		var self=this;
-		if ((self.inFormat!="")||(self.outFormat!="")){
-			var sAux="";
-			self.processInFormat();
-			self.processOutFormat();
-			sAux=self.popHtmlBuffer();
-			self.addHtml(sAux);
-		}
+		self.autoAddPostHtml=false;
 	}
 
 	apply(){

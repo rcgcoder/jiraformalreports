@@ -31,6 +31,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.setVars=obj.getAttrVal("setVar");
 		obj.inFormat=obj.getAttrVal("informat");
 		obj.outFormat=obj.getAttrVal("format");
+		obj.autoAddPostHtml=true;
 	}
 	processAllChilds(childList,reportElement){
 		var self=this;
@@ -130,14 +131,16 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	}
 	endApplyToken(){
 		var self=this;
-		self.processInFormat();
+		self.applyInFormat();
 		self.applySetVars();
 		self.applyPushVars();
-		self.processOutFormat();
+		self.applyOutFormat();
 		var sAux="";
 		sAux=self.popHtmlBuffer();
 		self.addHtml(sAux);
-		self.addPostHtml();
+		if (self.autoAddPostHtml){
+			self.addPostHtml();
+		}
 	}
 	addPostHtml(){
 		var self=this;

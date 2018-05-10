@@ -1,7 +1,7 @@
 class jrfReport{
 	constructor(theConfig){
 		var self=this;
-		self.allFieldNames=newHashMap();
+//		self.allFieldNames=newHashMap();
 		self.config=theConfig;
 		self.config.model=System.webapp.model;
 		self.childs=newHashMap();
@@ -52,7 +52,34 @@ class jrfReport{
 		});
 
 		self.addStep("Construct Issue Dynamic Object.... ",function(){
+			var hsFieldNames=newHashMap();
+//				self.allFieldNames;
+//			hsFieldNames.clear();
+			self.config.useFields.forEach(function(element){
+				hsFieldNames.add(element.name,element.key); // to do a reverse search
+			});
+			self.config.useOtherFields.forEach(function(element){
+				hsFieldNames.add(element.name,element.key); // to do a reverse search
+			});
 			self.allIssues=newIssueFactory(self);
+			// change de "fieldValue" method
+			self.allIssues.functions.add("fieldValue",function(sFieldName){
+				var fncAux=this["get"+sFieldName];
+				var sFieldKey="";
+				if (isDefined(fncAux)){
+					return this["get"+sFieldName]();
+				} else if (hsFieldNames.exists(sFieldName)) {
+					sFieldKey=hsFieldNames.getValue(sFieldName);
+					if (sFieldKey!=""){
+						fncAux=this["get"+sFieldKey];
+						if (isDefined(fncAux)){
+							return this["get"+sFieldKey]();
+						}
+					}
+				}
+				return "Undefined getter for fieldName:["+sFieldName+"]/["+sFieldKey+"]";
+			});			
+
 			self.continueTask();
 		});
 		// first launch all issue retrieve ...
@@ -179,14 +206,7 @@ class jrfReport{
 		// load report model and submodels
 		// Process Model with The Report
 		self.addStep("Processing Model",function(){
-			var hsFieldNames=self.allFieldNames;
-			hsFieldNames.clear();
-			self.config.useFields.forEach(function(element){
-				hsFieldNames.add(element.name,element.key); // to do a reverse search
-			});
-			self.config.useOtherFields.forEach(function(element){
-				hsFieldNames.add(element.name,element.key); // to do a reverse search
-			});
+			
 			var theModel=new jrfModel(self);
 			var sModelProcessed=theModel.process();
 	        var jqResult=$("#ReportResult");

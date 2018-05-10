@@ -70,10 +70,10 @@ class jrfModel{
 				}
 				return vAux;
 			}
-		} else if (self.model.report.allFieldNames.exists(idAttr)){
+/*		} else if (self.model.report.allFieldNames.exists(idAttr)){
 			var sNewId=self.model.report.allFieldNames.getValue(idAttr);
 			return self.getAttrVal(sNewId);
-		}
+*/		}
 		return "";
 	}
 

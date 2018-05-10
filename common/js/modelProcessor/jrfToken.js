@@ -12,6 +12,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.variables=self.model.variables;
 		obj.pushHtmlBuffer=function(){self.model.pushHtmlBuffer();};
 		obj.popHtmlBuffer=function(){return self.model.popHtmlBuffer();};
+		obj.getHtmlBuffer=function(){return self.model.html;};
 		obj.addHtml=function(sHtml){self.model.addHtml(sHtml);};
 		obj.getAttrVal=self.getAttrVal;
 		obj.encode=self.encode;
@@ -21,8 +22,10 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.endApplyToken=self.endApplyToken;
 		obj.processInFormat=self.processInFormat;
 		obj.processOutFormat=self.processOutFormat;
-
 		
+		obj.initVars=obj.getAttrVal("initVar");
+		obj.pushVars=obj.getAttrVal("pushVar");
+		obj.setVars=obj.getAttrVal("setVar");
 		obj.inFormat=obj.getAttrVal("informat");
 		obj.outFormat=obj.getAttrVal("format");
 	}
@@ -58,21 +61,79 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		self.variables.popLocalVarEnv();
 		return self.popHtmlBuffer();
 	}
+	
+	initVars(){
+		var self=this;
+		if (self.initVars!=""){
+			var arrVars=self.initVars.split(",");
+			for (var i=0;i<arrVars.length;i++){
+				var arrVarParts=arrVars[i].split("=");
+				var varName=arrVarParts[0];
+				self.variables.initVarLocal(varName);
+				if (arrVarParts.length>1){
+					self.variables.setVar(varName,arrVarParts[1]);
+				}
+			}
+		}
+	}
+	setVars(){
+		var self=this;
+		var sValAux=self.getHtmlBuffer();
+
+		if (self.pushVars!=""){ 
+			var arrVars=self.pushVars.split(",");
+			for (var i=0;i<arrVars.length;i++){
+				var arrVarParts=arrVars[i].split("=");
+				var varName=arrVarParts[0];
+				var varValue;
+				if (arrVarParts.length>0){
+					varValue=arrVarParts[1];
+				} else {
+					varValue=sValAux;
+				}
+				var vVar=self.variables.getVars(varName);
+				if (vVar.length()==0){
+					vVar.push(varValue);
+				} else {
+					vVar.top().value=varValue;
+				}
+			}
+		}
+	}
+	pushVars(){
+		var self=this;
+		var sValAux=self.getHtmlBuffer();
+
+		if (self.pushVars!=""){
+			var arrVars=self.pushVars.split(",");
+			for (var i=0;i<arrVars.length;i++){
+				var arrVarParts=arrVars[i].split("=");
+				var varName=arrVarParts[0];
+				var varValue;
+				if (arrVarParts.length>0){
+					varValue=arrVarParts[1];
+				} else {
+					varValue=sValAux;
+				}
+				var vVar=self.variables.getVars(varName);
+				vVar.push(varValue);
+			}
+		}
+	}
 	startApplyToken(){
 		var self=this;
-		if ((self.inFormat!="")||(self.outFormat!="")){
-			self.pushHtmlBuffer();
-		}
+		self.pushHtmlBuffer();
+		self.initVars();
 	}
 	endApplyToken(){
 		var self=this;
-		if ((self.inFormat!="")||(self.outFormat!="")){
-			self.processInFormat();
-			self.processOutFormat();
-			var sAux="";
-			sAux=self.popHtmlBuffer();
-			self.addHtml(sAux);
-		}
+		self.processInFormat();
+		self.setVars();
+		self.pushVars();
+		self.processOutFormat();
+		var sAux="";
+		sAux=self.popHtmlBuffer();
+		self.addHtml(sAux);
 		self.addPostHtml();
 	}
 	addPostHtml(){
@@ -100,26 +161,19 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		return "";
 	}
 	
-	processInFormat(sValue){
+	processInFormat(){
 		var self=this;
-		var sValAux=sValue;
-		if (isUndefined(sValAux)){
-			sValAux=self.popHtmlBuffer();
-			self.pushHtmlBuffer();
-		}
+		var sValAux=self.popHtmlBuffer();
+		self.pushHtmlBuffer();
 		if (self.inFormat=="markdown"){
 			sValAux=self.model.markdownConverter.makeHtml(sValAux); 
 		}
 		self.addHtml(sValAux);
-		return sValAux;
 	}
-	processOutFormat(sValue){
+	processOutFormat(){
 		var self=this;
-		var sValAux=sValue;
-		if (isUndefined(sValAux)){
-			sValAux=self.popHtmlBuffer();
-			self.pushHtmlBuffer();
-		}
+		var sValAux=self.popHtmlBuffer();
+		self.pushHtmlBuffer();
 		if (self.outFormat!=""){
 			var arrFormats=self.outFormat.split(",");
 			var sFormat;

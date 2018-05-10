@@ -35,8 +35,12 @@ var RCGVarEngine=class RCGVarEngine{ //this kind of definition allows to hot-rel
 		var self=this;
 		var hsVars=self.getVars(varName);
 		if (hsVars!=""){
-			var nodAux=hsVars.getLast();
-			nodAux.value=value;
+			if (hsVars.length()>0){
+				var nodAux=hsVars.getLast();
+				nodAux.value=value;
+			} else {
+				hsVars.push(value);
+			}
 		} else { // if not exists is a new local var
 			self.pushVar(varName,value); 
 		}
@@ -54,7 +58,12 @@ var RCGVarEngine=class RCGVarEngine{ //this kind of definition allows to hot-rel
 		}
 		return self.getVarsGlobal(varName);
 	}
-
+	initVarLocal(varName){
+		var self=this;
+		if (!self.localVars.top().exists(varName)){
+			self.localVars.top().add(varName,newHashMap());
+		}
+	}
 	pushVarGlobal(varName,value){
 		var self=this;
 		if (!self.globalVars.exists(varName)){

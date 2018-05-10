@@ -41,10 +41,13 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		var self=this;
 		self.tokenBase.extendObj(tagApplier,tag,reportElem);
 	}
-	pushHtmlBuffer(){
+	pushHtmlBuffer(sText){
 		var self=this;
 		self.htmlStack.push(self.html);
 		self.html="";
+		if (isDefined(sText)){
+			self.html=sText;
+		}
 	}
 	popHtmlBuffer(){
 		var self=this;

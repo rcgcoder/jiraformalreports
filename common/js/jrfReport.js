@@ -36,6 +36,23 @@ class jrfReport{
 	execute(){
 		var self=this;
 		
+		self.addStep("Getting Confluence Report Model.... ",function(){
+			var cfc=System.webapp.getConfluence();
+			//cfc.getAllPages();
+			self.addStep("Manipulating Content",function(content){
+				log(content);
+				var jsonObj=JSON.parse(content);
+				var sContent=jsonObj.body.storage.value;
+				var sHtml=he.decode(sContent);
+				//self.model=sHtml;
+				self.config.model=sHtml;
+				self.continueTask();
+//				var theHtml=$(sHtml);
+			});
+			cfc.getContent("388137744");
+		});
+		
+		
 		self.addStep("Loading report model engine.... ",function(){
 			var arrFiles=[	//"ts/demo.ts",
 							"js/jrfIssueFactory.js",

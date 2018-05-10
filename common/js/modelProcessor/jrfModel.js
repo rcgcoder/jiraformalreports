@@ -56,7 +56,12 @@ class jrfModel{
 	addHtml(sText){
 		var self=this;
 		if ((isDefined(sText)) && (sText!=null)){
-			log(sText.substring(0,150));
+			try {
+				log(sText.substring(0,150));
+			}
+			catch(err) {
+			    log("Mega Error");
+			}
 			self.html+="\n"+sText;
 		}
 	}

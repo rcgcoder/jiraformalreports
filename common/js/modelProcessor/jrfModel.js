@@ -55,7 +55,7 @@ class jrfModel{
 	}
 	addHtml(sText){
 		var self=this;
-		if ((isDefined(sText) && (sText!=null)){
+		if ((isDefined(sText)) && (sText!=null)){
 			log(sText.substring(0,150));
 			self.html+="\n"+sText;
 		}

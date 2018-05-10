@@ -27,7 +27,7 @@ class jrfToken{
 		obj.outFormat=obj.getAttrVal("format");
 	}
 	processAllChilds(childList,reportElement){
-		var self;
+		var self=this;
 		var auxRptElem=reportElement;
 		if (isUndefined(auxRptElem)){
 			auxRptElem=self.reportElem;

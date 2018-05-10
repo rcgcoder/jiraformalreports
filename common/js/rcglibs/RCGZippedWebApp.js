@@ -164,7 +164,7 @@ class GitHub{
 		var sCommitShortId=sCommitLongId.substring(0,8);
 		self.commitId=sCommitShortId;
 		self.commitDate=(new Date(self.lastCommit.commit.author.date)).getTime();
-		self.popCallback(self.commitId,self.commitDate,1);
+		self.popCallback([self.commitId,self.commitDate]);
 	}
 	updateLastCommit(){
 		var self=this;

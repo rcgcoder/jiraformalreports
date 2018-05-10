@@ -46,6 +46,7 @@ class jrfToken{
 		
 	}
 	encode(){
+		var self=this;
 		self.pushHtmlBuffer();
 		self.variables.pushLocalVarEnv();
 		self.addHtml("<!-- START PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
@@ -58,6 +59,7 @@ class jrfToken{
 		return self.popHtmlBuffer();
 	}
 	startApplyToken(){
+		var self=this;
 		if ((self.inFormat!="")||(self.outFormat!="")){
 			self.pushHtmlBuffer();
 		}

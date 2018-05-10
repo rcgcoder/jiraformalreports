@@ -35,7 +35,7 @@ var jrfReport=class jrfReport {
 	}
 	execute(){
 		var self=this;
-		
+		alert("Testing hot reload");		
 		self.addStep("Getting Confluence Report Model.... ",function(){
 			var cfc=System.webapp.getConfluence();
 			//cfc.getAllPages();

@@ -1,6 +1,8 @@
 class jrfModel{
 	constructor(theReport){
 		var self=this;
+		self.tokenBase=new jrfToken(self);
+		self.variables=new RCGVarEngine();
 		self.htmlStack=newHashMap();
 		self.html="";
 		self.markdownConverter = new showdown.Converter();
@@ -35,14 +37,10 @@ class jrfModel{
 				,
 				"jrfTags");
 	}
-	extendObj(obj){
+	extendToken(tagApplier,tag,reportElem){
 		var self=this;
-		obj.pushHtmlBuffer=function(){self.pushHtmlBuffer();};
-		obj.popHtmlBuffer=function(){return self.popHtmlBuffer();};
-		obj.addHtml=function(sHtml){self.addHtml(sHtml);};
-		obj.getAttrVal=self.getAttrVal;
+		self.tokenBase.extendObj(tagApplier,tag,reportElem);
 	}
-
 	pushHtmlBuffer(){
 		var self=this;
 		self.htmlStack.push(self.html);
@@ -59,23 +57,6 @@ class jrfModel{
 		var self=this;
 //		log(sText);
 		self.html+="\n"+sText;
-	}
-	getAttrVal(idAttr,objSrc){
-		var self=this;
-		if (self.tag.getAttributes().exists(idAttr)){
-			var attr=self.tag.getAttributeById(idAttr.toLowerCase());
-			if (isDefined(attr)){
-				var vAux=attr.value;
-				if (isUndefined(vAux)){
-					vAux="";
-				}
-				return vAux;
-			}
-/*		} else if (self.model.report.allFieldNames.exists(idAttr)){
-			var sNewId=self.model.report.allFieldNames.getValue(idAttr);
-			return self.getAttrVal(sNewId);
-*/		}
-		return "";
 	}
 
 	updateAttributes(tag){
@@ -225,7 +206,7 @@ class jrfModel{
 			tagApplier=new jrfFormula(tag,reportElem,self);
 		}
 		if (isDefined(tagApplier)){ // if tag is defined... it manages the childs...
-			self.addHtml(tagApplier.apply()); 
+			self.addHtml(tagApplier.encode()); 
 		} else { // if tag is not defined ... show the childs..... for test
 			self.addHtml(tag.getPreviousHTML());
 			self.addHtml("<!-- "+self.traceTag(tag)+" -->");

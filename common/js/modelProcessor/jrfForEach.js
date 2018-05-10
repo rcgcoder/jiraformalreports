@@ -1,10 +1,8 @@
 class jrfForEach{
 	constructor(tag,reportElem,model){
 		var self=this;
-		self.model=model;
-		model.extendObj(self);
-		self.tag=tag;
-		self.reportElem=reportElem;
+		model.extendToken(self,tag,reportElem);
+		self.endApplyToken=self.internal_endApplyToken();
 		self.type=self.getAttrVal("type");
 		self.subType=self.getAttrVal("subtype");
 		self.where=self.getAttrVal("where");
@@ -18,34 +16,34 @@ class jrfForEach{
 			self.elemsInForEach=newHashMap();
 		}
 	}
+	internal_endApplyToken(){
+		var self=this;
+		self.processInFormat();
+		self.processOutFormat();
+		if ((self.inFormat!="")||(self.outFormat!="")){
+			var sAux="";
+			sAux=self.popHtmlBuffer();
+			self.addHtml(sAux);
+		}
+	}
+	
+	
 	apply(){
 		var self=this;
-		self.pushHtmlBuffer();
 		var bAllRoots=false;
 		if (self.reportElem==self.model.report){
 			bAllRoots=true;
 		}
-		self.addHtml("<!-- START PREVIOUSHTML IN FOREACH JRF TOKEN -->");
-		self.addHtml(self.tag.getPreviousHTML());
-		self.addHtml("<!-- END PREVIOUSHTML IN FOREACH JRF TOKEN -->");
 		var nItem=0;
-		var nChild=0;
 		var rootBackUp=self.model.processingRoot;
 		self.elemsInForEach.walk(function(newParent){
 			self.addHtml("<!-- START INNER LOOP OF ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
-			nChild=0;
-			self.tag.getChilds().walk(function(childTag){
-				self.addHtml("<!-- START "+childTag.id +" CHILD ("+nChild+") LIST ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
-				if (bAllRoots) self.model.processingRoot=newParent;
-				self.addHtml(self.model.applyTag(childTag,newParent));
-				self.addHtml("<!-- END "+childTag.id +" CHILD ("+nChild+") LIST ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
-				if (bAllRoots) self.model.processingRoot=rootBackUp;
-				nChild++;
-			});
 			
-			self.addHtml("<!-- START POSTHTML ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
-			self.addHtml(self.tag.getPostHTML());
-			self.addHtml("<!-- END POSTHTML ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
+			if (bAllRoots) self.model.processingRoot=newParent;
+			self.processAllChilds(self.tag.getChilds(),newParent);
+			if (bAllRoots) self.model.processingRoot=rootBackUp;
+			self.addPostHtml();
+
 			if ((self.subType=="row")&&(self.elemsInForEach.getLast().value.getKey()
 										!=newParent.getKey())){
 				self.addHtml("</td></tr><tr><td>");
@@ -53,7 +51,6 @@ class jrfForEach{
 			self.addHtml("<!-- END INNER LOOP OF ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
 			nItem++;
 		});
-		return self.popHtmlBuffer();
 	}
 
 }

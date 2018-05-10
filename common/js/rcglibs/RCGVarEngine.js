@@ -1,4 +1,4 @@
-class jrfVariables{
+class RCGVarEngine{
 	constructor(){
 		var self=this;
 		self.localVars=newHashMap();
@@ -13,14 +13,18 @@ class jrfVariables{
 	}
 	pushVar(varName,value){
 		var self=this;
-		if (!self.localVars.top().exists(varName)){
-			self.localVars.top().add(varName,newHashMap());
+		var hsVars=self.getVars(varName);
+		if (hsVars==""){
+			hsVars=newHashMap();
+			self.localVars.add(varName,hsVars);
 		}
-		self.localVars.top().getValue(varName).push(value);
+		hsVars.push(value);
 	}
 	
 	popVar(varName,value){
-		return this.localVars.top().getValue(varName).pop();
+		var self=this;
+		var hsVars=self.getVars(varName);
+		return hsVars.pop();
 	}
 	getVar(varName){
 		var self=this;
@@ -30,8 +34,12 @@ class jrfVariables{
 	setVar(varName,value){
 		var self=this;
 		var hsVars=self.getVars(varName);
-		var nodAux=hsVars.getLast();
-		nodAux.value=value;
+		if (hsVars!=""){
+			var nodAux=hsVars.getLast();
+			nodAux.value=value;
+		} else { // if not exists is a new local var
+			self.pushVar(varName,value); 
+		}
 	}
 
 	getVars(varName){

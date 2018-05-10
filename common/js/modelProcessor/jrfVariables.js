@@ -65,7 +65,4 @@ class jrfVariables{
 		}
 		return "";
 	}
-
-		self.localVars=newHashMap();
-		self.globalVars=newHashMap();
 }

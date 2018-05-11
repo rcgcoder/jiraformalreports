@@ -213,7 +213,7 @@ export class TabStructure {
     executeReport(){
         var self=this;
         System.webapp.addStep("Updating and processing report...", function(){
-            var bDontReload=isDefined(jrfReport);
+            var bDontReload=isDefined(window.jrfReport);
             System.webapp.addStep("Refresh de Commit Id for update de report class", function(){
                 var antCommitId=System.webapp.github.commitId;
                 System.webapp.pushCallback(function(){

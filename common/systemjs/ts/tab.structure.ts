@@ -213,25 +213,34 @@ export class TabStructure {
     executeReport(){
         var self=this;
         System.webapp.addStep("Updating and processing report...", function(){
+            var bDontReload=true;
             System.webapp.addStep("Refresh de Commit Id for update de report class", function(){
+                var antCommitId=System.webapp.github.commitId;
                 System.webapp.pushCallback(function(){
                    log("commit updated");
+                   if (antCommitId!=System.webapp.github.commitId){
+                       bDontReload=false;
+                   }
                    System.webapp.continueTask();
                 });
                 System.webapp.github.updateLastCommit();
             });
             System.webapp.addStep("Dynamic load de report class", function(){
-                var arrFiles=[                  
-                             "js/jrfReport.js"
-                             ]; //test
-                System.webapp.loadRemoteFiles(arrFiles);
+                if (bDontReload){
+                    System.webapp.continueTask();
+                } else {
+                    var arrFiles=[                  
+                                 "js/jrfReport.js"
+                                 ]; //test
+                    System.webapp.loadRemoteFiles(arrFiles);
+                }
             });
             System.webapp.addStep("Executing Report", function(){
                 var theConfig=self.getActualReportConfig();
                 var auxObj=System.getAngularObject('selInterestFields',true);
                 theConfig["allFields"]=auxObj.getAllElements();
                 var theReport=new jrfReport(theConfig);
-                theReport.execute();
+                theReport.execute(bDontReload);
             });
             System.webapp.continueTask();
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);

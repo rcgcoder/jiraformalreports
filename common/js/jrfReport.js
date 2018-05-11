@@ -33,7 +33,7 @@ var jrfReport=class jrfReport {
 		// create a dynobj for store the issues.... 
 		self.allIssues=newIssueFactory(self);
 	}
-	execute(){
+	execute(bDontReloadFiles){
 		var self=this;
 		self.addStep("Getting Confluence Report Model.... ",function(){
 			var cfc=System.webapp.getConfluence();
@@ -53,21 +53,25 @@ var jrfReport=class jrfReport {
 		
 		
 		self.addStep("Loading report model engine.... ",function(){
-			var arrFiles=[	//"ts/demo.ts",
-							"js/jrfIssueFactory.js",
-							"js/libs/showdown.js",
-							"js/rcglibs/RCGVarEngine.js",
-							"js/modelProcessor/jrfModel.js",
-							"js/modelProcessor/jrfToken.js",
-							"js/modelProcessor/jrfForEach.js",
-							"js/modelProcessor/jrfField.js",
-							"js/modelProcessor/jrfGetVar.js",
-							"js/modelProcessor/jrfFormula.js"
-/*							"js/rcglibs/RCGLogUtils.js",
-							"js/rcglibs/RCGChronoUtils.js",
-							"js/rcglibs/RCGHashMapUtils.js"
-*/						 ]; //test
-			System.webapp.loadRemoteFiles(arrFiles);
+			if (bDontReloadFiles==false) {
+				var arrFiles=[	//"ts/demo.ts",
+								"js/jrfIssueFactory.js",
+								"js/libs/showdown.js",
+								"js/rcglibs/RCGVarEngine.js",
+								"js/modelProcessor/jrfModel.js",
+								"js/modelProcessor/jrfToken.js",
+								"js/modelProcessor/jrfForEach.js",
+								"js/modelProcessor/jrfField.js",
+								"js/modelProcessor/jrfGetVar.js",
+								"js/modelProcessor/jrfFormula.js"
+	/*							"js/rcglibs/RCGLogUtils.js",
+								"js/rcglibs/RCGChronoUtils.js",
+								"js/rcglibs/RCGHashMapUtils.js"
+	*/						 ]; //test
+				System.webapp.loadRemoteFiles(arrFiles);
+			} else {
+				System.webapp.continueTask();
+			}
 		});
 
 		self.addStep("Construct Issue Dynamic Object.... ",function(){

@@ -50,7 +50,18 @@ var RCGVarEngine=class RCGVarEngine{ //this kind of definition allows to hot-rel
 		var self=this;
 		var nodAux=self.localVars.getLast();
 		var hsAux;
+		var nBrothers;
 		while (nodAux!=""){
+			nBrothers=nodAux.brothers.length;
+			nBrothers--;
+			while (nBrothers>=0){
+				hsAux=nodAux.brothers[nBrothers];
+				if (hsAux.exists(varName)){
+					return hsAux.getValue(varName);
+				} else { 
+					nBrothers--
+				}
+			}
 			hsAux=nodAux.value;
 			if (hsAux.exists(varName)){
 				return hsAux.getValue(varName);

@@ -26,6 +26,7 @@ var jrfGetVar=class jrfGetVar{//this kind of definition allows to hot-reload
 					sVarRef+
 				  sName.substring(lastInd+2,sName.length);
 			initInd=sName.lastIndexOf("{{");
+			iVar++;
 		}
 		var sFnc=sName;
 		vValue=self.executeFunction(vValues,sFnc);

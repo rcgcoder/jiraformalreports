@@ -30,7 +30,7 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 		self.elemsInForEach.walk(function(newParent){
 			self.addHtml("<!-- START INNER LOOP OF ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
 			if (self.innerVarName!=""){
-				self.pushVar(self.innerVarName,newParent);
+				self.variables.pushVar(self.innerVarName,newParent);
 			}
 			if (bAllRoots) self.model.processingRoot=newParent;
 			self.processAllChilds(self.tag.getChilds(),newParent);

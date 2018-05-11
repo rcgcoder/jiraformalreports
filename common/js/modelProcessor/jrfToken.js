@@ -122,6 +122,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				var vVar=self.variables.getVars(varName);
 				if (vVar==""){
 					log("The var "+varName+" does not exists");
+					// repeat the search();
+					vVar=self.variables.getVars(varName);
 				}
 				vVar.push(varValue);
 			}

@@ -149,10 +149,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		self.addHtml("<!-- END POSTHTML  IN FORMULA JRF TOKEN ["+self.tokenName+"] -->");
 	}
 
-	getAttrVal(idAttr,objSrc){
+	getAttrVal(attrName,objSrc){
 		var self=this;
+		var idAttr=attrName.toLowerCase();
 		if (self.tag.getAttributes().exists(idAttr)){
-			var attr=self.tag.getAttributeById(idAttr.toLowerCase());
+			var attr=self.tag.getAttributeById(idAttr);
 			if (isDefined(attr)){
 				var vAux=attr.value;
 				if (isUndefined(vAux)){

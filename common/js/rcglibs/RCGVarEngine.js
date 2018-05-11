@@ -2,13 +2,12 @@ var RCGVarEngine=class RCGVarEngine{ //this kind of definition allows to hot-rel
 	constructor(){
 		var self=this;
 		self.localVars=newHashMap();
-		self.globalVars=newHashMap();
 	}
 
-	pushLocalVarEnv(){
+	pushVarEnv(){
 		this.localVars.push(newHashMap());
 	}
-	popLocalVarEnv(){
+	popVarEnv(){
 		return this.localVars.pop();
 	}
 	pushVar(varName,value){
@@ -69,31 +68,12 @@ var RCGVarEngine=class RCGVarEngine{ //this kind of definition allows to hot-rel
 				nodAux=nodAux.previous;
 			}
 		}
-		return self.getVarsGlobal(varName);
+		return "";
 	}
 	initVarLocal(varName){
 		var self=this;
 		if (!self.localVars.top().exists(varName)){
 			self.localVars.top().add(varName,newHashMap());
 		}
-	}
-	pushVarGlobal(varName,value){
-		var self=this;
-		if (!self.globalVars.exists(varName)){
-			self.globalVars.add(varName,newHashMap());
-		}
-		self.getVarsGlobal(varName).push(value);
-	}
-	getVarsGlobal(varName){
-		var self=this;
-		return self.globalVars.getValue(varName);
-	}
-	getVarGlobal(varName){
-		var self=this;
-		var hsValues=self.getVarsGlobal(varName);
-		if (hsValues!=""){
-			return hsValues.top();
-		}
-		return "";
 	}
 }

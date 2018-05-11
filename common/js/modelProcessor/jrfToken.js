@@ -25,6 +25,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.applyInitVars=self.applyInitVars;
 		obj.applyPushVars=self.applyPushVars;
 		obj.applySetVars=self.applySetVars;
+		obj.executeFunction=self.executeFunction;
 		
 		obj.initVars=obj.getAttrVal("initVar");
 		obj.pushVars=obj.getAttrVal("pushVar");
@@ -55,14 +56,14 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	encode(){
 		var self=this;
 		self.pushHtmlBuffer();
-		self.variables.pushLocalVarEnv();
+		self.variables.pushVarEnv();
 		self.addHtml("<!-- START PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
 		self.addHtml(self.tag.getPreviousHTML());
 		self.addHtml("<!-- END PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
 		self.startApplyToken();
 		self.apply();
 		self.endApplyToken();
-		self.variables.popLocalVarEnv();
+		self.variables.popVarEnv();
 		return self.popHtmlBuffer();
 	}
 	
@@ -212,5 +213,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		self.addHtml(sValAux);
 		return sValAux;
 	}
-
+	executeFunction(arrValues,sFunctionBody){
+		var sFncBody=replaceAll(sFunctionBody,"\n"," ");
+		var sFncFormula="var result="+sFncBody+"; return result;";
+		var fncFormula=Function(arrValues,sFncFormula);
+		var vValue=fncFormula();
+		return vValue;
+	}
 }

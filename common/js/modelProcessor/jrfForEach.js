@@ -6,6 +6,7 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 		self.type=self.getAttrVal("type");
 		self.subType=self.getAttrVal("subtype");
 		self.where=self.getAttrVal("where");
+		self.innerVarName=self.getAttrVal("as").trim();
 		if (self.type=="root"){
 			self.elemsInForEach=self.model.report.childs;
 		} else if (self.type=="child"){
@@ -28,7 +29,9 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 		var rootBackUp=self.model.processingRoot;
 		self.elemsInForEach.walk(function(newParent){
 			self.addHtml("<!-- START INNER LOOP OF ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
-			
+			if (self.innerVarName!=""){
+				self.pushVar(self.innerVarName,newParent);
+			}
 			if (bAllRoots) self.model.processingRoot=newParent;
 			self.processAllChilds(self.tag.getChilds(),newParent);
 			if (bAllRoots) self.model.processingRoot=rootBackUp;

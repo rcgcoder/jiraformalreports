@@ -4,6 +4,11 @@ var jrfNoop=class jrfNoop{//this kind of definition allows to hot-reload
 		model.extendToken(self,tag,reportElem);
 	}
 	apply(){
+		var self=this;
+		self.pushHtmlBuffer();
+		self.processAllChilds();
+		var sContent=self.popHtmlBuffer();
+		self.addHtml(sContent);
 	}
 
 }

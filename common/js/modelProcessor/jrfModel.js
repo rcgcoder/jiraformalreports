@@ -225,6 +225,8 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			sTokenName="jrfGetVar";
 		} else if (tagAttrs.exists("sum")){
 			sTokenName="jrfSum";
+		} else {
+			sTokenName="jrfNoop";
 		}
 		tagApplier=new window[sTokenName](tag,reportElem,self);
 

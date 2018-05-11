@@ -80,7 +80,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			if (sResult!=""){
 				sResult+="\n";
 			}
-			tag.addAttribute({id:element.name,value:element.value});
+			tag.addAttribute({id:element.name.trim(),value:element.value});
 		}
 	}
 	/* 

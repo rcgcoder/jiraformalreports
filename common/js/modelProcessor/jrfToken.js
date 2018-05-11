@@ -77,6 +77,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				if (arrVarParts.length>1){
 					self.variables.setVar(varName,arrVarParts[1]);
 				}
+				log("Initialized Value ["+varName+"] ");
 			}
 		}
 	}
@@ -95,6 +96,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				} else {
 					varValue=sValAux;
 				}
+				log("Looking for Value ["+varName+"] pushed:["+varValue+"]");
 				var vVar=self.variables.getVars(varName);
 				
 				if (vVar.length()==1){
@@ -121,9 +123,10 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				} else {
 					varValue=sValAux;
 				}
+				log("Looking for Value ["+varName+"] pushed:["+varValue+"]");
 				var vVar=self.variables.getVars(varName);
 				if (vVar==""){
-					log("The var "+varName+" does not exists");
+					log("The var ["+varName+"] does not exists");
 					// repeat the search();
 					vVar=self.variables.getVars(varName);
 				}

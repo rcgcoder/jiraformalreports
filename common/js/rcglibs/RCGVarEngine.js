@@ -50,11 +50,12 @@ var RCGVarEngine=class RCGVarEngine{ //this kind of definition allows to hot-rel
 		var self=this;
 		var nodAux=self.localVars.getLast();
 		var hsAux=nodAux.value;
-		while ((nodAux!="")&&(nodAux.key!=varName)){
-			nodAux=nodAux.previous;
-		}
-		if (nodAux!=""){
-			return nodAux.value;
+		while ((nodAux!="")&&(bNotLocated)){
+			if (nodAux.exists(varName)){
+				return nodAux.get(varName);
+			} else { 
+				nodAux=nodAux.previous;
+			}
 		}
 		return self.getVarsGlobal(varName);
 	}

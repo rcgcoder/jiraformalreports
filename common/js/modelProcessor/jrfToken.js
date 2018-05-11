@@ -217,7 +217,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var sFncBody=replaceAll(sFunctionBody,"\n"," ");
 		var sFncFormula="var result="+sFncBody+";\n return result;";
 		for (var i=0;i<arrValues.length;i++){
-			sFncFormula="log('"+arrRefs[i]+":[`"+arrValues[i]+"`]');\n"+sFncFormula;
+			sFncFormula="log(`"+arrRefs[i]+":["+arrValues[i]+"]`);\n"+sFncFormula;
 		}
 		var fncFormula=Function(arrRefs,sFncFormula);
 		var vValue=fncFormula(arrValues);

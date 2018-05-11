@@ -216,6 +216,9 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	executeFunction(arrValues,arrRefs,sFunctionBody){
 		var sFncBody=replaceAll(sFunctionBody,"\n"," ");
 		var sFncFormula="var result="+sFncBody+"; return result;";
+		for (var i=0;i<arrValues.length;i++){
+			sFncFormula="log('"+arrRefs[i]+"');\n"+sFncFormula;
+		}
 		var fncFormula=Function(arrRefs,sFncFormula);
 		var vValue=fncFormula(arrValues);
 		return vValue;

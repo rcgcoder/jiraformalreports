@@ -55,7 +55,7 @@ var RCGVarEngine=class RCGVarEngine{ //this kind of definition allows to hot-rel
 			nBrothers=nodAux.brothers.length;
 			nBrothers--;
 			while (nBrothers>=0){
-				hsAux=nodAux.brothers[nBrothers];
+				hsAux=nodAux.brothers[nBrothers].value;
 				if (hsAux.exists(varName)){
 					return hsAux.getValue(varName);
 				} else { 

@@ -53,7 +53,7 @@ var RCGVarEngine=class RCGVarEngine{ //this kind of definition allows to hot-rel
 		while (nodAux!=""){
 			hsAux=nodAux.value;
 			if (hsAux.exists(varName)){
-				return hsAux.get(varName);
+				return hsAux.top().value;
 			} else { 
 				nodAux=nodAux.previous;
 			}

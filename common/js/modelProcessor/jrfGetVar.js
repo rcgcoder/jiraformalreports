@@ -11,7 +11,7 @@ var jrfGetVar=class jrfGetVar{//this kind of definition allows to hot-reload
 		var vVarRefs=[];
 		var sVarRef="";
 		var iVar=0;
-		var initInd=sName.lastindexOf("{{");
+		var initInd=sName.lastIndexOf("{{");
 		if (initInd<0){ // there is not {{varName}} tokens all the string is a varName
 			var vValue=self.variables.getVar(sName);
 			return self.addHtml(vValue);
@@ -29,6 +29,7 @@ var jrfGetVar=class jrfGetVar{//this kind of definition allows to hot-reload
 			sVarRef="_vRef_"+iVar;
 			vVarRefs.unshift(sVarRef);
 			sName=sName.subString(0,initInd)+sVarRef+sName.subString(lastInd+2,sName.length);
+			initInd=sName.lastIndexOf("{{");
 		}
 		var sFnc=sName;
 		vValue=self.executeFunction(vValues,sFnc);

@@ -120,6 +120,9 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					varValue=sValAux;
 				}
 				var vVar=self.variables.getVars(varName);
+				if (vVar==""){
+					log("The var "+varName+" does not exists");
+				}
 				vVar.push(varValue);
 			}
 		}

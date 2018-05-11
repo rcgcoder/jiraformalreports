@@ -217,13 +217,10 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var sFncBody=replaceAll(sFunctionBody,"\n"," ");
 		var sFncFormula="var result="+sFncBody+";\n return result;";
 		for (var i=0;i<arrValues.length;i++){
-			sFncFormula="log(`"+arrRefs[i]+":["+arrValues[i]+"]`);\n"+sFncFormula;
+			sFncFormula="log(`_arrRefs_['"+i+"']:["+arrValues[i]+"]`);\n"+sFncFormula;
 		}
 		var fncFormula=Function(arrRefs,sFncFormula);
-		var callFormula=function(aArgs){
-			return fncFormula(aArgs);
-		}
-		var vValue=callFormula(arrValues);
+		var vValue=fncFormula(arrValues);
 		return vValue;
 	}
 }

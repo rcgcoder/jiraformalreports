@@ -213,11 +213,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		self.addHtml(sValAux);
 		return sValAux;
 	}
-	executeFunction(arrValues,sFunctionBody){
+	executeFunction(arrValues,arrRefs,sFunctionBody){
 		var sFncBody=replaceAll(sFunctionBody,"\n"," ");
 		var sFncFormula="var result="+sFncBody+"; return result;";
-		var fncFormula=Function(arrValues,sFncFormula);
-		var vValue=fncFormula();
+		var fncFormula=Function(arrRefs,sFncFormula);
+		var vValue=fncFormula(arrValues);
 		return vValue;
 	}
 }

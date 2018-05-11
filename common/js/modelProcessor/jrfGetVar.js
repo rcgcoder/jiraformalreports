@@ -21,8 +21,8 @@ var jrfGetVar=class jrfGetVar{//this kind of definition allows to hot-reload
 			var lastInd=sName.indexOf("}}",initInd+2);
 			var sInnerVarName=sName.substring(initInd+2,lastInd);
 			var vInnerVarValue=self.variables.getVar(sInnerVarName);
-			if (isString(sInnerVarValue)){
-				vValues.unshift('`'+sInnerVarValue+"`");
+			if (isString(vInnerVarValue)){
+				vValues.unshift('`'+vInnerVarValue+"`");
 			} else {
 				vValues.unshift(vInnerVarValue);
 			}

@@ -1,0 +1,22 @@
+var jrfSum=class jrfSum{//this kind of definition allows to hot-reload
+	constructor(tag,reportElem,model){
+		var self=this;
+		model.extendToken(self,tag,reportElem);
+		self.varName=self.getAttrVal("var");
+	}
+	apply(){
+		var self=this;
+		var hsValues=self.variables.getVars(self.varName);
+		var sValue=0;
+		hsValues.walk(function(elem){
+			var vValue=0;
+			if ($.isNumeric(elem)){
+				vValue=parseFloat(elem);
+				sValue+=vValue;
+			}
+		});
+		self.addHtml(sValue);
+	}
+
+}
+

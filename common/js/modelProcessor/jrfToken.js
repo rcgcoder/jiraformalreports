@@ -205,7 +205,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					sValAux=(parseFloat(sValAdjusted).toFixed(2) * 22.1).toFixed(2); 
 				} else if (sFormat=="hours"){
 					var sValAdjusted=replaceAll(sValAux+"",",",".");
-					sValAux=normalFormatNumber(sValAdjusted/3600); 
+					sValAux=normalFormatNumber(sValAdjusted) + " h"; 
 				}
 			}
 		}

@@ -60,6 +60,7 @@ var jrfReport=class jrfReport {
 								"js/rcglibs/RCGVarEngine.js",
 								"js/modelProcessor/jrfModel.js",
 								"js/modelProcessor/jrfToken.js",
+								"js/modelProcessor/jrfNoop.js",
 								"js/modelProcessor/jrfForEach.js",
 								"js/modelProcessor/jrfField.js",
 								"js/modelProcessor/jrfGetVar.js",

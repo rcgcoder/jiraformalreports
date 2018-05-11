@@ -212,33 +212,24 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		var i=0;
 		var tagApplier;
 		var tagAttrs=tag.getAttributes();
+		var sTokenName="jrfNoop";
 		if (tagAttrs.exists("foreach")){
-			tagApplier=new jrfForEach(tag,reportElem,self);
+			sTokenName="jrfForEach";
 		} else if (tagAttrs.exists("formula")){
-			tagApplier=new jrfFormula(tag,reportElem,self);
+			sTokenName="jrfFormula";
 		} else if (tagAttrs.exists("field")){
-			tagApplier=new jrfField(tag,reportElem,self);
+			sTokenName="jrfField";
 		} else if (tagAttrs.exists("formula")){
-			tagApplier=new jrfFormula(tag,reportElem,self);
+			sTokenName="jrfFormula";
 		} else if (tagAttrs.exists("getvar")){
-			tagApplier=new jrfGetVar(tag,reportElem,self);
+			sTokenName="jrfGetVar";
 		} else if (tagAttrs.exists("sum")){
-			tagApplier=new jrfSum(tag,reportElem,self);
+			sTokenName="jrfSum";
 		}
-		if (isDefined(tagApplier)){ // if tag is defined... it manages the childs...
-			self.addHtml(tagApplier.encode()); 
-		} else { // if tag is not defined ... show the childs..... for test
-			self.addHtml(tag.getPreviousHTML());
-			self.addHtml("<!-- "+self.traceTag(tag)+" -->");
-			if (tag.countChilds()>0){
-				self.addHtml("<!-  child list start       -->");
-				tag.getChilds().walk(function(tagElem){
-					self.addHtml(self.encode(tagElem,reportElem));
-				});
-				self.addHtml("<!-  child list stop       -->");
-			}
-			self.addHtml(tag.getPostHTML());
-		}
+		tagApplier=new window[sTokenName](tag,reportElem,self);
+
+		self.addHtml(tagApplier.encode()); 
+		
 		return self.popHtmlBuffer();
 	}
 	encode(parentTag,reportElement){

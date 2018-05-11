@@ -220,7 +220,10 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			sFncFormula="log(`"+arrRefs[i]+":["+arrValues[i]+"]`);\n"+sFncFormula;
 		}
 		var fncFormula=Function(arrRefs,sFncFormula);
-		var vValue=fncFormula(arrValues);
+		var callFormula=function(aArgs){
+			return fncFormula(aArgs);
+		}
+		var vValue=callFormula(arrValues);
 		return vValue;
 	}
 }

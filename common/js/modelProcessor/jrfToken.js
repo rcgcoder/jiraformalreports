@@ -213,13 +213,13 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		self.addHtml(sValAux);
 		return sValAux;
 	}
-	executeFunction(arrValues,arrRefs,sFunctionBody){
+	executeFunction(arrValues,sFunctionBody){
 		var sFncBody=replaceAll(sFunctionBody,"\n"," ");
 		var sFncFormula="var result="+sFncBody+";\n return result;";
 		for (var i=0;i<arrValues.length;i++){
 			sFncFormula="log(`_arrRefs_['"+i+"']:["+arrValues[i]+"]`);\n"+sFncFormula;
 		}
-		var fncFormula=Function(arrRefs,sFncFormula);
+		var fncFormula=Function("_arrRefs_",sFncFormula);
 		var vValue=fncFormula(arrValues);
 		return vValue;
 	}

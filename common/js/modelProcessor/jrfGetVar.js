@@ -19,7 +19,7 @@ var jrfGetVar=class jrfGetVar{//this kind of definition allows to hot-reload
 		// if there are {{varname}} tokens.... the string is a function
 		while (initInd>=0){
 			var lastInd=sName.indexOf("}}",initInd+2);
-			var sInnerVarName=sName.subString(initInd+2,lastInd);
+			var sInnerVarName=sName.substring(initInd+2,lastInd);
 			var vInnerVarValue=self.variables.getVar(sInnerVarName);
 			if (isString(sInnerVarValue)){
 				vValues.unshift('`'+sInnerVarValue+"`");

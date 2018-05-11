@@ -96,7 +96,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					varValue=sValAux;
 				}
 				var vVar=self.variables.getVars(varName);
-				if (vVar.length()==0){
+				if (vVar.length()==1){
 					vVar.push(varValue);
 				} else {
 					vVar.top().value=varValue;
@@ -114,7 +114,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				var arrVarParts=arrVars[i].split("=");
 				var varName=arrVarParts[0];
 				var varValue;
-				if (arrVarParts.length>0){
+				if (arrVarParts.length>1){
 					varValue=arrVarParts[1];
 				} else {
 					varValue=sValAux;

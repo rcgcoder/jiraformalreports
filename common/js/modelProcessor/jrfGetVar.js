@@ -7,29 +7,13 @@ var jrfGetVar=class jrfGetVar{//this kind of definition allows to hot-reload
 	apply(){
 		var self=this;
 		var sName=self.varName;
-		var vValues=[];
-		var sVarRef="";
-		var iVar=0;
 		var initInd=sName.lastIndexOf("{{");
+		var vValue="";
 		if (initInd<0){ // there is not {{varName}} tokens all the string is a varName
-			var vValue=self.variables.getVar(sName);
-			return self.addHtml(vValue);
-		} 
-		// if there are {{varname}} tokens.... the string is a function
-		while (initInd>=0){
-			var lastInd=sName.indexOf("}}",initInd+2);
-			var sInnerVarName=sName.substring(initInd+2,lastInd).trim();
-			var vInnerVarValue=self.variables.getVar(sInnerVarName);
-			vValues.push(vInnerVarValue);
-			sVarRef="_arrRefs_["+iVar+"]";
-			sName=sName.substring(0,initInd)+
-					sVarRef+
-				  sName.substring(lastInd+2,sName.length);
-			initInd=sName.lastIndexOf("{{");
-			iVar++;
+			vValue=self.variables.getVar(sName);
+		} else {
+			vValue=self.replaceVarsAndExecute(sName);
 		}
-		var sFnc=sName;
-		vValue=self.executeFunction(vValues,sFnc);
 		self.addHtml(vValue);
 	}
 

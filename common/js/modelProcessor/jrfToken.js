@@ -26,7 +26,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.applyPushVars=self.applyPushVars;
 		obj.applySetVars=self.applySetVars;
 		obj.executeFunction=self.executeFunction;
-		
+		obj.replaceVarsAndExecute=self.replaceVarsAndExecute;		
 		obj.initVars=obj.getAttrVal("initVar");
 		obj.pushVars=obj.getAttrVal("pushVar");
 		obj.setVars=obj.getAttrVal("setVar");
@@ -212,6 +212,28 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		}
 		self.addHtml(sValAux);
 		return sValAux;
+	}
+	replaceVarsAndExecute(sText){
+		// if there are {{varname}} tokens.... the string is a function
+		var vValues=[];
+		var sVarRef="";
+		var iVar=0;
+		var initInd=sText.lastIndexOf("{{");
+		while (initInd>=0){
+			var lastInd=sText.indexOf("}}",initInd+2);
+			var sInnerVarName=sText.substring(initInd+2,lastInd).trim();
+			var vInnerVarValue=self.variables.getVar(sInnerVarName);
+			vValues.push(vInnerVarValue);
+			sVarRef="_arrRefs_["+iVar+"]";
+			sText=sText.substring(0,initInd)+
+					sVarRef+
+				  sText.substring(lastInd+2,sText.length);
+			initInd=sText.lastIndexOf("{{");
+			iVar++;
+		}
+		var sFnc=sText;
+		vValue=self.executeFunction(vValues,sFnc);
+		return vValue;
 	}
 	executeFunction(arrValues,sFunctionBody){
 		var sFncBody=replaceAll(sFunctionBody,"\n"," ");

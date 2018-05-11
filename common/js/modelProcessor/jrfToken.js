@@ -96,11 +96,13 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					varValue=sValAux;
 				}
 				var vVar=self.variables.getVars(varName);
+				
 				if (vVar.length()==1){
 					vVar.push(varValue);
 				} else {
 					vVar.top().value=varValue;
 				}
+				log("Value ["+varName+"] setted:["+varValue+"]");
 			}
 		}
 	}
@@ -126,6 +128,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					vVar=self.variables.getVars(varName);
 				}
 				vVar.push(varValue);
+				log("Value ["+varName+"] pushed:["+varValue+"]");
 			}
 		}
 	}

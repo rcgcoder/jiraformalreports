@@ -117,13 +117,13 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		}
 
 		var indFirstCloseTag=sTagText.indexOf(">");
-		var indOpenTag=sTagText.subString(0,indFirstCloseTag).lastIndexOf("<");
+		var indOpenTag=sTagText.substring(0,indFirstCloseTag).lastIndexOf("<");
 
 		while((indOpenTag>=0)&&(indOpenTag<indFirstCloseTag)){
 			indCloseTag=sTagText.indexOf(">",indOpenTag+1);
 			sTagText=sTagText.substring(0,indOpenTag)+ sInnerChar +sTagText.substring(indCloseTag+1,sTagText.length);
 			indFirstCloseTag=sTagText.indexOf(">");
-			indOpenTag=sTagText.subString(0,indFirstCloseTag).lastIndexOf("<");
+			indOpenTag=sTagText.substring(0,indFirstCloseTag).lastIndexOf("<");
 		}
 		return sTagText;
 	}

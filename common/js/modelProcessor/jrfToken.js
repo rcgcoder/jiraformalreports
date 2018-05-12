@@ -193,8 +193,29 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var self=this;
 		var sValAux=self.popHtmlBuffer();
 		self.pushHtmlBuffer();
-		if (self.inFormat=="markdown"){
-			sValAux=self.model.markdownConverter.makeHtml(sValAux); 
+		if (self.inFormat!=""){
+			var sFormats=self.replaceVars(self.inFormat);
+			var arrFormats=sFormats.split(",");
+			arrFormats.forEach(function(sFormat){
+				var arrParts=self.inFormat.split("=")
+				var sFormatId=arrParts[0];
+				if (sFormatId=="markdown"){
+					sValAux=self.model.markdownConverter.makeHtml(sValAux); 
+				} else if (sFormatId=="fixed"){
+					var nDigits=2;
+					if (arrParts.length>1){
+						nDigits=arrParts[1];
+					}
+					var sFncFormula=`
+						var value=_arrRefs_[0];
+						var result=(value).toFixed(`+nDigits+`);
+						return result;
+						`;
+					sValAux=replaceAll("\n"," ").trim();
+					sValAux=executeFunction([sValAux],sFncFormula);
+				}
+			});
+			for (var i=0;i<ar)
 		}
 		self.addHtml(sValAux);
 	}

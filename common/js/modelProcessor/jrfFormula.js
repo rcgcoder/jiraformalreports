@@ -15,9 +15,13 @@ var jrfFormula=class jrfFormula{//this kind of definition allows to hot-reload
 		var dbgContent=sContent;
 		sContent=self.model.removeInnerTags(sContent,true); // remove al tags.... there are not allowed
 		sContent=replaceAll(sContent,"\n"," ");
-		var sFncFormula="var result="+sContent+"; return result;";
-		var fncFormula=Function("elem","root",sFncFormula);
-		var sValue=fncFormula(self.reportElem,self.model.processingRoot);
+		var sFncFormula=`
+						var elem=_arrRefs_[0];
+						var root=_arrRefs_[1];
+						var result=`+sContent+`;
+						return result;
+						`;
+		var sValue=executeFunction([self.reportElem,self.model.processingRoot],sFncFormula);
 		self.addHtml(sValue);
 	}
 

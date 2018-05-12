@@ -101,6 +101,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				}
 				log("Looking for Value ["+varName+"] pushed:["+varValue+"]");
 				var vVar=self.variables.getVars(varName);
+				if (vVar==""){
+					log("Error retrieving variable:["+varName+"]... trying again to debug");
+					vVar=self.variables.getVars(varName);
+					
+				}
 				
 				if (vVar.length()==1){
 					vVar.push(varValue);

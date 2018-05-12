@@ -262,8 +262,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var openInd=sText.lastIndexOf(openTag);
 		var closeInd;
 		while (openInd>=0){
-			var closeInd=sText.indexOf(closeTag,openInd+2);
-			var sInnerText=sText.substring(openInd+2,closeInd).trim();
+			var closeInd=sText.indexOf(closeTag,openInd+closeTag.length);
+			var sInnerText=sText.substring(openInd+closeTag.length,closeInd).trim();
 			if (!bReplaceVars){
 				vValues.push(sInnerText);
 				sVarRef="_arrRefs_["+iVar+"]";
@@ -280,7 +280,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			}
 			sText=sText.substring(0,openInd)+
 					sVarRef+
-				  sText.substring(closeInd+2,sText.length);
+				  sText.substring(closeInd+closeTag.length,sText.length);
 			openInd=sText.lastIndexOf(openTag);
 		}
 		return {text:sText,values:vValues};

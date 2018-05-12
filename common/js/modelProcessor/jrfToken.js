@@ -289,6 +289,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		while (openInd>=0){
 			var closeInd=sText.indexOf(closeTag,openInd+closeTag.length);
 			var sInnerText=sText.substring(openInd+closeTag.length,closeInd).trim();
+			sInnerText=self.model.removeInnerTags(sInnerText);
 			if (!bReplaceVars){
 				vValues.push(sInnerText);
 				sVarRef="_arrRefs_["+iVar+"]";

@@ -197,7 +197,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			var sFormats=self.replaceVars(self.inFormat);
 			var arrFormats=sFormats.split(",");
 			arrFormats.forEach(function(sFormat){
-				var arrParts=self.inFormat.split("=")
+				var arrParts=sFormat.split("=")
 				var sFormatId=arrParts[0];
 				if (sFormatId=="markdown"){
 					sValAux=self.model.markdownConverter.makeHtml(sValAux); 

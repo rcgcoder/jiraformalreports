@@ -112,7 +112,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		var sTagText=sHtml;
 		var indOpenTag=sTagText.lastIndexOf("<");
 		var indCloseTag;
-		var indFirstCloseTag=sTagText=indexOf(">");
+		var indFirstCloseTag=sTagText.indexOf(">");
 		var sInnerChar=" ";
 		if (isDefined(bClear)&&bClear){
 			sInnerChar="";
@@ -121,7 +121,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			indCloseTag=sTagText.indexOf(">",indOpenTag+1);
 			sTagText=sTagText.substring(0,indOpenTag)+ sInnerChar +sTagText.substring(indCloseTag+1,sTagText.length);
 			indOpenTag=sTagText.lastIndexOf("<");
-			indFirstCloseTag=sTagText=indexOf(">");
+			indFirstCloseTag=sTagText.indexOf(">");
 		}
 		return sTagText;
 	}

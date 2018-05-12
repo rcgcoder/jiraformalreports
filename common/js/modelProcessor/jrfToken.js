@@ -238,12 +238,17 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var bReplaceVars=true;
 		var openTag="{{";
 		var closeTag="}}";
+		var sText="";
 		if (isDefined(bReplaceVarsByValue)){
 			bReplaceVars=bReplaceVarsByValue;
 		}
 		if (isDefined(theOpenTag)) openTag=theOpenTag;
 		if (isDefined(theCloseTag)) closeTag=theCloseTag;
-		var sText=inText;
+		if (isDefined(inText)){
+			sText=inText;
+		} else {
+			log("You are using a undefined text.... this may be a big error!");
+		}
 		var vValues=[];
 		var sVarRef="";
 		var iVar=0;

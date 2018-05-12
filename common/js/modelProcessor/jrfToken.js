@@ -211,7 +211,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 						var result=(value).toFixed(`+nDigits+`);
 						return result;
 						`;
-					sValAux=replaceAll("\n"," ").trim();
+					sValAux=replaceAll(sValAux,"\n"," ").trim();
 					sValAux=executeFunction([sValAux],sFncFormula);
 				}
 			});

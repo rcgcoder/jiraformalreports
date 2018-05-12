@@ -88,7 +88,12 @@ class RCGStringUtils{
 		  if (isDefined(bInsensitive)&&(bInsensitive)){
 			  bModulator="i"+bModulator;
 		  }
-		  return str.replace(new RegExp(find, bModulator), replace);
+		  /*
+		   * [ ] are special cases in find.... RegExp needs /[  /]
+		   */
+		  var findAux=find.replace("[","/[");
+		  findAux=findAux.replace("]","/]");
+		  return str.replace(new RegExp(findAux, bModulator), replace);
 	};
 
 	prepareComparation(str,bCaseInsensitive,bRemoveSpecials){

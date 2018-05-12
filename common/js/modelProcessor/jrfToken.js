@@ -225,7 +225,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	replaceVarsAndExecute(sText){
 		var self=this;
 		var oReplaced=self.replaceVarsComplex(sText);
-		var vValue=self.executeFunction(oReplaced.values,oReplaced.text);
+		var vValue=executeFunction(oReplaced.values,oReplaced.text);
 		return vValue;
 	}
 	replaceVars(sText){
@@ -261,7 +261,6 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var iVar=0;
 		var openInd=sText.lastIndexOf(openTag);
 		var closeInd;
-		var bExecute=false;
 		while (openInd>=0){
 			var closeInd=sText.indexOf(closeTag,openInd+2);
 			var sInnerText=sText.substring(openInd+2,closeInd).trim();

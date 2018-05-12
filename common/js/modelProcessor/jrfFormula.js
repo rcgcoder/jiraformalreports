@@ -16,10 +16,13 @@ var jrfFormula=class jrfFormula{//this kind of definition allows to hot-reload
 		sContent=self.model.removeInnerTags(sContent,true); // remove al tags.... there are not allowed
 		sContent=replaceAll(sContent,"\n"," ");
 		var sFncFormula=`
+						""; // to close the var result= instruction inserted by executefunction
 						var elem=_arrRefs_[0];
 						var root=_arrRefs_[1];
 						var result=`+sContent+`;
 						return result;
+						log("Parse done... the rest is not executed")
+						// execute function inserts the las ";" automatically
 						`;
 		var sValue=executeFunction([self.reportElem,self.model.processingRoot],sFncFormula);
 		self.addHtml(sValue);

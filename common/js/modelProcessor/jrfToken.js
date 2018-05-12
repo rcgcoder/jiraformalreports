@@ -109,7 +109,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					vVar=self.variables.getVars(varName);
 				}
 				
-				if (vVar.length()==1){
+				if (vVar.length()==0){
 					vVar.push(varValue);
 				} else {
 					vVar.top().value=varValue;

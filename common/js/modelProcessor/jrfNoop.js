@@ -8,9 +8,10 @@ var jrfNoop=class jrfNoop{//this kind of definition allows to hot-reload
 		var self=this;
 		self.pushHtmlBuffer();
 		self.processAllChilds();
-		var sContent=self.popHtmlBuffer();
-		self.addHtml(sContent);
 		self.addPostHtml();
+		var sContent=self.popHtmlBuffer();
+		sContent=self.replaceVars(sContent);
+		self.addHtml(sContent);
 	}
 
 }

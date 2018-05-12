@@ -7,7 +7,7 @@ var jrfGetVar=class jrfGetVar{//this kind of definition allows to hot-reload
 	apply(){
 		var self=this;
 		var sName=self.varName;
-		var vValue=self.replaceVars(sName);
+		sName=self.replaceVars(sName);
 		vValue=self.variables.getVar(sName);
 		self.addHtml(vValue);
 	}

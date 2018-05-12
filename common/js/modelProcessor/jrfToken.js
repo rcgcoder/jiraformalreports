@@ -76,7 +76,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			for (var i=0;i<arrVars.length;i++){
 				var arrVarParts=arrVars[i].split("=");
 				var varName=arrVarParts[0].trim();
-				self.variables.initVarLocal(varName);
+				self.variables.initVar(varName);
 				if (arrVarParts.length>1){
 					self.variables.setVar(varName,arrVarParts[1]);
 				}
@@ -99,7 +99,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				} else {
 					varValue=sValAux;
 				}
-				log("Looking for Value ["+varName+"] pushed:["+varValue+"]");
+				log("Looking for Value ["+varName+"] to set:["+varValue+"]");
 				var vVar=self.variables.getVars(varName);
 				try {
 				    log("Variable Stack Elements:"+vVar.length());

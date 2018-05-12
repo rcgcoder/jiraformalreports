@@ -10,12 +10,15 @@ var RCGVarEngine=class RCGVarEngine{ //this kind of definition allows to hot-rel
 	popVarEnv(){
 		return this.localVars.pop();
 	}
+	topVarEnv(){
+		return this.localVars.top();
+	}
 	pushVar(varName,value){
 		var self=this;
 		var hsVars=self.getVars(varName);
 		if (hsVars==""){
 			hsVars=newHashMap();
-			self.localVars.add(varName,hsVars);
+			self.topVarEnv().add(varName,hsVars);
 		}
 		hsVars.push(value);
 	}
@@ -35,45 +38,36 @@ var RCGVarEngine=class RCGVarEngine{ //this kind of definition allows to hot-rel
 		var hsVars=self.getVars(varName);
 		if (hsVars!=""){
 			if (hsVars.length()>0){
-				var nodAux=hsVars.getLast();
-				nodAux.value=value;
-			} else {
-				hsVars.push(value);
-			}
+				hsVars.pop();
+			} 
+			hsVars.push(value);
 		} else { // if not exists is a new local var
 			self.pushVar(varName,value); 
 		}
 	}
 
-	getVars(varName){
+	getVars(varName){ // get the hashmap contained in the variable name... all variables are array of values
 		var self=this;
-		var nodAux=self.localVars.getLast();
-		var hsAux;
-		var nBrothers;
-		while (nodAux!=""){
-			nBrothers=nodAux.brothers.length;
-			nBrothers--;
-			while (nBrothers>=0){
-				hsAux=nodAux.brothers[nBrothers].value;
-				if (hsAux.exists(varName)){
-					return hsAux.getValue(varName);
-				} else { 
-					nBrothers--
-				}
+		// localVars is a Stack (hashmap without key) of Var Environments (hashmaps where the key is the var name)
+		// take the top environment
+		var nodEnv=self.localVars.getLast();
+		var hsEnv;
+		while (nodEnv!=""){
+			hsEnv=nodEnv.value;
+			if (hsEnv.exists(varName)){
+				return hsEnv.getValue(varName);
 			}
-			hsAux=nodAux.value;
-			if (hsAux.exists(varName)){
-				return hsAux.getValue(varName);
-			} else { 
-				nodAux=nodAux.previous;
-			}
+			nodEnv=nodEnv.previous;
 		}
 		return "";
 	}
-	initVarLocal(varName){
+	initVar(varName){
 		var self=this;
-		if (!self.localVars.top().exists(varName)){
-			self.localVars.top().add(varName,newHashMap());
+		var hsEnv=self.topVarEnv();
+		if (hsEnv.exists(varName)){
+			log("ERROR ... you can init a existin local variable");
+			return;
 		}
+		hsEnv.add(varName,newHashMap());
 	}
 }

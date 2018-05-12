@@ -110,22 +110,16 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 	 */
 	removeInnerTags(sHtml,bClear){
 		var sTagText=sHtml;
-		var indCloseTag=sTagText.indexOf(">");
-		var indOpenTag=sTagText.indexOf("<");
+		var indCloseTag;
+		var indOpenTag=sTagText.lastIndexOf("<");
 		var sInnerChar=" ";
 		if (isDefined(bClear)&&bClear){
 			sInnerChar="";
 		}
-		while ((indOpenTag>=0)&&(indOpenTag<indCloseTag)){// there is <  and > into the jrf tag
-			var sPart=sTagText.substring(indOpenTag+1,indCloseTag); // maybe < < > >
-			while (sPart.indexOf("<")>=0){
-				indOpenTag=sPart.indexOf("<");
-				sPart=sPart.substring(indOpenTag+1,indCloseTag); // maybe < < > >
-			}
-			// if there is not more "<" remove the pair <  ... >
+		while(indOpenTag>=0){
+			indCloseTag=sTagText.indexOf(">",indOpenTag+1);
 			sTagText=sTagText.substring(0,indOpenTag)+ sInnerChar +sTagText.substring(indCloseTag+1,sTagText.length);
-			indCloseTag=sTagText.indexOf(">");
-			indOpenTag=sTagText.indexOf("<");
+			indOpenTag=sTagText.lastIndexOf("<");
 		}
 		return sTagText;
 	}

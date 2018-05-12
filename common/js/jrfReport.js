@@ -88,7 +88,8 @@ var jrfReport=class jrfReport {
 			});
 			self.allIssues=newIssueFactory(self);
 			// change de "fieldValue" method
-			self.allIssues.functions.add("fieldValue",function(sFieldName){
+			self.allIssues.functions.add("fieldValue",function(theFieldName){
+				var sFieldName=theFieldName.trim();
 				var self=this;
 				var fncAux=self["get"+sFieldName];
 				var sFieldKey="";

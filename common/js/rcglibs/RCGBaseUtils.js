@@ -183,10 +183,14 @@ function isInArray(theArray,theKey,theField){
 }
 
 function executeFunction(arrValues,sFunctionBody){
-	var sFncFormula="var result="+sFunctionBody+";\n return result;";
+	var sFncFormula=`var result=
+						`+sFunctionBody+`
+						;
+					 return result;";
 	for (var i=0;i<arrValues.length;i++){
 		sFncFormula="log(`_arrRefs_['"+i+"']:["+arrValues[i]+"]`);\n"+sFncFormula;
 	}
+	
 	var fncFormula=Function("_arrRefs_",sFncFormula);
 	var vValue=fncFormula(arrValues);
 	return vValue;

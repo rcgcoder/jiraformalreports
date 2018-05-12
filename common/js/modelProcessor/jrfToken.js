@@ -235,7 +235,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		for (var i=0;i<oScripts.values.length;i++){
 			var sScript=oScripts.values[i];
 			var sValue=self.replaceVarsAndExecute(sScript);
-			sResult=replaceAll(sResult,"_arrRefs_["+i+"]",sValue);
+			var sRef="_arrRefs_["+i+"]";
+			sResult=replaceAll(sResult,sRef,sValue+"");
 		}
 		var oSimple=self.replaceVarsComplex(sResult);
 		return oSimple.text;

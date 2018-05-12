@@ -210,9 +210,12 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 						nDigits=arrParts[1];
 					}
 					var sFncFormula=`
+						""; // to close the var result= instruction inserted by executefunction
 						var value=_arrRefs_[0];
 						var result=parseFloat(value).toFixed(`+nDigits+`);
 						return result;
+						log("Parse done... the rest is not executed")
+						// execute function inserts the las ";" automatically
 						`;
 					sValAux=replaceAll(sValAux,"\n"," ").trim();
 					sValAux=executeFunction([sValAux],sFncFormula);

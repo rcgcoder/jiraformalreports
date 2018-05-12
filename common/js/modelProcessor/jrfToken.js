@@ -202,6 +202,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				if (sFormatId=="markdown"){
 					sValAux=self.model.markdownConverter.makeHtml(sValAux); 
 				} else if (sFormatId=="fixed"){
+					if (sValAux=="") return;
 					var nDigits=2;
 					if (arrParts.length>1){
 						nDigits=arrParts[1];

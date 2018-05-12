@@ -215,7 +215,6 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					sValAux=executeFunction([sValAux],sFncFormula);
 				}
 			});
-			for (var i=0;i<ar)
 		}
 		self.addHtml(sValAux);
 	}

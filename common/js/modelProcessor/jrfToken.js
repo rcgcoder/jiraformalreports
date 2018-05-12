@@ -234,12 +234,12 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var sResult=oScripts.text;
 		for (var i=0;i<oScripts.values.length;i++){
 			var sScript=oScripts.values[i];
-			var sValue=self.replaceVarsAndExecute(sScript);
+			var sValue=self.replaceVarsAndExecute(sScript).trim();
 			var sRef="_arrRefs_["+i+"]";
-			sResult=replaceAll(sResult,sRef,sValue+"");
+			sResult=replaceAll(sResult,sRef,sValue+"").trim();
 		}
 		var oSimple=self.replaceVarsComplex(sResult);
-		return oSimple.text;
+		return oSimple.text.trim();
 	}
 	replaceVarsComplex(inText,theOpenTag,theCloseTag,bReplaceVarsByValue){
 		var self=this;

@@ -95,7 +95,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				var varName=arrVarParts[0].trim();
 				var varValue;
 				if (arrVarParts.length>0){
-					varValue=arrVarParts[1];
+					varValue=self.replaceVars(arrVarParts[1]);
 				} else {
 					varValue=sValAux;
 				}
@@ -122,7 +122,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				var varName=arrVarParts[0].trim();
 				var varValue;
 				if (arrVarParts.length>1){
-					varValue=arrVarParts[1];
+					varValue=self.replaceVars(arrVarParts[1]);
 				} else {
 					varValue=sValAux;
 				}
@@ -223,42 +223,55 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	}
 	replaceVars(sText){
 		var self=this;
-		var oReplaced=self.replaceVarsComplex(sText);
-		return oReplaced.text;
+		var oScripts=self.replaceVarsComplex(sText,"{{{","}}}",false);
+		var sResult=oScripts.text;
+		for (var i=0;i<oScripts.values.length;i++){
+			var sScript=oScripts.values[i];
+			var sValue=self.replaceVarsAndExecute(sScript);
+			sResult=replaceAll(sResult,"_arrRefs_["+i+"]",sValue);
+		}
+		var oSimple=self.replaceVarsComplex(sResult);
+		return oSimple.text;
 	}
-	replaceVarsComplex(sText){
+	replaceVarsComplex(inText,theOpenTag,theCloseTag,bReplaceVarsByValue){
 		var self=this;
+		var bReplaceVars=true;
+		var openTag="{{";
+		var closeTag="}}";
+		if (isDefined(bReplaceVarsByValue)){
+			bReplaceVars=bReplaceVarsByValue;
+		}
+		if (isDefined(theOpenTag)) openTag=theOpenTag;
+		if (isDefined(theCloseTag)) closeTag=theCloseTag;
 		var sText=inText;
 		var vValues=[];
 		var sVarRef="";
 		var iVar=0;
-		var initInd=sText.lastIndexOf("{{");
-		while (initInd>=0){
-			var lastInd=sText.indexOf("}}",initInd+2);
-			var sInnerVarName=sText.substring(initInd+2,lastInd).trim();
-			var vInnerVarValue=self.variables.getVar(sInnerVarName);
-			vValues.push(vInnerVarValue);
-			if (isObject(vInnerVarValue)){
+		var openInd=sText.lastIndexOf(openTag);
+		var closeInd;
+		var bExecute=false;
+		while (openInd>=0){
+			var closeInd=sText.indexOf(closeTag,openInd+2);
+			var sInnerText=sText.substring(openInd+2,closeInd).trim();
+			if (!bReplaceVars){
+				vValues.push(sInnerText);
 				sVarRef="_arrRefs_["+iVar+"]";
 				iVar++;
 			} else {
-				sVarRef=vInnerVarValue;
+				var vInnerVarValue=self.variables.getVar(sInnerText);
+				vValues.push(vInnerVarValue);
+				if (isObject(vInnerVarValue)){
+					sVarRef="_arrRefs_["+iVar+"]";
+					iVar++;
+				} else {
+					sVarRef=vInnerVarValue;
+				}
 			}
-			sText=sText.substring(0,initInd)+
+			sText=sText.substring(0,openInd)+
 					sVarRef+
-				  sText.substring(lastInd+2,sText.length);
-			initInd=sText.lastIndexOf("{{");
+				  sText.substring(closeInd+2,sText.length);
+			openInd=sText.lastIndexOf(openTag);
 		}
 		return {text:sText,vales:vValues};
-	}
-	executeFunction(arrValues,sFunctionBody){
-		var sFncBody=replaceAll(sFunctionBody,"\n"," ");
-		var sFncFormula="var result="+sFncBody+";\n return result;";
-		for (var i=0;i<arrValues.length;i++){
-			sFncFormula="log(`_arrRefs_['"+i+"']:["+arrValues[i]+"]`);\n"+sFncFormula;
-		}
-		var fncFormula=Function("_arrRefs_",sFncFormula);
-		var vValue=fncFormula(arrValues);
-		return vValue;
 	}
 }

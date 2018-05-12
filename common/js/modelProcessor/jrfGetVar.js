@@ -7,13 +7,8 @@ var jrfGetVar=class jrfGetVar{//this kind of definition allows to hot-reload
 	apply(){
 		var self=this;
 		var sName=self.varName;
-		var initInd=sName.lastIndexOf("{{");
-		var vValue="";
-		if (initInd<0){ // there is not {{varName}} tokens all the string is a varName
-			vValue=self.variables.getVar(sName);
-		} else {
-			vValue=self.replaceVarsAndExecute(sName);
-		}
+		var vValue=self.replaceVars(sName);
+		vValue=self.variables.getVar(sName);
 		self.addHtml(vValue);
 	}
 

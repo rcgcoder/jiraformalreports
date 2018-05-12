@@ -182,6 +182,15 @@ function isInArray(theArray,theKey,theField){
 	return false;
 }
 
+function executeFunction(arrValues,sFunctionBody){
+	var sFncFormula="var result="+sFunctionBody+";\n return result;";
+	for (var i=0;i<arrValues.length;i++){
+		sFncFormula="log(`_arrRefs_['"+i+"']:["+arrValues[i]+"]`);\n"+sFncFormula;
+	}
+	var fncFormula=Function("_arrRefs_",sFncFormula);
+	var vValue=fncFormula(arrValues);
+	return vValue;
+}
 
 var undefinedValue;
 function fncEmpty(){

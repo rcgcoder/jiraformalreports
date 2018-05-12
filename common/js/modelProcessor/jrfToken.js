@@ -272,6 +272,6 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				  sText.substring(closeInd+2,sText.length);
 			openInd=sText.lastIndexOf(openTag);
 		}
-		return {text:sText,vales:vValues};
+		return {text:sText,values:vValues};
 	}
 }

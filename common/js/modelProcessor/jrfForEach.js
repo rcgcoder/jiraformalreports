@@ -9,8 +9,9 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 		self.innerVarName=self.getAttrVal("as").trim();
 		self.source=self.getAttrVal("source").trim();
 		self.sourceJson=self.getAttrVal("sourcejson").trim();
-		self.sourceFormula=self.getAttrVal("sourceFormula").trim();
+		self.sourceFormula=self.getAttrVal("sourceformula").trim();
 		self.whereCondition=self.getAttrVal("where").trim();
+		self.countProcessedElements=self.getAttrVal("count").trim();
 
 		if (self.type=="root"){
 			self.elemsInForEach=self.model.report.childs;
@@ -77,6 +78,7 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 		
 //		var nItem=0;
 		var rootBackUp=self.model.processingRoot;
+		// counting total elements
 		self.elemsInForEach.walk(function(eachElem){
 			var newParent;
 			var processedItemNumber=0;
@@ -94,6 +96,9 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 				}
 				if (bAllRoots) self.model.processingRoot=newParent;
 				self.continueTask();
+			});
+			self.addStep("Getting Count of final processed elements in For Each",function(){
+				
 			});
 			self.addStep("Processing Element in For Each",function(){
 				var bWhereResult=true;
@@ -120,6 +125,7 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 						&&((processedItemNumber+processedItemJumped)<(self.elemsInForEach.length()))){
 					self.addHtml("</td></tr><tr><td>");
 				}
+				
 				self.continueTask();
 			});
 		});

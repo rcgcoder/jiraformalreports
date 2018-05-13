@@ -85,7 +85,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			self.endApplyToken();
 			self.variables.popVarEnv();
 			var sHtml=self.popHtmlBuffer();
-			self.continueTask([sHtml]);
+			self.addHtml(sHtml);
+			self.continueTask();
 		});
 		self.continueTask();
 	}

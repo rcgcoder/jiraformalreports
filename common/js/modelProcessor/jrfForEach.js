@@ -117,7 +117,7 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 				processedItemNumber++;
 				if ((self.subType=="row")
 						&&(bLastShowed)
-						&&((processedItemNumber+self.processedItemJumped)<(self.elemsInForEach.length()))){
+						&&((processedItemNumber+processedItemJumped)<(self.elemsInForEach.length()))){
 					self.addHtml("</td></tr><tr><td>");
 				}
 				self.continueTask();

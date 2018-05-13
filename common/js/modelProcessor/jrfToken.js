@@ -354,8 +354,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				iVar++;
 			} else {
 				var vInnerVarValue=self.variables.getVar(sInnerText);
-				vValues.push(vInnerVarValue);
 				if (isObject(vInnerVarValue)){
+					vValues.push(vInnerVarValue);
 					sVarRef="_arrRefs_["+iVar+"]";
 					iVar++;
 				} else {

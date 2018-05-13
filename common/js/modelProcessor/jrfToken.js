@@ -35,7 +35,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.setVars=obj.getAttrVal("setVar");
 		obj.inFormat=obj.getAttrVal("informat");
 		obj.outFormat=obj.getAttrVal("format");
-		obj.ifCondition=obj.getAttrVal("if").trim();
+		obj.ifCondition=obj.getAttrVal("if");
 		obj.ifConditionResult=true;
 		obj.autoAddPostHtml=true;
 	}
@@ -228,6 +228,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		return "";
 	}
 	applyIfCondition(){
+		var self=this;
 		if (self.ifCondition!=""){
 			var sProcesed=self.replaceVars(self.ifCondition);
 			sProcessed=executeFunction([],sProcesed);

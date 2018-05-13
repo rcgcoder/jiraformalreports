@@ -7,11 +7,16 @@ var jrfNoop=class jrfNoop{//this kind of definition allows to hot-reload
 	apply(){
 		var self=this;
 		self.pushHtmlBuffer();
-		self.processAllChilds();
-		self.addPostHtml();
-		var sContent=self.popHtmlBuffer();
-		sContent=self.replaceVars(sContent);
-		self.addHtml(sContent);
+		self.addTask("Processing all Childs of NOOP",function(){
+			self.processAllChilds();
+		});
+		self.addTask("Finalizing the Noop process",function(){
+			self.addPostHtml();
+			var sContent=self.popHtmlBuffer();
+			sContent=self.replaceVars(sContent);
+			self.addHtml(sContent);
+			self.continueTask();
+		});
 	}
 
 }

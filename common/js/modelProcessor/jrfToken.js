@@ -46,27 +46,49 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		if (isUndefined(auxList)){
 			auxList=self.tag.getChilds();
 		}
-		var nChild=0;
-		auxList.walk(function(childTag){
+		var nChildWalker=0;
+		var processChild=function(childTag,nChild){
 			self.addHtml("<!-- START "+childTag.id +" CHILD ("+nChild+") LIST ITEM IN JRF TOKEN ["+self.tokenName+"] -->");
-			self.addHtml(self.model.applyTag(childTag,auxRptElem));
-			self.addHtml("<!-- END "+childTag.id +" CHILD ("+nChild+") LIST ITEM IN JRF TOKEN ["+self.tokenName+"] -->");
-			nChild++;
+			self.addStep("Applying Tag to model..",function(){
+				self.model.applyTag(childTag,auxRptElem);
+			})
+			self.addStep("Pushing the HTML..",function([sHtml]){
+				self.addHtml(sHtml);
+				self.addHtml("<!-- END "+childTag.id +" CHILD ("+nChild+") LIST ITEM IN JRF TOKEN ["+self.tokenName+"] -->");
+				self.continueTask();
+			})
+			self.continueTask();
+		}
+		auxList.walk(function(childTag){
+			self.addStep("Processing Child...",function(){
+				processChild(childTag,nChildWalker);
+			});
+			nChildWalker++;
 		});
-		
+		self.continueTask();
 	}
 	encode(){
 		var self=this;
-		self.pushHtmlBuffer();
-		self.variables.pushVarEnv();
-		self.addHtml("<!-- START PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
-		self.addHtml(self.tag.getPreviousHTML());
-		self.addHtml("<!-- END PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
-		self.startApplyToken();
-		self.apply();
-		self.endApplyToken();
-		self.variables.popVarEnv();
-		return self.popHtmlBuffer();
+		self.addStep("Pre-Encode part...",function(){
+			self.pushHtmlBuffer();
+			self.variables.pushVarEnv();
+			self.addHtml("<!-- START PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
+			self.addHtml(self.tag.getPreviousHTML());
+			self.addHtml("<!-- END PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
+			self.startApplyToken();
+			self.continueTask();
+		});
+		self.addStep("Encode part...",function(){
+			self.apply(); // the apply function not returns anything... only writes text to buffer
+			self.continueTask();
+		});
+		self.addStep("Post-Encode part...",function(){
+			self.endApplyToken();
+			self.variables.popVarEnv();
+			var sHtml=self.popHtmlBuffer();
+			self.continueTask([sHtml]);
+		});
+		self.continueTask();
 	}
 	
 	applyInitVars(){

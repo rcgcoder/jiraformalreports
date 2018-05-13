@@ -25,9 +25,41 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 		if (self.reportElem==self.model.report){
 			bAllRoots=true;
 		}
-		var nItem=0;
+//		var nItem=0;
+		var nItemWalk=0;
 		var rootBackUp=self.model.processingRoot;
+		
+		var fncProcessEach=function(newParent,nItem){
+			self.addHtml("<!-- START INNER LOOP OF ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
+			if (self.innerVarName!=""){
+				self.variables.pushVar(self.innerVarName,newParent);
+			}
+			if (bAllRoots) self.model.processingRoot=newParent;
+			self.addStep("Process Childs",function(){
+				self.processAllChilds(self.tag.getChilds(),newParent);
+			});
+			self.addStep("Continue...",function(){
+				if (bAllRoots) self.model.processingRoot=rootBackUp;
+				self.addPostHtml();
+	
+				if ((self.subType=="row")&&(self.elemsInForEach.getLast().value.getKey()
+											!=newParent.getKey())){
+					self.addHtml("</td></tr><tr><td>");
+				}
+				self.addHtml("<!-- END INNER LOOP OF ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
+				self.continueTask();
+			});
+			self.continueTask();
+		}
+		
 		self.elemsInForEach.walk(function(newParent){
+			self.addStep("Processing Element in For Each",function(){
+				fncProcessEach(newParent,nItemWalk);
+			});
+			nItemWalk++;
+		});
+		
+/*		self.elemsInForEach.walk(function(newParent){
 			self.addHtml("<!-- START INNER LOOP OF ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
 			if (self.innerVarName!=""){
 				self.variables.pushVar(self.innerVarName,newParent);
@@ -43,7 +75,7 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 			}
 			self.addHtml("<!-- END INNER LOOP OF ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
 			nItem++;
-		});
+		});*/
 	}
 
 }

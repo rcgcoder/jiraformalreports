@@ -229,10 +229,15 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			sTokenName="jrfNoop";
 		}
 		tagApplier=new window[sTokenName](tag,reportElem,self);
-
-		self.addHtml(tagApplier.encode()); 
-		
-		return self.popHtmlBuffer();
+		self.addStep("Encoding the tag...",function(){
+			tagApplier.encode(); 
+		});
+		self.addStep("Returning the html",function(sHtml){
+			self.addHtml(sHtml);
+			var sHtmlResult=self.popHtmlBuffer();
+			self.continueTask([sHtmlResult]);
+		});
+		self.continueTask();
 	}
 	encode(parentTag,reportElement){
 		var self=this;
@@ -241,8 +246,15 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		if (isUndefined(reportElem)){
 			reportElem=self.report;
 		}
-		self.addHtml(self.applyTag(parentTag,reportElem));
-		return self.popHtmlBuffer();
+		self.addStep("Applying tag recursively....",function(){
+			self.applyTag(parentTag,reportElem);
+		});
+		self.addStep("Returning the html",function(sHtml){
+			self.addHtml(sHtml);
+			var sHtmlResult=self.popHtmlBuffer();
+			self.continueTask([sHtmlResult]);
+		});
+		self.continueTask();
 	}
 	parse(html,parentTag){
 		var self=this;

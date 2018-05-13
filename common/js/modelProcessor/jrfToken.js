@@ -314,7 +314,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			sResult=sResult.trim();
 		}
 		var oSimple=self.replaceVarsComplex(sResult);
-		return oSimple.text.trim();
+		var vValue="";
+		if (oSimple.values.length>0){
+			vValue=executeFunction(oSimple.values,oSimple.text);
+		}
+		return vValue;
 	}
 	replaceVarsComplex(inText,theOpenTag,theCloseTag,bReplaceVarsByValue){
 		var self=this;

@@ -51,8 +51,9 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 				var fncAdjustText=function(sText,search,replace){
 					var sAux=sText;
 					while (sAux.indexOf(search)>=0){
-						sAux.sourceJson=replaceAll(sAux,search,replace);
+						sAux=replaceAll(sAux,search,replace);
 					}
+					return sAux;
 				}
 				self.sourceJson=fncAdjustText(self.sourceJson,' ,',',');
 				self.sourceJson=fncAdjustText(self.sourceJson,', ',',');

@@ -97,9 +97,6 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 				if (bAllRoots) self.model.processingRoot=newParent;
 				self.continueTask();
 			});
-			self.addStep("Getting Count of final processed elements in For Each",function(){
-				
-			});
 			self.addStep("Processing Element in For Each",function(){
 				var bWhereResult=true;
 				if (self.whereCondition!=""){

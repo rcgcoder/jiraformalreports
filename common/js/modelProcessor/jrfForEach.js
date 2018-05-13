@@ -63,7 +63,6 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 			} else if (self.type=="array"){
 				newParent=self.reportElem;
 			}
-			self.replaceVarsAndExecute(sAux);
 			self.addStep("Start processing Element in For Each",function(){
 				self.addHtml("<!-- START INNER LOOP OF ITEM "+ (self.processedItemNumber) + " IN FOREACH JRF TOKEN -->");
 				if (self.innerVarName!=""){

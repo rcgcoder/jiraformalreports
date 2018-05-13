@@ -61,13 +61,13 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 	addHtml(sText){
 		var self=this;
 		if ((isDefined(sText)) && (sText!=null)){
-/*			try {
+			try {
 				log((""+sText).substring(0,150));
 			}
 			catch(err) {
 			    log("Mega Error");
 			}
-*/			self.html+="\n"+sText;
+			self.html+="\n"+sText;
 		}
 	}
 

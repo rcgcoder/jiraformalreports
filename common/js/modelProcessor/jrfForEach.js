@@ -111,7 +111,7 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 			self.addStep("Continue...",function(){
 				if (bAllRoots) self.model.processingRoot=rootBackUp;
 				self.addPostHtml();
-				if ((self.subType=="row")&&((self.processedItemNumber+self.processedItemJumped)==(self.elemsInForEach.length-1))){
+				if ((self.subType=="row")&&((self.processedItemNumber+self.processedItemJumped)==(self.elemsInForEach.length()-1))){
 					self.addHtml("</td></tr><tr><td>");
 				}
 				self.addHtml("<!-- END INNER LOOP OF ITEM "+ (self.processedItemNumber) + " IN FOREACH JRF TOKEN -->");

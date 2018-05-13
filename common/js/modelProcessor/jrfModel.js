@@ -230,12 +230,12 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		}
 		tagApplier=new window[sTokenName](tag,reportElem,self);
 		self.addStep("Encoding the tag...",function(){
-			tagApplier.encode(); 
+			tagApplier.encode(); // it has steps... into
 		});
-		self.addStep("Returning the html",function(sHtml){
-			self.addHtml(sHtml);
+		self.addStep("Returning the html",function(){
 			var sHtmlResult=self.popHtmlBuffer();
-			self.continueTask([sHtmlResult]);
+			self.addHtml(sHtmlResult);
+			self.continueTask();
 		});
 		self.continueTask();
 	}
@@ -249,10 +249,10 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		self.addStep("Applying tag recursively....",function(){
 			self.applyTag(parentTag,reportElem);
 		});
-		self.addStep("Returning the html",function(sHtml){
+		self.addStep("Returning the html",function(){
+			var sHtml=self.popHtmlBuffer();
 			self.addHtml(sHtml);
-			var sHtmlResult=self.popHtmlBuffer();
-			self.continueTask([sHtmlResult]);
+			self.continueTask();
 		});
 		self.continueTask();
 	}
@@ -281,13 +281,15 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			self.continueTask();
 		});
 		self.addStep("Encoding model with Jira Info",function(){
-			var sHtml=self.encode(rootJRF);
+			self.pushHtmlBuffer();
+			self.encode(rootJRF);
 //			log(sHtml);
+			var sHtml=self.popHtmlBuffer();
+			if ((self.html.length>0)||(self.htmlStack.length()>0)){
+				log("Error.... someone has push hmtl without pop");
+			}
 			self.continueTask([sHtml]);
 		});
-		self.addStep("Returning the Result HTML",function(sHtml){
-			self.continueTask([sHtml]);
-		})
 		self.continueTask();
 	}
 }

@@ -260,7 +260,7 @@ var jrfReport=class jrfReport {
 		self.addStep("Processing Model",function(){
 			
 			var theModel=new jrfModel(self);
-			theModel.process();
+			theModel.process(); // hash inner task....
 			self.continueTask();
 		});
 		

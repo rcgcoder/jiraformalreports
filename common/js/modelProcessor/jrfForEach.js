@@ -67,6 +67,8 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 				self.elemsInForEach=JSON.parse(self.sourceJson);
 			} else if (self.sourceFormula!=""){
 				var sAux=self.replaceVars(self.sourceFormula);
+				sAux=replaceAll(sAux,";",",");
+				sAux=replaceAll(sAux,"'",'"');
 				self.elemsInForEach=self.replaceVarsAndExecute(sAux);
 			}
 			var hsAux=newHashMap();

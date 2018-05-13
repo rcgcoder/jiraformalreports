@@ -122,7 +122,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			var arrVars=self.setVars.split(",");
 			for (var i=0;i<arrVars.length;i++){
 				var arrVarParts=arrVars[i].split("=");
-				var varName=arrVarParts[0].trim();
+				var varName=self.replaceVars(arrVarParts[0].trim());
 				var varValue;
 				if (arrVarParts.length>1){
 					varValue=self.replaceVars(arrVarParts[1]);
@@ -156,7 +156,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			var arrVars=self.pushVars.split(",");
 			for (var i=0;i<arrVars.length;i++){
 				var arrVarParts=arrVars[i].split("=");
-				var varName=arrVarParts[0].trim();
+				var varName=self.replaceVars(arrVarParts[0].trim());
 				var varValue;
 				if (arrVarParts.length>1){
 					varValue=self.replaceVars(arrVarParts[1]);

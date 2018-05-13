@@ -18,6 +18,7 @@ var jrfFormula=class jrfFormula{//this kind of definition allows to hot-reload
 			var dbgContent=sContent;
 			sContent=self.model.removeInnerTags(sContent,true); // remove al tags.... there are not allowed
 			sContent=replaceAll(sContent,"\n"," ");
+			sContent=self.replaceVars(sContent);
 			var sFncFormula=`
 							""; // to close the var result= instruction inserted by executefunction
 							var elem=_arrRefs_[0];

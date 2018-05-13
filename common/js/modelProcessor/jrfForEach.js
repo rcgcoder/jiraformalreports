@@ -55,6 +55,9 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 					}
 					return sAux;
 				}
+				self.sourceJson=fncAdjustText(self.sourceJson,'\t','');
+				self.sourceJson=fncAdjustText(self.sourceJson,'\n','');
+				self.sourceJson=fncAdjustText(self.sourceJson,'\r','');
 				self.sourceJson=fncAdjustText(self.sourceJson,' ,',',');
 				self.sourceJson=fncAdjustText(self.sourceJson,', ',',');
 				self.sourceJson=fncAdjustText(self.sourceJson,"'",'"');

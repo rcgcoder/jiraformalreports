@@ -77,11 +77,11 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 		
 //		var nItem=0;
 		var rootBackUp=self.model.processingRoot;
-		var processedItemNumber=0;
-		var processedItemJumped=0;
-		var bLastShowed=true;
 		self.elemsInForEach.walk(function(eachElem){
 			var newParent;
+			var processedItemNumber=0;
+			var processedItemJumped=0;
+			var bLastShowed=true;
 			if ((self.type=="root")||(self.type=="child")||(self.type=="advchild")){
 				newParent=eachElem;
 			} else if (self.type=="array"){
@@ -115,7 +115,9 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 				self.addPostHtml();
 				self.addHtml("<!-- END INNER LOOP OF ITEM "+ (self.processedItemNumber) + " IN FOREACH JRF TOKEN -->");
 				processedItemNumber++;
-				if ((self.subType=="row")&&(bLastShowed)&&((processedItemNumber+self.processedItemJumped)<(self.elemsInForEach.length()))){
+				if ((self.subType=="row")
+						&&(bLastShowed)
+						&&((processedItemNumber+self.processedItemJumped)<(self.elemsInForEach.length()))){
 					self.addHtml("</td></tr><tr><td>");
 				}
 				self.continueTask();

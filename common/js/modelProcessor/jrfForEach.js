@@ -11,6 +11,8 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 		self.source=self.getAttrVal("source").trim();
 		self.sourceJson=self.getAttrVal("sourcejson").trim();
 		self.sourceFormula=self.getAttrVal("sourceFormula").trim();
+		self.whereCondition=self.getAttrVal("where").trim();
+
 		if (self.type=="root"){
 			self.elemsInForEach=self.model.report.childs;
 		} else if (self.type=="child"){
@@ -77,7 +79,16 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 				self.continueTask();
 			});
 			self.addStep("Processing Element in For Each",function(){
-				self.processAllChilds(self.tag.getChilds(),newParent);
+				var bWhereResult=true;
+				if (self.whereCondition!=""){
+					var sWhere=self.replaceVars(self.whereCondition);
+					bWhereResult=self.replaceVarsAndExecute(sWhere);
+				}
+				if (bWhereResult){
+					self.processAllChilds(self.tag.getChilds(),newParent);
+				} else {
+					self.continueTask();
+				}
 			});
 			self.addStep("Continue...",function(){
 				if (bAllRoots) self.model.processingRoot=rootBackUp;

@@ -1,6 +1,7 @@
 var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 	constructor(theReport){
 		var self=this;
+		System.webapp.getTaskManager().extendObject(self);
 		self.variables=new RCGVarEngine();
 		self.tokenBase=new jrfToken(self);
 		self.htmlStack=newHashMap();
@@ -39,6 +40,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 	}
 	extendToken(tagApplier,tag,reportElem){
 		var self=this;
+		System.webapp.getTaskManager().extendObject(tagApplier);
 		self.tokenBase.extendObj(tagApplier,tag,reportElem);
 	}
 	pushHtmlBuffer(sText){
@@ -262,9 +264,18 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		var self=this;
 		var sModel=self.report.config.model;
 		var rootJRF=self.tagFactory.new();
-		self.parse(sModel,rootJRF);
-		var sHtml=self.encode(rootJRF);
-		log(sHtml);
-		return sHtml;
+		self.addStep("Parsing Model",function(){
+			self.parse(sModel,rootJRF);
+			self.continueTask();
+		});
+		self.addStep("Encoding model with Jira Info",function(){
+			var sHtml=self.encode(rootJRF);
+//			log(sHtml);
+			self.continueTask([sHtml]);
+		});
+		self.addStep("Returning the Result HTML",function(sHtml){
+			self.continueTask([sHtml]);
+		})
+		self.continueTask();
 	}
 }

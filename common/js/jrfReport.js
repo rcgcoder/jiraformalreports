@@ -11,8 +11,7 @@ var jrfReport=class jrfReport {
 		self.rootIssues=newHashMap();
 		self.rootProjects=newHashMap();
 		self.bFinishReport=false;
-		var tm=System.webapp.getTaskManager();
-		tm.extendObject(self);
+		System.webapp.getTaskManager().extendObject(self);
 		self.jira=System.webapp.getJira();
 		self.confluence=System.webapp.getConfluence();
 	}
@@ -261,9 +260,13 @@ var jrfReport=class jrfReport {
 		self.addStep("Processing Model",function(){
 			
 			var theModel=new jrfModel(self);
-			var sModelProcessed=theModel.process();
+			theModel.process();
+			self.continueTask();
+		});
+		
+		self.addStep("Setting the HTML",function(sModelProcessedResult){
 	        var jqResult=$("#ReportResult");
-	        jqResult.html(sModelProcessed);
+	        jqResult.html(sModelProcessedResult);
 			self.continueTask();
 		});
 		self.continueTask();

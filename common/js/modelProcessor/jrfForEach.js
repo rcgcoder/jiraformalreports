@@ -48,12 +48,17 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 				sAux="["+sAux+"]";
 				self.elemsInForEach=JSON.parse(sAux);
 			} else if (self.sourceJson!=""){
-				while (self.sourceJson.indexOf(" ,")>=0){
-					self.sourceJson=replaceAll(self.sourceJson," ,",",");
+				var fncAdjustText=function(sText,search,replace){
+					var sAux=sText;
+					while (sAux.indexOf(search)>=0){
+						sAux.sourceJson=replaceAll(sAux,search,replace);
+					}
 				}
-				while (self.sourceJson.indexOf(", ")>=0){
-					self.sourceJson=replaceAll(self.sourceJson,", ",",");
-				}
+				self.sourceJson=fncAdjustText(self.sourceJson,' ,',',');
+				self.sourceJson=fncAdjustText(self.sourceJson,', ',',');
+				self.sourceJson=fncAdjustText(self.sourceJson,'" ','"');
+				self.sourceJson=fncAdjustText(self.sourceJson,' "','"');
+				self.sourceJson=fncAdjustText(self.sourceJson,'"',"'");
 				self.elemsInForEach=JSON.parse(self.sourceJson);
 			} else if (self.sourceFormula!=""){
 				var sAux=self.replaceVars(self.sourceFormula);

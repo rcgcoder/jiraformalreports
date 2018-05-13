@@ -20,6 +20,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.addPostHtml=self.addPostHtml;
 		obj.startApplyToken=self.startApplyToken;
 		obj.endApplyToken=self.endApplyToken;
+		obj.applyIfCondition=self.applyIfCondition;
 		obj.applyInFormat=self.applyInFormat;
 		obj.applyOutFormat=self.applyOutFormat;
 		obj.applyInitVars=self.applyInitVars;
@@ -34,6 +35,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.setVars=obj.getAttrVal("setVar");
 		obj.inFormat=obj.getAttrVal("informat");
 		obj.outFormat=obj.getAttrVal("format");
+		obj.ifCondition=obj.getAttrVal("if").trim();
+		obj.ifConditionResult=true;
 		obj.autoAddPostHtml=true;
 	}
 	processAllChilds(childList,reportElement){
@@ -78,11 +81,16 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			self.continueTask();
 		});
 		self.addStep("Encode part...",function(){
-			self.apply(); // the apply function not returns anything... only writes text to buffer
+			if (self.ifConditionResult){
+				self.apply(); // the apply function not returns anything... only writes text to buffer
+			}
 			self.continueTask();
 		});
 		self.addStep("Post-Encode part...",function(){
 			self.endApplyToken();
+			self.continueTask();
+		});
+		self.addStep("PostProcess all token and return...",function(){
 			self.variables.popVarEnv();
 			var sHtml=self.popHtmlBuffer();
 			self.addHtml(sHtml);
@@ -170,19 +178,28 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	startApplyToken(){
 		var self=this;
 		self.pushHtmlBuffer();
-		self.applyInitVars();
+		// process the if parameter 
+		self.applyIfCondition();
+		if (self.ifConditionResult){
+			self.applyInitVars();
+		}
 	}
 	endApplyToken(){
 		var self=this;
-		self.applyInFormat();
-		self.applySetVars();
-		self.applyPushVars();
-		self.applyOutFormat();
 		var sAux="";
-		sAux=self.popHtmlBuffer();
-		self.addHtml(sAux);
-		if (self.autoAddPostHtml){
-			self.addPostHtml();
+		if (self.ifConditionResult){
+			self.applyInFormat();
+			self.applySetVars();
+			self.applyPushVars();
+			self.applyOutFormat();
+			sAux=self.popHtmlBuffer();
+			self.addHtml(sAux);
+			if (self.autoAddPostHtml){
+				self.addPostHtml();
+			}
+		} else {
+			sAux=self.popHtmlBuffer();
+			self.addHtml(sAux);
 		}
 	}
 	addPostHtml(){
@@ -209,6 +226,13 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			return self.getAttrVal(sNewId);
 */		}
 		return "";
+	}
+	applyIfCondition(){
+		if (self.ifCondition!=""){
+			var sProcesed=self.replaceVars(self.ifCondition);
+			sProcessed=executeFunction([],sProcesed);
+			self.ifConditionResult=sProcesed;			
+		}
 	}
 	
 	applyInFormat(){

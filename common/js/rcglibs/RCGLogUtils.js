@@ -83,11 +83,11 @@ class RCGLogUtils{
 	}
 	log(sText){
 		var self=loggerFactory.getLogger();
-		var sFormated=sText;
-		if (typeof formatLog!=="undefined"){
-			sFormated=formatLog(sText);
-		}
 		if (self.enabled){
+			var sFormated=sText;
+			if (typeof formatLog!=="undefined"){
+				sFormated=formatLog(sText);
+			}
 			if (self.logToBuffer){
 				self.logText+="\n"+sFormated;
 			} else {

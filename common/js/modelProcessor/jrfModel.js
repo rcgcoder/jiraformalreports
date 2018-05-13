@@ -283,6 +283,8 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		self.addStep("Encoding model with Jira Info",function(){
 			self.pushHtmlBuffer();
 			self.encode(rootJRF);
+		});
+		self.addStep("Returning last HTML to process caller",function(){
 //			log(sHtml);
 			var sHtml=self.popHtmlBuffer();
 			if ((self.html.length>0)||(self.htmlStack.length()>0)){

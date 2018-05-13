@@ -7,6 +7,7 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 		self.subType=self.getAttrVal("subtype");
 		self.where=self.getAttrVal("where");
 		self.processedItemNumber=0;
+		self.processedItemJumped=0;
 		self.innerVarName=self.getAttrVal("as").trim();
 		self.source=self.getAttrVal("source").trim();
 		self.sourceJson=self.getAttrVal("sourcejson").trim();
@@ -103,13 +104,14 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 				if (bWhereResult){
 					self.processAllChilds(self.tag.getChilds(),newParent);
 				} else {
+					self.processedItemJumped++;
 					self.continueTask();
 				}
 			});
 			self.addStep("Continue...",function(){
 				if (bAllRoots) self.model.processingRoot=rootBackUp;
 				self.addPostHtml();
-				if ((self.subType=="row")&&(self.processedItemNumber==(self.elemsInForEach.length-1))){
+				if ((self.subType=="row")&&((self.processedItemNumber+self.processedItemJumped)==(self.elemsInForEach.length-1))){
 					self.addHtml("</td></tr><tr><td>");
 				}
 				self.addHtml("<!-- END INNER LOOP OF ITEM "+ (self.processedItemNumber) + " IN FOREACH JRF TOKEN -->");

@@ -336,6 +336,9 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		if (isDefined(theCloseTag)) closeTag=theCloseTag;
 		if (isDefined(inText)){
 			sText=inText;
+			if (!isString(sText)){
+				sText=""+sText;
+			}
 		} else {
 			log("You are using a undefined text.... this may be a big error!");
 		}

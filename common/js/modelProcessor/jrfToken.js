@@ -313,6 +313,9 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			sResult=replaceAll(sResult,sRef,sValue);
 			sResult=sResult.trim();
 		}
+		log("executed {{{ }}}");
+		log(sResult);
+		log("now let´s replace {{ }}");
 		var oSimple=self.replaceVarsComplex(sResult);
 		var vValue="";
 		if (oSimple.values.length>0){

@@ -52,8 +52,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			self.addStep("Applying Tag to model..",function(){
 				self.model.applyTag(childTag,auxRptElem);
 			})
-			self.addStep("Pushing the HTML..",function([sHtml]){
-				self.addHtml(sHtml);
+			self.addStep("Pushing the HTML..",function(){
 				self.addHtml("<!-- END "+childTag.id +" CHILD ("+nChild+") LIST ITEM IN JRF TOKEN ["+self.tokenName+"] -->");
 				self.continueTask();
 			})

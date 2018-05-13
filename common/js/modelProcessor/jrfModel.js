@@ -204,11 +204,18 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		});
 		return sResult;
 	}
+	changeBrackets(sText){
+		var sResult=replaceAll(sText,"{{{","{ { {");
+		sResult=replaceAll(sText,"}}}","} } }");
+		sResult=replaceAll(sText,"{{","{ {");
+		sResult=replaceAll(sText,"}}","} }");
+		return sResult;
+	}
 	applyTag(tag,reportElem){
 		var self=this;
 		self.pushHtmlBuffer();
-		self.addHtml("<!-- " + tag.getTagText()+" -->");
-		self.addHtml("<!-- " + self.traceTag(tag)+ " -->");
+		self.addHtml("<!-- " + self.changeBrackets(tag.getTagText())+" -->");
+		self.addHtml("<!-- " + self.changeBrackets(self.traceTag(tag))+ " -->");
 		var i=0;
 		var tagApplier;
 		var tagAttrs=tag.getAttributes();

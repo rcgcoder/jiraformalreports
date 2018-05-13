@@ -91,9 +91,10 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			self.continueTask();
 		});
 		self.addStep("PostProcess all token and return...",function(){
-			self.variables.popVarEnv();
 			var sHtml=self.popHtmlBuffer();
+			sHtml=self.replaceVars(sHtml);
 			self.addHtml(sHtml);
+			self.variables.popVarEnv();
 			self.continueTask();
 		});
 		self.continueTask();

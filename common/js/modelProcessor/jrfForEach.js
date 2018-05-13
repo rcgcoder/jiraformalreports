@@ -41,7 +41,7 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 					if (i>0){
 						sAux+=",";
 					}
-					sAux+="'"+arrAux[i]+"'";
+					sAux+='"'+arrAux[i]+'"';
 				}
 				sAux="["+sAux+"]";
 				self.elemsInForEach=JSON.parse(sAux);

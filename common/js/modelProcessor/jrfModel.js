@@ -206,9 +206,9 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 	}
 	changeBrackets(sText){
 		var sResult=replaceAll(sText,"{{{","{ { {");
-		sResult=replaceAll(sText,"}}}","} } }");
-		sResult=replaceAll(sText,"{{","{ {");
-		sResult=replaceAll(sText,"}}","} }");
+		sResult=replaceAll(sResult,"}}}","} } }");
+		sResult=replaceAll(sResult,"{{","{ {");
+		sResult=replaceAll(sResult,"}}","} }");
 		return sResult;
 	}
 	applyTag(tag,reportElem){

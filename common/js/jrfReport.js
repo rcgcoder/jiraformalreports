@@ -261,7 +261,6 @@ var jrfReport=class jrfReport {
 			
 			var theModel=new jrfModel(self);
 			theModel.process(); // hash inner task....
-			self.continueTask();
 		});
 		
 		self.addStep("Setting the HTML",function(sModelProcessedResult){

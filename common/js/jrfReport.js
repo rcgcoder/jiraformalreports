@@ -34,6 +34,7 @@ var jrfReport=class jrfReport {
 	}
 	execute(bDontReloadFiles){
 		var self=this;
+		loggerFactory.getLogger().enabled=false;
 		self.addStep("Getting Confluence Report Model.... ",function(){
 			var cfc=System.webapp.getConfluence();
 			//cfc.getAllPages();
@@ -266,6 +267,7 @@ var jrfReport=class jrfReport {
 		self.addStep("Setting the HTML",function(sModelProcessedResult){
 	        var jqResult=$("#ReportResult");
 	        jqResult.html(sModelProcessedResult);
+			loggerFactory.getLogger().enabled=true;
 			self.continueTask();
 		});
 		self.continueTask();

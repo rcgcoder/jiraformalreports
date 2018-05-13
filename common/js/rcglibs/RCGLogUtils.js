@@ -41,6 +41,7 @@ class RCGLogUtils{
     	self.logText="";
     	self.bAutoTrace=false;
     	self.fncAutoTrace="";
+    	self.enabled=true;
     }
 	logClear(){
 		var self=loggerFactory.getLogger();
@@ -86,11 +87,12 @@ class RCGLogUtils{
 		if (typeof formatLog!=="undefined"){
 			sFormated=formatLog(sText);
 		}
-
-		if (self.logToBuffer){
-			self.logText+="\n"+sFormated;
-		} else {
-			console.log(sFormated);
+		if (self.enabled){
+			if (self.logToBuffer){
+				self.logText+="\n"+sFormated;
+			} else {
+				console.log(sFormated);
+			}
 		}
 	}
 	logPush(){

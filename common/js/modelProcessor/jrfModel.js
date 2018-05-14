@@ -50,7 +50,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		if (isDefined(sText)){
 			self.html=sText;
 		}
-		return self.htmlStack.length;
+		return self.htmlStack.length();
 	}
 	popHtmlBuffer(fromIndex){
 		var self=this;

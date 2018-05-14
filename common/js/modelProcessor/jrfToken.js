@@ -11,9 +11,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.reportElem=reportElem;
 		obj.variables=self.model.variables;
 		obj.pushHtmlBuffer=function(){self.model.pushHtmlBuffer();};
-		obj.popHtmlBuffer=function(){return self.model.popHtmlBuffer();};
+		obj.popHtmlBuffer=function(index){return self.model.popHtmlBuffer(index);};
 		obj.getHtmlBuffer=function(){return self.model.html;};
 		obj.addHtml=function(sHtml){self.model.addHtml(sHtml);};
+		obj.indHtmlBuffer=0;
+		obj.indTokenHtmlBuffer=0;
 		obj.getAttrVal=self.getAttrVal;
 		obj.encode=self.encode;
 		obj.processAllChilds=self.processAllChilds;
@@ -50,20 +52,9 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			auxList=self.tag.getChilds();
 		}
 		var nChildWalker=0;
-		var processChild=function(childTag,nChild){
-			self.addHtml("<!-- START "+childTag.id +" CHILD ("+nChild+") LIST ITEM IN JRF TOKEN ["+self.tokenName+"] -->");
-			self.addStep("Applying Tag to model..",function(){
-				self.model.applyTag(childTag,auxRptElem);
-			})
-			self.addStep("Pushing the HTML..",function(){
-				self.addHtml("<!-- END "+childTag.id +" CHILD ("+nChild+") LIST ITEM IN JRF TOKEN ["+self.tokenName+"] -->");
-				self.continueTask();
-			})
-			self.continueTask();
-		}
 		auxList.walk(function(childTag){
 			self.addStep("Processing Child...",function(){
-				processChild(childTag,nChildWalker);
+				self.model.applyTag(childTag,auxRptElem);
 			});
 			nChildWalker++;
 		});
@@ -71,12 +62,12 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	}
 	encode(){
 		var self=this;
+		self.indHtmlBuffer=self.pushHtmlBuffer();
 		self.addStep("Pre-Encode part...",function(){
-			self.pushHtmlBuffer();
 			self.variables.pushVarEnv();
-			self.addHtml("<!-- START PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
+//			self.addHtml("<!-- START PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
 			self.addHtml(self.tag.getPreviousHTML());
-			self.addHtml("<!-- END PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
+//			self.addHtml("<!-- END PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
 			self.startApplyToken();
 			self.continueTask();
 		});
@@ -91,9 +82,9 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			self.continueTask();
 		});
 		self.addStep("PostProcess all token and return...",function(){
-			var sHtml=self.popHtmlBuffer();
+//			var sHtml=self.popHtmlBuffer();
 //			sHtml=self.replaceVars(sHtml);
-			self.addHtml(sHtml);
+//			self.addHtml(sHtml);
 			self.variables.popVarEnv();
 			self.continueTask();
 		});
@@ -115,9 +106,9 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			}
 		}
 	}
-	applySetVars(){
+	applySetVars(sValAux){
 		var self=this;
-		var sValAux=self.getHtmlBuffer();
+//		var sValAux=self.getHtmlBuffer();
 
 		if (self.setVars!=""){ 
 			var arrVars=self.setVars.split(",");
@@ -148,11 +139,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				log("Value ["+varName+"] setted:["+varValue+"]");
 			}
 		}
+		return sValAux;
 	}
-	applyPushVars(){
+	applyPushVars(sValAux){
 		var self=this;
-		var sValAux=self.getHtmlBuffer();
-
+//		var sValAux=self.getHtmlBuffer();
 		if (self.pushVars!=""){
 			var arrVars=self.pushVars.split(",");
 			for (var i=0;i<arrVars.length;i++){
@@ -175,10 +166,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				log("Value ["+varName+"] pushed:["+varValue+"]");
 			}
 		}
+		return sValAux;
 	}
 	startApplyToken(){
 		var self=this;
-		self.pushHtmlBuffer();
+		self.indTokenHtmlBuffer=self.pushHtmlBuffer();
 		// process the if parameter 
 		self.applyIfCondition();
 		if (self.ifConditionResult){
@@ -189,25 +181,29 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var self=this;
 		var sAux="";
 		if (self.ifConditionResult){
-			self.applyInFormat();
-			self.applySetVars();
-			self.applyPushVars();
-			self.applyOutFormat();
-			sAux=self.popHtmlBuffer();
-			self.addHtml(sAux);
+			var sValAux=self.popHtmlBuffer(self.indTokenHtmlBuffer);
+			self.indTokenHtmlBuffer=self.pushHtmlBuffer();
+
+			sValAux=self.applyInFormat(sValAux);
+			sValAux=self.applySetVars(sValAux);
+			sValAux=self.applyPushVars(sValAux);
+			sValAux=self.applyOutFormat(sValAux);
+//			sAux=self.popHtmlBuffer();
+//			self.addHtml(sAux);
+			self.addHtml(sValAux);
 			if (self.autoAddPostHtml){
 				self.addPostHtml();
 			}
-		} else {
-			sAux=self.popHtmlBuffer();
-			self.addHtml(sAux);
+//		} else {
+//			sAux=self.popHtmlBuffer();
+//			self.addHtml(sAux);
 		}
 	}
 	addPostHtml(){
 		var self=this;
-		self.addHtml("<!-- START POSTHTML IN FORMULA JRF TOKEN ["+self.tokenName+"] -->");
-		self.addHtml(self.tag.getPostHTML());
-		self.addHtml("<!-- END POSTHTML  IN FORMULA JRF TOKEN ["+self.tokenName+"] -->");
+//		self.addHtml("<!-- START POSTHTML IN FORMULA JRF TOKEN ["+self.tokenName+"] -->");
+		self.addHtml(self.replaceVars(self.tag.getPostHTML()));
+//		self.addHtml("<!-- END POSTHTML  IN FORMULA JRF TOKEN ["+self.tokenName+"] -->");
 	}
 
 	getAttrVal(attrName,objSrc){
@@ -237,10 +233,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		}
 	}
 	
-	applyInFormat(){
+	applyInFormat(sValAux){
 		var self=this;
-		var sValAux=self.popHtmlBuffer();
-		self.pushHtmlBuffer();
 		if (self.inFormat!=""){
 			var sFormats=self.replaceVars(self.inFormat);
 			var arrFormats=sFormats.split(",");
@@ -270,12 +264,13 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				}
 			});
 		}
-		self.addHtml(sValAux);
+		return sValAux;
+//		self.addHtml(sValAux);
 	}
-	applyOutFormat(){
+	applyOutFormat(sValAux){
 		var self=this;
-		var sValAux=self.popHtmlBuffer();
-		self.pushHtmlBuffer();
+//		var sValAux=self.popHtmlBuffer(self.indTokenHtmlBuffer);
+//		self.indTokenHtmlBuffer=self.pushHtmlBuffer();
 		if (self.outFormat!=""){
 			var arrFormats=self.outFormat.split(",");
 			var sFormat;
@@ -296,7 +291,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				}
 			}
 		}
-		self.addHtml(sValAux);
+//		self.addHtml(sValAux);
 		return sValAux;
 	}
 	replaceVarsAndExecute(sText){

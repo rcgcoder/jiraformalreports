@@ -50,13 +50,18 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		if (isDefined(sText)){
 			self.html=sText;
 		}
+		return self.htmlStack.length;
 	}
-	popHtmlBuffer(){
+	popHtmlBuffer(fromIndex){
 		var self=this;
-		var htmlAnt=self.html;
-		var html=self.htmlStack.pop();
-		self.html=html;
-		return htmlAnt;
+		var html=self.html;
+		if (isDefined(fromIndex)){
+			while (self.htmlStack.length>fromIndex){
+				html=self.htmlStack.pop()+html;
+			}
+		}
+		self.html=self.htmlStack.pop();
+		return html;
 	}
 	addHtml(sText){
 		var self=this;
@@ -213,9 +218,9 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 	}
 	applyTag(tag,reportElem){
 		var self=this;
-		self.pushHtmlBuffer();
-		self.addHtml("<!-- " + self.changeBrackets(tag.getTagText())+" -->");
-		self.addHtml("<!-- " + self.changeBrackets(self.traceTag(tag))+ " -->");
+		var htmlBufferIndex=self.pushHtmlBuffer();
+//		self.addHtml("<!-- " + self.changeBrackets(tag.getTagText())+" -->");
+//		self.addHtml("<!-- " + self.changeBrackets(self.traceTag(tag))+ " -->");
 		var i=0;
 		var tagApplier;
 		var tagAttrs=tag.getAttributes();
@@ -241,16 +246,16 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		self.addStep("Encoding the tag...",function(){
 			tagApplier.encode(); // it has steps... into
 		});
-		self.addStep("Returning the html",function(){
+/*		self.addStep("Returning the html",function(){
 			var sHtmlResult=self.popHtmlBuffer();
 			self.addHtml(sHtmlResult);
 			self.continueTask();
 		});
-		self.continueTask();
+*/		self.continueTask();
 	}
 	encode(parentTag,reportElement){
 		var self=this;
-		self.pushHtmlBuffer();
+		var htmlBufferIndex=self.pushHtmlBuffer();
 		var reportElem=reportElement;
 		if (isUndefined(reportElem)){
 			reportElem=self.report;
@@ -258,12 +263,12 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		self.addStep("Applying tag recursively....",function(){
 			self.applyTag(parentTag,reportElem);
 		});
-		self.addStep("Returning the html",function(){
-			var sHtml=self.popHtmlBuffer();
+/*		self.addStep("Returning the html",function(){
+			var sHtml=self.popHtmlBuffer(htmlBufferIndex);
 			self.addHtml(sHtml);
 			self.continueTask();
 		});
-		self.continueTask();
+*/		self.continueTask();
 	}
 	parse(html,parentTag){
 		var self=this;
@@ -285,19 +290,20 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		var self=this;
 		var sModel=self.report.config.model;
 		var rootJRF=self.tagFactory.new();
+		var htmlBufferIndex;
 		self.addStep("Parsing Model",function(){
 			self.parse(sModel,rootJRF);
 			self.continueTask();
 		});
 		self.addStep("Encoding model with Jira Info",function(){
-			self.pushHtmlBuffer();
+			htmlBufferIndex=self.pushHtmlBuffer();
 			self.encode(rootJRF);
 		});
 		self.addStep("Returning last HTML to process caller",function(){
 //			log(sHtml);
-			var sHtml=self.popHtmlBuffer();
+			var sHtml=self.popHtmlBuffer(htmlBufferIndex);
 			if ((self.html.length>0)||(self.htmlStack.length()>0)){
-				log("Error.... someone has push hmtl without pop");
+				log("There si more html in the buffer.... Maybe someone has push hmtl without pop");
 			}
 			self.continueTask([sHtml]);
 		});

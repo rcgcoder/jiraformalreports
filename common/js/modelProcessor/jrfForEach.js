@@ -97,7 +97,7 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 					self.variables.pushVar(self.innerVarName,eachElem);
 				}
 				if (bAllRoots) self.model.processingRoot=newParent;
-///				self.continueTask();
+				self.continueTask();
 			});
 			self.addStep("Processing Element in For Each",function(){
 				var bWhereResult=true;
@@ -128,7 +128,7 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 				self.continueTask();
 			});
 		});
-		log("All steps added in for each");
+//		log("All steps added in for each");
 /*		self.elemsInForEach.walk(function(newParent){
 			self.addHtml("<!-- START INNER LOOP OF ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
 			if (self.innerVarName!=""){

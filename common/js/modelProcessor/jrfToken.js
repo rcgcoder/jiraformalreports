@@ -202,7 +202,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	addPostHtml(){
 		var self=this;
 //		self.addHtml("<!-- START POSTHTML IN FORMULA JRF TOKEN ["+self.tokenName+"] -->");
-		self.addHtml(self.replaceVars(self.tag.getPostHTML()));
+		//self.addHtml(self.replaceVars(self.tag.getPostHTML()));
+		self.addHtml(self.tag.getPostHTML());
 //		self.addHtml("<!-- END POSTHTML  IN FORMULA JRF TOKEN ["+self.tokenName+"] -->");
 	}
 

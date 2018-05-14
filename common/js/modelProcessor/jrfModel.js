@@ -56,7 +56,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		var self=this;
 		var html=self.html;
 		if (isDefined(fromIndex)){
-			while (self.htmlStack.length>fromIndex){
+			while (self.htmlStack.length()>fromIndex){
 				html=self.htmlStack.pop()+html;
 			}
 		}

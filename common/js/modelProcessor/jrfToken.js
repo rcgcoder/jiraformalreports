@@ -290,6 +290,9 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				} else if (sFormat=="hours"){
 					var sValAdjusted=replaceAll(sValAux+"",",",".");
 					sValAux=normalFormatNumber(sValAdjusted) + " h"; 
+				} else if (sFormat=="%"){
+					var sValAdjusted=replaceAll(sValAux+"",",",".");
+					sValAux=normalFormatNumber(sValAdjusted) + " %"; 
 				}
 			}
 		}

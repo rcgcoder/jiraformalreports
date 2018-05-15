@@ -51,18 +51,25 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		if (isDefined(sText)){
 			self.html=sText;
 		}
+		log("PUSH HTMLBuffer new length:"+indStack);
 		return indStack;
 	}
 	popHtmlBuffer(fromIndex){
 		var self=this;
 		var html=self.html;
+		var newInd=self.htmlStack.length()-1;
 		if (isDefined(fromIndex)){
-			while (self.htmlStack.length()>(fromIndex+1)){
-				html=self.htmlStack.pop()+html;
-			}
+			newInd=fromIndex;
+		}
+		if (newInd==self.htmlStack.length()){
+			log("HTMLBuffer error popping a html buffer");
+		}
+		while (self.htmlStack.length()>(newInd+1)){
+			html=self.htmlStack.pop()+html;
 		}
 		self.html=self.htmlStack.pop();
 		log("Stack Length after pop("+fromIndex+"):"+self.htmlStack.length()+" == "+fromIndex);
+		log("POP HTMLBuffer new length:"+self.htmlStack.length());
 		return html;
 	}
 	addHtml(sText){

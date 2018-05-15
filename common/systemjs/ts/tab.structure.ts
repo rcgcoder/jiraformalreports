@@ -7,10 +7,16 @@ export class TabStructure {
     @Input() header: string = 'this is header';   
     @Input() footer: string = 'this is footer';
     @Input() name: string = 'tabStructure';
+    report: object;
     ngOnInit() {
         var self=this;
         System.addPostProcess(function(){
             System.bindObj(self);
+            var toggle = $('#toggle_DebugLogs');
+            toggle.change(function(e) {
+                self.report.config.logDebug=(toggle.attr("checked")=="checked");
+            });
+            
         });
     }
  
@@ -242,6 +248,7 @@ export class TabStructure {
                 var auxObj=System.getAngularObject('selInterestFields',true);
                 theConfig["allFields"]=auxObj.getAllElements();
                 var theReport=new jrfReport(theConfig);
+                self.report=theReport;
                 theReport.execute(bDontReload);
             });
             System.webapp.continueTask();

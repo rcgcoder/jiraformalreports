@@ -62,7 +62,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			}
 		}
 		self.html=self.htmlStack.pop();
-		log("Stack Length after pops:"+self.htmlStack.length()+" == "+fromIndex);
+		log("Stack Length after pop("+fromIndex+"):"+self.htmlStack.length()+" == "+fromIndex);
 		return html;
 	}
 	addHtml(sText){

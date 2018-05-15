@@ -45,22 +45,24 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 	}
 	pushHtmlBuffer(sText){
 		var self=this;
+		var indStack=self.htmlStack.length();
 		self.htmlStack.push(self.html);
 		self.html="";
 		if (isDefined(sText)){
 			self.html=sText;
 		}
-		return self.htmlStack.length();
+		return indStack;
 	}
 	popHtmlBuffer(fromIndex){
 		var self=this;
 		var html=self.html;
 		if (isDefined(fromIndex)){
-			while (self.htmlStack.length()>=fromIndex){
+			while (self.htmlStack.length()>(fromIndex+1)){
 				html=self.htmlStack.pop()+html;
 			}
 		}
 		self.html=self.htmlStack.pop();
+		log("Stack Length after pops:"+self.htmlStack.length()+" == "+fromIndex);
 		return html;
 	}
 	addHtml(sText){

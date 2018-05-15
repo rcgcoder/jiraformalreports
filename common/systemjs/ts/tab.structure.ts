@@ -47,6 +47,8 @@ export class TabStructure {
         var jql;
         var value;
         
+        auxObj=$('#toggle_DebugLogs');
+        dfReport["logDebug"]=(auxObj.attr("checked")=="checked");
         auxObj=$('#toggle_RootsByJQL');
         dfReport["rootsByJQL"]=(auxObj.attr("checked")=="checked");
         auxObj=$('#toggle_RootsByProject');

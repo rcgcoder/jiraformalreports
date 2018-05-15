@@ -65,9 +65,9 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		self.indHtmlBuffer=self.pushHtmlBuffer();
 		self.addStep("Pre-Encode part...",function(){
 			self.variables.pushVarEnv();
-			self.addHtml("<!-- START PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
+			if (self.model.report.config.htmlDebug) self.addHtml("<!-- START PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
 			self.addHtml(self.tag.getPreviousHTML());
-			self.addHtml("<!-- END PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
+			if (self.model.report.config.htmlDebug) self.addHtml("<!-- END PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
 			self.startApplyToken();
 			self.continueTask();
 		});
@@ -201,10 +201,10 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	}
 	addPostHtml(){
 		var self=this;
-		self.addHtml("<!-- START POSTHTML IN FORMULA JRF TOKEN ["+self.tokenName+"] -->");
+		if (self.model.report.config.htmlDebug) self.addHtml("<!-- START POSTHTML IN FORMULA JRF TOKEN ["+self.tokenName+"] -->");
 		//self.addHtml(self.replaceVars(self.tag.getPostHTML()));
 		self.addHtml(self.tag.getPostHTML());
-		self.addHtml("<!-- END POSTHTML  IN FORMULA JRF TOKEN ["+self.tokenName+"] -->");
+		if (self.model.report.config.htmlDebug) self.addHtml("<!-- END POSTHTML  IN FORMULA JRF TOKEN ["+self.tokenName+"] -->");
 	}
 
 	getAttrVal(attrName,objSrc){

@@ -34,7 +34,8 @@ var jrfReport=class jrfReport {
 	}
 	execute(bDontReloadFiles){
 		var self=this;
-		loggerFactory.getLogger().enabled=true;
+		loggerFactory.getLogger().enabled=self.config.logDebug;
+		self.config.htmlDebug=self.config.logDebug;
 		self.addStep("Getting Confluence Report Model.... ",function(){
 			var cfc=System.webapp.getConfluence();
 			//cfc.getAllPages();

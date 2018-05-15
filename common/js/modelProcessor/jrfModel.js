@@ -67,7 +67,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		var self=this;
 		if ((isDefined(sText)) && (sText!=null)){
 			try {
-				log((""+sText).substring(0,150));
+				log("<html>"+(""+sText).substring(0,150)+"...</html>");
 			}
 			catch(err) {
 			    log("Mega Error");
@@ -219,8 +219,8 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 	applyTag(tag,reportElem){
 		var self=this;
 		var htmlBufferIndex=self.pushHtmlBuffer();
-//		self.addHtml("<!-- " + self.changeBrackets(tag.getTagText())+" -->");
-//		self.addHtml("<!-- " + self.changeBrackets(self.traceTag(tag))+ " -->");
+		self.addHtml("<!-- " + self.changeBrackets(tag.getTagText())+" -->");
+		self.addHtml("<!-- " + self.changeBrackets(self.traceTag(tag))+ " -->");
 		var i=0;
 		var tagApplier;
 		var tagAttrs=tag.getAttributes();

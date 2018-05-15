@@ -92,7 +92,7 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 				newParent=self.reportElem;
 			}
 			self.addStep("Start processing Element in For Each",function(){
-//				self.addHtml("<!-- START INNER LOOP OF ITEM "+ (self.processedItemNumber) + " IN FOREACH JRF TOKEN -->");
+				self.addHtml("<!-- START INNER LOOP OF ITEM "+ (self.processedItemNumber) + " IN FOREACH JRF TOKEN -->");
 				if (self.innerVarName!=""){
 					self.variables.pushVar(self.innerVarName,eachElem);
 				}
@@ -117,7 +117,7 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 			self.addStep("Continue...",function(){
 				if (bAllRoots) self.model.processingRoot=rootBackUp;
 				self.addPostHtml();
-//				self.addHtml("<!-- END INNER LOOP OF ITEM "+ (self.processedItemNumber) + " IN FOREACH JRF TOKEN -->");
+				self.addHtml("<!-- END INNER LOOP OF ITEM "+ (self.processedItemNumber) + " IN FOREACH JRF TOKEN -->");
 				processedItemNumber++;
 				if ((self.subType=="row")
 						&&(bLastShowed)

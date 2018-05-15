@@ -14,7 +14,9 @@ export class TabStructure {
             System.bindObj(self);
             var toggle = $('#toggle_DebugLogs');
             toggle.change(function(e) {
-                self.report.config.logDebug=(toggle.attr("checked")=="checked");
+                var bWithLog=(toggle.attr("checked")=="checked");
+                loggerFactory.getLogger().enabled=bWithLog;
+                self.config.htmlDebug=bWithLog;
             });
             
         });

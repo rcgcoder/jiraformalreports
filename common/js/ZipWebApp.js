@@ -129,7 +129,7 @@ class ZipWebApp{
 		self.addStep("Trying to render content... needs oauth connect",function(){
 			var jira=self.getJira();
 			self.addStep("Connecting OAUTH",function(){
-				self.oauthConnect();
+				jira.oauthConnect();
 			});
 			self.addStep("RenderContent",function(){
 				jira.renderContent("*test*");

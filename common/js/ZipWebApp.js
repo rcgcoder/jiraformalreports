@@ -125,7 +125,8 @@ class ZipWebApp{
 		self.addStep("Setting <initized> Atlassian Engine.... ",function(){
 			var atl=self.getAtlassian();
 			atl.initialized=true;
-			atl.renderContent("*test*");
+			var jira=self.getJira();
+			jira.renderContent("*test*");
 		});  
 		
 		self.addStep("Import nearley grammar.... ",function(){

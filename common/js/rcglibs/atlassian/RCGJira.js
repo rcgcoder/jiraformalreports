@@ -7,6 +7,9 @@ class RCGJira{
 		self.tokenAccess="";
 		self.tokenTime=0;
 		taskManager.extendObject(self);
+		self.renderContent=function(sContent){
+			atlassian.renderContent(sContent);
+			};
 		self.oauthConnect=function(){
 			atlassian.oauthConnect(self);
 			};

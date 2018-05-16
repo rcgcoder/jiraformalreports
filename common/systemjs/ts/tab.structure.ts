@@ -234,6 +234,7 @@ export class TabStructure {
     }
     executeReport(){
         var self=this;
+        var theConfig=self.getActualReportConfig();
         System.webapp.addStep("Updating and processing report...", function(){
             var bDontReload=isDefined(window.jrfReport);
             System.webapp.addStep("Refresh de Commit Id for update de report class", function(){
@@ -269,6 +270,14 @@ export class TabStructure {
                 self.report=theReport;
                 theReport.execute(bDontReload);
             });
+            if (theConfig.reuseIssues){
+                System.webapp.addStep("Save issueList for next run", function(){
+                    if (theConfig.reuseIssues){
+                        self.allIssues=theReport.allIssues;
+                    }
+                    self continueTask();
+                });
+            }
             System.webapp.continueTask();
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
     }

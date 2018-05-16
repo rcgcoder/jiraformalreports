@@ -30,18 +30,10 @@ var jrfReport=class jrfReport {
 		
 	}
 	isReusingIssueList(){
-		if (!(isDefined(self.allIssues)&&(self.reuseAllIssues))){
-			return false;
+		if ((isDefined(self.allIssues)&&(self.reuseAllIssues))){
+			return true;
 		}
-		return true;
-	}
-	constructIssueFactory(){
-		var self=this;
-		// create a dynobj for store the issues.... 
-		if (self.isReusingIssueList()){
-			self.allIssues=newIssueFactory(self);
-			
-		};
+		return false;
 	}
 	execute(bDontReloadFiles){
 		var self=this;

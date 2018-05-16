@@ -199,7 +199,7 @@ function executeFunction(arrValues,sFunctionBody,functionCache){
 		hash.update(sFncFormula);
 		theHash=hash.hex();
 		if (functionCache.exists(theHash)){
-			fncFormula=functionCache.get(theHash);
+			fncFormula=functionCache.getValue(theHash);
 		} else {
 			fncFormula=Function("_arrRefs_",sFncFormula);
 			functionCache.add(theHash,fncFormula);

@@ -262,7 +262,7 @@ class RCGAtlassian{
 	}
 	renderContent(contentToRender){
 		var self=this;
-		self.pushCallBack(function(objResponse,xhr, statusText, errorThrown){
+		self.pushCallback(function(objResponse,xhr, statusText, errorThrown){
 			log("Rendered Content:"+objResponse);
 			self.continueTask();
 		});

@@ -262,8 +262,9 @@ class RCGAtlassian{
 	}
 	renderContent(contentToRender){
 		var self=this;
+		aa.vb.cc=4;
 		self.pushCallBack(function(objResponse,xhr, statusText, errorThrown){
-			log(objResponse);
+			log("Rendered Content:"+objResponse);
 			self.continueTask();
 		});
 		self.apiCallBase("https://paega2.atlassian.net/rest/api/1.0/render",

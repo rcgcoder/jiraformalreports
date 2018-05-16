@@ -24,7 +24,11 @@ export class TabStructure {
                 var bWithHtmlLog=(toggle.attr("checked")=="checked");
                 self.report.config.htmlDebug=bWithHtmlLog;
             });
-            
+            var toggle = $('#toggle_ReuseLoadedIssues');
+            toggle.change(function(e) {
+                var bReuseIssues=(toggle.attr("checked")=="checked");
+                self.report.config.reuseIssues=bReuseIssues;
+            });
         });
     }
  
@@ -235,7 +239,6 @@ export class TabStructure {
     }
     executeReport(){
         var self=this;
-        var theConfig=self.getActualReportConfig();
         self.addStep("Updating and processing report...", function(){
             var bDontReload=isDefined(window.jrfReport);
             self.addStep("Refresh de Commit Id for update de report class", function(){
@@ -271,14 +274,12 @@ export class TabStructure {
                 self.report=theReport;
                 theReport.execute(bDontReload);
             });
-            if (theConfig.reuseIssues){
-                self.addStep("Save issueList for next run", function(){
-                    if (theConfig.reuseIssues){
-                        self.allIssues=self.report.allIssues;
-                    }
-                    self.continueTask();
-                });
-            }
+            self.addStep("Save issueList for next run", function(){
+                if (self.report.config.reuseIssues){
+                    self.allIssues=self.report.allIssues;
+                }
+                self.continueTask();
+            });
             self.continueTask();
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
     }

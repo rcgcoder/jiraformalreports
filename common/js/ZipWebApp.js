@@ -134,6 +134,7 @@ class ZipWebApp{
 			self.addStep("RenderContent",function(){
 				jira.renderContent("*test*");
 			});
+			self.continueTask();
 		});
 		
 		self.addStep("Import nearley grammar.... ",function(){

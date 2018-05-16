@@ -8,6 +8,7 @@ export class TabStructure {
     @Input() footer: string = 'this is footer';
     @Input() name: string = 'tabStructure';
     report: object;
+    allIssues: object;
     ngOnInit() {
         var self=this;
         System.addPostProcess(function(){
@@ -59,6 +60,9 @@ export class TabStructure {
         var jql;
         var value;
         
+        
+        auxObj=$('#toggle_ReuseLoadedIssues');
+        dfReport["reuseIssues"]=(auxObj.attr("checked")=="checked");
         auxObj=$('#toggle_DebugLogs');
         dfReport["logDebug"]=(auxObj.attr("checked")=="checked");
         auxObj=$('#toggle_HTMLDebugLogs');
@@ -113,6 +117,8 @@ export class TabStructure {
         var self=this;
         var auxObj;
 
+        auxObj=$('#toggle_ReuseLoadedIssues');
+        if(isDefined(config.reuseIssues))auxObj.attr("checked","checked");
         auxObj=$('#toggle_RootsByJQL');
         if(isDefined(config.rootsByJQL)&&config.rootsByJQL)auxObj.attr("checked","checked");
         auxObj=$('#toggle_RootsByProject');
@@ -256,6 +262,10 @@ export class TabStructure {
                 var auxObj=System.getAngularObject('selInterestFields',true);
                 theConfig["allFields"]=auxObj.getAllElements();
                 var theReport=new jrfReport(theConfig);
+                if (theConfig.reuseIssues){
+                    theReport.allIssues=self.allIssues;
+                    theReport.reuseAllIssues=true;
+                }
                 self.report=theReport;
                 theReport.execute(bDontReload);
             });

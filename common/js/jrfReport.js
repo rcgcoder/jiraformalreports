@@ -2,6 +2,8 @@ var jrfReport=class jrfReport {
 	constructor(theConfig){
 		var self=this;
 //		self.allFieldNames=newHashMap();
+		self.allIssues;
+		self.reuseAllIssues=false;
 		self.config=theConfig;
 		self.config.model=System.webapp.model;
 		self.childs=newHashMap();
@@ -30,7 +32,10 @@ var jrfReport=class jrfReport {
 	constructIssueFactory(){
 		var self=this;
 		// create a dynobj for store the issues.... 
-		self.allIssues=newIssueFactory(self);
+		if (!(isDefined(self.allIssues)&&(self.reuseAllIssues))){
+			self.allIssues=newIssueFactory(self);
+			
+		};
 	}
 	execute(bDontReloadFiles){
 		var self=this;
@@ -79,6 +84,9 @@ var jrfReport=class jrfReport {
 		});
 
 		self.addStep("Construct Issue Dynamic Object.... ",function(){
+			if ((isDefined(self.allIssues)&&(self.reuseAllIssues))){
+				return self.continueTask();
+			}
 			var hsFieldNames=newHashMap();
 //				self.allFieldNames;
 //			hsFieldNames.clear();
@@ -139,6 +147,9 @@ var jrfReport=class jrfReport {
 		});
 		// first launch all issue retrieve ...
 		self.addStep("Getting All Issues in the Scope.... ",function(){
+			if ((isDefined(self.allIssues)&&(self.reuseAllIssues))){
+				return self.continueTask();
+			}
 			var fncProcessIssue=function(issue){
 				var oIssue=self.allIssues.new(issue.fields.summary,issue.key);
 				oIssue.setJiraObject(issue);
@@ -215,8 +226,12 @@ var jrfReport=class jrfReport {
 			self.rootIssues.walk(function(value,iProf,key){
 				log("Root Issue: "+key);
 				var issue=self.allIssues.getById(key);
-				issuesAdded.add(key,issue);
-				self.childs.add(key,issue);
+				if (!issuesAdded.exists(key)){
+					issuesAdded.add(key,issue);
+				}
+				if (!self.childs.exists(key)){
+					self.childs.add(key,issue);
+				}
 			});
 //			var treeIssues=issuesAdded.toArray([{doFieldName:"self",resultFieldName:"issue"}]);
 			var fncProcessChild=function(objStep,issueParent){
@@ -226,7 +241,9 @@ var jrfReport=class jrfReport {
 				}
 				var bIsChild=fncIsChild(issueChild,issueParent);
 				if (bIsChild){
-					issueParent.addChild(issueChild);
+					if (!issueParent.getChilds().exists(issueChild.getKey())){ // when reusing dynobj the childs are setted
+						issueParent.addChild(issueChild);
+					}
 					if (!issuesAdded.exists(issueChild.getKey())){
 						issuesAdded.add(issueChild.getKey(),issueChild);
 						fncGetIssueChilds(issueChild);
@@ -234,7 +251,9 @@ var jrfReport=class jrfReport {
 				}
 				var bIsAdvPart=fncIsAdvPart(issueChild,issueParent);
 				if (bIsAdvPart){
-					issueParent.addAdvanceChild(issueChild);
+					if (!issueParent.getAdvanceChilds().exists(issueChild.getKey())){ // when reusing dynobj the childs are setted
+						issueParent.addAdvanceChild(issueChild);
+					}
 					if (!issuesAdded.exists(issueChild.getKey())){
 						issuesAdded.add(issueChild.getKey(),issueChild);
 						fncGetIssueChilds(issueChild);

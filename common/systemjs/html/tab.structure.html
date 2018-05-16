@@ -21,7 +21,6 @@
 		>
 	</dlgEditableList>
 
-	<button (click)="executeReport()" class="aui-button">Execute the Report</button>
 	</div>
     <div class="aui-item">
 	
@@ -31,7 +30,11 @@
 	<aui-toggle id="toggle_HTMLDebugLogs" 
                         label="Include html logging tags (needs more memory)"
                         ></aui-toggle>Include HTML Debug Log
+	<aui-toggle id="toggle_ReuseLoadedIssues" 
+                        label="Do not reload Issues before execute report (increase speed when reexecuting)"
+                        ></aui-toggle>Reuse Loaded Issues
 	<br>
+	<button (click)="executeReport()" class="aui-button">Execute the Report</button>
 	</div>
 		</div>
 	

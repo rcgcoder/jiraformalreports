@@ -182,17 +182,31 @@ function isInArray(theArray,theKey,theField){
 	return false;
 }
 
-function executeFunction(arrValues,sFunctionBody){
+function executeFunction(arrValues,sFunctionBody,functionCache){
 	var sFncFormula=`var result=
 						`+sFunctionBody+`
 						;
 					 return result;`;
-	for (var i=0;i<arrValues.length;i++){
-		sFncFormula="log(`_arrRefs_['"+i+"']:["+arrValues[i]+"]`);\n"+sFncFormula;
-	}
 	log("Execute Formula-----");
+	for (var i=0;i<arrValues.length;i++){
+		log(`_arrRefs_['"+i+"']:["+arrValues[i]+"]`);
+	}
 	log(sFncFormula);
-	var fncFormula=Function("_arrRefs_",sFncFormula);
+	var theHash;
+	var fncFormula
+	if (isDefined(functionCache)){
+		var hash = sha256.create();
+		hash.update(sFncFormula);
+		theHash=hash.hex();
+		if (functionCache.exists(theHash)){
+			fncFormula=functionCache.get(theHash);
+		} else {
+			fncFormula=Function("_arrRefs_",sFncFormula);
+			functionCache.add(theHash,fncFormula);
+		}
+	} else {
+		fncFormula=Function("_arrRefs_",sFncFormula);
+	}
 	var vValue=fncFormula(arrValues);
 	return vValue;
 }

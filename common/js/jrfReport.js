@@ -61,6 +61,7 @@ var jrfReport=class jrfReport {
 			if (bDontReloadFiles==false) {
 				var arrFiles=[	//"ts/demo.ts",
 								"js/jrfIssueFactory.js",
+								"js/libs/sha256.js",
 								"js/libs/showdown.js",
 								"js/rcglibs/RCGVarEngine.js",
 								"js/modelProcessor/jrfModel.js",

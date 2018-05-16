@@ -2,6 +2,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 	constructor(theReport){
 		var self=this;
 		System.webapp.getTaskManager().extendObject(self);
+		self.functionCache=newHashMap();
 		self.variables=new RCGVarEngine();
 		self.tokenBase=new jrfToken(self);
 		self.htmlStack=newHashMap();

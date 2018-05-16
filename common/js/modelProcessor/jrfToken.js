@@ -229,7 +229,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var self=this;
 		if (self.ifCondition!=""){
 			var sProcesed=self.replaceVars(self.ifCondition);
-			sProcesed=executeFunction([],sProcesed);
+			sProcesed=executeFunction([],sProcesed,functionCache);
 			self.ifConditionResult=sProcesed;			
 		}
 	}
@@ -261,7 +261,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 						// execute function inserts the las ";" automatically
 						`;
 					sValAux=replaceAll(sValAux,"\n"," ").trim();
-					sValAux=executeFunction([sValAux],sFncFormula);
+					sValAux=executeFunction([sValAux],sFncFormula,self.model.functionCache);
 				}
 			});
 		}
@@ -298,7 +298,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	replaceVarsAndExecute(sText){
 		var self=this;
 		var oReplaced=self.replaceVarsComplex(sText);
-		var vValue=executeFunction(oReplaced.values,oReplaced.text);
+		var vValue=executeFunction(oReplaced.values,oReplaced.text,self.model.functionCache);
 		return vValue;
 	}
 	replaceVars(sText){
@@ -319,7 +319,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var oSimple=self.replaceVarsComplex(sResult);
 		var vValue=oSimple.text;
 		if (oSimple.values.length>0){
-			vValue=executeFunction(oSimple.values,oSimple.text);
+			vValue=executeFunction(oSimple.values,oSimple.text,self.model.functionCache);
 		}
 		return vValue;
 	}

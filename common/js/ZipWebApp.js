@@ -125,9 +125,16 @@ class ZipWebApp{
 		self.addStep("Setting <initized> Atlassian Engine.... ",function(){
 			var atl=self.getAtlassian();
 			atl.initialized=true;
-			var jira=self.getJira();
-			jira.renderContent("*test*");
 		});  
+		self.addStep("Trying to render content... needs oauth connect",function(){
+			var jira=self.getJira();
+			self.addStep("Connecting OAUTH",function(){
+				self.oauthConnect();
+			});
+			self.addStep("RenderContent",function(){
+				jira.renderContent("*test*");
+			});
+		});
 		
 		self.addStep("Import nearley grammar.... ",function(){
 			var arrFiles=[	//"ts/demo.ts",

@@ -100,7 +100,7 @@ class RCGTask{
 		var self=this;
 		self.isDone=true;
 		self.finishTime=(new Date()).getTime();
-//		self.method=undefined;
+		self.method=undefined;
 		self.changeStatus();
 	}
 	

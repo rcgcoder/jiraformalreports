@@ -30,6 +30,7 @@ var jrfReport=class jrfReport {
 		
 	}
 	isReusingIssueList(){
+		var self=this;
 		if ((isDefined(self.allIssues)&&(self.reuseAllIssues))){
 			return true;
 		}

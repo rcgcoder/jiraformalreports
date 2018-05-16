@@ -273,7 +273,7 @@ export class TabStructure {
             if (theConfig.reuseIssues){
                 System.webapp.addStep("Save issueList for next run", function(){
                     if (theConfig.reuseIssues){
-                        self.allIssues=theReport.allIssues;
+                        self.allIssues=self.report.allIssues;
                     }
                     self continueTask();
                 });

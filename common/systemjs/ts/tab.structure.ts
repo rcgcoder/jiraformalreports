@@ -16,7 +16,11 @@ export class TabStructure {
             toggle.change(function(e) {
                 var bWithLog=(toggle.attr("checked")=="checked");
                 loggerFactory.getLogger().enabled=bWithLog;
-                self.config.htmlDebug=bWithLog;
+            });
+            var toggle = $('#toggle_HTMLDebugLogs');
+            toggle.change(function(e) {
+                var bWithHtmlLog=(toggle.attr("checked")=="checked");
+                self.report.config.htmlDebug=bWithHtmlLog;
             });
             
         });
@@ -57,6 +61,8 @@ export class TabStructure {
         
         auxObj=$('#toggle_DebugLogs');
         dfReport["logDebug"]=(auxObj.attr("checked")=="checked");
+        auxObj=$('#toggle_HTMLDebugLogs');
+        dfReport["logHtmlDebug"]=(auxObj.attr("checked")=="checked");
         auxObj=$('#toggle_RootsByJQL');
         dfReport["rootsByJQL"]=(auxObj.attr("checked")=="checked");
         auxObj=$('#toggle_RootsByProject');

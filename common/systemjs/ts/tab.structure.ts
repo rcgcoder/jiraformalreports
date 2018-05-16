@@ -13,6 +13,7 @@ export class TabStructure {
         var self=this;
         System.addPostProcess(function(){
             System.bindObj(self);
+            System.webapp.getTaskManager().extendObject(self);
             var toggle = $('#toggle_DebugLogs');
             toggle.change(function(e) {
                 var bWithLog=(toggle.attr("checked")=="checked");
@@ -29,26 +30,26 @@ export class TabStructure {
  
     onGetBillingRelationships(event){
         log("GettingRelationships");
-        System.webapp.continueTask([System.webapp.getListRelations()]);
+        self.continueTask([System.webapp.getListRelations()]);
     }
     onGetBillingFields(event){
        log("structure fields event.... onGetBillingFields");
-       System.webapp.continueTask([System.webapp.getListFields()]);
+       self.continueTask([System.webapp.getListFields()]);
     }
     onLoadIssuesTest(event){
         var self=this;
-        var fork=System.webapp.addStep("Testing Load Issues:"+self.name, function(){
+        var fork=self.addStep("Testing Load Issues:"+self.name, function(){
             log("Testing end:"+self.name);
-            System.webapp.continueTask();
+            self.continueTask();
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
-//        System.webapp.continueTask();
+//        self.continueTask();
         
     }
     saveDefaultReport(){
         var self=this;
         var actualConfig=self.getActualReportConfig();
         var fileName="defaultReportConfig.json";
-        var contentType=System.webapp.getContentTypeFromExtension(fileName);
+        var contentType=self.getContentTypeFromExtension(fileName);
         contentType.isCacheable=true;
         var content=JSON.stringify(actualConfig);
         System.webapp.saveFileToStorage(fileName,content,contentType);
@@ -195,17 +196,17 @@ export class TabStructure {
     loadDefaultReport(){
         var self=this;
         var fileName="defaultReportConfig.json";
-        System.webapp.addStep("Loading default config file from Storage",function(){
+        self.addStep("Loading default config file from Storage",function(){
             System.webapp.loadFileFromStorage(fileName);
         });
-        System.webapp.addStep("Applying default config ",function(sRelativePath,content){
+        self.addStep("Applying default config ",function(sRelativePath,content){
             if (content!=""){
                 var dfReport=JSON.parse(content);
                 self.applyConfig(dfReport);
             }
-            System.webapp.continueTask();
+            self.continueTask();
         });
-        System.webapp.continueTask();
+        self.continueTask();
     }
     onChangeIssueLinkTypesConfiguration(arrTypes){
         var self=this;
@@ -235,22 +236,22 @@ export class TabStructure {
     executeReport(){
         var self=this;
         var theConfig=self.getActualReportConfig();
-        System.webapp.addStep("Updating and processing report...", function(){
+        self.addStep("Updating and processing report...", function(){
             var bDontReload=isDefined(window.jrfReport);
-            System.webapp.addStep("Refresh de Commit Id for update de report class", function(){
+            self.addStep("Refresh de Commit Id for update de report class", function(){
                 var antCommitId=System.webapp.github.commitId;
                 System.webapp.pushCallback(function(){
                    log("commit updated");
                    if (antCommitId!=System.webapp.github.commitId){
                        bDontReload=false;
                    }
-                   System.webapp.continueTask();
+                   self.continueTask();
                 });
                 System.webapp.github.updateLastCommit();
             });
-            System.webapp.addStep("Dynamic load de report class", function(){
+            self.addStep("Dynamic load de report class", function(){
                 if (bDontReload){
-                    System.webapp.continueTask();
+                    self.continueTask();
                 } else {
                     var arrFiles=[                  
                                  "js/jrfReport.js"
@@ -258,7 +259,7 @@ export class TabStructure {
                     System.webapp.loadRemoteFiles(arrFiles);
                 }
             });
-            System.webapp.addStep("Executing Report", function(){
+            self.addStep("Executing Report", function(){
                 var theConfig=self.getActualReportConfig();
                 var auxObj=System.getAngularObject('selInterestFields',true);
                 theConfig["allFields"]=auxObj.getAllElements();
@@ -271,14 +272,14 @@ export class TabStructure {
                 theReport.execute(bDontReload);
             });
             if (theConfig.reuseIssues){
-                System.webapp.addStep("Save issueList for next run", function(){
+                self.addStep("Save issueList for next run", function(){
                     if (theConfig.reuseIssues){
                         self.allIssues=self.report.allIssues;
                     }
-                    self continueTask();
+                    self.continueTask();
                 });
             }
-            System.webapp.continueTask();
+            self.continueTask();
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
     }
     getScopeNormalizedJQL(){
@@ -306,12 +307,12 @@ export class TabStructure {
         var self=this;
         var jira=System.webapp.getJira();
         var hsAllFields;
-        System.webapp.addStep("Getting all field names from scope issues",function(){
+        self.addStep("Getting all field names from scope issues",function(){
             var jql=self.getScopeNormalizedJQL();
             log("Scope Normalized jql:["+jql+"]");
             jira.getFieldFullList(jql);
         });
-        System.webapp.addStep("Getting all field names of the list",function(hsFields){
+        self.addStep("Getting all field names of the list",function(hsFields){
             var intFields=System.getAngularObject('selInterestFields',true);
             hsAllFields=hsFields;
             var arrAllFields=intFields.getAllElements();
@@ -330,7 +331,7 @@ export class TabStructure {
             });
             var fncProcessEnd=System.webapp.createManagedCallback(function(objStep){
                 var objStepEnd=objStep;
-                System.webapp.continueTask([hsResultFields]);
+                self.continueTask([hsResultFields]);
             });
             var fncBlockPercent=System.webapp.createManagedCallback(function(objStep){
                 var objStepEnd=objStep;
@@ -342,7 +343,7 @@ export class TabStructure {
             });
             hsFields.walkAsync("Removing duplicate fields...",fncProcessNode,fncProcessEnd,fncBlockPercent,fncBlockTime);
         });
-        System.webapp.addStep("Update selection table",function(hsResultFields){
+        self.addStep("Update selection table",function(hsResultFields){
             log("After discard identificied there is "+ hsResultFields.length()+"/"+hsAllFields.length()+" fields in all issues");
             var fieldDefs=System.getAngularObject('manualFieldDefinitions',true);
             var arrResultElements=[];
@@ -351,22 +352,22 @@ export class TabStructure {
             }
             hsResultFields.walk(fncToItem);
             fieldDefs.setElements(arrResultElements);
-            System.webapp.continueTask();
+            self.continueTask();
                 
         });
-        System.webapp.continueTask();
+        self.continueTask();
     }
     onGetFullListOfIssueTypes(){
         log("getting the total list of issue link types.....");
         var self=this;
         var jira=System.webapp.getJira();
         var hsAllFields;
-        System.webapp.addStep("Getting all issue link types of Scope",function(){
+        self.addStep("Getting all issue link types of Scope",function(){
             var jql=self.getScopeNormalizedJQL();
             log("Scope Normalized jql:["+jql+"]");
             jira.getIssueLinkFullList(jql);
         });
-        System.webapp.addStep("Update selection table",function(hsLinkTypes){
+        self.addStep("Update selection table",function(hsLinkTypes){
             var selLinkTypes=System.getAngularObject('linkTypesConfiguration',true);
             var arrResultElements=[];
             var fncToItem=function(elem){
@@ -374,8 +375,8 @@ export class TabStructure {
             }
             hsLinkTypes.walk(fncToItem);
             selLinkTypes.setElements(arrResultElements);
-            System.webapp.continueTask();
+            self.continueTask();
         });
-        System.webapp.continueTask();
+        self.continueTask();
     }
 }

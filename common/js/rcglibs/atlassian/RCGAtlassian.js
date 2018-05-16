@@ -269,7 +269,7 @@ class RCGAtlassian{
 		self.apiCallBase("https://paega2.atlassian.net/rest/api/1.0/render",
 						"POST",
 						'{"rendererType":"atlassian-wiki-renderer","unrenderedMarkup":contentToRender}',
-						"text/html",callback);
+						"text/html");
 		
 	}
 }

@@ -260,4 +260,16 @@ class RCGAtlassian{
 			  error: newErrorCallback
 			});
 	}
+	renderContent(contentToRender){
+		var self=this;
+		self.pushCallBack(function(objResponse,xhr, statusText, errorThrown){
+			log(objResponse);
+			self.continueTask();
+		});
+		self.apiCallBase("https://paega2.atlassian.net/rest/api/1.0/render",
+						"POST",
+						'{"rendererType":"atlassian-wiki-renderer","unrenderedMarkup":contentToRender}',
+						"text/html",callback);
+		
+	}
 }

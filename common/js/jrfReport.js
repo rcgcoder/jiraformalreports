@@ -29,10 +29,16 @@ var jrfReport=class jrfReport {
 	load(){
 		
 	}
+	isReusingIssueList(){
+		if (!(isDefined(self.allIssues)&&(self.reuseAllIssues))){
+			return false;
+		}
+		return true;
+	}
 	constructIssueFactory(){
 		var self=this;
 		// create a dynobj for store the issues.... 
-		if (!(isDefined(self.allIssues)&&(self.reuseAllIssues))){
+		if (self.isReusingIssueList()){
 			self.allIssues=newIssueFactory(self);
 			
 		};
@@ -84,7 +90,7 @@ var jrfReport=class jrfReport {
 		});
 
 		self.addStep("Construct Issue Dynamic Object.... ",function(){
-			if ((isDefined(self.allIssues)&&(self.reuseAllIssues))){
+			if (self.isReusingIssueList()){
 				return self.continueTask();
 			}
 			var hsFieldNames=newHashMap();
@@ -147,7 +153,7 @@ var jrfReport=class jrfReport {
 		});
 		// first launch all issue retrieve ...
 		self.addStep("Getting All Issues in the Scope.... ",function(){
-			if ((isDefined(self.allIssues)&&(self.reuseAllIssues))){
+			if (self.isReusingIssueList()){
 				return self.continueTask();
 			}
 			var fncProcessIssue=function(issue){

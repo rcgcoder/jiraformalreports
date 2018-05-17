@@ -178,10 +178,10 @@ class RCGAtlassian{
 				
 			}
 		}
-		if (appInfo.tokenNeeded){
+/*		if (appInfo.tokenNeeded){
 			fncAddParam("access_token",appInfo.tokenAccess);
 		}
-		fncAddParam("startAt",startItem);
+*/		fncAddParam("startAt",startItem);
 		fncAddParam("maxResults",maxResults);
 		var newSubPath=appInfo.subPath;
 		if (newSubPath!=""){

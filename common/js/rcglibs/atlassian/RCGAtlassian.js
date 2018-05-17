@@ -281,8 +281,8 @@ class RCGAtlassian{
 			    url: sTargetUrl,
 			    headers: arrHeaders,
 			    data:newData,
-			    dataType:"text/html"
-			    
+			    dataType:"json",
+			    contentType: 'text/html',
 			    //OR
 			    //beforeSend: function(xhr) { 
 			    //  xhr.setRequestHeader("My-First-Header", "first value"); 

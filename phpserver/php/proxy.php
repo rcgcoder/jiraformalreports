@@ -105,7 +105,7 @@ if ($oauth=="1"){
         $_SESSION['OAUTH_TOKEN']=$result;
         session_write_close();
         //		echo "Session Token Set:".$result;
-        $url="https://d696dc44.ngrok.io/jfreports/common/html/autoclose.html";
+        $url="https://cantabrana.no-ip.org/jfreports/common/html/autoclose.html";
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');

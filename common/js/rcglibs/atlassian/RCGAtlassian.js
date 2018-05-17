@@ -304,7 +304,7 @@ class RCGAtlassian{
 
 		self.apiCallApp(appInfo,
 					//"https://rcgcoder.atlassian.net/rest/api/1.0/render",
-				        "https://cantabrana.no-ip.org/jfreports/proxy/rcgcoder.atlassian.net/endproxy/api/1.0/render",
+				        "https://cantabrana.no-ip.org/jfreports/proxy/rcgcoder.atlassian.net/endproxy/rest/api/1.0/render",
 						"POST",
 						{"rendererType":"atlassian-wiki-renderer","unrenderedMarkup":contentToRender},
 						undefined,

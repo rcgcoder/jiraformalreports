@@ -287,17 +287,20 @@ class RCGAtlassian{
 			});
 		}
 	}
-	renderContent(contentToRender){
+	renderContent(appInfo,contentToRender){
 		var self=this;
 		self.pushCallback(function(objResponse,xhr, statusText, errorThrown){
 			log("Rendered Content:"+objResponse);
 			self.continueTask();
 		});
 		
+//		apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders){
 
-		self.apiCallBase("https://paega2.atlassian.net/rest/api/1.0/render",
+		self.apiCallApp(appInfo,"https://paega2.atlassian.net/rest/api/1.0/render",
 						"POST",
 						{"rendererType":"atlassian-wiki-renderer","unrenderedMarkup":contentToRender},
+						undefined,
+						undefined,
 						"text/html");
 		
 	}

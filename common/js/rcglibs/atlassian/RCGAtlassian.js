@@ -76,6 +76,7 @@ class RCGAtlassian{
 		if (appInfo.subPath!=""){
 			appName=appInfo.subPath;
 		}
+		log("AppName ouath connecting:"+appName + " instance:"+self.instance);
 		self.addStep("Querying a OAuth Access Token for "+appName,function(){
 				self.apiCallOauth("/sessions/connect?jiraInstance="+
 						self.instance+

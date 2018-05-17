@@ -230,8 +230,9 @@ class RCGAtlassian{
 							'oauth_token="' +appInfo.tokenAccess+'",'+
 							'oauth_version="'+"1.0"+'"';
 			auxHeaders["Authorization"]=oAuthString;
-			auxHeaders["contentType"]='text/html';
-			auxHeaders["accept"]='text/html';
+			auxHeaders["Content-Type"]='text/html';
+			auxHeaders["Accept"]='text/html';
+			
 			
 //			auxHeaders["access_token"]=appInfo.tokenAccess;
 //			auxHeaders["Authorization"]="Bearer {"+appInfo.tokenAccess+"}";

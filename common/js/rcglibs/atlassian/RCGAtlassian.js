@@ -222,13 +222,13 @@ class RCGAtlassian{
 			}
 		});
 		var auxHeaders=arrHeaders;
-/*		if ((appInfo.tokenNeeded)&&(callType.toUppeCase()=="POST")){
+		if ((appInfo.tokenNeeded)&&(callType.toUppeCase()=="POST")){
 			if (typeof arrHeaders==="undefined"){
-				auxHeaders=[];
+				auxHeaders={};
 			}
-			auxHeaders.push({"access_token",appInfo.tokenAccess});
+			auxHeaders["access_token"]=appInfo.tokenAccess;
 		}
-*/		self.apiCallBase(sTargetUrl,callType,data,sResponseType,callback,auxHeaders);
+		self.apiCallBase(sTargetUrl,callType,data,sResponseType,callback,auxHeaders);
 	}
 	apiCallBase(sTargetUrl,callType,data,sResponseType,callback,arrHeaders){
 		var self=this;
@@ -260,14 +260,32 @@ class RCGAtlassian{
 			    self.popCallback(["",xhr, statusText, errorThrown]);
 			  })
 		}
-		self.JiraAPConnection.request({
-			  url: sTargetUrl,
-			  type:newType,
-			  data:newData,
-			  contentType: sResponseType,
-			  success: newCallback,
-			  error: newErrorCallback
+		if (typeof arrHeaders==="undefined"){
+			self.JiraAPConnection.request({
+				  url: sTargetUrl,
+				  type:newType,
+				  data:newData,
+				  contentType: sResponseType,
+				  success: newCallback,
+				  error: newErrorCallback
+				});
+		} else {
+			$.ajax({
+			    type: 'POST',
+			    url: sTargetUrl,
+			    headers: arrHeaders,
+			    data:newData,
+			    dataType:"json"
+			    
+			    //OR
+			    //beforeSend: function(xhr) { 
+			    //  xhr.setRequestHeader("My-First-Header", "first value"); 
+			    //  xhr.setRequestHeader("My-Second-Header", "second value"); 
+			    //}
+			}).done(function(data) { 
+			    alert(data);
 			});
+		}
 	}
 	renderContent(contentToRender){
 		var self=this;

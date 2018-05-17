@@ -222,7 +222,7 @@ class RCGAtlassian{
 			}
 		});
 		var auxHeaders=arrHeaders;
-		if ((appInfo.tokenNeeded)&&(callType.toUppeCase()=="POST")){
+		if ((appInfo.tokenNeeded)&&(callType.toUpperCase()=="POST")){
 			if (typeof arrHeaders==="undefined"){
 				auxHeaders={};
 			}

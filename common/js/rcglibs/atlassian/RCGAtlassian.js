@@ -261,7 +261,7 @@ class RCGAtlassian{
 			    self.popCallback(["",xhr, statusText, errorThrown]);
 			  })
 		}
-//		if (typeof arrHeaders==="undefined"){
+		if (typeof arrHeaders==="undefined"){
 			self.JiraAPConnection.request({
 				  url: sTargetUrl,
 				  type:newType,
@@ -270,12 +270,12 @@ class RCGAtlassian{
 				  success: newCallback,
 				  error: newErrorCallback
 				});
-/*		} else {
+		} else {
 			$.ajax({
 			    type: 'POST',
 			    url: sTargetUrl,
 			    headers: arrHeaders,
-			    data:newData,
+			    data:JSON.parse(newData),
 			    dataType:"json"
 			    
 			    //OR
@@ -287,7 +287,7 @@ class RCGAtlassian{
 			    alert(data);
 			});
 		}
-*/	}
+	}
 	renderContent(appInfo,contentToRender){
 		var self=this;
 		self.pushCallback(function(objResponse,xhr, statusText, errorThrown){
@@ -297,7 +297,7 @@ class RCGAtlassian{
 		
 //		apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders){
 
-		self.apiCallApp(appInfo,"https://paega2.atlassian.net/rest/api/1.0/render",
+		self.apiCallApp(appInfo,"https://rcgcoder.atlassian.net/rest/api/1.0/render",
 						"POST",
 						{"rendererType":"atlassian-wiki-renderer","unrenderedMarkup":contentToRender},
 						undefined,

@@ -116,8 +116,8 @@ class ZipWebApp{
 					self.continueTask();
 //					var theHtml=$(sHtml);
 				});
-//				cfc.getContent("38076419");
-				cfc.getContent("388137744");
+				cfc.getContent("38076419");
+//				cfc.getContent("388137744");
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 //			}
 			);
@@ -127,7 +127,7 @@ class ZipWebApp{
 			var atl=self.getAtlassian();
 			atl.initialized=true;
 		});  
-/*		self.addStep("Trying to render content... needs oauth connect",function(){
+		self.addStep("Trying to render content... needs oauth connect",function(){
 			var jira=self.getJira();
 			self.addStep("Connecting OAUTH",function(){
 				jira.oauthConnect();
@@ -137,7 +137,7 @@ class ZipWebApp{
 			});
 			self.continueTask();
 		});
-*/		
+		
 		self.addStep("Import nearley grammar.... ",function(){
 			var arrFiles=[	//"ts/demo.ts",
 				"js/libs/grammar/lexer.js",

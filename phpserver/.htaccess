@@ -5,3 +5,4 @@ RewriteRule ^callback?(.*)$ php/proxy.php?url=phpserver/callback.html&refreshCom
 RewriteRule ^app/(.*)?(.*)$ php/proxy.php?url=common/$1&refreshCommitId=1&%{QUERY_STRING} [NC,l]
 RewriteRule ^getCommitId$ php/proxy.php?getCommitId=1
 RewriteRule ^oauth/(.*)?(.*)$ php/proxy.php?oauth=1&url=$1&%{QUERY_STRING} [NC,l]
+RewriteRule ^atlassian/(.*)/(.*)$ $1.atlassian.net/$2?%{QUERY_STRING} [NC,l]

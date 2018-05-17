@@ -221,7 +221,14 @@ class RCGAtlassian{
 				self.popCallback([response,xhr,sUrl,headers]);
 			}
 		});
-		self.apiCallBase(sTargetUrl,callType,data,sResponseType,callback,arrHeaders);
+		var auxHeaders=arrHeaders;
+/*		if ((appInfo.tokenNeeded)&&(callType.toUppeCase()=="POST")){
+			if (typeof arrHeaders==="undefined"){
+				auxHeaders=[];
+			}
+			auxHeaders.push({"access_token",appInfo.tokenAccess});
+		}
+*/		self.apiCallBase(sTargetUrl,callType,data,sResponseType,callback,auxHeaders);
 	}
 	apiCallBase(sTargetUrl,callType,data,sResponseType,callback,arrHeaders){
 		var self=this;
@@ -231,7 +238,8 @@ class RCGAtlassian{
 		}
 		var newData;
 		if (typeof data!=="undefined"){
-			newData=JSON.stringify(data);
+			//newData=JSON.stringify(data);
+			newData=data;
 		}
 		var newResponseType='application/json';
 		if (typeof sResponseType!=="undefined"){
@@ -267,9 +275,11 @@ class RCGAtlassian{
 			log("Rendered Content:"+objResponse);
 			self.continueTask();
 		});
+		
+
 		self.apiCallBase("https://paega2.atlassian.net/rest/api/1.0/render",
 						"POST",
-						'{"rendererType":"atlassian-wiki-renderer","unrenderedMarkup":contentToRender}',
+						{"rendererType":"atlassian-wiki-renderer","unrenderedMarkup":contentToRender},
 						"text/html");
 		
 	}

@@ -226,8 +226,13 @@ class RCGAtlassian{
 			if (typeof arrHeaders==="undefined"){
 				auxHeaders={};
 			}
-			auxHeaders["access_token"]=appInfo.tokenAccess;
-			auxHeaders["Authorization"]="Bearer {"+appInfo.tokenAccess+"}";
+			var oAuthString= ' OAuth oauth_consumer_key="'+"OauthKey"+'",'+
+			'oauth_token="' +appInfo.tokenAccess+'",'+
+			'oauth_version="'+"1.0"+'"';
+			auxHeaders["Authorization"]=oAuthString;
+			
+//			auxHeaders["access_token"]=appInfo.tokenAccess;
+//			auxHeaders["Authorization"]="Bearer {"+appInfo.tokenAccess+"}";
 		}
 		self.apiCallBase(sTargetUrl,callType,data,sResponseType,callback,auxHeaders);
 	}
@@ -275,7 +280,7 @@ class RCGAtlassian{
 			    type: 'POST',
 			    url: sTargetUrl,
 			    headers: arrHeaders,
-			    data:JSON.parse(newData),
+			    data:newData,
 			    dataType:"json"
 			    
 			    //OR

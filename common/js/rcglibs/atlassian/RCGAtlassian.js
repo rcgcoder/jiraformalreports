@@ -227,9 +227,11 @@ class RCGAtlassian{
 				auxHeaders={};
 			}
 			var oAuthString= ' OAuth oauth_consumer_key="'+"OauthKey"+'",'+
-			'oauth_token="' +appInfo.tokenAccess+'",'+
-			'oauth_version="'+"1.0"+'"';
+							'oauth_token="' +appInfo.tokenAccess+'",'+
+							'oauth_version="'+"1.0"+'"';
 			auxHeaders["Authorization"]=oAuthString;
+			auxHeaders["contentType"]='text/html';
+			auxHeaders["accept"]='text/html';
 			
 //			auxHeaders["access_token"]=appInfo.tokenAccess;
 //			auxHeaders["Authorization"]="Bearer {"+appInfo.tokenAccess+"}";
@@ -281,8 +283,7 @@ class RCGAtlassian{
 			    url: sTargetUrl,
 			    headers: arrHeaders,
 			    data:newData,
-			    dataType:"json",
-			    contentType: 'text/html',
+			    dataType:"json"
 			    //OR
 			    //beforeSend: function(xhr) { 
 			    //  xhr.setRequestHeader("My-First-Header", "first value"); 

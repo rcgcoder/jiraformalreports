@@ -239,8 +239,8 @@ class RCGAtlassian{
 		}
 		var newData;
 		if (typeof data!=="undefined"){
-			//newData=JSON.stringify(data);
-			newData=data;
+			newData=JSON.stringify(data);
+			//newData=data;
 		}
 		var newResponseType='application/json';
 		if (typeof sResponseType!=="undefined"){
@@ -261,7 +261,7 @@ class RCGAtlassian{
 			    self.popCallback(["",xhr, statusText, errorThrown]);
 			  })
 		}
-		if (typeof arrHeaders==="undefined"){
+//		if (typeof arrHeaders==="undefined"){
 			self.JiraAPConnection.request({
 				  url: sTargetUrl,
 				  type:newType,
@@ -270,7 +270,7 @@ class RCGAtlassian{
 				  success: newCallback,
 				  error: newErrorCallback
 				});
-		} else {
+/*		} else {
 			$.ajax({
 			    type: 'POST',
 			    url: sTargetUrl,
@@ -287,7 +287,7 @@ class RCGAtlassian{
 			    alert(data);
 			});
 		}
-	}
+*/	}
 	renderContent(appInfo,contentToRender){
 		var self=this;
 		self.pushCallback(function(objResponse,xhr, statusText, errorThrown){

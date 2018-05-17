@@ -126,7 +126,7 @@ class ZipWebApp{
 			var atl=self.getAtlassian();
 			atl.initialized=true;
 		});  
-		self.addStep("Trying to render content... needs oauth connect",function(){
+/*		self.addStep("Trying to render content... needs oauth connect",function(){
 			var jira=self.getJira();
 			self.addStep("Connecting OAUTH",function(){
 				jira.oauthConnect();
@@ -136,7 +136,7 @@ class ZipWebApp{
 			});
 			self.continueTask();
 		});
-		
+	*/	
 		self.addStep("Import nearley grammar.... ",function(){
 			var arrFiles=[	//"ts/demo.ts",
 				"js/libs/grammar/lexer.js",

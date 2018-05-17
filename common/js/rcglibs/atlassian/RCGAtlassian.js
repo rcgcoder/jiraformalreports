@@ -227,6 +227,7 @@ class RCGAtlassian{
 				auxHeaders={};
 			}
 			auxHeaders["access_token"]=appInfo.tokenAccess;
+			auxHeaders["Authorization"]="Bearer {"+appInfo.tokenAccess+"}";
 		}
 		self.apiCallBase(sTargetUrl,callType,data,sResponseType,callback,auxHeaders);
 	}

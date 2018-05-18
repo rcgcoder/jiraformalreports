@@ -289,7 +289,7 @@ class RCGAtlassian{
 					'oauth_version="'+"1.0"+'"';
 			log("OAUT STRING:"+oAuthString);
 			var options = {
-			url: 'http://192.168.100.3:18080/proxy/rcgcoder.atlassian.net/endproxy/rest/api/1.0/render',
+			url: 'https://192.168.100.3:18080/proxy/rcgcoder.atlassian.net/endproxy/rest/api/1.0/render',
 			method: "POST",
 			headers: {
 				'Content-type': 'application/json',

@@ -283,7 +283,7 @@ class RCGAtlassian{
 					'oauth_token="' +tokenAccess+'",'+
 					'oauth_version="'+"1.0"+'"';
 			var options = {
-			url: 'https://cantabrana.no-ip.org/proxy/rcgcoder.atlassian.net/endproxy/rest/api/1.0/render',
+			url: 'https://cantabrana.no-ip.org/jfreports/proxy/rcgcoder.atlassian.net/endproxy/rest/api/1.0/render',
 			method: "POST",
 			headers: {
 				'Content-type': 'application/json',

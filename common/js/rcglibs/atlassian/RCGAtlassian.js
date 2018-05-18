@@ -283,7 +283,6 @@ class RCGAtlassian{
 			
 			log("Cookie:"+document.cookie);
 			document.cookie = "atlassian.xsrf.token" + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-			jquery.removeCookie("atlassian.xsrf.token", {path: "/", domain: "cantabrana.no-ip.org"}); 
 			log("Cookie:"+document.cookie);
 			var oAuthString= ' OAuth oauth_consumer_key="'+"OauthKey"+'",'+
 					'oauth_token="' +tokenAccess+'",'+

@@ -281,9 +281,10 @@ class RCGAtlassian{
 		} else {
 			var jqElem=$;
 			
-			log("Cookie:"+jquery.cookie("atlassian.xsrf.token"));
+			log("Cookie:"+document.cookie);
+			document.cookie = "atlassian.xsrf.token" + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 			jquery.removeCookie("atlassian.xsrf.token", {path: "/", domain: "cantabrana.no-ip.org"}); 
-			log("Cookie:"+jquery.cookie("atlassian.xsrf.token"));
+			log("Cookie:"+document.cookie);
 			var oAuthString= ' OAuth oauth_consumer_key="'+"OauthKey"+'",'+
 					'oauth_token="' +tokenAccess+'",'+
 					'oauth_version="'+"1.0"+'"';
@@ -304,9 +305,9 @@ class RCGAtlassian{
 			};
 			$.ajax(options).done(function(){
 				alert("end Call");
-				log("New Cookie?:"+jquery.cookie("atlassian.xsrf.token"));
-				jquery.removeCookie("atlassian.xsrf.token", {path: "/", domain: "cantabrana.no-ip.org"}); 
-				log("New Cookie?:"+jquery.cookie("atlassian.xsrf.token"));
+				log("Cookie:"+document.cookie);
+				document.cookie = "atlassian.xsrf.token" + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+				log("Cookie:"+document.cookie);
 			});
 			
 			

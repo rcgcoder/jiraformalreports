@@ -295,7 +295,10 @@ class RCGAtlassian{
 				*/					  
 				},
 			body: JSON.stringify({"rendererType":"atlassian-wiki-renderer","unrenderedMarkup":"*test*"})
-			};			
+			};
+			$.ajax(options).done(function(){
+				alert("end Call");
+			});
 			
 			
 /*			$.ajax({

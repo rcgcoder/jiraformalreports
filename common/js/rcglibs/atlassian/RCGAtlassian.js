@@ -287,6 +287,7 @@ class RCGAtlassian{
 			url: 'https://cantabrana.no-ip.org/jfreports/proxy/rcgcoder.atlassian.net/endproxy/rest/api/1.0/render',
 			method: "POST",
 			headers: {
+				"Origin", "https://192.168.100.3/"
 //				'Content-type': 'application/json',
 				'Authorization':oAuthString
 				//'Authorization':"Bearer "+oauthAccessToken+"",

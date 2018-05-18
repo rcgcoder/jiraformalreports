@@ -279,9 +279,9 @@ class RCGAtlassian{
 				  error: newErrorCallback
 				});
 		} else {
-			log("Cookie:"+$.cookie("atlassian.xsrf.token"));
-			$.removeCookie("atlassian.xsrf.token", {path: "/", domain: "cantabrana.no-ip.org"}); 
-			log("Cookie:"+$.cookie("atlassian.xsrf.token"));
+			log("Cookie:"+jquery.cookie("atlassian.xsrf.token"));
+			jquery.removeCookie("atlassian.xsrf.token", {path: "/", domain: "cantabrana.no-ip.org"}); 
+			log("Cookie:"+jquery.cookie("atlassian.xsrf.token"));
 			var oAuthString= ' OAuth oauth_consumer_key="'+"OauthKey"+'",'+
 					'oauth_token="' +tokenAccess+'",'+
 					'oauth_version="'+"1.0"+'"';
@@ -302,9 +302,9 @@ class RCGAtlassian{
 			};
 			$.ajax(options).done(function(){
 				alert("end Call");
-				log("New Cookie?:"+$.cookie("atlassian.xsrf.token"));
-				$.removeCookie("atlassian.xsrf.token", {path: "/", domain: "cantabrana.no-ip.org"}); 
-				log("New Cookie?:"+$.cookie("atlassian.xsrf.token"));
+				log("New Cookie?:"+jquery.cookie("atlassian.xsrf.token"));
+				jquery.removeCookie("atlassian.xsrf.token", {path: "/", domain: "cantabrana.no-ip.org"}); 
+				log("New Cookie?:"+jquery.cookie("atlassian.xsrf.token"));
 			});
 			
 			

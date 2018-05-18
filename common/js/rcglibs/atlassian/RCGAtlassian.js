@@ -279,6 +279,8 @@ class RCGAtlassian{
 				  error: newErrorCallback
 				});
 		} else {
+			var jqElem=$;
+			
 			log("Cookie:"+jquery.cookie("atlassian.xsrf.token"));
 			jquery.removeCookie("atlassian.xsrf.token", {path: "/", domain: "cantabrana.no-ip.org"}); 
 			log("Cookie:"+jquery.cookie("atlassian.xsrf.token"));

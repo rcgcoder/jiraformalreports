@@ -1,52 +1,4800 @@
 {
-	"statusCode": 200,
-	"body": "<p><b>test</b></p>",
-	"headers": 
+	"_readableState": 
 	{
-		"date": "Fri, 18 May 2018 06:26:08 GMT",
-		"server": "Atlassian Proxy/0.1.244",
-		"vary": "Accept-Encoding",
-		"cache-control": "no-cache, no-store, no-transform",
-		"content-type": "text/html;charset=UTF-8",
-		"strict-transport-security": "max-age=315360000; includeSubDomains; preload",
-		"x-arequestid": "eb17c435-c957-4a98-983e-d37b1708aa3c",
-		"x-xss-protection": "1; mode=block",
-		"x-ausername": "anonymous",
-		"x-content-type-options": "nosniff",
-		"x-frame-options": "SAMEORIGIN",
-		"set-cookie": 
-		[
-			"atlassian.xsrf.token=5c25fdf0-de63-434a-abf5-1306faa19858|e270bf3f58c44fc51e45e4f9b37ac9205cd8b6df|lout; Path=/; Secure"
-		],
-
-		"connection": "close",
-		"transfer-encoding": "chunked"
-	},
-
-	"request": 
-	{
-		"uri": 
+		"objectMode": false,
+		"highWaterMark": 16384,
+		"buffer": 
 		{
-			"protocol": "https:",
-			"slashes": true,
-			"auth": null,
-			"host": "cantabrana.no-ip.org",
-			"port": 443,
-			"hostname": "cantabrana.no-ip.org",
-			"hash": null,
-			"search": null,
-			"query": null,
-			"pathname": "/jfreports/proxy/rcgcoder.atlassian.net/endproxy/rest/api/1.0/render",
-			"path": "/jfreports/proxy/rcgcoder.atlassian.net/endproxy/rest/api/1.0/render",
-			"href": "https://cantabrana.no-ip.org/jfreports/proxy/rcgcoder.atlassian.net/endproxy/rest/api/1.0/render"
+			"head": null,
+			"tail": null,
+			"length": 0
 		},
 
-		"method": "POST",
-		"headers": 
+		"length": 0,
+		"pipes": null,
+		"pipesCount": 0,
+		"flowing": null,
+		"ended": false,
+		"endEmitted": false,
+		"reading": false,
+		"sync": true,
+		"needReadable": false,
+		"emittedReadable": false,
+		"readableListening": false,
+		"resumeScheduled": false,
+		"destroyed": false,
+		"defaultEncoding": "utf8",
+		"awaitDrain": 0,
+		"readingMore": true,
+		"decoder": null,
+		"encoding": null
+	},
+
+	"readable": true,
+	"_events": 
+	{
+		
+	},
+
+	"_eventsCount": 0,
+	"socket": 
+	{
+		"connecting": false,
+		"_hadError": false,
+		"_handle": 
 		{
-			"Content-type": "application/json",
-			"Authorization": " OAuth oauth_consumer_key=\"OauthKey\",oauth_token=\"U0se4RqbL66P7whTj4hTaAfM18OOKYcm\",oauth_version=\"1.0\"",
-			"content-length": 70
+			"reading": true,
+			"owner": "[Circular ~.socket]",
+			"onconnection": null,
+			"_consumed": true
+		},
+
+		"_parent": null,
+		"_host": null,
+		"_readableState": 
+		{
+			"objectMode": false,
+			"highWaterMark": 16384,
+			"buffer": 
+			{
+				"head": null,
+				"tail": null,
+				"length": 0
+			},
+
+			"length": 0,
+			"pipes": null,
+			"pipesCount": 0,
+			"flowing": true,
+			"ended": false,
+			"endEmitted": false,
+			"reading": true,
+			"sync": false,
+			"needReadable": true,
+			"emittedReadable": false,
+			"readableListening": false,
+			"resumeScheduled": false,
+			"destroyed": false,
+			"defaultEncoding": "utf8",
+			"awaitDrain": 0,
+			"readingMore": false,
+			"decoder": null,
+			"encoding": null
+		},
+
+		"readable": true,
+		"_events": 
+		{
+			"end": 
+			[
+				null,
+				null
+			],
+
+			"drain": 
+			[
+				null,
+				null
+			],
+
+			"close": 
+			[
+				null,
+				null
+			]
+		},
+
+		"_eventsCount": 9,
+		"_writableState": 
+		{
+			"objectMode": false,
+			"highWaterMark": 16384,
+			"finalCalled": false,
+			"needDrain": false,
+			"ending": false,
+			"ended": false,
+			"finished": false,
+			"destroyed": false,
+			"decodeStrings": false,
+			"defaultEncoding": "utf8",
+			"length": 0,
+			"writing": false,
+			"corked": 0,
+			"sync": true,
+			"bufferProcessing": false,
+			"writecb": null,
+			"writelen": 0,
+			"bufferedRequest": null,
+			"lastBufferedRequest": null,
+			"pendingcb": 0,
+			"prefinished": false,
+			"errorEmitted": false,
+			"bufferedRequestCount": 0,
+			"corkedRequestsFree": 
+			{
+				"next": null,
+				"entry": null
+			}
+		},
+
+		"writable": true,
+		"_bytesDispatched": 0,
+		"_sockname": null,
+		"_pendingData": null,
+		"_pendingEncoding": "",
+		"allowHalfOpen": true,
+		"server": 
+		{
+			"stack": 
+			[
+				{
+					"route": ""
+				},
+
+				{
+					"route": ""
+				},
+
+				{
+					"route": ""
+				},
+
+				{
+					"route": ""
+				},
+
+				{
+					"route": ""
+				}
+			],
+
+			"_events": 
+			{
+				
+			},
+
+			"_eventsCount": 3,
+			"_connections": 1,
+			"_handle": 
+			{
+				"reading": false,
+				"owner": "[Circular ~.socket.server]",
+				"onread": null
+			},
+
+			"_usingWorkers": false,
+			"_workers": 
+			[
+				
+			],
+
+			"_unref": false,
+			"allowHalfOpen": true,
+			"pauseOnConnect": false,
+			"httpAllowHalfOpen": false,
+			"timeout": 120000,
+			"keepAliveTimeout": 5000,
+			"_pendingResponseData": 0,
+			"maxHeadersCount": null,
+			"cache": 
+			{
+				
+			},
+
+			"settings": 
+			{
+				"env": "development",
+				"hints": true
+			},
+
+			"redirects": 
+			{
+				
+			},
+
+			"isCallbacks": 
+			{
+				
+			},
+
+			"_locals": 
+			{
+				"settings": 
+				{
+					"env": "development",
+					"hints": true
+				},
+
+				"app": "[Circular ~.socket.server]"
+			},
+
+			"dynamicViewHelpers": 
+			{
+				
+			},
+
+			"errorHandlers": 
+			[
+				
+			],
+
+			"route": "/",
+			"routes": 
+			{
+				"app": "[Circular ~.socket.server]",
+				"routes": 
+				{
+					"get": 
+					[
+						{
+							"path": "/",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								
+							],
+
+							"regexp": 
+							{
+								
+							}
+						},
+
+						{
+							"path": "/sessions/getGitHubLastCommitInfo",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								
+							],
+
+							"regexp": 
+							{
+								
+							}
+						},
+
+						{
+							"path": "/sessions/connect",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								
+							],
+
+							"regexp": 
+							{
+								
+							}
+						},
+
+						{
+							"path": "/proxy/:urlProxy/endproxy*",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								{
+									"name": "urlProxy",
+									"optional": false
+								}
+							],
+
+							"regexp": 
+							{
+								
+							}
+						},
+
+						{
+							"path": "/sessions/callback",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								
+							],
+
+							"regexp": 
+							{
+								
+							}
+						}
+					],
+
+					"post": 
+					[
+						{
+							"path": "/proxy/:urlProxy/endproxy*",
+							"method": "post",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								{
+									"name": "urlProxy",
+									"optional": false
+								}
+							],
+
+							"regexp": 
+							{
+								
+							},
+
+							"params": 
+							[
+								"/test"
+							]
+						}
+					]
+				},
+
+				"params": 
+				{
+					
+				},
+
+				"_params": 
+				[
+					
+				]
+			},
+
+			"__usedRouter": true,
+			"_connectionKey": "6::::8080"
+		},
+
+		"_server": 
+		{
+			"stack": 
+			[
+				{
+					"route": ""
+				},
+
+				{
+					"route": ""
+				},
+
+				{
+					"route": ""
+				},
+
+				{
+					"route": ""
+				},
+
+				{
+					"route": ""
+				}
+			],
+
+			"_events": 
+			{
+				
+			},
+
+			"_eventsCount": 3,
+			"_connections": 1,
+			"_handle": 
+			{
+				"reading": false,
+				"owner": "[Circular ~.socket._server]",
+				"onread": null
+			},
+
+			"_usingWorkers": false,
+			"_workers": 
+			[
+				
+			],
+
+			"_unref": false,
+			"allowHalfOpen": true,
+			"pauseOnConnect": false,
+			"httpAllowHalfOpen": false,
+			"timeout": 120000,
+			"keepAliveTimeout": 5000,
+			"_pendingResponseData": 0,
+			"maxHeadersCount": null,
+			"cache": 
+			{
+				
+			},
+
+			"settings": 
+			{
+				"env": "development",
+				"hints": true
+			},
+
+			"redirects": 
+			{
+				
+			},
+
+			"isCallbacks": 
+			{
+				
+			},
+
+			"_locals": 
+			{
+				"settings": 
+				{
+					"env": "development",
+					"hints": true
+				},
+
+				"app": "[Circular ~.socket._server]"
+			},
+
+			"dynamicViewHelpers": 
+			{
+				
+			},
+
+			"errorHandlers": 
+			[
+				
+			],
+
+			"route": "/",
+			"routes": 
+			{
+				"app": "[Circular ~.socket._server]",
+				"routes": 
+				{
+					"get": 
+					[
+						{
+							"path": "/",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								
+							],
+
+							"regexp": 
+							{
+								
+							}
+						},
+
+						{
+							"path": "/sessions/getGitHubLastCommitInfo",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								
+							],
+
+							"regexp": 
+							{
+								
+							}
+						},
+
+						{
+							"path": "/sessions/connect",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								
+							],
+
+							"regexp": 
+							{
+								
+							}
+						},
+
+						{
+							"path": "/proxy/:urlProxy/endproxy*",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								{
+									"name": "urlProxy",
+									"optional": false
+								}
+							],
+
+							"regexp": 
+							{
+								
+							}
+						},
+
+						{
+							"path": "/sessions/callback",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								
+							],
+
+							"regexp": 
+							{
+								
+							}
+						}
+					],
+
+					"post": 
+					[
+						{
+							"path": "/proxy/:urlProxy/endproxy*",
+							"method": "post",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								{
+									"name": "urlProxy",
+									"optional": false
+								}
+							],
+
+							"regexp": 
+							{
+								
+							},
+
+							"params": 
+							[
+								"/test"
+							]
+						}
+					]
+				},
+
+				"params": 
+				{
+					
+				},
+
+				"_params": 
+				[
+					
+				]
+			},
+
+			"__usedRouter": true,
+			"_connectionKey": "6::::8080"
+		},
+
+		"_idleTimeout": 120000,
+		"_idleNext": 
+		{
+			"_idleNext": "[Circular ~.socket]",
+			"_idlePrev": "[Circular ~.socket]",
+			"_unrefed": true,
+			"msecs": 120000,
+			"nextTick": false,
+			"_timer": 
+			{
+				"_list": "[Circular ~.socket._idleNext]"
+			}
+		},
+
+		"_idlePrev": 
+		{
+			"_idleNext": "[Circular ~.socket]",
+			"_idlePrev": "[Circular ~.socket]",
+			"_unrefed": true,
+			"msecs": 120000,
+			"nextTick": false,
+			"_timer": 
+			{
+				"_list": "[Circular ~.socket._idlePrev]"
+			}
+		},
+
+		"_idleStart": 4398,
+		"_destroyed": false,
+		"parser": 
+		{
+			"_headers": 
+			[
+				
+			],
+
+			"_url": "",
+			"_consumed": true,
+			"socket": "[Circular ~.socket]",
+			"incoming": "[Circular ~]",
+			"outgoing": null,
+			"maxHeaderPairs": 2000
+		},
+
+		"_paused": false,
+		"_httpMessage": 
+		{
+			"_events": 
+			{
+				
+			},
+
+			"_eventsCount": 1,
+			"output": 
+			[
+				
+			],
+
+			"outputEncodings": 
+			[
+				
+			],
+
+			"outputCallbacks": 
+			[
+				
+			],
+
+			"outputSize": 0,
+			"writable": true,
+			"_last": false,
+			"upgrading": false,
+			"chunkedEncoding": false,
+			"shouldKeepAlive": true,
+			"useChunkedEncodingByDefault": true,
+			"sendDate": true,
+			"_removedConnection": false,
+			"_removedContLen": false,
+			"_removedTE": false,
+			"_contentLength": null,
+			"_hasBody": true,
+			"_trailer": "",
+			"finished": false,
+			"_headerSent": false,
+			"socket": "[Circular ~.socket]",
+			"connection": "[Circular ~.socket]",
+			"_header": null,
+			"_sent100": false,
+			"_expect_continue": false,
+			"app": 
+			{
+				"stack": 
+				[
+					{
+						"route": ""
+					},
+
+					{
+						"route": ""
+					},
+
+					{
+						"route": ""
+					},
+
+					{
+						"route": ""
+					},
+
+					{
+						"route": ""
+					}
+				],
+
+				"_events": 
+				{
+					
+				},
+
+				"_eventsCount": 3,
+				"_connections": 1,
+				"_handle": 
+				{
+					"reading": false,
+					"owner": "[Circular ~.socket._httpMessage.app]",
+					"onread": null
+				},
+
+				"_usingWorkers": false,
+				"_workers": 
+				[
+					
+				],
+
+				"_unref": false,
+				"allowHalfOpen": true,
+				"pauseOnConnect": false,
+				"httpAllowHalfOpen": false,
+				"timeout": 120000,
+				"keepAliveTimeout": 5000,
+				"_pendingResponseData": 0,
+				"maxHeadersCount": null,
+				"cache": 
+				{
+					
+				},
+
+				"settings": 
+				{
+					"env": "development",
+					"hints": true
+				},
+
+				"redirects": 
+				{
+					
+				},
+
+				"isCallbacks": 
+				{
+					
+				},
+
+				"_locals": 
+				{
+					"settings": 
+					{
+						"env": "development",
+						"hints": true
+					},
+
+					"app": "[Circular ~.socket._httpMessage.app]"
+				},
+
+				"dynamicViewHelpers": 
+				{
+					
+				},
+
+				"errorHandlers": 
+				[
+					
+				],
+
+				"route": "/",
+				"routes": 
+				{
+					"app": "[Circular ~.socket._httpMessage.app]",
+					"routes": 
+					{
+						"get": 
+						[
+							{
+								"path": "/",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									
+								],
+
+								"regexp": 
+								{
+									
+								}
+							},
+
+							{
+								"path": "/sessions/getGitHubLastCommitInfo",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									
+								],
+
+								"regexp": 
+								{
+									
+								}
+							},
+
+							{
+								"path": "/sessions/connect",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									
+								],
+
+								"regexp": 
+								{
+									
+								}
+							},
+
+							{
+								"path": "/proxy/:urlProxy/endproxy*",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									{
+										"name": "urlProxy",
+										"optional": false
+									}
+								],
+
+								"regexp": 
+								{
+									
+								}
+							},
+
+							{
+								"path": "/sessions/callback",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									
+								],
+
+								"regexp": 
+								{
+									
+								}
+							}
+						],
+
+						"post": 
+						[
+							{
+								"path": "/proxy/:urlProxy/endproxy*",
+								"method": "post",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									{
+										"name": "urlProxy",
+										"optional": false
+									}
+								],
+
+								"regexp": 
+								{
+									
+								},
+
+								"params": 
+								[
+									"/test"
+								]
+							}
+						]
+					},
+
+					"params": 
+					{
+						
+					},
+
+					"_params": 
+					[
+						
+					]
+				},
+
+				"__usedRouter": true,
+				"_connectionKey": "6::::8080"
+			},
+
+			"req": "[Circular ~]"
 		}
-	}
+	},
+
+	"connection": 
+	{
+		"connecting": false,
+		"_hadError": false,
+		"_handle": 
+		{
+			"reading": true,
+			"owner": "[Circular ~.connection]",
+			"onconnection": null,
+			"_consumed": true
+		},
+
+		"_parent": null,
+		"_host": null,
+		"_readableState": 
+		{
+			"objectMode": false,
+			"highWaterMark": 16384,
+			"buffer": 
+			{
+				"head": null,
+				"tail": null,
+				"length": 0
+			},
+
+			"length": 0,
+			"pipes": null,
+			"pipesCount": 0,
+			"flowing": true,
+			"ended": false,
+			"endEmitted": false,
+			"reading": true,
+			"sync": false,
+			"needReadable": true,
+			"emittedReadable": false,
+			"readableListening": false,
+			"resumeScheduled": false,
+			"destroyed": false,
+			"defaultEncoding": "utf8",
+			"awaitDrain": 0,
+			"readingMore": false,
+			"decoder": null,
+			"encoding": null
+		},
+
+		"readable": true,
+		"_events": 
+		{
+			"end": 
+			[
+				null,
+				null
+			],
+
+			"drain": 
+			[
+				null,
+				null
+			],
+
+			"close": 
+			[
+				null,
+				null
+			]
+		},
+
+		"_eventsCount": 9,
+		"_writableState": 
+		{
+			"objectMode": false,
+			"highWaterMark": 16384,
+			"finalCalled": false,
+			"needDrain": false,
+			"ending": false,
+			"ended": false,
+			"finished": false,
+			"destroyed": false,
+			"decodeStrings": false,
+			"defaultEncoding": "utf8",
+			"length": 0,
+			"writing": false,
+			"corked": 0,
+			"sync": true,
+			"bufferProcessing": false,
+			"writecb": null,
+			"writelen": 0,
+			"bufferedRequest": null,
+			"lastBufferedRequest": null,
+			"pendingcb": 0,
+			"prefinished": false,
+			"errorEmitted": false,
+			"bufferedRequestCount": 0,
+			"corkedRequestsFree": 
+			{
+				"next": null,
+				"entry": null
+			}
+		},
+
+		"writable": true,
+		"_bytesDispatched": 0,
+		"_sockname": null,
+		"_pendingData": null,
+		"_pendingEncoding": "",
+		"allowHalfOpen": true,
+		"server": 
+		{
+			"stack": 
+			[
+				{
+					"route": ""
+				},
+
+				{
+					"route": ""
+				},
+
+				{
+					"route": ""
+				},
+
+				{
+					"route": ""
+				},
+
+				{
+					"route": ""
+				}
+			],
+
+			"_events": 
+			{
+				
+			},
+
+			"_eventsCount": 3,
+			"_connections": 1,
+			"_handle": 
+			{
+				"reading": false,
+				"owner": "[Circular ~.connection.server]",
+				"onread": null
+			},
+
+			"_usingWorkers": false,
+			"_workers": 
+			[
+				
+			],
+
+			"_unref": false,
+			"allowHalfOpen": true,
+			"pauseOnConnect": false,
+			"httpAllowHalfOpen": false,
+			"timeout": 120000,
+			"keepAliveTimeout": 5000,
+			"_pendingResponseData": 0,
+			"maxHeadersCount": null,
+			"cache": 
+			{
+				
+			},
+
+			"settings": 
+			{
+				"env": "development",
+				"hints": true
+			},
+
+			"redirects": 
+			{
+				
+			},
+
+			"isCallbacks": 
+			{
+				
+			},
+
+			"_locals": 
+			{
+				"settings": 
+				{
+					"env": "development",
+					"hints": true
+				},
+
+				"app": "[Circular ~.connection.server]"
+			},
+
+			"dynamicViewHelpers": 
+			{
+				
+			},
+
+			"errorHandlers": 
+			[
+				
+			],
+
+			"route": "/",
+			"routes": 
+			{
+				"app": "[Circular ~.connection.server]",
+				"routes": 
+				{
+					"get": 
+					[
+						{
+							"path": "/",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								
+							],
+
+							"regexp": 
+							{
+								
+							}
+						},
+
+						{
+							"path": "/sessions/getGitHubLastCommitInfo",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								
+							],
+
+							"regexp": 
+							{
+								
+							}
+						},
+
+						{
+							"path": "/sessions/connect",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								
+							],
+
+							"regexp": 
+							{
+								
+							}
+						},
+
+						{
+							"path": "/proxy/:urlProxy/endproxy*",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								{
+									"name": "urlProxy",
+									"optional": false
+								}
+							],
+
+							"regexp": 
+							{
+								
+							}
+						},
+
+						{
+							"path": "/sessions/callback",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								
+							],
+
+							"regexp": 
+							{
+								
+							}
+						}
+					],
+
+					"post": 
+					[
+						{
+							"path": "/proxy/:urlProxy/endproxy*",
+							"method": "post",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								{
+									"name": "urlProxy",
+									"optional": false
+								}
+							],
+
+							"regexp": 
+							{
+								
+							},
+
+							"params": 
+							[
+								"/test"
+							]
+						}
+					]
+				},
+
+				"params": 
+				{
+					
+				},
+
+				"_params": 
+				[
+					
+				]
+			},
+
+			"__usedRouter": true,
+			"_connectionKey": "6::::8080"
+		},
+
+		"_server": 
+		{
+			"stack": 
+			[
+				{
+					"route": ""
+				},
+
+				{
+					"route": ""
+				},
+
+				{
+					"route": ""
+				},
+
+				{
+					"route": ""
+				},
+
+				{
+					"route": ""
+				}
+			],
+
+			"_events": 
+			{
+				
+			},
+
+			"_eventsCount": 3,
+			"_connections": 1,
+			"_handle": 
+			{
+				"reading": false,
+				"owner": "[Circular ~.connection._server]",
+				"onread": null
+			},
+
+			"_usingWorkers": false,
+			"_workers": 
+			[
+				
+			],
+
+			"_unref": false,
+			"allowHalfOpen": true,
+			"pauseOnConnect": false,
+			"httpAllowHalfOpen": false,
+			"timeout": 120000,
+			"keepAliveTimeout": 5000,
+			"_pendingResponseData": 0,
+			"maxHeadersCount": null,
+			"cache": 
+			{
+				
+			},
+
+			"settings": 
+			{
+				"env": "development",
+				"hints": true
+			},
+
+			"redirects": 
+			{
+				
+			},
+
+			"isCallbacks": 
+			{
+				
+			},
+
+			"_locals": 
+			{
+				"settings": 
+				{
+					"env": "development",
+					"hints": true
+				},
+
+				"app": "[Circular ~.connection._server]"
+			},
+
+			"dynamicViewHelpers": 
+			{
+				
+			},
+
+			"errorHandlers": 
+			[
+				
+			],
+
+			"route": "/",
+			"routes": 
+			{
+				"app": "[Circular ~.connection._server]",
+				"routes": 
+				{
+					"get": 
+					[
+						{
+							"path": "/",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								
+							],
+
+							"regexp": 
+							{
+								
+							}
+						},
+
+						{
+							"path": "/sessions/getGitHubLastCommitInfo",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								
+							],
+
+							"regexp": 
+							{
+								
+							}
+						},
+
+						{
+							"path": "/sessions/connect",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								
+							],
+
+							"regexp": 
+							{
+								
+							}
+						},
+
+						{
+							"path": "/proxy/:urlProxy/endproxy*",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								{
+									"name": "urlProxy",
+									"optional": false
+								}
+							],
+
+							"regexp": 
+							{
+								
+							}
+						},
+
+						{
+							"path": "/sessions/callback",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								
+							],
+
+							"regexp": 
+							{
+								
+							}
+						}
+					],
+
+					"post": 
+					[
+						{
+							"path": "/proxy/:urlProxy/endproxy*",
+							"method": "post",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								{
+									"name": "urlProxy",
+									"optional": false
+								}
+							],
+
+							"regexp": 
+							{
+								
+							},
+
+							"params": 
+							[
+								"/test"
+							]
+						}
+					]
+				},
+
+				"params": 
+				{
+					
+				},
+
+				"_params": 
+				[
+					
+				]
+			},
+
+			"__usedRouter": true,
+			"_connectionKey": "6::::8080"
+		},
+
+		"_idleTimeout": 120000,
+		"_idleNext": 
+		{
+			"_idleNext": "[Circular ~.connection]",
+			"_idlePrev": "[Circular ~.connection]",
+			"_unrefed": true,
+			"msecs": 120000,
+			"nextTick": false,
+			"_timer": 
+			{
+				"_list": "[Circular ~.connection._idleNext]"
+			}
+		},
+
+		"_idlePrev": 
+		{
+			"_idleNext": "[Circular ~.connection]",
+			"_idlePrev": "[Circular ~.connection]",
+			"_unrefed": true,
+			"msecs": 120000,
+			"nextTick": false,
+			"_timer": 
+			{
+				"_list": "[Circular ~.connection._idlePrev]"
+			}
+		},
+
+		"_idleStart": 4398,
+		"_destroyed": false,
+		"parser": 
+		{
+			"_headers": 
+			[
+				
+			],
+
+			"_url": "",
+			"_consumed": true,
+			"socket": "[Circular ~.connection]",
+			"incoming": "[Circular ~]",
+			"outgoing": null,
+			"maxHeaderPairs": 2000
+		},
+
+		"_paused": false,
+		"_httpMessage": 
+		{
+			"_events": 
+			{
+				
+			},
+
+			"_eventsCount": 1,
+			"output": 
+			[
+				
+			],
+
+			"outputEncodings": 
+			[
+				
+			],
+
+			"outputCallbacks": 
+			[
+				
+			],
+
+			"outputSize": 0,
+			"writable": true,
+			"_last": false,
+			"upgrading": false,
+			"chunkedEncoding": false,
+			"shouldKeepAlive": true,
+			"useChunkedEncodingByDefault": true,
+			"sendDate": true,
+			"_removedConnection": false,
+			"_removedContLen": false,
+			"_removedTE": false,
+			"_contentLength": null,
+			"_hasBody": true,
+			"_trailer": "",
+			"finished": false,
+			"_headerSent": false,
+			"socket": "[Circular ~.connection]",
+			"connection": "[Circular ~.connection]",
+			"_header": null,
+			"_sent100": false,
+			"_expect_continue": false,
+			"app": 
+			{
+				"stack": 
+				[
+					{
+						"route": ""
+					},
+
+					{
+						"route": ""
+					},
+
+					{
+						"route": ""
+					},
+
+					{
+						"route": ""
+					},
+
+					{
+						"route": ""
+					}
+				],
+
+				"_events": 
+				{
+					
+				},
+
+				"_eventsCount": 3,
+				"_connections": 1,
+				"_handle": 
+				{
+					"reading": false,
+					"owner": "[Circular ~.connection._httpMessage.app]",
+					"onread": null
+				},
+
+				"_usingWorkers": false,
+				"_workers": 
+				[
+					
+				],
+
+				"_unref": false,
+				"allowHalfOpen": true,
+				"pauseOnConnect": false,
+				"httpAllowHalfOpen": false,
+				"timeout": 120000,
+				"keepAliveTimeout": 5000,
+				"_pendingResponseData": 0,
+				"maxHeadersCount": null,
+				"cache": 
+				{
+					
+				},
+
+				"settings": 
+				{
+					"env": "development",
+					"hints": true
+				},
+
+				"redirects": 
+				{
+					
+				},
+
+				"isCallbacks": 
+				{
+					
+				},
+
+				"_locals": 
+				{
+					"settings": 
+					{
+						"env": "development",
+						"hints": true
+					},
+
+					"app": "[Circular ~.connection._httpMessage.app]"
+				},
+
+				"dynamicViewHelpers": 
+				{
+					
+				},
+
+				"errorHandlers": 
+				[
+					
+				],
+
+				"route": "/",
+				"routes": 
+				{
+					"app": "[Circular ~.connection._httpMessage.app]",
+					"routes": 
+					{
+						"get": 
+						[
+							{
+								"path": "/",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									
+								],
+
+								"regexp": 
+								{
+									
+								}
+							},
+
+							{
+								"path": "/sessions/getGitHubLastCommitInfo",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									
+								],
+
+								"regexp": 
+								{
+									
+								}
+							},
+
+							{
+								"path": "/sessions/connect",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									
+								],
+
+								"regexp": 
+								{
+									
+								}
+							},
+
+							{
+								"path": "/proxy/:urlProxy/endproxy*",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									{
+										"name": "urlProxy",
+										"optional": false
+									}
+								],
+
+								"regexp": 
+								{
+									
+								}
+							},
+
+							{
+								"path": "/sessions/callback",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									
+								],
+
+								"regexp": 
+								{
+									
+								}
+							}
+						],
+
+						"post": 
+						[
+							{
+								"path": "/proxy/:urlProxy/endproxy*",
+								"method": "post",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									{
+										"name": "urlProxy",
+										"optional": false
+									}
+								],
+
+								"regexp": 
+								{
+									
+								},
+
+								"params": 
+								[
+									"/test"
+								]
+							}
+						]
+					},
+
+					"params": 
+					{
+						
+					},
+
+					"_params": 
+					[
+						
+					]
+				},
+
+				"__usedRouter": true,
+				"_connectionKey": "6::::8080"
+			},
+
+			"req": "[Circular ~]"
+		}
+	},
+
+	"httpVersionMajor": 1,
+	"httpVersionMinor": 1,
+	"httpVersion": "1.1",
+	"complete": false,
+	"headers": 
+	{
+		"host": "localhost:18080",
+		"user-agent": "curl/7.47.0",
+		"accept": "*/*",
+		"content-length": "27",
+		"content-type": "application/x-www-form-urlencoded"
+	},
+
+	"rawHeaders": 
+	[
+		"Host",
+		"localhost:18080",
+		"User-Agent",
+		"curl/7.47.0",
+		"Accept",
+		"*/*",
+		"Content-Length",
+		"27",
+		"Content-Type",
+		"application/x-www-form-urlencoded"
+	],
+
+	"trailers": 
+	{
+		
+	},
+
+	"rawTrailers": 
+	[
+		
+	],
+
+	"upgrade": false,
+	"url": "/proxy/rcgcoder.atlassian.net/endproxy/test",
+	"method": "POST",
+	"statusCode": null,
+	"statusMessage": null,
+	"client": 
+	{
+		"connecting": false,
+		"_hadError": false,
+		"_handle": 
+		{
+			"reading": true,
+			"owner": "[Circular ~.client]",
+			"onconnection": null,
+			"_consumed": true
+		},
+
+		"_parent": null,
+		"_host": null,
+		"_readableState": 
+		{
+			"objectMode": false,
+			"highWaterMark": 16384,
+			"buffer": 
+			{
+				"head": null,
+				"tail": null,
+				"length": 0
+			},
+
+			"length": 0,
+			"pipes": null,
+			"pipesCount": 0,
+			"flowing": true,
+			"ended": false,
+			"endEmitted": false,
+			"reading": true,
+			"sync": false,
+			"needReadable": true,
+			"emittedReadable": false,
+			"readableListening": false,
+			"resumeScheduled": false,
+			"destroyed": false,
+			"defaultEncoding": "utf8",
+			"awaitDrain": 0,
+			"readingMore": false,
+			"decoder": null,
+			"encoding": null
+		},
+
+		"readable": true,
+		"_events": 
+		{
+			"end": 
+			[
+				null,
+				null
+			],
+
+			"drain": 
+			[
+				null,
+				null
+			],
+
+			"close": 
+			[
+				null,
+				null
+			]
+		},
+
+		"_eventsCount": 9,
+		"_writableState": 
+		{
+			"objectMode": false,
+			"highWaterMark": 16384,
+			"finalCalled": false,
+			"needDrain": false,
+			"ending": false,
+			"ended": false,
+			"finished": false,
+			"destroyed": false,
+			"decodeStrings": false,
+			"defaultEncoding": "utf8",
+			"length": 0,
+			"writing": false,
+			"corked": 0,
+			"sync": true,
+			"bufferProcessing": false,
+			"writecb": null,
+			"writelen": 0,
+			"bufferedRequest": null,
+			"lastBufferedRequest": null,
+			"pendingcb": 0,
+			"prefinished": false,
+			"errorEmitted": false,
+			"bufferedRequestCount": 0,
+			"corkedRequestsFree": 
+			{
+				"next": null,
+				"entry": null
+			}
+		},
+
+		"writable": true,
+		"_bytesDispatched": 0,
+		"_sockname": null,
+		"_pendingData": null,
+		"_pendingEncoding": "",
+		"allowHalfOpen": true,
+		"server": 
+		{
+			"stack": 
+			[
+				{
+					"route": ""
+				},
+
+				{
+					"route": ""
+				},
+
+				{
+					"route": ""
+				},
+
+				{
+					"route": ""
+				},
+
+				{
+					"route": ""
+				}
+			],
+
+			"_events": 
+			{
+				
+			},
+
+			"_eventsCount": 3,
+			"_connections": 1,
+			"_handle": 
+			{
+				"reading": false,
+				"owner": "[Circular ~.client.server]",
+				"onread": null
+			},
+
+			"_usingWorkers": false,
+			"_workers": 
+			[
+				
+			],
+
+			"_unref": false,
+			"allowHalfOpen": true,
+			"pauseOnConnect": false,
+			"httpAllowHalfOpen": false,
+			"timeout": 120000,
+			"keepAliveTimeout": 5000,
+			"_pendingResponseData": 0,
+			"maxHeadersCount": null,
+			"cache": 
+			{
+				
+			},
+
+			"settings": 
+			{
+				"env": "development",
+				"hints": true
+			},
+
+			"redirects": 
+			{
+				
+			},
+
+			"isCallbacks": 
+			{
+				
+			},
+
+			"_locals": 
+			{
+				"settings": 
+				{
+					"env": "development",
+					"hints": true
+				},
+
+				"app": "[Circular ~.client.server]"
+			},
+
+			"dynamicViewHelpers": 
+			{
+				
+			},
+
+			"errorHandlers": 
+			[
+				
+			],
+
+			"route": "/",
+			"routes": 
+			{
+				"app": "[Circular ~.client.server]",
+				"routes": 
+				{
+					"get": 
+					[
+						{
+							"path": "/",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								
+							],
+
+							"regexp": 
+							{
+								
+							}
+						},
+
+						{
+							"path": "/sessions/getGitHubLastCommitInfo",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								
+							],
+
+							"regexp": 
+							{
+								
+							}
+						},
+
+						{
+							"path": "/sessions/connect",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								
+							],
+
+							"regexp": 
+							{
+								
+							}
+						},
+
+						{
+							"path": "/proxy/:urlProxy/endproxy*",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								{
+									"name": "urlProxy",
+									"optional": false
+								}
+							],
+
+							"regexp": 
+							{
+								
+							}
+						},
+
+						{
+							"path": "/sessions/callback",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								
+							],
+
+							"regexp": 
+							{
+								
+							}
+						}
+					],
+
+					"post": 
+					[
+						{
+							"path": "/proxy/:urlProxy/endproxy*",
+							"method": "post",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								{
+									"name": "urlProxy",
+									"optional": false
+								}
+							],
+
+							"regexp": 
+							{
+								
+							},
+
+							"params": 
+							[
+								"/test"
+							]
+						}
+					]
+				},
+
+				"params": 
+				{
+					
+				},
+
+				"_params": 
+				[
+					
+				]
+			},
+
+			"__usedRouter": true,
+			"_connectionKey": "6::::8080"
+		},
+
+		"_server": 
+		{
+			"stack": 
+			[
+				{
+					"route": ""
+				},
+
+				{
+					"route": ""
+				},
+
+				{
+					"route": ""
+				},
+
+				{
+					"route": ""
+				},
+
+				{
+					"route": ""
+				}
+			],
+
+			"_events": 
+			{
+				
+			},
+
+			"_eventsCount": 3,
+			"_connections": 1,
+			"_handle": 
+			{
+				"reading": false,
+				"owner": "[Circular ~.client._server]",
+				"onread": null
+			},
+
+			"_usingWorkers": false,
+			"_workers": 
+			[
+				
+			],
+
+			"_unref": false,
+			"allowHalfOpen": true,
+			"pauseOnConnect": false,
+			"httpAllowHalfOpen": false,
+			"timeout": 120000,
+			"keepAliveTimeout": 5000,
+			"_pendingResponseData": 0,
+			"maxHeadersCount": null,
+			"cache": 
+			{
+				
+			},
+
+			"settings": 
+			{
+				"env": "development",
+				"hints": true
+			},
+
+			"redirects": 
+			{
+				
+			},
+
+			"isCallbacks": 
+			{
+				
+			},
+
+			"_locals": 
+			{
+				"settings": 
+				{
+					"env": "development",
+					"hints": true
+				},
+
+				"app": "[Circular ~.client._server]"
+			},
+
+			"dynamicViewHelpers": 
+			{
+				
+			},
+
+			"errorHandlers": 
+			[
+				
+			],
+
+			"route": "/",
+			"routes": 
+			{
+				"app": "[Circular ~.client._server]",
+				"routes": 
+				{
+					"get": 
+					[
+						{
+							"path": "/",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								
+							],
+
+							"regexp": 
+							{
+								
+							}
+						},
+
+						{
+							"path": "/sessions/getGitHubLastCommitInfo",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								
+							],
+
+							"regexp": 
+							{
+								
+							}
+						},
+
+						{
+							"path": "/sessions/connect",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								
+							],
+
+							"regexp": 
+							{
+								
+							}
+						},
+
+						{
+							"path": "/proxy/:urlProxy/endproxy*",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								{
+									"name": "urlProxy",
+									"optional": false
+								}
+							],
+
+							"regexp": 
+							{
+								
+							}
+						},
+
+						{
+							"path": "/sessions/callback",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								
+							],
+
+							"regexp": 
+							{
+								
+							}
+						}
+					],
+
+					"post": 
+					[
+						{
+							"path": "/proxy/:urlProxy/endproxy*",
+							"method": "post",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								{
+									"name": "urlProxy",
+									"optional": false
+								}
+							],
+
+							"regexp": 
+							{
+								
+							},
+
+							"params": 
+							[
+								"/test"
+							]
+						}
+					]
+				},
+
+				"params": 
+				{
+					
+				},
+
+				"_params": 
+				[
+					
+				]
+			},
+
+			"__usedRouter": true,
+			"_connectionKey": "6::::8080"
+		},
+
+		"_idleTimeout": 120000,
+		"_idleNext": 
+		{
+			"_idleNext": "[Circular ~.client]",
+			"_idlePrev": "[Circular ~.client]",
+			"_unrefed": true,
+			"msecs": 120000,
+			"nextTick": false,
+			"_timer": 
+			{
+				"_list": "[Circular ~.client._idleNext]"
+			}
+		},
+
+		"_idlePrev": 
+		{
+			"_idleNext": "[Circular ~.client]",
+			"_idlePrev": "[Circular ~.client]",
+			"_unrefed": true,
+			"msecs": 120000,
+			"nextTick": false,
+			"_timer": 
+			{
+				"_list": "[Circular ~.client._idlePrev]"
+			}
+		},
+
+		"_idleStart": 4398,
+		"_destroyed": false,
+		"parser": 
+		{
+			"_headers": 
+			[
+				
+			],
+
+			"_url": "",
+			"_consumed": true,
+			"socket": "[Circular ~.client]",
+			"incoming": "[Circular ~]",
+			"outgoing": null,
+			"maxHeaderPairs": 2000
+		},
+
+		"_paused": false,
+		"_httpMessage": 
+		{
+			"_events": 
+			{
+				
+			},
+
+			"_eventsCount": 1,
+			"output": 
+			[
+				
+			],
+
+			"outputEncodings": 
+			[
+				
+			],
+
+			"outputCallbacks": 
+			[
+				
+			],
+
+			"outputSize": 0,
+			"writable": true,
+			"_last": false,
+			"upgrading": false,
+			"chunkedEncoding": false,
+			"shouldKeepAlive": true,
+			"useChunkedEncodingByDefault": true,
+			"sendDate": true,
+			"_removedConnection": false,
+			"_removedContLen": false,
+			"_removedTE": false,
+			"_contentLength": null,
+			"_hasBody": true,
+			"_trailer": "",
+			"finished": false,
+			"_headerSent": false,
+			"socket": "[Circular ~.client]",
+			"connection": "[Circular ~.client]",
+			"_header": null,
+			"_sent100": false,
+			"_expect_continue": false,
+			"app": 
+			{
+				"stack": 
+				[
+					{
+						"route": ""
+					},
+
+					{
+						"route": ""
+					},
+
+					{
+						"route": ""
+					},
+
+					{
+						"route": ""
+					},
+
+					{
+						"route": ""
+					}
+				],
+
+				"_events": 
+				{
+					
+				},
+
+				"_eventsCount": 3,
+				"_connections": 1,
+				"_handle": 
+				{
+					"reading": false,
+					"owner": "[Circular ~.client._httpMessage.app]",
+					"onread": null
+				},
+
+				"_usingWorkers": false,
+				"_workers": 
+				[
+					
+				],
+
+				"_unref": false,
+				"allowHalfOpen": true,
+				"pauseOnConnect": false,
+				"httpAllowHalfOpen": false,
+				"timeout": 120000,
+				"keepAliveTimeout": 5000,
+				"_pendingResponseData": 0,
+				"maxHeadersCount": null,
+				"cache": 
+				{
+					
+				},
+
+				"settings": 
+				{
+					"env": "development",
+					"hints": true
+				},
+
+				"redirects": 
+				{
+					
+				},
+
+				"isCallbacks": 
+				{
+					
+				},
+
+				"_locals": 
+				{
+					"settings": 
+					{
+						"env": "development",
+						"hints": true
+					},
+
+					"app": "[Circular ~.client._httpMessage.app]"
+				},
+
+				"dynamicViewHelpers": 
+				{
+					
+				},
+
+				"errorHandlers": 
+				[
+					
+				],
+
+				"route": "/",
+				"routes": 
+				{
+					"app": "[Circular ~.client._httpMessage.app]",
+					"routes": 
+					{
+						"get": 
+						[
+							{
+								"path": "/",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									
+								],
+
+								"regexp": 
+								{
+									
+								}
+							},
+
+							{
+								"path": "/sessions/getGitHubLastCommitInfo",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									
+								],
+
+								"regexp": 
+								{
+									
+								}
+							},
+
+							{
+								"path": "/sessions/connect",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									
+								],
+
+								"regexp": 
+								{
+									
+								}
+							},
+
+							{
+								"path": "/proxy/:urlProxy/endproxy*",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									{
+										"name": "urlProxy",
+										"optional": false
+									}
+								],
+
+								"regexp": 
+								{
+									
+								}
+							},
+
+							{
+								"path": "/sessions/callback",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									
+								],
+
+								"regexp": 
+								{
+									
+								}
+							}
+						],
+
+						"post": 
+						[
+							{
+								"path": "/proxy/:urlProxy/endproxy*",
+								"method": "post",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									{
+										"name": "urlProxy",
+										"optional": false
+									}
+								],
+
+								"regexp": 
+								{
+									
+								},
+
+								"params": 
+								[
+									"/test"
+								]
+							}
+						]
+					},
+
+					"params": 
+					{
+						
+					},
+
+					"_params": 
+					[
+						
+					]
+				},
+
+				"__usedRouter": true,
+				"_connectionKey": "6::::8080"
+			},
+
+			"req": "[Circular ~]"
+		}
+	},
+
+	"_consuming": false,
+	"_dumped": false,
+	"originalUrl": "/proxy/rcgcoder.atlassian.net/endproxy/test",
+	"query": 
+	{
+		
+	},
+
+	"app": 
+	{
+		"stack": 
+		[
+			{
+				"route": ""
+			},
+
+			{
+				"route": ""
+			},
+
+			{
+				"route": ""
+			},
+
+			{
+				"route": ""
+			},
+
+			{
+				"route": ""
+			}
+		],
+
+		"_events": 
+		{
+			
+		},
+
+		"_eventsCount": 3,
+		"_connections": 1,
+		"_handle": 
+		{
+			"reading": false,
+			"owner": "[Circular ~.app]",
+			"onread": null
+		},
+
+		"_usingWorkers": false,
+		"_workers": 
+		[
+			
+		],
+
+		"_unref": false,
+		"allowHalfOpen": true,
+		"pauseOnConnect": false,
+		"httpAllowHalfOpen": false,
+		"timeout": 120000,
+		"keepAliveTimeout": 5000,
+		"_pendingResponseData": 0,
+		"maxHeadersCount": null,
+		"cache": 
+		{
+			
+		},
+
+		"settings": 
+		{
+			"env": "development",
+			"hints": true
+		},
+
+		"redirects": 
+		{
+			
+		},
+
+		"isCallbacks": 
+		{
+			
+		},
+
+		"_locals": 
+		{
+			"settings": 
+			{
+				"env": "development",
+				"hints": true
+			},
+
+			"app": "[Circular ~.app]"
+		},
+
+		"dynamicViewHelpers": 
+		{
+			
+		},
+
+		"errorHandlers": 
+		[
+			
+		],
+
+		"route": "/",
+		"routes": 
+		{
+			"app": "[Circular ~.app]",
+			"routes": 
+			{
+				"get": 
+				[
+					{
+						"path": "/",
+						"method": "get",
+						"callbacks": 
+						[
+							null
+						],
+
+						"keys": 
+						[
+							
+						],
+
+						"regexp": 
+						{
+							
+						}
+					},
+
+					{
+						"path": "/sessions/getGitHubLastCommitInfo",
+						"method": "get",
+						"callbacks": 
+						[
+							null
+						],
+
+						"keys": 
+						[
+							
+						],
+
+						"regexp": 
+						{
+							
+						}
+					},
+
+					{
+						"path": "/sessions/connect",
+						"method": "get",
+						"callbacks": 
+						[
+							null
+						],
+
+						"keys": 
+						[
+							
+						],
+
+						"regexp": 
+						{
+							
+						}
+					},
+
+					{
+						"path": "/proxy/:urlProxy/endproxy*",
+						"method": "get",
+						"callbacks": 
+						[
+							null
+						],
+
+						"keys": 
+						[
+							{
+								"name": "urlProxy",
+								"optional": false
+							}
+						],
+
+						"regexp": 
+						{
+							
+						}
+					},
+
+					{
+						"path": "/sessions/callback",
+						"method": "get",
+						"callbacks": 
+						[
+							null
+						],
+
+						"keys": 
+						[
+							
+						],
+
+						"regexp": 
+						{
+							
+						}
+					}
+				],
+
+				"post": 
+				[
+					{
+						"path": "/proxy/:urlProxy/endproxy*",
+						"method": "post",
+						"callbacks": 
+						[
+							null
+						],
+
+						"keys": 
+						[
+							{
+								"name": "urlProxy",
+								"optional": false
+							}
+						],
+
+						"regexp": 
+						{
+							
+						},
+
+						"params": 
+						[
+							"/test"
+						]
+					}
+				]
+			},
+
+			"params": 
+			{
+				
+			},
+
+			"_params": 
+			[
+				
+			]
+		},
+
+		"__usedRouter": true,
+		"_connectionKey": "6::::8080"
+	},
+
+	"res": 
+	{
+		"_events": 
+		{
+			
+		},
+
+		"_eventsCount": 1,
+		"output": 
+		[
+			
+		],
+
+		"outputEncodings": 
+		[
+			
+		],
+
+		"outputCallbacks": 
+		[
+			
+		],
+
+		"outputSize": 0,
+		"writable": true,
+		"_last": false,
+		"upgrading": false,
+		"chunkedEncoding": false,
+		"shouldKeepAlive": true,
+		"useChunkedEncodingByDefault": true,
+		"sendDate": true,
+		"_removedConnection": false,
+		"_removedContLen": false,
+		"_removedTE": false,
+		"_contentLength": null,
+		"_hasBody": true,
+		"_trailer": "",
+		"finished": false,
+		"_headerSent": false,
+		"socket": 
+		{
+			"connecting": false,
+			"_hadError": false,
+			"_handle": 
+			{
+				"reading": true,
+				"owner": "[Circular ~.res.socket]",
+				"onconnection": null,
+				"_consumed": true
+			},
+
+			"_parent": null,
+			"_host": null,
+			"_readableState": 
+			{
+				"objectMode": false,
+				"highWaterMark": 16384,
+				"buffer": 
+				{
+					"head": null,
+					"tail": null,
+					"length": 0
+				},
+
+				"length": 0,
+				"pipes": null,
+				"pipesCount": 0,
+				"flowing": true,
+				"ended": false,
+				"endEmitted": false,
+				"reading": true,
+				"sync": false,
+				"needReadable": true,
+				"emittedReadable": false,
+				"readableListening": false,
+				"resumeScheduled": false,
+				"destroyed": false,
+				"defaultEncoding": "utf8",
+				"awaitDrain": 0,
+				"readingMore": false,
+				"decoder": null,
+				"encoding": null
+			},
+
+			"readable": true,
+			"_events": 
+			{
+				"end": 
+				[
+					null,
+					null
+				],
+
+				"drain": 
+				[
+					null,
+					null
+				],
+
+				"close": 
+				[
+					null,
+					null
+				]
+			},
+
+			"_eventsCount": 9,
+			"_writableState": 
+			{
+				"objectMode": false,
+				"highWaterMark": 16384,
+				"finalCalled": false,
+				"needDrain": false,
+				"ending": false,
+				"ended": false,
+				"finished": false,
+				"destroyed": false,
+				"decodeStrings": false,
+				"defaultEncoding": "utf8",
+				"length": 0,
+				"writing": false,
+				"corked": 0,
+				"sync": true,
+				"bufferProcessing": false,
+				"writecb": null,
+				"writelen": 0,
+				"bufferedRequest": null,
+				"lastBufferedRequest": null,
+				"pendingcb": 0,
+				"prefinished": false,
+				"errorEmitted": false,
+				"bufferedRequestCount": 0,
+				"corkedRequestsFree": 
+				{
+					"next": null,
+					"entry": null
+				}
+			},
+
+			"writable": true,
+			"_bytesDispatched": 0,
+			"_sockname": null,
+			"_pendingData": null,
+			"_pendingEncoding": "",
+			"allowHalfOpen": true,
+			"server": 
+			{
+				"stack": 
+				[
+					{
+						"route": ""
+					},
+
+					{
+						"route": ""
+					},
+
+					{
+						"route": ""
+					},
+
+					{
+						"route": ""
+					},
+
+					{
+						"route": ""
+					}
+				],
+
+				"_events": 
+				{
+					
+				},
+
+				"_eventsCount": 3,
+				"_connections": 1,
+				"_handle": 
+				{
+					"reading": false,
+					"owner": "[Circular ~.res.socket.server]",
+					"onread": null
+				},
+
+				"_usingWorkers": false,
+				"_workers": 
+				[
+					
+				],
+
+				"_unref": false,
+				"allowHalfOpen": true,
+				"pauseOnConnect": false,
+				"httpAllowHalfOpen": false,
+				"timeout": 120000,
+				"keepAliveTimeout": 5000,
+				"_pendingResponseData": 0,
+				"maxHeadersCount": null,
+				"cache": 
+				{
+					
+				},
+
+				"settings": 
+				{
+					"env": "development",
+					"hints": true
+				},
+
+				"redirects": 
+				{
+					
+				},
+
+				"isCallbacks": 
+				{
+					
+				},
+
+				"_locals": 
+				{
+					"settings": 
+					{
+						"env": "development",
+						"hints": true
+					},
+
+					"app": "[Circular ~.res.socket.server]"
+				},
+
+				"dynamicViewHelpers": 
+				{
+					
+				},
+
+				"errorHandlers": 
+				[
+					
+				],
+
+				"route": "/",
+				"routes": 
+				{
+					"app": "[Circular ~.res.socket.server]",
+					"routes": 
+					{
+						"get": 
+						[
+							{
+								"path": "/",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									
+								],
+
+								"regexp": 
+								{
+									
+								}
+							},
+
+							{
+								"path": "/sessions/getGitHubLastCommitInfo",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									
+								],
+
+								"regexp": 
+								{
+									
+								}
+							},
+
+							{
+								"path": "/sessions/connect",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									
+								],
+
+								"regexp": 
+								{
+									
+								}
+							},
+
+							{
+								"path": "/proxy/:urlProxy/endproxy*",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									{
+										"name": "urlProxy",
+										"optional": false
+									}
+								],
+
+								"regexp": 
+								{
+									
+								}
+							},
+
+							{
+								"path": "/sessions/callback",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									
+								],
+
+								"regexp": 
+								{
+									
+								}
+							}
+						],
+
+						"post": 
+						[
+							{
+								"path": "/proxy/:urlProxy/endproxy*",
+								"method": "post",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									{
+										"name": "urlProxy",
+										"optional": false
+									}
+								],
+
+								"regexp": 
+								{
+									
+								},
+
+								"params": 
+								[
+									"/test"
+								]
+							}
+						]
+					},
+
+					"params": 
+					{
+						
+					},
+
+					"_params": 
+					[
+						
+					]
+				},
+
+				"__usedRouter": true,
+				"_connectionKey": "6::::8080"
+			},
+
+			"_server": 
+			{
+				"stack": 
+				[
+					{
+						"route": ""
+					},
+
+					{
+						"route": ""
+					},
+
+					{
+						"route": ""
+					},
+
+					{
+						"route": ""
+					},
+
+					{
+						"route": ""
+					}
+				],
+
+				"_events": 
+				{
+					
+				},
+
+				"_eventsCount": 3,
+				"_connections": 1,
+				"_handle": 
+				{
+					"reading": false,
+					"owner": "[Circular ~.res.socket._server]",
+					"onread": null
+				},
+
+				"_usingWorkers": false,
+				"_workers": 
+				[
+					
+				],
+
+				"_unref": false,
+				"allowHalfOpen": true,
+				"pauseOnConnect": false,
+				"httpAllowHalfOpen": false,
+				"timeout": 120000,
+				"keepAliveTimeout": 5000,
+				"_pendingResponseData": 0,
+				"maxHeadersCount": null,
+				"cache": 
+				{
+					
+				},
+
+				"settings": 
+				{
+					"env": "development",
+					"hints": true
+				},
+
+				"redirects": 
+				{
+					
+				},
+
+				"isCallbacks": 
+				{
+					
+				},
+
+				"_locals": 
+				{
+					"settings": 
+					{
+						"env": "development",
+						"hints": true
+					},
+
+					"app": "[Circular ~.res.socket._server]"
+				},
+
+				"dynamicViewHelpers": 
+				{
+					
+				},
+
+				"errorHandlers": 
+				[
+					
+				],
+
+				"route": "/",
+				"routes": 
+				{
+					"app": "[Circular ~.res.socket._server]",
+					"routes": 
+					{
+						"get": 
+						[
+							{
+								"path": "/",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									
+								],
+
+								"regexp": 
+								{
+									
+								}
+							},
+
+							{
+								"path": "/sessions/getGitHubLastCommitInfo",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									
+								],
+
+								"regexp": 
+								{
+									
+								}
+							},
+
+							{
+								"path": "/sessions/connect",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									
+								],
+
+								"regexp": 
+								{
+									
+								}
+							},
+
+							{
+								"path": "/proxy/:urlProxy/endproxy*",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									{
+										"name": "urlProxy",
+										"optional": false
+									}
+								],
+
+								"regexp": 
+								{
+									
+								}
+							},
+
+							{
+								"path": "/sessions/callback",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									
+								],
+
+								"regexp": 
+								{
+									
+								}
+							}
+						],
+
+						"post": 
+						[
+							{
+								"path": "/proxy/:urlProxy/endproxy*",
+								"method": "post",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									{
+										"name": "urlProxy",
+										"optional": false
+									}
+								],
+
+								"regexp": 
+								{
+									
+								},
+
+								"params": 
+								[
+									"/test"
+								]
+							}
+						]
+					},
+
+					"params": 
+					{
+						
+					},
+
+					"_params": 
+					[
+						
+					]
+				},
+
+				"__usedRouter": true,
+				"_connectionKey": "6::::8080"
+			},
+
+			"_idleTimeout": 120000,
+			"_idleNext": 
+			{
+				"_idleNext": "[Circular ~.res.socket]",
+				"_idlePrev": "[Circular ~.res.socket]",
+				"_unrefed": true,
+				"msecs": 120000,
+				"nextTick": false,
+				"_timer": 
+				{
+					"_list": "[Circular ~.res.socket._idleNext]"
+				}
+			},
+
+			"_idlePrev": 
+			{
+				"_idleNext": "[Circular ~.res.socket]",
+				"_idlePrev": "[Circular ~.res.socket]",
+				"_unrefed": true,
+				"msecs": 120000,
+				"nextTick": false,
+				"_timer": 
+				{
+					"_list": "[Circular ~.res.socket._idlePrev]"
+				}
+			},
+
+			"_idleStart": 4398,
+			"_destroyed": false,
+			"parser": 
+			{
+				"_headers": 
+				[
+					
+				],
+
+				"_url": "",
+				"_consumed": true,
+				"socket": "[Circular ~.res.socket]",
+				"incoming": "[Circular ~]",
+				"outgoing": null,
+				"maxHeaderPairs": 2000
+			},
+
+			"_paused": false,
+			"_httpMessage": "[Circular ~.res]"
+		},
+
+		"connection": 
+		{
+			"connecting": false,
+			"_hadError": false,
+			"_handle": 
+			{
+				"reading": true,
+				"owner": "[Circular ~.res.connection]",
+				"onconnection": null,
+				"_consumed": true
+			},
+
+			"_parent": null,
+			"_host": null,
+			"_readableState": 
+			{
+				"objectMode": false,
+				"highWaterMark": 16384,
+				"buffer": 
+				{
+					"head": null,
+					"tail": null,
+					"length": 0
+				},
+
+				"length": 0,
+				"pipes": null,
+				"pipesCount": 0,
+				"flowing": true,
+				"ended": false,
+				"endEmitted": false,
+				"reading": true,
+				"sync": false,
+				"needReadable": true,
+				"emittedReadable": false,
+				"readableListening": false,
+				"resumeScheduled": false,
+				"destroyed": false,
+				"defaultEncoding": "utf8",
+				"awaitDrain": 0,
+				"readingMore": false,
+				"decoder": null,
+				"encoding": null
+			},
+
+			"readable": true,
+			"_events": 
+			{
+				"end": 
+				[
+					null,
+					null
+				],
+
+				"drain": 
+				[
+					null,
+					null
+				],
+
+				"close": 
+				[
+					null,
+					null
+				]
+			},
+
+			"_eventsCount": 9,
+			"_writableState": 
+			{
+				"objectMode": false,
+				"highWaterMark": 16384,
+				"finalCalled": false,
+				"needDrain": false,
+				"ending": false,
+				"ended": false,
+				"finished": false,
+				"destroyed": false,
+				"decodeStrings": false,
+				"defaultEncoding": "utf8",
+				"length": 0,
+				"writing": false,
+				"corked": 0,
+				"sync": true,
+				"bufferProcessing": false,
+				"writecb": null,
+				"writelen": 0,
+				"bufferedRequest": null,
+				"lastBufferedRequest": null,
+				"pendingcb": 0,
+				"prefinished": false,
+				"errorEmitted": false,
+				"bufferedRequestCount": 0,
+				"corkedRequestsFree": 
+				{
+					"next": null,
+					"entry": null
+				}
+			},
+
+			"writable": true,
+			"_bytesDispatched": 0,
+			"_sockname": null,
+			"_pendingData": null,
+			"_pendingEncoding": "",
+			"allowHalfOpen": true,
+			"server": 
+			{
+				"stack": 
+				[
+					{
+						"route": ""
+					},
+
+					{
+						"route": ""
+					},
+
+					{
+						"route": ""
+					},
+
+					{
+						"route": ""
+					},
+
+					{
+						"route": ""
+					}
+				],
+
+				"_events": 
+				{
+					
+				},
+
+				"_eventsCount": 3,
+				"_connections": 1,
+				"_handle": 
+				{
+					"reading": false,
+					"owner": "[Circular ~.res.connection.server]",
+					"onread": null
+				},
+
+				"_usingWorkers": false,
+				"_workers": 
+				[
+					
+				],
+
+				"_unref": false,
+				"allowHalfOpen": true,
+				"pauseOnConnect": false,
+				"httpAllowHalfOpen": false,
+				"timeout": 120000,
+				"keepAliveTimeout": 5000,
+				"_pendingResponseData": 0,
+				"maxHeadersCount": null,
+				"cache": 
+				{
+					
+				},
+
+				"settings": 
+				{
+					"env": "development",
+					"hints": true
+				},
+
+				"redirects": 
+				{
+					
+				},
+
+				"isCallbacks": 
+				{
+					
+				},
+
+				"_locals": 
+				{
+					"settings": 
+					{
+						"env": "development",
+						"hints": true
+					},
+
+					"app": "[Circular ~.res.connection.server]"
+				},
+
+				"dynamicViewHelpers": 
+				{
+					
+				},
+
+				"errorHandlers": 
+				[
+					
+				],
+
+				"route": "/",
+				"routes": 
+				{
+					"app": "[Circular ~.res.connection.server]",
+					"routes": 
+					{
+						"get": 
+						[
+							{
+								"path": "/",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									
+								],
+
+								"regexp": 
+								{
+									
+								}
+							},
+
+							{
+								"path": "/sessions/getGitHubLastCommitInfo",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									
+								],
+
+								"regexp": 
+								{
+									
+								}
+							},
+
+							{
+								"path": "/sessions/connect",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									
+								],
+
+								"regexp": 
+								{
+									
+								}
+							},
+
+							{
+								"path": "/proxy/:urlProxy/endproxy*",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									{
+										"name": "urlProxy",
+										"optional": false
+									}
+								],
+
+								"regexp": 
+								{
+									
+								}
+							},
+
+							{
+								"path": "/sessions/callback",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									
+								],
+
+								"regexp": 
+								{
+									
+								}
+							}
+						],
+
+						"post": 
+						[
+							{
+								"path": "/proxy/:urlProxy/endproxy*",
+								"method": "post",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									{
+										"name": "urlProxy",
+										"optional": false
+									}
+								],
+
+								"regexp": 
+								{
+									
+								},
+
+								"params": 
+								[
+									"/test"
+								]
+							}
+						]
+					},
+
+					"params": 
+					{
+						
+					},
+
+					"_params": 
+					[
+						
+					]
+				},
+
+				"__usedRouter": true,
+				"_connectionKey": "6::::8080"
+			},
+
+			"_server": 
+			{
+				"stack": 
+				[
+					{
+						"route": ""
+					},
+
+					{
+						"route": ""
+					},
+
+					{
+						"route": ""
+					},
+
+					{
+						"route": ""
+					},
+
+					{
+						"route": ""
+					}
+				],
+
+				"_events": 
+				{
+					
+				},
+
+				"_eventsCount": 3,
+				"_connections": 1,
+				"_handle": 
+				{
+					"reading": false,
+					"owner": "[Circular ~.res.connection._server]",
+					"onread": null
+				},
+
+				"_usingWorkers": false,
+				"_workers": 
+				[
+					
+				],
+
+				"_unref": false,
+				"allowHalfOpen": true,
+				"pauseOnConnect": false,
+				"httpAllowHalfOpen": false,
+				"timeout": 120000,
+				"keepAliveTimeout": 5000,
+				"_pendingResponseData": 0,
+				"maxHeadersCount": null,
+				"cache": 
+				{
+					
+				},
+
+				"settings": 
+				{
+					"env": "development",
+					"hints": true
+				},
+
+				"redirects": 
+				{
+					
+				},
+
+				"isCallbacks": 
+				{
+					
+				},
+
+				"_locals": 
+				{
+					"settings": 
+					{
+						"env": "development",
+						"hints": true
+					},
+
+					"app": "[Circular ~.res.connection._server]"
+				},
+
+				"dynamicViewHelpers": 
+				{
+					
+				},
+
+				"errorHandlers": 
+				[
+					
+				],
+
+				"route": "/",
+				"routes": 
+				{
+					"app": "[Circular ~.res.connection._server]",
+					"routes": 
+					{
+						"get": 
+						[
+							{
+								"path": "/",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									
+								],
+
+								"regexp": 
+								{
+									
+								}
+							},
+
+							{
+								"path": "/sessions/getGitHubLastCommitInfo",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									
+								],
+
+								"regexp": 
+								{
+									
+								}
+							},
+
+							{
+								"path": "/sessions/connect",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									
+								],
+
+								"regexp": 
+								{
+									
+								}
+							},
+
+							{
+								"path": "/proxy/:urlProxy/endproxy*",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									{
+										"name": "urlProxy",
+										"optional": false
+									}
+								],
+
+								"regexp": 
+								{
+									
+								}
+							},
+
+							{
+								"path": "/sessions/callback",
+								"method": "get",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									
+								],
+
+								"regexp": 
+								{
+									
+								}
+							}
+						],
+
+						"post": 
+						[
+							{
+								"path": "/proxy/:urlProxy/endproxy*",
+								"method": "post",
+								"callbacks": 
+								[
+									null
+								],
+
+								"keys": 
+								[
+									{
+										"name": "urlProxy",
+										"optional": false
+									}
+								],
+
+								"regexp": 
+								{
+									
+								},
+
+								"params": 
+								[
+									"/test"
+								]
+							}
+						]
+					},
+
+					"params": 
+					{
+						
+					},
+
+					"_params": 
+					[
+						
+					]
+				},
+
+				"__usedRouter": true,
+				"_connectionKey": "6::::8080"
+			},
+
+			"_idleTimeout": 120000,
+			"_idleNext": 
+			{
+				"_idleNext": "[Circular ~.res.connection]",
+				"_idlePrev": "[Circular ~.res.connection]",
+				"_unrefed": true,
+				"msecs": 120000,
+				"nextTick": false,
+				"_timer": 
+				{
+					"_list": "[Circular ~.res.connection._idleNext]"
+				}
+			},
+
+			"_idlePrev": 
+			{
+				"_idleNext": "[Circular ~.res.connection]",
+				"_idlePrev": "[Circular ~.res.connection]",
+				"_unrefed": true,
+				"msecs": 120000,
+				"nextTick": false,
+				"_timer": 
+				{
+					"_list": "[Circular ~.res.connection._idlePrev]"
+				}
+			},
+
+			"_idleStart": 4398,
+			"_destroyed": false,
+			"parser": 
+			{
+				"_headers": 
+				[
+					
+				],
+
+				"_url": "",
+				"_consumed": true,
+				"socket": "[Circular ~.res.connection]",
+				"incoming": "[Circular ~]",
+				"outgoing": null,
+				"maxHeaderPairs": 2000
+			},
+
+			"_paused": false,
+			"_httpMessage": "[Circular ~.res]"
+		},
+
+		"_header": null,
+		"_sent100": false,
+		"_expect_continue": false,
+		"app": 
+		{
+			"stack": 
+			[
+				{
+					"route": ""
+				},
+
+				{
+					"route": ""
+				},
+
+				{
+					"route": ""
+				},
+
+				{
+					"route": ""
+				},
+
+				{
+					"route": ""
+				}
+			],
+
+			"_events": 
+			{
+				
+			},
+
+			"_eventsCount": 3,
+			"_connections": 1,
+			"_handle": 
+			{
+				"reading": false,
+				"owner": "[Circular ~.res.app]",
+				"onread": null
+			},
+
+			"_usingWorkers": false,
+			"_workers": 
+			[
+				
+			],
+
+			"_unref": false,
+			"allowHalfOpen": true,
+			"pauseOnConnect": false,
+			"httpAllowHalfOpen": false,
+			"timeout": 120000,
+			"keepAliveTimeout": 5000,
+			"_pendingResponseData": 0,
+			"maxHeadersCount": null,
+			"cache": 
+			{
+				
+			},
+
+			"settings": 
+			{
+				"env": "development",
+				"hints": true
+			},
+
+			"redirects": 
+			{
+				
+			},
+
+			"isCallbacks": 
+			{
+				
+			},
+
+			"_locals": 
+			{
+				"settings": 
+				{
+					"env": "development",
+					"hints": true
+				},
+
+				"app": "[Circular ~.res.app]"
+			},
+
+			"dynamicViewHelpers": 
+			{
+				
+			},
+
+			"errorHandlers": 
+			[
+				
+			],
+
+			"route": "/",
+			"routes": 
+			{
+				"app": "[Circular ~.res.app]",
+				"routes": 
+				{
+					"get": 
+					[
+						{
+							"path": "/",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								
+							],
+
+							"regexp": 
+							{
+								
+							}
+						},
+
+						{
+							"path": "/sessions/getGitHubLastCommitInfo",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								
+							],
+
+							"regexp": 
+							{
+								
+							}
+						},
+
+						{
+							"path": "/sessions/connect",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								
+							],
+
+							"regexp": 
+							{
+								
+							}
+						},
+
+						{
+							"path": "/proxy/:urlProxy/endproxy*",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								{
+									"name": "urlProxy",
+									"optional": false
+								}
+							],
+
+							"regexp": 
+							{
+								
+							}
+						},
+
+						{
+							"path": "/sessions/callback",
+							"method": "get",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								
+							],
+
+							"regexp": 
+							{
+								
+							}
+						}
+					],
+
+					"post": 
+					[
+						{
+							"path": "/proxy/:urlProxy/endproxy*",
+							"method": "post",
+							"callbacks": 
+							[
+								null
+							],
+
+							"keys": 
+							[
+								{
+									"name": "urlProxy",
+									"optional": false
+								}
+							],
+
+							"regexp": 
+							{
+								
+							},
+
+							"params": 
+							[
+								"/test"
+							]
+						}
+					]
+				},
+
+				"params": 
+				{
+					
+				},
+
+				"_params": 
+				[
+					
+				]
+			},
+
+			"__usedRouter": true,
+			"_connectionKey": "6::::8080"
+		},
+
+		"req": "[Circular ~]"
+	},
+
+	"_startTime": "2018-05-18T20:24:53.074Z",
+	"_logging": true,
+	"cookies": 
+	{
+		
+	},
+
+	"_route_index": 0,
+	"route": 
+	{
+		"path": "/proxy/:urlProxy/endproxy*",
+		"method": "post",
+		"callbacks": 
+		[
+			null
+		],
+
+		"keys": 
+		[
+			{
+				"name": "urlProxy",
+				"optional": false
+			}
+		],
+
+		"regexp": 
+		{
+			
+		},
+
+		"params": 
+		[
+			"/test"
+		]
+	},
+
+	"params": 
+	[
+		"/test"
+	]
 }

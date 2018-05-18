@@ -223,23 +223,23 @@ class RCGAtlassian{
 		});
 		var auxHeaders=arrHeaders;
 		if ((appInfo.tokenNeeded)&&(callType.toUpperCase()=="POST")){
-			if (typeof arrHeaders==="undefined"){
+//			if (typeof arrHeaders==="undefined"){
 				auxHeaders={};
-			}
+//			}
 			var oAuthString= ' OAuth oauth_consumer_key="'+"OauthKey"+'",'+
 							'oauth_token="' +appInfo.tokenAccess+'",'+
 							'oauth_version="'+"1.0"+'"';
 			auxHeaders["Authorization"]=oAuthString;
-			auxHeaders["Content-Type"]='text/html;charset=UTF-8';
+/*			auxHeaders["Content-Type"]='text/html;charset=UTF-8';
 			auxHeaders["Accept"]='text/html;charset=UTF-8';
-			
+	*/		
 			
 //			auxHeaders["access_token"]=appInfo.tokenAccess;
 //			auxHeaders["Authorization"]="Bearer {"+appInfo.tokenAccess+"}";
 		}
-		self.apiCallBase(sTargetUrl,callType,data,sResponseType,callback,auxHeaders);
+		self.apiCallBase(sTargetUrl,callType,data,sResponseType,callback,auxHeaders,appInfo.tokenAccess);
 	}
-	apiCallBase(sTargetUrl,callType,data,sResponseType,callback,arrHeaders){
+	apiCallBase(sTargetUrl,callType,data,sResponseType,callback,arrHeaders,tokenAccess){
 		var self=this;
 		var newType="GET";
 		if (typeof callType!=="undefined"){
@@ -279,12 +279,31 @@ class RCGAtlassian{
 				  error: newErrorCallback
 				});
 		} else {
-			$.ajax({
+			var oAuthString= ' OAuth oauth_consumer_key="'+"OauthKey"+'",'+
+					'oauth_token="' +tokenAccess+'",'+
+					'oauth_version="'+"1.0"+'"';
+			var options = {
+			url: 'https://cantabrana.no-ip.org/proxy/rcgcoder.atlassian.net/endproxy/rest/api/1.0/render',
+			method: "POST",
+			headers: {
+				'Content-type': 'application/json',
+				'Authorization':oAuthString
+				//'Authorization':"Bearer "+oauthAccessToken+"",
+				/*						'access_token': oauthAccessToken
+				'oauth_consumer_key':"OauthKey",
+				'oauth_token':oauthAccessToken,
+				*/					  
+				},
+			body: JSON.stringify({"rendererType":"atlassian-wiki-renderer","unrenderedMarkup":"*test*"})
+			};			
+			
+			
+/*			$.ajax({
 			    type: 'POST',
 			    url: sTargetUrl,
 			    headers: arrHeaders,
-			    data:newData,
-			    dataType:"json"
+			    data:newData
+//			    dataType:"json"
 			    //OR
 			    //beforeSend: function(xhr) { 
 			    //  xhr.setRequestHeader("My-First-Header", "first value"); 
@@ -293,6 +312,7 @@ class RCGAtlassian{
 			}).done(function(data) { 
 			    alert(data);
 			});
+			*/
 		}
 	}
 	renderContent(appInfo,contentToRender){

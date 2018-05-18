@@ -282,6 +282,7 @@ class RCGAtlassian{
 			var oAuthString= ' OAuth oauth_consumer_key="'+"OauthKey"+'",'+
 					'oauth_token="' +tokenAccess+'",'+
 					'oauth_version="'+"1.0"+'"';
+			log("OAUT STRING:"+oAuthString);
 			var options = {
 			url: 'https://cantabrana.no-ip.org/jfreports/proxy/rcgcoder.atlassian.net/endproxy/rest/api/1.0/render',
 			method: "POST",

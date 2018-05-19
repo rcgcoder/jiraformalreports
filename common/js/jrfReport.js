@@ -209,7 +209,11 @@ var jrfReport=class jrfReport {
 				}
 			}
 			var fncGetIssueChilds=function(issueParent){
-				self.addStep("Getting childs for issue:"+issueParent.getKey()+ "....",function(){
+				var auxKey="Report";
+				if (isDefined(issueParent.getKey)){
+					auxKey="Issue:"+issueParent.getKey();
+				}
+				self.addStep("Getting childs for " + auxKey + "....",function(){
 				//walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
 					self.allIssues.list.walkAsync("Getting childs for issue:"+issueParent.getKey()
 												,self.createManagedCallback(function(issueChild){fncProcessChild(issueChild,issueParent)})

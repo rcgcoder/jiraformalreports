@@ -18,7 +18,7 @@ function newIssueFactory(report){
 			[]
 			,
 			undefined);
-	dynObj.functions.add("fieldValue",function(sFieldName,bRendered){
+	dynObj.functions.add("fieldValue",function(theFieldName,bRendered){
 		var sFieldName=theFieldName.trim();
 		var self=this;
 		var fncAux=self["get"+sFieldName];

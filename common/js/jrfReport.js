@@ -128,23 +128,29 @@ var jrfReport=class jrfReport {
 				}
 			}
 			if (self.config.rootsByJQL){
+				var theJQL="";
 				if (self.config.rootIssues.values.length>0){
 					self.config.rootIssues.values.forEach(function(issueId) {
-						self.rootIssues.add(issueId,issueId);
+						if (theJQL!=""){
+							theJQL+=",";
+						}
+						theJQL+=issueId;
 					});
+					theJQL="id in ("+theJQL+")";
 				} else if (self.config.rootIssues.jql==""){
 					log("there is not root issues nor jql to do a report");
 					self.bFinishReport=true;
 				} else {
-					var fncProcessIssue=function(issue){
-						self.rootIssues.add(issue.key,issue);
-					}
-					self.addStep("Processing jql to get root issues:"+self.config.rootIssues.jql,function(){
-						self.jira.processJQLIssues(
-										self.config.rootIssues.jql,
-										fncProcessIssue);
-					});
+					theJQL=self.config.rootIssues.jql;
 				}
+				var fncProcessIssue=function(issue){
+					self.rootIssues.add(issue.key,issue);
+				}
+				self.addStep("Processing jql to get root issues:"+theJQL,function(){
+					self.jira.processJQLIssues(
+									theJQL,
+									fncProcessIssue);
+				});
 			}
 			self.continueTask();
 		});

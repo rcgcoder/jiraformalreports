@@ -1,5 +1,15 @@
 function newIssueFactory(report){
 	var theReport=report;
+	var hsFieldNames=newHashMap();
+	//	self.allFieldNames;
+	//hsFieldNames.clear();
+	self.config.useFields.forEach(function(element){
+		hsFieldNames.add(element.name,element.key); // to do a reverse search
+	});
+	self.config.useOtherFields.forEach(function(element){
+		hsFieldNames.add(element.name,element.key); // to do a reverse search
+	});
+	
 	var allFieldDefinitions=[];
 	theReport.config.useFields.forEach(function(element){
 		allFieldDefinitions.push({name:element.key,description:element.name});

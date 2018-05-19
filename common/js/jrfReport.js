@@ -88,15 +88,6 @@ var jrfReport=class jrfReport {
 			if (self.isReusingIssueList()){
 				return self.continueTask();
 			}
-			var hsFieldNames=newHashMap();
-//				self.allFieldNames;
-//			hsFieldNames.clear();
-			self.config.useFields.forEach(function(element){
-				hsFieldNames.add(element.name,element.key); // to do a reverse search
-			});
-			self.config.useOtherFields.forEach(function(element){
-				hsFieldNames.add(element.name,element.key); // to do a reverse search
-			});
 			self.allIssues=newIssueFactory(self);
 			// change de "fieldValue" method
 

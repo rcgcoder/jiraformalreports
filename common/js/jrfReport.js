@@ -143,14 +143,18 @@ var jrfReport=class jrfReport {
 				} else {
 					theJQL=self.config.rootIssues.jql;
 				}
-				var fncProcessIssue=function(issue){
-					self.rootIssues.add(issue.key,issue);
+				if (!self.bFinishReport){
+					var fncProcessIssue=function(issue){
+						self.rootIssues.add(issue.key,issue);
+					}
+					self.addStep("Processing jql to get root issues:"+theJQL,function(){
+						self.jira.processJQLIssues(
+										theJQL,
+										fncProcessIssue);
+					});
+				} else {
+					self.continueTask();
 				}
-				self.addStep("Processing jql to get root issues:"+theJQL,function(){
-					self.jira.processJQLIssues(
-									theJQL,
-									fncProcessIssue);
-				});
 			}
 			self.continueTask();
 		});
@@ -248,6 +252,7 @@ var jrfReport=class jrfReport {
 			self.childs.walk(function(parentIssue){
 				fncGetIssueChilds(parentIssue);
 			});
+			self.continueTask();
 		});
 		// load report model and submodels
 		// Process Model with The Report

@@ -215,7 +215,7 @@ var jrfReport=class jrfReport {
 				}
 				self.addStep("Getting childs for " + auxKey + "....",function(){
 				//walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
-					self.allIssues.list.walkAsync("Getting childs for issue:"+issueParent.getKey()
+					self.allIssues.list.walkAsync("Getting childs for "+auxKey
 												,self.createManagedCallback(function(issueChild){fncProcessChild(issueChild,issueParent)})
 												,self.createManagedCallback(function(){self.continueTask();})
 												);

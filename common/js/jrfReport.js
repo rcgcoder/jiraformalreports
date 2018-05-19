@@ -130,11 +130,11 @@ var jrfReport=class jrfReport {
 			if (self.config.rootsByJQL){
 				var theJQL="";
 				if (self.config.rootIssues.values.length>0){
-					self.config.rootIssues.values.forEach(function(issueId) {
+					self.config.rootIssues.values.forEach(function(selIssue) {
 						if (theJQL!=""){
 							theJQL+=",";
 						}
-						theJQL+=issueId;
+						theJQL+=selIssue.key;
 					});
 					theJQL="id in ("+theJQL+")";
 				} else if (self.config.rootIssues.jql==""){

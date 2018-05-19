@@ -243,7 +243,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				var arrParts=sFormat.split("=")
 				var sFormatId=arrParts[0];
 				if (sFormatId=="markdown"){
-					sValAux=wiki2html(sValAux); 
+					sValAux=sValAux.wiki2html(); 
 				} else if (sFormatId=="fixed"){
 					sValAux=self.replaceVars(sValAux);
 					sValAux=self.model.removeInnerTags(sValAux).trim();

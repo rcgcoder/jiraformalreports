@@ -248,8 +248,6 @@ var jrfReport=class jrfReport {
 			self.childs.walk(function(parentIssue){
 				fncGetIssueChilds(parentIssue);
 			});
-			
-			self.continueTask();
 		});
 		// load report model and submodels
 		// Process Model with The Report

@@ -197,6 +197,7 @@ var jrfReport=class jrfReport {
 				if (issueChild.id=="BENT-242"){
 					log("Testing "+issueChild.id);
 				}
+				var bPendingProcess=false;
 				var bIsChild=false;
 				try{
 					bIsChild=fncIsChild(issueChild,issueParent);
@@ -212,7 +213,7 @@ var jrfReport=class jrfReport {
 					}
 					if (!issuesAdded.exists(issueChild.getKey())){
 						issuesAdded.add(issueChild.getKey(),issueChild);
-						fncGetIssueChilds(issueChild);
+						bPendingProcess=true;
 					}
 				}
 				var bIsAdvPart=false;				
@@ -230,8 +231,11 @@ var jrfReport=class jrfReport {
 					}
 					if (!issuesAdded.exists(issueChild.getKey())){
 						issuesAdded.add(issueChild.getKey(),issueChild);
-						fncGetIssueChilds(issueChild);
+						bPendingProcess=true;
 					}
+				}
+				if (bPendingProcess){
+					fncGetIssueChilds(issueChild);
 				}
 			}
 			var fncGetIssueChilds=function(issueParent){

@@ -63,6 +63,7 @@ var jrfReport=class jrfReport {
 								"js/jrfIssueFactory.js",
 								"js/libs/sha256.js",
 								"js/libs/showdown.js",
+								"js/libs/wiki2html.js",
 								"js/rcglibs/RCGVarEngine.js",
 								"js/modelProcessor/jrfModel.js",
 								"js/modelProcessor/jrfToken.js",

@@ -248,7 +248,7 @@ class RCGJira{
 	getJQLIssues(jql,cbBlock){
 		var self=this;
 		self.addStep("Getting All Issues from JQL", function(){
-			self.getFullList("/rest/api/2/search?jql="+jql,"issues",undefined,undefined,cbBlock);
+			self.getFullList("/rest/api/2/search?jql="+jql+"&expand=renderedFields,changelog","issues",undefined,undefined,cbBlock);
 		});
 		self.addStep("Returning all Issues from JQL", function(response,xhr,sUrl,headers){
 			self.continueTask([response]);

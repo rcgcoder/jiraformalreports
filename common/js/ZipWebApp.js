@@ -126,6 +126,7 @@ class ZipWebApp{
 		self.addStep("Setting <initized> Atlassian Engine.... ",function(){
 			var atl=self.getAtlassian();
 			atl.initialized=true;
+			self.continueTask();
 		});  
 /*		self.addStep("Trying to render content... needs oauth connect",function(){
 			var jira=self.getJira();

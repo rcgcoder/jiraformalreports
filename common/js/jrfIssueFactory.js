@@ -3,19 +3,15 @@ function newIssueFactory(report){
 	var hsFieldNames=newHashMap();
 	//	self.allFieldNames;
 	//hsFieldNames.clear();
-	self.config.useFields.forEach(function(element){
-		hsFieldNames.add(element.name,element.key); // to do a reverse search
-	});
-	self.config.useOtherFields.forEach(function(element){
-		hsFieldNames.add(element.name,element.key); // to do a reverse search
-	});
 	
 	var allFieldDefinitions=[];
 	theReport.config.useFields.forEach(function(element){
 		allFieldDefinitions.push({name:element.key,description:element.name});
+		hsFieldNames.add(element.name,element.key); // to do a reverse search
 	});
 	theReport.config.useOtherFields.forEach(function(element){
 		allFieldDefinitions.push({name:element.key,description:element.name});
+		hsFieldNames.add(element.name,element.key); // to do a reverse search
 	});
 	var dynObj=newDynamicObjectFactory(
 			[{name:"Child",description:"SubIssues for Billing",type:"object"},

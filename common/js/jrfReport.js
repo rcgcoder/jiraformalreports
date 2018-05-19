@@ -249,8 +249,10 @@ var jrfReport=class jrfReport {
 				);
 			}
 
-			self.childs.walk(function(parentIssue){
-				fncGetIssueChilds(parentIssue);
+			self.childs.walk(function(childIssue){
+				self.addStep("Getting Issues of "+childIssue.getKey(),function(){
+					fncGetIssueChilds(childIssue);
+				});
 			});
 			self.continueTask();
 		});

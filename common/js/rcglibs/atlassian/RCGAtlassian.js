@@ -300,7 +300,8 @@ class RCGAtlassian{
 				'oauth_token':oauthAccessToken,
 				*/					  
 				},
-			body: {"rendererType":"atlassian-wiki-renderer","unrenderedMarkup":"*test*"}
+			data: {"rendererType":"atlassian-wiki-renderer","unrenderedMarkup":"*test*"},
+			dataType: "json"
 			};
 			$.ajax(options).done(function(){
 				alert("end Call");

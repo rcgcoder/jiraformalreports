@@ -193,7 +193,15 @@ var jrfReport=class jrfReport {
 				if (issueChild.id=="BENT-242"){
 					log("Testing "+issueChild.id);
 				}
-				var bIsChild=fncIsChild(issueChild,issueParent);
+				var bIsChild=false;
+				try{
+					bIsChild=fncIsChild(issueChild,issueParent);
+				} catch(err){
+					log ("somthing es not good in child formula:"+sFncFormulaChild);
+					log ("using child: "+JSON.stringify(issueChild));
+					log ("using parent: "+JSON.stringify(issueParent));
+					bIsChild=false;
+				}
 				if (bIsChild){
 					if (!issueParent.getChilds().exists(issueChild.getKey())){ // when reusing dynobj the childs are setted
 						issueParent.addChild(issueChild);
@@ -203,7 +211,15 @@ var jrfReport=class jrfReport {
 						fncGetIssueChilds(issueChild);
 					}
 				}
-				var bIsAdvPart=fncIsAdvPart(issueChild,issueParent);
+				var bIsAdvPart=false;				
+				try{
+					bIsAdvPart=fncIsAdvPart(issueChild,issueParent);
+				} catch(err){
+					log ("somthing es not good in advance formula:"+sFncFormulaAdv);
+					log ("using child: "+JSON.stringify(issueChild));
+					log ("using parent: "+JSON.stringify(issueParent));
+					bIsAdvPart=false;
+				}
 				if (bIsAdvPart){
 					if (!issueParent.getAdvanceChilds().exists(issueChild.getKey())){ // when reusing dynobj the childs are setted
 						issueParent.addAdvanceChild(issueChild);

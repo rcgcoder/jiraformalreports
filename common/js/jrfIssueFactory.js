@@ -57,12 +57,12 @@ function newIssueFactory(report){
 			var jiraObj=self.getJiraObject();
 			var jsonFields=jiraObj.renderedFields;
 			var jsonField=jsonFields[sFieldName];
-			if (isDefined(jsonField)){
+			if (isDefined(jsonField)&&(jsonField!=null)){
 				fieldValue=jsonField;
 				bDefined=true;
 			} else {
 				jsonField=jsonFields[sFieldKey];
-				if (isDefined(jsonField)){
+				if (isDefined(jsonField)&&(jsonField!=null)){
 					fieldValue=jsonField;
 					bDefined=true;
 				}

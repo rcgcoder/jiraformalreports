@@ -247,11 +247,10 @@ var jrfReport=class jrfReport {
 												);
 				},0,1,undefined,undefined,undefined,"INNER",undefined
 				);
-				self.continueTask();
 			}
 
-			self.childs.walk(function(childIssue){
-				self.addStep("Getting Issues of "+childIssue.getKey(),function(){
+			self.addStep("Getting Issues of Report",function(){
+				self.childs.walk(function(childIssue){
 					fncGetIssueChilds(childIssue);
 				});
 			});

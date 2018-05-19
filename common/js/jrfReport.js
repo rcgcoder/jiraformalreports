@@ -99,50 +99,6 @@ var jrfReport=class jrfReport {
 			});
 			self.allIssues=newIssueFactory(self);
 			// change de "fieldValue" method
-			self.allIssues.functions.add("fieldValue",function(theFieldName){
-				var sFieldName=theFieldName.trim();
-				var self=this;
-				var fncAux=self["get"+sFieldName];
-				var sFieldKey="";
-				var bDefined=false;
-				var fieldValue="";
-				if (isDefined(fncAux)){
-					bDefined=true;
-					fieldValue=self["get"+sFieldName]();
-				} else if (hsFieldNames.exists(sFieldName)) {
-					sFieldKey=hsFieldNames.getValue(sFieldName);
-					if (sFieldKey!=""){
-						fncAux=self["get"+sFieldKey];
-						if (isDefined(fncAux)){
-							bDefined=true;
-							fieldValue=self["get"+sFieldKey]();
-						}
-					}
-				}
-				if (!bDefined){
-					var jiraObj=self.getJiraObject();
-					var jsonFields=jiraObj.fields;
-					var jsonField=jsonFields[sFieldName];
-					if (isDefined(jsonField)){
-						fieldValue=jsonField;
-						bDefined=true;
-					} else {
-						jsonField=jsonFields[sFieldKey];
-						if (isDefined(jsonField)){
-							fieldValue=jsonField;
-							bDefined=true;
-						}
-					}
-				} 
-				if (bDefined){
-					if (typeof fieldValue==="object"){
-						return fieldValue.name;
-					} else {
-						return fieldValue;
-					}
-				}
-				return "Undefined getter for fieldName:["+sFieldName+"]/["+sFieldKey+"]";
-			});			
 
 			self.continueTask();
 		});

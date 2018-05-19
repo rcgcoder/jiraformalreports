@@ -18,13 +18,64 @@ function newIssueFactory(report){
 			[]
 			,
 			undefined);
-	dynObj.functions.add("fieldValue",function(sFieldName){
-		var fncAux=this["get"+sFieldName];
+	dynObj.functions.add("fieldValue",function(sFieldName,bRendered){
+		var sFieldName=theFieldName.trim();
+		var self=this;
+		var fncAux=self["get"+sFieldName];
+		var sFieldKey="";
+		var bDefined=false;
+		var fieldValue="";
 		if (isDefined(fncAux)){
-			return this["get"+sFieldName]();
-		} else {
-			return "Undefined getter for fieldName:["+sFieldName+"]";
+			bDefined=true;
+			fieldValue=self["get"+sFieldName]();
+		} else if (hsFieldNames.exists(sFieldName)) {
+			sFieldKey=hsFieldNames.getValue(sFieldName);
+			if (sFieldKey!=""){
+				fncAux=self["get"+sFieldKey];
+				if (isDefined(fncAux)){
+					bDefined=true;
+					fieldValue=self["get"+sFieldKey]();
+				}
+			}
 		}
+		if (!bDefined){
+			var jiraObj=self.getJiraObject();
+			var jsonFields=jiraObj.fields;
+			var jsonField=jsonFields[sFieldName];
+			if (isDefined(jsonField)){
+				fieldValue=jsonField;
+				bDefined=true;
+			} else {
+				jsonField=jsonFields[sFieldKey];
+				if (isDefined(jsonField)){
+					fieldValue=jsonField;
+					bDefined=true;
+				}
+			}
+		} 
+		if ((!bDefined)||(isDefined(bRendered)&&bRendered)){
+			var jiraObj=self.getJiraObject();
+			var jsonFields=jiraObj.renderedFields;
+			var jsonField=jsonFields[sFieldName];
+			if (isDefined(jsonField)){
+				fieldValue=jsonField;
+				bDefined=true;
+			} else {
+				jsonField=jsonFields[sFieldKey];
+				if (isDefined(jsonField)){
+					fieldValue=jsonField;
+					bDefined=true;
+				}
+			}
+		} 
+		if (bDefined){
+			if (typeof fieldValue==="object"){
+				return fieldValue.name;
+			} else {
+				return fieldValue;
+			}
+		}
+		return "Undefined getter for fieldName:["+sFieldName+"]/["+sFieldKey+"]";
 	});
 	dynObj.functions.add("linkValue",function(sLinkName){
 		return this["get"+sLinkName]();

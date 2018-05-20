@@ -719,9 +719,8 @@ class RCGTaskManager{
 			self.changeStatus();
 			self.steps=[]; // trying to free memory.... someone is eating memory
 			self.innerForks=[]; // trying to free memory.... someone is eating memory
-			var tm=self.taskManager;
-			tm.globalForks=[];
-			tm.runningTask="";
+			self.globalForks=[];
+			self.runningTask="";
 
 			log("-->   FINISHED !!");
 			return "";

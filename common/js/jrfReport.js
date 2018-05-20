@@ -259,6 +259,7 @@ var jrfReport=class jrfReport {
 				self.childs.walk(function(childIssue){
 					fncGetIssueChilds(childIssue);
 				});
+				self.continueTask();
 			});
 			self.continueTask();
 		});

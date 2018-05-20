@@ -722,7 +722,7 @@ class RCGTaskManager{
 			//self.globalForks=[];
 			//self.runningTask="";
 
-			log("-->   FINISHED !!");
+			log("-->   FINISHED !!... Global Forks running:"+self.globalForks.length);
 			return "";
 		}
 	}

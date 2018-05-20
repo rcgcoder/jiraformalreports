@@ -249,16 +249,22 @@ var jrfReport=class jrfReport {
 												,self.createManagedCallback(function(issueChild){fncProcessChild(issueChild,issueParent)})
 												,self.createManagedCallback(function(){self.continueTask();})
 												);
-				},0,1,undefined,undefined,undefined,"INNER",barProcessingChilds
+				},0,1,undefined,undefined,undefined,"INNER",undefined
 				);
 			}
 
 			self.addStep("Getting Issues of Report",function(){
 				self.childs.walk(function(childIssue){
-					fncGetIssueChilds(childIssue);
+					self.addStep("Getting childs for ROOT issue:" + childIssue.getKey() + "....",function(){
+						fncGetIssueChilds(childIssue);
+					},0,1,undefined,undefined,undefined,"INNER",undefined
+					);
+				});
+				self.addStep("Waiting for all child process....",function(){
+					log("Waiting.... finish of all inner pseudothreads");
 				});
 				self.continueTask();
-			},0,1,undefined,undefined,undefined,undefined,barProcessingChilds);
+			});
 			self.continueTask();
 		});
 		// load report model and submodels

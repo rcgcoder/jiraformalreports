@@ -250,6 +250,7 @@ var jrfReport=class jrfReport {
 												 }
 												,function(){
 													log("Finished "+"Getting childs for "+auxKey);
+													log("Status:"+self.getRunningTask().actStep + " " + self.getRunningTask().steps.length);
 													self.continueTask();
 													}
 												);

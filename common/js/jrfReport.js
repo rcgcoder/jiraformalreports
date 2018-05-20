@@ -40,8 +40,15 @@ var jrfReport=class jrfReport {
 		var self=this;
 		loggerFactory.getLogger().enabled=self.config.logDebug;
 		self.config.htmlDebug=self.config.logHtmlDebug;
+		
+		//clean the destination html.... to save memory when run more than one intents
+        var jqResult=$("#ReportResult");
+        jqResult.html("");
+		
+		
 		self.addStep("Getting Confluence Report Model.... ",function(){
-			var cfc=System.webapp.getConfluence();
+
+	        var cfc=System.webapp.getConfluence();
 			//cfc.getAllPages();
 			self.addStep("Manipulating Content",function(content){
 				log(content);

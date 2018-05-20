@@ -48,7 +48,6 @@ var jrfReport=class jrfReport {
 			self.allIssues=undefined; // unassing allIssues.... to free memory
 			self.childs.clear();
 			self.advanceChilds.clear();
-			self.treeIssues.clear();
 			self.rootElements.clear();
 			self.rootIssues.clear();
 			self.rootProjects.clear();

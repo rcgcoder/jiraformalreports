@@ -39,7 +39,7 @@ export class TabReports {
             bigString=bigString+Math.round(Math.random()*1000);
         }
         var sAux;
-        for (var i=0;i<100;i++){
+        for (var i=0;i<1024;i++){
             sAux=i+" - "+bigString;
             iSize+=sAux.length;
             bigArray.push(i+" - "+bigString);

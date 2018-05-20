@@ -174,6 +174,7 @@ var jrfReport=class jrfReport {
 			}
 			self.continueTask();
 		});
+		/*
 		self.addStep("Processing root elements.... ",function(){
 			if (self.bFinishReport) return self.continueTask();
 			self.rootIssues.walk(function(value,iProf,key){
@@ -285,7 +286,6 @@ var jrfReport=class jrfReport {
 		});
 		// load report model and submodels
 		// Process Model with The Report
-		/*
 		self.addStep("Processing Model",function(){
 			
 			var theModel=new jrfModel(self);

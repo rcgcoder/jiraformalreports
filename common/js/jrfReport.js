@@ -195,7 +195,7 @@ var jrfReport=class jrfReport {
 				}
 			});
 //			var treeIssues=issuesAdded.toArray([{doFieldName:"self",resultFieldName:"issue"}]);
-			var fncProcessChild=function(objStep,issueParent){
+			var fncProcessChild=self.createManagedCallback(function(objStep,issueParent){
 				var issueChild=objStep.value;
 				if (issueChild.id=="BENT-242"){
 					log("Testing "+issueChild.id);
@@ -236,7 +236,7 @@ var jrfReport=class jrfReport {
 						fncGetIssueChilds(issueChild);
 					}
 				}
-			}
+			});
 			var fncGetIssueChilds=function(issueParent){
 				var auxKey="Report";
 //				if (isDefined(issueParent.getKey)){
@@ -245,21 +245,21 @@ var jrfReport=class jrfReport {
 				self.addStep("Getting childs for " + auxKey + "....",function(){
 				//walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
 					self.allIssues.list.walkAsync("Getting childs for "+auxKey
-												,self.createManagedCallback(function(issueChild){fncProcessChild(issueChild,issueParent)})
-												,self.createManagedCallback(function(){self.continueTask();})
+												,function(issueChild){
+													fncProcessChild(issueChild,issueParent)
+												 }
+												,function(){
+													log("Finished "+"Getting childs for "+auxKey);
+													self.continueTask();
+													}
 												);
-				},0,1,undefined,undefined,undefined,"INNER",undefined
+				//},0,1,undefined,undefined,undefined,"INNER",undefined
+				}
 				);
-				self.addStep("Waiting for all child process....",function(){
-					log("Waiting.... finish of all inner pseudothreads");
-				});
 			}
 
-			self.addStep("Getting Issues of Report",function(){
-				self.childs.walk(function(childIssue){
-					fncGetIssueChilds(childIssue);
-				});
-				self.continueTask();
+			self.childs.walk(function(childIssue){
+				fncGetIssueChilds(childIssue);
 			});
 			self.continueTask();
 		});

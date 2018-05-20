@@ -738,6 +738,7 @@ class RCGTaskManager{
 			}
 			if ((self.globalForks.length==0)&&(self.innerForks.length==0)){
 				self.runningTask="";
+				self.setRunningTask("");
 			}
 
 			log("-->   FINISHED !! InnerForks:"+self.innerForks.length+" Global Forks:"+self.globalForks.length);

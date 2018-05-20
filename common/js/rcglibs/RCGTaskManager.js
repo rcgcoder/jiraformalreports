@@ -115,7 +115,11 @@ class RCGTask{
 	}
 	getRunningTask(){
 		var self=this;
-		return self.getTaskManager().getRunningTask(); 
+		var task=self.getTaskManager().getRunningTask(); 
+		if (!task.isSomethingRunning(){
+			return "";
+		}
+		return task;
 	}
 	setRunningTask(theTask){
 		var self=this;
@@ -404,7 +408,11 @@ class RCGTaskManager{
 	}
 	getRunningTask(){
 		var self=this;
-		return self.runningTask; 
+		var task=self.getRunningTask(); 
+		if (!task.isSomethingRunning(){
+			return "";
+		}
+		return task;
 	}
 	setRunningTask(theTask){
 		var self=this;

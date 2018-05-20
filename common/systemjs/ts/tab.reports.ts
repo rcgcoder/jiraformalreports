@@ -47,8 +47,8 @@ export class TabReports {
         }
     }
     doMemoryLeaksTest(){
-        log("Start Memory Leak");
         var self=this;
+        log("Start Memory Leak");
         self.innerMemoryLeakTest();
         log("Finish Memory Leak");
     }

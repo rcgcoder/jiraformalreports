@@ -285,6 +285,7 @@ var jrfReport=class jrfReport {
 		});
 		// load report model and submodels
 		// Process Model with The Report
+		/*
 		self.addStep("Processing Model",function(){
 			
 			var theModel=new jrfModel(self);
@@ -296,7 +297,7 @@ var jrfReport=class jrfReport {
 	        jqResult.html(sModelProcessedResult);
 			loggerFactory.getLogger().enabled=true;
 			self.continueTask();
-		});
+		});*/
 		self.continueTask();
 	}
 }

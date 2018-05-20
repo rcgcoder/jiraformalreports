@@ -718,10 +718,16 @@ class RCGTaskManager{
 		} else {
 			log("-->  FINISHING !!... InnerForks:"+self.innerForks.length+" Global Forks:"+self.globalForks.length);
 			self.changeStatus();
-			self.innerForks=[]; // trying to free memory.... someone is eating memory
-			//self.globalForks=[];
-			//self.runningTask="";
 			var i=0;
+			while (i< self.innerForks.length){
+				var fork=self.innerForks[i];
+				if (!fork.isSomethingRunning()){
+					self.innerForks.splice(i,1);
+				} else {
+					i++;
+				}
+			}
+			i=0;
 			while (i< self.globalForks.length){
 				var gf=self.globalForks[i];
 				if (!gf.isSomethingRunning()){
@@ -730,8 +736,11 @@ class RCGTaskManager{
 					i++;
 				}
 			}
+			if ((self.globalForks.length==0)&&(self.innerForks.length==0)){
+				self.runningTask="";
+			}
 
-			log("-->   FINISHED !!Steps:"+self.steps.length+" InnerForks:"+self.innerForks.length+" Global Forks:"+self.globalForks.length);
+			log("-->   FINISHED !! InnerForks:"+self.innerForks.length+" Global Forks:"+self.globalForks.length);
 			return "";
 		}
 	}

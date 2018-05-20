@@ -716,9 +716,8 @@ class RCGTaskManager{
 			}
 			taskToRun.callMethod(aArgs);
 		} else {
-			log("-->  FINISHING !!...Steps:"+self.steps.length+" InnerForks:"+self.innerForks.length+" Global Forks:"+self.globalForks.length);
+			log("-->  FINISHING !!... InnerForks:"+self.innerForks.length+" Global Forks:"+self.globalForks.length);
 			self.changeStatus();
-			self.steps=[]; // trying to free memory.... someone is eating memory
 			self.innerForks=[]; // trying to free memory.... someone is eating memory
 			//self.globalForks=[];
 			//self.runningTask="";

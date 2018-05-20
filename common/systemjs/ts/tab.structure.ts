@@ -53,7 +53,7 @@ export class TabStructure {
         var self=this;
         var actualConfig=self.getActualReportConfig();
         var fileName="defaultReportConfig.json";
-        var contentType=self.getContentTypeFromExtension(fileName);
+        var contentType=System.webapp.getContentTypeFromExtension(fileName);
         contentType.isCacheable=true;
         var content=JSON.stringify(actualConfig);
         System.webapp.saveFileToStorage(fileName,content,contentType);

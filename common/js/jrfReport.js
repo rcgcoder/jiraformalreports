@@ -250,6 +250,7 @@ var jrfReport=class jrfReport {
 												);
 				},0,1,undefined,undefined,undefined,"INNER",undefined
 				);
+				self.continueTask();
 			}
 
 			self.addStep("Getting Issues of Report",function(){

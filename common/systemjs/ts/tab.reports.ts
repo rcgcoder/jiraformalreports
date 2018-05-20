@@ -48,7 +48,7 @@ export class TabReports {
         for (var i=0;i<bigArray.length;i++){
             if ((math.random()*100)<5){
                 var str=bigArray[i];
-                str=str.substring(0,50);
+                str=str.substring(0,50) +  " [" +str.length+"]";
                 log(str);
             }
         }

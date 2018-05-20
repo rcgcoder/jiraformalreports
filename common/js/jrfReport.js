@@ -181,7 +181,6 @@ var jrfReport=class jrfReport {
 			var fncIsChild=Function("child","parent",sFncFormulaChild);
 			var fncIsAdvPart=Function("child","parent",sFncFormulaAdv);
 			var issuesAdded=newHashMap();
-			var barProcessingChilds=new RCGBarrier(self.createManagedCallBack(function(){self.continueTask();}));
 			
 			
 			

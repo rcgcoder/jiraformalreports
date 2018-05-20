@@ -181,6 +181,10 @@ var jrfReport=class jrfReport {
 			var fncIsChild=Function("child","parent",sFncFormulaChild);
 			var fncIsAdvPart=Function("child","parent",sFncFormulaAdv);
 			var issuesAdded=newHashMap();
+			var barProcessingChilds=new RCGBarrier(self.createManagedCallBack(function(){self.continueTask();}));
+			
+			
+			
 			self.rootIssues.walk(function(value,iProf,key){
 				log("Root Issue: "+key);
 				var issue=self.allIssues.getById(key);
@@ -197,7 +201,6 @@ var jrfReport=class jrfReport {
 				if (issueChild.id=="BENT-242"){
 					log("Testing "+issueChild.id);
 				}
-				var bPendingProcess=false;
 				var bIsChild=false;
 				try{
 					bIsChild=fncIsChild(issueChild,issueParent);
@@ -213,7 +216,7 @@ var jrfReport=class jrfReport {
 					}
 					if (!issuesAdded.exists(issueChild.getKey())){
 						issuesAdded.add(issueChild.getKey(),issueChild);
-						bPendingProcess=true;
+						fncGetIssueChilds(issueChild);
 					}
 				}
 				var bIsAdvPart=false;				
@@ -231,11 +234,8 @@ var jrfReport=class jrfReport {
 					}
 					if (!issuesAdded.exists(issueChild.getKey())){
 						issuesAdded.add(issueChild.getKey(),issueChild);
-						bPendingProcess=true;
+						fncGetIssueChilds(issueChild);
 					}
-				}
-				if (bPendingProcess){
-					fncGetIssueChilds(issueChild);
 				}
 			}
 			var fncGetIssueChilds=function(issueParent){
@@ -249,7 +249,7 @@ var jrfReport=class jrfReport {
 												,self.createManagedCallback(function(issueChild){fncProcessChild(issueChild,issueParent)})
 												,self.createManagedCallback(function(){self.continueTask();})
 												);
-				},0,1,undefined,undefined,undefined,"INNER",undefined
+				},0,1,undefined,undefined,undefined,"INNER",barProcessingChilds
 				);
 			}
 
@@ -258,7 +258,7 @@ var jrfReport=class jrfReport {
 					fncGetIssueChilds(childIssue);
 				});
 				self.continueTask();
-			});
+			},0,1,undefined,undefined,undefined,undefined,barProcessingChilds);
 			self.continueTask();
 		});
 		// load report model and submodels

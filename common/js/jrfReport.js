@@ -8,7 +8,7 @@ var jrfReport=class jrfReport {
 		self.config.model=System.webapp.model;
 		self.childs=newHashMap();
 		self.advanceChilds=newHashMap();
-		self.treeIssues=newHashMap();
+		//self.treeIssues=newHashMap();
 		self.rootElements=newHashMap();
 		self.rootIssues=newHashMap();
 		self.rootProjects=newHashMap();
@@ -44,7 +44,17 @@ var jrfReport=class jrfReport {
 		//clean the destination html.... to save memory when run more than one intents
         var jqResult=$("#ReportResult");
         jqResult.html("");
-		
+		if (!self.isReusingIssueList()){
+			self.allIssues=undefined; // unassing allIssues.... to free memory
+			self.childs.clear();
+			self.advanceChilds.clear();
+			self.treeIssues.clear();
+			self.rootElements.clear();
+			self.rootIssues.clear();
+			self.rootProjects.clear();
+
+		}
+		self.rootIssues.clear();
 		
 		self.addStep("Getting Confluence Report Model.... ",function(){
 
@@ -188,7 +198,8 @@ var jrfReport=class jrfReport {
 			var fncIsChild=Function("child","parent",sFncFormulaChild);
 			var fncIsAdvPart=Function("child","parent",sFncFormulaAdv);
 			var issuesAdded=newHashMap();
-			
+			self.allIssues;
+
 			
 			
 			self.rootIssues.walk(function(value,iProf,key){

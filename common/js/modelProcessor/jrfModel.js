@@ -36,8 +36,8 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 				,
 				[]
 				//arrAttributesPercs
-				,
-				"jrfTags");
+				/*,
+				"jrfTags"*/);
 	}
 	extendToken(tagApplier,tag,reportElem){
 		var self=this;

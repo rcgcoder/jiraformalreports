@@ -31,7 +31,7 @@ export class TabReports {
         var jqResult=$("#ReportResult");
         jqResult.html(model);
     }
-    innerMemoryLeakTest(){
+    innerMemoryLeakTest(callback){
         var bigArray=[];
         var bigString="";
         var iSize=0;
@@ -49,8 +49,12 @@ export class TabReports {
     }
     doMemoryLeaksTest(){
         var self=this;
-        log("Start Memory Leak");
-        self.innerMemoryLeakTest();
-        log("Finish Memory Leak");
+        self.addStep("Starting Memory Leak Test",function(){
+            self.innerMemoryLeakTest();
+        });
+        self.addStep("Endind Memory Leak Test",function(){
+            log("Ended");
+        });
+        self.continueTask();
     }
 }

@@ -382,8 +382,20 @@ export class TabStructure {
     }
     freeMemory(){
         var self=this;
+        var jqResult=$("#ReportResult");
+        jqResult.html("");
         if (isDefined(self.report)){
+            if (!self.report.isReusingIssueList()){
+                self.report.allIssues=undefined; // unassing allIssues.... to free memory
+                self.report.childs.clear();
+                self.report.advanceChilds.clear();
+                self.report.rootElements.clear();
+                self.report.rootIssues.clear();
+                self.report.rootProjects.clear();
+            }
+            self.report.rootIssues.clear();
             self.report=undefined;
+            
         }
         if (isDefined(self.allIssues)){
             self.allIssues=undefined;

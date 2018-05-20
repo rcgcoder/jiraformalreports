@@ -408,7 +408,7 @@ class RCGTaskManager{
 	}
 	getRunningTask(){
 		var self=this;
-		var task=self.getRunningTask(); 
+		var task=self.runningTask; 
 		if (!task.isSomethingRunning()){
 			return "";
 		}

@@ -717,6 +717,9 @@ class RCGTaskManager{
 			taskToRun.callMethod(aArgs);
 		} else {
 			self.changeStatus();
+			self.steps=[]; // trying to free memory.... someone is eating memory
+			self.innerForks=[]; // trying to free memory.... someone is eating memory
+
 			log("-->   FINISHED !!");
 			return "";
 		}

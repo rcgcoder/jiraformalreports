@@ -48,9 +48,10 @@ export class TabReports {
         log("Big Array was build");
     }
     doMemoryLeaksTest(){
-        var self=this;
+        var theTab=this;
+        var self=System.webapp;
         self.addStep("Starting Memory Leak Test",function(){
-            self.innerMemoryLeakTest();
+            theTab.innerMemoryLeakTest();
             self.continueTask();
         });
         self.addStep("Endind Memory Leak Test",function(){

@@ -380,4 +380,13 @@ export class TabStructure {
         });
         self.continueTask();
     }
+    freeMemory(){
+        var self=this;
+        if (isDefined(self.report)){
+            self.report=undefined;
+        }
+        if (isDefined(self.allIssues)){
+            self.allIssues=undefined;
+        }
+    }
 }

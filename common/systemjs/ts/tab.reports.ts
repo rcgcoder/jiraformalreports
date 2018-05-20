@@ -51,9 +51,11 @@ export class TabReports {
         var self=this;
         self.addStep("Starting Memory Leak Test",function(){
             self.innerMemoryLeakTest();
+            self.continueTask();
         });
         self.addStep("Endind Memory Leak Test",function(){
             log("Ended");
+            self.continueTask();
         });
         self.continueTask();
     }

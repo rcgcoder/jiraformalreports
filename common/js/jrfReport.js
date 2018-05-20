@@ -251,16 +251,18 @@ var jrfReport=class jrfReport {
 //				}
 				self.addStep("Getting childs for " + auxKey + "....",function(){
 				//walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
+					log("Task Manager Status:"+self.getRunningTask().parent.actStep + " " + self.getRunningTask().parent.steps.length);
 					self.allIssues.list.walkAsync("Getting childs for "+auxKey
 												,function(issueChild){
 													fncProcessChild(issueChild,issueParent)
 												 }
-												,function(){
+												,self.createManagedCallback(function(){
 													log("Finished "+"Getting childs for "+auxKey);
-													log("Status:"+self.getRunningTask().actStep + " " + self.getRunningTask().steps.length);
+													log("Task Manager Status:"+self.getRunningTask().parent.actStep 
+															+ " " + self.getRunningTask().parent.steps.length);
 													self.continueTask();
 													}
-												);
+												));
 				//},0,1,undefined,undefined,undefined,"INNER",undefined
 				}
 				);

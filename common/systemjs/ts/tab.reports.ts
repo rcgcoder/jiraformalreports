@@ -35,7 +35,7 @@ export class TabReports {
         var bigArray=[];
         var bigString="";
         var iSize=0;
-        while (bigString.length<(1024*1024*1024)){
+        while (bigString.length<(128*1024*1024)){
             bigString=bigString+Math.round(Math.random()*1000);
         }
         var sAux;

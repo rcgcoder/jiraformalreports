@@ -45,6 +45,7 @@ export class TabReports {
             bigArray.push(i+" - "+bigString);
             log("Testing:"+Math.round(iSize/(1024*1024))+" Mbytes");
         }
+        log("Big Array was build");
     }
     doMemoryLeaksTest(){
         var self=this;

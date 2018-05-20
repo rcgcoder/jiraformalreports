@@ -34,15 +34,22 @@ export class TabReports {
     innerMemoryLeakTest(){
         var bigArray=[];
         var bigString="";
-        while (bigString.length<(1024*1024)){
+        var iSize=0;
+        while (bigString.length<(10*1024*1024)){
             bigString=bigString+Math.round(Math.random()*1000);
         }
-        for (var i=0;i<1000;i++){
+        var sAux;
+        for (var i=0;i<100;i++){
+            sAux=i+" - "+bigString;
+            iSize+=sAux.length;
             bigArray.push(i+" - "+bigString);
+            log("Testing:"+Math.round(iSize/(1024*1024))+" Mbytes");
         }
     }
     doMemoryLeaksTest(){
+        log("Start Memory Leak");
         var self=this;
         self.innerMemoryLeakTest();
+        log("Finish Memory Leak");
     }
 }

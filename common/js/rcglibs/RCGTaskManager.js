@@ -116,10 +116,10 @@ class RCGTask{
 	getRunningTask(){
 		var self=this;
 		var task=self.getTaskManager().getRunningTask(); 
-		if (task=="") return "";
+/*		if (task=="") return "";
 		if ((task.isTotalDone())&&(!task.isSomethingRunning())){
 			return "";
-		}
+		}*/
 		return task;
 	}
 	setRunningTask(theTask){
@@ -410,11 +410,11 @@ class RCGTaskManager{
 	getRunningTask(){
 		var self=this;
 		var task=self.runningTask; 
-		if (task=="") return "";
+/*		if (task=="") return "";
 		if ((task.isTotalDone())&&(!task.isSomethingRunning())){
 			return "";
 		}
-		return task;
+*/		return task;
 	}
 	setRunningTask(theTask){
 		var self=this;
@@ -728,7 +728,7 @@ class RCGTaskManager{
 		} else {
 			log("-->  FINISHING !!... InnerForks:"+self.innerForks.length+" Global Forks:"+self.globalForks.length);
 			self.changeStatus();
-			var i=0;
+/*			var i=0;
 			while (i< self.innerForks.length){
 				var fork=self.innerForks[i];
 				if (!fork.isSomethingRunning()){
@@ -750,7 +750,7 @@ class RCGTaskManager{
 				self.runningTask="";
 				self.setRunningTask("");
 			}
-
+*/
 			log("-->   FINISHED !! InnerForks:"+self.innerForks.length+" Global Forks:"+self.globalForks.length);
 			return "";
 		}

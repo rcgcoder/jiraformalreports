@@ -716,13 +716,23 @@ class RCGTaskManager{
 			}
 			taskToRun.callMethod(aArgs);
 		} else {
+			log("-->   FINISHING !!...Steps:"+self.steps.length+" InnerForks:"+self.innerForks.length+" Global Forks:"+self.globalForks.length);
 			self.changeStatus();
 			self.steps=[]; // trying to free memory.... someone is eating memory
 			self.innerForks=[]; // trying to free memory.... someone is eating memory
 			//self.globalForks=[];
 			//self.runningTask="";
+			var i=0;
+			while (i< self.globalForks.length){
+				var gf=self.globalForks[i];
+				if (!gf.isSomethingRunning()){
+					self.globalForks.splice(i,1);
+				} else {
+					i++;
+				}
+			}
 
-			log("-->   FINISHED !!... Global Forks running:"+self.globalForks.length);
+			log("-->   FINISHED !!Steps:"+self.steps.length+" InnerForks:"+self.innerForks.length+" Global Forks:"+self.globalForks.length);
 			return "";
 		}
 	}

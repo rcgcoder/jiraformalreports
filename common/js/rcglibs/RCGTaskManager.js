@@ -116,7 +116,7 @@ class RCGTask{
 	getRunningTask(){
 		var self=this;
 		var task=self.getTaskManager().getRunningTask(); 
-		if (!task.isSomethingRunning(){
+		if (!task.isSomethingRunning()){
 			return "";
 		}
 		return task;
@@ -409,7 +409,7 @@ class RCGTaskManager{
 	getRunningTask(){
 		var self=this;
 		var task=self.getRunningTask(); 
-		if (!task.isSomethingRunning(){
+		if (!task.isSomethingRunning()){
 			return "";
 		}
 		return task;

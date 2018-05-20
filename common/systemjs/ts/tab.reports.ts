@@ -31,4 +31,18 @@ export class TabReports {
         var jqResult=$("#ReportResult");
         jqResult.html(model);
     }
+    innerMemoryLeakTest(){
+        var bigArray=[];
+        var bigString="";
+        while (bigString.length<(1024*1024)){
+            bigString=bigString+Math.round(Math.random()*1000);
+        }
+        for (var i=0;i<1000;i++){
+            bigArray.push(i+" - "+bigString);
+        }
+    }
+    doMemoryLeaksTest(){
+        var self=this;
+        self.innerMemoryLeakTest();
+    }
 }

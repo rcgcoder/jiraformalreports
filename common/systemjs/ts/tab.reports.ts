@@ -118,7 +118,7 @@ export class TabReports {
                         log(str);
                     }
                 }          
-                
+                setTimeout(function(){window.gc();},3000):
                 self.continueTask();
             });
             self.continueTask();

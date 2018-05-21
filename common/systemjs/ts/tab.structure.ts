@@ -400,5 +400,8 @@ export class TabStructure {
         if (isDefined(self.allIssues)){
             self.allIssues=undefined;
         }
+        if (isDefined(window.gc)){
+            window.gc();
+        }
     }
 }

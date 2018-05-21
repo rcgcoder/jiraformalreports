@@ -32,6 +32,7 @@ export class TabReports {
         jqResult.html(model);
     }
     innerMemoryLeakTest(callback){
+        var self=this;
         var bigArray=[];
         var bigString="";
         var iSize=0;
@@ -54,16 +55,16 @@ export class TabReports {
             }
         }
         log("Big Array was build");
+        System.webapp.continueTask([bigArray]);
     }
     doMemoryLeaksTest(){
         var theTab=this;
         var self=System.webapp;
         self.addStep("Starting Memory Leak Test",function(){
             theTab.innerMemoryLeakTest();
-            self.continueTask();
         });
-        self.addStep("Endind Memory Leak Test",function(){
-            log("Ended");
+        self.addStep("Endind Memory Leak Test",function(bigArray){
+            log("Ended:"+ bigArray.length);
             self.continueTask();
         });
         self.continueTask();

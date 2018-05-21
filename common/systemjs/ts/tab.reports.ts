@@ -110,7 +110,10 @@ export class TabReports {
                 for (var i=0;i<theDynObj.list.length();i++){
                     if ((Math.random()*100)<5){
                         var objAux=theDynObj.getById(""+i);
-                        var str=objAux.getTestObject();
+                        var strArr=objAux.getTestObject();
+                        var rndInd=Math.round(Math.random()*strArr.length);
+                        if (rndInd>=strArr.length) rndInd=Math.round(Math.random()*(strArr.length-1));
+                        str=strArr[rndInd];
                         str="dynObj:"+str.substring(0,50) +  " [" +str.length+"]";
                         log(str);
                     }

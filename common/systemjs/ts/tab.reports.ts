@@ -34,13 +34,13 @@ export class TabReports {
     innerMemoryLeakTest(callback){
         var self=this;
         var bigArray=[];
-/*        var bigString="";
+        var bigString="";
         var iSize=0;
         while (bigString.length<(64*1024*1024)){
             bigString=bigString+Math.round(Math.random()*1000);
         }
         var sAux;
-        var iTotalBlocks=25;
+        var iTotalBlocks=5;
         for (var i=0;i<iTotalBlocks;i++){
             sAux=i+" - "+bigString;
             iSize+=sAux.length;
@@ -54,7 +54,7 @@ export class TabReports {
                 log(str);
             }
         }
- */       log("Big Array was build");
+        log("Big Array was build");
         var dynObj=newDynamicObjectFactory(
             [{name:"Child",description:"SubIssues for Billing",type:"object"},
              {name:"AdvanceChild",description:"SubIssues for advance calculation",type:"object"},

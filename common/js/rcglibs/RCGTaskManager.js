@@ -83,6 +83,7 @@ class RCGTask{
 	}
 	freeMemory(){
 		var self=this;
+		log("Free Memory of task:"+self.description);
 		self.method=undefined;
 		self.steps.forEach(function(element){
 			element.freeMemory();

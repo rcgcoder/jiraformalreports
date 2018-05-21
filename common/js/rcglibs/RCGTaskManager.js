@@ -97,6 +97,8 @@ class RCGTask{
 /*			if (self.parent!=""){
 				self.parent.freeMemory();
 			}*/
+			self.method=undefined;
+			self.parent="";
 		}
 	}
 	setOnChangeStatus(callback){

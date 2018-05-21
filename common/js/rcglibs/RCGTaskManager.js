@@ -751,6 +751,9 @@ class RCGTaskManager{
 				self.setRunningTask("");
 			}
 */
+			if (typeof window.gc!=="undefined") {
+				setTimeout(function(){window.gc();},3000):
+			}
 			log("-->   FINISHED !! InnerForks:"+self.innerForks.length+" Global Forks:"+self.globalForks.length);
 			return "";
 		}

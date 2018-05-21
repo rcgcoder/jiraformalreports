@@ -129,13 +129,7 @@ var jrfReport=class jrfReport {
 			self.continueTask();
 		});	
 
-		self.addStep("Removing all Issues in the scope.... ",function(){
-			self.allIssues.list.clear();
-			log("Report uses "+ self.allIssues.list.length()+ " issues");
-			self.continueTask();
-		});	
-		
-		/*
+	
 		// get root elements.... issues and/or projects
 		self.addStep("Getting root elements.... ",function(){
 			log("Getting root elements");
@@ -182,7 +176,13 @@ var jrfReport=class jrfReport {
 			}
 			self.continueTask();
 		});
-		*/
+		
+		self.addStep("Removing all Issues in the scope.... ",function(){
+			self.allIssues.list.clear();
+			log("Report uses "+ self.allIssues.list.length()+ " issues");
+			self.rootIssues.clear();
+			self.continueTask();
+		});	
 		/*
 		self.addStep("Processing root elements.... ",function(){
 			if (self.bFinishReport) return self.continueTask();

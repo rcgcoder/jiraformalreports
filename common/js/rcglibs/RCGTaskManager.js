@@ -84,16 +84,20 @@ class RCGTask{
 	freeMemory(){
 		var self=this;
 		log("Free Memory of task:"+self.description);
-		self.method=undefined;
-		self.steps.forEach(function(element){
-			element.freeMemory();
-		});
-		self.steps=[];
-		self.actStep=-1;
-		self.innerForks.forEach(function(element){
-			element.freeMemory();
-		});
-		self.innerForks=[];		
+		if (self.isTotalDone()){
+			self.steps.forEach(function(element){
+				element.freeMemory();
+			});
+			self.steps=[];
+			self.actStep=-1;
+			self.innerForks.forEach(function(element){
+				element.freeMemory();
+			});
+			self.innerForks=[];
+			if (self.parent!=""){
+				self.parent.freeMemory();
+			}
+		}
 	}
 	setOnChangeStatus(callback){
 		var self=this;
@@ -115,8 +119,8 @@ class RCGTask{
 		self.isDone=true;
 		self.finishTime=(new Date()).getTime();
 		self.changeStatus();
+		self.method=undefined;
 		self.freeMemory()
-
 	}
 	
 

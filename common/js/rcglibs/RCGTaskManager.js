@@ -81,6 +81,19 @@ class RCGTask{
 			self.methodWeight=methodWeight;
 		}
 	}
+	freeMemory(){
+		var self=this;
+		self.method=undefined;
+		self.steps.forEach(function(element){
+			element.freeMemory();
+		});
+		self.steps=[];
+		self.actStep=-1;
+		self.innerForks.forEach(function(element){
+			element.freeMemory();
+		});
+		self.innerForks=[];		
+	}
 	setOnChangeStatus(callback){
 		var self=this;
 		self.onChangeStatus=callback;
@@ -100,8 +113,9 @@ class RCGTask{
 		var self=this;
 		self.isDone=true;
 		self.finishTime=(new Date()).getTime();
-		self.method=undefined;
 		self.changeStatus();
+		self.freeMemory()
+
 	}
 	
 
@@ -728,10 +742,11 @@ class RCGTaskManager{
 		} else {
 			log("-->  FINISHING !!... InnerForks:"+self.innerForks.length+" Global Forks:"+self.globalForks.length);
 			self.changeStatus();
-/*			var i=0;
+			var i=0;
 			while (i< self.innerForks.length){
 				var fork=self.innerForks[i];
 				if (!fork.isSomethingRunning()){
+					fork.freeMemory();
 					self.innerForks.splice(i,1);
 				} else {
 					i++;
@@ -741,12 +756,13 @@ class RCGTaskManager{
 			while (i< self.globalForks.length){
 				var gf=self.globalForks[i];
 				if (!gf.isSomethingRunning()){
+					gf.freeMemory();
 					self.globalForks.splice(i,1);
 				} else {
 					i++;
 				}
 			}
-			if ((self.globalForks.length==0)&&(self.innerForks.length==0)){
+/*			if ((self.globalForks.length==0)&&(self.innerForks.length==0)){
 				self.runningTask="";
 				self.setRunningTask("");
 			}

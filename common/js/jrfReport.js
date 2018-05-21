@@ -115,23 +115,23 @@ var jrfReport=class jrfReport {
 				return self.continueTask();
 			}
 			var fncProcessIssue=function(issue){
-/*				var oIssue=self.allIssues.new(issue.fields.summary,issue.key);
+				var oIssue=self.allIssues.new(issue.fields.summary,issue.key);
 				oIssue.setJiraObject(issue);
 				oIssue.updateInfo();
 				oIssue.setKey(issue.key);
-*/			}
+			}
 			
 			self.jira.processJQLIssues(self.config.jqlScope.jql,
 									  fncProcessIssue);
 		});	
 		self.addStep("Asigning all Issues in the scope.... ",function(){
-			log("Remove al issues "+ self.allIssues.list.length()+ " issues");
+			log("All issues in Report:"+ self.allIssues.list.length()+ " issues");
 			self.continueTask();
 		});	
 
 		self.addStep("Removing all Issues in the scope.... ",function(){
 			self.allIssues.list.clear();
-			log("Report utilices "+ self.allIssues.list.length()+ " issues");
+			log("Report uses "+ self.allIssues.list.length()+ " issues");
 			self.continueTask();
 		});	
 		

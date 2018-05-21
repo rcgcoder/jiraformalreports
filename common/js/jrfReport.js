@@ -191,13 +191,7 @@ var jrfReport=class jrfReport {
 			    "		Issues in scope:"+ self.allIssues.list.length());
 			self.continueTask();
 		});
-		self.addStep("Removing all Issues in the scope.... ",function(){
-			self.allIssues.list.clear();
-			log("Report uses "+ self.allIssues.list.length()+ " issues");
-			self.rootIssues.clear();
-			self.continueTask();
-		});	
-/*
+
 		// assing childs and advance childs to root elements
 		self.addStep("Assign Childs and Advance",function(){
 			var formulaChild=self.config.billingHierarchy;
@@ -207,9 +201,6 @@ var jrfReport=class jrfReport {
 			var fncIsChild=Function("child","parent",sFncFormulaChild);
 			var fncIsAdvPart=Function("child","parent",sFncFormulaAdv);
 			var issuesAdded=newHashMap();
-			self.allIssues;
-
-			
 			
 			self.rootIssues.walk(function(value,iProf,key){
 				log("Root Issue: "+key);
@@ -293,6 +284,14 @@ var jrfReport=class jrfReport {
 			});
 			self.continueTask();
 		});
+		
+		self.addStep("Removing all Issues in the scope.... ",function(){
+			self.allIssues.list.clear();
+			log("Report uses "+ self.allIssues.list.length()+ " issues");
+			self.rootIssues.clear();
+			self.continueTask();
+		});	
+		/*
 		// load report model and submodels
 		// Process Model with The Report
 		self.addStep("Processing Model",function(){

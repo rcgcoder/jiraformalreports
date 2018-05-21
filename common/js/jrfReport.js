@@ -288,7 +288,13 @@ var jrfReport=class jrfReport {
 		self.addStep("Removing all Issues in the scope.... ",function(){
 			self.allIssues.list.clear();
 			log("Report uses "+ self.allIssues.list.length()+ " issues");
-			self.rootIssues.clear();
+			self.childs=newHashMap();
+			self.advanceChilds=newHashMap();
+			//self.treeIssues=newHashMap();
+			self.rootElements=newHashMap();
+			self.rootIssues=newHashMap();
+			self.rootProjects=newHashMap();
+
 			self.continueTask();
 		});	
 		/*

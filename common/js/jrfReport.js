@@ -115,11 +115,11 @@ var jrfReport=class jrfReport {
 				return self.continueTask();
 			}
 			var fncProcessIssue=function(issue){
-				var oIssue=self.allIssues.new(issue.fields.summary,issue.key);
+/*				var oIssue=self.allIssues.new(issue.fields.summary,issue.key);
 				oIssue.setJiraObject(issue);
 				oIssue.updateInfo();
 				oIssue.setKey(issue.key);
-			}
+*/			}
 			
 			self.jira.processJQLIssues(self.config.jqlScope.jql,
 									  fncProcessIssue);

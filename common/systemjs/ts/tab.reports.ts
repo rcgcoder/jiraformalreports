@@ -55,6 +55,25 @@ export class TabReports {
             }
         }
         log("Big Array was build");
+        var dynObj=newDynamicObjectFactory(
+            [{name:"Child",description:"SubIssues for Billing",type:"object"},
+             {name:"AdvanceChild",description:"SubIssues for advance calculation",type:"object"},
+             {name:"LinkType",description:"Relation Types",type:"object"}
+            ]
+            ,
+            ["testObject"]
+            ,
+            []
+            ,
+            undefined);
+        for (var i=0;i<10000;i++){
+            var oIssue=dynObj.new("Test Dynobj"+i,""+i);
+            oIssue.setTestObject(bigArray); 
+        }
+        
+        
+        
+        
         System.webapp.continueTask([bigArray]);
     }
     doMemoryLeaksTest(){

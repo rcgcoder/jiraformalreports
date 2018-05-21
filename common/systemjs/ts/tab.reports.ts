@@ -61,7 +61,7 @@ export class TabReports {
              {name:"LinkType",description:"Relation Types",type:"object"}
             ]
             ,
-            ["testObject"]
+            ["TestObject"]
             ,
             []
             ,

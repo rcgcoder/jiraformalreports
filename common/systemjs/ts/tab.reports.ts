@@ -66,7 +66,7 @@ export class TabReports {
             []
             ,
             undefined);
-        for (var i=0;i<10*(1024*1024);i++){
+        for (var i=0;i<(64*1024);i++){
             var oIssue=dynObj.new("Test Dynobj"+i,""+i);
             oIssue.setTestObject(bigArray); 
         }

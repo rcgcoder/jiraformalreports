@@ -66,7 +66,7 @@ export class TabReports {
             []
             ,
             undefined);
-        for (var i=0;i<10000;i++){
+        for (var i=0;i<10*(1024*1024);i++){
             var oIssue=dynObj.new("Test Dynobj"+i,""+i);
             oIssue.setTestObject(bigArray); 
         }
@@ -74,7 +74,7 @@ export class TabReports {
         
         
         
-        System.webapp.continueTask([bigArray]);
+        System.webapp.continueTask([bigArray,dynObj]);
     }
     doMemoryLeaksTest(){
         var theTab=this;
@@ -83,9 +83,11 @@ export class TabReports {
             theTab.innerMemoryLeakTest();
         });
         var theBigOne;
-        self.addStep("Endind Memory Leak Test",function(bigArray){
+        var theDynObj;
+        self.addStep("Endind Memory Leak Test",function(bigArray,dynObj){
             theBigOne=bigArray;
-            log("Ended:"+ bigArray.length);
+            theDynObj=dynObj;
+            log("Ended:"+ bigArray.length + " dynObj:"+dynObj.length());
             self.addStep("Processing things with big array",function(){
                 for (var i=0;i<bigArray.length;i++){
                     if ((math.random()*100)<5){
@@ -99,12 +101,20 @@ export class TabReports {
             self.addStep("another Step",function(){
                 var innerBig=theBigOne;
                 for (var i=0;i<innerBig.length;i++){
-                    if ((math.random()*100)<5){
+                    if ((Math.random()*100)<5){
                         var str=innerBig[i];
-                        str=str.substring(0,50) +  " [" +str.length+"]";
+                        str="BigOne:"+str.substring(0,50) +  " [" +str.length+"]";
                         log(str);
                     }
                 }
+                for (var i=0;i<theDynObj.length();i++){
+                    if ((Math.random()*100)<5){
+                        var str=theDynObj.getValue(""+i);
+                        str="dynObj:"+str.substring(0,50) +  " [" +str.length+"]";
+                        log(str);
+                    }
+                }          
+                
                 self.continueTask();
             });
             self.continueTask();

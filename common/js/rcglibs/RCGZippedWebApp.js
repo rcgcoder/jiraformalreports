@@ -1044,7 +1044,9 @@ class RCGZippedApp{
 		if ((self.github!="")&&((self.github.commitId=="")||(self.github.commitDate==""))){
 			self.addStep(self.github.updateLastCommit,undefined,self.github);
 		}
-//		self.addStep("Starting Memory Monitor...",self.loadMemoryMonitor);
+		if (typeof window.gc!=="undefined"){
+			self.addStep("Starting Memory Monitor...",self.loadMemoryMonitor);
+		}		
 		self.addStep("Starting Persistence...",self.startPersistence);
 		self.addStep("Loading Base Files...",self.loadJSBaseEngine);
 		self.addStep("Updating Deploy Zips...",self.updateDeployZips);

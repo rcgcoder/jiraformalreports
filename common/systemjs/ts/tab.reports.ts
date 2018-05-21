@@ -67,7 +67,7 @@ export class TabReports {
         self.addStep("Endind Memory Leak Test",function(bigArray){
             theBigOne=bigArray;
             log("Ended:"+ bigArray.length);
-/*            self.addStep("Processing things with big array",function(){
+            self.addStep("Processing things with big array",function(){
                 for (var i=0;i<bigArray.length;i++){
                     if ((math.random()*100)<5){
                         var str=bigArray[i];
@@ -78,16 +78,17 @@ export class TabReports {
                 self.continueTask();
             });
             self.addStep("another Step",function(){
-                for (var i=0;i<bigArray.length;i++){
+                var innerBig=theBigOne;
+                for (var i=0;i<innerBig.length;i++){
                     if ((math.random()*100)<5){
-                        var str=bigArray[i];
+                        var str=innerBig[i];
                         str=str.substring(0,50) +  " [" +str.length+"]";
                         log(str);
                     }
                 }
                 self.continueTask();
             });
-*/            self.continueTask();
+            self.continueTask();
         });
         self.continueTask();
     }

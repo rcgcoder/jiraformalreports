@@ -29,7 +29,11 @@ class RCGBarrier{
 		self.nItems--;
 		if (self.nItems<=0){
 			log("Barrier "+self.id+" Barrier reached!");
-			setTimeout(self.callback);
+			self.tasksBarried=[]; // remove the arrays for free memory
+			self.tasksReached=[]; // remove the arrays for free memory
+			var theCallback=self.callback;
+			self.callback="";// to free memory at the end
+			setTimeout(theCallback); 
 		} 
 	}
 	add(task){
@@ -97,6 +101,9 @@ class RCGTask{
 /*			if (self.parent!=""){
 				self.parent.freeMemory();
 			}*/
+			if (self.barrier!=""){
+				self.barrier="";
+			}
 			self.method=undefined;
 			self.parent="";
 		}

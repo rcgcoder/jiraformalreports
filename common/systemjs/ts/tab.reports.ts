@@ -87,7 +87,7 @@ export class TabReports {
         self.addStep("Endind Memory Leak Test",function(bigArray,dynObj){
             theBigOne=bigArray;
             theDynObj=dynObj;
-            log("Ended:"+ bigArray.length + " dynObj:"+dynObj.length());
+            log("Ended:"+ bigArray.length + " dynObj:"+dynObj.list.length());
             self.addStep("Processing things with big array",function(){
                 for (var i=0;i<bigArray.length;i++){
                     if ((math.random()*100)<5){
@@ -107,7 +107,7 @@ export class TabReports {
                         log(str);
                     }
                 }
-                for (var i=0;i<theDynObj.length();i++){
+                for (var i=0;i<theDynObj.list.length();i++){
                     if ((Math.random()*100)<5){
                         var str=theDynObj.getValue(""+i);
                         str="dynObj:"+str.substring(0,50) +  " [" +str.length+"]";

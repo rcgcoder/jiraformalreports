@@ -64,8 +64,9 @@ export class TabReports {
             theTab.innerMemoryLeakTest();
         });
         self.addStep("Endind Memory Leak Test",function(bigArray){
+            System.webapp.bigArray=bigArray;
             log("Ended:"+ bigArray.length);
-            self.addStep("Processing things with big array",function(){
+/*            self.addStep("Processing things with big array",function(){
                 for (var i=0;i<bigArray.length;i++){
                     if ((math.random()*100)<5){
                         var str=bigArray[i];
@@ -85,7 +86,7 @@ export class TabReports {
                 }
                 self.continueTask();
             });
-            self.continueTask();
+*/            self.continueTask();
         });
         self.continueTask();
     }

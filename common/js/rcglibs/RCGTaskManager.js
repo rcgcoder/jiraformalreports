@@ -94,9 +94,9 @@ class RCGTask{
 				element.freeMemory();
 			});
 			self.innerForks=[];
-			if (self.parent!=""){
+/*			if (self.parent!=""){
 				self.parent.freeMemory();
-			}
+			}*/
 		}
 	}
 	setOnChangeStatus(callback){

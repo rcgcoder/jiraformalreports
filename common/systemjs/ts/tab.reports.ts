@@ -109,7 +109,8 @@ export class TabReports {
                 }
                 for (var i=0;i<theDynObj.list.length();i++){
                     if ((Math.random()*100)<5){
-                        var str=theDynObj.list.getValue(""+i);
+                        var objAux=theDynObj.list.getValue(""+i);
+                        var value=objAux.getTextObject();
                         str="dynObj:"+str.substring(0,50) +  " [" +str.length+"]";
                         log(str);
                     }

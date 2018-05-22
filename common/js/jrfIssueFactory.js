@@ -128,7 +128,7 @@ function newIssueFactory(report){
 				var sInitialParagraphTag=htmlText.substring(0,3).toLowerCase()
 				var sFinalParagraphTag=htmlText.substring(htmlText.length-4,htmlText.length).toLowerCase()
 				if (sInitialParagraphTag=="<p>"){
-					htmlText=htmlText.substring(4,htmlText.length);
+					htmlText=htmlText.substring(3,htmlText.length);
 					if (sFinalParagraphTag=="</p>"){
 						htmlText=htmlText.substring(0,htmlText.length-4);
 					}

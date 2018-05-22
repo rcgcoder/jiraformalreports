@@ -117,6 +117,21 @@ function newIssueFactory(report){
 		var self=this;
 		return self["get"+attrName]();
 	});
+	dynObj.functions.add("getCommentsStartsWith",function(sStart){
+		var self=this;
+		var comments=self.getComments();
+		var hsResults=newHashMap();
+		var sStartUpper=sStart.trim().toUpperCase();
+		var iLength=sStartUpper.length;
+		var sStartAux;
+		comments.walk(function(comment){
+			sStartAux=comment.body.substring(0,iLength);
+			if (sStartAux.toUpperCase()==sStartUpper){
+				hsResults.add(comment.id,comment);
+			}
+		});
+		return hsResults;
+	});
 	
 	dynObj.functions.add("updateInfo",function(){
 		var self=this;

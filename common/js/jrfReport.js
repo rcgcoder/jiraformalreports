@@ -320,8 +320,6 @@ var jrfReport=class jrfReport {
 							objComment={id:comment.created,body:comment.body,htmlBody:htmlComment.body};
 							issue.addComment(objComment);
 						}
-						comments.forEach(function(comment){
-						});
 					} else {
 						log("The issue ["+key+"] does not exists... Error");
 					}

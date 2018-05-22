@@ -16,7 +16,8 @@ function newIssueFactory(report){
 	var dynObj=newDynamicObjectFactory(
 			[{name:"Child",description:"SubIssues for Billing",type:"object"},
 			 {name:"AdvanceChild",description:"SubIssues for advance calculation",type:"object"},
-			 {name:"LinkType",description:"Relation Types",type:"object"}
+			 {name:"LinkType",description:"Relation Types",type:"object"},
+			 {name:"Comment", description:"Comments in Issue",type:"object"}
 			]
 			,
 			allFieldDefinitions.concat(["JiraObject"])

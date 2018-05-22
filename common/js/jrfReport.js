@@ -193,8 +193,152 @@ var jrfReport=class jrfReport {
 			self.continueTask();
 		});
 
+		var issuesAdded=newHashMap();
 		// assing childs and advance childs to root elements
 		self.addStep("Assign Childs and Advance",function(){
+			var formulaChild=self.config.billingHierarchy;
+			var formulaAdvance=self.config.advanceHierarchy;
+			var sFncFormulaChild="var bResult="+formulaChild+"; return bResult;";
+			var sFncFormulaAdv="var bResult="+formulaAdvance+"; return bResult;";
+			var fncIsChild=Function("child","parent",sFncFormulaChild);
+			var fncIsAdvPart=Function("child","parent",sFncFormulaAdv);
+			
+			self.rootIssues.walk(function(value,iProf,key){
+				log("Root Issue: "+key);
+				var issue=self.allIssues.getById(key);
+				if (!issuesAdded.exists(key)){
+					issuesAdded.add(key,issue);
+				}
+				if (!self.childs.exists(key)){
+					self.childs.add(key,issue);
+				}
+			});
+//			var treeIssues=issuesAdded.toArray([{doFieldName:"self",resultFieldName:"issue"}]);
+			var fncProcessChild=self.createManagedCallback(function(objStep,issueParent){
+				var issueChild=objStep.value;
+				if (issueChild.id=="BENT-242"){
+					log("Testing "+issueChild.id);
+				}
+				var bIsChild=false;
+				try{
+					bIsChild=fncIsChild(issueChild,issueParent);
+				} catch(err){
+					log ("somthing es not good in child formula:"+sFncFormulaChild);
+					log ("using child: "+JSON.stringify(issueChild));
+					log ("using parent: "+JSON.stringify(issueParent));
+					bIsChild=false;
+				}
+				if (bIsChild){
+					if (!issueParent.getChilds().exists(issueChild.getKey())){ // when reusing dynobj the childs are setted
+						issueParent.addChild(issueChild);
+					}
+					if (!issuesAdded.exists(issueChild.getKey())){
+						issuesAdded.add(issueChild.getKey(),issueChild);
+						fncGetIssueChilds(issueChild);
+					}
+				}
+				var bIsAdvPart=false;				
+				try{
+					bIsAdvPart=fncIsAdvPart(issueChild,issueParent);
+				} catch(err){
+					log ("somthing es not good in advance formula:"+sFncFormulaAdv);
+					log ("using child: "+JSON.stringify(issueChild));
+					log ("using parent: "+JSON.stringify(issueParent));
+					bIsAdvPart=false;
+				}
+				if (bIsAdvPart){
+					if (!issueParent.getAdvanceChilds().exists(issueChild.getKey())){ // when reusing dynobj the childs are setted
+						issueParent.addAdvanceChild(issueChild);
+					}
+					if (!issuesAdded.exists(issueChild.getKey())){
+						issuesAdded.add(issueChild.getKey(),issueChild);
+						fncGetIssueChilds(issueChild);
+					}
+				}
+			});
+			var fncGetIssueChilds=function(issueParent){
+				var auxKey="Report";
+//				if (isDefined(issueParent.getKey)){
+					auxKey="Issue:"+issueParent.getKey();
+//				}
+				self.addStep("Getting childs for " + auxKey + "....",function(){
+				//walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
+					log("Task Manager Status:"+self.getRunningTask().parent.actStep + " " + self.getRunningTask().parent.steps.length);
+					self.allIssues.list.walkAsync("Getting childs for "+auxKey
+												,function(issueChild){
+													fncProcessChild(issueChild,issueParent)
+												 }
+												,self.createManagedCallback(function(){
+													log("Finished "+"Getting childs for "+auxKey);
+													log("Task Manager Status:"+self.getRunningTask().parent.actStep 
+															+ " " + self.getRunningTask().parent.steps.length);
+													self.continueTask();
+													}
+												));
+				//},0,1,undefined,undefined,undefined,"INNER",undefined
+				}
+				);
+			}
+
+			self.childs.walk(function(childIssue){
+				fncGetIssueChilds(childIssue);
+			});
+			self.continueTask();
+		});
+
+		// load comments of issues
+		self.addStep("Loading comments of "+ issuesAdded.length()+"issues",function(){
+			var arrKeyGroups=[];
+			var keyGroup=[];
+			arrKeyGroups.push(keyGroup);
+			issuesAdded.walk(function (element){
+				if (keyGroup.length>10){
+					keyGroup=[];
+					arrKeyGroups.push(keyGroup);
+				}
+				keyGroup.push(element.getKey());
+			});
+			var confluence=self.
+			var fncAddComments=self.createManagedCallback(function(arrIssues){
+				var key;
+				var issue;
+				var comments;
+				var htmlComments;
+				var comment;
+				var htmlComment;
+				var objComment;
+				arrIssues.forEach(function (jsonIssue){
+					key=jsonIssue.key;
+					if (issuesAdded.exists(key)){
+						issue=issuesAdded.getValue(key);
+						comments=jsonIssue.fields.comment.comments;
+						htmlComments=jsonIssue.renderedFields.comment.comments;
+						for (var i=0;i<comments.length;i++){
+							comment=comments[i];
+							htmlComment=htmlComments[i];
+							objComment={id:comment.created,body:comment.body,htmlBody:htmlComment.body};
+							issue.addComment(objComment);
+						}
+						comments.forEach(function(comment){
+						});
+					} else {
+						log("The issue ["+key+"] does not exists... Error");
+					}
+					
+				})
+			});
+			arrKeyGroups.forEach(function(group){
+				if (group.length>0){
+					var sIssues="";
+					group.forEach(function (key){
+						sIssues+=((sIssues!=""?",":"")+key);
+					});
+					self.addStep("Retrieving Comments of Group ["+sIssues+"]",function(){
+						self.jira.getComments(group,fncAddComments);
+					});
+				}
+			});
+			
 			var formulaChild=self.config.billingHierarchy;
 			var formulaAdvance=self.config.advanceHierarchy;
 			var sFncFormulaChild="var bResult="+formulaChild+"; return bResult;";

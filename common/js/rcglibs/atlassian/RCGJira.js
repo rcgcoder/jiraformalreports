@@ -245,6 +245,21 @@ class RCGJira{
 //		self.apiCall("/plugins/servlet/applinks/proxy?appId=d1015b5f-d448-3745-a3d3-3dff12863286&path=https://rcgcoder.atlassian.net/rest/api/2/search");
 		//expand=changelog&jql=updateddate>'2018/03/01'
 	}
+	getComments(arrIssues,cbBlock){
+		var self=this;
+		var sJQL="";
+		arrIssues.forEach(function(issueKey){
+			sJQL+=((sJQL=""?",":"")+issueKey);
+		});
+		sJQL="issue in ("+sJQL+")";
+		self.addStep("Getting All Issues from JQL", function(){
+			self.getFullList("/rest/api/2/search?fields=comment&expand=renderedFields&jql="+jql,"issues",undefined,undefined,cbBlock);
+		});
+		self.addStep("Returning all Issues from JQL", function(response,xhr,sUrl,headers){
+			self.continueTask([response]);
+		});
+		self.continueTask();
+	}
 	getJQLIssues(jql,cbBlock){
 		var self=this;
 		self.addStep("Getting All Issues from JQL", function(){

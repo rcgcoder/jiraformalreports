@@ -247,7 +247,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				} else 
 */				if (sFormatId=="fixed"){
 					sValAux=self.replaceVars(sValAux);
-					sValAux=self.model.removeInnerTags(sValAux).trim();
+					sValAux=self.model.removeInnerTags(sValAux,true).trim();
 					if (sValAux=="") return;
 					var nDigits=2;
 					if (arrParts.length>1){
@@ -351,7 +351,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		while (openInd>=0){
 			var closeInd=sText.indexOf(closeTag,openInd+closeTag.length);
 			var sInnerText=sText.substring(openInd+closeTag.length,closeInd).trim();
-			sInnerText=self.model.removeInnerTags(sInnerText);
+			sInnerText=self.model.removeInnerTags(sInnerText,clear);
 			if (!bReplaceVars){
 				vValues.push(sInnerText);
 				sVarRef="_arrRefs_["+iVar+"]";

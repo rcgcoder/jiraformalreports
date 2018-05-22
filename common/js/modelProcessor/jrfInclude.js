@@ -22,16 +22,20 @@ var jrfInclude=class jrfInclude{//this kind of definition allows to hot-reload
 				confluence.getContent(contentId);
 			});
 			// parse the content
+			var theModel;
 			self.addStep("Processing Confluence Content:"+contentId,function(jsonContent){
 				var oContent=JSON.parse(jsonContent);
 				var sHtmlBody=oContent.body.storage.value;
 				sHtmlBody=decodeEntities(sHtmlBody);
-				var theModel=new jrfModel(self.model.report,sHtmlBody,self.reportElem);
+				theModel=new jrfModel(self.model.report,sHtmlBody,self.reportElem);
+				theModel.variables=self.model.variables;
+				theModel.variables.pushVarEnv();
 				theModel.process(); // hash inner task....
 			});
 			self.addStep("Return processed content of:"+contentId,function(sResultHtml){
 				var sProcessed=sResultHtml;
 				self.addHtml(sProcessed); 
+				theModel.variables.popVarEnv();
 				self.continueTask();
 			});
 		}

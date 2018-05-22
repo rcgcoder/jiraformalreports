@@ -11,12 +11,16 @@ var jrfField=class jrfField{//this kind of definition allows to hot-reload
 		var sValue=self.reportElem.fieldValue(self.fieldName,true);
 		if (sValue.indexOf("&lt;jrf")>=0){// if there is jrf tokens in the description
 			var sHtml=decodeEntities(sValue);
+			var theModel;
 			self.addStep("Processing the field including the jrf tags",function(){
-				var theModel=new jrfModel(self.model.report,sHtml,self.reportElem);
+				theModel=new jrfModel(self.model.report,sHtml,self.reportElem);
+				theModel.variables=self.model.variables;
+				theModel.variables.pushVarEnv();
 				theModel.process(); 
 			});
 			self.addStep("Setting the HTML",function(sModelProcessedResult){
 				self.addHtml(sModelProcessedResult);
+				theModel.variables.popVarEnv();
 				self.continueTask();
 			});
 		} else {

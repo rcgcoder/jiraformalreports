@@ -293,6 +293,14 @@ var jrfReport=class jrfReport {
 			theModel.process(); // hash inner task....
 		});
 		
+
+		self.addStep("Setting the HTML",function(sModelProcessedResult){
+	        var jqResult=$("#ReportResult");
+	        jqResult.html(sModelProcessedResult);
+			loggerFactory.getLogger().enabled=true;
+			self.continueTask();
+		});
+		
 		self.addStep("Removing all Issues in the scope.... ",function(){
 			self.allIssues.list.clear();
 			log("Report uses "+ self.allIssues.list.length()+ " issues");
@@ -302,16 +310,9 @@ var jrfReport=class jrfReport {
 			self.rootElements=newHashMap();
 			self.rootIssues=newHashMap();
 			self.rootProjects=newHashMap();
-
 			self.continueTask();
 		});	
-/*		
-		self.addStep("Setting the HTML",function(sModelProcessedResult){
-	        var jqResult=$("#ReportResult");
-	        jqResult.html(sModelProcessedResult);
-			loggerFactory.getLogger().enabled=true;
-			self.continueTask();
-		});*/
+
 		self.continueTask();
 	}
 }

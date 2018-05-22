@@ -314,11 +314,17 @@ var jrfReport=class jrfReport {
 						issue=issuesAdded.getValue(key);
 						comments=jsonIssue.fields.comment.comments;
 						htmlComments=jsonIssue.renderedFields.comment.comments;
+						var bFind=false;
 						for (var i=0;i<comments.length;i++){
 							comment=comments[i];
 							htmlComment=htmlComments[i];
 							objComment={id:comment.created,body:comment.body,htmlBody:htmlComment.body};
 							issue.addComment(objComment);
+							bFind=true;
+						}
+						if (bFind){
+							var vResult=issue.getHtmlLastCommentStartsWith("Descripción Formal",true,"<br/>",true);
+							log (vResult);
 						}
 					} else {
 						log("The issue ["+key+"] does not exists... Error");

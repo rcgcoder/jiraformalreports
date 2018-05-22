@@ -253,7 +253,7 @@ class RCGJira{
 		});
 		sJQL="issue in ("+sJQL+")";
 		self.addStep("Getting All Issues from JQL:["+sJQL+"]", function(){
-			self.getFullList("/rest/api/2/search?fields=comment&expand=renderedFields&sJQL="+jql,"issues",undefined,undefined,cbBlock);
+			self.getFullList("/rest/api/2/search?fields=comment&expand=renderedFields&jql="+sJQL,"issues",undefined,undefined,cbBlock);
 		});
 		self.addStep("Returning all Issues from JQL:["+sJQL+"]", function(response,xhr,sUrl,headers){
 			self.continueTask([response]);

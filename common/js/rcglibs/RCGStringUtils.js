@@ -97,7 +97,11 @@ class RCGStringUtils{
 			  return str.replace(new RegExp(find, bModulator), replace);
 		  }
 	};
-
+	decodeEntities(encodedString) {
+	    var textArea = document.createElement('textarea');
+	    textArea.innerHTML = encodedString;
+	    return textArea.value;
+	}
 	prepareComparation(str,bCaseInsensitive,bRemoveSpecials){
 			var sValue=str;
 			if (typeof bCaseInsensitive !=="undefined"){

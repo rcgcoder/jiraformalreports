@@ -9,9 +9,10 @@ var jrfField=class jrfField{//this kind of definition allows to hot-reload
 		var self=this;
 		var bRendered=(self.format=="jiramarkup");
 		var sValue=self.reportElem.fieldValue(self.fieldName,true);
-		if (sValue.indexOf("<jrf")>=0){// if there is jrf tokens in the description
+		if (sValue.indexOf("&lt;jrf")>=0){// if there is jrf tokens in the description
+			var sHtml=decodeEntities(sValue);
 			self.addStep("Processing the field including the jrf tags",function(){
-				var theModel=new jrfModel(self.model.report,sValue);
+				var theModel=new jrfModel(self.model.report,sHtml);
 				theModel.process(); 
 			});
 			self.addStep("Setting the HTML",function(sModelProcessedResult){

@@ -249,7 +249,7 @@ class RCGJira{
 		var self=this;
 		var sJQL="";
 		arrIssues.forEach(function(issueKey){
-			sJQL+=((sJQL=""?",":"")+issueKey);
+			sJQL+=((sJQL!=""?",":"")+issueKey);
 		});
 		sJQL="issue in ("+sJQL+")";
 		self.addStep("Getting All Issues from JQL:["+sJQL+"]", function(){

@@ -245,6 +245,7 @@ class RCGTask{
 					isCallback:self.isCallback,
 					nSubTasks:0,
 					nSubTasksRunning:0,
+					nSubDeep:0,
 					detail:[]  // there is not detail..... 
 					};
 		}
@@ -288,6 +289,7 @@ class RCGTask{
 				done:false,
 				nSubTasks:0,
 				nSubTasksRunning:0,
+				nSubDeep:0,
 				timeSpent:(bRunningMethod?(new Date()).getTime()-self.initTime:""),
 				running:bRunningMethod,
 				isCallback:self.isCallback
@@ -295,6 +297,7 @@ class RCGTask{
 				};
 		if ((self.steps.length==0)&&(allInnerForksDone)){
 			status.weight=self.weight;
+			status.nSubTasks=self.innerForks.length+self.steps.length;
 			status.detail=[];  // No, there is not more detail..... 
 			return status;
 		}
@@ -303,11 +306,17 @@ class RCGTask{
 		var nSubTasks=0;
 		var nSubTasksRunning=0;
 		var auxStatus;
+		var nSubDeep=0;
+		var auxDeep=0;
 		for (var i=0;i<self.steps.length;i++){
 			var auxStep=self.steps[i];
 			if (!auxStep.isFork){ // the forks will be processed in next for
 				auxStatus=auxStep.getStatus();
 				nSubTasks+=auxStatus.nSubTasks;
+				auxDeep=(auxStatus.nSubDeep+1);
+				if (auxDeep>nSubDeep){
+					nSubDeep=auxDeep;
+				}
 				nSubTasks++;
 				if (auxStatus.running){
 					nSubTasksRunning++;
@@ -322,6 +331,10 @@ class RCGTask{
 			nSubTasks++;
 			if (auxStatus.running){
 				nSubTasksRunning++;
+			}
+			auxDeep=(auxStatus.nSubDeep+1);
+			if (auxDeep>nSubDeep){
+				nSubDeep=auxDeep;
 			}
 			arrStatus.push(auxStatus);
 		}
@@ -379,6 +392,7 @@ class RCGTask{
 				running:true,
 				nSubTasks:nSubTasks,
 				nSubTasksRunning:nSubTasksRunning,
+				nSubDeep:nSubDeep,
 				timeSpent:(new Date()).getTime()-self.initTime,
 				child:arrRunningTasks,
 				detail:arrStatus  // there is detail..... useful info!

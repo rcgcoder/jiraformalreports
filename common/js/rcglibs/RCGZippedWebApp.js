@@ -987,6 +987,7 @@ class RCGZippedApp{
 					
 				}
 				sChildsInfo+=" ["+item.nSubTasksRunning+"/"+item.nSubTasks+"]";				
+				sChildsInfo+=" ["+item.nSubDeep+"]";				
 				var tTotal=0;
 				var tETA=0;
 				if (item.perc>0){

@@ -16,7 +16,7 @@ var jrfField=class jrfField{//this kind of definition allows to hot-reload
 				theModel.process(); 
 			});
 			self.addStep("Setting the HTML",function(sModelProcessedResult){
-				self.addHtml(sValue);
+				self.addHtml(sModelProcessedResult);
 				self.continueTask();
 			});
 		} else {

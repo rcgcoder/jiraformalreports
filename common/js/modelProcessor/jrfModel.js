@@ -257,7 +257,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			sTokenName="jrfNoop";
 		}
 		tagApplier=new window[sTokenName](tag,reportElem,self);
-		self.addStep("Encoding the tag...",function(){
+		self.addStep("Encoding the tag..."+sTokenName,function(){
 			tagApplier.encode(); // it has steps... into
 		});
 /*		self.addStep("Returning the html",function(){

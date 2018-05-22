@@ -298,7 +298,9 @@ var jrfReport=class jrfReport {
 				}
 				keyGroup.push(element.getKey());
 			});
-			var fncAddComments=self.createManagedCallback(function(arrIssues){
+			var fncAddComments=self.createManagedCallback(function(jsonIssues){
+				var oIssues=JSON.parse(jsonIssues);
+				var arrIssues=oIssues.issues;
 				var key;
 				var issue;
 				var comments;

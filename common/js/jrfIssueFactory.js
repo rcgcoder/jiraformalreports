@@ -77,8 +77,8 @@ function newIssueFactory(report){
 		} 
 		if (bDefined){
 			if (typeof fieldValue==="object"){
-				if (isDefined(fieldValue.name)) return fieldValue.name;
 				if (isDefined(fieldValue.value)) return fieldValue.value;
+				if (isDefined(fieldValue.name)) return fieldValue.name;
 				if (isDefined(fieldValue.key)) return fieldValue.key;
 				if (isDefined(fieldValue.id)) return fieldValue.id;
 				return fieldValue;

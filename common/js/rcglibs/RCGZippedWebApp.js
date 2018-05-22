@@ -986,7 +986,7 @@ class RCGZippedApp{
 					sChildsInfo+=" ["+nInnerMin+" => "+ nInnerAdv +" => "+nInnerMax+"]";
 					
 				}
-				
+				sChildsInfo+=" ["+item.nSubTasksRunning+"/"+item.nSubTasks+"]";				
 				var tTotal=0;
 				var tETA=0;
 				if (item.perc>0){
@@ -1016,7 +1016,7 @@ class RCGZippedApp{
 					sSubItems="<ul class='tm-ulSubItems'>"+sSubItems+"</ul>";
 				}
 				if (currentDeep<=maxDeep){
-					sItem='<li class="tm-progress">'+sItem+" ["+item.nSubTasksRunning+"/"+item.nSubTasks+"]"+' '+sSubItems+'</li>';
+					sItem='<li class="tm-progress">'+sItem+' '+sSubItems+'</li>';
 				} else {
 					sItem='';
 				}

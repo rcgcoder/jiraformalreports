@@ -12,7 +12,7 @@ var jrfField=class jrfField{//this kind of definition allows to hot-reload
 		if (sValue.indexOf("&lt;jrf")>=0){// if there is jrf tokens in the description
 			var sHtml=decodeEntities(sValue);
 			self.addStep("Processing the field including the jrf tags",function(){
-				var theModel=new jrfModel(self.model.report,sHtml);
+				var theModel=new jrfModel(self.model.report,sHtml,self.reportElem);
 				theModel.process(); 
 			});
 			self.addStep("Setting the HTML",function(sModelProcessedResult){

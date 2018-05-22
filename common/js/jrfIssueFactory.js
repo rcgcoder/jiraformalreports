@@ -122,7 +122,7 @@ function newIssueFactory(report){
 		var htmlText="";
 		var hsComments=self.getCommentsStartsWith(sStart);
 		if (hsComments.length()>0){
-			var lastComment=hsComents.getLast().value;
+			var lastComment=hsComments.getLast().value;
 			htmlText=lastComment.htmlBody.trim();
 			if (isDefined(bRemoveClosureParagraph)&&(bRemoveClosureParagraph)){
 				var sInitialParagraphTag=htmlText.substring(0,3).toLowerCase()

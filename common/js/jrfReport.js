@@ -285,6 +285,14 @@ var jrfReport=class jrfReport {
 			self.continueTask();
 		});
 		
+		// load report model and submodels
+		// Process Model with The Report
+		self.addStep("Processing Model",function(){
+			
+			var theModel=new jrfModel(self);
+			theModel.process(); // hash inner task....
+		});
+		
 		self.addStep("Removing all Issues in the scope.... ",function(){
 			self.allIssues.list.clear();
 			log("Report uses "+ self.allIssues.list.length()+ " issues");
@@ -297,15 +305,7 @@ var jrfReport=class jrfReport {
 
 			self.continueTask();
 		});	
-		/*
-		// load report model and submodels
-		// Process Model with The Report
-		self.addStep("Processing Model",function(){
-			
-			var theModel=new jrfModel(self);
-			theModel.process(); // hash inner task....
-		});
-		
+/*		
 		self.addStep("Setting the HTML",function(sModelProcessedResult){
 	        var jqResult=$("#ReportResult");
 	        jqResult.html(sModelProcessedResult);

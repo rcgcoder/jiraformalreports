@@ -18,11 +18,11 @@ var jrfInclude=class jrfInclude{//this kind of definition allows to hot-reload
 			var contentId=arrParts[0];
 			var confluence=System.webapp.getConfluence();
 			// download the content....
-			self.addStep("Getting Confluence Content:"+contentId),function(){
+			self.addStep("Getting Confluence Content:"+contentId,function(){
 				confluence.getContent(contentId);
 			});
 			// parse the content
-			self.addStep("Processing Confluence Content:"+contentId),function(sHtml){
+			self.addStep("Processing Confluence Content:"+contentId,function(sHtml){
 				var theModel=new jrfModel(self.model.report,sHtml);
 				theModel.process(); // hash inner task....
 			});

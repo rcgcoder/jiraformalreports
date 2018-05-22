@@ -117,6 +117,33 @@ function newIssueFactory(report){
 		var self=this;
 		return self["get"+attrName]();
 	});
+	dynObj.functions.add("getHtmlLastCommentStartsWith",function(sStart,bRemoveTarget,sPostPendToRemove,bRemoveClosureParagraph){
+		var self=this;
+		var htmlText="";
+		var hsComments=self.getCommentsStartsWith(sStart);
+		if (hsComments.length()>0){
+			var lastComment=hsComents.getLast().value;
+			htmlText=lastComment.htmlBody.trim();
+			if (isDefined(bRemoveClosureParagraph)&&(bRemoveClosureParagraph)){
+				var sInitialParagraphTag=htmlText.substring(0,3).toLowerCase()
+				var sFinalParagraphTag=htmlText.substring(htmlText.length-4,htmlText.length).toLowerCase()
+				if (sInitialParagraphTag=="<p>"){
+					htmlText=htmlText.substring(4,htmlText.length);
+					if (sFinalParagraphTag=="</p>"){
+						htmlText=htmlText.substring(0,htmlText.length-4);
+					}
+				}
+			}
+			if (isDefined(bRemoveTarget)&&(bRemoveTarget)){
+				var sRemove=sStart;
+				if (isDefined(sPostPendToRemove)){
+					sRemove+=sPostPendToRemove;
+				}
+				htmlText=replaceAll(htmlText,sStart,sRemove);
+			}
+		}
+		return htmlText;
+	});
 	dynObj.functions.add("getCommentsStartsWith",function(sStart){
 		var self=this;
 		var comments=self.getComments();

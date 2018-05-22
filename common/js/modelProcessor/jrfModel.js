@@ -1,10 +1,15 @@
 var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
-	constructor(theReport){
+	constructor(theReport,inputHtml){
 		var self=this;
 		System.webapp.getTaskManager().extendObject(self);
 		self.functionCache=newHashMap();
 		self.variables=new RCGVarEngine();
 		self.tokenBase=new jrfToken(self);
+		if (isDefined(inputHtml)){
+			self.inputHtml=inputHtml;
+		} else {
+			self.inputHtml=theReport.config.model;
+		}
 		self.htmlStack=newHashMap();
 		self.html="";
 		self.markdownConverter = new showdown.Converter();
@@ -302,7 +307,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 	}
 	process(){
 		var self=this;
-		var sModel=self.report.config.model;
+		var sModel=self.inputHtml;
 		var rootJRF=self.tagFactory.new();
 		var htmlBufferIndex;
 		self.addStep("Parsing Model",function(){

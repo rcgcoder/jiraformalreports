@@ -53,7 +53,13 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		}
 		var nChildWalker=0;
 		auxList.walk(function(childTag){
-			self.addStep("Processing Child..."+auxRptElem.getKey(),function(){
+			var sKey="";
+			if (isDefined(auxRptElem)){
+				if (isDefined(auxRptElem.getKey)){
+					sKey=auxRptElem.getKey();
+				}
+			}
+			self.addStep("Processing Child..."+sKey,function(){
 				self.model.applyTag(childTag,auxRptElem);
 			});
 			nChildWalker++;

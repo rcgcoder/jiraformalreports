@@ -137,7 +137,8 @@ function newIssueFactory(report){
 			if (isDefined(bRemoveTarget)&&(bRemoveTarget)){
 				var sRemove=sStart;
 				if (isDefined(sPostPendToRemove)){
-					sRemove+=sPostPendToRemove;
+					var inHtml=decodeEntities(sPostPendToRemove);
+					sRemove+=inHtml;
 				}
 				htmlText=replaceAll(htmlText,sStart,sRemove);
 			}

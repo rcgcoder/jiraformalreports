@@ -1,8 +1,9 @@
 var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
-	constructor(theReport,inputHtml){
+	constructor(theReport,inputHtml,actualElement){
 		var self=this;
 		System.webapp.getTaskManager().extendObject(self);
 		self.functionCache=newHashMap();
+		self.actualElement=actualElement;
 		self.variables=new RCGVarEngine();
 		self.tokenBase=new jrfToken(self);
 		if (isDefined(inputHtml)){
@@ -279,7 +280,11 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		var htmlBufferIndex=self.pushHtmlBuffer();
 		var reportElem=reportElement;
 		if (isUndefined(reportElem)){
-			reportElem=self.report;
+			if (isUndefined(self.actualElement)){
+				reportElem=self.report;
+			} else {
+				reportElem=self.actualElement;
+			}
 		}
 		self.addStep("Applying tag recursively....",function(){
 			self.applyTag(parentTag,reportElem);

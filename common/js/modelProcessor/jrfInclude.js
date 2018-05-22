@@ -26,7 +26,7 @@ var jrfInclude=class jrfInclude{//this kind of definition allows to hot-reload
 				var oContent=JSON.parse(jsonContent);
 				var sHtmlBody=oContent.body.storage.value;
 				sHtmlBody=decodeEntities(sHtmlBody);
-				var theModel=new jrfModel(self.model.report,sHtmlBody);
+				var theModel=new jrfModel(self.model.report,sHtmlBody,self.reportElem);
 				theModel.process(); // hash inner task....
 			});
 			self.addStep("Return processed content of:"+contentId,function(sResultHtml){

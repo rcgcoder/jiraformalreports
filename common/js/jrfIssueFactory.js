@@ -140,7 +140,7 @@ function newIssueFactory(report){
 					var inHtml=decodeEntities(sPostPendToRemove);
 					sRemove+=inHtml;
 				}
-				htmlText=replaceAll(htmlText,sStart,sRemove);
+				htmlText=replaceAll(htmlText,sRemove,"",true);
 			}
 		}
 		return htmlText;

@@ -90,6 +90,7 @@ var jrfReport=class jrfReport {
 								"js/modelProcessor/jrfGetVar.js",
 								"js/modelProcessor/jrfSum.js",
 								"js/modelProcessor/jrfFormula.js"
+								"js/modelProcessor/jrfInclude.js",
 	/*							"js/rcglibs/RCGLogUtils.js",
 								"js/rcglibs/RCGChronoUtils.js",
 								"js/rcglibs/RCGHashMapUtils.js"

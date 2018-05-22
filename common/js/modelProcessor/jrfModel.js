@@ -258,6 +258,8 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			sTokenName="jrfSum";
 		} else if (tagAttrs.exists("debug")){
 			sTokenName="jrfDebug";
+		} else if (tagAttrs.exists("include")){
+			sTokenName="jrfInclude";
 		} else {
 			sTokenName="jrfNoop";
 		}

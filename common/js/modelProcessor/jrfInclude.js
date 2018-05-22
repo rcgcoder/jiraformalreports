@@ -31,7 +31,7 @@ var jrfInclude=class jrfInclude{//this kind of definition allows to hot-reload
 			});
 			self.addStep("Return processed content of:"+contentId,function(sResultHtml){
 				var sProcessed=sResultHtml;
-				self.addHtml(sProcessed);
+				self.addHtml(sProcessed); 
 		}
 		// apply the tags
 	}

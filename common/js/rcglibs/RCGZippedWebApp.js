@@ -1016,7 +1016,7 @@ class RCGZippedApp{
 					sSubItems="<ul class='tm-ulSubItems'>"+sSubItems+"</ul>";
 				}
 				if (currentDeep<=maxDeep){
-					sItem='<li class="tm-progress">'+sItem+' '+sSubItems+'</li>';
+					sItem='<li class="tm-progress">'+sItem+" ["+item.nSubTasksRunning+"/"+item.nSubTasks+"]"+' '+sSubItems+'</li>';
 				} else {
 					sItem='';
 				}

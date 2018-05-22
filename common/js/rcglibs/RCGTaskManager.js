@@ -243,6 +243,8 @@ class RCGTask{
 					timeSpent:self.finishTime-self.initTime,
 					running:self.running,
 					isCallback:self.isCallback,
+					nSubTasks:0,
+					nSubTasksRunning:0,
 					detail:[]  // there is not detail..... 
 					};
 		}
@@ -284,6 +286,8 @@ class RCGTask{
 				adv:Math.round(progressAdv),
 				weight:self.methodWeight,
 				done:false,
+				nSubTasks:0,
+				nSubTasksRunning:0,
 				timeSpent:(bRunningMethod?(new Date()).getTime()-self.initTime:""),
 				running:bRunningMethod,
 				isCallback:self.isCallback
@@ -296,15 +300,30 @@ class RCGTask{
 		}
 		var arrStatus=[];
 		arrStatus.push(status);
+		var nSubTasks=0;
+		var nSubTasksRunning=0;
+		var auxStatus;
 		for (var i=0;i<self.steps.length;i++){
 			var auxStep=self.steps[i];
 			if (!auxStep.isFork){ // the forks will be processed in next for
-				arrStatus.push(auxStep.getStatus());
+				auxStatus=auxStep.getStatus();
+				nSubTasks+=auxStatus.nSubTasks;
+				nSubTasks++;
+				if (auxStatus.running){
+					nSubTasksRunning++;
+				}
+				arrStatus.push(auxStatus);
 			}
 		}
 		for (var i=0;i<self.innerForks.length;i++){
 			var auxStep=self.innerForks[i];
-			arrStatus.push(auxStep.getStatus());
+			auxStatus=auxStep.getStatus();
+			nSubTasks+=auxStatus.nSubTasks;
+			nSubTasks++;
+			if (auxStatus.running){
+				nSubTasksRunning++;
+			}
+			arrStatus.push(auxStatus);
 		}
 		//arrStatus has the estatus of all the steps and Forks in the list.
 		var totalWeight=0;
@@ -358,6 +377,8 @@ class RCGTask{
 				adv:Math.round((progressItems*totalPerc)+progressMin),
 				done:false,
 				running:true,
+				nSubTasks:nSubTasks,
+				nSubTasksRunning:nSubTasksRunning,
 				timeSpent:(new Date()).getTime()-self.initTime,
 				child:arrRunningTasks,
 				detail:arrStatus  // there is detail..... useful info!

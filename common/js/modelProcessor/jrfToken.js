@@ -59,6 +59,9 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					sKey=auxRptElem.getKey();
 				}
 			}
+			if (sKey=="NOTIFLOPD-120"){
+				log("Review this");
+			}
 			self.addStep("Processing Child..."+sKey,function(){
 				self.model.applyTag(childTag,auxRptElem);
 			});

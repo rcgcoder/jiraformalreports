@@ -229,7 +229,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var self=this;
 		if (self.ifCondition!=""){
 			var sProcesed=self.replaceVars(self.ifCondition);
-			sProcesed=executeFunction([],sProcesed,functionCache);
+			sProcesed=executeFunction([],sProcesed,self.model.functionCache);
 			self.ifConditionResult=sProcesed;			
 		}
 	}

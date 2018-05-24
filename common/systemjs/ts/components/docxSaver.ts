@@ -12,4 +12,7 @@ export class docxSaver {
             System.bindObj(self);
         });
     }
+    saveDocx(){
+        log("Saving to file");
+    }
 }

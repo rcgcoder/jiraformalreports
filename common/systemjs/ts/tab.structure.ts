@@ -21,13 +21,17 @@ export class TabStructure {
             });
             var toggle = $('#toggle_HTMLDebugLogs');
             toggle.change(function(e) {
-                var bWithHtmlLog=(toggle.attr("checked")=="checked");
-                self.report.config.htmlDebug=bWithHtmlLog;
+                if (isDefined(self.report)){
+                    var bWithHtmlLog=(toggle.attr("checked")=="checked");
+                    self.report.config.htmlDebug=bWithHtmlLog;
+                }
             });
             var toggle = $('#toggle_ReuseLoadedIssues');
             toggle.change(function(e) {
-                var bReuseIssues=(toggle.attr("checked")=="checked");
-                self.report.config.reuseIssues=bReuseIssues;
+                if (isDefined(self.report)){
+                    var bReuseIssues=(toggle.attr("checked")=="checked");
+                    self.report.config.reuseIssues=bReuseIssues;
+                }
             });
         });
     }

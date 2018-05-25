@@ -321,6 +321,7 @@ class RCGZippedApp{
 			isJSON:false,
 			isSVG:false,
 			isIMG:false,
+			isDOCX:false,
 			isCacheable:true,
 			commitId:"",
 			isUndefined:false
@@ -359,6 +360,7 @@ class RCGZippedApp{
 		} else if (sExt=="docx"){
 			result.isText=false;
 			result.isIMG=false;
+			result.isDOCX=true;
 			return result;
 		} else {
 			return result;
@@ -412,6 +414,7 @@ class RCGZippedApp{
 				return result;
 			} else if (arrContentTypes[i]=="application/vnd.openxmlformats-officedocument.wordprocessingml.document"){
 				result.isText=false;
+				result.isDOCX=true;
 				return result;
 			} else if (arrContentTypes[i]=="application/octet-stream"){
 				return result;
@@ -551,6 +554,8 @@ class RCGZippedApp{
 	    	self.addStyleString(content);
 	    } else if (contentType.isIMG){
 	    	auxContent='data:image/bmp;base64,'+auxContent;
+	    } else if (contentType.isDOCX){
+	    	auxContent='data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,'+auxContent;
 	    }
 	    self.popCallback([sRelativePath,auxContent]);
 	}

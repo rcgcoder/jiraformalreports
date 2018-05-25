@@ -17,7 +17,9 @@ var RCGDocxSaver=class RCGDocxSaver{ //this kind of definition allows to hot-rel
 	       System.webapp.loadRemoteFile("docx/html.docx"); 
 	    });
 	    self.addStep("Processing",function(sRelativePath,templateBase64){
-	    	log("in processing step:"+template.length);
+	    	log("in processing step:"+templateBase64.length);
+	    	var byteArray=toByteArray(templateBase64);
+	    	saveDataToFile(byteArray,"testSave.docx","application/vnd.openxmlformats-officedocument.wordprocessingml.document");
 	    	self.continueTask();
 		    });
 	    self.continueTask();

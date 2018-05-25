@@ -4,6 +4,7 @@ var RCGDocxSaver=class RCGDocxSaver{ //this kind of definition allows to hot-rel
 		taskManager.extendObject(self);
 	}
 	process(){
+		var self=this;
 	    self.addStep("Loading docx templater engine.... ",function(){
 	        var arrFiles=[  //"ts/demo.ts",
 	                        "js/libs/docxtemplater.v3.6.3.js"

@@ -1,4 +1,4 @@
-var RCGVarEngine=class RCGVarEngine{ //this kind of definition allows to hot-reload
+var RCGDocxSaver=class RCGDocxSaver{ //this kind of definition allows to hot-reload
 	constructor(taskManager){
 		var self=this;
 		taskManager.extendObject(self);

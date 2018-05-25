@@ -13,22 +13,23 @@ export class docxSaver {
             System.webapp.getTaskManager().extendObject(self);
         });
     }
+    
     saveDocx(){
         var self=this;
-        log("Saving to file");
-        // download the docxtemplater.js
-        self.addStep("Loading docx templater engine.... ",function(){
-            var arrFiles=[  //"ts/demo.ts",
-                            "js/libs/docxtemplater.v3.6.3.js"
-                            ]; //test
-            System.webapp.loadRemoteFiles(arrFiles);
-        });
-        
-        // download the docx template
-        self.addStep("Downloading Template",function(){
-           System.webapp.loadRemoteFile("docx/html.docx"); 
-        });
-        self.continueTask();
+        self.addStep("Saving to docx file.... ",function(){
+            // download the docxtemplater.js
+            self.addStep("Loading docx templater engine.... ",function(){
+                var arrFiles=[  //"ts/demo.ts",
+                                "js/libs/docxtemplater.v3.6.3.js"
+                                ]; //test
+                System.webapp.loadRemoteFiles(arrFiles);
+            });
+            
+            // download the docx template
+            self.addStep("Downloading Template",function(){
+               System.webapp.loadRemoteFile("docx/html.docx"); 
+            });
+        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
         // apply
     }
 }

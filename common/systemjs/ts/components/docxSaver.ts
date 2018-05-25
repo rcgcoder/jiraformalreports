@@ -17,17 +17,15 @@ export class docxSaver {
     saveDocx(){
         var self=this;
         self.addStep("Saving to docx file.... ",function(){
-            // download the docxtemplater.js
             self.addStep("Loading docx templater engine.... ",function(){
                 var arrFiles=[  //"ts/demo.ts",
-                                "js/libs/docxtemplater.v3.6.3.js"
+                                "js/rcglibs/RCGDocxSaver.js"
                                 ]; //test
                 System.webapp.loadRemoteFiles(arrFiles);
             });
-            
-            // download the docx template
-            self.addStep("Downloading Template",function(){
-               System.webapp.loadRemoteFile("docx/html.docx"); 
+            self.addStep("Launching docx saver engine",function(){
+                var vDocx=new RCGDocxSaver();
+                vDocx.process();
             });
             self.continueTask();
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);

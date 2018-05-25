@@ -17,6 +17,16 @@ export class docxSaver {
     saveDocx(){
         var self=this;
         self.addStep("Saving to docx file.... ",function(){
+            
+            self.addStep("Refresh de Commit Id for update de dockSaver class", function(){
+                var antCommitId=System.webapp.github.commitId;
+                System.webapp.pushCallback(function(){
+                   log("commit updated");
+                   self.continueTask();
+                });
+                System.webapp.github.updateLastCommit();
+            });
+            
             self.addStep("Loading docx templater engine.... ",function(){
                 var arrFiles=[  //"ts/demo.ts",
                                 "js/rcglibs/RCGDocxSaver.js"

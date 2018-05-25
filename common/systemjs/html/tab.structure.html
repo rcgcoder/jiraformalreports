@@ -88,33 +88,36 @@
 <div class="flatpack-box">
 	<strong>Billing Items Selection</strong>
 	<br>	
-	<!-- onSelectedProjects($event) -->
-	
-	  <aui-toggle id="toggle_RootsByJQL" 
-                        label="Select Report Roots by JQL"
-                        ></aui-toggle><strong>By JQL</strong>
-      <jqlSelector 
-      			 id="selIssuesToReport" 
-      			 name="selIssuesToReport" 
-    			 typeDescriptor="Report Root Issues" 
-    			 multiple="true"
-    			 
-    			 >
-      </jqlSelector>	
-      <br>
-	  <aui-toggle id="toggle_RootsByProject" 
-                        label="Select Report Roots by Projects"
-                        ></aui-toggle><strong>By Projects</strong>
-      <br>
-      <atlassianSelector name="selProjectsToReport" 
-	    				   typeDescriptor="Project"
-	    				   multiple="true"
-	    				   maxCharsInSelect=50
-	    				    atlassianAplication="webapp"
-	    				    atlassianObjectFunction="getListProjects"
-	    		>
-	  </atlassianSelector >
-      
+	<div class="aui-group">
+	    <div class="aui-item">
+			<!-- onSelectedProjects($event) -->
+			  <aui-toggle id="toggle_RootsByJQL" 
+		                        label="Select Report Roots by JQL"
+		                        ></aui-toggle><strong>By JQL</strong>
+		      <jqlSelector 
+		      			 id="selIssuesToReport" 
+		      			 name="selIssuesToReport" 
+		    			 typeDescriptor="Report Root Issues" 
+		    			 multiple="true"
+		    			 
+		    			 >
+		      </jqlSelector>	
+	    </div>
+	    <div class="aui-item">
+			  <aui-toggle id="toggle_RootsByProject" 
+		                        label="Select Report Roots by Projects"
+		                        ></aui-toggle><strong>By Projects</strong>
+		      <br>
+		      <atlassianSelector name="selProjectsToReport" 
+			    				   typeDescriptor="Project"
+			    				   multiple="true"
+			    				   maxCharsInSelect=50
+			    				    atlassianAplication="webapp"
+			    				    atlassianObjectFunction="getListProjects"
+			    		>
+			  </atlassianSelector >
+	   </div>
+	</div>      
 </div>	
 	<div class="aui-group">
 	    <div class="aui-item">

@@ -356,6 +356,10 @@ class RCGZippedApp{
 			result.isText=false;
 			result.isIMG=true;
 			return result;
+		} else if (sExt=="docx"){
+			result.isText=false;
+			result.isIMG=false;
+			return result;
 		} else {
 			return result;
 		}
@@ -405,6 +409,9 @@ class RCGZippedApp{
 			} else if (arrContentTypes[i]=="image/jpeg"){
 				result.isText=false;
 				result.isIMG=true;
+				return result;
+			} else if (arrContentTypes[i]=="application/vnd.openxmlformats-officedocument.wordprocessingml.document"){
+				result.isText=false;
 				return result;
 			} else if (arrContentTypes[i]=="application/octet-stream"){
 				return result;

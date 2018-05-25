@@ -20,7 +20,7 @@ var RCGDocxSaver=class RCGDocxSaver{ //this kind of definition allows to hot-rel
 */	    self.addStep("Processing",function(sRelativePath,templateBase64){
 			var odfelement = document.getElementById("ReportResult"),
 			odfcanvas = new odf.OdfCanvas(odfelement);
-			var sUrl=System.webapp.composeUrl("docx/test.odt");
+			var sUrl=System.webapp.composeUrl("https://cantabrana.no-ip.org/jfreports/php/test.odt");
 
 			odfcanvas.load(sUrl);
 /*	    	log("in processing step:"+templateBase64.length);

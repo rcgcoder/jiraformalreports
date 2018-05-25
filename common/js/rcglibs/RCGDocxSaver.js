@@ -8,20 +8,23 @@ var RCGDocxSaver=class RCGDocxSaver{ //this kind of definition allows to hot-rel
 	    self.addStep("Loading docx templater engine.... ",function(){
 	        var arrFiles=[  //"ts/demo.ts",
 	        				"js/rcglibs/RCGFileUtils.js",
-	                        "js/libs/docxtemplater.v3.6.3.js"
+	                        "js/libs/webodf.js"
 	                        ]; //test
 	        System.webapp.loadRemoteFiles(arrFiles);
 	    });
 	    
 	    // download the docx template
-	    self.addStep("Downloading Template",function(){
+/*	    self.addStep("Downloading Template",function(){
 	       System.webapp.loadRemoteFile("docx/html.docx"); 
 	    });
-	    self.addStep("Processing",function(sRelativePath,templateBase64){
+*/	    self.addStep("Processing",function(sRelativePath,templateBase64){
+			var odfelement = document.getElementById("odf"),
+			odfcanvas = new odf.OdfCanvas(odfelement);
+/*			odfcanvas.load("myfile.odt");
 	    	log("in processing step:"+templateBase64.length);
 	    	var byteArray=toByteArray(templateBase64);
 	    	saveDataToFile(byteArray,"testSave.docx","application/vnd.openxmlformats-officedocument.wordprocessingml.document");
-	    	self.continueTask();
+*/	    	self.continueTask();
 		    });
 	    self.continueTask();
 	}

@@ -16,6 +16,10 @@ var RCGDocxSaver=class RCGDocxSaver{ //this kind of definition allows to hot-rel
 	    self.addStep("Downloading Template",function(){
 	       System.webapp.loadRemoteFile("docx/html.docx"); 
 	    });
+	    self.addStep("Processing",function(){
+	    	log("in processing step");
+	    	self.continueTask();
+		    });
 	    self.continueTask();
 	}
 

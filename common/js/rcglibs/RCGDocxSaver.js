@@ -18,7 +18,7 @@ var RCGDocxSaver=class RCGDocxSaver{ //this kind of definition allows to hot-rel
 	       System.webapp.loadRemoteFile("docx/html.docx"); 
 	    });
 */	    self.addStep("Processing",function(sRelativePath,templateBase64){
-			var odfelement = document.getElementById("odf"),
+			var odfelement = document.getElementById("ReportResult"),
 			odfcanvas = new odf.OdfCanvas(odfelement);
 /*			odfcanvas.load("myfile.odt");
 	    	log("in processing step:"+templateBase64.length);

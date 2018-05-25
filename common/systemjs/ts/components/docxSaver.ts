@@ -29,6 +29,7 @@ export class docxSaver {
             self.addStep("Downloading Template",function(){
                System.webapp.loadRemoteFile("docx/html.docx"); 
             });
+            self.continueTask();
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
         // apply
     }

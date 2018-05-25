@@ -24,7 +24,7 @@ export class docxSaver {
                 System.webapp.loadRemoteFiles(arrFiles);
             });
             self.addStep("Launching docx saver engine",function(){
-                var vDocx=new RCGDocxSaver();
+                var vDocx=new RCGDocxSaver(self.getTaskManager());
                 vDocx.process();
             });
             self.continueTask();

@@ -145,4 +145,7 @@ export class TabReports {
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
 //      self.continueTask();
     }
+    doLoadReport(){
+        log("Open");
+    }
 }

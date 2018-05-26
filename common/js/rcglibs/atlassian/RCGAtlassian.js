@@ -124,7 +124,8 @@ class RCGAtlassian{
 		var fncIteration=self.createManagedCallback(function(){
 			self.pushCallback(function(response,xhr,sUrl,headers){
 				var objResp;
-				if (typeof response=="string"){
+				if (typeof response==="string"){
+					if (response=="") return self.popCallback([[]]);
 					objResp=JSON.parse(response);
 				} else {
 					objResp=response;

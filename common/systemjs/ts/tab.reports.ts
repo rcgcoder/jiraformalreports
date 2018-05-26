@@ -178,7 +178,8 @@ export class TabReports {
                       iValues.push(i);
                   }
               }
-              var sB64=fromByteArray([iValues]);
+              var uint8Values= new Uint8Array(iValues);
+              var sB64=fromByteArray(uint8Values);
               saveAttachment("PDP-37",sB64);
               System.webapp.continueTask();
                // jira.addAttachmentObject("PDP-37",{text:"attachmentTest",value:"a value"},"jrfConfig.json");

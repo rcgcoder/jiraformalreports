@@ -360,7 +360,7 @@ class RCGJira{
 	setProperty(issueId,propertyName,propertyValue){
 		var self=this;
 		self.pushCallback(function(objResponse,xhr, statusText, errorThrown){
-			log("Property:"+propertyName+" = "+properyValue+" setted in issue:"+issueId);
+			log("Property:"+propertyName+" = "+propertyValue+" setted in issue:"+issueId);
 			self.continueTask();
 		});
 		

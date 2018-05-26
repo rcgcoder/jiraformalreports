@@ -309,14 +309,16 @@ class RCGAtlassian{
 				*/					  
 				},
 			data: newData,
-			dataType: "json"
+			dataType: "json",
+		    success: newCallback,
+		    error: newErrorCallback
 			};
-			$.ajax(options).done(function(){
+			$.ajax(options);/*.done(function(){
 				alert("end Call");
 				log("Cookie:"+document.cookie);
 				document.cookie = "atlassian.xsrf.token" + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 				log("Cookie:"+document.cookie);
-			});
+			});*/
 			
 			
 /*			$.ajax({

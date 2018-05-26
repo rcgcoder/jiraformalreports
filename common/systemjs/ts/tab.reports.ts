@@ -149,7 +149,9 @@ export class TabReports {
                     formData.append("file", theBlob, theFileName);
 */
                     var content = '<a id="a"><b id="b">hey!</b></a>'; // the body of the new file...
-                    var blob = new Blob([content], { type: "text/xml"});
+                    var blob = new Blob([content], { 
+                        type: 'text/plain; charset="UTF-8"'
+                    });
 
                     formData.append("file", blob, theFileName);
                     var theRequestURL;
@@ -158,7 +160,7 @@ export class TabReports {
                     AP.request({
                       url: theRequestURL,
                       type: 'POST',
-                      data: JSON.stringify(formData),
+                      data: formData,
 //                      dataType: 'multipart/form-data',
 //                      dataType: 'json',
                       async: true,

@@ -132,8 +132,8 @@ export class TabReports {
                 System.webapp.getAtlassian().JiraAPConnection.request({
                     url: '/rest/api/2/issue/PDP-37/comment',
                     type: 'POST',
-                    contentType: 'multipart/form-data',
-                    data: {comment: 'example comment'},
+                    contentType: "application/json",//'multipart/form-data',
+                    data: JSON.stringify({"body":"a test comment"}),
                     success: function(responseText){
                       alert(responseText);
                     }

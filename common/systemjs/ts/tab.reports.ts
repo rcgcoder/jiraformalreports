@@ -138,8 +138,7 @@ export class TabReports {
                 jira.setProperty("PDP-37","RCGTest","A simple value");
             });
             System.webapp.addStep("Calling set attachment",function(){
-                
-                function saveAttachment(theDataToSave) {
+                var  saveAttachment=function (theDataToSave) {
 
                     // theDataToSave is a large block of base-64 encoded binary data
                     var theFileName = "testattachment.sdr64";
@@ -183,8 +182,8 @@ export class TabReports {
                     });
 
                   };     
-                  saveAttachment("example text to add attachment");
-                  self.continueTask();
+              saveAttachment("example text to add attachment");
+              self.continueTask();
                // jira.addAttachmentObject("PDP-37",{text:"attachmentTest",value:"a value"},"jrfConfig.json");
             });
             System.webapp.addStep("End of Calling set property",function(){

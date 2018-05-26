@@ -140,7 +140,7 @@ export class TabReports {
             System.webapp.addStep("Calling set attachment",function(){
                 var  saveAttachment=function (issueId,theDataToSave) {
                     // theDataToSave is a large block of base-64 encoded binary data
-                    var theFileName = "testattachment.txt";
+                    var theFileName = "testattachment.b64";
                     // Make a blob from the SDR data    
                     var theBlob = new Blob([theDataToSave], {
                       type: 'text/plain; charset="UTF-8"'
@@ -154,11 +154,11 @@ export class TabReports {
                       url: theRequestURL,
                       type: 'POST',
                       data: formData,
-                      dataType: 'multipart/form-data',
+//                      dataType: 'multipart/form-data',
 //                      dataType: 'json',
                       async: true,
                       processData: false,
-//                      contentType: 'multipart/form-data',
+                      contentType: 'multipart/form-data',
                       //contentType: false,
                       headers: {
 //                        "Content-Type": 'multipart/form-data',

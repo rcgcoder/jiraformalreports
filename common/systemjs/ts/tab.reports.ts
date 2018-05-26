@@ -138,7 +138,7 @@ export class TabReports {
                 jira.setProperty("PDP-37","RCGTest","A simple value");
             });
             System.webapp.addStep("Calling set attachment",function(){
-                jira.setProperty("PDP-37","RCGTest","A simple value");
+                jira.addAttachmentObject("PDP-37",{text:"attachmentTest",value:"a value"},"jrfConfig.json");
             });
             System.webapp.addStep("End of Calling set property",function(){
                 log("property setted... commment added and text rendered ... everything is OK");

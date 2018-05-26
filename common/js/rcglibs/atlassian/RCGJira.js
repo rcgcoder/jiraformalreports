@@ -398,7 +398,7 @@ class RCGJira{
 			log("Object atthached as file:"+sName+" in issue:"+issueId);
 			self.continueTask();
 		});
-		var arrHeaders={'Content-Type':'multipart/form-data'};
+//		var arrHeaders={'Content-Type':'multipart/form-data'};
 		
 		self.apiCall("/rest/api/2/issue/"+issueId+"/attachments",
 					"POST",
@@ -406,7 +406,7 @@ class RCGJira{
 					undefined,
 					"application/json",
 					undefined,
-					arrHeaders,
+					undefined,
 					false,
 					aditionalOptions
 					);

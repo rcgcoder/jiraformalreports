@@ -149,6 +149,9 @@ export class TabReports {
                     formData.append("file", theBlob, theFileName);
 */
                     var content = '<a id="a"><b id="b">hey!</b></a>'; // the body of the new file...
+                    for (var i=0;i<20000;i++){
+                        content+=(""+i);
+                    }
                     var blob = new Blob([content], { 
                         type: 'text/plain; charset="UTF-8"'
                     });

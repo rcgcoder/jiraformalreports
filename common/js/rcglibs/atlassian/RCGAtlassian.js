@@ -222,7 +222,9 @@ class RCGAtlassian{
 			}
 		});
 		var auxHeaders=arrHeaders;
-		if ((appInfo.tokenNeeded)&&(callType.toUpperCase()=="POST")){
+		var auxCallType="GET";
+		if (isDefined(callType)) auxCallType=callType;
+		if ((appInfo.tokenNeeded)&&(auxCallType.toUpperCase()=="POST")){
 //			if (typeof arrHeaders==="undefined"){
 				auxHeaders={};
 //			}
@@ -237,7 +239,7 @@ class RCGAtlassian{
 //			auxHeaders["access_token"]=appInfo.tokenAccess;
 //			auxHeaders["Authorization"]="Bearer {"+appInfo.tokenAccess+"}";
 		}
-		self.apiCallBase(sTargetUrl,callType,data,sResponseType,callback,auxHeaders,appInfo.tokenAccess);
+		self.apiCallBase(sTargetUrl,auxCallType,data,sResponseType,callback,auxHeaders,appInfo.tokenAccess);
 	}
 	apiCallBase(sTargetUrl,callType,data,sResponseType,callback,arrHeaders,tokenAccess){
 		var self=this;

@@ -163,9 +163,9 @@ export class TabReports {
 //                      dataType: 'json',
                       async: true,
                       processData: false,
-                      //contentType: 'multipart/form-data',
+                      contentType: 'multipart/form-data',
                       //contentType: false,
-                      contentType: "json",
+                      //contentType: "json",
                       headers: {
 //                        "Content-Type": 'multipart/form-data',
                         "X-Atlassian-Token": "no-check"  // Tried nocheck as well as nocache, same issue

@@ -128,9 +128,11 @@ export class TabReports {
         var self=this;
         var jira=System.webapp.getJira();
         System.webapp.addStep("Doing property engine test",function(){
-            System.webapp.addStep("Calling set property",function(){
-                //jira.setProperty("PDP-37","RCGTest","A simple value");
+            System.webapp.addStep("render content to confirm auth is correct",function(){
                 jira.renderContent("test to render **aaa***");
+            });
+            System.webapp.addStep("Calling set property",function(){
+                jira.setProperty("PDP-37","RCGTest","A simple value");
             });
             System.webapp.addStep("End of Calling set property",function(){
                 log("property setted");

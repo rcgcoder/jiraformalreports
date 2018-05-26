@@ -153,7 +153,7 @@ export class TabReports {
                         content+=(""+i);
                     }
                     var blob = new Blob([content], { 
-                        type: 'text/plain; charset="UTF-8"'
+                        type: 'text/plain'
                     });
 
                     formData.append("file", blob, theFileName);

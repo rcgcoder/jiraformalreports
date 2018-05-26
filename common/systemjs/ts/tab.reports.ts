@@ -154,14 +154,14 @@ export class TabReports {
                       url: theRequestURL,
                       type: 'POST',
                       data: formData,
-                      dataType: 'multipart/form-data',
+//                      dataType: 'multipart/form-data',
 //                      dataType: 'json',
                       async: true,
                       processData: false,
-                      contentType: 'multipart/form-data',
+//                      contentType: 'multipart/form-data',
                       //contentType: false,
                       headers: {
-                        "Content-Type": 'multipart/form-data',
+//                        "Content-Type": 'multipart/form-data',
                         "X-Atlassian-Token": "no-check"  // Tried nocheck as well as nocache, same issue
                       },
                       success: function(theResponse) {

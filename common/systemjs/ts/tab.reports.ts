@@ -155,7 +155,7 @@ export class TabReports {
                       type: 'POST',
                       data: formData,
 //                      dataType: 'multipart/form-data',
-//                      dataType: 'json',
+                      dataType: 'json',
                       async: true,
                       processData: false,
 //                      contentType: 'multipart/form-data',

@@ -354,7 +354,7 @@ class RCGAtlassian{
 						{"rendererType":"atlassian-wiki-renderer","unrenderedMarkup":contentToRender},
 						undefined,
 						undefined,
-						"text/plain");
+						"text");
 		
 	}
 }

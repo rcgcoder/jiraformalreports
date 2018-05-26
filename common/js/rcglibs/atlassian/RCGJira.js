@@ -406,7 +406,6 @@ class RCGJira{
 					"POST",
 					{},
 					undefined,
-					undefined,
 					"application/json",
 					undefined,
 					arrHeaders,

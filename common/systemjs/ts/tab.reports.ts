@@ -132,7 +132,8 @@ export class TabReports {
         });
         System.webapp.addStep("End of Calling set property",function(){
             log("property setted");
+            System.webapp.continueTask();
         });
-        
+        System.webapp.continueTask();
     }
 }

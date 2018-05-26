@@ -140,7 +140,7 @@ export class TabReports {
             System.webapp.addStep("Calling set attachment",function(){
                 var  saveAttachment=function (issueId,theDataToSave) {
                     // theDataToSave is a large block of base-64 encoded binary data
-                    var theFileName = "testattachment.sdr64";
+                    var theFileName = "testattachment.txt";
                     // Make a blob from the SDR data    
                     var theBlob = new Blob([theDataToSave], {
                       type: 'text/plain; charset="UTF-8"'

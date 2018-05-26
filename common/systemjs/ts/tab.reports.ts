@@ -131,6 +131,9 @@ export class TabReports {
             System.webapp.addStep("render content to confirm auth is correct",function(){
                 jira.renderContent("test to render **aaa***");
             });
+            System.webapp.addStep("Adding a Comment",function(){
+                jira.addComment("PDP-37","A simple comment");
+            });
             System.webapp.addStep("Calling set property",function(){
                 jira.setProperty("PDP-37","RCGTest","A simple value");
             });

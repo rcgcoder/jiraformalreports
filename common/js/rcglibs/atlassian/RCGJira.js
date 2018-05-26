@@ -373,4 +373,20 @@ class RCGJira{
 						undefined,
 						"application/json");
 	}
+	addComment(issueId,theComment){
+		var self=this;
+		self.pushCallback(function(objResponse,xhr, statusText, errorThrown){
+			log("Comment:"+theComment+" setted in issue:"+issueId);
+			self.continueTask();
+		});
+		
+//		apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders){
+
+		self.apiCall(   "https://cantabrana.no-ip.org/jfreports/proxy/rcgcoder.atlassian.net/endproxy/rest/api/2/issue/"+issueId+"/comment",
+						"POST",
+						{"body":theComment},
+						undefined,
+						undefined,
+						"application/json");
+	}
 }

@@ -160,12 +160,16 @@ class RCGAtlassian{
 		fncIteration();
 	}
 	
-	apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders){
+	apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders,useProxy){
 		var self=this;
 		var sTokenParam="";
 		var bHasParams=true;
 		if (sTarget.indexOf("?")<0){
 			bHasParams=false;
+		}
+		var bUseProxy=false;
+		if (isDefined(useProxy)){
+			bUseProxy=useProxy;
 		}
 		var fncAddParam=function(name,value){
 			if (typeof value!=="undefined"){
@@ -245,13 +249,17 @@ class RCGAtlassian{
 //			auxHeaders["access_token"]=appInfo.tokenAccess;
 //			auxHeaders["Authorization"]="Bearer {"+appInfo.tokenAccess+"}";
 		}
-		self.apiCallBase(sTargetUrl,auxCallType,data,sResponseType,callback,auxHeaders,appInfo.tokenAccess);
+		self.apiCallBase(sTargetUrl,auxCallType,data,sResponseType,callback,auxHeaders,appInfo.tokenAccess,bUseProxy);
 	}
-	apiCallBase(sTargetUrl,callType,data,sResponseType,callback,arrHeaders,tokenAccess){
+	apiCallBase(sTargetUrl,callType,data,sResponseType,callback,arrHeaders,tokenAccess,useProxy){
 		var self=this;
 		var newType="GET";
 		if (typeof callType!=="undefined"){
 			newType=callType;
+		}
+		var bUseProxy=false;
+		if (isDefined(useProxy)){
+			bUseProxy=useProxy;
 		}
 		var newData;
 		if (typeof data!=="undefined"){
@@ -277,7 +285,7 @@ class RCGAtlassian{
 			    self.popCallback(["",xhr, statusText, errorThrown]);
 			  })
 		}
-		if (typeof arrHeaders==="undefined"){
+		if (bUseProxy){
 			self.JiraAPConnection.request({
 				  url: sTargetUrl,
 				  type:newType,
@@ -354,7 +362,9 @@ class RCGAtlassian{
 						{"rendererType":"atlassian-wiki-renderer","unrenderedMarkup":contentToRender},
 						undefined,
 						undefined,
-						"text");
-		
+						"text",
+						undefined,
+						undefined,
+						true);
 	}
 }

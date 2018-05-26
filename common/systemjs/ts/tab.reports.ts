@@ -129,27 +129,7 @@ export class TabReports {
         var jira=System.webapp.getJira();
         System.webapp.addStep("Doing property engine test",function(){
             System.webapp.addStep("render content to confirm auth is correct",function(){
-                System.webapp.getAtlassian().JiraAPConnection.request({
-                    url: '/rest/api/2/issue/PDP-37/comment',
-                    type: 'POST',
-                    contentType: "application/json",//'multipart/form-data',
-                    data: JSON.stringify({"body":"a test comment"}),
-                    success: function(responseText){
-                      alert(responseText);
-                    }
-                  });
-                System.webapp.getAtlassian().JiraAPConnection.request({
-                    url: '/rest/api/2/issue/PDP-37/properties/RCGTestProperty',
-                    type: 'PUT',
-                    contentType: "application/json",//'multipart/form-data',
-                    data: JSON.stringify({"content":"Test if works on JIRA Cloud", "completed" : 1}),
-                    success: function(responseText){
-                      alert(responseText);
-                    }
-                  });
-                
-                
-                //jira.renderContent("test to render **aaa***");
+                jira.renderContent("test to render **aaa***");
             });
             System.webapp.addStep("Adding a Comment",function(){
                 jira.addComment("PDP-37","A simple comment");
@@ -158,7 +138,7 @@ export class TabReports {
                 jira.setProperty("PDP-37","RCGTest","A simple value");
             });
             System.webapp.addStep("End of Calling set property",function(){
-                log("property setted");
+                log("property setted... commment added and text rendered ... everything is OK");
                 System.webapp.continueTask();
             });
             System.webapp.continueTask();

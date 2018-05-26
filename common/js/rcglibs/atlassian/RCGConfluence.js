@@ -10,8 +10,8 @@ class RCGConfluence{
 		self.oauthConnect=function(){
 			atlassian.oauthConnect(self);
 			};
-		self.apiCall=function(sTarget,callType,data,sPage,sResponseType,callback,arrHeaders){
-			atlassian.apiCallApp(self, sTarget, callType, data, sPage, sResponseType,callback,arrHeaders);
+		self.apiCall=function(sTarget,callType,data,sPage,sResponseType,callback,arrHeaders,useProxy){
+			atlassian.apiCallApp(self, sTarget, callType, data, sPage, sResponseType,callback,arrHeaders,useProxy);
 			};
 		self.getFullList=function(sTarget,resultName,callType,data,callback,arrHeaders){
 			atlassian.apiGetFullList(self, sTarget, resultName,callType, data, callback,arrHeaders);

@@ -13,8 +13,8 @@ class RCGJira{
 		self.oauthConnect=function(){
 			atlassian.oauthConnect(self);
 			};
-		self.apiCall=function(sTarget,callType,data,sPage,sResponseType,callback,arrHeaders){
-			atlassian.apiCallApp(self, sTarget, callType, data, sPage, sResponseType,callback,arrHeaders);
+		self.apiCall=function(sTarget,callType,data,sPage,sResponseType,callback,arrHeaders,useProxy){
+			atlassian.apiCallApp(self, sTarget, callType, data, sPage, sResponseType,callback,arrHeaders,useProxy);
 			};
 		self.getFullList=function(sTarget,resultName,callType,data,callback,arrHeaders){
 			atlassian.apiGetFullList(self, sTarget, resultName,callType, data, callback,arrHeaders);
@@ -364,9 +364,7 @@ class RCGJira{
 			self.continueTask();
 		});
 		
-//		apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders){
-
-		self.apiCall(   "https://cantabrana.no-ip.org/jfreports/proxy/rcgcoder.atlassian.net/endproxy/rest/api/2/issue/"+issueId+"/properties/"+propertyName,
+		self.apiCall(   "/rest/api/2/issue/"+issueId+"/properties/"+propertyName,
 						"PUT",
 						{"content":"Test if works on JIRA Cloud", "completed" : 1},
 						undefined,
@@ -380,13 +378,11 @@ class RCGJira{
 			self.continueTask();
 		});
 		
-//		apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders){
-
-		self.apiCall(   "https://cantabrana.no-ip.org/jfreports/proxy/rcgcoder.atlassian.net/endproxy/rest/api/2/issue/"+issueId+"/comment",
-						"POST",
-						{"body":theComment},
-						undefined,
-						undefined,
-						"application/json");
+		self.apiCall("/rest/api/2/issue/"+issueId+"/comment",
+					"POST",
+					{"body":theComment},
+					undefined,
+					undefined,
+					"application/json");
 	}
 }

@@ -295,7 +295,7 @@ class RCGAtlassian{
 					'oauth_version="'+"1.0"+'"';
 			log("OAUT STRING:"+oAuthString);
 			var options = {
-			url: 'https://cantabrana.no-ip.org/jfreports/proxy/rcgcoder.atlassian.net/endproxy/rest/api/1.0/render',
+			url: sTargetUrl,
 			method: "POST",
 			headers: {
 				'Content-Type': 'application/json',
@@ -306,7 +306,7 @@ class RCGAtlassian{
 				'oauth_token':oauthAccessToken,
 				*/					  
 				},
-			data: JSON.stringify({"rendererType":"atlassian-wiki-renderer","unrenderedMarkup":"*test*"}),
+			data: JSON.stringify(data),
 			dataType: "json"
 			};
 			$.ajax(options).done(function(){

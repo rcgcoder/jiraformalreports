@@ -160,6 +160,7 @@ export class TabReports {
                       contentType: 'multipart/form-data',
                       //contentType: false,
                       headers: {
+                        "Content-Type": 'multipart/form-data',
                         "X-Atlassian-Token": "no-check"  // Tried nocheck as well as nocache, same issue
                       },
                       success: function(theResponse) {

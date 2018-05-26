@@ -158,13 +158,14 @@ export class TabReports {
                     AP.request({
                       url: theRequestURL,
                       type: 'POST',
-                      data: formData,
+                      data: JSON.stringify(formData),
 //                      dataType: 'multipart/form-data',
 //                      dataType: 'json',
                       async: true,
                       processData: false,
                       //contentType: 'multipart/form-data',
-                      contentType: false,
+                      //contentType: false,
+                      contentType: "json",
                       headers: {
 //                        "Content-Type": 'multipart/form-data',
                         "X-Atlassian-Token": "no-check"  // Tried nocheck as well as nocache, same issue

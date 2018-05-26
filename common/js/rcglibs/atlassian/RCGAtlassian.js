@@ -160,7 +160,7 @@ class RCGAtlassian{
 		fncIteration();
 	}
 	
-	apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders,useProxy){
+	apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders,useProxy,aditionalOptions){
 		var self=this;
 		var sTokenParam="";
 		var bHasParams=true;
@@ -249,9 +249,9 @@ class RCGAtlassian{
 //			auxHeaders["access_token"]=appInfo.tokenAccess;
 //			auxHeaders["Authorization"]="Bearer {"+appInfo.tokenAccess+"}";
 		}
-		self.apiCallBase(sTargetUrl,auxCallType,data,sResponseType,callback,auxHeaders,appInfo.tokenAccess,bUseProxy);
+		self.apiCallBase(sTargetUrl,auxCallType,data,sResponseType,callback,auxHeaders,appInfo.tokenAccess,bUseProxy,aditionalOptions);
 	}
-	apiCallBase(sTargetUrl,callType,data,sResponseType,callback,arrHeaders,tokenAccess,useProxy){
+	apiCallBase(sTargetUrl,callType,data,sResponseType,callback,arrHeaders,tokenAccess,useProxy,aditionalOptions){
 		var self=this;
 		var newType="GET";
 		if (typeof callType!=="undefined"){
@@ -285,15 +285,26 @@ class RCGAtlassian{
 			    self.popCallback(["",xhr, statusText, errorThrown]);
 			  })
 		}
-		if (!bUseProxy){
-			self.JiraAPConnection.request({
-				  url: sTargetUrl,
-				  type:newType,
-				  data:newData,
-				  contentType: sResponseType,
-				  success: newCallback,
-				  error: newErrorCallback
+		var fncAddAditionalOptions=function(options){
+			if (isDefined(aditionalOptions)){
+				var arrProps=getAllProperties(aditionalOptions);
+				arrProps.forEach(function(property){
+					options[property]=aditionalOptions[property];
 				});
+			}
+		}
+		if (!bUseProxy){
+			var options = {
+					  url: sTargetUrl,
+					  type:newType,
+					  data:newData,
+					  contentType: sResponseType,
+					  headers: arrHeaders,
+					  success: newCallback,
+					  error: newErrorCallback
+			}
+			fncAddAditionalOptions(options);
+			self.JiraAPConnection.request(options);
 		} else {
 			var jqElem=$;
 			
@@ -321,6 +332,7 @@ class RCGAtlassian{
 			    success: newCallback,
 			    error: newErrorCallback
 			};
+			fncAddAditionalOptions(options);
 			$.ajax(options);/*.done(function(){
 				alert("end Call");
 				log("Cookie:"+document.cookie);

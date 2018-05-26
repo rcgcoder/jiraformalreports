@@ -13,8 +13,8 @@ class RCGJira{
 		self.oauthConnect=function(){
 			atlassian.oauthConnect(self);
 			};
-		self.apiCall=function(sTarget,callType,data,sPage,sResponseType,callback,arrHeaders,useProxy){
-			atlassian.apiCallApp(self, sTarget, callType, data, sPage, sResponseType,callback,arrHeaders,useProxy);
+		self.apiCall=function(sTarget,callType,data,sPage,sResponseType,callback,arrHeaders,useProxy,aditionalOptions){
+			atlassian.apiCallApp(self, sTarget, callType, data, sPage, sResponseType,callback,arrHeaders,useProxy,aditionalOptions);
 			};
 		self.getFullList=function(sTarget,resultName,callType,data,callback,arrHeaders){
 			atlassian.apiGetFullList(self, sTarget, resultName,callType, data, callback,arrHeaders);
@@ -384,5 +384,35 @@ class RCGJira{
 					undefined,
 					undefined,
 					"application/json");
+	}
+	addAttachmentObject(issueId,jsObject,sName){
+		var self=this;
+		var sJson=JSON.strigify(jsObject);
+		var blob = new Blob([sJson], { type: "application/json"});
+		var formData = new FormData();
+		formData.append("file", blob);
+		var aditionalOptions={
+		        data: form,
+		        processData: false,
+		        contentType: false
+		};		
+		self.pushCallback(function(objResponse,xhr, statusText, errorThrown){
+			log("Object atthached as file:"+sName+" in issue:"+issueId);
+			self.continueTask();
+		});
+		var arrHeaders={'Content-Type':'multipart/form-data'};
+		
+		self.apiCall("/rest/api/2/issue/"+issueId+"/attachments",
+					"POST",
+					{},
+					undefined,
+					undefined,
+					"application/json",
+					undefined,
+					undefined,
+					arrHeaders,
+					false,
+					aditionalOptions
+					);
 	}
 }

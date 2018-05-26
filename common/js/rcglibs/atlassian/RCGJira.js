@@ -388,7 +388,8 @@ class RCGJira{
 		var sJson=JSON.stringify(jsObject);
 		var blob = new Blob([sJson], { type: "application/json"});
 		var formData = new FormData();
-		formData.append("file", blob);
+		formData.append("file", blob,sName);
+
 		var aditionalOptions={
 		        data: formData,
 		        processData: false,
@@ -398,7 +399,7 @@ class RCGJira{
 			log("Object atthached as file:"+sName+" in issue:"+issueId);
 			self.continueTask();
 		});
-//		var arrHeaders={'Content-Type':'multipart/form-data'};
+		var oHeaders={'Content-Type':'multipart/form-data'};
 		
 		self.apiCall("/rest/api/2/issue/"+issueId+"/attachments",
 					"POST",
@@ -406,7 +407,7 @@ class RCGJira{
 					undefined,
 					"application/json",
 					undefined,
-					undefined,
+					oHeaders,
 					false,
 					aditionalOptions
 					);

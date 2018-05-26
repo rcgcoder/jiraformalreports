@@ -138,7 +138,54 @@ export class TabReports {
                 jira.setProperty("PDP-37","RCGTest","A simple value");
             });
             System.webapp.addStep("Calling set attachment",function(){
-                jira.addAttachmentObject("PDP-37",{text:"attachmentTest",value:"a value"},"jrfConfig.json");
+                
+                function saveAttachment(theDataToSave) {
+
+                    // theDataToSave is a large block of base-64 encoded binary data
+                    var theFileName = "testattachment.sdr64";
+
+                    // Make a blob from the SDR data    
+                    var theBlob = new Blob([theDataToSave], {
+                      type: 'text/plain; charset="UTF-8"'
+                    });
+
+                    var formData = new FormData();
+
+                    formData.append("file", theBlob, theFileName);
+
+                    var theRequestURL;
+
+                    // gContentId is the JIRA issue ID, previously obtained in the code
+                    theRequestURL = '/rest/api/2/issue/' + gContentId + '/attachments';
+
+                    AP.request({
+                      url: theRequestURL,
+                      type: 'POST',
+                      data: formData,
+                      dataType: 'json',
+                      async: true,
+                      processData: false,
+                      contentType: false,
+                      headers: {
+                        "X-Atlassian-Token": "no-check"  // Tried nocheck as well as nocache, same issue
+                      },
+                      success: function(theResponse) {
+
+                         log("Correcto");
+                        // Kick off the next step after the save...
+
+                      },
+                      error: function(xhr, textStatus, errorThrown) {
+                      // We hit this every time with an XSRF issue
+                        alert("Problem saving data: "+xhr.responseText);
+
+                      }
+                    });
+
+                  };     
+                  saveAttachment("example text to add attachment");
+                  self.continueTask();
+               // jira.addAttachmentObject("PDP-37",{text:"attachmentTest",value:"a value"},"jrfConfig.json");
             });
             System.webapp.addStep("End of Calling set property",function(){
                 log("property setted... commment added and text rendered ... everything is OK");

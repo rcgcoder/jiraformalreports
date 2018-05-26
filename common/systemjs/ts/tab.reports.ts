@@ -130,7 +130,7 @@ export class TabReports {
         System.webapp.addStep("Doing property engine test",function(){
             System.webapp.addStep("render content to confirm auth is correct",function(){
                 System.webapp.getAtlassian().JiraAPConnection.request({
-                    url: 'rest/api/2/issue/PDP-37/comment',
+                    url: '/rest/api/2/issue/PDP-37/comment',
                     type: 'POST',
                     contentType: 'multipart/form-data',
                     data: {comment: 'example comment'},

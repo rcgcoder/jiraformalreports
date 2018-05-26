@@ -285,7 +285,7 @@ class RCGAtlassian{
 			    self.popCallback(["",xhr, statusText, errorThrown]);
 			  })
 		}
-		if (bUseProxy){
+		if (!bUseProxy){
 			self.JiraAPConnection.request({
 				  url: sTargetUrl,
 				  type:newType,

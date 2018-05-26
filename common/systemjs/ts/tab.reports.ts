@@ -135,6 +135,7 @@ export class TabReports {
                 log("property setted");
                 System.webapp.continueTask();
             });
+            System.webapp.continueTask();
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
 //      self.continueTask();
     }

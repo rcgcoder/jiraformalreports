@@ -366,9 +366,7 @@ class RCGJira{
 		
 //		apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders){
 
-		self.apiCallApp(appInfo,
-					//"https://rcgcoder.atlassian.net/rest/api/1.0/render",
-				        "https://cantabrana.no-ip.org/jfreports/proxy/rcgcoder.atlassian.net/endproxy/rest/api/2/issue/"+issueId+"/properties/"+propertyName,
+		self.apiCall(   "https://cantabrana.no-ip.org/jfreports/proxy/rcgcoder.atlassian.net/endproxy/rest/api/2/issue/"+issueId+"/properties/"+propertyName,
 						"POST",
 						{"content":"Test if works on JIRA Cloud", "completed" : 1},
 						undefined,

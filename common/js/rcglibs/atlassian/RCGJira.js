@@ -368,7 +368,6 @@ class RCGJira{
 						"PUT",
 						{"content":"Test if works on JIRA Cloud", "completed" : 1},
 						undefined,
-						undefined,
 						"application/json");
 	}
 	addComment(issueId,theComment){
@@ -381,7 +380,6 @@ class RCGJira{
 		self.apiCall("/rest/api/2/issue/"+issueId+"/comment",
 					"POST",
 					{"body":theComment},
-					undefined,
 					undefined,
 					"application/json");
 	}

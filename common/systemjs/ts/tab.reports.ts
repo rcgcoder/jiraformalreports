@@ -124,4 +124,14 @@ export class TabReports {
         });
         self.continueTask();
     }
+    doUpdateIssuePropertyTest(){
+        var jira=System.webapp.getJira();
+        self.addStep("Calling set property",function(){
+            jira.setProperty("PDP-37","RCGTest","A simple value");
+        });
+        self.addStep("End of Calling set property",function(){
+            log("property setted");
+        });
+        
+    }
 }

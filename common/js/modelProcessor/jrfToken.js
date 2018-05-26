@@ -266,13 +266,13 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 						""; // to close the var result= instruction inserted by executefunction
 						var value=_arrRefs_[0];
 						var result=parseFloat(value).toFixed(`+nDigits+`);
-						return result;
-						log("Parse done... the rest is not executed")
-						// execute function inserts the las ";" automatically
+
+						log("Parse done... the rest is return result")
+						// execute function inserts the last ";" automatically
 						`;
 					sValAux=replaceAll(sValAux,"\n"," ").trim();
 					sValAux=executeFunction([sValAux],sFncFormula,self.model.functionCache);
-				}
+				}  
 			});
 		}
 		return sValAux;

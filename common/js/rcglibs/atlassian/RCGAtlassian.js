@@ -228,7 +228,9 @@ class RCGAtlassian{
 		var auxHeaders=arrHeaders;
 		var auxCallType="GET";
 		if (isDefined(callType)) auxCallType=callType;
-		if ((appInfo.tokenNeeded)&&(auxCallType.toUpperCase()=="POST")){
+		if ((appInfo.tokenNeeded)&&
+				((auxCallType.toUpperCase()=="POST")||
+				 (auxCallType.toUpperCase()=="PUT"))){
 //			if (typeof arrHeaders==="undefined"){
 				auxHeaders={};
 //			}
@@ -296,7 +298,7 @@ class RCGAtlassian{
 			log("OAUT STRING:"+oAuthString);
 			var options = {
 			url: sTargetUrl,
-			method: "POST",
+			method: newType,
 			headers: {
 				'Content-Type': 'application/json',
 				'Authorization':oAuthString
@@ -306,7 +308,7 @@ class RCGAtlassian{
 				'oauth_token':oauthAccessToken,
 				*/					  
 				},
-			data: JSON.stringify(data),
+			data: newData,
 			dataType: "json"
 			};
 			$.ajax(options).done(function(){

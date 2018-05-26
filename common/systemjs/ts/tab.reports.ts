@@ -140,7 +140,7 @@ export class TabReports {
                   });
                 System.webapp.getAtlassian().JiraAPConnection.request({
                     url: '/rest/api/2/issue/PDP-37/properties/RCGTestProperty',
-                    type: 'POST',
+                    type: 'PUT',
                     contentType: "application/json",//'multipart/form-data',
                     data: JSON.stringify({"content":"Test if works on JIRA Cloud", "completed" : 1}),
                     success: function(responseText){

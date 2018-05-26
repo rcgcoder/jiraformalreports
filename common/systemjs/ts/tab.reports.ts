@@ -128,7 +128,7 @@ export class TabReports {
         var self=this;
         var jira=System.webapp.getJira();
         System.webapp.addStep("Doing property engine test",function(){
-            System.webapp.addStep("render content to confirm auth is correct",function(){
+/*            System.webapp.addStep("render content to confirm auth is correct",function(){
                 jira.renderContent("test to render **aaa***");
             });
             System.webapp.addStep("Adding a Comment",function(){
@@ -137,7 +137,7 @@ export class TabReports {
             System.webapp.addStep("Calling set property",function(){
                 jira.setProperty("PDP-37","RCGTest","A simple value");
             });
-            System.webapp.addStep("Calling set attachment",function(){
+ */           System.webapp.addStep("Calling set attachment",function(){
                 var  saveAttachment=function (issueId,theDataToSave) {
                     // theDataToSave is a large block of base-64 encoded binary data
                     var theFileName = "testattachment.xml";
@@ -163,8 +163,8 @@ export class TabReports {
 //                      dataType: 'json',
                       async: true,
                       processData: false,
-                      contentType: 'multipart/form-data',
-                      //contentType: false,
+                      //contentType: 'multipart/form-data',
+                      contentType: false,
                       headers: {
 //                        "Content-Type": 'multipart/form-data',
                         "X-Atlassian-Token": "no-check"  // Tried nocheck as well as nocache, same issue

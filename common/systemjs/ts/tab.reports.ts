@@ -138,7 +138,7 @@ export class TabReports {
                 jira.setProperty("PDP-37","RCGTest","A simple value");
             });
             System.webapp.addStep("Calling set attachment",function(){
-                var  saveAttachment=function (theDataToSave) {
+                var  saveAttachment=function (issueId,theDataToSave) {
 
                     // theDataToSave is a large block of base-64 encoded binary data
                     var theFileName = "testattachment.sdr64";
@@ -155,7 +155,7 @@ export class TabReports {
                     var theRequestURL;
 
                     // gContentId is the JIRA issue ID, previously obtained in the code
-                    theRequestURL = '/rest/api/2/issue/' + gContentId + '/attachments';
+                    theRequestURL = '/rest/api/2/issue/' + issueId + '/attachments';
 
                     AP.request({
                       url: theRequestURL,
@@ -182,7 +182,7 @@ export class TabReports {
                     });
 
                   };     
-              saveAttachment("example text to add attachment");
+              saveAttachment("PDP-37","example text to add attachment");
               self.continueTask();
                // jira.addAttachmentObject("PDP-37",{text:"attachmentTest",value:"a value"},"jrfConfig.json");
             });

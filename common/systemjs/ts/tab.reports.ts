@@ -157,11 +157,12 @@ export class TabReports {
                       dataType: 'json',
                       async: true,
                       processData: false,
-                      contentType: false,
-/*                      headers: {
+                      contentType: 'multipart/form-data',
+                      //contentType: false,
+                      headers: {
                         "X-Atlassian-Token": "no-check"  // Tried nocheck as well as nocache, same issue
                       },
-  */                    success: function(theResponse) {
+                      success: function(theResponse) {
                          log("Correcto");
                         // Kick off the next step after the save...
                       },

@@ -206,6 +206,9 @@ class RCGAtlassian{
 					log("retrying api call");
 					self.apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders);					
 					}),millis);
+			} else if (xhr.status == 400){
+				alert(headers);
+				return self.popCallback([response,xhr,sUrl,headers]);
 			} else if ((xhr.status == 403)||(response=="")) { // forbidden
 				self.addStep("Discarding Oauth Access Token",function(){
 					self.apiCallOauth("/discardToken");

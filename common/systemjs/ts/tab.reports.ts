@@ -158,10 +158,10 @@ export class TabReports {
                       async: true,
                       processData: false,
                       contentType: false,
-                      headers: {
+/*                      headers: {
                         "X-Atlassian-Token": "no-check"  // Tried nocheck as well as nocache, same issue
                       },
-                      success: function(theResponse) {
+  */                    success: function(theResponse) {
                          log("Correcto");
                         // Kick off the next step after the save...
                       },

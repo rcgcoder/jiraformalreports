@@ -392,7 +392,7 @@ class RCGJira{
 		var formData = new FormData();
 		formData.append("file", blob);
 		var aditionalOptions={
-		        data: form,
+		        data: formData,
 		        processData: false,
 		        contentType: false
 		};		

@@ -409,7 +409,6 @@ class RCGJira{
 					undefined,
 					"application/json",
 					undefined,
-					undefined,
 					arrHeaders,
 					false,
 					aditionalOptions

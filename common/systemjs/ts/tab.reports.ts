@@ -129,7 +129,17 @@ export class TabReports {
         var jira=System.webapp.getJira();
         System.webapp.addStep("Doing property engine test",function(){
             System.webapp.addStep("render content to confirm auth is correct",function(){
-                jira.renderContent("test to render **aaa***");
+                System.webapp.getAtlassian().JiraAPConnection.request({
+                    url: 'rest/api/2/issue/PDP-37/comment',
+                    type: 'POST',
+                    contentType: 'multipart/form-data',
+                    data: {comment: 'example comment'},
+                    success: function(responseText){
+                      alert(responseText);
+                    }
+                  });
+                
+                //jira.renderContent("test to render **aaa***");
             });
             System.webapp.addStep("Adding a Comment",function(){
                 jira.addComment("PDP-37","A simple comment");

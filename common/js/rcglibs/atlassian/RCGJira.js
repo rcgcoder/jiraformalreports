@@ -387,7 +387,7 @@ class RCGJira{
 	}
 	addAttachmentObject(issueId,jsObject,sName){
 		var self=this;
-		var sJson=JSON.strigify(jsObject);
+		var sJson=JSON.stringify(jsObject);
 		var blob = new Blob([sJson], { type: "application/json"});
 		var formData = new FormData();
 		formData.append("file", blob);

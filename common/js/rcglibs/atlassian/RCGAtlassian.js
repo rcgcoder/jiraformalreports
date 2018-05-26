@@ -297,21 +297,21 @@ class RCGAtlassian{
 					'oauth_version="'+"1.0"+'"';
 			log("OAUT STRING:"+oAuthString);
 			var options = {
-			url: sTargetUrl,
-			method: newType,
-			headers: {
-				'Content-Type': 'application/json',
-				'Authorization':oAuthString
-				//'Authorization':"Bearer "+oauthAccessToken+"",
-				/*						'access_token': oauthAccessToken
-				'oauth_consumer_key':"OauthKey",
-				'oauth_token':oauthAccessToken,
-				*/					  
-				},
-			data: newData,
-			dataType: "json",
-		    success: newCallback,
-		    error: newErrorCallback
+				url: sTargetUrl,
+				method: newType,
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization':oAuthString
+					//'Authorization':"Bearer "+oauthAccessToken+"",
+					/*						'access_token': oauthAccessToken
+					'oauth_consumer_key':"OauthKey",
+					'oauth_token':oauthAccessToken,
+					*/					  
+					},
+				data: newData,
+				dataType: newResponseType,
+			    success: newCallback,
+			    error: newErrorCallback
 			};
 			$.ajax(options);/*.done(function(){
 				alert("end Call");

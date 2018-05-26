@@ -127,13 +127,15 @@ export class TabReports {
     doUpdateIssuePropertyTest(){
         var self=this;
         var jira=System.webapp.getJira();
-        System.webapp.addStep("Calling set property",function(){
-            jira.setProperty("PDP-37","RCGTest","A simple value");
-        });
-        System.webapp.addStep("End of Calling set property",function(){
-            log("property setted");
-            System.webapp.continueTask();
-        });
-        System.webapp.continueTask();
+        System.webapp.addStep("Doing property engine test",function(){
+            System.webapp.addStep("Calling set property",function(){
+                jira.setProperty("PDP-37","RCGTest","A simple value");
+            });
+            System.webapp.addStep("End of Calling set property",function(){
+                log("property setted");
+                System.webapp.continueTask();
+            });
+        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
+//      self.continueTask();
     }
 }

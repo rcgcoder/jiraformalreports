@@ -140,13 +140,18 @@ export class TabReports {
             System.webapp.addStep("Calling set attachment",function(){
                 var  saveAttachment=function (issueId,theDataToSave) {
                     // theDataToSave is a large block of base-64 encoded binary data
-                    var theFileName = "testattachment.b64";
-                    // Make a blob from the SDR data    
+                    var theFileName = "testattachment.xml";
+                    var formData = new FormData();
+/*                    // Make a blob from the SDR data    
                     var theBlob = new Blob([theDataToSave], {
                       type: 'text/plain; charset="UTF-8"'
                     });
-                    var formData = new FormData();
                     formData.append("file", theBlob, theFileName);
+*/
+                    var content = '<a id="a"><b id="b">hey!</b></a>'; // the body of the new file...
+                    var blob = new Blob([content], { type: "text/xml"});
+
+                    formData.append("file", blob, theFileName);
                     var theRequestURL;
                     // gContentId is the JIRA issue ID, previously obtained in the code
                     theRequestURL = '/rest/api/2/issue/' + issueId + '/attachments';

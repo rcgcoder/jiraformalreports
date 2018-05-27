@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
   selector: 'jsExecutor',
   templateUrl: System.composeUrl('systemjs/html/components/jsExecutor.html'),
 })
-export class docxSaver {
+export class jsExecutor {
     @Input() name: string = 'jsExecutor';
     ngOnInit() {
         var self=this;

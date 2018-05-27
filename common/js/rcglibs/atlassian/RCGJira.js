@@ -383,33 +383,21 @@ class RCGJira{
 					undefined,
 					"application/json");
 	}
-	addAttachmentObject(issueId,jsObject,sName){
+	addAttachmentObject(issueId,jsObject,sFileName,sComment){
 		var self=this;
-		var sJson=JSON.stringify(jsObject);
-		var blob = new Blob([sJson], { type: "application/json"});
-		var formData = new FormData();
-		formData.append("file", blob,sName);
-
-		var aditionalOptions={
-		        data: formData,
-		        processData: false,
-		        contentType: false
-		};		
-		self.pushCallback(function(objResponse,xhr, statusText, errorThrown){
-			log("Object atthached as file:"+sName+" in issue:"+issueId);
-			self.continueTask();
-		});
-		var oHeaders={'Content-Type':'multipart/form-data'};
-		
+        var theBlob = new Blob([JSON.stringify(jsObject)], { 
+            type: 'text/plain'
+        });
+        var auxComment=sComment;
+        if (isUndefined(sComment)){
+        	auxComment="Attached file:"+sFileName;
+        }
+        var fileOfBlob = new File([theBlob], sFileName);
+        var data={comment: auxComment, file: fileOfBlob  };
 		self.apiCall("/rest/api/2/issue/"+issueId+"/attachments",
-					"POST",
-					{},
-					undefined,
-					"application/json",
-					undefined,
-					oHeaders,
-					false,
-					aditionalOptions
-					);
+				"POST",
+				data,
+				undefined,
+				'multipart/form-data');
 	}
 }

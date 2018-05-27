@@ -14,10 +14,12 @@ export class jsExecutor {
         });
     }
     
-    saveDocx(){
+    execute(){
         var self=this;
+        var theTextArea=System.getAngularDomObject(self.name+"-code",true);
         self.addStep("Saving to docx file.... ",function(){
-            log("excuting the text area");
+            log("excuting the text area:"+theTextArea.value);
+            self.continueTask();
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
         // apply
     }

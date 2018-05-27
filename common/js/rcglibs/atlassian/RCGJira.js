@@ -394,10 +394,19 @@ class RCGJira{
         }
         var fileOfBlob = new File([theBlob], sFileName);
         var data={comment: auxComment, file: fileOfBlob  };
+        var aditionalOptions={
+        		data:data,
+        		contentType: 'multipart/form-data'};
+        }
+//		self.apiCall=function(sTarget,callType,data,sPage,sResponseType,callback,arrHeaders,useProxy,aditionalOptions){
 		self.apiCall("/rest/api/2/issue/"+issueId+"/attachments",
 				"POST",
 				data,
 				undefined,
-				'multipart/form-data');
+				'multipart/form-data',
+				undefined,
+				undefined,
+				false,
+				aditionalOptions);
 	}
 }

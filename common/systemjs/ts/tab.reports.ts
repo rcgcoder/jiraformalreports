@@ -172,6 +172,7 @@ export class TabReports {
                 reportIssue=issueDetail;
                 self.continueTask();
             });
+            var arrConfigs=[];
             self.addStep("Getting all the attachments of the report issue",function(){
                 log("Adding... process attachment steps");
                 var inspectAttachment=self.createManagedCallback(function(contentUrl){
@@ -181,7 +182,10 @@ export class TabReports {
                                        "application/json",undefined,undefined,{token:true});
                     });
                     self.addStep("Evaluating the loaded content for :"+contentUrl,function(response){
-                       log(response);
+                       log(response.substring(0,50));
+                       if (response.indexOf('"Vendor":"Jira Formal Reports"')>=0){
+                           arrConfig.push(JSON.parse(respone));
+                       }
                        self.continueTask();
                     });
                 });

@@ -152,7 +152,7 @@ export class TabReports {
     
     getSelectedReport(){
         var self=this;
-        var auxObj=System.getAngularDomObject("selReport");
+        var auxObj=System.getAngularObject("selReport",true);
         var arrValues=auxObj.getSelectedValues();
         return arrValues[0];
     }

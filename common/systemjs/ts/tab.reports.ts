@@ -175,6 +175,7 @@ export class TabReports {
             self.addStep("Getting all the attachments of the report issue",function(){
                 log("Adding... process attachment steps");
                 var inspectAttachment=self.createManagedCallback(function(contentUrl){
+                    log("Adding steps for inspect:"+contentUrl);
                    self.addStep("Getting Content of Attachment:"+contentUrl,function(){
                        System.webapp.loadRemoteFile(contentUrl);
                    });

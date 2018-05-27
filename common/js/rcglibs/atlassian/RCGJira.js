@@ -3,7 +3,6 @@ class RCGJira{
 		var self=this;
 		self.manager=atlassian;
 		self.subPath="";
-		self.tokenNeeded=false;
 		self.tokenAccess="";
 		self.tokenTime=0;
 		taskManager.extendObject(self);
@@ -13,8 +12,8 @@ class RCGJira{
 		self.oauthConnect=function(){
 			atlassian.oauthConnect(self);
 			};
-		self.apiCall=function(sTarget,callType,data,sPage,sResponseType,callback,arrHeaders,useProxy,aditionalOptions){
-			atlassian.apiCallApp(self, sTarget, callType, data, sPage,undefined, sResponseType,callback,arrHeaders,useProxy,aditionalOptions);
+		self.apiCall=function(sTarget,callType,data,sPage,sResponseType,callback,arrHeaders,callSecurity,aditionalOptions){
+			atlassian.apiCallApp(self, sTarget, callType, data, sPage,undefined, sResponseType,callback,arrHeaders,callSecurity,aditionalOptions);
 			};
 		self.getFullList=function(sTarget,resultName,callType,data,callback,arrHeaders){
 			atlassian.apiGetFullList(self, sTarget, resultName,callType, data, callback,arrHeaders);

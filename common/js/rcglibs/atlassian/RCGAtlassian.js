@@ -175,97 +175,100 @@ class RCGAtlassian{
 		});
 		self.continueTask();
 	}
-	apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders,useProxy,aditionalOptions){
+	apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders,oCallSecurity,aditionalOptions){
 		var self=this;
 		var sTokenParam="";
 		var bHasParams=true;
 		if (sTarget.indexOf("?")<0){
 			bHasParams=false;
 		}
-		var bUseProxy=false;
-		if (isDefined(useProxy)){
-			bUseProxy=useProxy;
+		var oSecurity={proxy:false,token:false};
+		if (isDefined(oCallSecurity)){
+			oSecurity=oCallSecurity;
+			if (isUndefined(oSecurity.token))oSecurity.token=false;
+			if (isUndefined(oSecurity.proxy))oSecurity.proxy=false;
 		}
-		var fncAddParam=function(name,value){
-			if (typeof value!=="undefined"){
-				if (!bHasParams){
-					sTokenParam+="?";
-					bHasParams=true;
-				} else {
-					sTokenParam+="&";
+		if ((oCallSecurity.token)&&(appInfo.tokenAccess=="")){
+			//needs to get a Token
+			self.addStep("Token needed....",function(){
+				self.oauthConnect(appInfo);
+			})
+		}
+		self.addStep("Doing de API call...",function(){
+			var fncAddParam=function(name,value){
+				if (typeof value!=="undefined"){
+					if (!bHasParams){
+						sTokenParam+="?";
+						bHasParams=true;
+					} else {
+						sTokenParam+="&";
+					}
+					sTokenParam+=name+"="+value;
+					
 				}
-				sTokenParam+=name+"="+value;
-				
 			}
-		}
-/*		if (appInfo.tokenNeeded){
-			fncAddParam("access_token",appInfo.tokenAccess);
-		}
-*/		fncAddParam("startAt",startItem);
-		fncAddParam("maxResults",maxResults);
-		var newSubPath=appInfo.subPath;
-		if (newSubPath!=""){
-			newSubPath="/"+newSubPath;
-		}
-		var sTargetUrl=newSubPath+sTarget+sTokenParam;
-		log("Calling api of "+(newSubPath==""?"Jira":appInfo.subPath) + " final url:"+sTargetUrl);
-		self.pushCallback(function(response,xhr,sUrl,headers){
-			log("Api Call Response of "+(newSubPath==""?"Jira":appInfo.subPath) 
-					+ " final url:"+sTargetUrl);
-			if (typeof xhr==="undefined"){
-				log("=========");
-				log("ERROR: xhr is undefined.... " );
-				log("=========");
-			} else {
-				log(" --> Bytes:"+response.length);
+	/*		if (appInfo.tokenNeeded){
+				fncAddParam("access_token",appInfo.tokenAccess);
 			}
-			if (xhr.status == 429){
-				var millis=Math.round(((Math.random()*5)+10)*1000);
-				log("too many request.... have to wait "+(Math.round(millis/10)/100)+" secs");
-				setTimeout(self.createManagedCallback(function(){
-					log("retrying api call");
-					self.apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders);					
-					}),millis);
-			} else if (xhr.status == 400){
-				alert(headers);
-				return self.popCallback([response,xhr,sUrl,headers]);
-			} else if (xhr.status == 403) { // forbidden
-				self.authenticate();
-			} else {
-				self.popCallback([response,xhr,sUrl,headers]);
+	*/		fncAddParam("startAt",startItem);
+			fncAddParam("maxResults",maxResults);
+			var newSubPath=appInfo.subPath;
+			if (newSubPath!=""){
+				newSubPath="/"+newSubPath;
 			}
-		});
-		var auxHeaders=arrHeaders;
-		var auxCallType="GET";
-		if (isDefined(callType)) auxCallType=callType;
-		if ((appInfo.tokenNeeded)&&
-				((auxCallType.toUpperCase()=="POST")||
-				 (auxCallType.toUpperCase()=="PUT"))){
-//			if (typeof arrHeaders==="undefined"){
+			var sTargetUrl=newSubPath+sTarget+sTokenParam;
+			log("Calling api of "+(newSubPath==""?"Jira":appInfo.subPath) + " final url:"+sTargetUrl);
+			self.pushCallback(function(response,xhr,sUrl,headers){
+				log("Api Call Response of "+(newSubPath==""?"Jira":appInfo.subPath) 
+						+ " final url:"+sTargetUrl);
+				if (typeof xhr==="undefined"){
+					log("=========");
+					log("ERROR: xhr is undefined.... " );
+					log("=========");
+				} else {
+					log(" --> Bytes:"+response.length);
+				}
+				if (xhr.status == 429){
+					var millis=Math.round(((Math.random()*5)+10)*1000);
+					log("too many request.... have to wait "+(Math.round(millis/10)/100)+" secs");
+					setTimeout(self.createManagedCallback(function(){
+						log("retrying api call");
+						self.apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders);					
+						}),millis);
+				} else if (xhr.status == 400){
+					alert(headers);
+					return self.popCallback([response,xhr,sUrl,headers]);
+				} else if (xhr.status == 403) { // forbidden
+					self.authenticate();
+				} else {
+					self.popCallback([response,xhr,sUrl,headers]);
+				}
+			});
+			var auxHeaders=arrHeaders;
+			var auxCallType="GET";
+			if (isDefined(callType)) auxCallType=callType;
+			if (oCallSecurity.token){
 				auxHeaders={};
-//			}
-			var oAuthString= ' OAuth oauth_consumer_key="'+"OauthKey"+'",'+
-							'oauth_token="' +appInfo.tokenAccess+'",'+
-							'oauth_version="'+"1.0"+'"';
-			auxHeaders["Authorization"]=oAuthString;
-/*			auxHeaders["Content-Type"]='text/html;charset=UTF-8';
-			auxHeaders["Accept"]='text/html;charset=UTF-8';
-	*/		
-			
-//			auxHeaders["access_token"]=appInfo.tokenAccess;
-//			auxHeaders["Authorization"]="Bearer {"+appInfo.tokenAccess+"}";
-		}
-		self.apiCallBase(sTargetUrl,auxCallType,data,sResponseType,callback,auxHeaders,appInfo.tokenAccess,bUseProxy,aditionalOptions);
+				var oAuthString= ' OAuth oauth_consumer_key="'+"OauthKey"+'",'+
+								'oauth_token="' +appInfo.tokenAccess+'",'+
+								'oauth_version="'+"1.0"+'"';
+				auxHeaders["Authorization"]=oAuthString;
+			}
+			self.apiCallBase(sTargetUrl,auxCallType,data,sResponseType,callback,auxHeaders,appInfo.tokenAccess,oSecurity,aditionalOptions);
+		});
+		self.continueTask();
 	}
-	apiCallBase(sTargetUrl,callType,data,sResponseType,callback,arrHeaders,tokenAccess,useProxy,aditionalOptions){
+	apiCallBase(sTargetUrl,callType,data,sResponseType,callback,arrHeaders,tokenAccess,oCallSecurity,aditionalOptions){
 		var self=this;
 		var newType="GET";
 		if (typeof callType!=="undefined"){
 			newType=callType;
 		}
-		var bUseProxy=false;
-		if (isDefined(useProxy)){
-			bUseProxy=useProxy;
+		var oSecurity={proxy:false,token:false};
+		if (isDefined(oCallSecurity)){
+			oSecurity=oCallSecurity;
+			if (isUndefined(oSecurity.token))oSecurity.token=false;
+			if (isUndefined(oSecurity.proxy))oSecurity.proxy=false;
 		}
 		var newData;
 		if (typeof data!=="undefined"){
@@ -299,7 +302,7 @@ class RCGAtlassian{
 				});
 			}
 		}
-		if (!bUseProxy){
+		if (!oCallSecurity.proxy){
 			var options = {
 					  url: sTargetUrl,
 					  type:newType,

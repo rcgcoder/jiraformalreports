@@ -168,8 +168,8 @@ export class TabReports {
 //                      dataType: 'json',
                       async: true,
                       processData: false,
-                      contentType: 'multipart/form-data',
-                      //contentType: false,
+//                      contentType: 'multipart/form-data',
+                      contentType: false,
                       //contentType: "json",
                       headers: {
                         "Content-Type": 'multipart/form-data',

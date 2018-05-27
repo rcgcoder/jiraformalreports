@@ -16,9 +16,11 @@ export class jsExecutor {
     
     execute(){
         var self=this;
-        var theTextArea=System.getAngularDomObject(self.name+"-code");
-        self.addStep("Saving to docx file.... ",function(){
-            log("excuting the text area:"+theTextArea.value);
+        var theTextArea=System.getAngularDomObject(self.name+"-code")[0];
+        var code=theTextArea.value;
+        self.addStep("Executing text area code.... ",function(){
+            log("executing the code:"+code);
+            executeFunction([],code);
             self.continueTask();
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
         // apply

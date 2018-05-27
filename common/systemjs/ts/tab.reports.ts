@@ -200,6 +200,14 @@ export class TabReports {
                 });
                 self.continueTask();
             });
+            self.addStep("Listing all configs",function(){
+               if (arrConfig.length>0){
+                   log("there are "+arrConfig.length+" config files");
+               } else {
+                   log("there is not config files");
+               }
+               self.continueTask();
+            });
             self.continueTask();
        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
    }

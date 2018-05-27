@@ -160,17 +160,29 @@ export class TabReports {
                     var theRequestURL;
                     // gContentId is the JIRA issue ID, previously obtained in the code
                     theRequestURL = '/rest/api/2/issue/' + issueId + '/attachments';
+
+                    var newFormData = {
+                        file: {
+                            value: vInput,
+                            options: {
+                                filename: "test3.jpg",
+                                contentType: "image/jpeg"
+                            }
+                        }
+                    };                    
+                    
+                    
                     AP.request({
                       url: theRequestURL,
                       type: 'POST',
-                      data: formData,
+                      data: newFormData ,
 //                      dataType: 'multipart/form-data',
 //                      dataType: 'json',
                       async: true,
 //                      processData: false,
-                      contentType: 'multipart/form-data',
+//                      contentType: 'multipart/form-data',
 //                      contentType: false,
-                      //contentType: "json",
+                      contentType: "json",
                       headers: {
                         "Content-Type": 'multipart/form-data',
                         "X-Atlassian-Token": "no-check"  // Tried nocheck as well as nocache, same issue

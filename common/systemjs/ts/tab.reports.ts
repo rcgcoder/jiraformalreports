@@ -188,8 +188,8 @@ export class TabReports {
                        var contentUrl=elem.content;
                        inspectAttachment(contentUrl);
                    }
-                   self.continueTask();
                }) ;
+               self.continueTask();
             });
             self.continueTask();
        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);

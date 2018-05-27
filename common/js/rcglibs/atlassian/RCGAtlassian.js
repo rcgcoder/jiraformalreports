@@ -188,7 +188,7 @@ class RCGAtlassian{
 			if (isUndefined(oSecurity.token))oSecurity.token=false;
 			if (isUndefined(oSecurity.proxy))oSecurity.proxy=false;
 		}
-		if ((oCallSecurity.token)&&(appInfo.tokenAccess=="")){
+		if ((oSecurity.token)&&(appInfo.tokenAccess=="")){
 			//needs to get a Token
 			self.addStep("Token needed....",function(){
 				self.oauthConnect(appInfo);
@@ -247,7 +247,7 @@ class RCGAtlassian{
 			var auxHeaders=arrHeaders;
 			var auxCallType="GET";
 			if (isDefined(callType)) auxCallType=callType;
-			if (oCallSecurity.token){
+			if (oSecurity.token){
 				auxHeaders={};
 				var oAuthString= ' OAuth oauth_consumer_key="'+"OauthKey"+'",'+
 								'oauth_token="' +appInfo.tokenAccess+'",'+
@@ -302,7 +302,7 @@ class RCGAtlassian{
 				});
 			}
 		}
-		if (!oCallSecurity.proxy){
+		if (!oSecurity.proxy){
 			var options = {
 					  url: sTargetUrl,
 					  type:newType,

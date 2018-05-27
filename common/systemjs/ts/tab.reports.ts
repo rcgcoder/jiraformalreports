@@ -142,34 +142,36 @@ export class TabReports {
                     // theDataToSave is a large block of base-64 encoded binary data
                     var theFileName = "testattachment.txt";
                     var formData = new FormData();
+                    var content = '<a id="a"><b id="b">hey!</b></a>'; // the body of the new file...
+                    for (var i=0;i<20000;i++){
+                        content+=(""+i);
+                    }
+                    var theBlob = new Blob([content], { 
+                        type: 'text/plain'
+                    });
+                
 /*                    // Make a blob from the SDR data    
                     var theBlob = new Blob([theDataToSave], {
                       type: 'text/plain; charset="UTF-8"'
                     });
                     formData.append("file", theBlob, theFileName);
 */
-                    var content = '<a id="a"><b id="b">hey!</b></a>'; // the body of the new file...
-                    for (var i=0;i<20000;i++){
-                        content+=(""+i);
-                    }
-                    var blob = new Blob([content], { 
-                        type: 'text/plain'
-                    });
-                    var vInput=$('input[type=file]')[0].files[0];
-                    formData.append("file", vInput);
-                    var theRequestURL;
-                    // gContentId is the JIRA issue ID, previously obtained in the code
-                    theRequestURL = '/rest/api/2/issue/' + issueId + '/attachments';
-
+//                    var vInput=$('input[type=file]')[0].files[0];
+//                    formData.append("file", vInput);
+                    
                     var newFormData = {
                         file: {
-                            value: "testing a value",
+                            value: "añdsflksafdjñalsdf",
                             options: {
                                 filename: "test3.txt",
                                 contentType: "text/plain"
                             }
                         }
-                    };                    
+                    }; 
+                    var theRequestURL;
+                    // gContentId is the JIRA issue ID, previously obtained in the code
+                    theRequestURL = '/rest/api/2/issue/' + issueId + '/attachments';
+
                     
                     
                     AP.request({
@@ -177,14 +179,16 @@ export class TabReports {
                       type: 'POST',
                       data: newFormData,
 //                      dataType: 'multipart/form-data',
-                      dataType: 'json',
+                      dataType: 'text/json',
                       async: true,
+                      contentType: 'text/json',
 //                      processData: false,
-                      contentType: 'multipart/form-data',
+//                      contentType: 'multipart/form-data',
 //                      contentType: false,
 //                      contentType: "text/plain",
                       headers: {
 //                        "Content-Type": 'multipart/form-data',
+                        "Content-Type": 'text/json',
                         "X-Atlassian-Token": "no-check"  // Tried nocheck as well as nocache, same issue
                       },
                       success: function(theResponse) {

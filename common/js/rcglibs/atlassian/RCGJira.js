@@ -374,7 +374,6 @@ class RCGJira{
 			log("Property:"+propertyName+" = "+propertyValue+" setted in issue:"+issueId);
 			self.continueTask();
 		});
-		
 		self.apiCall(   "/rest/api/2/issue/"+issueId+"/properties/"+propertyName,
 						"PUT",
 						{"content":"Test if works on JIRA Cloud", "completed" : 1},

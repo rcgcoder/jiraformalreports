@@ -188,13 +188,8 @@ class RCGAtlassian{
 			if (isUndefined(oSecurity.token))oSecurity.token=false;
 			if (isUndefined(oSecurity.proxy))oSecurity.proxy=false;
 		} 
-		if ((oSecurity.token)&&(appInfo.tokenAccess=="")){
-			//needs to get a Token
-			self.addStep("Token needed....",function(){
-				self.oauthConnect(appInfo);
-			})
-		}
-		self.addStep("Doing de API call...",function(){
+		//"Doing de API call..."
+		self.pushCallback(function(){
 			var fncAddParam=function(name,value){
 				if (typeof value!=="undefined"){
 					if (!bHasParams){
@@ -256,6 +251,12 @@ class RCGAtlassian{
 			}
 			self.apiCallBase(sTargetUrl,auxCallType,data,sResponseType,callback,auxHeaders,appInfo.tokenAccess,oSecurity,aditionalOptions);
 		});
+		if ((oSecurity.token)&&(appInfo.tokenAccess=="")){
+			//needs to get a Token
+			self.pushCallback(function(){
+				self.oauthConnect(appInfo);
+			})
+		}
 		self.continueTask();
 	}
 	apiCallBase(sTargetUrl,callType,data,sResponseType,callback,arrHeaders,tokenAccess,oCallSecurity,aditionalOptions){

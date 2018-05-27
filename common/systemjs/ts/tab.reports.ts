@@ -155,8 +155,8 @@ export class TabReports {
                     var blob = new Blob([content], { 
                         type: 'text/plain'
                     });
-
-                    formData.append("file", $('input[type=file]')[0].files[0]);
+                    var vInput=$('input[type=file]')[0].files[0];
+                    formData.append("file", vInput);
                     var theRequestURL;
                     // gContentId is the JIRA issue ID, previously obtained in the code
                     theRequestURL = '/rest/api/2/issue/' + issueId + '/attachments';

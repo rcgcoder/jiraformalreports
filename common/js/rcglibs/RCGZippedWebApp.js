@@ -561,7 +561,7 @@ class RCGZippedApp{
 	}
 	loadFileFromNetwork(sRelativePath,fileContent,contentType){
 		var self=this;
-		if (fileContent!="") {
+		if ((fileContent!="")&&(typeof fileContent!=="undefined")) {
 			log(sRelativePath+" loaded from persistent storage");
 			return self.popCallback([sRelativePath,fileContent,contentType]);
 		}

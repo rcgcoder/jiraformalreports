@@ -12,6 +12,7 @@ export class TabReports {
         var self=this;
         System.addPostProcess(function(){
             log("TabReports constructor called");
+            System.webapp.getTaskManager().extendObject(self);
             var theList=$("#ulDwarfers");
             console.log("List items:"+theList.length);
             console.log("Updating List");
@@ -148,7 +149,47 @@ export class TabReports {
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
 //      self.continueTask();
     }
-    doLoadReport(){
-        log("Open");
+    
+    getSelectedReport(){
+        var self=this;
+        var auxObj=System.getAngularDomObject("selReport");
+        var arrValues=auxObj.getSelectedValues();
+        return arrValues[0];
     }
+
+    doLoadReport(){
+        var self=this;
+        log("Open");
+        var jira=System.webapp.getJira();
+        var issueId=self.getSelectedReport();
+        var reportIssue={};
+        var theJQL="id in (issueId)";
+        System.webapp.addStep("Loading report "+issueId+"...",function(){
+            var fncProcessIssue=function(issue){
+                reportIssue=issue;
+            }
+            self.addStep("Processing jql to get report issue detail:"+theJQL,function(){
+                jira.processJQLIssues(theJQL,fncProcessIssue);
+            });
+            self.addStep("Getting all the attachments of the report issue",function(){
+               var inspectAttachment=self.createManagedCallback(function(contentUrl){
+                   self.addStep("Getting Content of Attachment:"+contentUrl,function(){
+                       System.webapp.loadRemoteFile(contentUrl);
+                   });
+                   self.addStep("Evaluating the loaded content for :"+contentUrl,function(response){
+                       log(response);
+                       self.continueTask();
+                   });
+               });
+               reportIssue.fields.attachment.forEach(function(elem){
+                   if (elem.mimetype=="application/json"){ // the config is a json object
+                       var contentUrl=elem.content;
+                       inspectAttachment(contentUrl);
+                   }
+                   self.continueTask();
+               }) ;
+            });
+            self.continueTask();
+       },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
+   }
 }

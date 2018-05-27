@@ -11,6 +11,7 @@ import {TabResult} from './tab.result';
 import {advSelector} from "./components/advSelector";
 import {listEditor} from "./components/listEditor";
 import {docxSaver} from "./components/docxSaver";
+import {jsExecutor} from "./components/jsExecutor";
 import {dlgEditableList} from "./dialogs/dlgEditableList";
 import {dlgSelectionTable} from './dialogs/dlgSelectionTable';
 import {jqlExtendedParser} from './components/jqlExtendedParser';
@@ -83,6 +84,7 @@ class App {
                     advSelector,
                     listEditor,
                     docxSaver,
+                    jsExecutor,
                     dlgEditableList,
                     jqlExtendedParser,
                     jqlSelector,

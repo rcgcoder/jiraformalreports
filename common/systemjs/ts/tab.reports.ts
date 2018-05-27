@@ -175,7 +175,7 @@ export class TabReports {
                     AP.request({
                       url: theRequestURL,
                       type: 'POST',
-                      data: JSON.stringify(newFormData) ,
+                      data: newFormData,
 //                      dataType: 'multipart/form-data',
 //                      dataType: 'json',
                       async: true,

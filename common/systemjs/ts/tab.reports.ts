@@ -185,7 +185,7 @@ export class TabReports {
                    });
                });
                reportIssue.fields.attachment.forEach(function(elem){
-                   if (elem.mimetype=="application/json"){ // the config is a json object
+                   if (elem.mimeType=="application/json"){ // the config is a json object
                        var contentUrl=elem.content;
                        inspectAttachment(contentUrl);
                    }

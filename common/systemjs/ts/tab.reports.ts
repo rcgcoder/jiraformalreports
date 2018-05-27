@@ -201,8 +201,8 @@ export class TabReports {
                 self.continueTask();
             });
             self.addStep("Listing all configs",function(){
-               if (arrConfig.length>0){
-                   log("there are "+arrConfig.length+" config files");
+               if (arrConfigs.length>0){
+                   log("there are "+arrConfigs.length+" config files");
                } else {
                    log("there is not config files");
                }

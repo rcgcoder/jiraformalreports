@@ -187,7 +187,7 @@ class RCGAtlassian{
 			oSecurity=oCallSecurity;
 			if (isUndefined(oSecurity.token))oSecurity.token=false;
 			if (isUndefined(oSecurity.proxy))oSecurity.proxy=false;
-		}
+		} 
 		if ((oSecurity.token)&&(appInfo.tokenAccess=="")){
 			//needs to get a Token
 			self.addStep("Token needed....",function(){

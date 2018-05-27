@@ -396,7 +396,7 @@ class RCGJira{
         var data={comment: auxComment, file: fileOfBlob  };
         var aditionalOptions={
         		data:data,
-        		contentType: 'multipart/form-data'};
+        		contentType: 'multipart/form-data'
         }
 //		self.apiCall=function(sTarget,callType,data,sPage,sResponseType,callback,arrHeaders,useProxy,aditionalOptions){
 		self.apiCall("/rest/api/2/issue/"+issueId+"/attachments",
@@ -407,6 +407,7 @@ class RCGJira{
 				undefined,
 				undefined,
 				false,
-				aditionalOptions);
+				aditionalOptions
+				);
 	}
 }

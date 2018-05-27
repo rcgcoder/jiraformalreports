@@ -163,7 +163,7 @@ export class TabReports {
         var jira=System.webapp.getJira();
         var issueId=self.getSelectedReport();
         var reportIssue={};
-        var theJQL="id in (issueId)";
+        var theJQL="id in ("+issueId+")";
         System.webapp.addStep("Loading report "+issueId+"...",function(){
             var fncProcessIssue=function(issue){
                 reportIssue=issue;

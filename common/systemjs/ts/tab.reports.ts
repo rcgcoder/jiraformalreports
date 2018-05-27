@@ -163,10 +163,10 @@ export class TabReports {
 
                     var newFormData = {
                         file: {
-                            value: vInput,
+                            value: "testing a value",
                             options: {
-                                filename: "test3.jpg",
-                                contentType: "image/jpeg"
+                                filename: "test3.txt",
+                                contentType: "text/plain"
                             }
                         }
                     };                    
@@ -175,7 +175,7 @@ export class TabReports {
                     AP.request({
                       url: theRequestURL,
                       type: 'POST',
-                      data: formData,
+                      data: newFormData,
 //                      dataType: 'multipart/form-data',
                       dataType: 'json',
                       async: true,

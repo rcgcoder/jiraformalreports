@@ -159,7 +159,22 @@ class RCGAtlassian{
 		});
 		fncIteration();
 	}
-	
+	authenticate(){
+		var self=this;
+		self.addStep("Authenticating....",function(){
+			self.addStep("Discarding Oauth Access Token",function(){
+				self.apiCallOauth("/discardToken");
+			});
+			self.addStep("Getting Oauth Access Token",function(){
+				self.oauthConnect(appInfo);
+			});
+			self.addStep("Retrying api call",function(){
+				self.apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders);					
+			});
+			self.continueTask();
+		});
+		self.continueTask();
+	}
 	apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders,useProxy,aditionalOptions){
 		var self=this;
 		var sTokenParam="";
@@ -215,16 +230,7 @@ class RCGAtlassian{
 				alert(headers);
 				return self.popCallback([response,xhr,sUrl,headers]);
 			} else if (xhr.status == 403) { // forbidden
-				self.addStep("Discarding Oauth Access Token",function(){
-					self.apiCallOauth("/discardToken");
-				});
-				self.addStep("Getting Oauth Access Token",function(){
-					self.oauthConnect(appInfo);
-				});
-				self.addStep("Retrying api call",function(){
-					self.apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders);					
-				});
-				self.continueTask();
+				self.authenticate();
 			} else {
 				self.popCallback([response,xhr,sUrl,headers]);
 			}
@@ -315,6 +321,7 @@ class RCGAtlassian{
 					'oauth_token="' +tokenAccess+'",'+
 					'oauth_version="'+"1.0"+'"';
 			log("OAUT STRING:"+oAuthString);
+			sTargetUrl="/proxy/"+"rcgcoder.atlassian.net"+"/endproxy"+sTargetUrl;
 			var options = {
 				url: sTargetUrl,
 				method: newType,

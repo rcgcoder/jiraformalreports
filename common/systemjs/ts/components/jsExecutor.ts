@@ -17,7 +17,11 @@ export class jsExecutor {
     execute(){
         var self=this;
         var theTextArea=System.getAngularDomObject(self.name+"-code")[0];
-        var code=theTextArea.value;
+        var code=`"";
+                 log("executing");
+                 `+theTextArea.value+`
+                 log("executed");
+                 `;
         self.addStep("Executing text area code.... ",function(){
             log("executing the code:"+code);
             executeFunction([],code);

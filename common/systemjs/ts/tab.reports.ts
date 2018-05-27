@@ -179,16 +179,16 @@ export class TabReports {
                       type: 'POST',
                       data: newFormData,
 //                      dataType: 'multipart/form-data',
-                      dataType: 'text/json',
+                      dataType: 'application/json',
                       async: true,
-                      contentType: 'text/json',
+                      contentType: 'application/json',
 //                      processData: false,
 //                      contentType: 'multipart/form-data',
 //                      contentType: false,
 //                      contentType: "text/plain",
                       headers: {
 //                        "Content-Type": 'multipart/form-data',
-                        "Content-Type": 'text/json',
+                        "Content-Type": 'application/json',
                         "X-Atlassian-Token": "no-check"  // Tried nocheck as well as nocache, same issue
                       },
                       success: function(theResponse) {

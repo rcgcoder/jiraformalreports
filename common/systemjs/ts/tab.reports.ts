@@ -165,11 +165,12 @@ export class TabReports {
         var reportIssue={};
         var theJQL="id in ("+issueId+")";
         System.webapp.addStep("Loading report "+issueId+"...",function(){
-            var fncProcessIssue=function(issue){
-                reportIssue=issue;
-            }
-            self.addStep("Processing jql to get report issue detail:"+theJQL,function(){
-                jira.processJQLIssues(theJQL,fncProcessIssue);
+            self.addStep("Processing jql to get report issue detail:"+issueId,function(){
+                jira.getIssueDetails(issueId);
+            });
+            self.addStep("setting issue detail:"+issueId,function(issueDetail){
+                reportIssue=issueDetail;
+                self.continueTask();
             });
             self.addStep("Getting all the attachments of the report issue",function(){
                var inspectAttachment=self.createManagedCallback(function(contentUrl){

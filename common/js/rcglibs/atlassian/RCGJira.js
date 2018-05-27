@@ -357,6 +357,18 @@ class RCGJira{
 		});
 		self.continueTask();
 	}
+	getIssueDetails(issueId){
+		var self=this;
+		self.pushCallback(function(objResponse,xhr, statusText, errorThrown){
+			log("Issue Detail for issue:"+issueId);
+			self.continueTask([objResponse]);
+		});
+		self.apiCall(   "/rest/api/2/issue/"+issueId,
+						"GET",
+						undefined,
+						undefined,
+						"application/json");
+	}
 	setProperty(issueId,propertyName,propertyValue){
 		var self=this;
 		self.pushCallback(function(objResponse,xhr, statusText, errorThrown){

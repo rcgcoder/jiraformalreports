@@ -420,4 +420,23 @@ class RCGJira{
 				aditionalOptions
 				);
 	}
+	getAttachment(){
+		var self=System.webapp;
+		var jira=self.getJira();
+		self.addStep("Trying to get attachment",function(){
+			self.addStep("oauth",function(){
+			    jira.oauthConnect();
+			});
+			self.addStep("Call",function(){
+			    jira.tokenNeeded=true;
+			    jira.apiCall("/secure/attachment/10011/jrfConfig.json","GET",undefined,undefined,"application/json",undefined,undefined);
+			});
+			self.addStep("End Calls",function(){
+			    jira.tokenNeeded=false;
+			    self.continueTask();
+			});
+			self.continueTask();
+		},0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
+	}
+
 }

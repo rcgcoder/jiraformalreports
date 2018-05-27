@@ -176,21 +176,24 @@ export class TabReports {
                 log("Adding... process attachment steps");
                 var inspectAttachment=self.createManagedCallback(function(contentUrl){
                     log("Adding steps for inspect:"+contentUrl);
-                   self.addStep("Getting Content of Attachment:"+contentUrl,function(){
-                       System.webapp.loadRemoteFile(contentUrl);
-                   });
-                   self.addStep("Evaluating the loaded content for :"+contentUrl,function(response){
+                    self.addStep("Getting Content of Attachment:"+contentUrl,function(){
+                       jira.apiCall(contentUrl,"GET",undefined,undefined,
+                                       "application/json",undefined,undefined,{token:true});
+                    });
+                    self.addStep("Evaluating the loaded content for :"+contentUrl,function(response){
                        log(response);
                        self.continueTask();
-                   });
-               });
-               reportIssue.fields.attachment.forEach(function(elem){
+                    });
+                });
+                reportIssue.fields.attachment.forEach(function(elem){
                    if (elem.mimeType=="application/json"){ // the config is a json object
                        var contentUrl=elem.content;
-                       inspectAttachment(contentUrl);
+                       var arrElem=contentUrl.split("secure");
+                       var relativeUrl="/secure"+arrElem[1];
+                       inspectAttachment(relativeUrl);
                    }
-               }) ;
-               self.continueTask();
+                });
+                self.continueTask();
             });
             self.continueTask();
        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);

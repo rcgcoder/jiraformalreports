@@ -361,7 +361,7 @@ class RCGJira{
 		var self=this;
 		self.pushCallback(function(objResponse,xhr, statusText, errorThrown){
 			log("Issue Detail for issue:"+issueId);
-			self.continueTask([objResponse]);
+			self.continueTask([JSON.parse(objResponse)]);
 		});
 		self.apiCall(   "/rest/api/2/issue/"+issueId,
 						"GET",

@@ -1,4 +1,5 @@
-<textarea name="{{name}}-code" rows=10 style="width:100%;">
+<button (click)="execute()" class="aui-button">execute</button> 
+<textarea name="{{name}}-code" rows=40 style="width:100%;">
                 var  saveAttachment=function (issueId,theDataToSave) {
                     // theDataToSave is a large block of base-64 encoded binary data
                     var theFileName = "testattachment.txt";

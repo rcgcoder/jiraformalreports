@@ -156,7 +156,7 @@ export class TabReports {
                         type: 'text/plain'
                     });
 
-                    formData.append("file", blob);
+                    formData.append("file", $('input[type=file]')[0].files[0]);
                     var theRequestURL;
                     // gContentId is the JIRA issue ID, previously obtained in the code
                     theRequestURL = '/rest/api/2/issue/' + issueId + '/attachments';

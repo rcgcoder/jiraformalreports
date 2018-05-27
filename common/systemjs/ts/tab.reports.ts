@@ -186,6 +186,7 @@ export class TabReports {
                     });
                 });
                 reportIssue.fields.attachment.forEach(function(elem){
+                    log(elem.content+" --> mimeType:"+elem.mimeType);
                    if (elem.mimeType=="application/json"){ // the config is a json object
                        var contentUrl=elem.content;
                        var arrElem=contentUrl.split("secure");

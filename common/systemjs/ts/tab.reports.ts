@@ -179,12 +179,13 @@ export class TabReports {
             });
             self.addStep("Listing all configs",function(objAttachs){
                reportIssue=objAttachs.issue;
+               var tabStructure=System.getAngularObject("tabStructure",true);
                var arrConfigs=objAttachs.attachments;
                if (arrConfigs.length>0){
                    log("there are "+arrConfigs.length+" config files");
+                   tabStructure.setConfiguration(reportIssue,arrConfigs);
                } else {
                    log("there is not config files");
-                   var tabStructure=System.getAngularObject("tabStructure",true);
                    tabStructure.setConfiguration(reportIssue);
                }
                self.continueTask();

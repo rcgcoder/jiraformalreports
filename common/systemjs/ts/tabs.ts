@@ -9,10 +9,14 @@ export class Tabs implements AfterContentInit {
   @Input() name: string = 'Tabs';
   @ContentChildren(Tab) tabs: QueryList<Tab>;
   
+  
+  ngOnInit() {
+      var self=this;
+      System["Tabs_"+self.name]=self;
+  }
+
   // contentChildren are set
   ngAfterContentInit() {
-    var self=this;
-    window["Tabs_"+self.name]=self;
     
     // get all active tabs
     let activeTabs = this.tabs.filter((tab)=>tab.active);

@@ -11,6 +11,7 @@ export class Tabs implements AfterContentInit {
   
   // contentChildren are set
   ngAfterContentInit() {
+    var self=this;
     System.bindObj(self);
     
     // get all active tabs

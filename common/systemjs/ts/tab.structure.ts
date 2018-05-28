@@ -28,7 +28,7 @@ export class TabStructure {
         var selConfs=System.getAngularObject("selConfigurations",true);
         var arrOptions=[];
         self.configurations.forEach(function(conf){
-            arrOptions.push({key:conf.date,name:"Configuration "+arrOptions.length,description:conf.comment});
+            arrOptions.push({key:conf.timestamp,name:"Configuration "+arrOptions.length+" "+conf.date,description:conf.comment});
         });
         selConfs.fillOptions(arrOptions);
         var tabs=System.Tabs_appMain;

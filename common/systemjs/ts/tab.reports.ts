@@ -170,7 +170,7 @@ export class TabReports {
                     return (file.mimeType=="application/json"); // the config is a json object
                 };
                 var contentFilter=function(content){
-                    return (response.indexOf('"Vendor":"Jira Formal Reports"')>=0);
+                    return (content.indexOf('"Vendor":"Jira Formal Reports"')>=0);
                 };
                 var contentProcess=function(content){
                     return JSON.parse(content);

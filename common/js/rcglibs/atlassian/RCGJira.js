@@ -425,7 +425,7 @@ class RCGJira{
 		var reportIssue;
 		var arrFiles=[];
         self.addStep("Processing jql to get report issue detail:"+issueId,function(){
-            jira.getIssueDetails(issueId);
+            self.getIssueDetails(issueId);
         });
         self.addStep("setting issue detail:"+issueId,function(issueDetail){
             reportIssue=issueDetail;
@@ -436,7 +436,7 @@ class RCGJira{
             var inspectAttachment=self.createManagedCallback(function(contentUrl){
                 log("Adding steps for inspect:"+contentUrl);
                 self.addStep("Getting Content of Attachment:"+contentUrl,function(){
-                   jira.apiCall(contentUrl,"GET",undefined,undefined,
+                   self.apiCall(contentUrl,"GET",undefined,undefined,
                                    "application/json",undefined,undefined,{token:true});
                 });
                 self.addStep("Evaluating the loaded content for :"+contentUrl,function(response){

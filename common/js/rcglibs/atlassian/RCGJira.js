@@ -421,6 +421,7 @@ class RCGJira{
 				);
 	}
 	getAttachments(issueId,fileFilterFunction,contentFilterFunction,contentProcessFunction){
+		var self=this;
 		var reportIssue;
 		var arrFiles=[];
         self.addStep("Processing jql to get report issue detail:"+issueId,function(){

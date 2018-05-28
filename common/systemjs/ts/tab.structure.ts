@@ -23,10 +23,16 @@ export class TabStructure {
             } 
             return 0;
         })
-        var tabs=System.Tabs_appMain;
-        tabs.selectTabByTitle("Structure");
         var reportIssueInfo=System.getAngularDomObject(self.name+"_reportIssue");
         reportIssueInfo.html(self.configurationIssue.key +" - "+  self.configurationIssue.fields.summary);
+        var selConfs=System.getAngularObject("selConfigurations",true);
+        var arrOptions=[];
+        self.configurations.forEach(function(conf){
+            arrOptions.push({key:conf.date,name:"Configuration "+arrOptions.length,description:conf.comment});
+        });
+        selConfs.fillOptions(arrOptions);
+        var tabs=System.Tabs_appMain;
+        tabs.selectTabByTitle("Structure");
     }
     ngOnInit() {
         var self=this;

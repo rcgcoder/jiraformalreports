@@ -10,7 +10,7 @@ export class Tabs implements AfterContentInit {
   
   ngOnInit() {
       var self=this;
-      System["Tabs_"+self.id]=self;
+      System["Tabs_"+"appMain"]=self;
   }
   // contentChildren are set
   ngAfterContentInit() {

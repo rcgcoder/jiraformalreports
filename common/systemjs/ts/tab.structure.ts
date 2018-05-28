@@ -425,7 +425,7 @@ export class TabStructure {
         var self=this;
         log("Change configuration:"+event);
         self.configurations.forEach(function(conf){
-            if (conf.timestamp=config){
+            if (conf.timestamp==event){
                 self.applyConfig(conf);
             }
         });

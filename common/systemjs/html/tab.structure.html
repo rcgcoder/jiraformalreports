@@ -1,17 +1,20 @@
 <div tab-structure id={{name}}>
 <div class="aui-group">
-	<b>Report:</b><span id="{{name}}_reportIssue"> 
-	</span>
-	<br>
-	<advSelector name="selConfiguration" 
-	    				   typeDescriptor="Configurations"
-	    				    multiple="false"
-							(onSelected)="onChangeConfiguration($event)"
-	    		>
-	</advSelector>
-	<br>
-	<button (click)="loadDefaultReport()" class="aui-button">load default Report</button>
-	<button (click)="saveDefaultReport()" class="aui-button">Save as default Report</button>
+    <div class="aui-item">
+		<b>Report:</b><span id="{{name}}_reportIssue"> 
+		</span>
+		<br>
+		<button (click)="loadDefaultReport()" class="aui-button">load default Report</button>
+		<button (click)="saveDefaultReport()" class="aui-button">Save as default Report</button>
+    </div>
+    <div class="aui-item">
+		<advSelector name="selConfiguration" 
+		    				   typeDescriptor="Configurations"
+		    				    multiple="false"
+								(onSelected)="onChangeConfiguration($event)"
+		    		>
+		</advSelector>
+    </div>
 </div>
 <div class="aui-group">
     <div class="aui-item">

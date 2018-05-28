@@ -164,43 +164,22 @@ export class TabReports {
         var issueId=self.getSelectedReport();
         var reportIssue={};
         var theJQL="id in ("+issueId+")";
-        System.webapp.addStep("Loading report "+issueId+"...",function(){
-            self.addStep("Processing jql to get report issue detail:"+issueId,function(){
-                jira.getIssueDetails(issueId);
-            });
-            self.addStep("setting issue detail:"+issueId,function(issueDetail){
-                reportIssue=issueDetail;
-                self.continueTask();
-            });
-            var arrConfigs=[];
-            self.addStep("Getting all the attachments of the report issue",function(){
-                log("Adding... process attachment steps");
-                var inspectAttachment=self.createManagedCallback(function(contentUrl){
-                    log("Adding steps for inspect:"+contentUrl);
-                    self.addStep("Getting Content of Attachment:"+contentUrl,function(){
-                       jira.apiCall(contentUrl,"GET",undefined,undefined,
-                                       "application/json",undefined,undefined,{token:true});
-                    });
-                    self.addStep("Evaluating the loaded content for :"+contentUrl,function(response){
-                       log(response.substring(0,50));
-                       if (response.indexOf('"Vendor":"Jira Formal Reports"')>=0){
-                           arrConfig.push(JSON.parse(respone));
-                       }
-                       self.continueTask();
-                    });
-                });
-                reportIssue.fields.attachment.forEach(function(elem){
-                    log(elem.content+" --> mimeType:"+elem.mimeType);
-                   if (elem.mimeType=="application/json"){ // the config is a json object
-                       var contentUrl=elem.content;
-                       var arrElem=contentUrl.split("secure");
-                       var relativeUrl="/secure"+arrElem[1];
-                       inspectAttachment(relativeUrl);
-                   }
-                });
-                self.continueTask();
-            });
-            self.addStep("Listing all configs",function(){
+        System.webapp.addStep("Loading report "+issueId+" config files...",function(){
+            self.addStep("Getting al json attachments that contains 'Vendor=Jira Formal Reports'",function(){
+                var fileFilter=function(file){
+                    return (file.mimeType=="application/json"); // the config is a json object
+                };
+                var contentFilter=function(content){
+                    return (response.indexOf('"Vendor":"Jira Formal Reports"')>=0);
+                };
+                var contentProcess=function(content){
+                    return JSON.parse(content);
+                };
+                jira.getAttachments(issueId,fileFilter,contentFilter,contentProcess);
+            }
+            self.addStep("Listing all configs",function(objAttachs){
+               reportIssue=objAttachs.issue;
+               var arrConfigs=objAttachs.attachments;
                if (arrConfigs.length>0){
                    log("there are "+arrConfigs.length+" config files");
                } else {

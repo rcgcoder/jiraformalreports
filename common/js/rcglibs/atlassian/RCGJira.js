@@ -420,23 +420,59 @@ class RCGJira{
 				aditionalOptions
 				);
 	}
-	getAttachment(){
-		var self=System.webapp;
-		var jira=self.getJira();
-		self.addStep("Trying to get attachment",function(){
-			self.addStep("oauth",function(){
-			    jira.oauthConnect();
-			});
-			self.addStep("Call",function(){
-			    jira.tokenNeeded=true;
-			    jira.apiCall("/secure/attachment/10011/jrfConfig.json","GET",undefined,undefined,"application/json",undefined,undefined);
-			});
-			self.addStep("End Calls",function(){
-			    jira.tokenNeeded=false;
-			    self.continueTask();
-			});
-			self.continueTask();
-		},0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
+	getAttachments(issueId,fileFilterFunction,contentFilterFunction,contentProcessFunction){
+		var reportIssue;
+		var arrFiles=[];
+        self.addStep("Processing jql to get report issue detail:"+issueId,function(){
+            jira.getIssueDetails(issueId);
+        });
+        self.addStep("setting issue detail:"+issueId,function(issueDetail){
+            reportIssue=issueDetail;
+            self.continueTask();
+        });
+        self.addStep("Getting all the attachments of the report issue:"+issueId,function(){
+            log("Adding... process attachment steps");
+            var inspectAttachment=self.createManagedCallback(function(contentUrl){
+                log("Adding steps for inspect:"+contentUrl);
+                self.addStep("Getting Content of Attachment:"+contentUrl,function(){
+                   jira.apiCall(contentUrl,"GET",undefined,undefined,
+                                   "application/json",undefined,undefined,{token:true});
+                });
+                self.addStep("Evaluating the loaded content for :"+contentUrl,function(response){
+                   log(response.substring(0,50));
+                   var bAddAttachment=true;
+                   if (isDefined(contentFilterFunction)){
+                	   bAddAttachment=contentFilterFunction(response);
+                   }
+                   if (bAddAttachment){
+                	   var vResult=respone;
+                	   if (isDefined(contentProcessFunction)){
+                		   vResult=contentProcessFunction(vResult);
+                	   }
+                	   arrFiles.push(vResult);
+                   }
+                   self.continueTask();
+                });
+            });
+            reportIssue.fields.attachment.forEach(function(elem){
+                log(elem.content+" --> mimeType:"+elem.mimeType);
+                var bDoInspect=true;
+                if (isDefined(fileFilterFunction)){
+                	bDoInspect=fileFilterFunction(elem);
+                }
+                if (bDoInspect){
+                    var contentUrl=elem.content;
+                    var arrElem=contentUrl.split("secure");
+                    var relativeUrl="/secure"+arrElem[1];
+                    inspectAttachment(relativeUrl);
+                }
+            });
+            self.continueTask();
+        });
+        self.addStep("Returning selected attachments",function(){
+        	self.continueTask([{issue:reportIssue,attachments:arrFiles}]);
+        });
+        self.continueTask();
 	}
 
 }

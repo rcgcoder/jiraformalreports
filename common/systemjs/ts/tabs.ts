@@ -6,18 +6,12 @@ import { Tab } from './tab';
   templateUrl:System.composeUrl("systemjs/html/tabs.html")
 })
 export class Tabs implements AfterContentInit {
-  
+  @Input() name: string = 'Tabs';
   @ContentChildren(Tab) tabs: QueryList<Tab>;
   
   // contentChildren are set
   ngAfterContentInit() {
-    var self=this;
-    this.tabs.forEach(function(tab){
-        tab.getTabsComponent=function(){
-            return self;
-        }
-    })
-    
+    System.bindObj(self);
     
     // get all active tabs
     let activeTabs = this.tabs.filter((tab)=>tab.active);

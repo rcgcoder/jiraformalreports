@@ -79,6 +79,7 @@ export class TabStructure {
                 var jira=System.webapp.getJira();
                 jira.addAttachmentObject(self.configurationIssue.key,actualConfig,fileName,"Added new versión of Report Configuration ");
             });
+            self.continueTask();
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
     }
     getActualReportConfig(){

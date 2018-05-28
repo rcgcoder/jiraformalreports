@@ -33,7 +33,7 @@ export class Tabs implements AfterContentInit {
   }
   selectTabByTitle(title: string){
       // get all active tabs
-      let selectedTabs = this.tabs.filter((tab)=>(tab.tabTitle==title);
+      let selectedTabs = this.tabs.filter((tab)=>(tab.title==title);
       this.selectTab(selectedTabs[0]);
     }
 

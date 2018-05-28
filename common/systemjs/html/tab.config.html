@@ -1,7 +1,95 @@
 <div tab-config>
-apernia tests workspace OK
+<div class="flatpack-box">
+	<div class="aui-group">
+    	<div class="aui-item">
+			<strong>Report Configuration</strong><br>
+			<span id="{{name}}_reportIssue"> </span>
+			<br>
+			<button (click)="loadDefaultReport()" class="aui-button">load default Report</button>
+			<button (click)="saveDefaultReport()" class="aui-button">Save as default Report</button>
+    	</div>
+	    <div class="aui-item">
+			<advSelector name="selConfigurations" 
+			    				   typeDescriptor="Configurations"
+			    				    multiple="false"
+									(onSelected)="onChangeConfiguration($event)"
+			    		>
+			</advSelector>
+	    </div>
+	</div>
+</div>
+<div class="flatpack-box">
+	<div class="aui-group">
+    	<div class="aui-item">
+			<dlgEditableList id="linkTypesConfiguration" name="linkTypesConfiguration" 
+				typeDescriptor="Issue Link Types" 
+			    openDialogCaption="Issue Link Types Configuracion"
+				(onApply)="onChangeIssueLinkTypesConfiguration($event)"
+				(onFullFillRequest)="onGetFullListOfIssueTypes($event)"
+				>
+			</dlgEditableList>
+			<dlgEditableList id="manualFieldDefinitions" name="manualFieldDefinitions" 
+				typeDescriptor="Manual Field Definitions" 
+				columns=2
+				columnDefinitions='[{"caption":"key"},{"caption":"description"}]'
+			    openDialogCaption="Manual Issue Field Configuracion"
+				(onApply)="onChangeManualIssueFieldDefinitions($event)"
+				(onFullFillRequest)="onGetFullListOfFields($event)"
+				>
+			</dlgEditableList>
+		</div>
+	</div>
+</div>
+<div class="flatpack-box">
+<strong> Interest Elements</strong><br>
+<div class="aui-group">
+    <div class="aui-item">
+	
+	    <atlassianSelector name="selInterestFields" 
+	    				   typeDescriptor="Issue Fields needed for the Report"
+	    				    atlassianAplication="webapp"
+	    				    multiple="true"
+	    				    atlassianObjectFunction="getListFields"
+							(onSelected)="onChangeInterest($event)"
+	    		>
+	    </atlassianSelector >
+	    <br>
+	    <atlassianSelector name="selInterestOtherFields"
+	    			 typeDescriptor="Other Issue Fields needed for the Report"
+	    			 multiple="true"
+   				     atlassianAplication="webapp"
+   				     multiple="true"
+   				     atlassianObjectFunction="getIssueOtherFields"
+ 					 (onSelected)="onChangeInterest($event)"
+	    		>
+	    </atlassianSelector>
+	</div>
+    <div class="aui-item">
+	    <atlassianSelector name="selInterestIssueLinkTypes" 
+	    				   typeDescriptor="Issue Link Types needed for the Report"
+	    				    atlassianAplication="webapp"
+	    				    multiple="true"
+	    				    atlassianObjectFunction="getIssueLinkTypes"
+	    				    (onSelected)="onChangeInterest($event)"
+	    		>
+	    </atlassianSelector >
+	</div>
+	<div>
+      <jqlSelector 
+      			 id="selScope" 
+      			 name="selScope" 
+    			 typeDescriptor="Issues in the Scope" 
+    			 multiple="true"
+    			 >
+      </jqlSelector>
+      </div>	
+	</div>
+    <button (click)="onLoadIssuesTest($event)" class="aui-button">Load Test</button>
 </div>
 
 
-<jqlExtendedParser name="testJQL"></jqlExtendedParser>
+
+
+</div>
+
 

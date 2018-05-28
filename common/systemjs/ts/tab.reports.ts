@@ -185,7 +185,7 @@ export class TabReports {
                } else {
                    log("there is not config files");
                    var tabStructure=System.getAngularDomObject("tabStructure");
-                   tabStructure.setConfiguration(reportIssue,"");
+                   tabStructure.setConfiguration(reportIssue);
                }
                self.continueTask();
             });

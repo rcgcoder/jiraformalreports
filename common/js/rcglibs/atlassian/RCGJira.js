@@ -416,7 +416,7 @@ class RCGJira{
 				'multipart/form-data',
 				undefined,
 				undefined,
-				false,
+				undefined,
 				aditionalOptions
 				);
 	}

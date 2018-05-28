@@ -1,6 +1,5 @@
 <div tab-structure id={{name}}>
 <div class="aui-group">
-    <div class="aui-item">
 	<b>Report:</b><span id="{{name}}_reportIssue"> 
 	</span>
 	<br>
@@ -10,9 +9,9 @@
 							(onSelected)="onChangeConfiguration($event)"
 	    		>
 	</advSelector>
+	<br>
 	<button (click)="loadDefaultReport()" class="aui-button">load default Report</button>
 	<button (click)="saveDefaultReport()" class="aui-button">Save as default Report</button>
-    </div>
 </div>
 <div class="aui-group">
     <div class="aui-item">

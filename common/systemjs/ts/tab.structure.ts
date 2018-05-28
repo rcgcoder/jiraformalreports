@@ -415,6 +415,9 @@ export class TabStructure {
         });
         self.continueTask();
     }
+    onChangeConfiguration(event){
+            log("Change configuration:"+event);
+    }
     freeMemory(){
         var self=this;
         var jqResult=$("#ReportResult");

@@ -17,6 +17,8 @@ export class TabStructure {
         self.configuration=oConfiguration;
         var tabs=System.Tabs_appMain;
         tabs.selectTabByTitle("Structure");
+        var reportIssueInfo=System.getAngularDomObject(self.name+"_reportIssue");
+        reportIssueInfo.html(self.configurationIssue.key +" - "+  self.configurationIssue.fields.summary);
     }
     ngOnInit() {
         var self=this;

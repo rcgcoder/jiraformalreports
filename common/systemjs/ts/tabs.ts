@@ -11,6 +11,14 @@ export class Tabs implements AfterContentInit {
   
   // contentChildren are set
   ngAfterContentInit() {
+    var self=this;
+    this.tabs.forEach(function(tab){
+        tab.getTabsComponent=function(){
+            return self;
+        }
+    })
+    
+    
     // get all active tabs
     let activeTabs = this.tabs.filter((tab)=>tab.active);
     

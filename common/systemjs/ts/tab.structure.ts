@@ -7,8 +7,16 @@ export class TabStructure {
     @Input() header: string = 'this is header';   
     @Input() footer: string = 'this is footer';
     @Input() name: string = 'tabStructure';
+    configuration: object;
+    configurationIssue: object;
     report: object;
     allIssues: object;
+    setConfiguration(issue,oConfiguration){
+        var self=this;
+        self.configurationIssue=issue;
+        self.configuration=oConfiguration;
+        self.getTabsComponent().selectTab(self);
+    }
     ngOnInit() {
         var self=this;
         System.addPostProcess(function(){

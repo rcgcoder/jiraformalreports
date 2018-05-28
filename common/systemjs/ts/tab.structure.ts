@@ -160,7 +160,7 @@ export class TabStructure {
         var arrFunctions=["AdvanceProgressFunction","BillingProgressFunction",
                           "AdvanceTotalEstimatedFunction","BillingTotalEstimatedFunction"];
         arrFunctions.forEach(function(textareaName){
-            auxObj=System.getAngularDomObject(textAreaName)[0];
+            auxObj=System.getAngularDomObject(textareaName)[0];
             dfReport[textareaName]=auxObj.value;
         });
         return dfReport;
@@ -222,9 +222,9 @@ export class TabStructure {
         var arrFunctions=["AdvanceProgressFunction","BillingProgressFunction",
                           "AdvanceTotalEstimatedFunction","BillingTotalEstimatedFunction"];
         arrFunctions.forEach(function(textareaName){
-            auxObj=System.getAngularDomObject(textAreaName)[0];
-            if (isDefined(config[textAreaName])){
-                auxObj.value=config[textAreaName];
+            auxObj=System.getAngularDomObject(textareaName)[0];
+            if (isDefined(config[textareaName])){
+                auxObj.value=config[textareaName];
             }
         });
         return dfReport;

@@ -422,7 +422,14 @@ export class TabStructure {
         self.continueTask();
     }
     onChangeConfiguration(event){
-            log("Change configuration:"+event);
+        var self=this;
+        log("Change configuration:"+event);
+        self.configurations.forEach(function(conf){
+            if (conf.timestamp=config){
+                self.applyConfig(conf);
+            }
+        });
+       
     }
     freeMemory(){
         var self=this;

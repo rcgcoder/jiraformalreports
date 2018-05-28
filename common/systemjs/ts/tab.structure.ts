@@ -17,9 +17,9 @@ export class TabStructure {
         self.configurations=arrConfigurations;
         self.configurations.sort(function(a,b){
             if (a.timestamp<b.timestamp){
-               return -1;
-            } else if (a.timestamp>b.timestamp){
                return 1;
+            } else if (a.timestamp>b.timestamp){
+               return -1;
             } 
             return 0;
         })
@@ -156,7 +156,13 @@ export class TabStructure {
         auxObj=System.getAngularObject('manualFieldDefinitions',true);
         value=auxObj.getElements();
         dfReport["otherFieldDefinitions"]=value;
-
+        
+        var arrFunctions=["AdvanceProgressFunction","BillingProgressFunction",
+                          "AdvanceTotalEstimatedFunction","BillingTotalEstimatedFunction"];
+        arrFunctions.forEach(function(textareaName){
+            auxObj=System.getAngularDomObject(textAreaName)[0];
+            dfReport[textareaName]=auxObj.value;
+        });
         return dfReport;
     }
     applyConfig(config){
@@ -213,6 +219,17 @@ export class TabStructure {
         auxObj=System.getAngularObject('selInterestOtherFields',true);
         if (isDefined(config.useOtherFields)) auxObj.setSelectedValues(config.useOtherFields);
 
+        var arrFunctions=["AdvanceProgressFunction","BillingProgressFunction",
+                          "AdvanceTotalEstimatedFunction","BillingTotalEstimatedFunction"];
+        arrFunctions.forEach(function(textareaName){
+            auxObj=System.getAngularDomObject(textAreaName)[0];
+            if (isDefined(config[textAreaName])){
+                auxObj.value=config[textAreaName];
+            }
+        });
+        return dfReport;
+        
+        
         self.updateCorrelators();
         
     }

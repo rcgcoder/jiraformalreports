@@ -176,7 +176,7 @@ export class TabReports {
                     return JSON.parse(content);
                 };
                 jira.getAttachments(issueId,fileFilter,contentFilter,contentProcess);
-            }
+            });
             self.addStep("Listing all configs",function(objAttachs){
                reportIssue=objAttachs.issue;
                var arrConfigs=objAttachs.attachments;

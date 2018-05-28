@@ -446,7 +446,7 @@ class RCGJira{
                 	   bAddAttachment=contentFilterFunction(response);
                    }
                    if (bAddAttachment){
-                	   var vResult=respone;
+                	   var vResult=response;
                 	   if (isDefined(contentProcessFunction)){
                 		   vResult=contentProcessFunction(vResult);
                 	   }

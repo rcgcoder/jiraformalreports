@@ -15,8 +15,8 @@ export class TabStructure {
         var self=this;
         self.configurationIssue=issue;
         self.configuration=oConfiguration;
-        var tabs=System["Tabs_"+"appMain"];
-        tabs.selectTab(self);
+        var tabs=System.Tabs_appMain;
+        tabs.selectTabByTitle("Structure");
     }
     ngOnInit() {
         var self=this;

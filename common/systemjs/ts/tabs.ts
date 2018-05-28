@@ -31,5 +31,10 @@ export class Tabs implements AfterContentInit {
     // activate the tab the user has clicked on.
     tab.active = true;
   }
+  selectTabByTitle(title: string){
+      // get all active tabs
+      let selectedTabs = this.tabs.filter((tab)=>(tab.tabTitle==title);
+      this.selectTab(selectedTabs[0]);
+    }
 
 }

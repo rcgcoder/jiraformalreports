@@ -227,8 +227,6 @@ export class TabStructure {
                 auxObj.value=config[textareaName];
             }
         });
-        return dfReport;
-        
         
         self.updateCorrelators();
         

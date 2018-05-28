@@ -6,7 +6,7 @@ import { Tab } from './tab';
   templateUrl:System.composeUrl("systemjs/html/tabs.html")
 })
 export class Tabs implements AfterContentInit {
-//  @Input() ComponentName: string = 'Tabs';
+  @Input() ComponentName: string = 'Tabs';
   @ContentChildren(Tab) tabs: QueryList<Tab>;
   
   /*

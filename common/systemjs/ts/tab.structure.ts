@@ -90,6 +90,9 @@ export class TabStructure {
         var value;
         
         dfReport["Vendor"]="Jira Formal Reports";
+        dfReport["timestamp"]=""+Date.now();
+        dfReport["date"]=Date();
+        dfReport["comment"]="";
         auxObj=$('#toggle_ReuseLoadedIssues');
         dfReport["reuseIssues"]=(auxObj.attr("checked")=="checked");
         auxObj=$('#toggle_DebugLogs');

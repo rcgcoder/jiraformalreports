@@ -1,13 +1,573 @@
 {
-jqlRootIssues:"id=BENT-330",
-rootIssues:["BENT-330"],
-billingHierarchyRules:"(child.linkValue('detecta')==parent.id)
-&&
-(child.fieldValue('fixVersions') /*Versión(es) Correctora(s)*/==parent.field('description') /*Descripción*/)
-||
-(child.fieldValue('project') /*Proyecto*/==parent.field('priority') /*Prioridad*/)",
-advanceHierarchyRules:"(child.linkValue('bloquea a')==parent.id)
-||
-(child.fieldValue('customfield_11002') /*Ubicación*/==parent.field('customfield_11001') /*Tipo Seguimiento*/)"
+	"Vendor": "Jira Formal Reports",
+	"reuseIssues": true,
+	"logDebug": false,
+	"logHtmlDebug": false,
+	"rootsByJQL": true,
+	"rootsByProject": false,
+	"rootProjects": 
+	[
+		
+	],
 
+	"useIssueLinkTypes": 
+	[
+		{
+			"key": "bloquea a",
+			"name": "bloquea a"
+		},
+
+		{
+			"key": "depende de",
+			"name": "depende de"
+		},
+
+		{
+			"key": "es implementado por",
+			"name": "es implementado por"
+		},
+
+		{
+			"key": "está relacionado con",
+			"name": "está relacionado con"
+		},
+
+		{
+			"key": "implementa",
+			"name": "implementa"
+		},
+
+		{
+			"key": "tiene relación con",
+			"name": "tiene relación con"
+		}
+	],
+
+	"useFields": 
+	[
+		{
+			"key": "description",
+			"name": "Descripción"
+		},
+
+		{
+			"key": "duedate",
+			"name": "Fecha de entrega"
+		},
+
+		{
+			"key": "fixVersions",
+			"name": "Versión(es) Correctora(s)"
+		},
+
+		{
+			"key": "issuelinks",
+			"name": "Incidencias Enlazadas"
+		},
+
+		{
+			"key": "issuetype",
+			"name": "Tipo de Incidencia"
+		},
+
+		{
+			"key": "labels",
+			"name": "Etiquetas"
+		},
+
+		{
+			"key": "parent",
+			"name": "Padre"
+		},
+
+		{
+			"key": "priority",
+			"name": "Prioridad"
+		},
+
+		{
+			"key": "project",
+			"name": "Proyecto"
+		},
+
+		{
+			"key": "summary",
+			"name": "Resumen"
+		},
+
+		{
+			"key": "timetracking",
+			"name": "Seguimiento del Tiempo"
+		},
+
+		{
+			"key": "versions",
+			"name": "Version(es) Afectadas"
+		}
+	],
+
+	"useOtherFields": 
+	[
+		{
+			"key": "Key",
+			"name": "Issue Key"
+		},
+
+		{
+			"key": "aggregateprogress",
+			"name": "aggregateprogress"
+		},
+
+		{
+			"key": "aggregatetimeestimate",
+			"name": "aggregatetimeestimate"
+		},
+
+		{
+			"key": "aggregatetimeoriginalestimate",
+			"name": "aggregatetimeoriginalestimate"
+		},
+
+		{
+			"key": "aggregatetimespent",
+			"name": "aggregatetimespent"
+		},
+
+		{
+			"key": "created",
+			"name": "created"
+		},
+
+		{
+			"key": "creator",
+			"name": "creator"
+		},
+
+		{
+			"key": "progress",
+			"name": "progress"
+		},
+
+		{
+			"key": "status",
+			"name": "status"
+		},
+
+		{
+			"key": "timeestimate",
+			"name": "timeestimate"
+		},
+
+		{
+			"key": "timeoriginalestimate",
+			"name": "timeoriginalestimate"
+		},
+
+		{
+			"key": "timespent",
+			"name": "timespent"
+		},
+
+		{
+			"key": "updated",
+			"name": "updated"
+		}
+	],
+
+	"jqlScope": 
+	{
+		"jql": "",
+		"values": 
+		[
+			
+		]
+	},
+
+	"rootIssues": 
+	{
+		"jql": "type = epic and project not in (SAE) and contrato= \"AMM L2\" and timeoriginalestimate>0",
+		"values": 
+		[
+			
+		]
+	},
+
+	"billingHierarchy": "(child.fieldValue('customfield_10002') /*Epic Link*/==parent.fieldValue('Key') /*Issue Key*/)\n||\n(child.isLinkedTo(parent,'implementa'))",
+	"advanceHierarchy": "(child.fieldValue('customfield_10002') /*Epic Link*/==parent.fieldValue('Key') /*Issue Key*/)\n||\n(child.isLinkedTo(parent,'implementa'))",
+	"allIssueLinkTypes": 
+	[
+		"bloquea a",
+		"causa",
+		"depende de",
+		"es especificado en",
+		"es implementado por",
+		"especifica",
+		"está causada por",
+		"está relacionado con",
+		"implementa",
+		"tiene relación con"
+	],
+
+	"otherFieldDefinitions": 
+	[
+		[
+			"Key",
+			"Issue Key"
+		],
+
+		[
+			"aggregateprogress",
+			"aggregateprogress"
+		],
+
+		[
+			"aggregatetimeestimate",
+			"aggregatetimeestimate"
+		],
+
+		[
+			"aggregatetimeoriginalestimate",
+			"aggregatetimeoriginalestimate"
+		],
+
+		[
+			"aggregatetimespent",
+			"aggregatetimespent"
+		],
+
+		[
+			"created",
+			"created"
+		],
+
+		[
+			"creator",
+			"creator"
+		],
+
+		[
+			"customfield_10000",
+			"customfield_10000"
+		],
+
+		[
+			"customfield_10001",
+			"customfield_10001"
+		],
+
+		[
+			"customfield_10005",
+			"customfield_10005"
+		],
+
+		[
+			"customfield_10007",
+			"customfield_10007"
+		],
+
+		[
+			"customfield_10009",
+			"customfield_10009"
+		],
+
+		[
+			"customfield_10010",
+			"customfield_10010"
+		],
+
+		[
+			"customfield_10021",
+			"customfield_10021"
+		],
+
+		[
+			"customfield_10402",
+			"customfield_10402"
+		],
+
+		[
+			"customfield_10404",
+			"customfield_10404"
+		],
+
+		[
+			"customfield_10500",
+			"customfield_10500"
+		],
+
+		[
+			"customfield_10501",
+			"customfield_10501"
+		],
+
+		[
+			"customfield_10505",
+			"customfield_10505"
+		],
+
+		[
+			"customfield_10506",
+			"customfield_10506"
+		],
+
+		[
+			"customfield_10507",
+			"customfield_10507"
+		],
+
+		[
+			"customfield_10604",
+			"customfield_10604"
+		],
+
+		[
+			"customfield_10701",
+			"customfield_10701"
+		],
+
+		[
+			"customfield_10814",
+			"customfield_10814"
+		],
+
+		[
+			"customfield_10900",
+			"customfield_10900"
+		],
+
+		[
+			"customfield_10901",
+			"customfield_10901"
+		],
+
+		[
+			"customfield_10902",
+			"customfield_10902"
+		],
+
+		[
+			"customfield_10903",
+			"customfield_10903"
+		],
+
+		[
+			"customfield_10904",
+			"customfield_10904"
+		],
+
+		[
+			"customfield_10905",
+			"customfield_10905"
+		],
+
+		[
+			"customfield_10906",
+			"customfield_10906"
+		],
+
+		[
+			"customfield_10907",
+			"customfield_10907"
+		],
+
+		[
+			"customfield_10908",
+			"customfield_10908"
+		],
+
+		[
+			"customfield_10909",
+			"customfield_10909"
+		],
+
+		[
+			"customfield_10911",
+			"customfield_10911"
+		],
+
+		[
+			"customfield_11005",
+			"customfield_11005"
+		],
+
+		[
+			"customfield_11102",
+			"customfield_11102"
+		],
+
+		[
+			"customfield_11103",
+			"customfield_11103"
+		],
+
+		[
+			"customfield_11104",
+			"customfield_11104"
+		],
+
+		[
+			"customfield_11105",
+			"customfield_11105"
+		],
+
+		[
+			"customfield_11106",
+			"customfield_11106"
+		],
+
+		[
+			"customfield_11107",
+			"customfield_11107"
+		],
+
+		[
+			"customfield_11108",
+			"customfield_11108"
+		],
+
+		[
+			"customfield_11109",
+			"customfield_11109"
+		],
+
+		[
+			"customfield_11110",
+			"customfield_11110"
+		],
+
+		[
+			"customfield_11111",
+			"customfield_11111"
+		],
+
+		[
+			"customfield_11300",
+			"customfield_11300"
+		],
+
+		[
+			"customfield_11500",
+			"customfield_11500"
+		],
+
+		[
+			"customfield_11600",
+			"customfield_11600"
+		],
+
+		[
+			"customfield_11700",
+			"customfield_11700"
+		],
+
+		[
+			"customfield_11800",
+			"customfield_11800"
+		],
+
+		[
+			"customfield_11900",
+			"customfield_11900"
+		],
+
+		[
+			"customfield_12003",
+			"customfield_12003"
+		],
+
+		[
+			"customfield_12200",
+			"customfield_12200"
+		],
+
+		[
+			"customfield_12812",
+			"customfield_12812"
+		],
+
+		[
+			"customfield_12830",
+			"customfield_12830"
+		],
+
+		[
+			"customfield_12837",
+			"customfield_12837"
+		],
+
+		[
+			"customfield_12849",
+			"customfield_12849"
+		],
+
+		[
+			"customfield_12850",
+			"customfield_12850"
+		],
+
+		[
+			"customfield_12857",
+			"customfield_12857"
+		],
+
+		[
+			"lastViewed",
+			"lastViewed"
+		],
+
+		[
+			"progress",
+			"progress"
+		],
+
+		[
+			"resolution",
+			"resolution"
+		],
+
+		[
+			"resolutiondate",
+			"resolutiondate"
+		],
+
+		[
+			"status",
+			"status"
+		],
+
+		[
+			"subtasks",
+			"subtasks"
+		],
+
+		[
+			"timeestimate",
+			"timeestimate"
+		],
+
+		[
+			"timeoriginalestimate",
+			"timeoriginalestimate"
+		],
+
+		[
+			"timespent",
+			"timespent"
+		],
+
+		[
+			"updated",
+			"updated"
+		],
+
+		[
+			"watches",
+			"watches"
+		],
+
+		[
+			"workratio",
+			"workratio"
+		]
+	]
 }

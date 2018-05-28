@@ -254,7 +254,9 @@ export class advSelector {
         //System.webapp.continueTask();
     }
     onChangeSelect(event){
+        var self=this;
         log("Changed element "+event);
-    }
+        self.onSelected.emit([event]);
+   }
                         
 }

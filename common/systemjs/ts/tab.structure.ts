@@ -71,7 +71,15 @@ export class TabStructure {
         var contentType=System.webapp.getContentTypeFromExtension(fileName);
         contentType.isCacheable=true;
         var content=JSON.stringify(actualConfig);
-        System.webapp.saveFileToStorage(fileName,content,contentType);
+        self.addStep("Saving configuration...",function(){
+            self.addStep("Save to Storage the Config",function(){
+                System.webapp.saveFileToStorage(fileName,content,contentType);
+            });
+            self.addStep("Save to attachment of Issue:"+self.configurationIssue.key,function(){
+                var jira=System.webapp.getJira();
+                jira.addAttachmentObject(self.configurationIssue.key,actualConfig,fileName,"Added new versión of Report Configuration ");
+            });
+        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
     }
     getActualReportConfig(){
         var dfReport={};
@@ -80,7 +88,7 @@ export class TabStructure {
         var jql;
         var value;
         
-        
+        dfReport["Vendor"]="Jira Formal Reports";
         auxObj=$('#toggle_ReuseLoadedIssues');
         dfReport["reuseIssues"]=(auxObj.attr("checked")=="checked");
         auxObj=$('#toggle_DebugLogs');

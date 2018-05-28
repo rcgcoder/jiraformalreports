@@ -6,15 +6,12 @@ import { Tab } from './tab';
   templateUrl:System.composeUrl("systemjs/html/tabs.html")
 })
 export class Tabs implements AfterContentInit {
-  @Input() ComponentName: string = 'Tabs';
   @ContentChildren(Tab) tabs: QueryList<Tab>;
   
-  /*
   ngOnInit() {
       var self=this;
-      System["Tabs_"+self.ComponentName]=self;
+      System["Tabs_"+self.id]=self;
   }
-*/
   // contentChildren are set
   ngAfterContentInit() {
     

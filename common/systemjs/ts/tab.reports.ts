@@ -179,14 +179,14 @@ export class TabReports {
             });
             self.addStep("Listing all configs",function(objAttachs){
                reportIssue=objAttachs.issue;
-               var tabStructure=System.getAngularObject("tabStructure",true);
+               var tabConfig=System.getAngularObject("tabConfig",true);
                var arrConfigs=objAttachs.attachments;
                if (arrConfigs.length>0){
                    log("there are "+arrConfigs.length+" config files");
-                   tabStructure.setConfiguration(reportIssue,arrConfigs);
+                   tabConfig.setConfiguration(reportIssue,arrConfigs);
                } else {
                    log("there is not config files");
-                   tabStructure.setConfiguration(reportIssue);
+                   tabConfig.setConfiguration(reportIssue);
                }
                self.continueTask();
             });

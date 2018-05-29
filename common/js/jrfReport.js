@@ -69,7 +69,10 @@ var jrfReport=class jrfReport {
 				self.continueTask(); 
 //				var theHtml=$(sHtml);
 			});
-			cfc.getContent("388137744");
+	        var auxObj=System.getAngularObject('selReportModel',true);
+	        var arrValues=auxObj.getSelectedValues();
+			var contentId=arrValues[0];
+			cfc.getContent(contentId);
 		});
 		
 		

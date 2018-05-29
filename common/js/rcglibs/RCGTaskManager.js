@@ -92,7 +92,7 @@ class RCGTask{
 			element.killTasks();
 		});
 		self.innerForks.forEach(function(task){
-			taks.killTasks();
+			task.killTasks();
 		});
 		self.steps=[];
 		self.innerForks=[];
@@ -971,10 +971,10 @@ class RCGTaskManager{
 	killTasks(){
 		var self=this;
 		self.globalForks.forEach(function(task){
-			taks.killTasks();
+			task.killTasks();
 		});
 		self.innerForks.forEach(function(task){
-			taks.killTasks();
+			task.killTasks();
 		});
 		if (self.runningTask!=""){
 			self.runningTask.killTasks();
@@ -987,13 +987,13 @@ class RCGTaskManager{
 	freeMemory(){
 		var self=this;
 		self.globalForks.forEach(function(task){
-			taks.freeMemory();
+			task.freeMemory();
 		});
 		self.innerForks.forEach(function(task){
-			taks.freeMemory();
+			task.freeMemory();
 		});
 		if (self.runningTask!=""){
-			taks.freeMemory();
+			task.freeMemory();
 		}
 		self.globalForks=[];
 		self.innerForks=[];

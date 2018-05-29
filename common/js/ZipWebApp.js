@@ -104,6 +104,7 @@ class ZipWebApp{
 				jira.getAllEpics();
 			});
 			*/
+			/*
 			self.addStep("Testing Confluence Api Integrations.... ",function(){
 				var cfc=self.getConfluence();
 				//cfc.getAllPages();
@@ -121,6 +122,7 @@ class ZipWebApp{
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 //			}
 			);
+			*/
 			self.continueTask();
 		});
 		self.addStep("Setting <initized> Atlassian Engine.... ",function(){

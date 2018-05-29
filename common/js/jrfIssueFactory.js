@@ -17,7 +17,8 @@ function newIssueFactory(report){
 			[{name:"Child",description:"SubIssues for Billing",type:"object"},
 			 {name:"AdvanceChild",description:"SubIssues for advance calculation",type:"object"},
 			 {name:"LinkType",description:"Relation Types",type:"object"},
-			 {name:"Comment", description:"Comments in Issue",type:"object"}
+			 {name:"Comment", description:"Comments in Issue",type:"object"},
+			 {name:"AccumulatorsCache",description:"Cache the values of accumulator calls",type:"object"}
 			]
 			,
 			allFieldDefinitions.concat(["JiraObject"])
@@ -88,6 +89,58 @@ function newIssueFactory(report){
 		}
 		return "Undefined getter for fieldName:["+sFieldName+"]/["+sFieldKey+"]";
 	});
+	dynObj.functions.add("fieldAccumChilds",function(theFieldName,fncItemCustomCalc){
+		var self=this;
+		self.fieldAccum(theFieldName,"Childs",fncItemCustomCalc);
+	});
+	dynObj.functions.add("fieldAccumAdvanceChilds",function(theFieldName,fncItemCustomCalc){
+		var self=this;
+		self.fieldAccum(theFieldName,"AdvanceChilds",fncItemCustomCalc);
+	});
+	dynObj.functions.add("fieldAccum",function(theFieldName,listAttribName,fncItemCustomCalc){
+		var self=this;
+		var app=System.webapp;
+		var accumValue=0;
+		var childType="Childs";
+		if (isDefined(listAttribName)){
+			childType=listAttribName;
+		}
+		var cacheKey=childType+"."+theFieldName;
+		var accumCache=self.getAccumulatorsCaches();
+		if (accumCache.exists(cacheKey)){
+			return app.continueTask([accumCache.getValue(cacheKey)]);
+		} 
+		app.addStep("looping "+childType,function(){
+			var allChilds=self["get"+childType]();
+			if (allChilds.length()>0){
+				allChilds.walk(function(child){
+					app.addStep("Computing "+childType+":"+child.getKey(),function(){
+						child.fieldAccum(theFieldName,childType);
+					});
+					app.addStep("Accumulating "+childType,function(childValue){
+						accumValue+=childValue;
+					});
+				});
+			} else {
+				var childValue=self.fieldValue(theFieldName);
+				accumValue=childValue;
+			}
+			app.continueTask();
+		});
+		app.addStep("Returning accumulated value for "+childType + " of "+ self.getKey(),function(){
+			if (isDefined(fncItemCustomCalc)){
+				log("Isssue"+self.getKey()+". Calling item custom calc function with value:"+accumValue);
+				accumValue=fncItemCustomCalc(accumValue);
+				log("Isssue"+self.getKey()+ " item custom calc function returns value:"+accumValue);
+			} else {
+				log("Isssue"+self.getKey()+ " returns value:"+accumValue);
+			}
+			accumCache.add(cacheKey,accumValue);
+			app.continueTask([accumValue]);
+		});
+		app.continueTask();
+	});
+	
 	dynObj.functions.add("linkValue",function(sLinkName){
 		return this["get"+sLinkName]();
 	});

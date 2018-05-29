@@ -106,6 +106,11 @@ export class TabConfig {
         dfReport["rootsByJQL"]=(auxObj.attr("checked")=="checked");
         auxObj=$('#toggle_RootsByProject');
         dfReport["rootsByProject"]=(auxObj.attr("checked")=="checked");
+        auxObj=$('#toggle_ForceReloadFiles');
+        dfReport["ForceReloadFiles"]=(auxObj.attr("checked")=="checked");
+
+        
+        
         
         auxObj=System.getAngularObject('selProjectsToReport',true);
         arrValues=auxObj.getSelectedValues();
@@ -178,6 +183,8 @@ export class TabConfig {
         if(isDefined(config.rootsByJQL)&&config.rootsByJQL)auxObj.attr("checked","checked");
         auxObj=$('#toggle_RootsByProject');
         if(isDefined(config.rootsByProject)&&config.rootsByProject)auxObj.attr("checked","checked");
+        auxObj=$('#toggle_ForceReloadFiles');
+        if(isDefined(config.ForceReloadFiles)&&config.ForceReloadFiles)auxObj.attr("checked","checked");
 
         auxObj=System.getAngularObject('linkTypesConfiguration',true);
         if (isDefined(config.allIssueLinkTypes)){

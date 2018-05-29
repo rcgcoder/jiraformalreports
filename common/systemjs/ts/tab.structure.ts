@@ -55,6 +55,10 @@ export class TabStructure {
     }
     executeReport(){
         var self=this;
+        var auxObj=$('#toggle_ForceReloadFiles');
+        var bForceReloadFiles=(auxObj.attr("checked")=="checked");
+
+
         self.addStep("Updating and processing report...", function(){
             var bDontReload=isDefined(window.jrfReport);
             self.addStep("Refresh de Commit Id for update de report class", function(){
@@ -69,6 +73,7 @@ export class TabStructure {
                 System.webapp.github.updateLastCommit();
             });
             self.addStep("Dynamic load de report class", function(){
+                if (bForceReloadFiles) bDontReload=false; 
                 if (bDontReload){
                     self.continueTask();
                 } else {

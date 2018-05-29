@@ -396,7 +396,7 @@ export class TabConfig {
         var self=this;
         var selReportModel=System.getAngularObject("selReportModel",true);
         var modelsSrc=System.getAngularObject("listModels",true);
-        var arrModels=modelSrc.getElements();
+        var arrModels=modelsSrc.getElements();
         var url="";
         var urlParts;
         var reportModel=[];

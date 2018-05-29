@@ -321,7 +321,7 @@ export class TabConfig {
         });
         self.continueTask();
     }
-    onGetFullListOfIssueTypes(){
+    onGetFullListOfIssueLinkTypes(){
         log("getting the total list of issue link types.....");
         var self=this;
         var jira=System.webapp.getJira();

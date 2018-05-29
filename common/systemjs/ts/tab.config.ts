@@ -141,6 +141,10 @@ export class TabConfig {
         auxObj=System.getAngularObject('manualFieldDefinitions',true);
         value=auxObj.getElements();
         dfReport["otherFieldDefinitions"]=value;
+
+        auxObj=System.getAngularObject('listModels',true);
+        value=auxObj.getElements();
+        dfReport["listModels"]=value;
         
         var arrFunctions=["AdvanceProgressFunction","BillingProgressFunction",
                           "AdvanceTotalEstimatedFunction","BillingTotalEstimatedFunction"];
@@ -204,6 +208,13 @@ export class TabConfig {
         auxObj=System.getAngularObject('selInterestOtherFields',true);
         if (isDefined(config.useOtherFields)) auxObj.setSelectedValues(config.useOtherFields);
 
+        
+        auxObj=System.getAngularObject('listModels',true);
+        if (isDefined(config.listModels)){
+            auxObj.setElements(config.listModels);
+        }
+        
+        
         var arrFunctions=["AdvanceProgressFunction","BillingProgressFunction",
                           "AdvanceTotalEstimatedFunction","BillingTotalEstimatedFunction"];
         arrFunctions.forEach(function(textareaName){

@@ -11,6 +11,11 @@
 		                        label="Do not reload Issues before execute report (increase speed when reexecuting)"
 		                        ></aui-toggle>Reuse Loaded Issues
 			<br>
+			<advSelector name="selReportModel" 
+			    				   typeDescriptor="Report Model"
+			    				    multiple="false"
+			    		>
+			</advSelector>
 			<button (click)="executeReport()" class="aui-button">Execute the Report</button>
 			<button (click)="freeMemory()" class="aui-button">Free Memory</button>
 		</div>

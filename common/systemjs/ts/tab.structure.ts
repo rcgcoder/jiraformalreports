@@ -228,7 +228,7 @@ export class TabStructure {
             }
         });
         
-        self.getAngularObject("tabConfig",true).updateCorrelators();
+        System.getAngularObject("tabConfig",true).updateCorrelators();
         
     }
     loadDefaultReport(){
@@ -251,7 +251,7 @@ export class TabStructure {
         log("applying issue link types conf:"+arrTypes.length);
         System.webapp.setIssueLinkTypes(arrTypes); 
         System.getAngularObject('selInterestIssueLinkTypes',true).reloadItems();
-        self.getAngularObject("tabConfig",true).updateCorrelators();
+        System.getAngularObject("tabConfig",true).updateCorrelators();
     }
     onChangeManualIssueFieldDefinitions(arrFields){
         var self=this;
@@ -269,7 +269,7 @@ export class TabStructure {
         }
         System.webapp.setIssueOtherFields(values); 
         auxObj.setElements(values);
-        self.getAngularObject("tabConfig",true).updateCorrelators();
+        System.getAngularObject("tabConfig",true).updateCorrelators();
     }
     executeReport(){
         var self=this;

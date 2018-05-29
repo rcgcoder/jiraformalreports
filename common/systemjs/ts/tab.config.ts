@@ -267,59 +267,60 @@ export class TabConfig {
        
     }
     onGetFullListOfFields($event){
-        log("getting the total list of fields.....");
         var self=this;
         var jira=System.webapp.getJira();
         var hsAllFields;
-        self.addStep("Getting all field names from scope issues",function(){
-            var jql=self.getScopeNormalizedJQL();
-            log("Scope Normalized jql:["+jql+"]");
-            jira.getFieldFullList(jql);
-        });
-        self.addStep("Getting all field names of the list",function(hsFields){
-            var intFields=System.getAngularObject('selInterestFields',true);
-            hsAllFields=hsFields;
-            var arrAllFields=intFields.getAllElements();
-            var hsIdentified=newHashMap();
-            var hsResultFields=newHashMap();
-            log("There is "+ hsFields.length()+" fields in all issues");
-            for (var i=0;i<arrAllFields.length;i++){
-                hsIdentified.add(arrAllFields[i].key,arrAllFields[i]);
-            }
-                
-            var fncProcessNode=System.webapp.createManagedCallback(function(objStep){
-                var objStepKey=objStep.actualNode.key;
-                if (!hsIdentified.exists(objStepKey)){
-                    hsResultFields.add(objStepKey,objStepKey);
+        self.addStep(""getting the total list of fields....."",function(){
+            self.addStep("Getting all field names from scope issues",function(){
+                var jql=self.getScopeNormalizedJQL();
+                log("Scope Normalized jql:["+jql+"]");
+                jira.getFieldFullList(jql);
+            });
+            self.addStep("Getting all field names of the list",function(hsFields){
+                var intFields=System.getAngularObject('selInterestFields',true);
+                hsAllFields=hsFields;
+                var arrAllFields=intFields.getAllElements();
+                var hsIdentified=newHashMap();
+                var hsResultFields=newHashMap();
+                log("There is "+ hsFields.length()+" fields in all issues");
+                for (var i=0;i<arrAllFields.length;i++){
+                    hsIdentified.add(arrAllFields[i].key,arrAllFields[i]);
                 }
+                    
+                var fncProcessNode=System.webapp.createManagedCallback(function(objStep){
+                    var objStepKey=objStep.actualNode.key;
+                    if (!hsIdentified.exists(objStepKey)){
+                        hsResultFields.add(objStepKey,objStepKey);
+                    }
+                });
+                var fncProcessEnd=System.webapp.createManagedCallback(function(objStep){
+                    var objStepEnd=objStep;
+                    self.continueTask([hsResultFields]);
+                });
+                var fncBlockPercent=System.webapp.createManagedCallback(function(objStep){
+                    var objStepEnd=objStep;
+                    log("Block Percent");
+                });
+                var fncBlockTime=System.webapp.createManagedCallback(function(objStep){
+                    var objStepEnd=objStep;
+                    log("Block Time");
+                });
+                hsFields.walkAsync("Removing duplicate fields...",fncProcessNode,fncProcessEnd,fncBlockPercent,fncBlockTime);
             });
-            var fncProcessEnd=System.webapp.createManagedCallback(function(objStep){
-                var objStepEnd=objStep;
-                self.continueTask([hsResultFields]);
+            self.addStep("Update selection table",function(hsResultFields){
+                log("After discard identificied there is "+ hsResultFields.length()+"/"+hsAllFields.length()+" fields in all issues");
+                var fieldDefs=System.getAngularObject('manualFieldDefinitions',true);
+                var arrResultElements=[];
+                var fncToItem=function(elem){
+                    arrResultElements.push([elem,elem]);
+                }
+                hsResultFields.walk(fncToItem);
+                fieldDefs.setElements(arrResultElements);
+                self.continueTask();
+                    
             });
-            var fncBlockPercent=System.webapp.createManagedCallback(function(objStep){
-                var objStepEnd=objStep;
-                log("Block Percent");
-            });
-            var fncBlockTime=System.webapp.createManagedCallback(function(objStep){
-                var objStepEnd=objStep;
-                log("Block Time");
-            });
-            hsFields.walkAsync("Removing duplicate fields...",fncProcessNode,fncProcessEnd,fncBlockPercent,fncBlockTime);
-        });
-        self.addStep("Update selection table",function(hsResultFields){
-            log("After discard identificied there is "+ hsResultFields.length()+"/"+hsAllFields.length()+" fields in all issues");
-            var fieldDefs=System.getAngularObject('manualFieldDefinitions',true);
-            var arrResultElements=[];
-            var fncToItem=function(elem){
-                arrResultElements.push([elem,elem]);
-            }
-            hsResultFields.walk(fncToItem);
-            fieldDefs.setElements(arrResultElements);
             self.continueTask();
-                
-        });
-        self.continueTask();
+        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
     }
     onGetFullListOfIssueLinkTypes(){
         var self=this;

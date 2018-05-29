@@ -270,7 +270,7 @@ export class TabConfig {
         var self=this;
         var jira=System.webapp.getJira();
         var hsAllFields;
-        self.addStep(""getting the total list of fields....."",function(){
+        self.addStep("getting the total list of fields.....",function(){
             self.addStep("Getting all field names from scope issues",function(){
                 var jql=self.getScopeNormalizedJQL();
                 log("Scope Normalized jql:["+jql+"]");

@@ -322,10 +322,10 @@ export class TabConfig {
         self.continueTask();
     }
     onGetFullListOfIssueLinkTypes(){
+        var self=this;
+        var jira=System.webapp.getJira();
+        var hsAllFields;
         self.addStep("getting the total list of issue link types.....",function(){
-            var self=this;
-            var jira=System.webapp.getJira();
-            var hsAllFields;
             self.addStep("Getting all issue link types of Scope",function(){
                 var jql=self.getScopeNormalizedJQL();
                 log("Scope Normalized jql:["+jql+"]");

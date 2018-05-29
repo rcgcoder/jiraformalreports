@@ -173,7 +173,7 @@ export class TabConfig {
         var auxObj;
 
         auxObj=$('#toggle_ReuseLoadedIssues');
-        if(isDefined(config.reuseIssues))auxObj.attr("checked","checked");
+        if(isDefined(config.reuseIssues)&&config.reuseIssues)auxObj.attr("checked","checked");
         auxObj=$('#toggle_RootsByJQL');
         if(isDefined(config.rootsByJQL)&&config.rootsByJQL)auxObj.attr("checked","checked");
         auxObj=$('#toggle_RootsByProject');

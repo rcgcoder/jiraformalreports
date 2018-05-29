@@ -15,6 +15,15 @@
 										(onSelected)="onChangeConfiguration($event)"
 				    		>
 				</advSelector>
+				<dlgEditableList id="listModels" name="listModels" 
+					typeDescriptor="List of Models Available to Report" 
+					columns=2
+					columnDefinitions='[{"caption":"key"},{"caption":"url"}]'
+				    openDialogCaption="List of Models Available to Report"
+					(onApply)="onChangeListOfModels($event)"
+					(onFullFillRequest)="onGetFullListOfModels($event)"
+					>
+				</dlgEditableList>
 		    </div>
 		</div>
 	</div>

@@ -155,6 +155,10 @@ export class TabConfig {
         arrValues=auxObj.getSelectedValues();
         dfReport["jqlReports"]={jql:jql,values:arrValues};
         
+        auxObj=System.getAngularObject('selReportModel',true);
+        arrValues=auxObj.getSelectedValues();
+        var arrOptions=auxObj.getOptions();
+        dfReport["selReportModel"]={selected:arrValues,options:arrOptions};
         
         var arrFunctions=["AdvanceProgressFunction","BillingProgressFunction",
                           "AdvanceTotalEstimatedFunction","BillingTotalEstimatedFunction"];
@@ -229,6 +233,14 @@ export class TabConfig {
             var jql=config.jqlReports.jql;
             auxObj.setJQLValue(jql);
             auxObj.setSelectedValues(config.jqlReports.values);
+        }
+
+        auxObj=System.getAngularObject('selReportModel',true);
+        if (isDefined(config.selReportModel)){
+            var arrValues=config.selReportModel.selected;
+            var arrOptions=config.selReportModel.options;
+            auxObj.fillOptions(arrOptions);
+            auxObj.setSelectedValues(arrValues);
         }
         
         var arrFunctions=["AdvanceProgressFunction","BillingProgressFunction",

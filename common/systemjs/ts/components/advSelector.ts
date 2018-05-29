@@ -58,6 +58,9 @@ export class advSelector {
             log("Parsing: "+sFormula+" Result:<ERROR>:<"+e.toString());
         }
     }
+    getOptions(){
+        return this.elements;
+    }
     findElement(key,source){
         var srcAux=source;
         if (typeof srcAux==="undefined"){

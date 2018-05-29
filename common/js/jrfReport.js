@@ -16,6 +16,7 @@ var jrfReport=class jrfReport {
 		System.webapp.getTaskManager().extendObject(self);
 		self.jira=System.webapp.getJira();
 		self.confluence=System.webapp.getConfluence();
+		self.result="";
 	}
 	getChilds(){
 		return this.childs;
@@ -82,6 +83,7 @@ var jrfReport=class jrfReport {
 								"js/jrfIssueFactory.js",
 								"js/libs/sha256.js",
 								"js/libs/showdown.js",
+								"js/libs/FileSaver.js",
 								"js/libs/wiki2html.js",
 								"js/rcglibs/RCGVarEngine.js",
 								"js/modelProcessor/jrfModel.js",
@@ -362,6 +364,7 @@ var jrfReport=class jrfReport {
 	        var jqResult=$("#ReportResult");
 	        jqResult.html(sModelProcessedResult);
 			loggerFactory.getLogger().enabled=true;
+			self.result=sModelProcessedResult;
 			self.continueTask();
 		});
 		

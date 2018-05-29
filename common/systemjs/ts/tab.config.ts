@@ -108,6 +108,8 @@ export class TabConfig {
         dfReport["rootsByProject"]=(auxObj.attr("checked")=="checked");
         auxObj=$('#toggle_ForceReloadFiles');
         dfReport["ForceReloadFiles"]=(auxObj.attr("checked")=="checked");
+        auxObj=$('#toggle_SaveResult');
+        dfReport["SaveResult"]=(auxObj.attr("checked")=="checked");
 
         
         
@@ -186,6 +188,11 @@ export class TabConfig {
         auxObj=$('#toggle_ForceReloadFiles');
         if(isDefined(config.ForceReloadFiles)&&config.ForceReloadFiles)auxObj.attr("checked","checked");
 
+        
+        auxObj=$('#toggle_SaveResult');
+        if(isDefined(config.SaveResult)&&config.SaveResult)auxObj.attr("checked","checked");
+
+        
         auxObj=System.getAngularObject('linkTypesConfiguration',true);
         if (isDefined(config.allIssueLinkTypes)){
             auxObj.setElements(config.allIssueLinkTypes);

@@ -123,8 +123,11 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 						&&(bLastShowed)
 						&&((processedItemNumber+processedItemJumped)<(self.elemsInForEach.length()))){
 					self.addHtml("</td></tr><tr><td>");
+				} else if ((self.subType=="subrow")
+							&&(bLastShowed)
+							&&((processedItemNumber+processedItemJumped)<(self.elemsInForEach.length()))){
+//						self.addHtml("</td></tr><tr><td>");
 				}
-				
 				self.continueTask();
 			});
 		});

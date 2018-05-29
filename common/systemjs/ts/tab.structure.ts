@@ -57,6 +57,10 @@ export class TabStructure {
         var self=this;
         var auxObj=$('#toggle_ForceReloadFiles');
         var bForceReloadFiles=(auxObj.attr("checked")=="checked");
+        var auxObj=$('#toggle_ForceReloadFiles');
+        var bForceReloadFiles=(auxObj.attr("checked")=="checked");
+        auxObj=$('#toggle_SaveResult');
+        var bSaveToFile=(auxObj.attr("checked")=="checked");
 
 
         self.addStep("Updating and processing report...", function(){
@@ -94,6 +98,12 @@ export class TabStructure {
                 }
                 self.report=theReport;
                 theReport.execute(bDontReload);
+            });
+            self.addStep("Save result to file", function(){
+                if (bSaveToFile){
+                    saveDataToFile(self.report.result,"result.html","text/html");
+                }
+                self.continueTask();
             });
             self.addStep("Save issueList for next run", function(){
                 if (self.report.config.reuseIssues){

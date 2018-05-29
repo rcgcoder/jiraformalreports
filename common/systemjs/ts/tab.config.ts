@@ -8,6 +8,31 @@ export class TabConfig {
     @Input() header: string = 'this is header';   
     @Input() footer: string = 'this is footer';
     @Input() name: string = 'tabConfig';
+    configurations: array;
+    configurationIssue: object;
+    setConfiguration(issue,arrConfigurations){
+        var self=this;
+        self.configurationIssue=issue;
+        self.configurations=arrConfigurations;
+        self.configurations.sort(function(a,b){
+            if (a.timestamp<b.timestamp){
+               return 1;
+            } else if (a.timestamp>b.timestamp){
+               return -1;
+            } 
+            return 0;
+        })
+        var reportIssueInfo=System.getAngularDomObject(self.name+"_reportIssue");
+        reportIssueInfo.html(self.configurationIssue.key +" - "+  self.configurationIssue.fields.summary);
+        var selConfs=System.getAngularObject("selConfigurations",true);
+        var arrOptions=[];
+        self.configurations.forEach(function(conf){
+            arrOptions.push({key:conf.timestamp,name:"Configuration "+arrOptions.length+" "+conf.date,description:conf.comment});
+        });
+        selConfs.fillOptions(arrOptions);
+        var tabs=System.Tabs_appMain;
+        tabs.selectTabByTitle("Config");
+    }
     ngOnInit() {
         var self=this;
         System.addPostProcess(function(){

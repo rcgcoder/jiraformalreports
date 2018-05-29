@@ -152,7 +152,6 @@ export class TabConfig {
         arrValues=auxObj.getSelectedValues();
         dfReport["jqlReports"]={jql:jql,values:arrValues};
         
-        dfReport["actualReport"]=self.configurationIssue.getKey();
         
         var arrFunctions=["AdvanceProgressFunction","BillingProgressFunction",
                           "AdvanceTotalEstimatedFunction","BillingTotalEstimatedFunction"];

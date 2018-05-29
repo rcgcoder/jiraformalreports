@@ -398,7 +398,7 @@ export class TabConfig {
         var modelsSrc=System.getAngularObject("listModels",true);
         var arrModels=modelsSrc.getElements();
         var url="";
-        var urlParts;
+        var urlParts; 
         var reportModel=[];
         arrModels.forEach(function(model){
             url=model[1];

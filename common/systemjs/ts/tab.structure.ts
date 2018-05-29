@@ -79,7 +79,7 @@ export class TabStructure {
                 }
             });
             self.addStep("Executing Report", function(){
-                var theConfig=self.getAngularObject('tabConfig',true).getActualReportConfig();
+                var theConfig=System.getAngularObject('tabConfig',true).getActualReportConfig();
                 var auxObj=System.getAngularObject('selInterestFields',true);
                 theConfig["allFields"]=auxObj.getAllElements();
                 var theReport=new jrfReport(theConfig);

@@ -389,5 +389,21 @@ export class TabConfig {
             return "id in ("+sIssues+")";
         }
     }
-
+    onChangeListOfModels(){
+        var self=this;
+        var selReportModel=System.getAngularObject("selReportModel",true);
+        var modelsSrc=System.getAngularObject("listModels",true);
+        var arrModels=modelSrc.getElements();
+        var url="";
+        var urlParts;
+        var reportModel=[];
+        arrModels.forEach(function(model){
+            url=model[1];
+            urlParts=url.splice("pages/");
+            urlParts=urlParts[1].splice("/");
+            reportModel.push({key:urlParts[0],name:urlParts[1]});
+        });
+        selReportModel.fillOptions(reportModel);
+        selReportModel.setSelectedValues(reportModel[0].key);
+    }
 }

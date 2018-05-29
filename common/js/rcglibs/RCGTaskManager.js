@@ -983,6 +983,7 @@ class RCGTaskManager{
 		self.globalForks=[];
 		self.innerForks=[];
 		self.runningTask="";
+		self.changeStatus();
 	}
 	freeMemory(){
 		var self=this;

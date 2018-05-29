@@ -402,8 +402,8 @@ export class TabConfig {
         var reportModel=[];
         arrModels.forEach(function(model){
             url=model[1];
-            urlParts=url.splice("pages/");
-            urlParts=urlParts[1].splice("/");
+            urlParts=url.split("pages/");
+            urlParts=urlParts[1].split("/");
             reportModel.push({key:urlParts[0],name:urlParts[1]});
         });
         selReportModel.fillOptions(reportModel);

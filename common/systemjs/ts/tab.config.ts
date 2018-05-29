@@ -322,26 +322,27 @@ export class TabConfig {
         self.continueTask();
     }
     onGetFullListOfIssueLinkTypes(){
-        log("getting the total list of issue link types.....");
-        var self=this;
-        var jira=System.webapp.getJira();
-        var hsAllFields;
-        self.addStep("Getting all issue link types of Scope",function(){
-            var jql=self.getScopeNormalizedJQL();
-            log("Scope Normalized jql:["+jql+"]");
-            jira.getIssueLinkFullList(jql);
-        });
-        self.addStep("Update selection table",function(hsLinkTypes){
-            var selLinkTypes=System.getAngularObject('linkTypesConfiguration',true);
-            var arrResultElements=[];
-            var fncToItem=function(elem){
-                arrResultElements.push(elem);
-            }
-            hsLinkTypes.walk(fncToItem);
-            selLinkTypes.setElements(arrResultElements);
+        self.addStep("getting the total list of issue link types.....",function(){
+            var self=this;
+            var jira=System.webapp.getJira();
+            var hsAllFields;
+            self.addStep("Getting all issue link types of Scope",function(){
+                var jql=self.getScopeNormalizedJQL();
+                log("Scope Normalized jql:["+jql+"]");
+                jira.getIssueLinkFullList(jql);
+            });
+            self.addStep("Update selection table",function(hsLinkTypes){
+                var selLinkTypes=System.getAngularObject('linkTypesConfiguration',true);
+                var arrResultElements=[];
+                var fncToItem=function(elem){
+                    arrResultElements.push(elem);
+                }
+                hsLinkTypes.walk(fncToItem);
+                selLinkTypes.setElements(arrResultElements);
+                self.continueTask();
+            });
             self.continueTask();
-        });
-        self.continueTask();
+        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
     }
     getScopeNormalizedJQL(){
         log("getting the list of issues in the Scope.....");

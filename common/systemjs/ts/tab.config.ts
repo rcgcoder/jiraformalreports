@@ -7,6 +7,15 @@ export class TabConfig {
     
     @Input() header: string = 'this is header';   
     @Input() footer: string = 'this is footer';
+    @Input() name: string = 'tabConfig';
+    ngOnInit() {
+        var self=this;
+        System.addPostProcess(function(){
+            System.bindObj(self);
+            System.webapp.getTaskManager().extendObject(self);
+        });
+    }
+          
     onChangeInterest(event){
         this.updateCorrelators();
     }

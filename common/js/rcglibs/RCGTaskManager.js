@@ -993,7 +993,7 @@ class RCGTaskManager{
 			task.freeMemory();
 		});
 		if (self.runningTask!=""){
-			task.freeMemory();
+			self.runningTask.freeMemory();
 		}
 		self.globalForks=[];
 		self.innerForks=[];

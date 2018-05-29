@@ -132,5 +132,8 @@ export class TabStructure {
         var self=this;
         var tm=self.getTaskManager();
         tm.killTasks();
+        var auxObj=$('#toggle_ForceReloadFiles');
+        auxObj.attr("checked","checked");
+
     }
 }

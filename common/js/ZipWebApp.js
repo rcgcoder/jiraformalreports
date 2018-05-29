@@ -283,8 +283,8 @@ class ZipWebApp{
 		self.addStep("Default Config.... ",function(){
 			log("Everything is initialized! now Config!");
 			self.addStep("Loading default config from Storage",function(){
-				var tbStructure=System.getAngularObject('tabStructure',true);
-				tbStructure.loadDefaultReport();
+				var tbConfig=System.getAngularObject('tabConfig',true);
+				tbConfig.loadDefaultReport();
 			});
 /*            System.getAngularObject('advSelector[name="selProjects"]').fillOptions(self.getListProjects());
             System.getAngularObject('advSelector[name="selTypes"]').fillOptions(self.getListIssueTypes());

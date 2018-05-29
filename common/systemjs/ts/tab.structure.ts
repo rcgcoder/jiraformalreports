@@ -123,4 +123,9 @@ export class TabStructure {
             window.gc();
         }
     }
+    killTasks(){
+        var self=this;
+        var tm=self.getTaskManager();
+        tm.killTasks();
+    }
 }

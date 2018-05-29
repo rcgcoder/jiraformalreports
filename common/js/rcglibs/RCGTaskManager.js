@@ -85,6 +85,22 @@ class RCGTask{
 			self.methodWeight=methodWeight;
 		}
 	}
+	killTasks(){
+		var self=this;
+//		log("Free Memory of task:"+self.description);
+		self.steps.forEach(function(element){
+			element.killTasks();
+		});
+		self.innerForks.forEach(function(task){
+			taks.killTasks();
+		});
+		self.steps=[];
+		self.innerForks=[];
+		self.actStep=0;
+		self.running=false;
+		self.isDone=true;
+		self.freeMemory();
+	}
 	freeMemory(){
 		var self=this;
 //		log("Free Memory of task:"+self.description);
@@ -952,5 +968,37 @@ class RCGTaskManager{
 		obj.getTaskManager=self.extended_getTaskManager;
 		obj.continueTask=self.extended_continueTask;
 	}
+	killTasks(){
+		var self=this;
+		self.globalForks.forEach(function(task){
+			taks.killTasks();
+		});
+		self.innerForks.forEach(function(task){
+			taks.killTasks();
+		});
+		if (self.runningTask!=""){
+			self.runningTask.killTasks();
+		}
+		self.freeMemory();
+		self.globalForks=[];
+		self.innerForks=[];
+		self.runningTask="";
+	}
+	freeMemory(){
+		var self=this;
+		self.globalForks.forEach(function(task){
+			taks.freeMemory();
+		});
+		self.innerForks.forEach(function(task){
+			taks.freeMemory();
+		});
+		if (self.runningTask!=""){
+			taks.freeMemory();
+		}
+		self.globalForks=[];
+		self.innerForks=[];
+		self.runningTask="";
+	}
+	
 }
 var taskManager=new RCGTaskManager("Total Tasks");

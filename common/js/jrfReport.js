@@ -71,7 +71,7 @@ var jrfReport=class jrfReport {
 			});
 	        var auxObj=System.getAngularObject('selReportModel',true);
 	        var arrValues=auxObj.getSelectedValues();
-			var contentId=arrValues[0];
+			var contentId=arrValues[0].key;
 			cfc.getContent(contentId);
 		});
 		

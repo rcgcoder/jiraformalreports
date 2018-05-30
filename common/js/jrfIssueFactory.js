@@ -187,7 +187,7 @@ function newIssueFactory(report){
 			}
 		} 
 		return htmlText;
-	}
+	});
 	dynObj.functions.add("getHtmlLastCommentStartsWith",function(sStart,bRemoveTarget,sPostPendToRemove,bRemoveClosureParagraph){
 		var self=this;
 		var htmlText="";

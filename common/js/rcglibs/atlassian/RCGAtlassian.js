@@ -159,7 +159,7 @@ class RCGAtlassian{
 		});
 		fncIteration();
 	}
-	authenticate(appInfo){
+	authenticate(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders){
 		var self=this;
 		self.addStep("Authenticating....",function(){
 			self.addStep("Discarding Oauth Access Token",function(){
@@ -234,7 +234,12 @@ class RCGAtlassian{
 					alert(headers);
 					return self.popCallback([response,xhr,sUrl,headers]);
 				} else if (xhr.status == 403) { // forbidden
-					self.authenticate(appInfo);
+					if (appInfo.tokenAccess==""){
+						self.authenticate(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders);
+					} else {
+						log(response);
+						self.popCallback(["",xhr,sUrl,headers]);
+					}
 				} else {
 					self.popCallback([response,xhr,sUrl,headers]);
 				}

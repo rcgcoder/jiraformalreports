@@ -328,10 +328,10 @@ var jrfReport=class jrfReport {
 							issue.addComment(objComment);
 							bFind=true;
 						}
-						if (bFind){
-							var vResult=issue.getHtmlLastCommentStartsWith("Descripción Formal",true,"<br/>",true);
-							log (vResult);
-						}
+//						if (bFind){
+//							var vResult=issue.getHtmlLastCommentStartsWith("Descripción Formal",true,"<br/>",true);
+//							log (vResult);
+//						}
 					} else {
 						log("The issue ["+key+"] does not exists... Error");
 					}

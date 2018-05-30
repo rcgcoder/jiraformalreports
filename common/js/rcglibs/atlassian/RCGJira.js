@@ -431,6 +431,9 @@ class RCGJira{
             reportIssue=issueDetail;
             self.continueTask();
         });
+        self.addStep("Authorization Call",function(issueDetail){
+        	self.oauthConnect();
+        });
         self.addStep("Getting all the attachments of the report issue:"+issueId,function(){
             log("Adding... process attachment steps");
             var inspectAttachment=self.createManagedCallback(function(contentUrl){

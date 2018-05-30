@@ -435,25 +435,30 @@ class RCGJira{
             log("Adding... process attachment steps");
             var inspectAttachment=self.createManagedCallback(function(contentUrl){
                 log("Adding steps for inspect:"+contentUrl);
-                self.addStep("Getting Content of Attachment:"+contentUrl,function(){
-                   self.apiCall(contentUrl,"GET",undefined,undefined,
-                                   "application/json",undefined,undefined,{token:true});
-                });
-                self.addStep("Evaluating the loaded content for :"+contentUrl,function(response){
-                   log(response.substring(0,50));
-                   var bAddAttachment=true;
-                   if (isDefined(contentFilterFunction)){
-                	   bAddAttachment=contentFilterFunction(response);
-                   }
-                   if (bAddAttachment){
-                	   var vResult=response;
-                	   if (isDefined(contentProcessFunction)){
-                		   vResult=contentProcessFunction(vResult);
-                	   }
-                	   arrFiles.push(vResult);
-                   }
-                   self.continueTask();
-                });
+                self.addStep("Getting Content as Inner Fork:"+contentUrl,function(){
+	                self.addStep("Getting Content of Attachment:"+contentUrl,function(){
+	                   self.apiCall(contentUrl,"GET",undefined,undefined,
+	                                   "application/json",undefined,undefined,{token:true});
+	                });
+	                self.addStep("Evaluating the loaded content for :"+contentUrl,function(response){
+	                   log(response.substring(0,50));
+	                   var bAddAttachment=true;
+	                   if (isDefined(contentFilterFunction)){
+	                	   bAddAttachment=contentFilterFunction(response);
+	                   }
+	                   if (bAddAttachment){
+	                	   var vResult=response;
+	                	   if (isDefined(contentProcessFunction)){
+	                		   vResult=contentProcessFunction(vResult);
+	                	   }
+	                	   arrFiles.push(vResult);
+	                   }
+	                   self.continueTask();
+	                });
+    			},0,1,undefined,undefined,undefined,"INNER",undefined
+                //}
+                );
+                
             });
             reportIssue.fields.attachment.forEach(function(elem){
                 log(elem.content+" --> mimeType:"+elem.mimeType);

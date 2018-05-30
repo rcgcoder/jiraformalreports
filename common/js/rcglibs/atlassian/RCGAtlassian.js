@@ -1,4 +1,4 @@
-class RCGAtlassian{
+fclass RCGAtlassian{
 	constructor(app){
 		var self=this;
 		self.proxyPath="";
@@ -159,7 +159,7 @@ class RCGAtlassian{
 		});
 		fncIteration();
 	}
-	authenticate(){
+	authenticate(appInfo){
 		var self=this;
 		self.addStep("Authenticating....",function(){
 			self.addStep("Discarding Oauth Access Token",function(){
@@ -234,7 +234,7 @@ class RCGAtlassian{
 					alert(headers);
 					return self.popCallback([response,xhr,sUrl,headers]);
 				} else if (xhr.status == 403) { // forbidden
-					self.authenticate();
+					self.authenticate(appInfo);
 				} else {
 					self.popCallback([response,xhr,sUrl,headers]);
 				}

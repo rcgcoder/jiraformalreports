@@ -2,7 +2,7 @@ var jrfSum=class jrfSum{//this kind of definition allows to hot-reload
 	constructor(tag,reportElem,model){
 		var self=this;
 		model.extendToken(self,tag,reportElem);
-		self.varName=self.getAttrVal("var");
+		self.varName=self.getAttrVal("var").trim();
 	}
 	apply(){
 		var self=this;

@@ -89,15 +89,15 @@ function newIssueFactory(report){
 		}
 		return "Undefined getter for fieldName:["+sFieldName+"]/["+sFieldKey+"]";
 	});
-	dynObj.functions.add("fieldAccumChilds",function(theFieldName,fncItemCustomCalc){
+	dynObj.functions.add("fieldAccumChilds",function(theFieldName,bSetProperty,fncItemCustomCalc){
 		var self=this;
-		return self.fieldAccum(theFieldName,"Childs",fncItemCustomCalc);
+		return self.fieldAccum(theFieldName,"Childs",bSetProperty,fncItemCustomCalc);
 	});
-	dynObj.functions.add("fieldAccumAdvanceChilds",function(theFieldName,fncItemCustomCalc){
+	dynObj.functions.add("fieldAccumAdvanceChilds",function(theFieldName,bSetProperty,fncItemCustomCalc){
 		var self=this;
-		return self.fieldAccum(theFieldName,"AdvanceChilds",fncItemCustomCalc);
+		return self.fieldAccum(theFieldName,"AdvanceChilds",bSetProperty,fncItemCustomCalc);
 	});
-	dynObj.functions.add("fieldAccum",function(theFieldName,listAttribName,fncItemCustomCalc){
+	dynObj.functions.add("fieldAccum",function(theFieldName,listAttribName,bSetProperty,fncItemCustomCalc){
 		var self=this;
 		var app=System.webapp;
 		var accumValue=0;
@@ -110,7 +110,6 @@ function newIssueFactory(report){
 		if (accumCache.exists(cacheKey)){
 			return accumCache.getValue(cacheKey);
 		} 
-	
 		var allChilds=self["get"+childType]();
 		if (allChilds.length()>0){
 			allChilds.walk(function(child){
@@ -132,6 +131,13 @@ function newIssueFactory(report){
 			log("Isssue"+self.getKey()+ " returns value:"+accumValue);
 		}
 		accumCache.add(cacheKey,accumValue);
+		if (isUndefined(bSetProperty) || (isDefined(bSetProperty)&&(bSetProperty))){
+			// save to jira property
+			System.webapp.addStep("Saving result:"+accumValue+" to property:"+cacheKey+" of Issue:"+self.getKey(),function(){
+				var jira=System.webapp.getJira();
+				jira.setProperty(self.getKey(),cacheKey,{date:Date.now(),value:accumValue});
+	        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
+		}
 		return accumValue;
 	});
 	

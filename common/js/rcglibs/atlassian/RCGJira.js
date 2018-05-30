@@ -376,7 +376,7 @@ class RCGJira{
 		});
 		self.apiCall(   "/rest/api/2/issue/"+issueId+"/properties/"+propertyName,
 						"PUT",
-						{"content":"Test if works on JIRA Cloud", "completed" : 1},
+						propertyValue,
 						undefined,
 						"application/json");
 	}

@@ -29,6 +29,9 @@ var jrfFormula=class jrfFormula{//this kind of definition allows to hot-reload
 							// execute function inserts the las ";" automatically
 							`;
 			var sValue=executeFunction([self.reportElem,self.model.processingRoot],sFncFormula);
+			if (isNaN(sValue)||(!isFinity(sValue))){
+				sValue="";
+			}
 			self.addHtml(sValue);
 			self.continueTask();
 		});

@@ -135,7 +135,7 @@ function newIssueFactory(report){
 			// save to jira property
 			System.webapp.addStep("Saving result:"+accumValue+" to property:"+cacheKey+" of Issue:"+self.getKey(),function(){
 				var jira=System.webapp.getJira();
-				jira.setProperty(self.getKey(),cacheKey,{date:Date.now(),value:accumValue});
+				jira.setProperty(self.getKey(),cacheKey,[{date:Date.now(),value:accumValue}]);
 	        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
 		}
 		return accumValue;

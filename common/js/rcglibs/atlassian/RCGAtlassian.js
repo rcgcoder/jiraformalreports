@@ -1,4 +1,4 @@
-fclass RCGAtlassian{
+class RCGAtlassian{
 	constructor(app){
 		var self=this;
 		self.proxyPath="";

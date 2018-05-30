@@ -122,11 +122,11 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 				if ((self.subType=="row")
 						&&(bLastShowed)
 						&&((processedItemNumber+processedItemJumped)<(self.elemsInForEach.length()))){
-					self.addHtml("</td></tr><tr><td>");
+					self.addHtml("<!-- ADDED BY FOREACH ROW ==>>  --></td></tr><tr><td><!-- <== ADDED BY FOREACH ROW -->");
 				} else if ((self.subType=="subrow")
 							&&(bLastShowed)
 							&&((processedItemNumber+processedItemJumped)<(self.elemsInForEach.length()))){
-//						self.addHtml("</td></tr><tr><td>");
+					self.addHtml("<!-- ADDED BY FOREACH SUBROW ==>>  --></td></tr><tr><td><!-- <== ADDED BY FOREACH SUBROW -->");
 				}
 				self.continueTask();
 			});

@@ -168,22 +168,44 @@ function newIssueFactory(report){
 		var self=this;
 		return self["get"+attrName]();
 	});
+	dynObj.functions.add("removeParagraphOfHTML",function(sHTML){
+		htmlText=sHTML;
+		var sInitialParagraphTag=htmlText.substring(0,3).toLowerCase();
+		var sFinalParagraphTag=htmlText.substring(htmlText.length-4,htmlText.length).toLowerCase();
+		if (sInitialParagraphTag=="<p>"){
+			htmlText=htmlText.substring(3,htmlText.length);
+			if (sFinalParagraphTag=="</p>"){
+				htmlText=htmlText.substring(0,htmlText.length-4);
+			}
+		}
+		return htmlText;
+	});
+	dynObj.functions.add("getHtmlAllComments",function(bRemoveClosureParagraph){
+		var self=this;
+		var htmlText="";
+		var hsComments=self.getComments();
+		if (hsComments.length()>0){
+			hsComments.walk(function(comment){
+				if (htmlText!=""){
+					htmlText="<br><br>"+htmlText;
+				}
+				htmlText=comment.id+"<br>"+comment.htmlBody+htmlText;
+			});
+			if (isUndefined(bRemoveClosureParagraph) || (isDefined(bRemoveClosureParagraph)&&(bRemoveClosureParagraph))){
+				htmlText=self.removeParagraphOfHTML(htmlText);
+			}
+		} 
+		return htmlText;
+	});
 	dynObj.functions.add("getHtmlLastComment",function(bRemoveClosureParagraph){
 		var self=this;
 		var htmlText="";
 		var hsComments=self.getComments();
 		if (hsComments.length()>0){
 			var lastComment=hsComments.getLast().value;
-			htmlText=lastComment.htmlBody.trim();
+			htmlText=lastComment.htmlBody;
 			if (isUndefined(bRemoveClosureParagraph) || (isDefined(bRemoveClosureParagraph)&&(bRemoveClosureParagraph))){
-				var sInitialParagraphTag=htmlText.substring(0,3).toLowerCase()
-				var sFinalParagraphTag=htmlText.substring(htmlText.length-4,htmlText.length).toLowerCase()
-				if (sInitialParagraphTag=="<p>"){
-					htmlText=htmlText.substring(3,htmlText.length);
-					if (sFinalParagraphTag=="</p>"){
-						htmlText=htmlText.substring(0,htmlText.length-4);
-					}
-				}
+				htmlText=self.removeParagraphOfHTML(htmlText);
 			}
 		} 
 		return htmlText;
@@ -194,16 +216,9 @@ function newIssueFactory(report){
 		var hsComments=self.getCommentsStartsWith(sStart);
 		if (hsComments.length()>0){
 			var lastComment=hsComments.getLast().value;
-			htmlText=lastComment.htmlBody.trim();
+			htmlText=lastComment.htmlBody;
 			if (isDefined(bRemoveClosureParagraph)&&(bRemoveClosureParagraph)){
-				var sInitialParagraphTag=htmlText.substring(0,3).toLowerCase()
-				var sFinalParagraphTag=htmlText.substring(htmlText.length-4,htmlText.length).toLowerCase()
-				if (sInitialParagraphTag=="<p>"){
-					htmlText=htmlText.substring(3,htmlText.length);
-					if (sFinalParagraphTag=="</p>"){
-						htmlText=htmlText.substring(0,htmlText.length-4);
-					}
-				}
+				htmlText=self.removeParagraphOfHTML(htmlText);
 			}
 			if (isDefined(bRemoveTarget)&&(bRemoveTarget)){
 				var sRemove=sStart;

@@ -324,7 +324,7 @@ var jrfReport=class jrfReport {
 						for (var i=0;i<comments.length;i++){
 							comment=comments[i];
 							htmlComment=htmlComments[i];
-							objComment={id:comment.created,body:comment.body,htmlBody:htmlComment.body};
+							objComment={id:comment.created.trim(),body:comment.body.trim(),htmlBody:htmlComment.body.trim()};
 							issue.addComment(objComment);
 							bFind=true;
 						}

@@ -171,7 +171,7 @@ function newIssueFactory(report){
 	dynObj.functions.add("getHtmlLastComment",function(bRemoveClosureParagraph){
 		var self=this;
 		var htmlText="";
-		var hsComments=self.getCommentsStartsWith(sStart);
+		var hsComments=self.getComments();
 		if (hsComments.length()>0){
 			var lastComment=hsComments.getLast().value;
 			htmlText=lastComment.htmlBody.trim();

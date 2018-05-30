@@ -119,6 +119,9 @@ function newIssueFactory(report){
 			});
 		} else {
 			var childValue=self.fieldValue(theFieldName);
+			if (childValue==""){
+				childValue=0;
+			}
 			accumValue=childValue;
 		}
 		if (isDefined(fncItemCustomCalc)){

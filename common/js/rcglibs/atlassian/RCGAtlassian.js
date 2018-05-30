@@ -237,7 +237,7 @@ class RCGAtlassian{
 					if (appInfo.tokenAccess==""){
 						self.authenticate(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders);
 					} else {
-						log(response);
+						log(xhr.responseText);
 						self.popCallback(["",xhr,sUrl,headers]);
 					}
 				} else {

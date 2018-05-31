@@ -186,7 +186,7 @@ var jrfReport=class jrfReport {
 		
 		self.addStep("Processing root elements.... ",function(){
 			if (self.bFinishReport) return self.continueTask();
-			self.treeIssues=newHashMap();
+			//self.treeIssues=newHashMap();
 			self.rootIssues.walk(function(value,iProf,key){
 				log("Root Issue: "+key);
 				var issue=self.allIssues.getById(key);

@@ -84,6 +84,12 @@ class ZipWebApp{
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 //			}
 			);
+			self.addStep("Getting All Users to do a list.... ",function(){
+				var jira=self.getJira();
+				jira.getAllUsers();
+			},0,1,undefined,undefined,undefined,"INNER",undefined
+//			}
+			);
 			
 			self.addStep("Getting All Labels.... ",function(){
 				var jira=self.getJira();

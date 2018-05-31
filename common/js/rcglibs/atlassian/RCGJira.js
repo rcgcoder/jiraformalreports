@@ -25,6 +25,7 @@ class RCGJira{
 
 		self.epics=newDynamicObjectFactory([],[],[],"Epics");
 		self.labels=newDynamicObjectFactory([],[],[],"Labels");
+		self.users=[];
 		self.filters=[];
 		self.issueLinkTypes=[];
 		self.issueOtherFields=[];
@@ -187,6 +188,21 @@ class RCGJira{
 	getAllIssueLinkTypes(){
 		
 	}
+	getUsers(){
+		var self=this;
+		return self.users;
+	}
+	getAllUsers(){
+		var self=this;
+		self.pushCallback(function(response,xhr,sUrl,headers){
+			log("getAllUsers:"+response);
+			self.users=response;
+			self.popCallback();
+		});
+		self.apiCall(   "/rest/api/2/user/search?startAt=0&maxResults=1000&username=_");
+	}
+
+	
 	getAllProjects(){
 		var self=this;
 		self.pushCallback(function(response,xhr,sUrl,headers){
@@ -377,25 +393,6 @@ class RCGJira{
 		self.apiCall(   "/rest/api/2/issue/"+issueId+"/properties/"+propertyName,
 						"PUT",
 						propertyValue,
-						undefined,
-						"application/json");
-	}
-	getUsers(){
-		var self=this;
-		self.pushCallback(function(sResponse,xhr, statusText, errorThrown){
-			var arrUsers=[];
-			if (sResponse!=""){
-				var oResponse=JSON.parse(sResponse);
-				oResponse.forEach(function(user){
-					arrUsers.push({key:user.key,name:user.displayName});
-				});
-			}
-			log(arrUsers.length + " users in Jira");
-			self.continueTask([arrUsers]);
-		});
-		self.apiCall(   "/rest/api/2/user/search?startAt=0&maxResults=1000&username=_",
-						"GET",
-						undefined,
 						undefined,
 						"application/json");
 	}

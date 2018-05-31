@@ -111,6 +111,8 @@ export class TabConfig {
         auxObj=$('#toggle_SaveResult');
         dfReport["SaveResult"]=(auxObj.attr("checked")=="checked");
 
+        auxObj=$('#toggle_ResetLeafPrecomputations');
+        dfReport["ResetLeafPrecomputations"]=(auxObj.attr("checked")=="checked");
         
         
         
@@ -166,6 +168,10 @@ export class TabConfig {
         arrValues=auxObj.getSelectedValues();
         var arrOptions=auxObj.getOptions();
         dfReport["selReportModel"]={selected:arrValues,options:arrOptions};
+
+        auxObj=System.getAngularDomObject("PrecomputatorUsers")[0];
+        dfReport["PrecomputatorUsers"]=auxObj.value;
+        
         
         var arrFunctions=["AdvanceProgressFunction","BillingProgressFunction",
                           "AdvanceTotalEstimatedFunction","BillingTotalEstimatedFunction"];
@@ -188,6 +194,10 @@ export class TabConfig {
         auxObj=$('#toggle_ForceReloadFiles');
         if(isDefined(config.ForceReloadFiles)&&config.ForceReloadFiles)auxObj.attr("checked","checked");
 
+        auxObj=$('#toggle_ResetLeafPrecomputations');
+        if(isDefined(config.ResetLeafPrecomputations)&&config.ResetLeafPrecomputations)auxObj.attr("checked","checked");
+        
+        
         
         auxObj=$('#toggle_SaveResult');
         if(isDefined(config.SaveResult)&&config.SaveResult)auxObj.attr("checked","checked");
@@ -255,6 +265,12 @@ export class TabConfig {
             var arrOptions=config.selReportModel.options;
             auxObj.fillOptions(arrOptions);
             auxObj.setSelectedValues(arrValues);
+        }
+        
+        
+        auxObj=System.getAngularDomObject("PrecomputatorUsers")[0];
+        if (isDefined(config.PrecomputatorUsers)){
+            auxObj.value=config.PrecomputatorUsers;
         }
         
         var arrFunctions=["AdvanceProgressFunction","BillingProgressFunction",

@@ -383,15 +383,15 @@ class RCGJira{
 	getUsers(){
 		var self=this;
 		self.pushCallback(function(sResponse,xhr, statusText, errorThrown){
-			var hsUsers=newHashMap();
+			var arrUsers=[];
 			if (objResponse!=""){
 				var oResponse=JSON.parse(sResponse);
 				oResponse.forEach(function(user){
-					hsUsers.add(user.key,{key:user.key,name:user.displayName});
+					arrUsers.push({key:user.key,name:user.displayName});
 				});
 			}
-			log(hsUsers.length + " users in Jira");
-			self.continueTask([hsUsers]);
+			log(arrUsers.length + " users in Jira");
+			self.continueTask([arrUsers]);
 		});
 		self.apiCall(   "/rest/api/2/user/search?startAt=0&maxResults=1000&username=_",
 						"GET",

@@ -167,7 +167,7 @@ export class TabConfig {
         var arrOptions=auxObj.getOptions();
         dfReport["selReportModel"]={selected:arrValues,options:arrOptions};
 
-        auxObj=System.getAngularObject("selUsersCanResetLeafs");
+        auxObj=System.getAngularObject("selUsersCanResetLeafs",true);
         arrValues=auxObj.getSelectedValues();
         dfReport["UsersCanResetLeafs"]=arrValues;
         

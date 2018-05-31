@@ -384,7 +384,7 @@ class RCGJira{
 		var self=this;
 		self.pushCallback(function(sResponse,xhr, statusText, errorThrown){
 			var arrUsers=[];
-			if (objResponse!=""){
+			if (sResponse!=""){
 				var oResponse=JSON.parse(sResponse);
 				oResponse.forEach(function(user){
 					arrUsers.push({key:user.key,name:user.displayName});

@@ -162,10 +162,27 @@ function newIssueFactory(report){
 		accumCache.add(cacheKey,accumValue);
 		if (isUndefined(bSetProperty) || (isDefined(bSetProperty)&&(bSetProperty))){
 			// save to jira property
-			System.webapp.addStep("Saving result:"+accumValue+" to property:"+cacheKey+" of Issue:"+self.getKey(),function(){
-				var jira=System.webapp.getJira();
-				jira.setProperty(self.getKey(),cacheKey,[{date:Date.now(),value:accumValue}]);
-	        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
+			if ((allChilds.length()>0)&&(accumValue!=0)){
+				var antValue=0;
+				var precompValue=self.getLastPrecomputedPropertyValue(cacheKey);
+				if (precompValue!=""){
+					antValue=precompValue.value;
+				}
+				if (antValue==""){
+					antValue=0;
+				}
+				if (accumValue!=antValue){
+					self.appendPrecomputedPropertyValues(cacheKey,[{"date":Date.now(),"value":accumValue}]);
+					System.webapp.addStep("Saving result:"+accumValue+" to property:"+cacheKey+" of Issue:"+self.getKey(),function(){
+						var jira=System.webapp.getJira();
+						var arrPropertyToJira=[];
+						self.getPrecomputedPropertyById(cacheKey).walk(function(elem,iProf,key){
+							arrPropertyToJira.push(elem);
+						});
+						jira.setProperty(self.getKey(),cacheKey,arrPropertyToJira);
+			        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
+				}
+			}
 		}
 		return accumValue;
 	});

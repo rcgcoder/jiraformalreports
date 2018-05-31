@@ -266,7 +266,7 @@ export class TabConfig {
             auxObj.setSelectedValues(arrValues);
         }
         
-        auxObj=System.getAngularObject("selUsersCanResetLeafs");
+        auxObj=System.getAngularObject("selUsersCanResetLeafs",true);
         if (isDefined(config.UsersCanResetLeafs)){
             auxObj.setSelectedValues(config.UsersCanResetLeafs);
         }

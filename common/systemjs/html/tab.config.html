@@ -62,8 +62,12 @@
 		<strong> Update leaf precomputation users</strong><br>
 		<div class="aui-group">
 		    <div class="aui-item">
-		    <span>Users allowed to reset leaf precomputations </span><textarea id="PrecomputatorUsers">
-		    </textarea>
+		    <atlassianSelector name="selUsersCanResetLeafs" 
+		    				   typeDescriptor="Users allowed to reset leaf computed accumulators"
+		    				    atlassianAplication="jira"
+		    				    atlassianObjectFunction="getUsers"
+		    		>
+		    </atlassianSelector >
 			<aui-toggle id="toggle_ResetLeafPrecomputations" 
 		                        label="Allowed Users resets the leaf acummulators (Use with empty jql scope)"
 		                        ></aui-toggle>Allowed Users resets the leaf acummulators (Use with empty jql scope)

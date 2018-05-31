@@ -380,6 +380,26 @@ class RCGJira{
 						undefined,
 						"application/json");
 	}
+	getUsers(){
+		var self=this;
+		self.pushCallback(function(sResponse,xhr, statusText, errorThrown){
+			var hsUsers=newHashMap();
+			if (objResponse!=""){
+				var oResponse=JSON.parse(sResponse);
+				oResponse.forEach(function(user){
+					hsUsers.add(user.key,{key:user.key,name:user.displayName});
+				});
+			}
+			log(hsUsers.length + " users in Jira");
+			self.continueTask([hsUsers]);
+		});
+		self.apiCall(   "/rest/api/2/user/search?startAt=0&maxResults=1000&username=_",
+						"GET",
+						undefined,
+						undefined,
+						"application/json");
+	}
+	
 	getProperty(issueId,propertyName){
 		var self=this;
 		self.pushCallback(function(sResponse,xhr, statusText, errorThrown){

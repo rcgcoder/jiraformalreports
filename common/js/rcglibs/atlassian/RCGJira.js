@@ -190,13 +190,21 @@ class RCGJira{
 	}
 	getUsers(){
 		var self=this;
-		return self.users;
+		var arrResult=[];
+		if (self.users!=""){
+			self.users.forEach(function(user){
+				arrResult.push({key:user.key,name:user.displayName});
+			});
+		}
+		return arrResult;
 	}
 	getAllUsers(){
 		var self=this;
 		self.pushCallback(function(response,xhr,sUrl,headers){
 			log("getAllUsers:"+response);
-			self.users=response;
+			if (response!=""){
+				self.users=JSON.parse(response);
+			}
 			self.popCallback();
 		});
 		self.apiCall(   "/rest/api/2/user/search?startAt=0&maxResults=1000&username=_");

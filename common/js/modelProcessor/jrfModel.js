@@ -74,15 +74,18 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			if (bLocated){ // if bLocated... sToken stores the type of call.
 				sPart=self.removeInnerTags(sPart,true); // remove all html tags that confluence can be inserted
 				sPart=sPart.split(")")[0]; // sParts only have the params of the function Childs(.....) or ();
-				sPart=sPart.substring(sPart.indexOf("("),sPart.length);// now only the inner part
+				sPart=sPart.substring(sPart.indexOf("(")+1,sPart.length);// now only the inner part
 				arrParts=sPart.split(","); // , separated
 				var typeRelation=sToken;
 				if (sToken=="("){
 					// the first param is the name of list (childs,advancechilds,... another custom
-					typeRelation=arrParts[0];
+					typeRelation=replaceAll(arrParts[0],'"','');
+					typeRelation=replaceAll(typeRelation,"'",'').trim();
 					arrParts=arrParts.shift();
 				}
 				var fieldName=arrParts[0]; // the field name.... 
+				fieldName=replaceAll(fieldName,'"','');
+				fieldName=replaceAll(fieldName,"'",'').trim();
 				var sKey=typeRelation+"."+fieldName;
 				var hsAux;
 				if (!hsAccumulators.exists(typeRelation)){

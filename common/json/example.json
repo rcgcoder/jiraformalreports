@@ -1,4800 +1,826 @@
 {
-	"_readableState": 
+	"expand": "renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations,customfield_10021.properties,customfield_10009.properties",
+	"id": "40443",
+	"self": "https://paega2.atlassian.net/rest/api/2/issue/40443",
+	"key": "NOTIFLOPD-87",
+	"fields": 
 	{
-		"objectMode": false,
-		"highWaterMark": 16384,
-		"buffer": 
-		{
-			"head": null,
-			"tail": null,
-			"length": 0
-		},
-
-		"length": 0,
-		"pipes": null,
-		"pipesCount": 0,
-		"flowing": null,
-		"ended": false,
-		"endEmitted": false,
-		"reading": false,
-		"sync": true,
-		"needReadable": false,
-		"emittedReadable": false,
-		"readableListening": false,
-		"resumeScheduled": false,
-		"destroyed": false,
-		"defaultEncoding": "utf8",
-		"awaitDrain": 0,
-		"readingMore": true,
-		"decoder": null,
-		"encoding": null
-	},
-
-	"readable": true,
-	"_events": 
-	{
-		
-	},
-
-	"_eventsCount": 0,
-	"socket": 
-	{
-		"connecting": false,
-		"_hadError": false,
-		"_handle": 
-		{
-			"reading": true,
-			"owner": "[Circular ~.socket]",
-			"onconnection": null,
-			"_consumed": true
-		},
-
-		"_parent": null,
-		"_host": null,
-		"_readableState": 
-		{
-			"objectMode": false,
-			"highWaterMark": 16384,
-			"buffer": 
+		"fixVersions": 
+		[
 			{
-				"head": null,
-				"tail": null,
-				"length": 0
+				"self": "https://paega2.atlassian.net/rest/api/2/version/23513",
+				"id": "23513",
+				"description": "Versión creada a partir de la 4.0.2. Funcionalidad para cumplir ley LOPD",
+				"name": "NOTIF_LOPD_4.3.0",
+				"archived": false,
+				"released": false
+			}
+		],
+
+		"resolution": 
+		{
+			"self": "https://paega2.atlassian.net/rest/api/2/resolution/10000",
+			"id": "10000",
+			"description": "Una vez implementado el requisito y caso de uso pasado OK",
+			"name": "Validado"
+		},
+
+		"customfield_10500": 1.0,
+		"customfield_10501": null,
+		"customfield_10108": null,
+		"customfield_10900": 0.1,
+		"customfield_10901": 0.2,
+		"customfield_10505": null,
+		"customfield_10902": 0.6,
+		"customfield_10506": null,
+		"customfield_10507": null,
+		"customfield_10903": 0.1,
+		"customfield_10904": null,
+		"customfield_10905": null,
+		"customfield_10906": null,
+		"customfield_10907": null,
+		"customfield_10908": null,
+		"customfield_10909": null,
+		"lastViewed": null,
+		"customfield_12002": null,
+		"customfield_12400": null,
+		"priority": 
+		{
+			"self": "https://paega2.atlassian.net/rest/api/2/priority/1",
+			"iconUrl": "https://paega2.atlassian.net/images/icons/priorities/critical.svg",
+			"name": "Muy Alta",
+			"id": "1"
+		},
+
+		"customfield_12003": null,
+		"labels": 
+		[
+			
+		],
+
+		"customfield_11700": "{}",
+		"aggregatetimeoriginalestimate": 670680,
+		"timeestimate": 670680,
+		"issuelinks": 
+		[
+			
+		],
+
+		"assignee": 
+		{
+			"self": "https://paega2.atlassian.net/rest/api/2/user?username=alpernia1",
+			"name": "alpernia1",
+			"key": "alpernia1",
+			"accountId": "5ab8b4e018c3bd2a73ffa3ef",
+			"emailAddress": "alpernia@oesia.com",
+			"avatarUrls": 
+			{
+				"48x48": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+				"24x24": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+				"16x16": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+				"32x32": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
 			},
 
-			"length": 0,
-			"pipes": null,
-			"pipesCount": 0,
-			"flowing": true,
-			"ended": false,
-			"endEmitted": false,
-			"reading": true,
-			"sync": false,
-			"needReadable": true,
-			"emittedReadable": false,
-			"readableListening": false,
-			"resumeScheduled": false,
-			"destroyed": false,
-			"defaultEncoding": "utf8",
-			"awaitDrain": 0,
-			"readingMore": false,
-			"decoder": null,
-			"encoding": null
+			"displayName": "Angel Pernia",
+			"active": true,
+			"timeZone": "Europe/Berlin"
 		},
 
-		"readable": true,
-		"_events": 
+		"status": 
 		{
-			"end": 
-			[
-				null,
-				null
-			],
+			"self": "https://paega2.atlassian.net/rest/api/2/status/5",
+			"description": "Se ha indicado una resolución, que está a la espera de verificación por el informador de la misma. A partir de aquí las incidencia son reabiertas, o cerradas.",
+			"iconUrl": "https://paega2.atlassian.net/images/icons/statuses/resolved.png",
+			"name": "Resuelta",
+			"id": "5",
+			"statusCategory": 
+			{
+				"self": "https://paega2.atlassian.net/rest/api/2/statuscategory/3",
+				"id": 3,
+				"key": "done",
+				"colorName": "green",
+				"name": "Listo"
+			}
+		},
 
-			"drain": 
-			[
-				null,
-				null
-			],
+		"customfield_11300": null,
+		"customfield_11301": null,
+		"customfield_12865": null,
+		"aggregatetimeestimate": 670680,
+		"creator": 
+		{
+			"self": "https://paega2.atlassian.net/rest/api/2/user?username=alpernia1",
+			"name": "alpernia1",
+			"key": "alpernia1",
+			"accountId": "5ab8b4e018c3bd2a73ffa3ef",
+			"emailAddress": "alpernia@oesia.com",
+			"avatarUrls": 
+			{
+				"48x48": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+				"24x24": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+				"16x16": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+				"32x32": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+			},
 
-			"close": 
+			"displayName": "Angel Pernia",
+			"active": true,
+			"timeZone": "Europe/Berlin"
+		},
+
+		"subtasks": 
+		[
+			
+		],
+
+		"reporter": 
+		{
+			"self": "https://paega2.atlassian.net/rest/api/2/user?username=alpernia1",
+			"name": "alpernia1",
+			"key": "alpernia1",
+			"accountId": "5ab8b4e018c3bd2a73ffa3ef",
+			"emailAddress": "alpernia@oesia.com",
+			"avatarUrls": 
+			{
+				"48x48": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+				"24x24": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+				"16x16": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+				"32x32": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+			},
+
+			"displayName": "Angel Pernia",
+			"active": true,
+			"timeZone": "Europe/Berlin"
+		},
+
+		"customfield_12860": 
+		[
+			
+		],
+
+		"aggregateprogress": 
+		{
+			"progress": 0,
+			"total": 670680,
+			"percent": 0
+		},
+
+		"customfield_12862": null,
+		"customfield_12861": null,
+		"customfield_10201": 
+		{
+			"self": "https://paega2.atlassian.net/rest/api/2/customFieldOption/10202",
+			"value": "Funcional",
+			"id": "10202"
+		},
+
+		"customfield_12864": null,
+		"customfield_12863": null,
+		"customfield_12855": null,
+		"customfield_12854": null,
+		"customfield_12857": null,
+		"customfield_12856": null,
+		"customfield_11800": null,
+		"customfield_12859": null,
+		"customfield_12858": null,
+		"progress": 
+		{
+			"progress": 0,
+			"total": 670680,
+			"percent": 0
+		},
+
+		"worklog": 
+		{
+			"startAt": 0,
+			"maxResults": 20,
+			"total": 0,
+			"worklogs": 
 			[
-				null,
-				null
+				
 			]
 		},
 
-		"_eventsCount": 9,
-		"_writableState": 
+		"issuetype": 
 		{
-			"objectMode": false,
-			"highWaterMark": 16384,
-			"finalCalled": false,
-			"needDrain": false,
-			"ending": false,
-			"ended": false,
-			"finished": false,
-			"destroyed": false,
-			"decodeStrings": false,
-			"defaultEncoding": "utf8",
-			"length": 0,
-			"writing": false,
-			"corked": 0,
-			"sync": true,
-			"bufferProcessing": false,
-			"writecb": null,
-			"writelen": 0,
-			"bufferedRequest": null,
-			"lastBufferedRequest": null,
-			"pendingcb": 0,
-			"prefinished": false,
-			"errorEmitted": false,
-			"bufferedRequestCount": 0,
-			"corkedRequestsFree": 
+			"self": "https://paega2.atlassian.net/rest/api/2/issuetype/10100",
+			"id": "10100",
+			"description": "Incidencia creada especificamente para la gestión de los requisitos",
+			"iconUrl": "https://paega2.atlassian.net/secure/viewavatar?size=xsmall&avatarId=10313&avatarType=issuetype",
+			"name": "Requisito",
+			"subtask": false,
+			"avatarId": 10313
+		},
+
+		"timespent": null,
+		"project": 
+		{
+			"self": "https://paega2.atlassian.net/rest/api/2/project/10107",
+			"id": "10107",
+			"key": "NOTIFLOPD",
+			"name": "NOTIF_LOPD - Notificaciones LOPD",
+			"projectTypeKey": "business",
+			"avatarUrls": 
 			{
-				"next": null,
-				"entry": null
+				"48x48": "https://paega2.atlassian.net/secure/projectavatar?pid=10107&avatarId=10011",
+				"24x24": "https://paega2.atlassian.net/secure/projectavatar?size=small&pid=10107&avatarId=10011",
+				"16x16": "https://paega2.atlassian.net/secure/projectavatar?size=xsmall&pid=10107&avatarId=10011",
+				"32x32": "https://paega2.atlassian.net/secure/projectavatar?size=medium&pid=10107&avatarId=10011"
 			}
 		},
 
-		"writable": true,
-		"_bytesDispatched": 0,
-		"_sockname": null,
-		"_pendingData": null,
-		"_pendingEncoding": "",
-		"allowHalfOpen": true,
-		"server": 
+		"aggregatetimespent": null,
+		"customfield_12851": null,
+		"customfield_12850": null,
+		"customfield_11005": null,
+		"customfield_12852": null,
+		"customfield_10304": 
 		{
-			"stack": 
+			"self": "https://paega2.atlassian.net/rest/api/2/customFieldOption/10348",
+			"value": "Si",
+			"id": "10348"
+		},
+
+		"customfield_10701": 
+		{
+			"self": "https://paega2.atlassian.net/rest/api/2/customFieldOption/10748",
+			"value": "Desbloqueado",
+			"id": "10748"
+		},
+
+		"resolutiondate": "2018-05-16T12:06:46.973+0200",
+		"customfield_12849": null,
+		"workratio": 0,
+		"watches": 
+		{
+			"self": "https://paega2.atlassian.net/rest/api/2/issue/NOTIFLOPD-87/watchers",
+			"watchCount": 3,
+			"isWatching": false
+		},
+
+		"created": "2018-04-02T17:06:59.196+0200",
+		"customfield_12200": null,
+		"customfield_11110": null,
+		"customfield_10021": null,
+		"customfield_11111": null,
+		"customfield_12600": null,
+		"customfield_10301": 
+		{
+			"self": "https://paega2.atlassian.net/rest/api/2/customFieldOption/10324",
+			"value": "8 - Mejoras funcionales a realizar en los servicios de Administración Electrónica",
+			"id": "10324",
+			"child": 
+			{
+				"self": "https://paega2.atlassian.net/rest/api/2/customFieldOption/10613",
+				"value": "8.5.3 - Notiifcación de Ficheros de Carácter Personal a la Agencia Estatal de Protección de Datos (AEPD)",
+				"id": "10613"
+			}
+		},
+
+		"customfield_11105": null,
+		"customfield_12833": null,
+		"customfield_11106": null,
+		"customfield_12832": null,
+		"customfield_11107": null,
+		"customfield_12835": null,
+		"customfield_11900": null,
+		"customfield_12834": null,
+		"customfield_11108": null,
+		"customfield_12837": null,
+		"customfield_11109": null,
+		"customfield_12836": null,
+		"customfield_10814": null,
+		"updated": "2018-05-30T13:36:17.223+0200",
+		"timeoriginalestimate": 670680,
+		"description": "En este requisito se expone una indicación para comenzar el estudio detallado, que estará contenido en un documento que se adjuntará al requisito una vez finalizado. El resultado de este requisito será el documento de definición de la extensión del modelo de datos y la creación efectiva de las tablas y demás elementos de base de datos que se hayan definido en dicho documento\r\n\r\nEste requisito se divide en 3 bloques principales:\r\n\r\n*Tarea 1: Recuperar modelo de datos versión 4.0.2*\r\n\r\nSe debe partir de la base de datos que hay en PRO. Esto se corresponde con la versión de NOTIFLOPD 4.0.2. Partiendo de esta, se debe crear una nueva versión 4.3.0\r\n\r\nRevisar los cambios en el modelo de datos que se han realizado desde la versión 4.0.2 a la última versión desplegada en PRE (4.2.0)\r\n\r\n- Los nuevos campos de las tablas se deberían eliminar.\r\n- Las modificaciones de campos ya existentes, se deberían restaurar tal cual están en PRO. Este Script se deberá lanzar en DES_UTE, INTEGRA, DES_AST y PRE_AST\r\nLa definición de las tablas en PRO está en este fichero:\r\n [^exportPRO.zip] \r\n\r\n*Tarea 2: Añadir tablas al modelo de datos.*\r\n\r\na)\r\n\tSe debe crear una nueva tabla que centraliza toda la información: NOTIF_REG_FICHERO. Tendrá clave compuesta formada por los campos ID_FICHERO+VERSION (UNIQUE NOT NULL).\r\nCampos:\r\n\t\r\n- ID_FICHERO <-- NUMBER(6,0); NOT NULL; COLUM_ID=2; coment: Id del fichero. \r\n\r\n- VERSION <-- NUMBER(5,0); NOT NULL; COLUM_ID=3 ;coment: Número de versión.\r\n\r\n- ESTADO_REG <-- NUMBER(2,0); FK (crear tabla maestra), NOT NULL; COLUM_ID=4; coment: Estado del fichero (0:IMPORTADO, 1:BAJA_IMPORTADO, 2:BORRADOR, 3:FINALIZADO, 4:Enviado a la Agencia, 7:Inscrito en la Agencia, pendiente de confirmacion, 8:Inscrito en la Agencia).\r\n\r\n- NOM_FICHERO <-- VARCHAR2(200) NOT NULL, COLUM_ID=5; coment:Nombre del fichero.\r\n\r\n- IDDEPT_NOT <-- VARCHAR2(12 CHAR), null, COLUM_ID=6; coment:Id del departamento.\r\n\t\r\n- ANONOT_NOT <-- NUMBER(4,0), null, COLUM_ID=7; coment: Año de la notificación.\r\n\r\n- NUMNOT_NOT <-- NUMBER(5,0), null, COLUM_ID=8; coment: Número de la notificación.\r\n\r\nb)\r\n\tPartiendo de la definición de las siguientes tablas:\r\n\r\n- NOTIF_LOPD_NOTIFICACIONES\r\n- NOTIF_LOPD_RESPONSABLE\r\n- NOTIF_LOPD_ACCESO\r\n- NOTIF_LOPD_DISPOSICION\r\n- NOTIF_LOPD_NOMBRE\r\n- NOTIF_LOPD_ENCARGADO\r\n- NOTIF_LOPD_ESTRUESPRO\r\n- NOTIF_LOPD_ESTRUOTESP\r\n- NOTIF_LOPD_ESTRUINFRA\r\n- NOTIF_LOPD_ESTRUIDENT\r\n- NOTIF_LOPD_ESTRUFINAL\r\n- NOTIF_LOPD_ESTRUPERSO\r\n- NOTIF_LOPD_ESTRUPROCE\r\n- NOTIF_LOPD_ESTRUCESIO\r\n- NOTIF_LOPD_ESTRUTRFER\r\n- NOTIF_LOPD_SUPRESION\r\n- NOTIF_LOPD_MODIFICACI\r\n- NOTIF_LOPD_ESTRUOTRDT\r\n\r\n\tCrear las respectivas tablas:\r\n\r\n- NOTIF_REG_NOTIFICACIONES\r\n- NOTIF_REG_RESPONSABLE\r\n- NOTIF_REG_ACCESO\r\n- NOTIF_REG_DISPOSICION\r\n- NOTIF_REG_NOMBRE\r\n- NOTIF_REG_ENCARGADO\r\n- NOTIF_REG_ESTRUESPRO\r\n- NOTIF_REG_ESTRUOTESP\r\n- NOTIF_REG_ESTRUINFRA\r\n- NOTIF_REG_ESTRUIDENT\r\n- NOTIF_REG_ESTRUFINAL\r\n- NOTIF_REG_ESTRUPERSO\r\n- NOTIF_REG_ESTRUPROCE\r\n- NOTIF_REG_ESTRUCESIO\r\n- NOTIF_REG_ESTRUTRFER\r\n- NOTIF_REG_SUPRESION\r\n- NOTIF_REG_MODIFICACI\r\n- NOTIF_REG_ESTRUOTRDT\r\n\t\t\r\n\tTeniendo en cuenta que:\r\n\r\n\t- Todas estas tablas tendrán una clave compuesta única que además será FK compuesta a la tabla NOTIF_REG_FICHERO. Esta PK y FK estará formada por los campos :\r\n\t\tID_FICHERO <-- NUMBER(6,0); NOT NULL; COLUM_ID=2; coment: Id del fichero. \r\n\t\tVERSION <-- NUMBER(5,0); NOT NULL; COLUM_ID=3 ; coment: Número de versión.\r\n\t- No tendrán los campos:\r\n\t\tANONOT_XXX <-- Año notificación\r\n\t\tNUMNOT_XXX <-- Número notificación\r\n\t- Si tienen algún campo de estados, debe crearse una tabla maestra a la que haga referencia mediante FK.\r\n\t- Para la tabla NOTIF_REG_DISPOSICION añadir además de lo anterior, el campo:\r\n\t\tNUMREG_DIS <-- NUMBER(3,0); NOT NULL; COLUM_ID=3 ; coment: Número de orden de la disposición.\r\n\r\n*Tarea 3: Migración.*\r\n\r\nEl proceso de migración se debería implementar en una clase Java nueva (un action accesible por URL). La migración se hace sobre las nuevas tablas creadas en la tarea anterior, no afectando al actual modelo de datos. No hay mucha información a migrar, no debería costar mucho tiempo. En posteriores versiones el action responsable de la migración se deshabilitará.\r\n\r\na)\r\n\tObtener las Declaraciones. Esto se hace a partir de la siguiente consulta. (Se basa en LOPDBusquedaFochjerpsGeneradosAction.java, fncBuscar):\r\n\r\n [^consulta1 (fc1514fb-ee68-497e-b04e-1c2e121c51ad)] \r\n\r\nEl valor que nos interesa es NUMRCA_NOT <-- Número de registro asignado por la comunidad autónoma.\r\n\r\nb)\r\n\tA partir del listado anterior de NUMRCA_NOT, se debe proceder a rellenar las tablas del nuevo modelo de datos (NOTIF_REG_XXX):\r\n\r\nSe puede partir del código del método generarPDFNotificacionFichero de la clase ClsPrepararInformes.java.\r\n\r\nEste método utiliza como base la siguiente consulta:\r\n\r\n [^consulta2] \r\n\r\nEsta consulta devuelve los movimientos que ha tenido el fichero. Es decir, si únicamente se ha producido un alta retorna 1 fila, pero si ha habido 2 movimientos retorna 2 valores.\r\n- Si se trata del primer caso (un único movimiento), se debería hacer un insert en las tablas NOTIF_REG_XXX. Tener en cuenta que la tabla NOTIF_REG_FICHERO tendrá la versión 1 y que las tablas satélites apuntan a esta tabla.\r\n- Si la consulta retorna más de un resultado, es porque ha habido más de un movimiento (alta, modificación o alta, modificación, modificación...)\r\n\r\nEn este caso en el que hay varios movimientos, sólo el de alta está informado con todos los datos. Los movimientos posteriores muestran únicamente los cambios que se han producido, siendo presentados los campos que no han cambiado a NULL.\r\nEl método generarPDFNotificacionFichero de la clase ClsPrepararInformes.java, \"acumula\" esta información. A partir del resultado con la información acumulada, se deberá hacer un insert en las tablas NOTIF_REG_XXX para rellenarlas (similar al caso anterior), salvo en la tabla NOTIF_REG_DISPOSICION que tendrá el siguiente comportamiento:\r\n\t-> Para cada movimiento, se informará NOTIF_REG_DISPOSICION con los datos obtenidos de la consulta, haciendo referencia al NOTIF_REG_FICHERO. Se  deberá informar el campo NUMREG_DIS con el número de movimiento (1,2,3...).",
+		"customfield_10010": null,
+		"customfield_11100": null,
+		"customfield_11102": null,
+		"customfield_11103": null,
+		"customfield_11500": null,
+		"timetracking": 
+		{
+			"originalEstimate": "186,3h",
+			"remainingEstimate": "186,3h",
+			"originalEstimateSeconds": 670680,
+			"remainingEstimateSeconds": 670680
+		},
+
+		"customfield_12830": null,
+		"customfield_11104": null,
+		"customfield_12822": null,
+		"customfield_10401": "NOTIFLOPD-87",
+		"customfield_10006": 
+		[
+			
+		],
+
+		"customfield_12821": null,
+		"customfield_12700": null,
+		"customfield_10007": "0|i02orv:",
+		"security": 
+		{
+			"self": "https://paega2.atlassian.net/rest/api/2/securitylevel/10500",
+			"id": "10500",
+			"description": "Nivel de seguridad que no limita la visibilidad de las incidencias",
+			"name": "Externo"
+		},
+
+		"customfield_12824": null,
+		"customfield_10404": 
+		[
+			
+		],
+
+		"customfield_12823": null,
+		"attachment": 
+		[
+			{
+				"self": "https://paega2.atlassian.net/rest/api/2/attachment/36738",
+				"id": "36738",
+				"filename": "analisisAngel_20180406.odt",
+				"author": 
+				{
+					"self": "https://paega2.atlassian.net/rest/api/2/user?username=alpernia1",
+					"name": "alpernia1",
+					"key": "alpernia1",
+					"accountId": "5ab8b4e018c3bd2a73ffa3ef",
+					"emailAddress": "alpernia@oesia.com",
+					"avatarUrls": 
+					{
+						"48x48": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+						"24x24": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+						"16x16": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+						"32x32": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+					},
+
+					"displayName": "Angel Pernia",
+					"active": true,
+					"timeZone": "Europe/Berlin"
+				},
+
+				"created": "2018-04-06T15:26:41.584+0200",
+				"size": 86337,
+				"mimeType": "application/vnd.oasis.opendocument.text",
+				"content": "https://paega2.atlassian.net/secure/attachment/36738/analisisAngel_20180406.odt"
+			},
+
+			{
+				"self": "https://paega2.atlassian.net/rest/api/2/attachment/36762",
+				"id": "36762",
+				"filename": "analisisAngel_20180409.odt",
+				"author": 
+				{
+					"self": "https://paega2.atlassian.net/rest/api/2/user?username=alpernia1",
+					"name": "alpernia1",
+					"key": "alpernia1",
+					"accountId": "5ab8b4e018c3bd2a73ffa3ef",
+					"emailAddress": "alpernia@oesia.com",
+					"avatarUrls": 
+					{
+						"48x48": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+						"24x24": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+						"16x16": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+						"32x32": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+					},
+
+					"displayName": "Angel Pernia",
+					"active": true,
+					"timeZone": "Europe/Berlin"
+				},
+
+				"created": "2018-04-09T18:03:03.730+0200",
+				"size": 2064818,
+				"mimeType": "application/vnd.oasis.opendocument.text",
+				"content": "https://paega2.atlassian.net/secure/attachment/36762/analisisAngel_20180409.odt"
+			},
+
+			{
+				"self": "https://paega2.atlassian.net/rest/api/2/attachment/36705",
+				"id": "36705",
+				"filename": "consulta1 (fc1514fb-ee68-497e-b04e-1c2e121c51ad)",
+				"author": 
+				{
+					"self": "https://paega2.atlassian.net/rest/api/2/user?username=alpernia1",
+					"name": "alpernia1",
+					"key": "alpernia1",
+					"accountId": "5ab8b4e018c3bd2a73ffa3ef",
+					"emailAddress": "alpernia@oesia.com",
+					"avatarUrls": 
+					{
+						"48x48": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+						"24x24": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+						"16x16": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+						"32x32": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+					},
+
+					"displayName": "Angel Pernia",
+					"active": true,
+					"timeZone": "Europe/Berlin"
+				},
+
+				"created": "2018-04-03T14:00:51.808+0200",
+				"size": 561,
+				"mimeType": "binary/octet-stream",
+				"content": "https://paega2.atlassian.net/secure/attachment/36705/consulta1+%28fc1514fb-ee68-497e-b04e-1c2e121c51ad%29"
+			},
+
+			{
+				"self": "https://paega2.atlassian.net/rest/api/2/attachment/36706",
+				"id": "36706",
+				"filename": "consulta2",
+				"author": 
+				{
+					"self": "https://paega2.atlassian.net/rest/api/2/user?username=alpernia1",
+					"name": "alpernia1",
+					"key": "alpernia1",
+					"accountId": "5ab8b4e018c3bd2a73ffa3ef",
+					"emailAddress": "alpernia@oesia.com",
+					"avatarUrls": 
+					{
+						"48x48": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+						"24x24": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+						"16x16": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+						"32x32": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+					},
+
+					"displayName": "Angel Pernia",
+					"active": true,
+					"timeZone": "Europe/Berlin"
+				},
+
+				"created": "2018-04-03T14:00:52.233+0200",
+				"size": 4941,
+				"mimeType": "binary/octet-stream",
+				"content": "https://paega2.atlassian.net/secure/attachment/36706/consulta2"
+			},
+
+			{
+				"self": "https://paega2.atlassian.net/rest/api/2/attachment/36707",
+				"id": "36707",
+				"filename": "exportPRO.zip",
+				"author": 
+				{
+					"self": "https://paega2.atlassian.net/rest/api/2/user?username=alpernia1",
+					"name": "alpernia1",
+					"key": "alpernia1",
+					"accountId": "5ab8b4e018c3bd2a73ffa3ef",
+					"emailAddress": "alpernia@oesia.com",
+					"avatarUrls": 
+					{
+						"48x48": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+						"24x24": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+						"16x16": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+						"32x32": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+					},
+
+					"displayName": "Angel Pernia",
+					"active": true,
+					"timeZone": "Europe/Berlin"
+				},
+
+				"created": "2018-04-03T14:14:27.570+0200",
+				"size": 54295,
+				"mimeType": "binary/octet-stream",
+				"content": "https://paega2.atlassian.net/secure/attachment/36707/exportPRO.zip"
+			}
+		],
+
+		"customfield_10009": null,
+		"customfield_12826": null,
+		"customfield_12825": null,
+		"customfield_12828": null,
+		"customfield_12827": 
+		[
+			{
+				"self": "https://paega2.atlassian.net/rest/api/2/customFieldOption/13215",
+				"value": "Base Presupuesto",
+				"id": "13215"
+			}
+		],
+
+		"customfield_12829": null,
+		"summary": "Estudio y adaptación del modelo de datos",
+		"customfield_10000": "2018-04-03T16:16:38.877+0200",
+		"customfield_10001": "1_*:*_1_*:*_332110274_*|*_10308_*:*_2_*:*_1113968580_*|*_5_*:*_1_*:*_0_*|*_10002_*:*_1_*:*_964385083_*|*_10003_*:*_2_*:*_1373123886",
+		"customfield_10002": "NOTIFLOPD-102",
+		"customfield_12300": 
+		{
+			"self": "https://paega2.atlassian.net/rest/api/2/customFieldOption/13202",
+			"value": "Mantenimiento Evolutivo 2018. Definición alta",
+			"id": "13202"
+		},
+
+		"customfield_12820": null,
+		"customfield_10400": null,
+		"customfield_11600": null,
+		"customfield_11603": null,
+		"customfield_12812": "1|i004pb:",
+		"customfield_11602": null,
+		"customfield_11605": null,
+		"customfield_12815": null,
+		"customfield_10911": null,
+		"customfield_11604": null,
+		"customfield_12817": null,
+		"customfield_11606": null,
+		"customfield_12816": null,
+		"customfield_12819": null,
+		"customfield_12818": null,
+		"comment": 
+		{
+			"comments": 
 			[
 				{
-					"route": ""
+					"self": "https://paega2.atlassian.net/rest/api/2/issue/40443/comment/70377",
+					"id": "70377",
+					"author": 
+					{
+						"self": "https://paega2.atlassian.net/rest/api/2/user?username=enuezb",
+						"name": "enuezb",
+						"key": "enuezb",
+						"accountId": "557058:3b7b5bc0-427e-4a83-96cc-32eb075d4281",
+						"emailAddress": "enuezb@aragon.es",
+						"avatarUrls": 
+						{
+							"48x48": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+							"24x24": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+							"16x16": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+							"32x32": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+						},
+
+						"displayName": "Esther Nuez Bernal",
+						"active": true,
+						"timeZone": "Europe/Berlin"
+					},
+
+					"body": "Buenas.\r\n\r\nA mí no me convence lo de que cada tabla tenga de clave primara ID_NOTIF_REG_nombreTabla. ¿No valdría con que la foreign key sea también la primary key? Salvo en el caso de NOTIF_REG_DISPOSICION, que sería (/*foreing key del fichero*/, numDiposición) - me estoy inventando el nombre numDisposicion.\r\n\r\nPor otra parte, aunque ya me comentaste ayer que preferías tener en la tabla maestra una clave primaria ID_NOTIF_REG_FICHERO, dándole vueltas yo le sigo viendo dos ventajas a tener de clave (ID_FICHERO, VERSION):\r\n\r\n    Evitas controlar una secuencia de números adicional.\r\n    Te aseguras sin necesidad de introducir comprobaciones por código de que no puede haber dos (ID_FICHERO, VERSION) iguales.\r\n\r\nPor otra parte, como bien apuntaba por aquí Alberto, también es más conforme a la normalización de bases de datos, que no está mal tener en cuenta ahora que tenemos ocasión de hacer algo más o menos nuevo.\r\n\r\n¿Aporta algo con lo que no esté contando?",
+					"updateAuthor": 
+					{
+						"self": "https://paega2.atlassian.net/rest/api/2/user?username=enuezb",
+						"name": "enuezb",
+						"key": "enuezb",
+						"accountId": "557058:3b7b5bc0-427e-4a83-96cc-32eb075d4281",
+						"emailAddress": "enuezb@aragon.es",
+						"avatarUrls": 
+						{
+							"48x48": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+							"24x24": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+							"16x16": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+							"32x32": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+						},
+
+						"displayName": "Esther Nuez Bernal",
+						"active": true,
+						"timeZone": "Europe/Berlin"
+					},
+
+					"created": "2018-04-03T16:16:38.877+0200",
+					"updated": "2018-04-03T16:16:38.877+0200"
 				},
 
 				{
-					"route": ""
+					"self": "https://paega2.atlassian.net/rest/api/2/issue/40443/comment/70379",
+					"id": "70379",
+					"author": 
+					{
+						"self": "https://paega2.atlassian.net/rest/api/2/user?username=alpernia1",
+						"name": "alpernia1",
+						"key": "alpernia1",
+						"accountId": "5ab8b4e018c3bd2a73ffa3ef",
+						"emailAddress": "alpernia@oesia.com",
+						"avatarUrls": 
+						{
+							"48x48": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+							"24x24": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+							"16x16": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+							"32x32": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+						},
+
+						"displayName": "Angel Pernia",
+						"active": true,
+						"timeZone": "Europe/Berlin"
+					},
+
+					"body": "Buenas,\r\nCreo que no me he dejado nada. Mirad a ver.\r\nSaludos.",
+					"updateAuthor": 
+					{
+						"self": "https://paega2.atlassian.net/rest/api/2/user?username=alpernia1",
+						"name": "alpernia1",
+						"key": "alpernia1",
+						"accountId": "5ab8b4e018c3bd2a73ffa3ef",
+						"emailAddress": "alpernia@oesia.com",
+						"avatarUrls": 
+						{
+							"48x48": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+							"24x24": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+							"16x16": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+							"32x32": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+						},
+
+						"displayName": "Angel Pernia",
+						"active": true,
+						"timeZone": "Europe/Berlin"
+					},
+
+					"created": "2018-04-03T16:56:53.991+0200",
+					"updated": "2018-04-03T16:56:53.991+0200"
 				},
 
 				{
-					"route": ""
+					"self": "https://paega2.atlassian.net/rest/api/2/issue/40443/comment/70383",
+					"id": "70383",
+					"author": 
+					{
+						"self": "https://paega2.atlassian.net/rest/api/2/user?username=alpernia1",
+						"name": "alpernia1",
+						"key": "alpernia1",
+						"accountId": "5ab8b4e018c3bd2a73ffa3ef",
+						"emailAddress": "alpernia@oesia.com",
+						"avatarUrls": 
+						{
+							"48x48": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+							"24x24": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+							"16x16": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+							"32x32": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+						},
+
+						"displayName": "Angel Pernia",
+						"active": true,
+						"timeZone": "Europe/Berlin"
+					},
+
+					"body": "Buenas[~enuezb]\r\nEn el modelo de datos que me pasaste no aparece la tabla NOTIF_LOPD_DESTINATARIOS, sin embargo en nuestro entorno de desarrollo si que está. ¿Podríais confirmar que no la tenéis en PRO?\r\nSaludos!",
+					"updateAuthor": 
+					{
+						"self": "https://paega2.atlassian.net/rest/api/2/user?username=alpernia1",
+						"name": "alpernia1",
+						"key": "alpernia1",
+						"accountId": "5ab8b4e018c3bd2a73ffa3ef",
+						"emailAddress": "alpernia@oesia.com",
+						"avatarUrls": 
+						{
+							"48x48": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+							"24x24": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+							"16x16": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+							"32x32": "https://avatar-cdn.atlassian.com/02868345915a91edc3c426ec1b5633af?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F02868345915a91edc3c426ec1b5633af%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+						},
+
+						"displayName": "Angel Pernia",
+						"active": true,
+						"timeZone": "Europe/Berlin"
+					},
+
+					"created": "2018-04-04T09:42:57.631+0200",
+					"updated": "2018-04-04T09:42:57.631+0200"
 				},
 
 				{
-					"route": ""
+					"self": "https://paega2.atlassian.net/rest/api/2/issue/40443/comment/70394",
+					"id": "70394",
+					"author": 
+					{
+						"self": "https://paega2.atlassian.net/rest/api/2/user?username=enuezb",
+						"name": "enuezb",
+						"key": "enuezb",
+						"accountId": "557058:3b7b5bc0-427e-4a83-96cc-32eb075d4281",
+						"emailAddress": "enuezb@aragon.es",
+						"avatarUrls": 
+						{
+							"48x48": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+							"24x24": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+							"16x16": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+							"32x32": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+						},
+
+						"displayName": "Esther Nuez Bernal",
+						"active": true,
+						"timeZone": "Europe/Berlin"
+					},
+
+					"body": "Buenos días.\r\n\r\nLos estados que habéis indicado para la tabla ESTADO_REG no se corresponden con los que hemos definido.\r\n\r\nPor otra parte, ¿las tablas NOTIF_REG_SUPRESION y NOTIF_REG_MODIFICACI son necesarias? \r\n\r\nEn cuanto a la tabla NOTIF_LOPD_DESTINATARIOS, yo no la veo en PRO.\r\n\r\nUn saludo.",
+					"updateAuthor": 
+					{
+						"self": "https://paega2.atlassian.net/rest/api/2/user?username=enuezb",
+						"name": "enuezb",
+						"key": "enuezb",
+						"accountId": "557058:3b7b5bc0-427e-4a83-96cc-32eb075d4281",
+						"emailAddress": "enuezb@aragon.es",
+						"avatarUrls": 
+						{
+							"48x48": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+							"24x24": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+							"16x16": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+							"32x32": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+						},
+
+						"displayName": "Esther Nuez Bernal",
+						"active": true,
+						"timeZone": "Europe/Berlin"
+					},
+
+					"created": "2018-04-04T11:17:41.295+0200",
+					"updated": "2018-04-04T11:17:41.295+0200"
 				},
 
 				{
-					"route": ""
+					"self": "https://paega2.atlassian.net/rest/api/2/issue/40443/comment/70395",
+					"id": "70395",
+					"author": 
+					{
+						"self": "https://paega2.atlassian.net/rest/api/2/user?username=enuezb",
+						"name": "enuezb",
+						"key": "enuezb",
+						"accountId": "557058:3b7b5bc0-427e-4a83-96cc-32eb075d4281",
+						"emailAddress": "enuezb@aragon.es",
+						"avatarUrls": 
+						{
+							"48x48": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+							"24x24": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+							"16x16": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+							"32x32": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+						},
+
+						"displayName": "Esther Nuez Bernal",
+						"active": true,
+						"timeZone": "Europe/Berlin"
+					},
+
+					"body": "Otra cosa.\r\nNo se trata de volcar los datos sin más en tablas exactamente iguales a las que había antes con los campos nuevos añadidos. Se trata de hacer tablas que contengan la información que se va a mostrar ahora. Por ejemplo, en la tabla NOTIF_LOPD_DISPOSICION, hay unos campos NUMDIS_DIS, FECPUB_DIS que ahora no los necesitamos porque de hecho, ni les vamos a dar opción de rellenarlos en las nuevas pantallas.\r\nPor otra parte, a la hora de definir el nuevo modelo de datos, hay que tener en cuenta que hay información nueva que no está en las tablas antiguas, y por lo tanto también habrá que crear campos o tablas que la recojan.\r\nEs decir, para crear el nuevo modelo de datos, no sólo hay que tener en cuenta la transformación de la información de notificación a fichero/tratamiento, sino también qué información se va a necesitar, para lo que también tenéis que tener en cuenta los pantallazos que os enviamos.\r\nAdemás, aprovechando que el modelo es nuevo, no hay problema por ejemplo en hacer que los datos NOMBRE.NOMFIC_NOM y NOMBRE.DESFIN_FIN estén en la tabla maestra y se cree una tabla nueva para los usos previstos, que es una información que actualmente está en la tabla NOMBRE. Es decir, no hay problema en reordenar información si va a ayudar a la comprensión del modelo.\r\n",
+					"updateAuthor": 
+					{
+						"self": "https://paega2.atlassian.net/rest/api/2/user?username=enuezb",
+						"name": "enuezb",
+						"key": "enuezb",
+						"accountId": "557058:3b7b5bc0-427e-4a83-96cc-32eb075d4281",
+						"emailAddress": "enuezb@aragon.es",
+						"avatarUrls": 
+						{
+							"48x48": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+							"24x24": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+							"16x16": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+							"32x32": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+						},
+
+						"displayName": "Esther Nuez Bernal",
+						"active": true,
+						"timeZone": "Europe/Berlin"
+					},
+
+					"created": "2018-04-04T11:27:19.794+0200",
+					"updated": "2018-04-04T11:38:58.818+0200"
+				},
+
+				{
+					"self": "https://paega2.atlassian.net/rest/api/2/issue/40443/comment/70482",
+					"id": "70482",
+					"author": 
+					{
+						"self": "https://paega2.atlassian.net/rest/api/2/user?username=enuezb",
+						"name": "enuezb",
+						"key": "enuezb",
+						"accountId": "557058:3b7b5bc0-427e-4a83-96cc-32eb075d4281",
+						"emailAddress": "enuezb@aragon.es",
+						"avatarUrls": 
+						{
+							"48x48": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+							"24x24": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+							"16x16": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+							"32x32": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+						},
+
+						"displayName": "Esther Nuez Bernal",
+						"active": true,
+						"timeZone": "Europe/Berlin"
+					},
+
+					"body": "Si le cambiais el nombre al requisito por \"Estudio y adaptación del modelo de datos\", apruebo el requisito porque se está trabajando en un documento con toda la definición detallada de las nuevas tablas. Indicad por favor en la descripción que lo que se expone es una indicación para comenzar el estudio detallado, que estará contenido en el documento que digo y que se adjuntará al requisito una vez finalizado. El resultado de este requisito será el documento de definición de la extensión del modelo de datos y la creación efectiva de las tablas y demás elementos de base de datos que se hayan definido en dicho documento.",
+					"updateAuthor": 
+					{
+						"self": "https://paega2.atlassian.net/rest/api/2/user?username=enuezb",
+						"name": "enuezb",
+						"key": "enuezb",
+						"accountId": "557058:3b7b5bc0-427e-4a83-96cc-32eb075d4281",
+						"emailAddress": "enuezb@aragon.es",
+						"avatarUrls": 
+						{
+							"48x48": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=48&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D48%26noRedirect%3Dtrue",
+							"24x24": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=24&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D24%26noRedirect%3Dtrue",
+							"16x16": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=16&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D16%26noRedirect%3Dtrue",
+							"32x32": "https://avatar-cdn.atlassian.com/36b993ea982dd682cb0d542486467344?s=32&d=https%3A%2F%2Fsecure.gravatar.com%2Favatar%2F36b993ea982dd682cb0d542486467344%3Fd%3Dmm%26s%3D32%26noRedirect%3Dtrue"
+						},
+
+						"displayName": "Esther Nuez Bernal",
+						"active": true,
+						"timeZone": "Europe/Berlin"
+					},
+
+					"created": "2018-04-05T12:27:11.175+0200",
+					"updated": "2018-04-05T12:29:46.406+0200"
 				}
 			],
 
-			"_events": 
-			{
-				
-			},
-
-			"_eventsCount": 3,
-			"_connections": 1,
-			"_handle": 
-			{
-				"reading": false,
-				"owner": "[Circular ~.socket.server]",
-				"onread": null
-			},
-
-			"_usingWorkers": false,
-			"_workers": 
-			[
-				
-			],
-
-			"_unref": false,
-			"allowHalfOpen": true,
-			"pauseOnConnect": false,
-			"httpAllowHalfOpen": false,
-			"timeout": 120000,
-			"keepAliveTimeout": 5000,
-			"_pendingResponseData": 0,
-			"maxHeadersCount": null,
-			"cache": 
-			{
-				
-			},
-
-			"settings": 
-			{
-				"env": "development",
-				"hints": true
-			},
-
-			"redirects": 
-			{
-				
-			},
-
-			"isCallbacks": 
-			{
-				
-			},
-
-			"_locals": 
-			{
-				"settings": 
-				{
-					"env": "development",
-					"hints": true
-				},
-
-				"app": "[Circular ~.socket.server]"
-			},
-
-			"dynamicViewHelpers": 
-			{
-				
-			},
-
-			"errorHandlers": 
-			[
-				
-			],
-
-			"route": "/",
-			"routes": 
-			{
-				"app": "[Circular ~.socket.server]",
-				"routes": 
-				{
-					"get": 
-					[
-						{
-							"path": "/",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								
-							],
-
-							"regexp": 
-							{
-								
-							}
-						},
-
-						{
-							"path": "/sessions/getGitHubLastCommitInfo",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								
-							],
-
-							"regexp": 
-							{
-								
-							}
-						},
-
-						{
-							"path": "/sessions/connect",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								
-							],
-
-							"regexp": 
-							{
-								
-							}
-						},
-
-						{
-							"path": "/proxy/:urlProxy/endproxy*",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								{
-									"name": "urlProxy",
-									"optional": false
-								}
-							],
-
-							"regexp": 
-							{
-								
-							}
-						},
-
-						{
-							"path": "/sessions/callback",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								
-							],
-
-							"regexp": 
-							{
-								
-							}
-						}
-					],
-
-					"post": 
-					[
-						{
-							"path": "/proxy/:urlProxy/endproxy*",
-							"method": "post",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								{
-									"name": "urlProxy",
-									"optional": false
-								}
-							],
-
-							"regexp": 
-							{
-								
-							},
-
-							"params": 
-							[
-								"/test"
-							]
-						}
-					]
-				},
-
-				"params": 
-				{
-					
-				},
-
-				"_params": 
-				[
-					
-				]
-			},
-
-			"__usedRouter": true,
-			"_connectionKey": "6::::8080"
-		},
-
-		"_server": 
-		{
-			"stack": 
-			[
-				{
-					"route": ""
-				},
-
-				{
-					"route": ""
-				},
-
-				{
-					"route": ""
-				},
-
-				{
-					"route": ""
-				},
-
-				{
-					"route": ""
-				}
-			],
-
-			"_events": 
-			{
-				
-			},
-
-			"_eventsCount": 3,
-			"_connections": 1,
-			"_handle": 
-			{
-				"reading": false,
-				"owner": "[Circular ~.socket._server]",
-				"onread": null
-			},
-
-			"_usingWorkers": false,
-			"_workers": 
-			[
-				
-			],
-
-			"_unref": false,
-			"allowHalfOpen": true,
-			"pauseOnConnect": false,
-			"httpAllowHalfOpen": false,
-			"timeout": 120000,
-			"keepAliveTimeout": 5000,
-			"_pendingResponseData": 0,
-			"maxHeadersCount": null,
-			"cache": 
-			{
-				
-			},
-
-			"settings": 
-			{
-				"env": "development",
-				"hints": true
-			},
-
-			"redirects": 
-			{
-				
-			},
-
-			"isCallbacks": 
-			{
-				
-			},
-
-			"_locals": 
-			{
-				"settings": 
-				{
-					"env": "development",
-					"hints": true
-				},
-
-				"app": "[Circular ~.socket._server]"
-			},
-
-			"dynamicViewHelpers": 
-			{
-				
-			},
-
-			"errorHandlers": 
-			[
-				
-			],
-
-			"route": "/",
-			"routes": 
-			{
-				"app": "[Circular ~.socket._server]",
-				"routes": 
-				{
-					"get": 
-					[
-						{
-							"path": "/",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								
-							],
-
-							"regexp": 
-							{
-								
-							}
-						},
-
-						{
-							"path": "/sessions/getGitHubLastCommitInfo",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								
-							],
-
-							"regexp": 
-							{
-								
-							}
-						},
-
-						{
-							"path": "/sessions/connect",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								
-							],
-
-							"regexp": 
-							{
-								
-							}
-						},
-
-						{
-							"path": "/proxy/:urlProxy/endproxy*",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								{
-									"name": "urlProxy",
-									"optional": false
-								}
-							],
-
-							"regexp": 
-							{
-								
-							}
-						},
-
-						{
-							"path": "/sessions/callback",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								
-							],
-
-							"regexp": 
-							{
-								
-							}
-						}
-					],
-
-					"post": 
-					[
-						{
-							"path": "/proxy/:urlProxy/endproxy*",
-							"method": "post",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								{
-									"name": "urlProxy",
-									"optional": false
-								}
-							],
-
-							"regexp": 
-							{
-								
-							},
-
-							"params": 
-							[
-								"/test"
-							]
-						}
-					]
-				},
-
-				"params": 
-				{
-					
-				},
-
-				"_params": 
-				[
-					
-				]
-			},
-
-			"__usedRouter": true,
-			"_connectionKey": "6::::8080"
-		},
-
-		"_idleTimeout": 120000,
-		"_idleNext": 
-		{
-			"_idleNext": "[Circular ~.socket]",
-			"_idlePrev": "[Circular ~.socket]",
-			"_unrefed": true,
-			"msecs": 120000,
-			"nextTick": false,
-			"_timer": 
-			{
-				"_list": "[Circular ~.socket._idleNext]"
-			}
-		},
-
-		"_idlePrev": 
-		{
-			"_idleNext": "[Circular ~.socket]",
-			"_idlePrev": "[Circular ~.socket]",
-			"_unrefed": true,
-			"msecs": 120000,
-			"nextTick": false,
-			"_timer": 
-			{
-				"_list": "[Circular ~.socket._idlePrev]"
-			}
-		},
-
-		"_idleStart": 4398,
-		"_destroyed": false,
-		"parser": 
-		{
-			"_headers": 
-			[
-				
-			],
-
-			"_url": "",
-			"_consumed": true,
-			"socket": "[Circular ~.socket]",
-			"incoming": "[Circular ~]",
-			"outgoing": null,
-			"maxHeaderPairs": 2000
-		},
-
-		"_paused": false,
-		"_httpMessage": 
-		{
-			"_events": 
-			{
-				
-			},
-
-			"_eventsCount": 1,
-			"output": 
-			[
-				
-			],
-
-			"outputEncodings": 
-			[
-				
-			],
-
-			"outputCallbacks": 
-			[
-				
-			],
-
-			"outputSize": 0,
-			"writable": true,
-			"_last": false,
-			"upgrading": false,
-			"chunkedEncoding": false,
-			"shouldKeepAlive": true,
-			"useChunkedEncodingByDefault": true,
-			"sendDate": true,
-			"_removedConnection": false,
-			"_removedContLen": false,
-			"_removedTE": false,
-			"_contentLength": null,
-			"_hasBody": true,
-			"_trailer": "",
-			"finished": false,
-			"_headerSent": false,
-			"socket": "[Circular ~.socket]",
-			"connection": "[Circular ~.socket]",
-			"_header": null,
-			"_sent100": false,
-			"_expect_continue": false,
-			"app": 
-			{
-				"stack": 
-				[
-					{
-						"route": ""
-					},
-
-					{
-						"route": ""
-					},
-
-					{
-						"route": ""
-					},
-
-					{
-						"route": ""
-					},
-
-					{
-						"route": ""
-					}
-				],
-
-				"_events": 
-				{
-					
-				},
-
-				"_eventsCount": 3,
-				"_connections": 1,
-				"_handle": 
-				{
-					"reading": false,
-					"owner": "[Circular ~.socket._httpMessage.app]",
-					"onread": null
-				},
-
-				"_usingWorkers": false,
-				"_workers": 
-				[
-					
-				],
-
-				"_unref": false,
-				"allowHalfOpen": true,
-				"pauseOnConnect": false,
-				"httpAllowHalfOpen": false,
-				"timeout": 120000,
-				"keepAliveTimeout": 5000,
-				"_pendingResponseData": 0,
-				"maxHeadersCount": null,
-				"cache": 
-				{
-					
-				},
-
-				"settings": 
-				{
-					"env": "development",
-					"hints": true
-				},
-
-				"redirects": 
-				{
-					
-				},
-
-				"isCallbacks": 
-				{
-					
-				},
-
-				"_locals": 
-				{
-					"settings": 
-					{
-						"env": "development",
-						"hints": true
-					},
-
-					"app": "[Circular ~.socket._httpMessage.app]"
-				},
-
-				"dynamicViewHelpers": 
-				{
-					
-				},
-
-				"errorHandlers": 
-				[
-					
-				],
-
-				"route": "/",
-				"routes": 
-				{
-					"app": "[Circular ~.socket._httpMessage.app]",
-					"routes": 
-					{
-						"get": 
-						[
-							{
-								"path": "/",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									
-								],
-
-								"regexp": 
-								{
-									
-								}
-							},
-
-							{
-								"path": "/sessions/getGitHubLastCommitInfo",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									
-								],
-
-								"regexp": 
-								{
-									
-								}
-							},
-
-							{
-								"path": "/sessions/connect",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									
-								],
-
-								"regexp": 
-								{
-									
-								}
-							},
-
-							{
-								"path": "/proxy/:urlProxy/endproxy*",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									{
-										"name": "urlProxy",
-										"optional": false
-									}
-								],
-
-								"regexp": 
-								{
-									
-								}
-							},
-
-							{
-								"path": "/sessions/callback",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									
-								],
-
-								"regexp": 
-								{
-									
-								}
-							}
-						],
-
-						"post": 
-						[
-							{
-								"path": "/proxy/:urlProxy/endproxy*",
-								"method": "post",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									{
-										"name": "urlProxy",
-										"optional": false
-									}
-								],
-
-								"regexp": 
-								{
-									
-								},
-
-								"params": 
-								[
-									"/test"
-								]
-							}
-						]
-					},
-
-					"params": 
-					{
-						
-					},
-
-					"_params": 
-					[
-						
-					]
-				},
-
-				"__usedRouter": true,
-				"_connectionKey": "6::::8080"
-			},
-
-			"req": "[Circular ~]"
+			"maxResults": 6,
+			"total": 6,
+			"startAt": 0
 		}
-	},
-
-	"connection": 
-	{
-		"connecting": false,
-		"_hadError": false,
-		"_handle": 
-		{
-			"reading": true,
-			"owner": "[Circular ~.connection]",
-			"onconnection": null,
-			"_consumed": true
-		},
-
-		"_parent": null,
-		"_host": null,
-		"_readableState": 
-		{
-			"objectMode": false,
-			"highWaterMark": 16384,
-			"buffer": 
-			{
-				"head": null,
-				"tail": null,
-				"length": 0
-			},
-
-			"length": 0,
-			"pipes": null,
-			"pipesCount": 0,
-			"flowing": true,
-			"ended": false,
-			"endEmitted": false,
-			"reading": true,
-			"sync": false,
-			"needReadable": true,
-			"emittedReadable": false,
-			"readableListening": false,
-			"resumeScheduled": false,
-			"destroyed": false,
-			"defaultEncoding": "utf8",
-			"awaitDrain": 0,
-			"readingMore": false,
-			"decoder": null,
-			"encoding": null
-		},
-
-		"readable": true,
-		"_events": 
-		{
-			"end": 
-			[
-				null,
-				null
-			],
-
-			"drain": 
-			[
-				null,
-				null
-			],
-
-			"close": 
-			[
-				null,
-				null
-			]
-		},
-
-		"_eventsCount": 9,
-		"_writableState": 
-		{
-			"objectMode": false,
-			"highWaterMark": 16384,
-			"finalCalled": false,
-			"needDrain": false,
-			"ending": false,
-			"ended": false,
-			"finished": false,
-			"destroyed": false,
-			"decodeStrings": false,
-			"defaultEncoding": "utf8",
-			"length": 0,
-			"writing": false,
-			"corked": 0,
-			"sync": true,
-			"bufferProcessing": false,
-			"writecb": null,
-			"writelen": 0,
-			"bufferedRequest": null,
-			"lastBufferedRequest": null,
-			"pendingcb": 0,
-			"prefinished": false,
-			"errorEmitted": false,
-			"bufferedRequestCount": 0,
-			"corkedRequestsFree": 
-			{
-				"next": null,
-				"entry": null
-			}
-		},
-
-		"writable": true,
-		"_bytesDispatched": 0,
-		"_sockname": null,
-		"_pendingData": null,
-		"_pendingEncoding": "",
-		"allowHalfOpen": true,
-		"server": 
-		{
-			"stack": 
-			[
-				{
-					"route": ""
-				},
-
-				{
-					"route": ""
-				},
-
-				{
-					"route": ""
-				},
-
-				{
-					"route": ""
-				},
-
-				{
-					"route": ""
-				}
-			],
-
-			"_events": 
-			{
-				
-			},
-
-			"_eventsCount": 3,
-			"_connections": 1,
-			"_handle": 
-			{
-				"reading": false,
-				"owner": "[Circular ~.connection.server]",
-				"onread": null
-			},
-
-			"_usingWorkers": false,
-			"_workers": 
-			[
-				
-			],
-
-			"_unref": false,
-			"allowHalfOpen": true,
-			"pauseOnConnect": false,
-			"httpAllowHalfOpen": false,
-			"timeout": 120000,
-			"keepAliveTimeout": 5000,
-			"_pendingResponseData": 0,
-			"maxHeadersCount": null,
-			"cache": 
-			{
-				
-			},
-
-			"settings": 
-			{
-				"env": "development",
-				"hints": true
-			},
-
-			"redirects": 
-			{
-				
-			},
-
-			"isCallbacks": 
-			{
-				
-			},
-
-			"_locals": 
-			{
-				"settings": 
-				{
-					"env": "development",
-					"hints": true
-				},
-
-				"app": "[Circular ~.connection.server]"
-			},
-
-			"dynamicViewHelpers": 
-			{
-				
-			},
-
-			"errorHandlers": 
-			[
-				
-			],
-
-			"route": "/",
-			"routes": 
-			{
-				"app": "[Circular ~.connection.server]",
-				"routes": 
-				{
-					"get": 
-					[
-						{
-							"path": "/",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								
-							],
-
-							"regexp": 
-							{
-								
-							}
-						},
-
-						{
-							"path": "/sessions/getGitHubLastCommitInfo",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								
-							],
-
-							"regexp": 
-							{
-								
-							}
-						},
-
-						{
-							"path": "/sessions/connect",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								
-							],
-
-							"regexp": 
-							{
-								
-							}
-						},
-
-						{
-							"path": "/proxy/:urlProxy/endproxy*",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								{
-									"name": "urlProxy",
-									"optional": false
-								}
-							],
-
-							"regexp": 
-							{
-								
-							}
-						},
-
-						{
-							"path": "/sessions/callback",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								
-							],
-
-							"regexp": 
-							{
-								
-							}
-						}
-					],
-
-					"post": 
-					[
-						{
-							"path": "/proxy/:urlProxy/endproxy*",
-							"method": "post",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								{
-									"name": "urlProxy",
-									"optional": false
-								}
-							],
-
-							"regexp": 
-							{
-								
-							},
-
-							"params": 
-							[
-								"/test"
-							]
-						}
-					]
-				},
-
-				"params": 
-				{
-					
-				},
-
-				"_params": 
-				[
-					
-				]
-			},
-
-			"__usedRouter": true,
-			"_connectionKey": "6::::8080"
-		},
-
-		"_server": 
-		{
-			"stack": 
-			[
-				{
-					"route": ""
-				},
-
-				{
-					"route": ""
-				},
-
-				{
-					"route": ""
-				},
-
-				{
-					"route": ""
-				},
-
-				{
-					"route": ""
-				}
-			],
-
-			"_events": 
-			{
-				
-			},
-
-			"_eventsCount": 3,
-			"_connections": 1,
-			"_handle": 
-			{
-				"reading": false,
-				"owner": "[Circular ~.connection._server]",
-				"onread": null
-			},
-
-			"_usingWorkers": false,
-			"_workers": 
-			[
-				
-			],
-
-			"_unref": false,
-			"allowHalfOpen": true,
-			"pauseOnConnect": false,
-			"httpAllowHalfOpen": false,
-			"timeout": 120000,
-			"keepAliveTimeout": 5000,
-			"_pendingResponseData": 0,
-			"maxHeadersCount": null,
-			"cache": 
-			{
-				
-			},
-
-			"settings": 
-			{
-				"env": "development",
-				"hints": true
-			},
-
-			"redirects": 
-			{
-				
-			},
-
-			"isCallbacks": 
-			{
-				
-			},
-
-			"_locals": 
-			{
-				"settings": 
-				{
-					"env": "development",
-					"hints": true
-				},
-
-				"app": "[Circular ~.connection._server]"
-			},
-
-			"dynamicViewHelpers": 
-			{
-				
-			},
-
-			"errorHandlers": 
-			[
-				
-			],
-
-			"route": "/",
-			"routes": 
-			{
-				"app": "[Circular ~.connection._server]",
-				"routes": 
-				{
-					"get": 
-					[
-						{
-							"path": "/",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								
-							],
-
-							"regexp": 
-							{
-								
-							}
-						},
-
-						{
-							"path": "/sessions/getGitHubLastCommitInfo",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								
-							],
-
-							"regexp": 
-							{
-								
-							}
-						},
-
-						{
-							"path": "/sessions/connect",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								
-							],
-
-							"regexp": 
-							{
-								
-							}
-						},
-
-						{
-							"path": "/proxy/:urlProxy/endproxy*",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								{
-									"name": "urlProxy",
-									"optional": false
-								}
-							],
-
-							"regexp": 
-							{
-								
-							}
-						},
-
-						{
-							"path": "/sessions/callback",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								
-							],
-
-							"regexp": 
-							{
-								
-							}
-						}
-					],
-
-					"post": 
-					[
-						{
-							"path": "/proxy/:urlProxy/endproxy*",
-							"method": "post",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								{
-									"name": "urlProxy",
-									"optional": false
-								}
-							],
-
-							"regexp": 
-							{
-								
-							},
-
-							"params": 
-							[
-								"/test"
-							]
-						}
-					]
-				},
-
-				"params": 
-				{
-					
-				},
-
-				"_params": 
-				[
-					
-				]
-			},
-
-			"__usedRouter": true,
-			"_connectionKey": "6::::8080"
-		},
-
-		"_idleTimeout": 120000,
-		"_idleNext": 
-		{
-			"_idleNext": "[Circular ~.connection]",
-			"_idlePrev": "[Circular ~.connection]",
-			"_unrefed": true,
-			"msecs": 120000,
-			"nextTick": false,
-			"_timer": 
-			{
-				"_list": "[Circular ~.connection._idleNext]"
-			}
-		},
-
-		"_idlePrev": 
-		{
-			"_idleNext": "[Circular ~.connection]",
-			"_idlePrev": "[Circular ~.connection]",
-			"_unrefed": true,
-			"msecs": 120000,
-			"nextTick": false,
-			"_timer": 
-			{
-				"_list": "[Circular ~.connection._idlePrev]"
-			}
-		},
-
-		"_idleStart": 4398,
-		"_destroyed": false,
-		"parser": 
-		{
-			"_headers": 
-			[
-				
-			],
-
-			"_url": "",
-			"_consumed": true,
-			"socket": "[Circular ~.connection]",
-			"incoming": "[Circular ~]",
-			"outgoing": null,
-			"maxHeaderPairs": 2000
-		},
-
-		"_paused": false,
-		"_httpMessage": 
-		{
-			"_events": 
-			{
-				
-			},
-
-			"_eventsCount": 1,
-			"output": 
-			[
-				
-			],
-
-			"outputEncodings": 
-			[
-				
-			],
-
-			"outputCallbacks": 
-			[
-				
-			],
-
-			"outputSize": 0,
-			"writable": true,
-			"_last": false,
-			"upgrading": false,
-			"chunkedEncoding": false,
-			"shouldKeepAlive": true,
-			"useChunkedEncodingByDefault": true,
-			"sendDate": true,
-			"_removedConnection": false,
-			"_removedContLen": false,
-			"_removedTE": false,
-			"_contentLength": null,
-			"_hasBody": true,
-			"_trailer": "",
-			"finished": false,
-			"_headerSent": false,
-			"socket": "[Circular ~.connection]",
-			"connection": "[Circular ~.connection]",
-			"_header": null,
-			"_sent100": false,
-			"_expect_continue": false,
-			"app": 
-			{
-				"stack": 
-				[
-					{
-						"route": ""
-					},
-
-					{
-						"route": ""
-					},
-
-					{
-						"route": ""
-					},
-
-					{
-						"route": ""
-					},
-
-					{
-						"route": ""
-					}
-				],
-
-				"_events": 
-				{
-					
-				},
-
-				"_eventsCount": 3,
-				"_connections": 1,
-				"_handle": 
-				{
-					"reading": false,
-					"owner": "[Circular ~.connection._httpMessage.app]",
-					"onread": null
-				},
-
-				"_usingWorkers": false,
-				"_workers": 
-				[
-					
-				],
-
-				"_unref": false,
-				"allowHalfOpen": true,
-				"pauseOnConnect": false,
-				"httpAllowHalfOpen": false,
-				"timeout": 120000,
-				"keepAliveTimeout": 5000,
-				"_pendingResponseData": 0,
-				"maxHeadersCount": null,
-				"cache": 
-				{
-					
-				},
-
-				"settings": 
-				{
-					"env": "development",
-					"hints": true
-				},
-
-				"redirects": 
-				{
-					
-				},
-
-				"isCallbacks": 
-				{
-					
-				},
-
-				"_locals": 
-				{
-					"settings": 
-					{
-						"env": "development",
-						"hints": true
-					},
-
-					"app": "[Circular ~.connection._httpMessage.app]"
-				},
-
-				"dynamicViewHelpers": 
-				{
-					
-				},
-
-				"errorHandlers": 
-				[
-					
-				],
-
-				"route": "/",
-				"routes": 
-				{
-					"app": "[Circular ~.connection._httpMessage.app]",
-					"routes": 
-					{
-						"get": 
-						[
-							{
-								"path": "/",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									
-								],
-
-								"regexp": 
-								{
-									
-								}
-							},
-
-							{
-								"path": "/sessions/getGitHubLastCommitInfo",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									
-								],
-
-								"regexp": 
-								{
-									
-								}
-							},
-
-							{
-								"path": "/sessions/connect",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									
-								],
-
-								"regexp": 
-								{
-									
-								}
-							},
-
-							{
-								"path": "/proxy/:urlProxy/endproxy*",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									{
-										"name": "urlProxy",
-										"optional": false
-									}
-								],
-
-								"regexp": 
-								{
-									
-								}
-							},
-
-							{
-								"path": "/sessions/callback",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									
-								],
-
-								"regexp": 
-								{
-									
-								}
-							}
-						],
-
-						"post": 
-						[
-							{
-								"path": "/proxy/:urlProxy/endproxy*",
-								"method": "post",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									{
-										"name": "urlProxy",
-										"optional": false
-									}
-								],
-
-								"regexp": 
-								{
-									
-								},
-
-								"params": 
-								[
-									"/test"
-								]
-							}
-						]
-					},
-
-					"params": 
-					{
-						
-					},
-
-					"_params": 
-					[
-						
-					]
-				},
-
-				"__usedRouter": true,
-				"_connectionKey": "6::::8080"
-			},
-
-			"req": "[Circular ~]"
-		}
-	},
-
-	"httpVersionMajor": 1,
-	"httpVersionMinor": 1,
-	"httpVersion": "1.1",
-	"complete": false,
-	"headers": 
-	{
-		"host": "localhost:18080",
-		"user-agent": "curl/7.47.0",
-		"accept": "*/*",
-		"content-length": "27",
-		"content-type": "application/x-www-form-urlencoded"
-	},
-
-	"rawHeaders": 
-	[
-		"Host",
-		"localhost:18080",
-		"User-Agent",
-		"curl/7.47.0",
-		"Accept",
-		"*/*",
-		"Content-Length",
-		"27",
-		"Content-Type",
-		"application/x-www-form-urlencoded"
-	],
-
-	"trailers": 
-	{
-		
-	},
-
-	"rawTrailers": 
-	[
-		
-	],
-
-	"upgrade": false,
-	"url": "/proxy/rcgcoder.atlassian.net/endproxy/test",
-	"method": "POST",
-	"statusCode": null,
-	"statusMessage": null,
-	"client": 
-	{
-		"connecting": false,
-		"_hadError": false,
-		"_handle": 
-		{
-			"reading": true,
-			"owner": "[Circular ~.client]",
-			"onconnection": null,
-			"_consumed": true
-		},
-
-		"_parent": null,
-		"_host": null,
-		"_readableState": 
-		{
-			"objectMode": false,
-			"highWaterMark": 16384,
-			"buffer": 
-			{
-				"head": null,
-				"tail": null,
-				"length": 0
-			},
-
-			"length": 0,
-			"pipes": null,
-			"pipesCount": 0,
-			"flowing": true,
-			"ended": false,
-			"endEmitted": false,
-			"reading": true,
-			"sync": false,
-			"needReadable": true,
-			"emittedReadable": false,
-			"readableListening": false,
-			"resumeScheduled": false,
-			"destroyed": false,
-			"defaultEncoding": "utf8",
-			"awaitDrain": 0,
-			"readingMore": false,
-			"decoder": null,
-			"encoding": null
-		},
-
-		"readable": true,
-		"_events": 
-		{
-			"end": 
-			[
-				null,
-				null
-			],
-
-			"drain": 
-			[
-				null,
-				null
-			],
-
-			"close": 
-			[
-				null,
-				null
-			]
-		},
-
-		"_eventsCount": 9,
-		"_writableState": 
-		{
-			"objectMode": false,
-			"highWaterMark": 16384,
-			"finalCalled": false,
-			"needDrain": false,
-			"ending": false,
-			"ended": false,
-			"finished": false,
-			"destroyed": false,
-			"decodeStrings": false,
-			"defaultEncoding": "utf8",
-			"length": 0,
-			"writing": false,
-			"corked": 0,
-			"sync": true,
-			"bufferProcessing": false,
-			"writecb": null,
-			"writelen": 0,
-			"bufferedRequest": null,
-			"lastBufferedRequest": null,
-			"pendingcb": 0,
-			"prefinished": false,
-			"errorEmitted": false,
-			"bufferedRequestCount": 0,
-			"corkedRequestsFree": 
-			{
-				"next": null,
-				"entry": null
-			}
-		},
-
-		"writable": true,
-		"_bytesDispatched": 0,
-		"_sockname": null,
-		"_pendingData": null,
-		"_pendingEncoding": "",
-		"allowHalfOpen": true,
-		"server": 
-		{
-			"stack": 
-			[
-				{
-					"route": ""
-				},
-
-				{
-					"route": ""
-				},
-
-				{
-					"route": ""
-				},
-
-				{
-					"route": ""
-				},
-
-				{
-					"route": ""
-				}
-			],
-
-			"_events": 
-			{
-				
-			},
-
-			"_eventsCount": 3,
-			"_connections": 1,
-			"_handle": 
-			{
-				"reading": false,
-				"owner": "[Circular ~.client.server]",
-				"onread": null
-			},
-
-			"_usingWorkers": false,
-			"_workers": 
-			[
-				
-			],
-
-			"_unref": false,
-			"allowHalfOpen": true,
-			"pauseOnConnect": false,
-			"httpAllowHalfOpen": false,
-			"timeout": 120000,
-			"keepAliveTimeout": 5000,
-			"_pendingResponseData": 0,
-			"maxHeadersCount": null,
-			"cache": 
-			{
-				
-			},
-
-			"settings": 
-			{
-				"env": "development",
-				"hints": true
-			},
-
-			"redirects": 
-			{
-				
-			},
-
-			"isCallbacks": 
-			{
-				
-			},
-
-			"_locals": 
-			{
-				"settings": 
-				{
-					"env": "development",
-					"hints": true
-				},
-
-				"app": "[Circular ~.client.server]"
-			},
-
-			"dynamicViewHelpers": 
-			{
-				
-			},
-
-			"errorHandlers": 
-			[
-				
-			],
-
-			"route": "/",
-			"routes": 
-			{
-				"app": "[Circular ~.client.server]",
-				"routes": 
-				{
-					"get": 
-					[
-						{
-							"path": "/",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								
-							],
-
-							"regexp": 
-							{
-								
-							}
-						},
-
-						{
-							"path": "/sessions/getGitHubLastCommitInfo",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								
-							],
-
-							"regexp": 
-							{
-								
-							}
-						},
-
-						{
-							"path": "/sessions/connect",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								
-							],
-
-							"regexp": 
-							{
-								
-							}
-						},
-
-						{
-							"path": "/proxy/:urlProxy/endproxy*",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								{
-									"name": "urlProxy",
-									"optional": false
-								}
-							],
-
-							"regexp": 
-							{
-								
-							}
-						},
-
-						{
-							"path": "/sessions/callback",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								
-							],
-
-							"regexp": 
-							{
-								
-							}
-						}
-					],
-
-					"post": 
-					[
-						{
-							"path": "/proxy/:urlProxy/endproxy*",
-							"method": "post",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								{
-									"name": "urlProxy",
-									"optional": false
-								}
-							],
-
-							"regexp": 
-							{
-								
-							},
-
-							"params": 
-							[
-								"/test"
-							]
-						}
-					]
-				},
-
-				"params": 
-				{
-					
-				},
-
-				"_params": 
-				[
-					
-				]
-			},
-
-			"__usedRouter": true,
-			"_connectionKey": "6::::8080"
-		},
-
-		"_server": 
-		{
-			"stack": 
-			[
-				{
-					"route": ""
-				},
-
-				{
-					"route": ""
-				},
-
-				{
-					"route": ""
-				},
-
-				{
-					"route": ""
-				},
-
-				{
-					"route": ""
-				}
-			],
-
-			"_events": 
-			{
-				
-			},
-
-			"_eventsCount": 3,
-			"_connections": 1,
-			"_handle": 
-			{
-				"reading": false,
-				"owner": "[Circular ~.client._server]",
-				"onread": null
-			},
-
-			"_usingWorkers": false,
-			"_workers": 
-			[
-				
-			],
-
-			"_unref": false,
-			"allowHalfOpen": true,
-			"pauseOnConnect": false,
-			"httpAllowHalfOpen": false,
-			"timeout": 120000,
-			"keepAliveTimeout": 5000,
-			"_pendingResponseData": 0,
-			"maxHeadersCount": null,
-			"cache": 
-			{
-				
-			},
-
-			"settings": 
-			{
-				"env": "development",
-				"hints": true
-			},
-
-			"redirects": 
-			{
-				
-			},
-
-			"isCallbacks": 
-			{
-				
-			},
-
-			"_locals": 
-			{
-				"settings": 
-				{
-					"env": "development",
-					"hints": true
-				},
-
-				"app": "[Circular ~.client._server]"
-			},
-
-			"dynamicViewHelpers": 
-			{
-				
-			},
-
-			"errorHandlers": 
-			[
-				
-			],
-
-			"route": "/",
-			"routes": 
-			{
-				"app": "[Circular ~.client._server]",
-				"routes": 
-				{
-					"get": 
-					[
-						{
-							"path": "/",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								
-							],
-
-							"regexp": 
-							{
-								
-							}
-						},
-
-						{
-							"path": "/sessions/getGitHubLastCommitInfo",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								
-							],
-
-							"regexp": 
-							{
-								
-							}
-						},
-
-						{
-							"path": "/sessions/connect",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								
-							],
-
-							"regexp": 
-							{
-								
-							}
-						},
-
-						{
-							"path": "/proxy/:urlProxy/endproxy*",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								{
-									"name": "urlProxy",
-									"optional": false
-								}
-							],
-
-							"regexp": 
-							{
-								
-							}
-						},
-
-						{
-							"path": "/sessions/callback",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								
-							],
-
-							"regexp": 
-							{
-								
-							}
-						}
-					],
-
-					"post": 
-					[
-						{
-							"path": "/proxy/:urlProxy/endproxy*",
-							"method": "post",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								{
-									"name": "urlProxy",
-									"optional": false
-								}
-							],
-
-							"regexp": 
-							{
-								
-							},
-
-							"params": 
-							[
-								"/test"
-							]
-						}
-					]
-				},
-
-				"params": 
-				{
-					
-				},
-
-				"_params": 
-				[
-					
-				]
-			},
-
-			"__usedRouter": true,
-			"_connectionKey": "6::::8080"
-		},
-
-		"_idleTimeout": 120000,
-		"_idleNext": 
-		{
-			"_idleNext": "[Circular ~.client]",
-			"_idlePrev": "[Circular ~.client]",
-			"_unrefed": true,
-			"msecs": 120000,
-			"nextTick": false,
-			"_timer": 
-			{
-				"_list": "[Circular ~.client._idleNext]"
-			}
-		},
-
-		"_idlePrev": 
-		{
-			"_idleNext": "[Circular ~.client]",
-			"_idlePrev": "[Circular ~.client]",
-			"_unrefed": true,
-			"msecs": 120000,
-			"nextTick": false,
-			"_timer": 
-			{
-				"_list": "[Circular ~.client._idlePrev]"
-			}
-		},
-
-		"_idleStart": 4398,
-		"_destroyed": false,
-		"parser": 
-		{
-			"_headers": 
-			[
-				
-			],
-
-			"_url": "",
-			"_consumed": true,
-			"socket": "[Circular ~.client]",
-			"incoming": "[Circular ~]",
-			"outgoing": null,
-			"maxHeaderPairs": 2000
-		},
-
-		"_paused": false,
-		"_httpMessage": 
-		{
-			"_events": 
-			{
-				
-			},
-
-			"_eventsCount": 1,
-			"output": 
-			[
-				
-			],
-
-			"outputEncodings": 
-			[
-				
-			],
-
-			"outputCallbacks": 
-			[
-				
-			],
-
-			"outputSize": 0,
-			"writable": true,
-			"_last": false,
-			"upgrading": false,
-			"chunkedEncoding": false,
-			"shouldKeepAlive": true,
-			"useChunkedEncodingByDefault": true,
-			"sendDate": true,
-			"_removedConnection": false,
-			"_removedContLen": false,
-			"_removedTE": false,
-			"_contentLength": null,
-			"_hasBody": true,
-			"_trailer": "",
-			"finished": false,
-			"_headerSent": false,
-			"socket": "[Circular ~.client]",
-			"connection": "[Circular ~.client]",
-			"_header": null,
-			"_sent100": false,
-			"_expect_continue": false,
-			"app": 
-			{
-				"stack": 
-				[
-					{
-						"route": ""
-					},
-
-					{
-						"route": ""
-					},
-
-					{
-						"route": ""
-					},
-
-					{
-						"route": ""
-					},
-
-					{
-						"route": ""
-					}
-				],
-
-				"_events": 
-				{
-					
-				},
-
-				"_eventsCount": 3,
-				"_connections": 1,
-				"_handle": 
-				{
-					"reading": false,
-					"owner": "[Circular ~.client._httpMessage.app]",
-					"onread": null
-				},
-
-				"_usingWorkers": false,
-				"_workers": 
-				[
-					
-				],
-
-				"_unref": false,
-				"allowHalfOpen": true,
-				"pauseOnConnect": false,
-				"httpAllowHalfOpen": false,
-				"timeout": 120000,
-				"keepAliveTimeout": 5000,
-				"_pendingResponseData": 0,
-				"maxHeadersCount": null,
-				"cache": 
-				{
-					
-				},
-
-				"settings": 
-				{
-					"env": "development",
-					"hints": true
-				},
-
-				"redirects": 
-				{
-					
-				},
-
-				"isCallbacks": 
-				{
-					
-				},
-
-				"_locals": 
-				{
-					"settings": 
-					{
-						"env": "development",
-						"hints": true
-					},
-
-					"app": "[Circular ~.client._httpMessage.app]"
-				},
-
-				"dynamicViewHelpers": 
-				{
-					
-				},
-
-				"errorHandlers": 
-				[
-					
-				],
-
-				"route": "/",
-				"routes": 
-				{
-					"app": "[Circular ~.client._httpMessage.app]",
-					"routes": 
-					{
-						"get": 
-						[
-							{
-								"path": "/",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									
-								],
-
-								"regexp": 
-								{
-									
-								}
-							},
-
-							{
-								"path": "/sessions/getGitHubLastCommitInfo",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									
-								],
-
-								"regexp": 
-								{
-									
-								}
-							},
-
-							{
-								"path": "/sessions/connect",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									
-								],
-
-								"regexp": 
-								{
-									
-								}
-							},
-
-							{
-								"path": "/proxy/:urlProxy/endproxy*",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									{
-										"name": "urlProxy",
-										"optional": false
-									}
-								],
-
-								"regexp": 
-								{
-									
-								}
-							},
-
-							{
-								"path": "/sessions/callback",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									
-								],
-
-								"regexp": 
-								{
-									
-								}
-							}
-						],
-
-						"post": 
-						[
-							{
-								"path": "/proxy/:urlProxy/endproxy*",
-								"method": "post",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									{
-										"name": "urlProxy",
-										"optional": false
-									}
-								],
-
-								"regexp": 
-								{
-									
-								},
-
-								"params": 
-								[
-									"/test"
-								]
-							}
-						]
-					},
-
-					"params": 
-					{
-						
-					},
-
-					"_params": 
-					[
-						
-					]
-				},
-
-				"__usedRouter": true,
-				"_connectionKey": "6::::8080"
-			},
-
-			"req": "[Circular ~]"
-		}
-	},
-
-	"_consuming": false,
-	"_dumped": false,
-	"originalUrl": "/proxy/rcgcoder.atlassian.net/endproxy/test",
-	"query": 
-	{
-		
-	},
-
-	"app": 
-	{
-		"stack": 
-		[
-			{
-				"route": ""
-			},
-
-			{
-				"route": ""
-			},
-
-			{
-				"route": ""
-			},
-
-			{
-				"route": ""
-			},
-
-			{
-				"route": ""
-			}
-		],
-
-		"_events": 
-		{
-			
-		},
-
-		"_eventsCount": 3,
-		"_connections": 1,
-		"_handle": 
-		{
-			"reading": false,
-			"owner": "[Circular ~.app]",
-			"onread": null
-		},
-
-		"_usingWorkers": false,
-		"_workers": 
-		[
-			
-		],
-
-		"_unref": false,
-		"allowHalfOpen": true,
-		"pauseOnConnect": false,
-		"httpAllowHalfOpen": false,
-		"timeout": 120000,
-		"keepAliveTimeout": 5000,
-		"_pendingResponseData": 0,
-		"maxHeadersCount": null,
-		"cache": 
-		{
-			
-		},
-
-		"settings": 
-		{
-			"env": "development",
-			"hints": true
-		},
-
-		"redirects": 
-		{
-			
-		},
-
-		"isCallbacks": 
-		{
-			
-		},
-
-		"_locals": 
-		{
-			"settings": 
-			{
-				"env": "development",
-				"hints": true
-			},
-
-			"app": "[Circular ~.app]"
-		},
-
-		"dynamicViewHelpers": 
-		{
-			
-		},
-
-		"errorHandlers": 
-		[
-			
-		],
-
-		"route": "/",
-		"routes": 
-		{
-			"app": "[Circular ~.app]",
-			"routes": 
-			{
-				"get": 
-				[
-					{
-						"path": "/",
-						"method": "get",
-						"callbacks": 
-						[
-							null
-						],
-
-						"keys": 
-						[
-							
-						],
-
-						"regexp": 
-						{
-							
-						}
-					},
-
-					{
-						"path": "/sessions/getGitHubLastCommitInfo",
-						"method": "get",
-						"callbacks": 
-						[
-							null
-						],
-
-						"keys": 
-						[
-							
-						],
-
-						"regexp": 
-						{
-							
-						}
-					},
-
-					{
-						"path": "/sessions/connect",
-						"method": "get",
-						"callbacks": 
-						[
-							null
-						],
-
-						"keys": 
-						[
-							
-						],
-
-						"regexp": 
-						{
-							
-						}
-					},
-
-					{
-						"path": "/proxy/:urlProxy/endproxy*",
-						"method": "get",
-						"callbacks": 
-						[
-							null
-						],
-
-						"keys": 
-						[
-							{
-								"name": "urlProxy",
-								"optional": false
-							}
-						],
-
-						"regexp": 
-						{
-							
-						}
-					},
-
-					{
-						"path": "/sessions/callback",
-						"method": "get",
-						"callbacks": 
-						[
-							null
-						],
-
-						"keys": 
-						[
-							
-						],
-
-						"regexp": 
-						{
-							
-						}
-					}
-				],
-
-				"post": 
-				[
-					{
-						"path": "/proxy/:urlProxy/endproxy*",
-						"method": "post",
-						"callbacks": 
-						[
-							null
-						],
-
-						"keys": 
-						[
-							{
-								"name": "urlProxy",
-								"optional": false
-							}
-						],
-
-						"regexp": 
-						{
-							
-						},
-
-						"params": 
-						[
-							"/test"
-						]
-					}
-				]
-			},
-
-			"params": 
-			{
-				
-			},
-
-			"_params": 
-			[
-				
-			]
-		},
-
-		"__usedRouter": true,
-		"_connectionKey": "6::::8080"
-	},
-
-	"res": 
-	{
-		"_events": 
-		{
-			
-		},
-
-		"_eventsCount": 1,
-		"output": 
-		[
-			
-		],
-
-		"outputEncodings": 
-		[
-			
-		],
-
-		"outputCallbacks": 
-		[
-			
-		],
-
-		"outputSize": 0,
-		"writable": true,
-		"_last": false,
-		"upgrading": false,
-		"chunkedEncoding": false,
-		"shouldKeepAlive": true,
-		"useChunkedEncodingByDefault": true,
-		"sendDate": true,
-		"_removedConnection": false,
-		"_removedContLen": false,
-		"_removedTE": false,
-		"_contentLength": null,
-		"_hasBody": true,
-		"_trailer": "",
-		"finished": false,
-		"_headerSent": false,
-		"socket": 
-		{
-			"connecting": false,
-			"_hadError": false,
-			"_handle": 
-			{
-				"reading": true,
-				"owner": "[Circular ~.res.socket]",
-				"onconnection": null,
-				"_consumed": true
-			},
-
-			"_parent": null,
-			"_host": null,
-			"_readableState": 
-			{
-				"objectMode": false,
-				"highWaterMark": 16384,
-				"buffer": 
-				{
-					"head": null,
-					"tail": null,
-					"length": 0
-				},
-
-				"length": 0,
-				"pipes": null,
-				"pipesCount": 0,
-				"flowing": true,
-				"ended": false,
-				"endEmitted": false,
-				"reading": true,
-				"sync": false,
-				"needReadable": true,
-				"emittedReadable": false,
-				"readableListening": false,
-				"resumeScheduled": false,
-				"destroyed": false,
-				"defaultEncoding": "utf8",
-				"awaitDrain": 0,
-				"readingMore": false,
-				"decoder": null,
-				"encoding": null
-			},
-
-			"readable": true,
-			"_events": 
-			{
-				"end": 
-				[
-					null,
-					null
-				],
-
-				"drain": 
-				[
-					null,
-					null
-				],
-
-				"close": 
-				[
-					null,
-					null
-				]
-			},
-
-			"_eventsCount": 9,
-			"_writableState": 
-			{
-				"objectMode": false,
-				"highWaterMark": 16384,
-				"finalCalled": false,
-				"needDrain": false,
-				"ending": false,
-				"ended": false,
-				"finished": false,
-				"destroyed": false,
-				"decodeStrings": false,
-				"defaultEncoding": "utf8",
-				"length": 0,
-				"writing": false,
-				"corked": 0,
-				"sync": true,
-				"bufferProcessing": false,
-				"writecb": null,
-				"writelen": 0,
-				"bufferedRequest": null,
-				"lastBufferedRequest": null,
-				"pendingcb": 0,
-				"prefinished": false,
-				"errorEmitted": false,
-				"bufferedRequestCount": 0,
-				"corkedRequestsFree": 
-				{
-					"next": null,
-					"entry": null
-				}
-			},
-
-			"writable": true,
-			"_bytesDispatched": 0,
-			"_sockname": null,
-			"_pendingData": null,
-			"_pendingEncoding": "",
-			"allowHalfOpen": true,
-			"server": 
-			{
-				"stack": 
-				[
-					{
-						"route": ""
-					},
-
-					{
-						"route": ""
-					},
-
-					{
-						"route": ""
-					},
-
-					{
-						"route": ""
-					},
-
-					{
-						"route": ""
-					}
-				],
-
-				"_events": 
-				{
-					
-				},
-
-				"_eventsCount": 3,
-				"_connections": 1,
-				"_handle": 
-				{
-					"reading": false,
-					"owner": "[Circular ~.res.socket.server]",
-					"onread": null
-				},
-
-				"_usingWorkers": false,
-				"_workers": 
-				[
-					
-				],
-
-				"_unref": false,
-				"allowHalfOpen": true,
-				"pauseOnConnect": false,
-				"httpAllowHalfOpen": false,
-				"timeout": 120000,
-				"keepAliveTimeout": 5000,
-				"_pendingResponseData": 0,
-				"maxHeadersCount": null,
-				"cache": 
-				{
-					
-				},
-
-				"settings": 
-				{
-					"env": "development",
-					"hints": true
-				},
-
-				"redirects": 
-				{
-					
-				},
-
-				"isCallbacks": 
-				{
-					
-				},
-
-				"_locals": 
-				{
-					"settings": 
-					{
-						"env": "development",
-						"hints": true
-					},
-
-					"app": "[Circular ~.res.socket.server]"
-				},
-
-				"dynamicViewHelpers": 
-				{
-					
-				},
-
-				"errorHandlers": 
-				[
-					
-				],
-
-				"route": "/",
-				"routes": 
-				{
-					"app": "[Circular ~.res.socket.server]",
-					"routes": 
-					{
-						"get": 
-						[
-							{
-								"path": "/",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									
-								],
-
-								"regexp": 
-								{
-									
-								}
-							},
-
-							{
-								"path": "/sessions/getGitHubLastCommitInfo",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									
-								],
-
-								"regexp": 
-								{
-									
-								}
-							},
-
-							{
-								"path": "/sessions/connect",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									
-								],
-
-								"regexp": 
-								{
-									
-								}
-							},
-
-							{
-								"path": "/proxy/:urlProxy/endproxy*",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									{
-										"name": "urlProxy",
-										"optional": false
-									}
-								],
-
-								"regexp": 
-								{
-									
-								}
-							},
-
-							{
-								"path": "/sessions/callback",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									
-								],
-
-								"regexp": 
-								{
-									
-								}
-							}
-						],
-
-						"post": 
-						[
-							{
-								"path": "/proxy/:urlProxy/endproxy*",
-								"method": "post",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									{
-										"name": "urlProxy",
-										"optional": false
-									}
-								],
-
-								"regexp": 
-								{
-									
-								},
-
-								"params": 
-								[
-									"/test"
-								]
-							}
-						]
-					},
-
-					"params": 
-					{
-						
-					},
-
-					"_params": 
-					[
-						
-					]
-				},
-
-				"__usedRouter": true,
-				"_connectionKey": "6::::8080"
-			},
-
-			"_server": 
-			{
-				"stack": 
-				[
-					{
-						"route": ""
-					},
-
-					{
-						"route": ""
-					},
-
-					{
-						"route": ""
-					},
-
-					{
-						"route": ""
-					},
-
-					{
-						"route": ""
-					}
-				],
-
-				"_events": 
-				{
-					
-				},
-
-				"_eventsCount": 3,
-				"_connections": 1,
-				"_handle": 
-				{
-					"reading": false,
-					"owner": "[Circular ~.res.socket._server]",
-					"onread": null
-				},
-
-				"_usingWorkers": false,
-				"_workers": 
-				[
-					
-				],
-
-				"_unref": false,
-				"allowHalfOpen": true,
-				"pauseOnConnect": false,
-				"httpAllowHalfOpen": false,
-				"timeout": 120000,
-				"keepAliveTimeout": 5000,
-				"_pendingResponseData": 0,
-				"maxHeadersCount": null,
-				"cache": 
-				{
-					
-				},
-
-				"settings": 
-				{
-					"env": "development",
-					"hints": true
-				},
-
-				"redirects": 
-				{
-					
-				},
-
-				"isCallbacks": 
-				{
-					
-				},
-
-				"_locals": 
-				{
-					"settings": 
-					{
-						"env": "development",
-						"hints": true
-					},
-
-					"app": "[Circular ~.res.socket._server]"
-				},
-
-				"dynamicViewHelpers": 
-				{
-					
-				},
-
-				"errorHandlers": 
-				[
-					
-				],
-
-				"route": "/",
-				"routes": 
-				{
-					"app": "[Circular ~.res.socket._server]",
-					"routes": 
-					{
-						"get": 
-						[
-							{
-								"path": "/",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									
-								],
-
-								"regexp": 
-								{
-									
-								}
-							},
-
-							{
-								"path": "/sessions/getGitHubLastCommitInfo",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									
-								],
-
-								"regexp": 
-								{
-									
-								}
-							},
-
-							{
-								"path": "/sessions/connect",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									
-								],
-
-								"regexp": 
-								{
-									
-								}
-							},
-
-							{
-								"path": "/proxy/:urlProxy/endproxy*",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									{
-										"name": "urlProxy",
-										"optional": false
-									}
-								],
-
-								"regexp": 
-								{
-									
-								}
-							},
-
-							{
-								"path": "/sessions/callback",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									
-								],
-
-								"regexp": 
-								{
-									
-								}
-							}
-						],
-
-						"post": 
-						[
-							{
-								"path": "/proxy/:urlProxy/endproxy*",
-								"method": "post",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									{
-										"name": "urlProxy",
-										"optional": false
-									}
-								],
-
-								"regexp": 
-								{
-									
-								},
-
-								"params": 
-								[
-									"/test"
-								]
-							}
-						]
-					},
-
-					"params": 
-					{
-						
-					},
-
-					"_params": 
-					[
-						
-					]
-				},
-
-				"__usedRouter": true,
-				"_connectionKey": "6::::8080"
-			},
-
-			"_idleTimeout": 120000,
-			"_idleNext": 
-			{
-				"_idleNext": "[Circular ~.res.socket]",
-				"_idlePrev": "[Circular ~.res.socket]",
-				"_unrefed": true,
-				"msecs": 120000,
-				"nextTick": false,
-				"_timer": 
-				{
-					"_list": "[Circular ~.res.socket._idleNext]"
-				}
-			},
-
-			"_idlePrev": 
-			{
-				"_idleNext": "[Circular ~.res.socket]",
-				"_idlePrev": "[Circular ~.res.socket]",
-				"_unrefed": true,
-				"msecs": 120000,
-				"nextTick": false,
-				"_timer": 
-				{
-					"_list": "[Circular ~.res.socket._idlePrev]"
-				}
-			},
-
-			"_idleStart": 4398,
-			"_destroyed": false,
-			"parser": 
-			{
-				"_headers": 
-				[
-					
-				],
-
-				"_url": "",
-				"_consumed": true,
-				"socket": "[Circular ~.res.socket]",
-				"incoming": "[Circular ~]",
-				"outgoing": null,
-				"maxHeaderPairs": 2000
-			},
-
-			"_paused": false,
-			"_httpMessage": "[Circular ~.res]"
-		},
-
-		"connection": 
-		{
-			"connecting": false,
-			"_hadError": false,
-			"_handle": 
-			{
-				"reading": true,
-				"owner": "[Circular ~.res.connection]",
-				"onconnection": null,
-				"_consumed": true
-			},
-
-			"_parent": null,
-			"_host": null,
-			"_readableState": 
-			{
-				"objectMode": false,
-				"highWaterMark": 16384,
-				"buffer": 
-				{
-					"head": null,
-					"tail": null,
-					"length": 0
-				},
-
-				"length": 0,
-				"pipes": null,
-				"pipesCount": 0,
-				"flowing": true,
-				"ended": false,
-				"endEmitted": false,
-				"reading": true,
-				"sync": false,
-				"needReadable": true,
-				"emittedReadable": false,
-				"readableListening": false,
-				"resumeScheduled": false,
-				"destroyed": false,
-				"defaultEncoding": "utf8",
-				"awaitDrain": 0,
-				"readingMore": false,
-				"decoder": null,
-				"encoding": null
-			},
-
-			"readable": true,
-			"_events": 
-			{
-				"end": 
-				[
-					null,
-					null
-				],
-
-				"drain": 
-				[
-					null,
-					null
-				],
-
-				"close": 
-				[
-					null,
-					null
-				]
-			},
-
-			"_eventsCount": 9,
-			"_writableState": 
-			{
-				"objectMode": false,
-				"highWaterMark": 16384,
-				"finalCalled": false,
-				"needDrain": false,
-				"ending": false,
-				"ended": false,
-				"finished": false,
-				"destroyed": false,
-				"decodeStrings": false,
-				"defaultEncoding": "utf8",
-				"length": 0,
-				"writing": false,
-				"corked": 0,
-				"sync": true,
-				"bufferProcessing": false,
-				"writecb": null,
-				"writelen": 0,
-				"bufferedRequest": null,
-				"lastBufferedRequest": null,
-				"pendingcb": 0,
-				"prefinished": false,
-				"errorEmitted": false,
-				"bufferedRequestCount": 0,
-				"corkedRequestsFree": 
-				{
-					"next": null,
-					"entry": null
-				}
-			},
-
-			"writable": true,
-			"_bytesDispatched": 0,
-			"_sockname": null,
-			"_pendingData": null,
-			"_pendingEncoding": "",
-			"allowHalfOpen": true,
-			"server": 
-			{
-				"stack": 
-				[
-					{
-						"route": ""
-					},
-
-					{
-						"route": ""
-					},
-
-					{
-						"route": ""
-					},
-
-					{
-						"route": ""
-					},
-
-					{
-						"route": ""
-					}
-				],
-
-				"_events": 
-				{
-					
-				},
-
-				"_eventsCount": 3,
-				"_connections": 1,
-				"_handle": 
-				{
-					"reading": false,
-					"owner": "[Circular ~.res.connection.server]",
-					"onread": null
-				},
-
-				"_usingWorkers": false,
-				"_workers": 
-				[
-					
-				],
-
-				"_unref": false,
-				"allowHalfOpen": true,
-				"pauseOnConnect": false,
-				"httpAllowHalfOpen": false,
-				"timeout": 120000,
-				"keepAliveTimeout": 5000,
-				"_pendingResponseData": 0,
-				"maxHeadersCount": null,
-				"cache": 
-				{
-					
-				},
-
-				"settings": 
-				{
-					"env": "development",
-					"hints": true
-				},
-
-				"redirects": 
-				{
-					
-				},
-
-				"isCallbacks": 
-				{
-					
-				},
-
-				"_locals": 
-				{
-					"settings": 
-					{
-						"env": "development",
-						"hints": true
-					},
-
-					"app": "[Circular ~.res.connection.server]"
-				},
-
-				"dynamicViewHelpers": 
-				{
-					
-				},
-
-				"errorHandlers": 
-				[
-					
-				],
-
-				"route": "/",
-				"routes": 
-				{
-					"app": "[Circular ~.res.connection.server]",
-					"routes": 
-					{
-						"get": 
-						[
-							{
-								"path": "/",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									
-								],
-
-								"regexp": 
-								{
-									
-								}
-							},
-
-							{
-								"path": "/sessions/getGitHubLastCommitInfo",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									
-								],
-
-								"regexp": 
-								{
-									
-								}
-							},
-
-							{
-								"path": "/sessions/connect",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									
-								],
-
-								"regexp": 
-								{
-									
-								}
-							},
-
-							{
-								"path": "/proxy/:urlProxy/endproxy*",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									{
-										"name": "urlProxy",
-										"optional": false
-									}
-								],
-
-								"regexp": 
-								{
-									
-								}
-							},
-
-							{
-								"path": "/sessions/callback",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									
-								],
-
-								"regexp": 
-								{
-									
-								}
-							}
-						],
-
-						"post": 
-						[
-							{
-								"path": "/proxy/:urlProxy/endproxy*",
-								"method": "post",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									{
-										"name": "urlProxy",
-										"optional": false
-									}
-								],
-
-								"regexp": 
-								{
-									
-								},
-
-								"params": 
-								[
-									"/test"
-								]
-							}
-						]
-					},
-
-					"params": 
-					{
-						
-					},
-
-					"_params": 
-					[
-						
-					]
-				},
-
-				"__usedRouter": true,
-				"_connectionKey": "6::::8080"
-			},
-
-			"_server": 
-			{
-				"stack": 
-				[
-					{
-						"route": ""
-					},
-
-					{
-						"route": ""
-					},
-
-					{
-						"route": ""
-					},
-
-					{
-						"route": ""
-					},
-
-					{
-						"route": ""
-					}
-				],
-
-				"_events": 
-				{
-					
-				},
-
-				"_eventsCount": 3,
-				"_connections": 1,
-				"_handle": 
-				{
-					"reading": false,
-					"owner": "[Circular ~.res.connection._server]",
-					"onread": null
-				},
-
-				"_usingWorkers": false,
-				"_workers": 
-				[
-					
-				],
-
-				"_unref": false,
-				"allowHalfOpen": true,
-				"pauseOnConnect": false,
-				"httpAllowHalfOpen": false,
-				"timeout": 120000,
-				"keepAliveTimeout": 5000,
-				"_pendingResponseData": 0,
-				"maxHeadersCount": null,
-				"cache": 
-				{
-					
-				},
-
-				"settings": 
-				{
-					"env": "development",
-					"hints": true
-				},
-
-				"redirects": 
-				{
-					
-				},
-
-				"isCallbacks": 
-				{
-					
-				},
-
-				"_locals": 
-				{
-					"settings": 
-					{
-						"env": "development",
-						"hints": true
-					},
-
-					"app": "[Circular ~.res.connection._server]"
-				},
-
-				"dynamicViewHelpers": 
-				{
-					
-				},
-
-				"errorHandlers": 
-				[
-					
-				],
-
-				"route": "/",
-				"routes": 
-				{
-					"app": "[Circular ~.res.connection._server]",
-					"routes": 
-					{
-						"get": 
-						[
-							{
-								"path": "/",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									
-								],
-
-								"regexp": 
-								{
-									
-								}
-							},
-
-							{
-								"path": "/sessions/getGitHubLastCommitInfo",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									
-								],
-
-								"regexp": 
-								{
-									
-								}
-							},
-
-							{
-								"path": "/sessions/connect",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									
-								],
-
-								"regexp": 
-								{
-									
-								}
-							},
-
-							{
-								"path": "/proxy/:urlProxy/endproxy*",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									{
-										"name": "urlProxy",
-										"optional": false
-									}
-								],
-
-								"regexp": 
-								{
-									
-								}
-							},
-
-							{
-								"path": "/sessions/callback",
-								"method": "get",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									
-								],
-
-								"regexp": 
-								{
-									
-								}
-							}
-						],
-
-						"post": 
-						[
-							{
-								"path": "/proxy/:urlProxy/endproxy*",
-								"method": "post",
-								"callbacks": 
-								[
-									null
-								],
-
-								"keys": 
-								[
-									{
-										"name": "urlProxy",
-										"optional": false
-									}
-								],
-
-								"regexp": 
-								{
-									
-								},
-
-								"params": 
-								[
-									"/test"
-								]
-							}
-						]
-					},
-
-					"params": 
-					{
-						
-					},
-
-					"_params": 
-					[
-						
-					]
-				},
-
-				"__usedRouter": true,
-				"_connectionKey": "6::::8080"
-			},
-
-			"_idleTimeout": 120000,
-			"_idleNext": 
-			{
-				"_idleNext": "[Circular ~.res.connection]",
-				"_idlePrev": "[Circular ~.res.connection]",
-				"_unrefed": true,
-				"msecs": 120000,
-				"nextTick": false,
-				"_timer": 
-				{
-					"_list": "[Circular ~.res.connection._idleNext]"
-				}
-			},
-
-			"_idlePrev": 
-			{
-				"_idleNext": "[Circular ~.res.connection]",
-				"_idlePrev": "[Circular ~.res.connection]",
-				"_unrefed": true,
-				"msecs": 120000,
-				"nextTick": false,
-				"_timer": 
-				{
-					"_list": "[Circular ~.res.connection._idlePrev]"
-				}
-			},
-
-			"_idleStart": 4398,
-			"_destroyed": false,
-			"parser": 
-			{
-				"_headers": 
-				[
-					
-				],
-
-				"_url": "",
-				"_consumed": true,
-				"socket": "[Circular ~.res.connection]",
-				"incoming": "[Circular ~]",
-				"outgoing": null,
-				"maxHeaderPairs": 2000
-			},
-
-			"_paused": false,
-			"_httpMessage": "[Circular ~.res]"
-		},
-
-		"_header": null,
-		"_sent100": false,
-		"_expect_continue": false,
-		"app": 
-		{
-			"stack": 
-			[
-				{
-					"route": ""
-				},
-
-				{
-					"route": ""
-				},
-
-				{
-					"route": ""
-				},
-
-				{
-					"route": ""
-				},
-
-				{
-					"route": ""
-				}
-			],
-
-			"_events": 
-			{
-				
-			},
-
-			"_eventsCount": 3,
-			"_connections": 1,
-			"_handle": 
-			{
-				"reading": false,
-				"owner": "[Circular ~.res.app]",
-				"onread": null
-			},
-
-			"_usingWorkers": false,
-			"_workers": 
-			[
-				
-			],
-
-			"_unref": false,
-			"allowHalfOpen": true,
-			"pauseOnConnect": false,
-			"httpAllowHalfOpen": false,
-			"timeout": 120000,
-			"keepAliveTimeout": 5000,
-			"_pendingResponseData": 0,
-			"maxHeadersCount": null,
-			"cache": 
-			{
-				
-			},
-
-			"settings": 
-			{
-				"env": "development",
-				"hints": true
-			},
-
-			"redirects": 
-			{
-				
-			},
-
-			"isCallbacks": 
-			{
-				
-			},
-
-			"_locals": 
-			{
-				"settings": 
-				{
-					"env": "development",
-					"hints": true
-				},
-
-				"app": "[Circular ~.res.app]"
-			},
-
-			"dynamicViewHelpers": 
-			{
-				
-			},
-
-			"errorHandlers": 
-			[
-				
-			],
-
-			"route": "/",
-			"routes": 
-			{
-				"app": "[Circular ~.res.app]",
-				"routes": 
-				{
-					"get": 
-					[
-						{
-							"path": "/",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								
-							],
-
-							"regexp": 
-							{
-								
-							}
-						},
-
-						{
-							"path": "/sessions/getGitHubLastCommitInfo",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								
-							],
-
-							"regexp": 
-							{
-								
-							}
-						},
-
-						{
-							"path": "/sessions/connect",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								
-							],
-
-							"regexp": 
-							{
-								
-							}
-						},
-
-						{
-							"path": "/proxy/:urlProxy/endproxy*",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								{
-									"name": "urlProxy",
-									"optional": false
-								}
-							],
-
-							"regexp": 
-							{
-								
-							}
-						},
-
-						{
-							"path": "/sessions/callback",
-							"method": "get",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								
-							],
-
-							"regexp": 
-							{
-								
-							}
-						}
-					],
-
-					"post": 
-					[
-						{
-							"path": "/proxy/:urlProxy/endproxy*",
-							"method": "post",
-							"callbacks": 
-							[
-								null
-							],
-
-							"keys": 
-							[
-								{
-									"name": "urlProxy",
-									"optional": false
-								}
-							],
-
-							"regexp": 
-							{
-								
-							},
-
-							"params": 
-							[
-								"/test"
-							]
-						}
-					]
-				},
-
-				"params": 
-				{
-					
-				},
-
-				"_params": 
-				[
-					
-				]
-			},
-
-			"__usedRouter": true,
-			"_connectionKey": "6::::8080"
-		},
-
-		"req": "[Circular ~]"
-	},
-
-	"_startTime": "2018-05-18T20:24:53.074Z",
-	"_logging": true,
-	"cookies": 
-	{
-		
-	},
-
-	"_route_index": 0,
-	"route": 
-	{
-		"path": "/proxy/:urlProxy/endproxy*",
-		"method": "post",
-		"callbacks": 
-		[
-			null
-		],
-
-		"keys": 
-		[
-			{
-				"name": "urlProxy",
-				"optional": false
-			}
-		],
-
-		"regexp": 
-		{
-			
-		},
-
-		"params": 
-		[
-			"/test"
-		]
-	},
-
-	"params": 
-	[
-		"/test"
-	]
+	}
 }

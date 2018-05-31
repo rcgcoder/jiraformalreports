@@ -114,7 +114,7 @@ function newIssueFactory(report){
 	})
 	dynObj.functions.add("getLastPrecomputedPropertyValue",function(key){
 		var self=this;
-		var precomps=self.getPrecomputedProperty(key);
+		var precomps=self.getPrecomputedPropertyById(key);
 		if (precomps=="") return "";
 		return precoms.getLast().value;
 	})

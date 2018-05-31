@@ -372,6 +372,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		var self=this;
 		var sModel=self.inputHtml;
 		var rootJRF=self.tagFactory.new();
+		var report=self.report;
 		var htmlBufferIndex;
 		self.addStep("Parsing Model",function(){
 			self.parse(sModel,rootJRF);
@@ -386,7 +387,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 					log("Type of accumulators:"+accumKey);		
 					//getting all leafs
 					var hsLeafs=newHashMap();
-					self.report.treeIssues.walk(function(issue){
+					report.treeIssues.walk(function(issue){
 						if (issue["get"+accumKey]().length()==0){
 							hsLeafs.add(issue.getKey(),issue);
 						}

@@ -400,7 +400,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 				});
 				self.continueTask();
 			});
-			var maxThreads=25;
+			var maxThreads=3;
 			self.addStep("Doing " + hsIssueGetProperties.length()+" of getproperty calls", function(){
 				var nextAccumulator=0;
 				var jira=System.webapp.getJira();

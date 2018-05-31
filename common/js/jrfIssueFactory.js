@@ -18,7 +18,8 @@ function newIssueFactory(report){
 			 {name:"AdvanceChild",description:"SubIssues for advance calculation",type:"object"},
 			 {name:"LinkType",description:"Relation Types",type:"object"},
 			 {name:"Comment", description:"Comments in Issue",type:"object"},
-			 {name:"AccumulatorsCache",description:"Cache the values of accumulator calls",type:"object"}
+			 {name:"AccumulatorsCache",description:"Cache the values of accumulator calls",type:"object"},
+			 {name:"PrecomputedProperty",description:"List of properties with values of hidden childs computed by a user with permissions",type:"object"}
 			]
 			,
 			allFieldDefinitions.concat(["JiraObject"])
@@ -97,6 +98,26 @@ function newIssueFactory(report){
 		var self=this;
 		return self.fieldAccum(theFieldName,"AdvanceChilds",bSetProperty,fncItemCustomCalc);
 	});
+	dynObj.functions.add("appendPrecomputedPropertyValues",function(key,arrValues){
+		var self=this;
+		var precomps=self.getPrecomputedPropertys();
+		var hsValues;
+		if (!precomps.exists(key)){
+			hsValues=newHashMap();
+			precomps.add(key,hsValues);
+		} else {
+			hsValues.getValue(key);
+		}
+		arrValues.forEach(function(elem){
+			hsValues.add(elem.date,elem);
+		})
+	})
+	dynObj.functions.add("getLastPrecomputedPropertyValue",function(key){
+		var self=this;
+		var precomps=self.getPrecomputedProperty(key);
+		if (precomps=="") return "";
+		return precoms.getLast().value;
+	})
 	dynObj.functions.add("fieldAccum",function(theFieldName,listAttribName,bSetProperty,fncItemCustomCalc){
 		var self=this;
 		var app=System.webapp;
@@ -117,7 +138,12 @@ function newIssueFactory(report){
 				accumValue+=childValue;
 			});
 		} else {
-			var childValue=self.fieldValue(theFieldName);
+			// let´s find if field have a precomputed value
+			
+			var childValue=self.getLastPrecomputedPropertyValue(cacheKey);
+			if (childValue==""){ // if precomputed==""..... there is not precomputed value
+				var childValue=self.fieldValue(theFieldName);
+			}
 			if (childValue==""){
 				childValue=0;
 			}

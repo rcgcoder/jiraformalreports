@@ -115,7 +115,7 @@ function newIssueFactory(report){
 	dynObj.functions.add("getLastPrecomputedPropertyValue",function(key){
 		var self=this;
 		var precomps=self.getPrecomputedPropertyById(key);
-		if ((precomps=="")||(isUndefined(precomps)) return "";
+		if ((precomps=="")||(isUndefined(precomps))) return "";
 		return precoms.getLast().value;
 	})
 	dynObj.functions.add("fieldAccum",function(theFieldName,listAttribName,bSetProperty,fncItemCustomCalc){

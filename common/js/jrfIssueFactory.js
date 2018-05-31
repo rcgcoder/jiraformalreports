@@ -106,7 +106,7 @@ function newIssueFactory(report){
 			hsValues=newHashMap();
 			precomps.add(key,hsValues);
 		} else {
-			hsValues.getValue(key);
+			hsValues=precomps.getValue(key);
 		}
 		arrValues.forEach(function(elem){
 			hsValues.add(elem.date,elem);

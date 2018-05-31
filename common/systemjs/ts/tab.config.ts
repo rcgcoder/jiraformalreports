@@ -114,8 +114,6 @@ export class TabConfig {
         auxObj=$('#toggle_ResetLeafPrecomputations');
         dfReport["ResetLeafPrecomputations"]=(auxObj.attr("checked")=="checked");
         
-        
-        
         auxObj=System.getAngularObject('selProjectsToReport',true);
         arrValues=auxObj.getSelectedValues();
         dfReport["rootProjects"]=arrValues;
@@ -169,8 +167,9 @@ export class TabConfig {
         var arrOptions=auxObj.getOptions();
         dfReport["selReportModel"]={selected:arrValues,options:arrOptions};
 
-        auxObj=System.getAngularDomObject("PrecomputatorUsers")[0];
-        dfReport["PrecomputatorUsers"]=auxObj.value;
+        auxObj=System.getAngularObject("selUsersCanResetLeafs");
+        arrValues=auxObj.getSelectedValues();
+        dfReport["UsersCanResetLeafs"]=arrValues;
         
         
         var arrFunctions=["AdvanceProgressFunction","BillingProgressFunction",
@@ -267,12 +266,11 @@ export class TabConfig {
             auxObj.setSelectedValues(arrValues);
         }
         
-        
-        auxObj=System.getAngularDomObject("PrecomputatorUsers")[0];
-        if (isDefined(config.PrecomputatorUsers)){
-            auxObj.value=config.PrecomputatorUsers;
+        auxObj=System.getAngularObject("selUsersCanResetLeafs");
+        if (isDefined(config.UsersCanResetLeafs)){
+            auxObj.setSelectedValues(config.UsersCanResetLeafs);
         }
-        
+                
         var arrFunctions=["AdvanceProgressFunction","BillingProgressFunction",
                           "AdvanceTotalEstimatedFunction","BillingTotalEstimatedFunction"];
         arrFunctions.forEach(function(textareaName){

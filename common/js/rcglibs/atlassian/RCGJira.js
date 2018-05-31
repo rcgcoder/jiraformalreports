@@ -387,7 +387,7 @@ class RCGJira{
 			var objJson=JSON.parse(objResponse);
 			self.continueTask([objJson]);
 		});
-		self.apiCall(   "/rest/api/2/issue/"+issueId+"/"+propertyName,
+		self.apiCall(   "/rest/api/2/issue/"+issueId+"/properties/"+propertyName,
 						"GET",
 						undefined,
 						undefined,

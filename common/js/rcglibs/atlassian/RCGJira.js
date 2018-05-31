@@ -385,7 +385,7 @@ class RCGJira{
 		self.pushCallback(function(sResponse,xhr, statusText, errorThrown){
 			log("Property:"+propertyName+" = "+sResponse+" getted for issue:"+issueId);
 			if (sResponse!=""){
-				self.continueTask([JSON.parse(Response)]);
+				self.continueTask([JSON.parse(sResponse)]);
 			} else {
 				self.continueTask([sResponse,xhr, statusText, errorThrown]);
 			}

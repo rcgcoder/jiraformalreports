@@ -29,5 +29,20 @@
                  }
              }
          ]
+		,"jiraEntityProperties": [{
+			"name": {
+				"value": "Sauce index",
+				"i18n": "sauce.index"
+			},
+			"key": "sauce-entity-job-id",
+			"entityType": "issue",
+			"keyConfigurations": [{
+				"propertyKey": "sauce",
+				"extractions": [{
+					"objectName": "sauce.id",
+					"type": "string"
+				}]
+			}]
+		}]
      }
  }

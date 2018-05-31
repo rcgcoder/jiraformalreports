@@ -8,7 +8,7 @@ var jrfReport=class jrfReport {
 		self.config.model=System.webapp.model;
 		self.childs=newHashMap();
 		self.advanceChilds=newHashMap();
-		//self.treeIssues=newHashMap();
+		self.treeIssues=newHashMap();
 		self.rootElements=newHashMap();
 		self.rootIssues=newHashMap();
 		self.rootProjects=newHashMap();
@@ -186,6 +186,7 @@ var jrfReport=class jrfReport {
 		
 		self.addStep("Processing root elements.... ",function(){
 			if (self.bFinishReport) return self.continueTask();
+			self.treeIssues=newHashMap();
 			self.rootIssues.walk(function(value,iProf,key){
 				log("Root Issue: "+key);
 				var issue=self.allIssues.getById(key);
@@ -200,6 +201,7 @@ var jrfReport=class jrfReport {
 		});
 
 		var issuesAdded=newHashMap();
+		self.treeIssues=issuesAdded;
 		// assing childs and advance childs to root elements
 		self.addStep("Assign Childs and Advance",function(){
 			var formulaChild=self.config.billingHierarchy;

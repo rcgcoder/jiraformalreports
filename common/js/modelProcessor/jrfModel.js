@@ -45,6 +45,59 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 				/*,
 				"jrfTags"*/);
 	}
+	extractAccumulators(sHTML){
+		var self=this;
+		var sTag="fieldAccum";
+		var sTypes=["Childs","AdvanceChilds","("];
+		if (sHTML.substring(0,sTag.length)==sTag){
+			sHTML="  "+sHTML;
+		}
+		var arrParts=sHTML.split("fieldAccum");
+		var arrParts2;
+		var sPart;
+		var bLocated;
+		var j;
+		var sToken;
+		var hsAccumulators=newHashMap();
+		for (var i=1;i<arrParts.length;i++){
+			sPart=arrParts[i];
+			bLocated=false;
+			j=0;
+			while ((j<sTypes.length)&&(!bLocated)){
+				sToken=sTypes[j];
+				if (sToken==sPart.substring(0,sToken.length)){
+					bLocated=true;
+				} else {
+					j++;
+				}
+			}
+			if (bLocated){ // if bLocated... sToken stores the type of call.
+				sPart=self.removeInnerTags(sPart,true); // remove all html tags that confluence can be inserted
+				sPart=sPart.split(")")[0]; // sParts only have the params of the function Childs(.....) or ();
+				sPart=sPart.substring(sPart.indexOf("("),sPart.length);// now only the inner part
+				arrParts=sPart.split(","); // , separated
+				var typeRelation=sToken;
+				if (sToken=="("){
+					// the first param is the name of list (childs,advancechilds,... another custom
+					typeRelation=arrParts[0];
+					arrParts=arrParts.shift();
+				}
+				var fieldName=arrParts[0]; // the field name.... 
+				var sKey=typeRelation+"."+fieldName;
+				var hsAux;
+				if (!hsAccumulators.exists(typeRelation)){
+					hsAux=newHashMap();
+					hsAccummulators.add(typeRelation,hsAux);
+				} else {
+					hsAux=hsAccummulators.getValue(typeRelation);
+				}
+				if (!hsAux.exists(sKey)){
+					hsAux.add(sKey,{key:sKey,type:typeRelation,field:fieldName});
+				}
+			}
+		}
+		return hsAccumulators;
+	}
 	extendToken(tagApplier,tag,reportElem){
 		var self=this;
 		System.webapp.getTaskManager().extendObject(tagApplier);
@@ -321,6 +374,71 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			self.parse(sModel,rootJRF);
 			self.continueTask();
 		});
+		self.addStep("Getting accum properties of leafs", function(){
+			var hsAccumulators=self.extractAccumulators(self.inputHtml);
+			var petCounter=0;
+			var hsIssueGetProperties=newHashMap();
+			self.addStep("Preparing the pool of getproperty calls", function(){
+				hsAccumulators.walk(function(hsAccum,iProf,accumKey){
+					log("Type of accumulators:"+accumKey);		
+					//getting all leafs
+					var hsLeafs=newHashMap();
+					self.report.treeIssues.walk(function(issue){
+						if (issue["get"+accumKey]().length()==0){
+							hsLeafs.add(issue.getKey(),issue);
+						}
+					});
+					hsAccum.walk(function(theFieldAccum){
+						hsLeafs.walk(function (issue){
+							hsIssueGetProperties.push({issue:issue,key:propertyKey});
+						});
+					});
+				});
+				self.continueTask();
+			});
+			var maxThreads=25;
+			self.addStep("Doing " + hsIssueGetProperties.length()+" of getproperty calls", function(){
+				var nextAccumulator=0;
+				var jira=System.webapp.getJira();
+				var fncAddThread=function(iThread){
+					self.addStep("Property Getter Thread "+iThread,function(){
+						var fncGetAccumulator=self.createManagedCallback(function(){
+							if (hsIssueGetProperties.length()==0)return;
+							var iPet=hsIssueGetProperties.length()-1;
+							var callInfo=hsIssueGetProperties.pop();//push({issue:issue,key:propertyKey});
+							var issue=callInfo.issue;
+							var propKey=callInfo.key;
+							
+							self.addStep("Petition:"+iPet+" Getting accumulator:"+propKey+" for issue:"+issue.getKey(),function(){
+								jira.getProperty(issue.getKey(),propKey);
+							});
+							self.addStep("Petition:"+iPet+" Processing result "+propKey+" of "+ issue.getKey() +" and Trying Next Call...",function(objProperty){
+								log("Start adding properties "+objProperty.key +" to issue:"+issue.getKey() );
+								log("End of adding properties "+objProperty.key +" to issue:"+issue.getKey() );
+								
+								if (hsIssueGetProperties.length()>0){
+									log("There are "+hsIssueGetProperties.length()+" not more petitions pending... let´s go next petition");
+									fncGetAccumulator();
+								} else {
+									log("There is not more petitions");
+								}
+								self.continueTask();
+							});
+						});
+						fncGetAccumulator();
+						self.continueTask();
+					},0,1,undefined,undefined,undefined,"INNER",undefined
+					);
+				}
+				for (var i=0;(i<maxThreads)&&(i<hsIssueGetProperties.length());i++){
+					fncAddThread(i);
+				}
+				self.continueTask();
+			});
+			
+			self.continueTask();
+		});
+		
 		self.addStep("Encoding model with Jira Info",function(){
 			htmlBufferIndex=self.pushHtmlBuffer();
 			self.encode(rootJRF);

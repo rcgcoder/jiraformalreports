@@ -380,6 +380,20 @@ class RCGJira{
 						undefined,
 						"application/json");
 	}
+	getProperty(issueId,propertyName){
+		var self=this;
+		self.pushCallback(function(objResponse,xhr, statusText, errorThrown){
+			log("Property:"+propertyName+" = "+objResponse+" getted for issue:"+issueId);
+			var objJson=JSON.parse(objResponse);
+			self.continueTask([objJson]);
+		});
+		self.apiCall(   "/rest/api/2/issue/"+issueId+"/"+propertyName,
+						"GET",
+						undefined,
+						undefined,
+						"application/json");
+	}
+	
 	addComment(issueId,theComment){
 		var self=this;
 		self.pushCallback(function(objResponse,xhr, statusText, errorThrown){

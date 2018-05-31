@@ -224,7 +224,7 @@ class RCGAtlassian{
 					log(" --> Bytes:"+response.length);
 				}
 				if (xhr.status == 429){
-					var millis=Math.round(((Math.random()*5)+10)*1000);
+					var millis=Math.round(((Math.random()*10)+5)*1000);
 					log("too many request.... have to wait "+(Math.round(millis/10)/100)+" secs");
 					setTimeout(self.createManagedCallback(function(){
 						log("retrying api call");

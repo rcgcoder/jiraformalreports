@@ -393,8 +393,9 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 						}
 					});
 					hsAccum.walk(function(theFieldAccum){
+						var sPropertyKey=accumKey+"."+theFieldAccum;
 						hsLeafs.walk(function (issue){
-							hsIssueGetProperties.push({issue:issue,key:accumKey});
+							hsIssueGetProperties.push({issue:issue,key:sPropertyKey});
 						});
 					});
 				});

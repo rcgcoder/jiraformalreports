@@ -385,15 +385,16 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			self.addStep("Preparing the pool of getproperty calls", function(){
 				hsAccumulators.walk(function(hsAccum,iProf,accumKey){
 					log("Type of accumulators:"+accumKey);		
-					//getting all leafs
+/*					//getting all leafs  NOT WORKING.... THE SYSTEM NEEDS ALL THE PRECOMPUTED INFO
 					var hsLeafs=newHashMap();
 					report.treeIssues.walk(function(issue){
 						if (issue["get"+accumKey]().length()==0){
 							hsLeafs.add(issue.getKey(),issue);
 						}
 					});
-					hsAccum.walk(function(theFieldAccum){
-						hsLeafs.walk(function (issue){
+*/					hsAccum.walk(function(theFieldAccum){
+						/*hsLeafs*/ 
+						report.treeIssues.walk(function (issue){
 							hsIssueGetProperties.push({issue:issue,key:theFieldAccum.key});
 						});
 					});

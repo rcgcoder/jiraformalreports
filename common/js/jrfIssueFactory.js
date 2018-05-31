@@ -182,6 +182,16 @@ function newIssueFactory(report){
 						jira.setProperty(self.getKey(),cacheKey,arrPropertyToJira);
 			        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
 				}
+			} else if (isDefined(System.webapp.resetPrecomputedPropertiesOfLeafs) && System.webapp.resetPrecomputedPropertiesOfLeafs){
+				self.appendPrecomputedPropertyValues(cacheKey,[{"date":Date.now(),"value":0}]);
+				System.webapp.addStep("Forcing the save of result:"+ 0 +" to property:"+cacheKey+" of Issue:"+self.getKey(),function(){
+					var jira=System.webapp.getJira();
+					var arrPropertyToJira=[];
+					self.getPrecomputedPropertyById(cacheKey).walk(function(elem,iProf,key){
+						arrPropertyToJira.push(elem);
+					});
+					jira.setProperty(self.getKey(),cacheKey,arrPropertyToJira);
+		        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
 			}
 		}
 		return accumValue;

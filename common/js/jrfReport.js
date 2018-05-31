@@ -224,7 +224,7 @@ var jrfReport=class jrfReport {
 //			var treeIssues=issuesAdded.toArray([{doFieldName:"self",resultFieldName:"issue"}]);
 			var fncProcessChild=self.createManagedCallback(function(objStep,issueParent){
 				var issueChild=objStep.value;
-				if (issueChild.id=="BENT-242"){
+				if (issueChild.id=="PDP-36"){
 					log("Testing "+issueChild.id);
 				}
 				var bIsChild=false;

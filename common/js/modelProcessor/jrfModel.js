@@ -53,7 +53,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			sHTML="  "+sHTML;
 		}
 		var arrParts=sHTML.split("fieldAccum");
-		var arrParts2;
+		var arrParams;
 		var sPart;
 		var bLocated;
 		var j;
@@ -75,15 +75,15 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 				sPart=self.removeInnerTags(sPart,true); // remove all html tags that confluence can be inserted
 				sPart=sPart.split(")")[0]; // sParts only have the params of the function Childs(.....) or ();
 				sPart=sPart.substring(sPart.indexOf("(")+1,sPart.length);// now only the inner part
-				arrParts=sPart.split(","); // , separated
+				arrParams=sPart.split(","); // , separated
 				var typeRelation=sToken;
 				if (sToken=="("){
 					// the first param is the name of list (childs,advancechilds,... another custom
-					typeRelation=replaceAll(arrParts[0],'"','');
+					typeRelation=replaceAll(arrParams[0],'"','');
 					typeRelation=replaceAll(typeRelation,"'",'').trim();
 					arrParts=arrParts.shift();
 				}
-				var fieldName=arrParts[0]; // the field name.... 
+				var fieldName=arrParams[0]; // the field name.... 
 				fieldName=replaceAll(fieldName,'"','');
 				fieldName=replaceAll(fieldName,"'",'').trim();
 				var sKey=typeRelation+"."+fieldName;

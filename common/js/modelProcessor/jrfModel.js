@@ -417,9 +417,10 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 								jira.getProperty(issue.getKey(),propKey);
 							});
 							self.addStep("Petition:"+iPet+" Processing result "+propKey+" of "+ issue.getKey() +" and Trying Next Call...",function(objProperty){
-								log("Start adding properties "+objProperty.key +" to issue:"+issue.getKey() );
-								log("End of adding properties "+objProperty.key +" to issue:"+issue.getKey() );
-								
+								if (objProperty!=""){
+									log("Start adding properties "+objProperty.key +" to issue:"+issue.getKey() );
+									log("End of adding properties "+objProperty.key +" to issue:"+issue.getKey() );
+								}
 								if (hsIssueGetProperties.length()>0){
 									log("There are "+hsIssueGetProperties.length()+" not more petitions pending... let´s go next petition");
 									fncGetAccumulator();

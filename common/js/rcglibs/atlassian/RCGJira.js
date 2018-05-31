@@ -382,10 +382,13 @@ class RCGJira{
 	}
 	getProperty(issueId,propertyName){
 		var self=this;
-		self.pushCallback(function(objResponse,xhr, statusText, errorThrown){
-			log("Property:"+propertyName+" = "+objResponse+" getted for issue:"+issueId);
-			var objJson=JSON.parse(objResponse);
-			self.continueTask([objJson]);
+		self.pushCallback(function(sResponse,xhr, statusText, errorThrown){
+			log("Property:"+propertyName+" = "+sResponse+" getted for issue:"+issueId);
+			if (sResponse!=""){
+				self.continueTask([JSON.parse(Response)]);
+			} else {
+				self.continueTask([sResponse,xhr, statusText, errorThrown]);
+			}
 		});
 		self.apiCall(   "/rest/api/2/issue/"+issueId+"/properties/"+propertyName,
 						"GET",

@@ -90,9 +90,9 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 				var hsAux;
 				if (!hsAccumulators.exists(typeRelation)){
 					hsAux=newHashMap();
-					hsAccummulators.add(typeRelation,hsAux);
+					hsAccumulators.add(typeRelation,hsAux);
 				} else {
-					hsAux=hsAccummulators.getValue(typeRelation);
+					hsAux=hsAccumulators.getValue(typeRelation);
 				}
 				if (!hsAux.exists(sKey)){
 					hsAux.add(sKey,{key:sKey,type:typeRelation,field:fieldName});

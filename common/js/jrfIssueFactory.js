@@ -163,7 +163,7 @@ function newIssueFactory(report){
 			log("Isssue"+self.getKey()+ " returns value:"+accumValue);
 		}
 		
-		accumValue=self.getReport().adjustAccumItem(childType,accumValue,issue);
+		accumValue=self.getReport().adjustAccumItem(childType,accumValue,self);
 		accumCache.add(cacheKey,accumValue);
 		if ((self.getReport().updatePrecomputedAccumulators)
 				&&

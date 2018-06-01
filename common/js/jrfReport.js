@@ -18,6 +18,20 @@ var jrfReport=class jrfReport {
 		self.confluence=System.webapp.getConfluence();
 		self.result="";
 		self.updatePrecomputedAccumulators=false;
+		self.adjustAccumItemFunctions=newHashMap();
+	}
+	adjustAccumItem(accumType,accumValue,issue){
+		var fnc=self.adjustAccumItemFunctions.getValue(accumType);
+		if (fnc!=""){
+			return fnc(accumValue,child);
+		}
+		return accumValue;
+	}
+	adjustAdvanceAccumItem(accumValue,child){
+		if (self.adjustAdvanceAccumItemFunction!=""){
+			return self.adjustAdvanceAccumItemFunction(accumValue,child);
+		}
+		return accumValue;
 	}
 	getChilds(){
 		return this.childs;
@@ -113,9 +127,8 @@ var jrfReport=class jrfReport {
 			}
 			self.allIssues=newIssueFactory(self);
 			self.updatePrecomputedAccumulators=false;
-			var auxObj=$('#toggle_ResetLeafPrecomputations');
-	        var bWithPrepcomps=(auxObj.attr("checked")=="checked");
-	        if (bWithPrepcomps){
+	        var bWithPrepcomps=self.config.ResetLeafPrecomputations;
+	        if (isDefined(bWithPrepcomps)&&bWithPrepcomps){
 				var userId=self.jira.getUser();
 				var arrUsers=self.config.UsersCanResetLeafs;
 				arrUsers.forEach(function(userAllowed){
@@ -124,6 +137,18 @@ var jrfReport=class jrfReport {
 					}
 				});
 	        }
+	        var sBillingAdjustFunction=self.config.BillingElementAdjustFunction;
+	        if (isDefined(sBillingAdjustFunction)&&(sBillingAdjustFunction!="")){
+	    		var fncFormula=Function("actualValue","issue",sBillingAdjustFunction);
+	    		self.adjustAccumItemFunctions.add("Childs",fncFormula);
+	        }
+	        
+	        var sAdvanceAdjustFunction=self.config.AdvanceElementAdjustFunction;
+	        if (isDefined(sAdvanceAdjustFunction)&&(sAdvanceAdjustFunction!="")){
+	    		var fncFormula=Function("actualValue","issue",sAdvanceAdjustFunction);
+	    		self.adjustAccumItemFunctions.add("AdvanceChilds",fncFormula);
+	        }
+
         // change de "fieldValue" method
 
 			self.continueTask();

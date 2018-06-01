@@ -182,11 +182,11 @@ function isInArray(theArray,theKey,theField){
 	return false;
 }
 
-function executeFunction(arrValues,sFunctionBody,functionCache){
+function createFunction(arrValues,sFunctionBody,functionCache){
 	var sFncFormula=`var result=
-						`+sFunctionBody+`
-						;
-					 return result;`;
+		`+sFunctionBody+`
+		;
+	 return result;`;
 	log("Execute Formula-----");
 	for (var i=0;i<arrValues.length;i++){
 		log(`_arrRefs_['"+i+"']:["+arrValues[i]+"]`);
@@ -207,6 +207,11 @@ function executeFunction(arrValues,sFunctionBody,functionCache){
 	} else {
 		fncFormula=Function("_arrRefs_",sFncFormula);
 	}
+	return fncFormula;
+}
+
+function executeFunction(arrValues,sFunctionBody,functionCache){
+	var fncFormula=createFunction(arrValues,sFunctionBody,functionCache);
 	var vValue=fncFormula(arrValues);
 	return vValue;
 }

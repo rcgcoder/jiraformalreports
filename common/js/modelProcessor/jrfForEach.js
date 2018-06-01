@@ -8,6 +8,7 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 		self.where=self.getAttrVal("where");
 		self.innerVarName=self.getAttrVal("as").trim();
 		self.source=self.getAttrVal("source").trim();
+		self.recursive=self.getAttrVal("recursive").trim();
 		self.sourceJson=self.getAttrVal("sourcejson").trim();
 		self.sourceFormula=self.getAttrVal("sourceformula").trim();
 		self.whereCondition=self.getAttrVal("where").trim();
@@ -107,12 +108,27 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 				}
 				if (bWhereResult){
 					bLastShowed=true;
-					self.processAllChilds(self.tag.getChilds(),newParent);
+					self.addStep("Processing all Childs elements",function(){
+						self.processAllChilds(self.tag.getChilds(),newParent);
+					});
+					if ((self.recursive!="")&&(self.recursive.toLowerCase=="true")){
+						log("Recursive!");
+						var antElem=self.reportElem;
+						self.addStep("Encoding recursive childs...",function(){
+							self.addHtml("<!-- Start Recursive -->");
+							self.encode();
+						});
+						self.addStep("Encoding recursive childs...",function(){
+							self.addHtml("<!-- End Recursive -->");
+							self.reportElem=antElem;
+							self.continueTask();
+						});
+					}
 				} else {
 					bLastShowed=false;
 					processedItemJumped++;
-					self.continueTask();
 				}
+				self.continueTask();
 			});
 			self.addStep("Continue...",function(){
 				if (bAllRoots) self.model.processingRoot=rootBackUp;

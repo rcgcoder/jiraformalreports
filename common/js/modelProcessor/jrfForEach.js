@@ -117,16 +117,23 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 					});
 					if ((self.recursive!="")&&(self.recursive.toLowerCase()=="true")){
 						log("Recursive!");
-						var antElem=self.reportElem;
+
 						
 						self.addStep("Encoding recursive childs...",function(){
 							self.addHtml("<!-- Start Recursive -->");
+							self.variables.pushVarEnv();
+							var iDeep=self.variables.getVar("RecursiveDeep");
+							iDeep+1;
+							self.variables.pushVar("RecursiveDeep",iDeep);
+							self.variables.pushVar("parentRecursiveElement",self.reportElem);
 							self.reportElem=eachElem;
 							self.encode();
 						});
 						self.addStep("Encoding recursive childs...",function(){
 							self.addHtml("<!-- End Recursive -->");
-							self.reportElem=antElem;
+							self.variables.popVar("RecursiveDeep");
+							self.reportElem=self.variables.popVar("parentRecursiveElement");
+							self.variables.popVarEnv();
 							self.continueTask();
 						});
 					}

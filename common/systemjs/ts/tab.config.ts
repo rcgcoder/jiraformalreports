@@ -172,7 +172,7 @@ export class TabConfig {
         dfReport["UsersCanResetLeafs"]=arrValues;
         
         
-        var arrFunctions=["BillingLeafAdjustFunction","AdvanceLeafAdjustFunction"];
+        var arrFunctions=["BillingElementAdjustFunction","AdvanceElementAdjustFunction"];
         arrFunctions.forEach(function(textareaName){
             auxObj=System.getAngularDomObject(textareaName)[0];
             dfReport[textareaName]=auxObj.value;
@@ -270,7 +270,7 @@ export class TabConfig {
             auxObj.setSelectedValues(config.UsersCanResetLeafs);
         }
                 
-        var arrFunctions=["BillingLeafAdjustFunction","AdvanceLeafAdjustFunction"];
+        var arrFunctions=["BillingElementAdjustFunction","AdvanceElementAdjustFunction"];
         arrFunctions.forEach(function(textareaName){
             auxObj=System.getAngularDomObject(textareaName)[0];
             if (isDefined(config[textareaName])){

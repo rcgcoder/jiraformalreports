@@ -26,11 +26,13 @@ var RCGVarEngine=class RCGVarEngine{ //this kind of definition allows to hot-rel
 	popVar(varName,value){
 		var self=this;
 		var hsVars=self.getVars(varName);
+		if (hsVars=="") return "";
 		return hsVars.pop();
 	}
 	getVar(varName){
 		var self=this;
 		var hsVars=self.getVars(varName);
+		if (hsVars=="") return "";
 		return hsVars.top();
 	}
 	setVar(varName,value){

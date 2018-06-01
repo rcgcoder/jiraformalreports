@@ -124,7 +124,7 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 							self.variables.pushVarEnv();
 							var iDeep=self.variables.getVar("RecursiveDeep");
 							if (iDeep==""){
-								iDeep=0;
+								iDeep=1;
 							} else {
 								iDeep++;
 							}

@@ -116,6 +116,7 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 						var antElem=self.reportElem;
 						self.addStep("Encoding recursive childs...",function(){
 							self.addHtml("<!-- Start Recursive -->");
+							self.reportElem=eachElem;
 							self.encode();
 						});
 						self.addStep("Encoding recursive childs...",function(){

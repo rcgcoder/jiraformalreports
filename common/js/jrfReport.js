@@ -21,15 +21,10 @@ var jrfReport=class jrfReport {
 		self.adjustAccumItemFunctions=newHashMap();
 	}
 	adjustAccumItem(accumType,accumValue,issue){
+		var self=this;
 		var fnc=self.adjustAccumItemFunctions.getValue(accumType);
 		if (fnc!=""){
 			return fnc(accumValue,child);
-		}
-		return accumValue;
-	}
-	adjustAdvanceAccumItem(accumValue,child){
-		if (self.adjustAdvanceAccumItemFunction!=""){
-			return self.adjustAdvanceAccumItemFunction(accumValue,child);
 		}
 		return accumValue;
 	}

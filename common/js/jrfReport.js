@@ -114,14 +114,18 @@ var jrfReport=class jrfReport {
 			}
 			self.allIssues=newIssueFactory(self);
 			self.updatePrecomputedAccumulators=false;
-			var userId=self.jira.getUser();
-			var auxObj=System.getAngularObject("selUsersCanResetLeafs",true);
-			var arrUsers=auxObj.getSelectedValues();
-			arrUsers.forEach(function(userAllowed){
-				if (userAllowed.key==userId){
-					self.updatePrecomputedAccumulators=true;
-				}
-			})
+			var auxObj=$('#toggle_ResetLeafPrecomputations');
+	        var bWithPrepcomps=(auxObj.attr("checked")=="checked");
+	        if (bWithPrepcomps){
+				var userId=self.jira.getUser();
+				auxObj=System.getAngularObject("selUsersCanResetLeafs",true);
+				var arrUsers=auxObj.getSelectedValues();
+				arrUsers.forEach(function(userAllowed){
+					if (userAllowed.key==userId){
+						self.updatePrecomputedAccumulators=true;
+					}
+				});
+	        }
         // change de "fieldValue" method
 
 			self.continueTask();

@@ -24,7 +24,7 @@ var jrfReport=class jrfReport {
 		var self=this;
 		var fnc=self.adjustAccumItemFunctions.getValue(accumType);
 		if (fnc!=""){
-			return fnc(accumValue,child);
+			return fnc(accumValue,issue);
 		}
 		return accumValue;
 	}

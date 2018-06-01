@@ -75,8 +75,8 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 				elemsInForEach=self.replaceVarsAndExecute(sAux);
 			}
 			var hsAux=newHashMap();
-			for (var i=0;i<self.elemsInForEach.length;i++){
-				hsAux.push(self.elemsInForEach[i]);
+			for (var i=0;i<elemsInForEach.length;i++){
+				hsAux.push(elemsInForEach[i]);
 			}
 			elemsInForEach=hsAux;
 		} else {

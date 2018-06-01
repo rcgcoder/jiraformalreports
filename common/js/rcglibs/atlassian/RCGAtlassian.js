@@ -4,6 +4,8 @@ class RCGAtlassian{
 		self.proxyPath="";
 		self.instance="";
 		self.JiraAPConnection=AP;
+		self.userId="";
+		self.userName="";
 		self.app=app;
 		self.confluence="";//new RCGConfluence();
 		self.jira="";
@@ -26,6 +28,20 @@ class RCGAtlassian{
 	}
 	loadError(oError){
 	    throw new URIError("The URL " + oError.target.src + " is not accessible.");
+	}
+	getUser(){
+		var self=this;
+		self.addStep("Calling the API for get Current User",function(){
+			self.JiraAPConnection.getUser(self.createManagedCallback(function(user){
+				  log("user id", user.id);
+				  log("user key", user.key);
+				  log("user name", user.fullName);
+				  self.userId=user.key;
+				  self.userName=user.fullName;
+				  self.continueTask();
+			}));
+		});
+		self.continueTask();
 	}
 	apiCallOauth(sTargetUrl,data,sPage,sType,callback,arrHeaders){
 		var self=this;

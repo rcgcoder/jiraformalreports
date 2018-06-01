@@ -17,6 +17,9 @@ class RCGConfluence{
 			atlassian.apiGetFullList(self, sTarget, resultName,callType, data, callback,arrHeaders);
 			};
 	}
+	getUser(){
+		return self.manager.userId;
+	}
 	getAllPages(){
 		var self=this;
 		self.pushCallback(function(response,xhr,sUrl,headers){

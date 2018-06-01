@@ -188,6 +188,9 @@ class RCGJira{
 	getAllIssueLinkTypes(){
 		
 	}
+	getUser(){
+		return self.manager.userId;
+	}
 	getUsers(){
 		var self=this;
 		var arrResult=[];

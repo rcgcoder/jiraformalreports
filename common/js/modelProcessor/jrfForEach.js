@@ -123,7 +123,11 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 							self.addHtml("<!-- Start Recursive -->");
 							self.variables.pushVarEnv();
 							var iDeep=self.variables.getVar("RecursiveDeep");
-							iDeep+1;
+							if (iDeep==""){
+								iDeep=0;
+							} else {
+								iDeep++;
+							}
 							self.variables.pushVar("RecursiveDeep",iDeep);
 							self.variables.pushVar("parentRecursiveElement",self.reportElem);
 							self.reportElem=eachElem;

@@ -16,6 +16,7 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 
 	}
 	getElementsInForEach(){
+		var self=this;
 		if (self.type=="root"){
 			return self.model.report.childs;
 		} else if (self.type=="child"){

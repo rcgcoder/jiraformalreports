@@ -18,7 +18,7 @@ class RCGConfluence{
 			};
 	}
 	getUser(){
-		return self.manager.userId;
+		return this.manager.userId;
 	}
 	getAllPages(){
 		var self=this;

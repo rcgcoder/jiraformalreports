@@ -189,7 +189,7 @@ class RCGJira{
 		
 	}
 	getUser(){
-		return self.manager.userId;
+		return this.manager.userId;
 	}
 	getUsers(){
 		var self=this;

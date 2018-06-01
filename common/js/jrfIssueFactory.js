@@ -27,6 +27,9 @@ function newIssueFactory(report){
 			[]
 			,
 			undefined);
+	dynObj.functions.add("getReport",function(){
+		return theReport;
+	});
 	dynObj.functions.add("fieldValue",function(theFieldName,bRendered){
 		var sFieldName=theFieldName.trim();
 		var self=this;
@@ -160,7 +163,7 @@ function newIssueFactory(report){
 			log("Isssue"+self.getKey()+ " returns value:"+accumValue);
 		}
 		accumCache.add(cacheKey,accumValue);
-		if ((self.getFactory().theReport.updatePrecomputedAccumulators)
+		if ((self.getReport().updatePrecomputedAccumulators)
 				&&
 			(isUndefined(bSetProperty) || (isDefined(bSetProperty)&&(bSetProperty)))){
 			// save to jira property

@@ -71,8 +71,7 @@ var jrfReport=class jrfReport {
 				self.continueTask(); 
 //				var theHtml=$(sHtml);
 			});
-	        var auxObj=System.getAngularObject('selReportModel',true);
-	        var arrValues=auxObj.getSelectedValues();
+	        var arrValues=self.config.selReportModel.selected;
 			var contentId=arrValues[0].key;
 			cfc.getContent(contentId);
 		});
@@ -118,8 +117,7 @@ var jrfReport=class jrfReport {
 	        var bWithPrepcomps=(auxObj.attr("checked")=="checked");
 	        if (bWithPrepcomps){
 				var userId=self.jira.getUser();
-				auxObj=System.getAngularObject("selUsersCanResetLeafs",true);
-				var arrUsers=auxObj.getSelectedValues();
+				var arrUsers=self.config.UsersCanResetLeafs;
 				arrUsers.forEach(function(userAllowed){
 					if (userAllowed.key==userId){
 						self.updatePrecomputedAccumulators=true;

@@ -17,6 +17,7 @@ var jrfReport=class jrfReport {
 		self.jira=System.webapp.getJira();
 		self.confluence=System.webapp.getConfluence();
 		self.result="";
+		self.updatePrecomputedAccumulators=false;
 	}
 	getChilds(){
 		return this.childs;
@@ -112,7 +113,16 @@ var jrfReport=class jrfReport {
 				return self.continueTask();
 			}
 			self.allIssues=newIssueFactory(self);
-			// change de "fieldValue" method
+			self.updatePrecomputedAccumulators=false;
+			var userId=self.jira.getUser();
+			var auxObj=System.getAngularObject("selUsersCanResetLeafs",true);
+			var arrUsers=auxObj.getSelectedValues();
+			arrUsers.forEach(function(userAllowed){
+				if (userAllowed.key==userId){
+					self.updatePrecomputedAccumulators=true;
+				}
+			})
+        // change de "fieldValue" method
 
 			self.continueTask();
 		});

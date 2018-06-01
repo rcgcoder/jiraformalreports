@@ -160,9 +160,11 @@ function newIssueFactory(report){
 			log("Isssue"+self.getKey()+ " returns value:"+accumValue);
 		}
 		accumCache.add(cacheKey,accumValue);
-		if (isUndefined(bSetProperty) || (isDefined(bSetProperty)&&(bSetProperty))){
+		if ((self.getFactory().theReport.updatePrecomputedAccumulators)
+				&&
+			(isUndefined(bSetProperty) || (isDefined(bSetProperty)&&(bSetProperty)))){
 			// save to jira property
-			if ((allChilds.length()>0)&&(accumValue!=0)){
+			if ((allChilds.length()>0)){
 				var antValue=0;
 				var precompValue=self.getLastPrecomputedPropertyValue(cacheKey);
 				if (precompValue!=""){
@@ -182,7 +184,7 @@ function newIssueFactory(report){
 						jira.setProperty(self.getKey(),cacheKey,arrPropertyToJira);
 			        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
 				}
-			} else if (isDefined(System.webapp.resetPrecomputedPropertiesOfLeafs) && System.webapp.resetPrecomputedPropertiesOfLeafs){
+			} else {
 				self.appendPrecomputedPropertyValues(cacheKey,[{"date":Date.now(),"value":0}]);
 				System.webapp.addStep("Forcing the save of result:"+ 0 +" to property:"+cacheKey+" of Issue:"+self.getKey(),function(){
 					var jira=System.webapp.getJira();

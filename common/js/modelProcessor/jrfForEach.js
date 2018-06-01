@@ -111,7 +111,7 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 					self.addStep("Processing all Childs elements",function(){
 						self.processAllChilds(self.tag.getChilds(),newParent);
 					});
-					if ((self.recursive!="")&&(self.recursive.toLowerCase=="true")){
+					if ((self.recursive!="")&&(self.recursive.toLowerCase()=="true")){
 						log("Recursive!");
 						var antElem=self.reportElem;
 						self.addStep("Encoding recursive childs...",function(){

@@ -14,19 +14,19 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 		self.whereCondition=self.getAttrVal("where").trim();
 		self.countProcessedElements=self.getAttrVal("count").trim();
 
+	}
+	getElementsInForEach(){
 		if (self.type=="root"){
-			self.elemsInForEach=self.model.report.childs;
+			return self.model.report.childs;
 		} else if (self.type=="child"){
-			self.elemsInForEach=self.reportElem.getChilds();
+			return self.reportElem.getChilds();
 		} else if (self.type=="advchild"){
-			self.elemsInForEach=self.reportElem.getAdvanceChilds();
+			return self.reportElem.getAdvanceChilds();
 		} else if (self.type=="array"){
 			log("Proccessing array");
-		} else {
-			self.elemsInForEach=newHashMap();
 		}
+		return newHashMap();
 	}
-	
 	
 	apply(){
 		var self=this;
@@ -34,6 +34,7 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 		if (self.reportElem==self.model.report){
 			bAllRoots=true;
 		}
+		var elemsInForEach;
 		if (self.type=="array"){
 			// getting array from source, sourcejson, sourceformula
 			if (self.source!=""){
@@ -47,7 +48,7 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 					sAux+='"'+arrAux[i]+'"';
 				}
 				sAux="["+sAux+"]";
-				self.elemsInForEach=JSON.parse(sAux);
+				elemsInForEach=JSON.parse(sAux);
 			} else if (self.sourceJson!=""){
 				var fncAdjustText=function(sText,search,replace){
 					var sAux=sText;
@@ -65,24 +66,26 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 				self.sourceJson=fncAdjustText(self.sourceJson,"'",'"');
 				self.sourceJson=fncAdjustText(self.sourceJson,'" ','"');
 				self.sourceJson=fncAdjustText(self.sourceJson,' "','"');
-				self.elemsInForEach=JSON.parse(self.sourceJson);
+				elemsInForEach=JSON.parse(self.sourceJson);
 			} else if (self.sourceFormula!=""){
 				var sAux=self.replaceVars(self.sourceFormula);
 				sAux=replaceAll(sAux,";",",");
 				sAux=replaceAll(sAux,"'",'"');
-				self.elemsInForEach=self.replaceVarsAndExecute(sAux);
+				elemsInForEach=self.replaceVarsAndExecute(sAux);
 			}
 			var hsAux=newHashMap();
 			for (var i=0;i<self.elemsInForEach.length;i++){
 				hsAux.push(self.elemsInForEach[i]);
 			}
-			self.elemsInForEach=hsAux;
+			elemsInForEach=hsAux;
+		} else {
+			elemsInForEach=self.getElementsInForEach();
 		}
 		
 //		var nItem=0;
 		var rootBackUp=self.model.processingRoot;
 		// counting total elements
-		self.elemsInForEach.walk(function(eachElem){
+		elemsInForEach.walk(function(eachElem){
 			var newParent;
 			var processedItemNumber=0;
 			var processedItemJumped=0;
@@ -114,6 +117,7 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 					if ((self.recursive!="")&&(self.recursive.toLowerCase()=="true")){
 						log("Recursive!");
 						var antElem=self.reportElem;
+						
 						self.addStep("Encoding recursive childs...",function(){
 							self.addHtml("<!-- Start Recursive -->");
 							self.reportElem=eachElem;

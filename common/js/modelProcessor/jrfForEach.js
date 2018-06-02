@@ -11,7 +11,7 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 		self.recursive=self.getAttrVal("recursive");
 		self.sourceJson=self.getAttrVal("sourcejson");
 		self.sourceFormula=self.getAttrVal("sourceformula");
-		self.whereCondition=self.getAttrVal("where");
+		self.whereCondition=self.getAttrVal("where",undefined,false);
 		self.countProcessedElements=self.getAttrVal("count");
 
 	}

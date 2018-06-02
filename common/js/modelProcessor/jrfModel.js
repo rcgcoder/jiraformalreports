@@ -367,6 +367,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		}
 	}
 	preloadAccumPropertiesLeafs(){
+		var self=this;
 		var hsAccumulators=self.extractAccumulators(self.inputHtml);
 		var petCounter=0;
 		var hsIssueGetProperties=newHashMap();

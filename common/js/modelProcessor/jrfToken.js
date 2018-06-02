@@ -82,9 +82,17 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			while(stackLastProcess.length>0){
 				var objTag=stackLastProcess.pop();
 				var tagApplier=objTag.tagApplier;
+				var htmlBufferIndex=objTag.htmlBufferIndex;
+				// backup the rest of htmlbuffer
+				var htmlBufferBackup=self.popHtmlBuffer(htmlBufferIndex);
 				self.addStep("Processing Child..."+sKey,function(){
 					tagApplier.encode();
 //					self.model.applyTag(childTag,auxRptElem);
+				});
+				self.addStep("Pusshing the saved rest of html buffer ..."+sKey,function(){
+					var htmlBufferIndex=self.pushHtmlBuffer();
+					self.addHtml(htmlBufferBackup);
+					self.continueTask();
 				});
 			}
 			self.continueTask();

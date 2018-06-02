@@ -38,6 +38,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.inFormat=obj.getAttrVal("informat");
 		obj.outFormat=obj.getAttrVal("format");
 		obj.ifCondition=obj.getAttrVal("if");
+		obj.processOrder=obj.getAttrVal("processOrder");
 		obj.ifConditionResult=true;
 		obj.autoAddPostHtml=true;
 	}

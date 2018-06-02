@@ -87,7 +87,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 //					self.model.applyTag(childTag,auxRptElem);
 				});
 			}
-			
+			self.continueTask();
 		});
 		self.continueTask();
 	}

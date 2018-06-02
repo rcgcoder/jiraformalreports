@@ -216,7 +216,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		if (self.model.report.config.htmlDebug) self.addHtml("<!-- END POSTHTML  IN FORMULA JRF TOKEN ["+self.tokenName+"] -->");
 	}
 
-	getAttrVal(attrName,objSrc){
+	getAttrVal(attrName,objSrc,bReplaceVars){
 		var self=this;
 		var idAttr=attrName.toLowerCase();
 		if (self.tag.getAttributes().exists(idAttr)){
@@ -226,7 +226,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				if (isUndefined(vAux)){
 					vAux="";
 				}
-				vAux=self.replaceVars(vAux);
+				if (isDefined(bReplaceVars)&&(!bReplaceVars)){
+					log ("not replace Vars");
+				} else {
+					vAux=self.replaceVars(vAux);
+				}
 				if (typeof vAux==="string") vAux=vAux.trim();
 				return vAux;
 			}

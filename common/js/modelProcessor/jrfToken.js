@@ -45,32 +45,31 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	}
 	processAllChilds(childList,reportElement){
 		var self=this;
+		var sKey="";
 		var auxRptElem=reportElement;
 		if (isUndefined(auxRptElem)){
 			auxRptElem=self.reportElem;
 		}
+		if (isDefined(auxRptElem.getKey)){
+			sKey=auxRptElem.getKey();
+		}
+		if (sKey=="NOTIFLOPD-120"){
+			log("Review this");
+		}
+
 		var auxList=childList;
 		if (isUndefined(auxList)){
 			auxList=self.tag.getChilds();
 		}
 		var nChildWalker=0;
 		var stackLastProcess=[];
+
 		auxList.walk(function(childTag){
-			var sKey="";
-			if (isDefined(auxRptElem)){
-				if (isDefined(auxRptElem.getKey)){
-					sKey=auxRptElem.getKey();
-				}
-			}
-			if (sKey=="NOTIFLOPD-120"){
-				log("Review this");
-			}
 			var htmlBufferIndex=self.pushHtmlBuffer();
 
 			var tagApplier=self.model.prepareTag(childTag,auxRptElem);
-
 			if (tagApplier.processOrder.toLowerCase()==="last"){
-				
+				stackLastProcess.push({tagApplier:tagApplier,htmlBufferIndex:htmlBufferIndex});
 			} else {
 				self.addStep("Processing Child..."+sKey,function(){
 					tagApplier.encode();
@@ -78,6 +77,17 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				});
 			}
 			nChildWalker++;
+		});
+		self.addStep("Processing last processOrder tags",function(){
+			while(stackLastProcess.length>0){
+				var objTag=stackLastProcess.pop();
+				var tagApplier=objTag.tagApplier;
+				self.addStep("Processing Child..."+sKey,function(){
+					tagApplier.encode();
+//					self.model.applyTag(childTag,auxRptElem);
+				});
+			}
+			
 		});
 		self.continueTask();
 	}

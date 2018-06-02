@@ -73,31 +73,35 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	encode(){
 		var self=this;
 		self.indHtmlBuffer=self.pushHtmlBuffer();
-		self.addStep("Pre-Encode part...",function(){
-			self.variables.pushVarEnv();
-			if (self.model.report.config.htmlDebug) self.addHtml("<!-- START PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
-			self.addHtml(self.tag.getPreviousHTML());
-			if (self.model.report.config.htmlDebug) self.addHtml("<!-- END PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
-			self.startApplyToken();
-			self.continueTask();
-		});
-		self.addStep("Encode part...",function(){
-			if (self.ifConditionResult){
-				self.apply(); // the apply function not returns anything... only writes text to buffer
-			}
-			self.continueTask();
-		});
-		self.addStep("Post-Encode part...",function(){
-			self.endApplyToken();
-			self.continueTask();
-		});
-		self.addStep("PostProcess all token and return...",function(){
-//			var sHtml=self.popHtmlBuffer();
-//			sHtml=self.replaceVars(sHtml);
-//			self.addHtml(sHtml);
-			self.variables.popVarEnv();
-			self.continueTask();
-		});
+		if (self.processOrder.toLowerCase()=="last"){
+			
+		} else {
+			self.addStep("Pre-Encode part...",function(){
+				self.variables.pushVarEnv();
+				if (self.model.report.config.htmlDebug) self.addHtml("<!-- START PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
+				self.addHtml(self.tag.getPreviousHTML());
+				if (self.model.report.config.htmlDebug) self.addHtml("<!-- END PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
+				self.startApplyToken();
+				self.continueTask();
+			});
+			self.addStep("Encode part...",function(){
+				if (self.ifConditionResult){
+					self.apply(); // the apply function not returns anything... only writes text to buffer
+				}
+				self.continueTask();
+			});
+			self.addStep("Post-Encode part...",function(){
+				self.endApplyToken();
+				self.continueTask();
+			});
+			self.addStep("PostProcess all token and return...",function(){
+	//			var sHtml=self.popHtmlBuffer();
+	//			sHtml=self.replaceVars(sHtml);
+	//			self.addHtml(sHtml);
+				self.variables.popVarEnv();
+				self.continueTask();
+			});
+		}
 		self.continueTask();
 	}
 	

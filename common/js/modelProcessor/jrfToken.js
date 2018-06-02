@@ -80,6 +80,14 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		});
 		self.continueTask();
 	}
+	changeBrackets(sText){
+		var sResult=replaceAll(sText,"{{{","{ { {");
+		sResult=replaceAll(sResult,"}}}","} } }");
+		sResult=replaceAll(sResult,"{{","{ {");
+		sResult=replaceAll(sResult,"}}","} }");
+		return sResult;
+	}
+
 	encode(){
 		var self=this;
 		self.indHtmlBuffer=self.pushHtmlBuffer();

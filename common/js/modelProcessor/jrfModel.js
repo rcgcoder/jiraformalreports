@@ -283,13 +283,6 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		});
 		return sResult;
 	}
-	changeBrackets(sText){
-		var sResult=replaceAll(sText,"{{{","{ { {");
-		sResult=replaceAll(sResult,"}}}","} } }");
-		sResult=replaceAll(sResult,"{{","{ {");
-		sResult=replaceAll(sResult,"}}","} }");
-		return sResult;
-	}
 	prepareTag(tag,reportElem){
 		var self=this;
 		var tagApplier;
@@ -322,7 +315,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		var self=this;
 		var htmlBufferIndex=self.pushHtmlBuffer();
 		var tagApplier=self.prepareTag(tag,reportElem);
-		self.addStep("Encoding the tag... "+self.changeBrackets(tag.getTagText()),function(){
+		self.addStep("Encoding the tag... "+tagApplier.changeBrackets(tag.getTagText()),function(){
 			tagApplier.encode(); // it has steps... into
 		});
 /*		self.addStep("Returning the html",function(){

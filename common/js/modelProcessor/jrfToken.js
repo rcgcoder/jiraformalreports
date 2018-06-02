@@ -227,7 +227,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					vAux="";
 				}
 				vAux=self.replaceVars(vAux);
-				return vAux.trim();
+				if (typeof vAux==="string") vAux=vAux.trim();
+				return vAux;
 			}
 /*		} else if (self.model.report.allFieldNames.exists(idAttr)){
 			var sNewId=self.model.report.allFieldNames.getValue(idAttr);

@@ -37,7 +37,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.setVars=obj.getAttrVal("setVar");
 		obj.inFormat=obj.getAttrVal("informat");
 		obj.outFormat=obj.getAttrVal("format");
-		obj.ifCondition=obj.getAttrVal("if").trim();
+		obj.ifCondition=obj.getAttrVal("if");
 		obj.ifConditionResult=true;
 		obj.autoAddPostHtml=true;
 	}
@@ -226,6 +226,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				if (isUndefined(vAux)){
 					vAux="";
 				}
+				vAux=self.replaceVars(vAux);
 				return vAux;
 			}
 /*		} else if (self.model.report.allFieldNames.exists(idAttr)){
@@ -237,8 +238,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	applyIfCondition(){
 		var self=this;
 		if (self.ifCondition!=""){
-			var sProcesed=self.replaceVars(self.ifCondition);
-			sProcesed=executeFunction([],sProcesed,self.model.functionCache);
+			var sProcesed=executeFunction([],self.ifCondition,self.model.functionCache);
 			self.ifConditionResult=sProcesed;			
 		}
 	}
@@ -246,8 +246,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	applyInFormat(sValAux){
 		var self=this;
 		if (self.inFormat!=""){
-			var sFormats=self.replaceVars(self.inFormat);
-			var arrFormats=sFormats.split(",");
+//			var sFormats=self.replaceVars(self.inFormat);
+			var arrFormats=self.inFormat.split(",");
 			arrFormats.forEach(function(sFormat){
 				var arrParts=sFormat.split("=")
 				var sFormatId=arrParts[0];

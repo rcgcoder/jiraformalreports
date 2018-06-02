@@ -436,7 +436,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 	}
 	processIncludeTags(){
 		var self=this;
-		self.tagFactory.list.walk(function(tagInfo){
+		self.tagFactory.list.walk(function(tag){
 			if (tag.getTokenName=="jrfInclude"){
 				self.traceTag(tag);
 			}

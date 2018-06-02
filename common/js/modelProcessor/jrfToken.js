@@ -14,6 +14,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.popHtmlBuffer=function(index){return self.model.popHtmlBuffer(index);};
 		obj.getHtmlBuffer=function(){return self.model.html;};
 		obj.addHtml=function(sHtml){self.model.addHtml(sHtml);};
+		obj.changeBrackets=self.changeBrackets;
 		obj.indHtmlBuffer=0;
 		obj.indTokenHtmlBuffer=0;
 		obj.getAttrVal=self.getAttrVal;

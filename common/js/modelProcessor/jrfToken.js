@@ -83,7 +83,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	encode(){
 		var self=this;
 		self.indHtmlBuffer=self.pushHtmlBuffer();
-		if (self.report.config.htmlDebug){
+		if (self.model.report.config.htmlDebug){
 			self.addHtml("<!-- " + self.changeBrackets(self.tag.getTagText())+" -->");
 			self.addHtml("<!-- " + self.changeBrackets(self.model.traceTag(self.tag))+ " -->");
 		}

@@ -6,13 +6,13 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 		self.type=self.getAttrVal("type");
 		self.subType=self.getAttrVal("subtype");
 		self.where=self.getAttrVal("where");
-		self.innerVarName=self.getAttrVal("as").trim();
-		self.source=self.getAttrVal("source").trim();
-		self.recursive=self.getAttrVal("recursive").trim();
-		self.sourceJson=self.getAttrVal("sourcejson").trim();
-		self.sourceFormula=self.getAttrVal("sourceformula").trim();
-		self.whereCondition=self.getAttrVal("where").trim();
-		self.countProcessedElements=self.getAttrVal("count").trim();
+		self.innerVarName=self.getAttrVal("as");
+		self.source=self.getAttrVal("source");
+		self.recursive=self.getAttrVal("recursive");
+		self.sourceJson=self.getAttrVal("sourcejson");
+		self.sourceFormula=self.getAttrVal("sourceformula");
+		self.whereCondition=self.getAttrVal("where");
+		self.countProcessedElements=self.getAttrVal("count");
 
 	}
 	getElementsInForEach(){

@@ -53,6 +53,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			auxList=self.tag.getChilds();
 		}
 		var nChildWalker=0;
+		var stackLastProcess=[];
 		auxList.walk(function(childTag){
 			var sKey="";
 			if (isDefined(auxRptElem)){
@@ -63,9 +64,18 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			if (sKey=="NOTIFLOPD-120"){
 				log("Review this");
 			}
-			self.addStep("Processing Child..."+sKey,function(){
-				self.model.applyTag(childTag,auxRptElem);
-			});
+			var htmlBufferIndex=self.pushHtmlBuffer();
+
+			var tagApplier=self.model.prepareTag(childTag,auxRptElem);
+
+			if (tagApplier.processOrder.toLowerCase()==="last"){
+				
+			} else {
+				self.addStep("Processing Child..."+sKey,function(){
+					tagApplier.encode();
+//					self.model.applyTag(childTag,auxRptElem);
+				});
+			}
 			nChildWalker++;
 		});
 		self.continueTask();
@@ -73,35 +83,36 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	encode(){
 		var self=this;
 		self.indHtmlBuffer=self.pushHtmlBuffer();
-		if (self.processOrder.toLowerCase()=="last"){
-			
-		} else {
-			self.addStep("Pre-Encode part...",function(){
-				self.variables.pushVarEnv();
-				if (self.model.report.config.htmlDebug) self.addHtml("<!-- START PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
-				self.addHtml(self.tag.getPreviousHTML());
-				if (self.model.report.config.htmlDebug) self.addHtml("<!-- END PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
-				self.startApplyToken();
-				self.continueTask();
-			});
-			self.addStep("Encode part...",function(){
-				if (self.ifConditionResult){
-					self.apply(); // the apply function not returns anything... only writes text to buffer
-				}
-				self.continueTask();
-			});
-			self.addStep("Post-Encode part...",function(){
-				self.endApplyToken();
-				self.continueTask();
-			});
-			self.addStep("PostProcess all token and return...",function(){
-	//			var sHtml=self.popHtmlBuffer();
-	//			sHtml=self.replaceVars(sHtml);
-	//			self.addHtml(sHtml);
-				self.variables.popVarEnv();
-				self.continueTask();
-			});
+		if (self.report.config.htmlDebug){
+			self.addHtml("<!-- " + self.changeBrackets(self.tag.getTagText())+" -->");
+			self.addHtml("<!-- " + self.changeBrackets(self.model.traceTag(self.tag))+ " -->");
 		}
+
+		self.addStep("Pre-Encode part...",function(){
+			self.variables.pushVarEnv();
+			if (self.model.report.config.htmlDebug) self.addHtml("<!-- START PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
+			self.addHtml(self.tag.getPreviousHTML());
+			if (self.model.report.config.htmlDebug) self.addHtml("<!-- END PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
+			self.startApplyToken();
+			self.continueTask();
+		});
+		self.addStep("Encode part...",function(){
+			if (self.ifConditionResult){
+				self.apply(); // the apply function not returns anything... only writes text to buffer
+			}
+			self.continueTask();
+		});
+		self.addStep("Post-Encode part...",function(){
+			self.endApplyToken();
+			self.continueTask();
+		});
+		self.addStep("PostProcess all token and return...",function(){
+//			var sHtml=self.popHtmlBuffer();
+//			sHtml=self.replaceVars(sHtml);
+//			self.addHtml(sHtml);
+			self.variables.popVarEnv();
+			self.continueTask();
+		});
 		self.continueTask();
 	}
 	

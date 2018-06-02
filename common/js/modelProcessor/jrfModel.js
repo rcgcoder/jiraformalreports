@@ -290,14 +290,8 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		sResult=replaceAll(sResult,"}}","} }");
 		return sResult;
 	}
-	applyTag(tag,reportElem){
+	prepareTag(tag,reportElem){
 		var self=this;
-		var htmlBufferIndex=self.pushHtmlBuffer();
-		if (self.report.config.htmlDebug){
-			self.addHtml("<!-- " + self.changeBrackets(tag.getTagText())+" -->");
-			self.addHtml("<!-- " + self.changeBrackets(self.traceTag(tag))+ " -->");
-		}
-		var i=0;
 		var tagApplier;
 		var tagAttrs=tag.getAttributes();
 		var sTokenName="jrfNoop";
@@ -321,6 +315,13 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			sTokenName="jrfNoop";
 		}
 		tagApplier=new window[sTokenName](tag,reportElem,self);
+		return tagApplier;
+		
+	}
+	applyTag(tag,reportElem){
+		var self=this;
+		var htmlBufferIndex=self.pushHtmlBuffer();
+		var tagApplier=self.prepareTag(tag,reportElem);
 		self.addStep("Encoding the tag..."+sTokenName+" "+self.changeBrackets(tag.getTagText()),function(){
 			tagApplier.encode(); // it has steps... into
 		});

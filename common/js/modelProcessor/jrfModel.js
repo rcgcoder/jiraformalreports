@@ -454,7 +454,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 					log("needs preprocess");
 					var auxTagApplier=self.prepareTag(tag);
 					self.addStep("Processing include Tag",function(){
-						auxTagApplier.preload();
+						auxTagApplier.preload(tag);
 					});
 					self.addStep("Processing auxiliar model returned from preload",function(auxModel){
 						self.continueTask();

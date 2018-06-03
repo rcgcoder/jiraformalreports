@@ -9,7 +9,8 @@ var jrfInclude=class jrfInclude{//this kind of definition allows to hot-reload
 		self.includeId="";
 		self.autoAddPostHtml=false;
 	}
-	preload(){
+	preload(tag){
+		var self=this;
 		if (self.type.toLowerCase()=="confluence"){
 			var srcUrl=self.url;
             var urlParts=srcUrl.split("pages/");

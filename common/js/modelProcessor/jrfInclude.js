@@ -28,8 +28,8 @@ var jrfInclude=class jrfInclude{//this kind of definition allows to hot-reload
 				var oContent=JSON.parse(jsonContent);
 				var sHtmlBody=oContent.body.storage.value;
 				sHtmlBody=decodeEntities(sHtmlBody);
-				theModel=new jrfModel(self.model.report,sHtmlBody,self.reportElem);
-				theModel.parse(sHtmlBody,self);
+				var auxModel=new jrfModel(self.model.report,sHtmlBody,self.reportElem);
+				auxModel.parse(sHtmlBody,self);
 			});
 
 		}

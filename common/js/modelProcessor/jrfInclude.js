@@ -1,45 +1,52 @@
+var includesCache=newHashMap();
 var jrfInclude=class jrfInclude{//this kind of definition allows to hot-reload
 	constructor(tag,reportElem,model){
 		var self=this;
 		model.extendToken(self,tag,reportElem);
 		self.type=self.getAttrVal("type").trim();
 		self.url=self.getAttrVal("url").trim();
+		self.preprocessed=false;
+		self.includeId="";
 		self.autoAddPostHtml=false;
 	}
-	apply(){
-		var self=this;
-		var noopIndHtmlBuffer=self.pushHtmlBuffer();
-		// if Confluence.... take the Content Id
+	preload(){
 		if (self.type.toLowerCase()=="confluence"){
-			var sUrl=self.url;
-			var arrParts=sUrl.split("/pages/");
-			sUrl=arrParts[1];
-			arrParts=sUrl.split("/");
-			var contentId=arrParts[0];
-			var confluence=System.webapp.getConfluence();
-			// download the content....
-			self.addStep("Getting Confluence Content:"+contentId,function(){
-				confluence.getContent(contentId);
-			});
-			// parse the content
-			var theModel;
-			self.addStep("Processing Confluence Content:"+contentId,function(jsonContent){
+			var srcUrl=self.url;
+            var urlParts=srcUrl.split("pages/");
+            urlParts=urlParts[1].split("/");
+            var contentId=urlParts[0];
+    		var hash = sha256.create();
+    		hash.update("Confluence:"+contentId);
+    		theHash=hash.hex();
+            self.includeId=theHash;
+            var cflc=System.webapp.getConfluence();
+            self.addStep("Downloading content:"+contentId+" from "+srcUrl,function(){
+            	cflc.getContent(contentId);
+            });
+			self.addStep("Processing Confluence Content:"+contentId+" from "+srcUrl,function(jsonContent){
 				var oContent=JSON.parse(jsonContent);
 				var sHtmlBody=oContent.body.storage.value;
 				sHtmlBody=decodeEntities(sHtmlBody);
 				theModel=new jrfModel(self.model.report,sHtmlBody,self.reportElem);
-				theModel.variables=self.model.variables;
-				theModel.variables.pushVarEnv();
-				theModel.process(); // hash inner task....
+				theModel.parse(sHtmlBody,self);
 			});
-			self.addStep("Return processed content of:"+contentId,function(sResultHtml){
-				var sProcessed=sResultHtml;
-				self.addHtml(sProcessed); 
-				theModel.variables.popVarEnv();
-				self.continueTask();
-			});
+
 		}
-		// apply the tags
+		self.continueTask();
+	}
+	apply(){
+		var self=this;
+		var noopIndHtmlBuffer=self.pushHtmlBuffer();
+		self.addStep("Processing all Childs of jrfInclude",function(){
+			self.processAllChilds();
+		});
+		self.addStep("Finalizing the jrfInclude",function(){
+			self.addPostHtml();
+			var sContent=self.popHtmlBuffer(noopIndHtmlBuffer);
+			sContent=self.replaceVars(sContent);
+			self.addHtml(sContent);
+			self.continueTask();
+		});
 	}
 
 }

@@ -16,6 +16,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		self.markdownConverter = new showdown.Converter();
 		self.report=theReport;
 		self.processingRoot="";
+		self.accumulatorList=newHashMap();
 		self.tagFactory=newDynamicObjectFactory(
 				[{name:"Child",description:"subTags",type:"object"},
 				 {name:"Attribute",description:"Attributes of the Item",type:"String"}
@@ -37,7 +38,8 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 									...(postHTML) html....
 									*/
 				"PostHTML",
-				"TagText"]
+				"TagText",
+				"Preprocessed"]
 				//arrAttributes
 				,
 				[]
@@ -358,13 +360,22 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		if (sModel.indexOf("<JRF")==0){
 			arrJRFs.unshift(""); // added a first element.....
 		}
-		var oAdvance=self.processRecursive(arrJRFs,1,parentTag,arrJRFs[0]);
-		if (oAdvance.actIndex<arrJRFs.length){
-			log("ERROR THERE IS NOT ALL TAG CLOSED");
-		} else {
-			var sTagRest=oAdvance.text;
-			parentTag.setPostHTML(sTagRest);
-		}
+		self.addStep("Extracting tags", function(){
+			var oAdvance=self.processRecursive(arrJRFs,1,parentTag,arrJRFs[0]);
+			if (oAdvance.actIndex<arrJRFs.length){
+				log("ERROR THERE IS NOT ALL TAG CLOSED");
+			} else {
+				var sTagRest=oAdvance.text;
+				parentTag.setPostHTML(sTagRest);
+			}
+		});
+		self.addStep("Processing Includes", function(){
+			self.processIncludeTags();
+		});
+		self.addStep("Getting accum properties of leafs", function(){
+			self.preloadAccumPropertiesLeafs();
+		});
+		self.continueTask();
 	}
 	preloadAccumPropertiesLeafs(){
 		var self=this;
@@ -438,11 +449,26 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		var self=this;
 		self.tagFactory.list.walk(function(tag){
 			if (self.getTokenName(tag)=="jrfInclude"){
-				self.traceTag(tag);
+				log(self.traceTag(tag));
+				if (tag.getPreprocessed==""){
+					log("needs preprocess");
+					var auxTagApplier=self.prepareTag(tag);
+					self.addStep("Processing include Tag",function(){
+						auxTagApplier.preload();
+					});
+					self.addStep("Processing auxiliar model returned from preload",function(auxModel){
+						self.continueTask();
+					});
+				} else {
+					log("do nothing");
+				}
 			}
 		});
 		self.continueTask();
 	}
+	
+	
+	
 	process(){
 		var self=this;
 		var sModel=self.inputHtml;
@@ -453,18 +479,11 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			self.parse(sModel,rootJRF);
 			self.continueTask();
 		});
-		self.addStep("Getting accum properties of leafs", function(){
-			self.preloadAccumPropertiesLeafs();
-		});
-		self.addStep("Processing Includes", function(){
-			self.processIncludeTags();
-		});
-		
 		self.addStep("Encoding model with Jira Info",function(){
 			htmlBufferIndex=self.pushHtmlBuffer();
 			self.encode(rootJRF);
 		});
-		self.addStep("Returning last HTML to process caller",function(){
+		self.addStep("Returning result HTML to process caller",function(){
 //			log(sHtml);
 			var sHtml=self.popHtmlBuffer(htmlBufferIndex);
 			if ((self.html.length>0)||(self.htmlStack.length()>0)){

@@ -29,7 +29,7 @@ var jrfInclude=class jrfInclude{//this kind of definition allows to hot-reload
 				var sHtmlBody=oContent.body.storage.value;
 				sHtmlBody=decodeEntities(sHtmlBody);
 				var auxModel=new jrfModel(self.model.report,sHtmlBody,self.reportElem);
-				auxModel.parse(sHtmlBody,self);
+				auxModel.parse(sHtmlBody,tag);
 			});
 
 		}

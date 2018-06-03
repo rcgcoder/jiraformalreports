@@ -3,7 +3,7 @@ var jrfInclude=class jrfInclude{//this kind of definition allows to hot-reload
 	constructor(tag,reportElem,model){
 		var self=this;
 		model.extendToken(self,tag,reportElem);
-		self.type=self.getAttrVal("type").trim();
+		self.type=self.getAttrVal("include").trim();
 		self.url=self.getAttrVal("url").trim();
 		self.preprocessed=false;
 		self.includeId="";

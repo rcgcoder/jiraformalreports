@@ -18,7 +18,7 @@ var jrfInclude=class jrfInclude{//this kind of definition allows to hot-reload
             var contentId=urlParts[0];
     		var hash = sha256.create();
     		hash.update("Confluence:"+contentId);
-    		theHash=hash.hex();
+    		var theHash=hash.hex();
             self.includeId=theHash;
             var cflc=System.webapp.getConfluence();
             self.addStep("Downloading content:"+contentId+" from "+srcUrl,function(){

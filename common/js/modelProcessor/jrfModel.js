@@ -450,7 +450,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		self.tagFactory.list.walk(function(tag){
 			if (self.getTokenName(tag)=="jrfInclude"){
 				log(self.traceTag(tag));
-				if (tag.getPreprocessed==""){
+				if ((tag.getPreprocessed()=="")||(tag.getPreprocessed()==false)){
 					log("needs preprocess");
 					var auxTagApplier=self.prepareTag(tag);
 					self.addStep("Processing include Tag",function(){

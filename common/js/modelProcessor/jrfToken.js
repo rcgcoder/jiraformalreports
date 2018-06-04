@@ -27,6 +27,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.applyInFormat=self.applyInFormat;
 		obj.applyOutFormat=self.applyOutFormat;
 		obj.applyInitVars=self.applyInitVars;
+		obj.applyInitVarsReuse=self.applyInitVarsReuse;
 		obj.applyPushVars=self.applyPushVars;
 		obj.applySetVars=self.applySetVars;
 		obj.executeFunction=self.executeFunction;
@@ -34,6 +35,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.replaceVarsComplex=self.replaceVarsComplex;		
 		obj.replaceVarsAndExecute=self.replaceVarsAndExecute;		
 		obj.initVars=obj.getAttrVal("initVar");
+		obj.initVarsReuse=obj.getAttrVal("initVarReuse");
 		obj.pushVars=obj.getAttrVal("pushVar");
 		obj.setVars=obj.getAttrVal("setVar");
 		obj.inFormat=obj.getAttrVal("informat");
@@ -153,6 +155,20 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				self.variables.initVar(varName);
 				if (arrVarParts.length>1){
 					self.variables.setVar(varName,arrVarParts[1]);
+				}
+				log("Initialized Value ["+varName+"] ");
+			}
+		}
+		if (self.initVarsReuse!=""){
+			var arrVars=self.initVarsReuse.split(",");
+			for (var i=0;i<arrVars.length;i++){
+				var arrVarParts=arrVars[i].split("=");
+				var varName=arrVarParts[0].trim();
+				if (self.variables.getVars(varName)==""){ // the variable does not exists
+					self.variables.initVar(varName);
+				};
+				if (arrVarParts.length>1){
+					self.variables.pushVar(varName,arrVarParts[1]);
 				}
 				log("Initialized Value ["+varName+"] ");
 			}

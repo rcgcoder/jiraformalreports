@@ -368,7 +368,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 				var sTagRest=oAdvance.text;
 				parentTag.setPostHTML(sTagRest);
 			}
-//			self.continueTask();
+			self.continueTask();
 		});
 		self.addStep("Processing Includes", function(){
 			self.processIncludeTags();
@@ -478,7 +478,6 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		var htmlBufferIndex;
 		self.addStep("Parsing Model",function(){
 			self.parse(sModel,rootJRF);
-			self.continueTask();
 		});
 		self.addStep("Encoding model with Jira Info",function(){
 			htmlBufferIndex=self.pushHtmlBuffer();

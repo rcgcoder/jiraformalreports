@@ -63,7 +63,7 @@ function newIssueFactory(report){
 		}
 		log("Error getting correct id of Field:"+sFieldName);
 		return sFieldName;
-	}
+	});
 	dynObj.functions.add("fieldValue",function(theFieldName,bRendered,dateTime){
 		var self=this;
 		var sFieldName=self.getExistentFieldId(theFieldName.trim());

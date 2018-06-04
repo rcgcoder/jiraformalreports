@@ -145,6 +145,7 @@ var jrfReport=class jrfReport {
 	        }
 
         // change de "fieldValue" method
+	        
 
 			self.continueTask();
 		});
@@ -389,8 +390,12 @@ var jrfReport=class jrfReport {
 		// load report model and submodels
 		// Process Model with The Report
 		self.addStep("Processing Model",function(){
-			
 			var theModel=new jrfModel(self);
+			if (isDefined(self.config.listDefaultVariables)){
+				self.config.listDefaultVariables.forEach(function(defaultVar){
+					theModel.variables.pushVar(defaultVar.key,defaultVar.name);				
+				})
+			}
 			theModel.process(); // hash inner task....
 		});
 		

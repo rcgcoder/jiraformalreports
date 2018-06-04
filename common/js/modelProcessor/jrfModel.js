@@ -383,8 +383,8 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		var hsAccumulators=self.extractAccumulators(self.inputHtml);
 		var hsAccumAux=newHashMap();
 		hsAccumulators.walk(function(hsAccum,iDeep,key){
-			if (!self.accumulartorList.exists(key)){
-				self.accumulartorList.add(key,hsAccum);
+			if (!self.accumulatorList.exists(key)){
+				self.accumulatorList.add(key,hsAccum);
 				hsAccumAux.add(key,hsAccum);
 			};
 		});

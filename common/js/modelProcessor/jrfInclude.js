@@ -24,12 +24,22 @@ var jrfInclude=class jrfInclude{//this kind of definition allows to hot-reload
             self.addStep("Downloading content:"+contentId+" from "+srcUrl,function(){
             	cflc.getContent(contentId);
             });
+            var auxModel;
 			self.addStep("Processing Confluence Content:"+contentId+" from "+srcUrl,function(jsonContent){
 				var oContent=JSON.parse(jsonContent);
 				var sHtmlBody=oContent.body.storage.value;
 				sHtmlBody=decodeEntities(sHtmlBody);
-				var auxModel=new jrfModel(self.model.report,sHtmlBody,self.reportElem);
+				auxModel=new jrfModel(self.model.report,sHtmlBody,self.reportElem);
 				auxModel.parse(sHtmlBody,tag);
+			});
+			
+			self.addStep("Updating Accumulators of Parent Model... avoid multiple process ",function(){
+				auxModel.accumulartorList.walk(function(hsAccum,iDeep,key){
+					if (!self.model.accumulartorList.exists(key){
+						self.model.accumulartorList.add(key,hsAccum);
+					});
+				});
+				self.continueTask();
 			});
 
 		}

@@ -381,10 +381,17 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 	preloadAccumPropertiesLeafs(){
 		var self=this;
 		var hsAccumulators=self.extractAccumulators(self.inputHtml);
+		var hsAccumAux=newHashMap();
+		hsAccumulators.walk(function(hsAccum,iDeep,key){
+			if (!self.accumulartorList.exists(key){
+				self.accumulartorList.add(key,hsAccum);
+				hsAccumAux.add(key,hsAccum);
+			});
+		});
 		var petCounter=0;
 		var hsIssueGetProperties=newHashMap();
 		self.addStep("Preparing the pool of getproperty calls", function(){
-			hsAccumulators.walk(function(hsAccum,iProf,accumKey){
+			hsAccumAux.walk(function(hsAccum,iProf,accumKey){
 				log("Type of accumulators:"+accumKey);		
 /*					//getting all leafs  NOT WORKING.... THE SYSTEM NEEDS ALL THE PRECOMPUTED INFO
 				var hsLeafs=newHashMap();
@@ -395,7 +402,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 				});
 */					hsAccum.walk(function(theFieldAccum){
 					/*hsLeafs*/ 
-					report.treeIssues.walk(function (issue){
+					self.report.treeIssues.walk(function (issue){
 						hsIssueGetProperties.push({issue:issue,key:theFieldAccum.key});
 					});
 				});

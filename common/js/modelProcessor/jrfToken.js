@@ -42,6 +42,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.outFormat=obj.getAttrVal("format");
 		obj.ifCondition=obj.getAttrVal("if");
 		obj.processOrder=obj.getAttrVal("processOrder");
+		obj.visibility=obj.getAttrVal("visibility");
 		obj.ifConditionResult=true;
 		obj.autoAddPostHtml=true;
 	}
@@ -136,9 +137,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			self.continueTask();
 		});
 		self.addStep("PostProcess all token and return...",function(){
-//			var sHtml=self.popHtmlBuffer();
-//			sHtml=self.replaceVars(sHtml);
-//			self.addHtml(sHtml);
+			if ((self.visibility!="")&&(self.visibility=="hidden")){
+					var sHtml=self.popHtmlBuffer(self.indHtmlBuffer);
+					//sHtml=self.replaceVars(sHtml);
+					self.addHtml("");
+			}
 			self.variables.popVarEnv();
 			self.continueTask();
 		});

@@ -368,6 +368,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 				var sTagRest=oAdvance.text;
 				parentTag.setPostHTML(sTagRest);
 			}
+			self.continueTask();
 		});
 		self.addStep("Processing Includes", function(){
 			self.processIncludeTags();

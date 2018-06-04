@@ -74,6 +74,10 @@ var RCGVarEngine=class RCGVarEngine{ //this kind of definition allows to hot-rel
 	initVar(varName){
 		var self=this;
 		var hsEnv=self.topVarEnv();
+		if (hsEnv==""){
+			self.pushVarEnv()
+			hsEnv=self.topVarEnv();
+		}
 		if (hsEnv.exists(varName)){
 			log("ERROR ... you can init a existin local variable");
 			return;

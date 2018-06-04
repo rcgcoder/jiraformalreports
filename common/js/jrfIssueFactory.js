@@ -19,7 +19,8 @@ function newIssueFactory(report){
 			 {name:"LinkType",description:"Relation Types",type:"object"},
 			 {name:"Comment", description:"Comments in Issue",type:"object"},
 			 {name:"AccumulatorsCache",description:"Cache the values of accumulator calls",type:"object"},
-			 {name:"PrecomputedProperty",description:"List of properties with values of hidden childs computed by a user with permissions",type:"object"}
+			 {name:"PrecomputedProperty",description:"List of properties with values of hidden childs computed by a user with permissions",type:"object"},
+			 {name:"FieldLifeCache",description:"Cache the life of the fields to speed up the reutilization of values",type:"object"}
 			]
 			,
 			allFieldDefinitions.concat(["JiraObject"])
@@ -30,56 +31,58 @@ function newIssueFactory(report){
 	dynObj.functions.add("getReport",function(){
 		return theReport;
 	});
-	dynObj.functions.add("fieldValue",function(theFieldName,bRendered){
-		var sFieldName=theFieldName.trim();
+	dynObj.functions.add("getExistentFieldId",function(theFieldName){
 		var self=this;
+		var sFieldName=theFieldName.trim();
 		var fncAux=self["get"+sFieldName];
 		var sFieldKey="";
 		var bDefined=false;
 		var fieldValue="";
 		if (isDefined(fncAux)){
 			bDefined=true;
-			fieldValue=self["get"+sFieldName]();
+			return sFieldName;
 		} else if (hsFieldNames.exists(sFieldName)) {
 			sFieldKey=hsFieldNames.getValue(sFieldName);
 			if (sFieldKey!=""){
 				fncAux=self["get"+sFieldKey];
 				if (isDefined(fncAux)){
-					bDefined=true;
-					fieldValue=self["get"+sFieldKey]();
+					return sFieldKey;
 				}
 			}
 		}
-		if (!bDefined){
+		var jiraObj=self.getJiraObject();
+		var jsonFields=jiraObj.fields;
+		var jsonField=jsonFields[sFieldName];
+		if (isDefined(jsonField)){
+			return sFieldName;
+		} else {
+			jsonField=jsonFields[sFieldKey];
+			if (isDefined(jsonField)){
+				return sFieldKey;
+			}
+		}
+		log("Error getting correct id of Field:"+sFieldName);
+		return sFieldName;
+	}
+	dynObj.functions.add("fieldValue",function(theFieldName,bRendered,dateTime){
+		var self=this;
+		var sFieldName=self.getExistentFieldId(theFieldName.trim());
+		var fncAux=self["get"+sFieldName];
+		var bDefined=false;
+		var fieldValue="";
+		if (isDefined(fncAux)){
+			bDefined=true;
+			fieldValue=self["get"+sFieldName]();
+			bDefined=true;
+		} else {
 			var jiraObj=self.getJiraObject();
 			var jsonFields=jiraObj.fields;
-			var jsonField=jsonFields[sFieldName];
-			if (isDefined(jsonField)){
-				fieldValue=jsonField;
-				bDefined=true;
-			} else {
-				jsonField=jsonFields[sFieldKey];
-				if (isDefined(jsonField)){
-					fieldValue=jsonField;
-					bDefined=true;
-				}
-			}
-		} 
-		if ((!bDefined)||(isDefined(bRendered)&&bRendered)){
-			var jiraObj=self.getJiraObject();
-			var jsonFields=jiraObj.renderedFields;
 			var jsonField=jsonFields[sFieldName];
 			if (isDefined(jsonField)&&(jsonField!=null)){
 				fieldValue=jsonField;
 				bDefined=true;
-			} else {
-				jsonField=jsonFields[sFieldKey];
-				if (isDefined(jsonField)&&(jsonField!=null)){
-					fieldValue=jsonField;
-					bDefined=true;
-				}
 			}
-		} 
+		}
 		if (bDefined){
 			if (typeof fieldValue==="object"){
 				if (isDefined(fieldValue.value)) return fieldValue.value;
@@ -366,8 +369,62 @@ function newIssueFactory(report){
 			})
 		});
 	});
-	
-
+	dynObj.functions.add("getFieldLife",function(sFieldName){
+		var self=this;
+		var hsItemFieldsCache;
+		var hsFieldLifesCache=self.getFieldLifeCache();
+		if (hsFieldLifesCache.exists(sFieldName)){
+			hsItemFieldsCache=hsFieldLifesCache.getValueById(sFieldName);
+			return hsItemFieldsCache;
+		}
+		var arrResult=[];
+		var sChangeDate;
+		var issueBase=self.getJiraObject();
+		if (isDefined(issueBase.changelog)){
+			var arrHistories=issueBase.changelog.histories;
+			var arrItems;
+			arrHistories.forEach(function(change){
+				arrItems=change.items;
+				sChangeDate=change.created;
+				arrItems.forEach(function(chgField){
+					if ((chgField.field==sFieldName)||
+						(chgField.fieldId==sFieldName)){
+						arrResult.push([sChangeDate,chgField.fromString,chgField.toString]);
+					}
+				});
+			});
+		}
+		arrLife.sort(function(a,b){
+			if (a[0]<b[0]) return -1;
+			if (a[0]>b[0]) return 1;
+			return 0
+		});
+		hsItemFieldsCache=newHashMap();
+		hsItemFieldsCache.add("life",arrResult);
+		hsFieldLifesCache.add(sFieldName,hsItemFieldsCache);
+		return hsItemFieldsCache;
+	});
+	dynObj.functions.add("getFieldValueAtDateTime",function(sFieldName,dateTime){
+		var self=this;
+		var hsFieldLife=self.getFieldLife(sFieldName);
+		if (hsFieldLife.exists(dateTime)){
+			return hsFieldLife.getValueById(dateTime);
+		}
+		var arrLife=hsFieldLife.getValueById("life");
+		var auxVal="";
+		var history;
+		var bLocated=false;
+		for (var i=0;(i<arrLife.length) &&(!bLocated);i++){
+			history=arrLife[i];
+			if (history[0]<=dateTime){
+				auxVal=history[1];
+			} else {
+				bLocated=true;
+			}
+		}
+		hsFieldLife.add(datetime,auxVal);
+		return auxVal;
+	});
 	
 	return dynObj;
 }

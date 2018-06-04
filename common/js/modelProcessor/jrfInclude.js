@@ -35,9 +35,9 @@ var jrfInclude=class jrfInclude{//this kind of definition allows to hot-reload
 			
 			self.addStep("Updating Accumulators of Parent Model... avoid multiple process ",function(){
 				auxModel.accumulartorList.walk(function(hsAccum,iDeep,key){
-					if (!self.model.accumulartorList.exists(key){
+					if (!self.model.accumulartorList.exists(key)){
 						self.model.accumulartorList.add(key,hsAccum);
-					});
+					};
 				});
 				self.continueTask();
 			});

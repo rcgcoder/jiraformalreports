@@ -22,6 +22,14 @@
 			    				    multiple="false"
 			    		>
 			</advSelector>
+			<dlgEditableList id="listDefaultVariables" name="listDefaultVariables" 
+				typeDescriptor="List of Default Variables" 
+				columns=2
+				columnDefinitions='[{"caption":"Var Name"},{"caption":"Default Value"}]'
+			    openDialogCaption="List of Default Variables for the Report"
+				(onApply)="onChangeDefaultVariables($event)"
+				>
+			</dlgEditableList>
 		</div>
 	    <div class="aui-item">
 			<button (click)="executeReport()" class="aui-button">Execute the Report</button>

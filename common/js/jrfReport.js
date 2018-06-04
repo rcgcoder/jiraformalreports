@@ -393,7 +393,8 @@ var jrfReport=class jrfReport {
 			var theModel=new jrfModel(self);
 			if (isDefined(self.config.listDefaultVariables)){
 				self.config.listDefaultVariables.forEach(function(defaultVar){
-					theModel.variables.pushVar(defaultVar.key,defaultVar.name);				
+					theModel.variables.initVar(defaultVar[0]);				
+					theModel.variables.pushVar(defaultVar[0],defaultVar[1]);				
 				})
 			}
 			theModel.process(); // hash inner task....

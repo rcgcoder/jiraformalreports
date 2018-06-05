@@ -377,7 +377,7 @@ function newIssueFactory(report){
 		var hsItemFieldsCache;
 		var hsFieldLifesCaches=self.getFieldLifeCaches();
 		if (hsFieldLifesCaches.exists(sFieldName)){
-			hsItemFieldsCache=hsFieldLifesCaches.getValueById(sFieldName);
+			hsItemFieldsCache=hsFieldLifesCaches.getValue(sFieldName);
 			return hsItemFieldsCache;
 		}
 		var arrResult=[];

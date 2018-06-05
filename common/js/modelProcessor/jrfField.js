@@ -9,7 +9,7 @@ var jrfField=class jrfField{//this kind of definition allows to hot-reload
 		var self=this;
 		var bRendered=(self.format=="jiramarkup");
 		var sValue=self.reportElem.fieldValue(self.fieldName,true);
-		if (sValue.indexOf("&lt;jrf")>=0){// if there is jrf tokens in the description
+		if (isString(sValue)&&(sValue.indexOf("&lt;jrf")>=0)){// if there is jrf tokens in the description
 			var sHtml=decodeEntities(sValue);
 			var theModel;
 			self.addStep("Processing the field including the jrf tags",function(){

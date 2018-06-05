@@ -68,7 +68,7 @@ function newIssueFactory(report){
 		var self=this;
 		var sFieldName=self.getExistentFieldId(theFieldName.trim());
 		if (isDefined(dateTime)){
-			return self.getFieldValueAtDateTime(theFieldNam,dateTime);
+			return self.getFieldValueAtDateTime(theFieldName,dateTime);
 		}
 		var fncAux=self["get"+sFieldName];
 		var bDefined=false;

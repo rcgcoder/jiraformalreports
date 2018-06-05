@@ -67,6 +67,9 @@ function newIssueFactory(report){
 	dynObj.functions.add("fieldValue",function(theFieldName,bRendered,dateTime){
 		var self=this;
 		var sFieldName=self.getExistentFieldId(theFieldName.trim());
+		if (isDefined(dateTime)){
+			return self.getFieldValueAtDateTime(theFieldNam,dateTime);
+		}
 		var fncAux=self["get"+sFieldName];
 		var bDefined=false;
 		var fieldValue="";

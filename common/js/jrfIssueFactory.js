@@ -404,7 +404,7 @@ function newIssueFactory(report){
 		});
 		hsItemFieldsCache=newHashMap();
 		hsItemFieldsCache.add("life",arrResult);
-		hsFieldLifesCache.add(sFieldName,hsItemFieldsCache);
+		hsFieldLifesCaches.add(sFieldName,hsItemFieldsCache);
 		return hsItemFieldsCache;
 	});
 	dynObj.functions.add("getFieldValueAtDateTime",function(sFieldName,dateTime){

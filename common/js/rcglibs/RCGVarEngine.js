@@ -71,6 +71,10 @@ var RCGVarEngine=class RCGVarEngine{ //this kind of definition allows to hot-rel
 		}
 		return "";
 	}
+	flushVar(varName){
+		var hsVars=getVars(varName);
+		hsVars.clear();
+	}
 	initVar(varName){
 		var self=this;
 		var hsEnv=self.topVarEnv();

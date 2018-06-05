@@ -427,7 +427,7 @@ function newIssueFactory(report){
 				bLocated=true;
 			}
 		}
-		hsFieldLife.add(datetime,auxVal);
+		hsFieldLife.add(dateTime,auxVal);
 		return auxVal;
 	});
 	

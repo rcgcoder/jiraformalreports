@@ -422,7 +422,7 @@ function newIssueFactory(report){
 		var bLocated=false;
 		for (var i=0;(i<arrLife.length) &&(!bLocated);i++){
 			history=arrLife[i];
-			auxVal=history[1];
+			auxVal=history[2];
 			if (history[0]<=dateTime){
 				bLocated=true;
 			}

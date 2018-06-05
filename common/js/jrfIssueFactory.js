@@ -427,6 +427,9 @@ function newIssueFactory(report){
 				bLocated=true;
 			}
 		}
+		if ((auxVal==null)||(isUndefined(auxVal))){
+			auxVal="";
+		}
 		hsFieldLife.add(dateTime,auxVal);
 		return auxVal;
 	});

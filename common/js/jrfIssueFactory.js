@@ -392,7 +392,7 @@ function newIssueFactory(report){
 				arrItems.forEach(function(chgField){
 					if ((chgField.field==sFieldName)||
 						(chgField.fieldId==sFieldName)){
-						arrResult.push([sChangeDate,chgField.fromString,chgField.toString]);
+						arrResult.push([(new Date(sChangeDate)),chgField.fromString,chgField.toString]);
 					}
 				});
 			});

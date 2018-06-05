@@ -397,9 +397,9 @@ function newIssueFactory(report){
 				});
 			});
 		}
-		arrResult.sort(function(a,b){
-			if (a[0]<b[0]) return -1;
-			if (a[0]>b[0]) return 1;
+		arrResult.sort(function(a,b){ " ordered from actual to the past"
+			if (a[0]<b[0]) return 1;
+			if (a[0]>b[0]) return -1;
 			return 0
 		});
 		hsItemFieldsCache=newHashMap();
@@ -417,14 +417,13 @@ function newIssueFactory(report){
 		if (arrLife.length>0){
 			log("Debug here");
 		}
-		var auxVal="";
+		var auxVal=	self.fieldValue(sFieldName); // getting actual Value
 		var history;
 		var bLocated=false;
 		for (var i=0;(i<arrLife.length) &&(!bLocated);i++){
 			history=arrLife[i];
+			auxVal=history[1];
 			if (history[0]<=dateTime){
-				auxVal=history[1];
-			} else {
 				bLocated=true;
 			}
 		}

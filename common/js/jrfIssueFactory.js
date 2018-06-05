@@ -375,9 +375,9 @@ function newIssueFactory(report){
 	dynObj.functions.add("getFieldLife",function(sFieldName){
 		var self=this;
 		var hsItemFieldsCache;
-		var hsFieldLifesCache=self.getFieldLifeCache();
-		if (hsFieldLifesCache.exists(sFieldName)){
-			hsItemFieldsCache=hsFieldLifesCache.getValueById(sFieldName);
+		var hsFieldLifesCaches=self.getFieldLifeCaches();
+		if (hsFieldLifesCaches.exists(sFieldName)){
+			hsItemFieldsCache=hsFieldLifesCaches.getValueById(sFieldName);
 			return hsItemFieldsCache;
 		}
 		var arrResult=[];

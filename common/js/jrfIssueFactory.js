@@ -411,9 +411,9 @@ function newIssueFactory(report){
 		var self=this;
 		var hsFieldLife=self.getFieldLife(sFieldName);
 		if (hsFieldLife.exists(dateTime)){
-			return hsFieldLife.getValueById(dateTime);
+			return hsFieldLife.getValue(dateTime);
 		}
-		var arrLife=hsFieldLife.getValueById("life");
+		var arrLife=hsFieldLife.getValue("life");
 		var auxVal="";
 		var history;
 		var bLocated=false;

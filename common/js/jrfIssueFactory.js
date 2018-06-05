@@ -414,6 +414,9 @@ function newIssueFactory(report){
 			return hsFieldLife.getValue(dateTime);
 		}
 		var arrLife=hsFieldLife.getValue("life");
+		if (arrLife.length>0){
+			log("Debug here");
+		}
 		var auxVal="";
 		var history;
 		var bLocated=false;

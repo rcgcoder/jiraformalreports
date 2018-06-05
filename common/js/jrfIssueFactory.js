@@ -97,7 +97,7 @@ function newIssueFactory(report){
 				return fieldValue;
 			}
 		}
-		return "Undefined getter for fieldName:["+sFieldName+"]/["+sFieldKey+"]";
+		return "Undefined getter for fieldName:["+sFieldName+"]";
 	});
 	dynObj.functions.add("fieldAccumChilds",function(theFieldName,bSetProperty,fncItemCustomCalc){
 		var self=this;

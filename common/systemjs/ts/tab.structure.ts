@@ -149,5 +149,6 @@ export class TabStructure {
     doEditSelectedModel(){
         var win = window.open("html/htmlEditor.html", '_blank');
         win.focus();
+        win.document.body.innerHTML = "<html><header></header><body>Test editor loaded</body></html>";
     }
 }

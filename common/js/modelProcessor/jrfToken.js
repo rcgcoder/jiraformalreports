@@ -177,7 +177,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					vValue=arrVarParts[1];
 					self.variables.pushVar(varName,vValue);
 				}
-				log("Initialized reusing Value ["+varName+"] with value ["+vValue+"]");
+				var actValue=self.variables.getVar(varName);
+				log("Initialized reusing Value ["+varName+"] with value ["+vValue+"], actual value["+actValue+"]");
 			}
 		}
 	}

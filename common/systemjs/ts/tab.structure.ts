@@ -146,4 +146,8 @@ export class TabStructure {
         auxObj.attr("checked","checked");
 
     }
+    doEditSelectedModel(){
+        var win = window.open("html/htmlEditor.html, '_blank');
+        win.focus();
+    }
 }

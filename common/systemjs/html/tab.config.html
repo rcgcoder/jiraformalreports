@@ -24,6 +24,14 @@
 					(onFullFillRequest)="onGetFullListOfModels($event)"
 					>
 				</dlgEditableList>
+				<dlgEditableList id="importModelsFromAttachment" name="importModelsFromAttachment" 
+					typeDescriptor="Import models from attachment of the report issue" 
+					columns=3
+					columnDefinitions='[{"caption":"key"},{"caption":"filename"},{"caption":"url"}]'
+				    openDialogCaption="Import models from attachment of the report issue"
+					(onApply)="onChangeImportList($event)"
+					>
+				</dlgEditableList>
 		    </div>
 		</div>
 	</div>

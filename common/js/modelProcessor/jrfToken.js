@@ -156,10 +156,12 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				var arrVarParts=arrVars[i].split("=");
 				var varName=arrVarParts[0].trim();
 				self.variables.initVar(varName);
+				var vValue="empty";
 				if (arrVarParts.length>1){
-					self.variables.setVar(varName,arrVarParts[1]);
+					vValue=arrVarParts[1];
+					self.variables.setVar(varName,vValue);
 				}
-				log("Initialized Value ["+varName+"] ");
+				log("Initialized Value ["+varName+"] with value ["+vValue+"]");
 			}
 		}
 		if (self.initVarsReuse!=""){
@@ -170,10 +172,12 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				if (self.variables.getVars(varName)==""){ // the variable does not exists
 					self.variables.initVar(varName);
 				};
+				var vValue="empty";
 				if (arrVarParts.length>1){
-					self.variables.pushVar(varName,arrVarParts[1]);
+					vValue=arrVarParts[1];
+					self.variables.pushVar(varName,vValue);
 				}
-				log("Initialized Value ["+varName+"] ");
+				log("Initialized reusing Value ["+varName+"] with value ["+vValue+"]");
 			}
 		}
 	}

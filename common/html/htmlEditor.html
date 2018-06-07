@@ -24,54 +24,7 @@
 
 <p>It&rsquo;s the most obvious naming rule of all but it&rsquo;s also perhaps the most difficult. In my younger years I would often use very descriptive names, I pulled the following doozy from the archives:</p>
 
-<p>At a whopping 50 characters it can hardly be described as nondescript, however I&rsquo;m sure anyone who came after would have cursed me for using such a long name. A far better name for my list of promotion codes would have been:</p>
-
-<p>Or possibly:</p>
-
-<p>However care should be taken when using abbreviations or acronyms. Only use an abbreviated term if it is well known and/or its use is standard practice (e.g db, id, url, etc.) If you&rsquo;re not sure if an abbreviated form of a term is well known err on the side of caution and don&rsquo;t abbreviate:</p>
-
-<p>There is one exception to this rule - list or dictionary comprehensions (if you&rsquo;re not familiar with list comprehension look it up). Using a single letter abbreviation in this case is preferential to a more descriptive name, for example:</p>
-
-<h2>Be conscious of scope</h2>
-
-<p>In the first rule we reduced a very descriptive term to a more concise version promotion_codes. So why not reduce it further (e.g codes) and why was it acceptable to reduce it at all? The answer lies in scope.</p>
-
-<p>The scope in which you declare a variable determines how much information must be included in the name. For example a variable declared in the settings module for a project will infer little information from its scope and therefore needs to be more descriptive.</p>
-
-<p>Now consider the scope when the same variable is used in a function:</p>
-
-<p>The purpose of our function is to connect to the database and therefore we can infer that the supplied username and password are for this purpose and there&rsquo;s no need to include db in the variable names.</p>
-
-<p>On occasion it may be necessary to use more descriptive names to avoid a naming conflict within the same scope. Consider our first example where we declared a username for the database in the settings file, what if the project uses multiple databases?</p>
-
-<p>Here the name of the database application is used to namespace the variables and avoid any conflict whilst keeping the names themselves as concise as possible.</p>
-
-<h2>Pluralize when naming collections</h2>
-
-<p>Harking back again to my youth there was a time where I would have avoided using plurals at all costs, instead opting to follow the convention of appending <i>_list</i> to any variable associated with a collection of items. With the benefit of time I&rsquo;ve come to prefer variable names that sound natural.</p>
-
-<p>I&rsquo;ve refrained from marking either example as good or bad as they are both acceptable in my eyes, however colours would be the preferred term purely on the base it is the most concise and natural sounding.</p>
-
-<p>Advocates for using <i>_list</i> often argue that it reduces common spelling mistakes with words like category/categories and hero/heroes. I would counter that in the same way I will grammar and spell check this document before asking you to read it you should take the same pride in the code you write.</p>
-
-<h2>Read your code out loud</h2>
-
-<p>If you can read a line of code and comprehend it in one that&rsquo;s a good indication that it&rsquo;s well written using good variable names. If on the other hand if jars or you find yourself re-reading it multiple times before it makes sense then there&rsquo;s room for improvement.</p>
-
-<p>Reading your code out loud (or in your head if you&rsquo;re attracting too much attention) is a sure fire way to spot badly named variables.</p>
-
-<h2>Above all else be consistent</h2>
-
-<p>When you work with old or externally written code chances are there will be difference in the rules the author(s) used when coming up with variable names. Unless you&rsquo;re going to rewrite and maintain all the code in future do not break from the existing naming conventions.</p>
-
-<p>If they prefix numbers with num_ or append _list to lists then follow suite, whilst conventional wisdom tells us two wrongs don&rsquo;t make a right, mixing styles within a project will only make things worse.pening statement.</p>
-
-<h2>Further reading...</h2>
-
-<ul>
-	<li>Code complete 2 <i>(by Steve McConnell)</i></li>
-	<li>The Art of Computer Programming: Volumes 1-4a <i>(by Donald E. Knuth)</i></li>
-</ul>
+<p>&nbsp;</p>
 </div>
 </section>
 </article>

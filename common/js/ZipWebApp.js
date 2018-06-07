@@ -1,8 +1,6 @@
 class ZipWebApp{
 	constructor(){
 		var self=this;
-		self.oneParam="Casa";
-		self.twoParam="Coche";
 		self.atlassian="";
 		self.systemjs="";
 		self.initializationBarrier;

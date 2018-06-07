@@ -150,7 +150,8 @@ export class TabStructure {
         var win = window.open("html/htmlEditor.html", '_blank');
         win.focus();
         win.addEventListener('load', function(){
-            win.document.body.innerHTML = "<html><header></header><body>Test editor loaded</body></html>";
+            log("Window Loaded");
+            //win.document.body.innerHTML = "<html><header></header><body>Test editor loaded</body></html>";
         }, true);
     }
 }

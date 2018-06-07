@@ -147,7 +147,7 @@ export class TabStructure {
 
     }
     doEditSelectedModel(){
-        var win = window.open("html/htmlEditor.html", '_blank');
+        var win = window.open("js/libs/contentEditor/index.html", '_blank');
         win.focus();
         win.addEventListener('load', function(){
             log("Window Loaded");

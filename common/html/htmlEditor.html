@@ -13,293 +13,572 @@
 <body>
 
 	<div data-editable="" data-name="article">
-
-		<h1>
-			<strong>Informe de Avance de Subproyectos.</strong>
-		</h1>
-		<p>&lt;jrf initVarReuse=&quot;</p>
+		<p>&nbsp;</p>
+		<p>&lt;jrf</p>
+		<p>
+			initVarReuse=&quot;CosteHora,TotalImporte,<strong><span
+				style="color: rgb(51, 51, 51);">TotalIVA,TotalImporteConIVA,<strong
+					style="text-align: right;"><span
+						style="color: rgb(51, 51, 51);">TotalHoras,rootKey</span></strong></span></strong>&quot;
+		</p>
+		<p>initVar=&quot;</p>
 		<p>TotalHHEstimadoOriginal,</p>
-		<p>TotalHHEstimadoActual&quot;&gt;</p>
+		<p>TotalHHEstimadoActual,</p>
+		<p>arrCamposDesarrollo=[</p>
+		<p>{'caption':'Análisis';'isImplementa':'false';'isLineaBase':'false';'defaultPerc':'10';'name':'Base
+			Presupuesto Análisis';'varName':'hhAnalisis';'percField':'%
+			Análisis'};</p>
+		<p>{'caption':'Diseño';'isImplementa':'false';'isLineaBase':'false';'defaultPerc':'11';'name':'Base
+			Presupuesto Diseño';'varName':'hhDiseño';'percField':'% Diseño'};</p>
+		<p>{'caption':'Implementación';'isImplementa':'true';'isLineaBase':'false';'defaultPerc':'69.58';'name':'Base
+			Presupuesto
+			Implementación';'varName':'hhImplementacion';'percField':'%
+			Implementación'};</p>
+		<p>{'caption':'Pruebas';'isImplementa':'false';'isLineaBase':'false';'defaultPerc':'12';'name':'Base
+			Presupuesto Pruebas';'varName':'hhPruebas';'percField':'% Pruebas'};</p>
+		<p>{'caption':'Documentación';'isImplementa':'true';'isLineaBase':'false';'defaultPerc':'1.74';'name':'Base
+			Presupuesto Documentación';'varName':'hhDocumentacion';'percField':'%
+			Documentación'}],</p>
+		<p>LBHHDespliegue,LBHHCoordinacion,LBHHDireccion,LBPercDespliegue,LBPercCoordinacion=17.38,LBPercDireccion=11.82</p>
+		<p>&quot;&gt;</p>
+		<p>&lt;jrf initVar=&quot;</p>
+		<p>LOTE2_HHDesarrollo,</p>
+		<p>AST_HHTotalFaseImplementacion,</p>
+		<p>AST_HHDespliegue,</p>
+		<p>AST_HHAccumFaseImplementacion,</p>
+		<p>
+			AST_HHPartFaseImplementacion,<br />AST_HHPercsImplementacion<br />
+			<br />&quot;&gt;
+		</p>
+		<p>&lt;jrf visibility=&quot;hidden&quot;&gt;</p>
+		<p>&lt;jrf forEach as=&quot;root&quot; type=&quot;root&quot;
+			where=&quot;(({{root}}.fieldValue('Key')=={{rootKey}})||({{rootKey}}==''))&quot;
+			id=&quot;forEachCompleto&quot;&gt;</p>
+		<p>Key Root:&lt;jrf field=&quot;Key&quot; /&gt;</p>
+		<p>&lt;jrf forEach as=&quot;elem&quot; type=&quot;child&quot;
+			where=&quot;&quot; id=&quot;forEachCompleto&quot;&gt;</p>
+		<p>Key Child:&lt;jrf field=&quot;Key&quot; /&gt;</p>
+		<p>&lt;jrf FORMULA pushVar=&quot;LOTE2_HHDesarrollo&quot;
+			inFormat=&quot;fixed=2&quot; format=&quot;hours&quot;&gt;</p>
+		<p>(&lt;jrf field=&quot;timeoriginalestimate&quot;
+			format=&quot;fixed=2&quot;/&gt;</p>
+		<p>/ 3600 )</p>
+		<p>&lt;/jrf&gt;</p>
+		<p>TimeOriginal Estimate: &lt;jrf
+			getVar=&quot;LOTE2_HHDesarrollo&quot; format=&quot;hours&quot;/&gt;</p>
+		<p>&lt;jrf initVar=&quot;auxAccum&quot;&gt;</p>
+		<p>&lt;jrf forEach as=&quot;workType&quot; type=&quot;array&quot;
+			sourceFormula=&quot;{{arrCamposDesarrollo}}&quot; where=&quot; ( {{{
+			{{workType}}.isImplementa }}} ) ==true &quot; &gt;</p>
+		<p>&lt;jrf FORMULA pushVar=&quot;auxAccum&quot;
+			format=&quot;hours&quot; inFormat=&quot;fixed=2&quot;&gt;</p>
+		<p>( {{{ {{workType}}.defaultPerc }}} / 100 ) * &lt;jrf
+			getVar=&quot;LOTE2_HHDesarrollo&quot; /&gt;</p>
+		<p>&lt;/jrf&gt;</p>
+		<p>&lt;/jrf&gt;</p>
+		<p>
+			Implementation Part: &lt;jrf <span style="color: rgb(51, 51, 51);">SUM
+				pushVar=&quot;<span style="color: rgb(51, 51, 51);">AST_HHPartFaseImplementacion</span>&quot;
+				var
+			</span>=&quot;auxAccum&quot; format=&quot;hours&quot;/&gt;
+		</p>
+		<p>&lt;/jrf&gt;</p>
+		<p>&lt;/jrf&gt;</p>
+		<p>
+			Implementation Part of all Childs: &lt;jrf <span
+				style="color: rgb(51, 51, 51);">SUM pushVar=&quot;<span
+				style="color: rgb(51, 51, 51);">AST_HHAccumFaseImplementacion</span>&quot;
+				var
+			</span>=&quot;<span style="color: rgb(51, 51, 51);">AST_HHPartFaseImplementacion</span>&quot;
+			format=&quot;hours&quot;/&gt;
+		</p>
+		<p>Despliegue &lt;jrf FORMULA format=&quot;hours&quot;
+			pushVar=&quot;AST_HHDespliegue&quot; inFormat=&quot;fixed=2&quot;
+			&gt;</p>
+		<p>
+			&lt;jrf SUM var = &quot;<span style="color: rgb(51, 51, 51);"><span
+				style="color: rgb(51, 51, 51);">AST_HHAccumFaseImplementacion</span></span>&quot;
+			/&gt; * 0.2191
+		</p>
+		<p>&lt;/jrf&gt;</p>
 		<p>
 			<br />
 		</p>
-		<p>&lt;jrf&nbsp;initVar=&quot;</p>
-		<p>hhEstimadoOriginal,</p>
-		<p>hhEstimadoActual,</p>
-		<p>%DesviacionEstimacion,</p>
-		<p>hhAvanceActual,</p>
-		<p>%AvanceActual,</p>
-		<p>hhFacturableActual,</p>
-		<p>%FacturableActual,</p>
+		<p>Implementation Part of all Childs + Despliegue:&lt;jrf FORMULA
+			format=&quot;hours&quot;
+			pushVar=&quot;AST_HHTotalFaseImplementacion&quot;
+			inFormat=&quot;fixed=2&quot; &gt;</p>
 		<p>
-			<span style="color: rgb(23, 43, 77);"><span
-				style="color: rgb(23, 43, 77);">MediaDesviacionEstimacion,</span></span>
+			{{<span style="color: rgb(51, 51, 51);"><span
+				style="color: rgb(51, 51, 51);">AST_HHAccumFaseImplementacion}}
+					+ {{ AST_HHDespliegue }}</span></span>
 		</p>
-		<p>
-			<span style="color: rgb(23, 43, 77);"><span
-				style="color: rgb(23, 43, 77);">TotalHHAvanceActual,</span></span>
-		</p>
-		<p>
-			<span style="color: rgb(23, 43, 77);"><span
-				style="color: rgb(23, 43, 77);"><span
-					style="color: rgb(23, 43, 77);"><span
-						style="color: rgb(23, 43, 77);">MediaAvanceActual,</span></span></span></span>
-		</p>
-		<p>
-			<span style="color: rgb(23, 43, 77);"><span
-				style="color: rgb(23, 43, 77);"><span
-					style="color: rgb(23, 43, 77);"><span
-						style="color: rgb(23, 43, 77);">TotalHHFacturableActual,</span></span></span></span>
-		</p>
-		<p>
-			<span style="color: rgb(23, 43, 77);"><span
-				style="color: rgb(23, 43, 77);">MediaFacturableActual,</span></span>
-		</p>
-		<p>
-			<span style="color: rgb(23, 43, 77);"><span
-				style="color: rgb(23, 43, 77);"><strong>hhEstimadoRestante,</strong></span></span>
-		</p>
-		<p>
-			<span style="color: rgb(23, 43, 77);"><span
-				style="color: rgb(23, 43, 77);"><strong><span
-						style="color: rgb(23, 43, 77);"><span
-							style="color: rgb(23, 43, 77);">hhEstimadoRestanteDetail,</span></span></strong></span></span>
-		</p>
-		<p>
-			<strong><span style="color: rgb(23, 43, 77);"><span
-					style="color: rgb(23, 43, 77);"><strong><span
-							style="color: rgb(23, 43, 77);"><span
-								style="color: rgb(23, 43, 77);"><span
-									style="color: rgb(23, 43, 77);"><span
-										style="color: rgb(23, 43, 77);">%AvanceActualDetail,</span></span></span></span></strong></span></span></strong>
-		</p>
-		<p>
-			<strong><span style="color: rgb(23, 43, 77);"><span
-					style="color: rgb(23, 43, 77);"><strong><span
-							style="color: rgb(23, 43, 77);"><span
-								style="color: rgb(23, 43, 77);"><span
-									style="color: rgb(23, 43, 77);"><span
-										style="color: rgb(23, 43, 77);"><strong><strong><strong>TotalHHEstimadoRestante,<strong><span
-															style="color: rgb(23, 43, 77);"><span
-																style="color: rgb(23, 43, 77);">Total<span
-																	style="color: rgb(23, 43, 77);"><span
-																		style="color: rgb(23, 43, 77);">%AvanceActual,<strong>hhIssueOriginalEstimate,</strong></span></span></span></span></strong></strong></strong></strong></span></span></span></span></strong></span></span></strong>
-		</p>
-		<p>
-			<span style="color: rgb(23, 43, 77);"><span
-				style="color: rgb(23, 43, 77);"><span
-					style="color: rgb(23, 43, 77);"><span
-						style="color: rgb(23, 43, 77);">withDetailRows,</span></span></span></span>
-		</p>
-		<p>
-			<span style="color: rgb(23, 43, 77);"><span
-				style="color: rgb(23, 43, 77);"><span
-					style="color: rgb(23, 43, 77);"><span
-						style="color: rgb(23, 43, 77);">recursiveTable</span></span></span></span>
-		</p>
-		<p>
-			<br />&quot;&gt;
-		</p>
-		<table class="wrapped relative-table" style="width: 100.0%;">
-			<colgroup>
-				<col style="width: 8.02281%;" />
-				<col />
-				<col />
-				<col style="width: 5.55133%;" />
-				<col />
-				<col />
-				<col style="width: 9.46768%;" />
-				<col />
-				<col style="width: 9.08745%;" />
-				<col style="width: 9.01141%;" />
-				<col style="width: 10.8745%;" />
-				<col style="width: 9.73384%;" />
-				<col style="width: 7.79468%;" />
-			</colgroup>
-			<tbody>
-				<tr>
-					<th width="75"><p>
-							<strong>Id Proyecto</strong>
-						</p></th>
-					<th colspan="1" width="180">Prueba Entre Fechas (a las 15:30)</th>
-					<th colspan="1" width="180">Prueba Entre Fechas (a las 14:00)</th>
-					<th width="180"><p>
-							<strong>Nombre</strong>
-						</p></th>
-					<th colspan="1" width="180">Nivel Anidamiento</th>
-					<th colspan="1" width="180">Estimaci&oacute;n Inicial trabajos
-						desarrollo (Indicada en Issue)</th>
-					<th colspan="1" width="180"><p style="text-align: right;">Estimaci&oacute;n
-							Inicial trabajos desarrollo</p>
-						<p style="text-align: right;">(Computada de issues derivados)</p></th>
-					<th style="text-align: right;" colspan="1" width="189">Tiempo
-						Trabajado hasta la Fecha</th>
-					<th style="text-align: right;" width="189"><p>Tiempo
-							Estimado Restante de desarrollo</p></th>
-					<th style="text-align: right;" colspan="1" width="189">Estimaci&oacute;n
-						Total Actual</th>
-					<th style="text-align: right;" colspan="1" width="189">% de
-						Desviaci&oacute;n</th>
-					<th style="text-align: right;" colspan="1" width="189"><p>%
-							Actual de Avance</p>
-						<p>Sobre la Facturaci&oacute;n</p></th>
-					<th colspan="1" width="189">&Uacute;ltimo comentario</th>
-				</tr>
-				<tr>
-					<td width="75"><p>
-							<strong><span style="color: rgb(51, 51, 51);">&lt;jrf
-									forEach as=&quot;root&quot; type=&quot;root&quot;&nbsp;
+		<p>&lt;/jrf&gt;</p>
+		<p>Total Implementación en variable:{{
+			AST_HHTotalFaseImplementacion }}</p>
+		<p style="text-align: left;">&lt;/jrf&gt;</p>
+		<p style="text-align: left;">&lt;/jrf&gt;</p>
+		<p>&lt;jrf forEach as=&quot;root&quot; type=&quot;root&quot;
+			where=&quot;(({{root}}.fieldValue('Key')=={{rootKey}})||({{rootKey}}==''))
+			&quot; id=&quot;forEachCompleto&quot;&gt;</p>
+		<div class="table-wrap">
+			<div class="table-wrap">
+				<p class="auto-cursor-target">
+					&lt;jrf
+					initVar=&quot;ReqsHHImplementacion,PercsImplementacion,AccumHHDescuentos,<strong>HHRestoActividades</strong>&quot;&gt;
+				</p>
+				<table
+					class="wrapped tablesorter tablesorter-default confluenceTable">
+					<colgroup>
+						<col />
+						<col />
+						<col />
+					</colgroup>
+					<tbody>
+						<tr class="tablesorter-headerRow">
+							<th
+								class="tablesorter-header sortableHeader tablesorter-headerUnSorted confluenceTh"
+								style="text-align: left;" scope="col"><div
+									class="tablesorter-header-inner">REQUISITOS /
+									FUNCIONALIDADES / COMPONENTES / MÓDULOS / FASES / ACTIVIDADES /
+									TAREAS / ...</div></th>
+							<th
+								class="tablesorter-header sortableHeader tablesorter-headerUnSorted confluenceTh"
+								style="text-align: left;" scope="col"><div
+									class="tablesorter-header-inner" style="text-align: center;">
+									%</div></th>
+							<th
+								class="tablesorter-header sortableHeader tablesorter-headerUnSorted confluenceTh"
+								style="text-align: left;" scope="col"><div
+									class="tablesorter-header-inner">Nº DE HORAS ESTIMADAS</div></th>
+						</tr>
+						<tr>
+							<td style="text-align: left;" class="confluenceTd"><strong>ESTIMACIÓN
+									ACTIVIDAD DE CONSTRUCCIÓN</strong></td>
+							<td style="text-align: left;" class="confluenceTd"><br /></td>
+							<td style="text-align: left;" class="confluenceTd"><br /></td>
+						</tr>
+						<tr>
+							<td style="text-align: left;" class="confluenceTd"><p>&lt;jrf
+									forEach as=&quot;elem&quot; type=&quot;child&quot;
 									subtype=&quot;row&quot; where=&quot;&quot;
-									id=&quot;forEachCompleto&quot;&gt;</span></strong>
-						</p>
-						<p>
-							<strong>&lt;jrf field=&quot;Key&quot;/&gt;</strong>
-						</p></td>
-					<td colspan="1" width="180"><p>
-							&lt;jrf field=&quot;<strong><strong><span
-									style="color: rgb(23, 43, 77);"><span
-										style="color: rgb(136, 19, 145);">timeoriginalestimate&quot;&nbsp;atDateTime=&quot;<span
-											style="color: rgb(23, 43, 77);">03/05/2018 15:30&quot;
-												/&gt;</span></span></span></strong></strong>
-						</p>
-						<p>&lt;jrf&gt;</p>
-						<p style="text-align: right;">
-							<strong><span style="color: rgb(23, 43, 77);">{{{&n…3,43,77);"><span
-									style="color: rgb(23, 43, 77);">&lt;jrf getVar=&quot;<span
-										style="color: rgb(23, 43, 77);"><span
-											style="color: rgb(23, 43, 77);">hhEstimadoActualDetail</span></span>&quot;/&gt;))*100
-								</span></span></span>
-						</p>
-						<p style="text-align: right;">
-							<span style="color: rgb(23, 43, 77);"><span
-								style="color: rgb(23, 43, 77);"><span
-									style="color: rgb(23, 43, 77);">&lt;/jrf&gt;</span></span></span>
-						</p></td>
-					<td width="189"><p>Facturaci&oacute;n&lt;/jrf&gt;&nbsp;</p>
-						<p>&lt;/jrf&gt;</p>
-						<p>&lt;/jrf&gt;</p>
-						<p>
-							<br />
-						</p></td>
-				</tr>
-				<tr>
-					<td width="75"><p>
-							<br />
-						</p></td>
-					<td colspan="1" width="180"><br /></td>
-					<td colspan="1" width="180"><br /></td>
-					<td width="180"><p style="text-align: right;">
-							<strong>TOTALES</strong>
-						</p></td>
-					<td colspan="1" width="180"><br /></td>
-					<td style="text-align: right;" colspan="1" width="180"><strong>&lt;jrf
-							SUM var = &quot;<strong>hhIssueOriginalEstimate</strong>&quot;&nbsp;
-							format=&quot;hours&quot; /&gt;
-					</strong></td>
-					<td style="text-align: right;" colspan="1" width="180"><strong>&lt;jrf
-							SUM var = &quot;hhEstimadoOriginal&quot; pushVar =
-							&quot;TotalHHEstimadoOriginal&quot; format=&quot;hours&quot;
-							/&gt;</strong></td>
-					<td style="text-align: right;" colspan="1" width="189"><strong>&lt;jrf
-							SUM var = &quot;<strong>hhFacturableActual</strong>&quot; pushVar
-							= &quot;TotalHHFacturableActual&quot; format=&quot;hours&quot;
-							/&gt;
-					</strong></td>
-					<td width="189"><p style="text-align: right;">
-							<strong>&lt;jrf SUM var = &quot;<strong>hhEstimadoRestante</strong>&quot;
-								pushVar = &quot;TotalHHEstimadoRestante&quot;
-							</strong>
-						</p>
-						<p style="text-align: right;">
-							<strong>format=&quot;hours&quot;/&gt;</strong>
-						</p></td>
-					<td colspan="1" width="189"><p style="text-align: right;">
-							<strong><span style="color: rgb(23, 43, 77);"><span
-									style="color: rgb(23, 43, 77);">&lt;jrf FORMULA
-										format=&quot;hours&quot; inFormat=&quot;fixed=2&quot;
-										pushVar=&quot;TotalHHEstimadoActual&quot; &gt;</span></span></strong>
-						</p>
-						<p style="text-align: right;">
-							<strong><span style="color: rgb(23, 43, 77);"><span
-									style="color: rgb(23, 43, 77);">(&lt;jrf getVar=&quot;<strong>TotalHHEstimadoRestante</strong>&quot;/&gt;
-								</span></span></strong>
-						</p>
-						<p style="text-align: right;">
-							<strong><span style="color: rgb(23, 43, 77);">+</span></strong>
-						</p>
-						<p style="text-align: right;">
-							<strong><span style="color: rgb(23, 43, 77);"><span
-									style="color: rgb(23, 43, 77);"><span
-										style="color: rgb(23, 43, 77);">&lt;jrf getVar=&quot;<strong>TotalHHFacturableActual</strong>&quot;/&gt;)
-									</span></span></span></strong>
-						</p>
-						<p style="text-align: right;">
-							<strong><span style="color: rgb(23, 43, 77);"><span
-									style="color: rgb(23, 43, 77);"><span
-										style="color: rgb(23, 43, 77);">&lt;/jrf&gt;</span></span></span></strong>
-						</p></td>
-					<td colspan="1" width="189"><p style="text-align: right;">
-							<strong><span style="color: rgb(23, 43, 77);"><span
-									style="color: rgb(23, 43, 77);">&lt;jrf FORMULA
-										format=&quot;%&quot; inFormat=&quot;fixed=2&quot;
-										pushVar=&quot;MediaDesviacionEstimacion&quot; &gt;</span></span></strong>
-						</p>
-						<p style="text-align: right;">
-							<strong><span style="color: rgb(23, 43, 77);"><span
-									style="color: rgb(23, 43, 77);">((&lt;jrf
-										getVar=&quot;TotalHHEstimadoActual&quot;/&gt;</span></span></strong>
-						</p>
-						<p style="text-align: right;">
-							<strong><span style="color: rgb(23, 43, 77);">/</span></strong>
-						</p>
-						<p style="text-align: right;">
-							<strong><span style="color: rgb(23, 43, 77);"><span
-									style="color: rgb(23, 43, 77);"><span
-										style="color: rgb(23, 43, 77);">&lt;jrf
-											getVar=&quot;TotalHHEstimadoOriginal&quot;/&gt;)-1)*100</span></span></span></strong>
-						</p>
-						<p style="text-align: right;">
-							<strong><span style="color: rgb(23, 43, 77);"><span
-									style="color: rgb(23, 43, 77);"><span
-										style="color: rgb(23, 43, 77);">&lt;/jrf&gt;</span></span></span></strong>
-						</p></td>
-					<td style="text-align: right;" colspan="1" width="189"><p
-							style="text-align: right;">
-							<strong><span style="color: rgb(23, 43, 77);"><span
-									style="color: rgb(23, 43, 77);">&lt;jrf FORMULA
-										format=&quot;%&quot; inFormat=&quot;fixed=2&quot;
-										pushVar=&quot;Total<span style="color: rgb(23, 43, 77);"><span
-											style="color: rgb(23, 43, 77);">%AvanceActual</span></span>&quot;
-										&gt;
-								</span></span></strong>
-						</p>
-						<p style="text-align: right;">
-							<strong><span style="color: rgb(23, 43, 77);"><span
-									style="color: rgb(23, 43, 77);">((&lt;jrf getVar=&quot;<strong>TotalHHFacturableActual</strong>&quot;/&gt;&nbsp;
-								</span></span></strong>
-						</p>
-						<p style="text-align: right;">
-							<strong><span style="color: rgb(23, 43, 77);">/</span></strong>
-						</p>
-						<p style="text-align: right;">
-							<strong><span style="color: rgb(23, 43, 77);"><span
-									style="color: rgb(23, 43, 77);"><span
-										style="color: rgb(23, 43, 77);">&lt;jrf getVar=&quot;<strong><span
-												style="color: rgb(23, 43, 77);"><span
-													style="color: rgb(23, 43, 77);">TotalHHEstimadoActual</span></span></strong>&quot;/&gt;))*100
-									</span></span></span></strong>
-						</p>
-						<p style="text-align: right;">
-							<strong><span style="color: rgb(23, 43, 77);"><span
-									style="color: rgb(23, 43, 77);"><span
-										style="color: rgb(23, 43, 77);">&lt;/jrf&gt;</span></span></span></strong>
-						</p></td>
-					<td colspan="1" width="189"><br /></td>
-				</tr>
-			</tbody>
-		</table>
-		<p>&lt;/jrf&gt;</p>
-		<p>&lt;/jrf&gt;</p>
+									id=&quot;forEachCompleto&quot;&gt;</p>
+								<p>&lt;jrf field=&quot;Key&quot; /&gt; - &lt;jrf
+									field=&quot;summary&quot; /&gt;&lt;jrf
+									visibility=&quot;hidden&quot;
+									initVar=&quot;ReqHHDesarrollo&quot;&gt;</p>
+								<p>ReqHHDesarrollo:&lt;jrf FORMULA
+									pushVar=&quot;ReqHHDesarrollo&quot;</p>
+								<p>inFormat=&quot;fixed=2&quot; format=&quot;hours&quot;&gt;</p>
+								<p>(&lt;jrf field=&quot;timeoriginalestimate&quot;
+									format=&quot;tofixed=2&quot; /&gt;</p>
+								<p>/ 3600 )</p>
+								<p>&lt;/jrf&gt;</p>
+								<p>&lt;jrf initVar=&quot;ReqAuxAccum&quot;&gt;</p>
+								<p>&lt;jrf forEach as=&quot;workType&quot;
+									type=&quot;array&quot;</p>
+								<p>sourceFormula=&quot;{{arrCamposDesarrollo}}&quot;</p>
+								<p>where=&quot; ( {{{ {{workType}}.isImplementa }}} ) ==true
+									&quot; &gt;</p>
+								<p>ReqAuxAcum:&lt;jrf FORMULA</p>
+								<p>pushVar=&quot;ReqAuxAccum&quot;</p>
+								<p>format=&quot;hours&quot; inFormat=&quot;fixed=2&quot;&gt;</p>
+								<p>( {{{ {{workType}}.defaultPerc }}} / 100 )</p>
+								<p>* &lt;jrf getVar=&quot;ReqHHDesarrollo&quot; /&gt;</p>
+								<p>&lt;/jrf&gt;</p>
+								<p>&lt;/jrf&gt;</p>
+								<p>ReqHHImplementation:&lt;jrf SUM</p>
+								<p>pushVar=&quot;ReqsHHImplementacion&quot;</p>
+								<p>var=&quot;ReqAuxAccum&quot; format=&quot;hours&quot;/&gt;</p>
+								<p>&lt;/jrf&gt;</p>
+								<p>&lt;/jrf&gt;</p></td>
+							<td style="text-align: left;" class="confluenceTd"><p
+									style="text-align: right;">&lt;jrf FORMULA
+									pushVar=&quot;PercsImplementacion&quot;
+									inFormat=&quot;fixed=2&quot; format=&quot;%&quot;&gt;</p>
+								<p style="text-align: right;">( ({{ ReqsHHImplementacion}}
+									*100) / {{AST_HHTotalFaseImplementacion}})</p>
+								<p style="text-align: right;">&lt;/jrf&gt;</p></td>
+							<td style="text-align: right;" class="confluenceTd">&lt;jrf
+								getVar=&quot;ReqsHHImplementacion&quot;
+								format=&quot;hours&quot;/&gt;&lt;/jrf&gt;</td>
+						</tr>
+						<tr>
+							<td style="text-align: left;" class="confluenceTd">Actividades
+								técnicas y de Despliegue - Incluido en Línea Base</td>
+							<td style="text-align: left;" class="confluenceTd"><p
+									style="text-align: right;">&lt;jrf FORMULA
+									pushVar=&quot;PercsImplementacion,LBPercDespliegue&quot;
+									inFormat=&quot;fixed=2&quot; format=&quot;%&quot;&gt;</p>
+								<p style="text-align: right;">100 - &lt;jrf SUM var =
+									&quot;PercsImplementacion&quot;</p>
+								<p style="text-align: right;">inFormat=&quot;fixed=2&quot;
+									/&gt;</p>
+								<p style="text-align: right;">&lt;/jrf&gt;</p></td>
+							<td style="text-align: right;" class="confluenceTd"><p>&lt;jrf
+									FORMULA pushVar=&quot;ReqsHHImplementacion,LBHHDespliegue&quot;
+									format=&quot;hours&quot;&gt;</p>
+								<p>
+									<br />
+								</p>
+								<blockquote>
+									<p>
+										&lt;jrf getVar=&quot;<span style="color: rgb(51, 51, 51);">AST_HHTotalFaseImplementacion<span>
+										</span></span><span style="color: rgb(51, 51, 51);"><span
+											style="color: rgb(51, 51, 51);">&quot;
+												format=&quot;tofixed=2&quot;/&gt; - </span></span>
+									</p>
+									<p style="text-align: right;">&lt;jrf SUM var =
+										&quot;ReqsHHImplementacion&quot;</p>
+									<p style="text-align: right;">inFormat=&quot;fixed=2&quot;
+										/&gt;</p>
+									<p>&lt;/jrf&gt;</p>
+								</blockquote></td>
+						</tr>
+						<tr>
+							<td style="text-align: left;" class="confluenceTd"><p>
+									<strong>Total Construcción</strong>
+								</p>
+								<p>(Codificación; pruebas unitarias, de integración e
+									implantación)</p></td>
+							<td style="text-align: left;" class="confluenceTd"><p
+									style="text-align: right;">
+									<strong>&lt;jrf SUM var =
+										&quot;PercsImplementacion&quot; </strong>
+								</p>
+								<p style="text-align: right;">
+									<strong>inFormat=&quot;fixed=2&quot;
+										format=&quot;%&quot; /&gt;</strong>
+								</p></td>
+							<td style="text-align: left;" class="confluenceTd"><p
+									style="text-align: right;">
+									<strong>&lt;jrf SUM var =
+										&quot;ReqsHHImplementacion&quot; </strong>
+								</p>
+								<p style="text-align: right;">
+									<strong>inFormat=&quot;fixed=2&quot;
+										format=&quot;hours&quot; /&gt;</strong>
+								</p></td>
+						</tr>
+						<tr>
+							<td style="text-align: left;" colspan="1" class="confluenceTd"><strong>ESTIMACIÓN
+									RESTO DE ACTIVIDADES</strong></td>
+							<td style="text-align: left;" colspan="1" class="confluenceTd"><p>
+									<br />
+								</p></td>
+							<td style="text-align: left;" colspan="1" class="confluenceTd"><br /></td>
+						</tr>
+						<tr>
+							<td style="text-align: left;" colspan="1" class="confluenceTd"><p
+									style="text-align: left;">&lt;jrf
+									initVar=&quot;PercTotal,HHAuxResto&quot;&gt;&lt;jrf forEach
+									as=&quot;workType&quot; type=&quot;array&quot;
+									subtype=&quot;row&quot;</p>
+								<p style="text-align: left;">
+									sourceFormula=&quot;{{arrCamposDesarrollo}}&quot;</p>
+								<p style="text-align: left;">where=&quot; ( {{{
+									{{workType}}.isImplementa }}} ) ==false &quot; &gt;</p>
+								<p>&lt;jrf&gt;{{workType}}.caption&lt;/jrf&gt;</p></td>
+							<td style="text-align: left;" colspan="1" class="confluenceTd"><p
+									style="text-align: right;">&lt;jrf FORMULA
+									pushVar=&quot;PercTotal&quot; format=&quot;%&quot;
+									inFormat=&quot;fixed=2&quot;&gt;</p>
+								<p style="text-align: right;">( {{{ {{workType}}.defaultPerc
+									}}} )</p>
+								<p style="text-align: right;">&lt;/jrf&gt;</p></td>
+							<td style="text-align: left;" colspan="1" class="confluenceTd"><p
+									style="text-align: right;">
+									&lt;jrf FORMULA format=&quot;hours&quot;
+									pushVar=&quot;HHAuxResto&quot;
+									inFormat=&quot;fixed=2&quot;&gt;( ({{PercTotal}} /100 )* {{<span
+										style="color: rgb(51, 51, 51);">AST_HHTotalFaseImplementacion</span>}}
+									)
+								</p>
+								<p style="text-align: right;">&lt;/jrf&gt;</p>
+								<p style="text-align: right;">&lt;/jrf&gt;</p></td>
+						</tr>
+						<tr>
+							<td style="text-align: left;" colspan="1" class="confluenceTd">Fijo
+								- Coordinación (Incluye requerimientos y parte de gestión) -
+								Incluido en Línea Base</td>
+							<td style="text-align: left;" colspan="1" class="confluenceTd"><p
+									style="text-align: right;">
+									&lt;jrf<span> </span><span style="color: rgb(51, 51, 51);">FORMULA<span>
+									</span></span>format=&quot;%&quot; pushVar=&quot;PercTotal&quot;&gt;
+								</p>
+								<p style="text-align: right;">{{LBPercCoordinacion}}</p>
+								<p style="text-align: right;">&lt;/jrf&gt;</p></td>
+							<td style="text-align: left;" colspan="1" class="confluenceTd"><p
+									style="text-align: right;">
+									&lt;jrf FORMULA format=&quot;hours&quot;
+									pushVar=&quot;HHAuxResto,LBHHCoordinacion&quot;
+									inFormat=&quot;fixed=2&quot;&gt;( ({{PercTotal}} /100 )* {{<span
+										style="color: rgb(51, 51, 51);">AST_HHTotalFaseImplementacion</span>}}
+									)
+								</p>
+								<p style="text-align: right;">&lt;/jrf&gt;</p></td>
+						</tr>
+						<tr>
+							<td style="text-align: left;" colspan="1" class="confluenceTd">Fijo
+								- Dirección (Incluye parte de gestión) - Incluido en Línea Base</td>
+							<td style="text-align: left;" colspan="1" class="confluenceTd"><p
+									style="text-align: right;">
+									&lt;jrf<span> </span><span style="color: rgb(51, 51, 51);">FORMULA<span>
+									</span></span>format=&quot;%&quot; pushVar=&quot;PercTotal&quot;&gt;
+								</p>
+								<p style="text-align: right;">{{LBPercDireccion}}</p>
+								<p style="text-align: right;">&lt;/jrf&gt;</p></td>
+							<td style="text-align: left;" colspan="1" class="confluenceTd"><p
+									style="text-align: right;">
+									&lt;jrf FORMULA format=&quot;hours&quot;
+									pushVar=&quot;HHAuxResto,LBHHDireccion&quot;
+									inFormat=&quot;fixed=2&quot;&gt;( ({{PercTotal}} /100 )* {{<span
+										style="color: rgb(51, 51, 51);">AST_HHTotalFaseImplementacion</span>}}
+									)
+								</p>
+								<p style="text-align: right;">&lt;/jrf&gt;</p></td>
+						</tr>
+						<tr>
+							<td style="text-align: left;" colspan="1" class="confluenceTd"><strong>Total
+									resto de actividades</strong></td>
+							<td style="text-align: left;" colspan="1" class="confluenceTd"><p
+									style="text-align: right;">
+									<strong>&lt;jrf SUM var = &quot;PercTotal&quot; </strong>
+								</p>
+								<p style="text-align: right;">
+									<strong>inFormat=&quot;fixed=2&quot;
+										format=&quot;%&quot; /&gt;</strong>
+								</p></td>
+							<td style="text-align: left;" colspan="1" class="confluenceTd"><p
+									style="text-align: right;">
+									<strong>&lt;jrf SUM
+										pushVar=&quot;HHRestoActividades&quot; var =
+										&quot;HHAuxResto&quot; </strong>
+								</p>
+								<p style="text-align: right;">
+									<strong>inFormat=&quot;fixed=2&quot;
+										format=&quot;hours&quot; /&gt;&lt;/jrf&gt;</strong>
+								</p></td>
+						</tr>
+						<tr>
+							<td style="text-align: left;" colspan="1" class="confluenceTd"><strong>DESCUENTOS
+									POR ACTIVIDAD INCLUIDA EN LÍNEA BASE</strong></td>
+							<td style="text-align: left;" colspan="1" class="confluenceTd">&lt;jrf
+								initVar=&quot;AccumPercDescuentos&quot;&gt;</td>
+							<td style="text-align: left;" colspan="1" class="confluenceTd"><br /></td>
+						</tr>
+						<tr>
+							<td style="text-align: left;" colspan="1" class="confluenceTd">Actividades
+								técnicas y de Despliegue - Incluido en Línea Base</td>
+							<td style="text-align: left;" colspan="1" class="confluenceTd"><p
+									style="text-align: right;">
+									&lt;jrf<span> </span><span style="color: rgb(51, 51, 51);">FORMULA<span>
+									</span></span>format=&quot;%&quot;
+									pushVar=&quot;AccumPercDescuentos&quot;&gt;
+								</p>
+								<p style="text-align: right;">{{LBPercDespliegue}}*(-1)</p>
+								<p style="text-align: right;">&lt;/jrf&gt;</p></td>
+							<td style="text-align: right;" colspan="1" class="confluenceTd"><p>
+									&lt;jrf<span> </span><span style="color: rgb(51, 51, 51);">FORMULA<span>
+											pushVar=&quot;AccumHHDescuentos&quot;
+											format=&quot;hours&quot;&gt;</span></span>
+								</p>
+								<p>&lt;jrf getVar=&quot;LBHHDespliegue&quot; /&gt;*-1</p>
+								<p>&lt;/jrf&gt;</p></td>
+						</tr>
+						<tr>
+							<td style="text-align: left;" colspan="1" class="confluenceTd">Fijo
+								- Coordinación (Incluye requerimientos y parte de gestión) -
+								Incluido en Línea Base</td>
+							<td style="text-align: left;" colspan="1" class="confluenceTd"><p
+									style="text-align: right;">
+									&lt;jrf<span> </span><span style="color: rgb(51, 51, 51);">FORMULA<span>
+									</span></span>format=&quot;%&quot;
+									pushVar=&quot;AccumPercDescuentos&quot;&gt;
+								</p>
+								<p style="text-align: right;">{{LBPercCoordinacion}}*(-1)</p>
+								<p style="text-align: right;">&lt;/jrf&gt;</p></td>
+							<td style="text-align: right;" colspan="1" class="confluenceTd"><p>
+									&lt;jrf<span> </span><span style="color: rgb(51, 51, 51);">FORMULA<span>
+											pushVar=&quot;AccumHHDescuentos&quot;
+											format=&quot;hours&quot;&gt;</span></span>
+								</p>
+								<p>&lt;jrf getVar=&quot;LBHHCoordinacion&quot; /&gt;*-1</p>
+								<p>&lt;/jrf&gt;</p></td>
+						</tr>
+						<tr>
+							<td style="text-align: left;" colspan="1" class="confluenceTd">Fijo
+								- Dirección (Incluye parte de gestión) - Incluido en Línea Base</td>
+							<td style="text-align: left;" colspan="1" class="confluenceTd"><p
+									style="text-align: right;">
+									&lt;jrf<span> </span><span style="color: rgb(51, 51, 51);">FORMULA<span>
+									</span></span>format=&quot;%&quot;
+									pushVar=&quot;AccumPercDescuentos&quot;&gt;
+								</p>
+								<p style="text-align: right;">{{LBPercDireccion}}*(-1)</p>
+								<p style="text-align: right;">&lt;/jrf&gt;</p></td>
+							<td style="text-align: right;" colspan="1" class="confluenceTd"><p>
+									&lt;jrf<span> </span><span style="color: rgb(51, 51, 51);">FORMULA<span>
+											pushVar=&quot;AccumHHDescuentos&quot;
+											format=&quot;hours&quot;&gt;</span></span>
+								</p>
+								<p>&lt;jrf getVar=&quot;LBHHDireccion&quot; /&gt;*-1</p>
+								<p>&lt;/jrf&gt;</p></td>
+						</tr>
+						<tr>
+							<td style="text-align: left;" colspan="1" class="confluenceTd"><strong>Total
+									Descuentos</strong></td>
+							<td style="text-align: left;" colspan="1" class="confluenceTd"><p
+									style="text-align: right;">
+									<strong>&lt;jrf SUM var =
+										&quot;AccumPercDescuentos&quot; </strong>
+								</p>
+								<p style="text-align: right;">
+									<strong>inFormat=&quot;fixed=2&quot;
+										format=&quot;%&quot; /&gt;</strong>
+								</p></td>
+							<td style="text-align: left;" colspan="1" class="confluenceTd"><p
+									style="text-align: right;">
+									<strong>&lt;jrf SUM
+										pushVar=&quot;AccumHHDescuentos&quot; var = &quot;<span
+										style="color: rgb(51, 51, 51);">AccumHHDescuentos</span>&quot;
+									</strong>
+								</p>
+								<p style="text-align: right;">
+									<strong>inFormat=&quot;fixed=2&quot;
+										format=&quot;hours&quot; /&gt;</strong>
+								</p>
+								<strong>&lt;/jrf&gt;</strong></td>
+						</tr>
+						<tr>
+							<td style="text-align: right;" colspan="1" class="confluenceTd"><strong>TOTAL
+									HORAS</strong></td>
+							<td style="text-align: left;" colspan="1" class="confluenceTd"><br /></td>
+							<td style="text-align: left;" colspan="1" class="confluenceTd"><p
+									style="text-align: right;">
+									<strong><span style="color: rgb(51, 51, 51);">&lt;jrf
+											FORMULA pushVar=&quot;TotalHoras&quot;
+											format=&quot;hours&quot;&gt;</span></strong>
+								</p>
+								<p style="text-align: right;">
+									<strong><span style="color: rgb(51, 51, 51);">{{AST_HHTotalFaseImplementacion}}
+											+{{<span style="color: rgb(51, 51, 51);">AccumHHDescuentos}}+{{HHRestoActividades}}</span>
+									</span></strong>
+								</p>
+								<p style="text-align: right;">
+									<strong><span style="color: rgb(51, 51, 51);"><span
+											style="color: rgb(51, 51, 51);">&lt;/jrf&gt;</span></span></strong>
+								</p></td>
+						</tr>
+					</tbody>
+				</table>
+				<p class="auto-cursor-target">
+					<br />
+				</p>
+			</div>
+			<div class="table-wrap">
+				<p class="auto-cursor-target" style="text-align: right;">
+					<br />
+				</p>
+				<table
+					class="wrapped tablesorter tablesorter-default confluenceTable"
+					style="float: right;">
+					<colgroup>
+						<col />
+						<col />
+					</colgroup>
+					<tbody>
+						<tr>
+							<th style="text-align: right;" class="confluenceTh"><strong>PRECIO/HORA
+									MEDIO</strong></th>
+							<td style="text-align: right;" class="confluenceTd"><strong>&lt;jrf
+									getVar=&quot;CosteHora&quot; format=&quot;money&quot; /&gt;</strong></td>
+						</tr>
+						<tr>
+							<th style="text-align: right;" class="confluenceTh"><strong>IMPORTE</strong></th>
+							<td style="text-align: left;" class="confluenceTd"><p
+									style="text-align: right;">
+									<strong><span style="color: rgb(51, 51, 51);">&lt;jrf
+											FORMULA pushVar=&quot;TotalImporte&quot;
+											format=&quot;money&quot; inFormat=&quot;fixed=2&quot;&gt;</span></strong>
+								</p>
+								<p style="text-align: right;">
+									<strong><span style="color: rgb(51, 51, 51);">{{TotalHoras}}
+											* {{<span style="color: rgb(51, 51, 51);">CosteHora}}</span>
+									</span></strong>
+								</p>
+								<p style="text-align: right;">
+									<strong><span style="color: rgb(51, 51, 51);"><span
+											style="color: rgb(51, 51, 51);">&lt;/jrf&gt;</span></span></strong>
+								</p></td>
+						</tr>
+						<tr>
+							<th style="text-align: right;" colspan="1" class="confluenceTh"><strong>IVA
+									21 %</strong></th>
+							<td style="text-align: left;" colspan="1" class="confluenceTd"><p
+									style="text-align: right;">
+									<strong><span style="color: rgb(51, 51, 51);">&lt;jrf
+											FORMULA pushVar=&quot;<strong><span
+												style="color: rgb(51, 51, 51);"><strong><span
+														style="color: rgb(51, 51, 51);">TotalIVA</span></strong></span></strong>&quot;
+											format=&quot;money&quot; inFormat=&quot;fixed=2&quot;&gt;
+									</span></strong>
+								</p>
+								<p style="text-align: right;">
+									<strong><span style="color: rgb(51, 51, 51);">{{<strong><span
+												style="color: rgb(51, 51, 51);">TotalImporte</span></strong>}} * <span
+											style="color: rgb(51, 51, 51);">0.21</span></span></strong>
+								</p>
+								<p style="text-align: right;">
+									<strong><span style="color: rgb(51, 51, 51);"><span
+											style="color: rgb(51, 51, 51);">&lt;/jrf&gt;</span></span></strong>
+								</p></td>
+						</tr>
+						<tr>
+							<th style="text-align: right;" colspan="1" class="confluenceTh"><strong>TOTAL
+									IMPORTE</strong></th>
+							<td style="text-align: left;" colspan="1" class="confluenceTd"><p
+									style="text-align: right;">
+									<strong><span style="color: rgb(51, 51, 51);">&lt;jrf
+											FORMULA <strong><span
+												style="color: rgb(51, 51, 51);">pushVar=&quot;<strong><span
+														style="color: rgb(51, 51, 51);">TotalImporteConIVA</span></strong>&quot;
+											</span></strong>format=&quot;money&quot; inFormat=&quot;fixed=2&quot;&gt;
+									</span></strong>
+								</p>
+								<p style="text-align: right;">
+									<strong><span style="color: rgb(51, 51, 51);">{{<strong><span
+												style="color: rgb(51, 51, 51);">TotalImporte</span></strong>}} + {{<strong><span
+												style="color: rgb(51, 51, 51);">TotalIVA}}</span></strong></span></strong>
+								</p>
+								<p style="text-align: right;">
+									<strong><span style="color: rgb(51, 51, 51);"><span
+											style="color: rgb(51, 51, 51);">&lt;/jrf&gt;</span></span></strong>
+								</p></td>
+						</tr>
+					</tbody>
+				</table>
+				<p class="auto-cursor-target" style="text-align: right;">
+					<br />
+				</p>
+			</div>
+		</div>
+		<p style="text-align: right;">&lt;/jrf&gt;</p>
+		<p>
+			<span style="color: rgb(51, 51, 51);">&lt;/jrf&gt;</span>
+		</p>
+		<p>
+			<span style="color: rgb(51, 51, 51);">&lt;/jrf&gt;</span>
+		</p>
+		<p>
+			<span style="color: rgb(51, 51, 51);">&lt;/jrf&gt;</span>
+		</p>
+		<p>&nbsp;</p>
+
+
+
+
+
 	</div>
 	<script type="text/javascript"
 		src="https://cdn.jsdelivr.net/npm/ContentTools@1.6.5/build/content-tools.js"></script>

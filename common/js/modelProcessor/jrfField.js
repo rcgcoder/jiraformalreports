@@ -3,7 +3,7 @@ var jrfField=class jrfField{//this kind of definition allows to hot-reload
 		var self=this;
 		model.extendToken(self,tag,reportElem);
 		self.fieldName=self.getAttrVal("field");
-		self.dateTime=self.getAttrVal("atDateTime");
+		self.dateTime=replaceAll(self.getAttrVal("atDateTime")," ","");
 		self.format=self.getAttrVal("inFormat");
 	}
 	apply(){

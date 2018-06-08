@@ -410,7 +410,7 @@ function newIssueFactory(report){
 		var issueBase=self.getJiraObject();
 		var arrFieldNames=sFieldName.split(".");
 		if (arrFieldNames.length>0){
-			sFieldName=arrFieldNames[0];s
+			sFieldName=arrFieldNames[0];
 		}
 		var hsItemFieldsCache;
 		if (isDefined(issueBase.changelog)){

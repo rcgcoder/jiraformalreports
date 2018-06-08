@@ -70,6 +70,12 @@ function newIssueFactory(report){
 		if (isDefined(dateTime)){
 			return self.getFieldValueAtDateTime(theFieldName,dateTime);
 		}
+		var bGetAttribute=false;
+		var arrFieldNames=sFieldName.split(".");
+		if (arrFieldNames.length>1){
+			bGetAttribute=true;
+			sFieldName=arrFieldNames[0];
+		}
 		var fncAux=self["get"+sFieldName];
 		var bDefined=false;
 		var fieldValue="";
@@ -88,6 +94,13 @@ function newIssueFactory(report){
 		}
 		if (bDefined){
 			if (typeof fieldValue==="object"){
+				if (bGetAttribute){
+					var auxValue=fieldValue;
+					for (var i=1;i<arrFieldNames.length;i++){
+						auxValue=fieldValue[arrFieldNames[i]];
+					}
+					return auxValue;
+				}
 				if (isDefined(fieldValue.value)) return fieldValue.value;
 				if (isDefined(fieldValue.name)) return fieldValue.name;
 				if (isDefined(fieldValue.key)) return fieldValue.key;

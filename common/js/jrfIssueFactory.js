@@ -396,8 +396,9 @@ function newIssueFactory(report){
 			})
 		});
 	});
-	dynObj.functions.add("getFieldLife",function(sFieldName){
+	dynObj.functions.add("getFieldLife",function(theFieldName){
 		var self=this;
+		var sFieldName=theFieldName;
 		var hsItemFieldsCache;
 		var hsFieldLifesCaches=self.getFieldLifeCaches();
 		if (hsFieldLifesCaches.exists(sFieldName)){
@@ -407,6 +408,11 @@ function newIssueFactory(report){
 		var arrResult=[];
 		var sChangeDate;
 		var issueBase=self.getJiraObject();
+		var arrFieldNames=sFieldName.split(".");
+		if (arrFieldNames.length>0){
+			sFieldName=arrFieldNames[0];s
+		}
+		var hsItemFieldsCache;
 		if (isDefined(issueBase.changelog)){
 			var arrHistories=issueBase.changelog.histories;
 			var arrItems;
@@ -428,7 +434,7 @@ function newIssueFactory(report){
 		});
 		hsItemFieldsCache=newHashMap();
 		hsItemFieldsCache.add("life",arrResult);
-		hsFieldLifesCaches.add(sFieldName,hsItemFieldsCache);
+		hsFieldLifesCaches.add(theFieldName,hsItemFieldsCache);
 		return hsItemFieldsCache;
 	});
 	dynObj.functions.add("getFieldValueAtDateTime",function(sFieldName,dateTime){

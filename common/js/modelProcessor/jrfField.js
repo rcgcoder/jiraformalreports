@@ -14,7 +14,7 @@ var jrfField=class jrfField{//this kind of definition allows to hot-reload
 		if (self.dateTime!=""){
 			auxDateTime=toDateNormalDDMMYYYYHHMMSS(self.dateTime);			
 		}
-		if (!isFunction(self.reportElem.fieldValue)){
+		if (!isDefined(self.reportElem.fieldValue)){
 			log("There is not function.... in reportElem");
 		}
 		sValue=self.reportElem.fieldValue(self.fieldName,true,auxDateTime);

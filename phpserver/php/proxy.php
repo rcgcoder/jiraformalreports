@@ -195,7 +195,7 @@ if ($onlyCommitId=="1"){ // if this param is set the php returns the last commit
 // 3. - GET RAWGIT CONTENT
 // to get the headers
 function HandleHeaderLine( $curl, $header_line ) {
-    //    echo "<br>YEAH: ".$header_line; // or do whatever
+    //echo "<br>YEAH: ".$header_line; // or do whatever
     $arrValues=explode(":",$header_line,2);
     if (sizeOf($arrValues)>1){
         header($arrValues[0]. ":" .  $arrValues[1]);
@@ -205,7 +205,10 @@ function HandleHeaderLine( $curl, $header_line ) {
 $url="https://cdn.rawgit.com/".  $sGitHubUser . "/". $sGitHubRepository. "/". $commitID."/". $baseUrl . $urlParams;
 header('urlInRawGit:'.$url);
 $ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+curl_setopt($ch, CURLOPT_VERBOSE, 1);
+curl_setopt($ch, CURLOPT_HEADER, 1);
 //curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
 //curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 /*curl_setopt($ch, CURLOPT_HTTPHEADER, array(
@@ -217,5 +220,29 @@ curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
  curl_setopt ($ch , CURLOPT_USERAGENT , 'rcgcoder' ) ;
  */
 //curl_setopt($ch, CURLOPT_HEADERFUNCTION, "HandleHeaderLine");
-curl_exec($ch);
+//curl_exec($ch);
+$response = curl_exec($ch);
+
+// Then, after your curl_exec call:
+$header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+$headers = substr($response, 0, $header_size);
+//print_r($headers);
+$arrHeaders = explode(PHP_EOL, $headers);
+//echo "------------------------";
+//print_r($arrHeaders);
+
+foreach($arrHeaders as $header_line){
+    $headerPair=explode(":",$header_line,2);
+    if (sizeOf($headerPair)>1){
+        if ($headerPair[0]=='Content-Type'){
+            header($headerPair[0]. ":" .  $headerPair[1]);
+        }
+        //		echo "PAIR:". $headerPair[0] . " ==> {".$headerPair[1]."}";
+    }
+}
+
+//echo "------------------------";
+$body = substr($response, $header_size);
+
+echo $body;
 ?>

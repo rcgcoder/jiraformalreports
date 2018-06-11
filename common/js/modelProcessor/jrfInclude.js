@@ -49,6 +49,7 @@ var jrfInclude=class jrfInclude{//this kind of definition allows to hot-reload
             } else if (self.subtype=="javascript"){
             	log("Include Javascript");
     			self.addStep("Processing Javascript of Confluence Content:"+contentId+" from "+srcUrl,function(sJavascriptBody){
+    				log(sJavascriptBody);
     				var sJs=self.model.removeInnerTags(sJavascriptBody,true);
     				System.webapp.addJavascriptString(sJs);
     				self.continueTask();

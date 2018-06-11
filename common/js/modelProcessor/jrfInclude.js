@@ -48,8 +48,12 @@ var jrfInclude=class jrfInclude{//this kind of definition allows to hot-reload
 				});
             } else if (self.subtype=="javascript"){
     			self.addStep("Processing Javascript of Confluence Content:"+contentId+" from "+srcUrl,function(sJavascriptBody){
-					auxModel=new jrfModel(self.model.report,sContentHtmlBody,self.reportElem);
-					auxModel.parse(sContentHtmlBody,tag);
+    				var sJs=self.model.removeInnerTags(sJavascriptBody,true);
+    				System.webapp.addJavascriptString(sJs);
+    				self.continueTask();
+
+//    				auxModel=new jrfModel(self.model.report,sContentHtmlBody,self.reportElem);
+//					auxModel.parse(sContentHtmlBody,tag);
 				});
             }
 		}

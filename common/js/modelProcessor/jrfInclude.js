@@ -3,7 +3,8 @@ var jrfInclude=class jrfInclude{//this kind of definition allows to hot-reload
 	constructor(tag,reportElem,model){
 		var self=this;
 		model.extendToken(self,tag,reportElem);
-		self.type=self.getAttrVal("include").trim();
+		self.type=self.getAttrVal("include").trim(); // supports only confluence... future: html, etc..
+		self.subtype=self.getAttrVal("subtype").trim(); // now only content or javascript
 		self.url=self.getAttrVal("url").trim();
 		self.preprocessed=false;
 		self.includeId="";
@@ -27,21 +28,30 @@ var jrfInclude=class jrfInclude{//this kind of definition allows to hot-reload
             var auxModel;
 			self.addStep("Processing Confluence Content:"+contentId+" from "+srcUrl,function(jsonContent){
 				var oContent=JSON.parse(jsonContent);
-				var sHtmlBody=oContent.body.storage.value;
-				sHtmlBody=decodeEntities(sHtmlBody);
-				auxModel=new jrfModel(self.model.report,sHtmlBody,self.reportElem);
-				auxModel.parse(sHtmlBody,tag);
-			});
-			
-			self.addStep("Updating Accumulators of Parent Model... avoid multiple process ",function(){
-				auxModel.accumulatorList.walk(function(hsAccum,iDeep,key){
-					if (!self.model.accumulatorList.exists(key)){
-						self.model.accumulatorList.add(key,hsAccum);
-					};
-				});
-				self.continueTask();
+				var sContentBody=oContent.body.storage.value;
+				sContentBody=decodeEntities(sContentBody);
+				self.continueTask([sContentBody]);
 			});
 
+            if (isUndefined(self.subtype)||(self.subtype=="content")){
+    			self.addStep("Processing HTML Model of Confluence Content:"+contentId+" from "+srcUrl,function(sContentHtmlBody){
+					auxModel=new jrfModel(self.model.report,sContentHtmlBody,self.reportElem);
+					auxModel.parse(sContentHtmlBody,tag);
+				});
+				self.addStep("Updating Accumulators of Parent Model... avoid multiple process ",function(){
+					auxModel.accumulatorList.walk(function(hsAccum,iDeep,key){
+						if (!self.model.accumulatorList.exists(key)){
+							self.model.accumulatorList.add(key,hsAccum);
+						};
+					});
+					self.continueTask();
+				});
+            } else if (self.subtype=="javascript"){
+    			self.addStep("Processing Javascript of Confluence Content:"+contentId+" from "+srcUrl,function(sJavascriptBody){
+					auxModel=new jrfModel(self.model.report,sContentHtmlBody,self.reportElem);
+					auxModel.parse(sContentHtmlBody,tag);
+				});
+            }
 		}
 		self.continueTask();
 	}

@@ -50,6 +50,7 @@ var jrfInclude=class jrfInclude{//this kind of definition allows to hot-reload
             	log("Include Javascript");
     			self.addStep("Processing Javascript of Confluence Content:"+contentId+" from "+srcUrl,function(sJavascriptBody){
     				var sJs=sJavascriptBody;
+    				log(sJs);
     				var arrTagsReplace=["<p>","<br>","</p>","</br>","<br/>"];
     				arrTagsReplace.forEach(function(sTag){
         				sJs=replaceAll(sJs,sTag,"\n");

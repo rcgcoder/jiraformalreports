@@ -1,8 +1,8 @@
 var issueExtender=class issueExtender{//this kind of definition allows to hot-reload
-    constructor(tag,reportElem,model){
+    constructor(tag,report,model){
          self.tag=tag;
          debugger;
-         self.reportElem=reportElem;
+         self.report=report;
          self.model=model;
      }
     getFaseOf(sValue){ //devuelve la fase imputable del requisito o soporte

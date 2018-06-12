@@ -444,7 +444,9 @@ function newIssueFactory(report){
 	});
 	dynObj.functions.add("getFieldValueAtDateTime",function(sFieldName,dateTime){
 		var self=this;
-		if (new Date(self.fieldValue("created"))<dateTime) return "";
+		debugger;
+		var dateCreated=new Date(self.fieldValue("created"));
+		if (dateCreated<dateTime) return "";
 		var hsFieldLife=self.getFieldLife(sFieldName);
 		if (hsFieldLife.exists(dateTime)){
 			return hsFieldLife.getValue(dateTime);
@@ -458,7 +460,7 @@ function newIssueFactory(report){
 		var bLocated=false;
 		for (var i=0;(i<arrLife.length) &&(!bLocated);i++){
 			history=arrLife[i];
-			debugger;
+	
 			log("Valor Actual:" +auxVal+ "  Valor:"+ history[0] + " From:"+history[1] + " To:"+history[2]);
 			if (history[0]<=dateTime){
 				bLocated=true;

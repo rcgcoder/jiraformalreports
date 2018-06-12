@@ -446,7 +446,7 @@ function newIssueFactory(report){
 		var self=this;
 		debugger;
 		var dateCreated=new Date(self.fieldValue("created"));
-		if (dateCreated<dateTime) return "";
+		if (dateCreated>dateTime) return "";
 		var hsFieldLife=self.getFieldLife(sFieldName);
 		if (hsFieldLife.exists(dateTime)){
 			return hsFieldLife.getValue(dateTime);

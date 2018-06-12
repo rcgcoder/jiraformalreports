@@ -88,7 +88,8 @@ var issueExtender=class issueExtender{//this kind of definition allows to hot-re
         	 debugger;
         	 var arrResults=[];
              var hsStatus=this.getFieldLife("status.name");
-             hsStatus.walk(function(status){
+             var arrStatuses=hsStatus.getValue("life");
+             arrStatuses.forEach(function(status){
             	 arrResults.push([status[0],self.getFaseOf(status[1]),self.getFaseOf(status[2])]);
              });
              return arrResults;

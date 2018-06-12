@@ -6,6 +6,7 @@ var jrfInclude=class jrfInclude{//this kind of definition allows to hot-reload
 		self.type=self.getAttrVal("include").trim(); // supports only confluence... future: html, etc..
 		self.subtype=self.getAttrVal("subtype").trim(); // now only content or javascript
 		self.url=self.getAttrVal("url").trim();
+		self.jsClass=self.getAttrVal("class").trim();
 		self.preprocessed=false;
 		self.includeId="";
 		self.autoAddPostHtml=false;
@@ -17,6 +18,13 @@ var jrfInclude=class jrfInclude{//this kind of definition allows to hot-reload
 			self.addStep("Getting Include Url",function(){
 				System.webapp.loadRemoteFile(srcUrl);
 			});			
+			if (self.jsClass!=""){
+				self.addStep("Executing class...."+self.jsClass,function(){
+    				var jrfPluginClass=new window[self.jsClass](tag,self.model.report,self.model);
+    				jrfPluginClass.execute();
+    				self.continueTask();
+				});			
+			}
 		} else if (self.type.toLowerCase()=="confluence"){
             var urlParts=srcUrl.split("pages/");
             urlParts=urlParts[1].split("/");

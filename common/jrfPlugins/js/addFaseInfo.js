@@ -76,7 +76,7 @@ var issueExtender=class issueExtender{//this kind of definition allows to hot-re
 		return -1;
     }
 
-    extendTreeIssues(){
+    execute(){
          var self=this;
          var fncGetFase=function(){
                 var status=this.fieldValue("status.name");

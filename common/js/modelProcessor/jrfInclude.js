@@ -15,7 +15,7 @@ var jrfInclude=class jrfInclude{//this kind of definition allows to hot-reload
 		var srcUrl=self.url;
 		if (self.type.toLowerCase()=="url"){
 			self.addStep("Getting Include Url",function(){
-				system.webapp.loadRemoteFile(srcUrl);
+				System.webapp.loadRemoteFile(srcUrl);
 			});			
 		} else if (self.type.toLowerCase()=="confluence"){
             var urlParts=srcUrl.split("pages/");

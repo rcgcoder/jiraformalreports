@@ -458,7 +458,7 @@ function newIssueFactory(report){
 		for (var i=0;(i<arrLife.length) &&(!bLocated);i++){
 			history=arrLife[i];
 			debugger;
-			log("Valor Actual:" +auxVal+ "Valor:"+ history[0] + " From:"+history[0] + " To:"+history[2]);
+			log("Valor Actual:" +auxVal+ "  Valor:"+ history[0] + " From:"+history[1] + " To:"+history[2]);
 			auxVal=history[1];
 			if (history[0]>dateTime){
 				bLocated=true;

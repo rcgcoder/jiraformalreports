@@ -142,6 +142,7 @@ var issueExtender=class issueExtender{//this kind of definition allows to hot-re
                  issue.getFase=fncGetFase;
                  issue.getFaseLife=fncGetFaseLife;
                  issue.getFaseName=fncGetFaseName;
+                 issue.getFaseNameLife=fncGetFaseNameLife;
          });
     }
 

@@ -1,5 +1,6 @@
 var issueExtender=class issueExtender{//this kind of definition allows to hot-reload
     constructor(tag,report,model){
+    	 var self=this;
          self.tag=tag;
          debugger;
          self.report=report;

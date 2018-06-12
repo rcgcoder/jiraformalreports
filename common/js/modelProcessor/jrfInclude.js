@@ -33,7 +33,7 @@ var jrfInclude=class jrfInclude{//this kind of definition allows to hot-reload
 				self.continueTask([sContentBody]);
 			});
 
-            if (isUndefined(self.subtype)||(self.subtype=="content")){
+            if (isUndefined(self.subtype)||(self.subtype=="content")||(self.subtype=="")){
     			self.addStep("Processing HTML Model of Confluence Content:"+contentId+" from "+srcUrl,function(sContentHtmlBody){
 					auxModel=new jrfModel(self.model.report,sContentHtmlBody,self.reportElem);
 					auxModel.parse(sContentHtmlBody,tag);

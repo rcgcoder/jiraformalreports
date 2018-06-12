@@ -89,7 +89,7 @@ var issueExtender=class issueExtender{//this kind of definition allows to hot-re
              arrStatus.forEach(function(status){
             	 status[1]=self.getFaseOf(status[1]);
             	 status[2]=self.getFaseOf(status[2]);
-             }):
+             });
              return arrStatus;
          };
 

@@ -68,6 +68,7 @@ var issueExtender=class issueExtender{//this kind of definition allows to hot-re
 		tEstados["Building"]=1;
 		tEstados["Cerrada"]=4;
 		tEstados["Cerrado"]=4;
+		tEstados["Resolved"]=3;
 		tEstados["Resuelta"]=3;
 		tEstados["Resuelto"]=3;
 		tEstados["Reabierta"]=0;

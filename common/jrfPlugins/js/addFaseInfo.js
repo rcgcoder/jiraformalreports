@@ -1,6 +1,7 @@
 var issueExtender=class issueExtender{//this kind of definition allows to hot-reload
     constructor(tag,reportElem,model){
          self.tag=tag;
+         debugger;
          self.reportElem=reportElem;
          self.model=model;
      }
@@ -78,6 +79,7 @@ var issueExtender=class issueExtender{//this kind of definition allows to hot-re
 
     execute(){
          var self=this;
+         debugger;
          var fncGetFase=function(){
                 var status=this.fieldValue("status.name");
                 return self.getFaseOf(status);

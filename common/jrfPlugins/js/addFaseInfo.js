@@ -71,7 +71,7 @@ var issueExtender=class issueExtender{//this kind of definition allows to hot-re
 		tEstados["Resuelta"]=3;
 		tEstados["Resuelto"]=3;
 		tEstados["Reabierta"]=0;
-		iResult=tEstados[sValue];
+		var iResult=tEstados[sValue];
 		if (typeof iResult!=="undefined"){
 			return iResult;
 		}

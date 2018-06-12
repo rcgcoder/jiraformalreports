@@ -12,8 +12,12 @@ var jrfInclude=class jrfInclude{//this kind of definition allows to hot-reload
 	}
 	preload(tag){
 		var self=this;
-		if (self.type.toLowerCase()=="confluence"){
-			var srcUrl=self.url;
+		var srcUrl=self.url;
+		if (self.type.toLowerCase()=="url"){
+			self.addStep("Getting Include Url",function(){
+				system.webapp.loadRemoteFile(srcUrl);
+			});			
+		} else if (self.type.toLowerCase()=="confluence"){
             var urlParts=srcUrl.split("pages/");
             urlParts=urlParts[1].split("/");
             var contentId=urlParts[0];

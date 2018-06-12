@@ -80,16 +80,16 @@ var issueExtender=class issueExtender{//this kind of definition allows to hot-re
 		return -1;
     }
 
-    getFaseName(faseNum){
-			if (FaseNum==5){
+    getFaseName(nFaseNum){
+			if (nFaseNum==5){
 				return "Total";
-			} else if (FaseNum==4){
+			} else if (nFaseNum==4){
 				return "Desplegado";
-			} else if (FaseNum==3){
+			} else if (nFaseNum==3){
 				return "Implementado";
-			} else if (FaseNum==2){
+			} else if (nFaseNum==2){
 				return "Disenado";
-			} else if (FaseNum==1){
+			} else if (nFaseNum==1){
 				return "Aprobado";
 			} else { //if (FaseNum==0)
 				return "Identificado";

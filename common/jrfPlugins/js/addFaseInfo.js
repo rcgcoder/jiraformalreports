@@ -80,12 +80,45 @@ var issueExtender=class issueExtender{//this kind of definition allows to hot-re
 		return -1;
     }
 
+    getFaseName(faseNum){
+			if (FaseNum==5){
+				return "Total";
+			} else if (FaseNum==4){
+				return "Desplegado";
+			} else if (FaseNum==3){
+				return "Implementado";
+			} else if (FaseNum==2){
+				return "Disenado";
+			} else if (FaseNum==1){
+				return "Aprobado";
+			} else { //if (FaseNum==0)
+				return "Identificado";
+			}
+     }
+    /*
+	obj.importesPorcentajeRef={"Total":1,"Identificado":0,"Aprobado":0,"Disenado":0.1,"Implementado":0.8,"Desplegado":0.1};
+	obj.importesEstimados={"Total":impAux,"Aprobado":0,"Disenado":impAux*0.1,
+							"Implementado":impAux*0.8,"Desplegado":impAux*0.1,
+							"Identificado":0
+							};
+	obj.importesReales={"Total":impAux*rAux,"Aprobado":0,"Disenado":impAux*0.1*(1+rAux),
+									"Implementado":impAux*0.8*(1+rAux),
+									"Desplegado":impAux*0.1*(1*rAux),
+									"Identificado":0
+							};
+	obj.importesdefinidos={importesEstimados:{"Total":false,"Identificado":false,"Aprobado":false,"Disenado":false,"Implementado":false,"Desplegado":false},
+						  importesReales:{"Total":false,"Identificado":false,"Aprobado":false,"Disenado":false,"Implementado":false,"Desplegado":false}};
+    */
     execute(){
          var self=this;
          var fncGetFase=function(){
                 var status=this.fieldValue("status.name");
                 return self.getFaseOf(status);
          };
+         var fncGetFaseName=function(){
+             var status=this.fieldValue("Fase");
+             return self.getFaseName(status);
+      };
          var fncGetFaseLife=function(){
         	 debugger;
         	 var arrResults=[];
@@ -96,10 +129,21 @@ var issueExtender=class issueExtender{//this kind of definition allows to hot-re
              });
              return arrResults;
          };
+         var fncGetFaseNameLife=function(){
+        	 debugger;
+        	 var arrResults=[];
+             var hsStatus=this.getFieldLife("Fase");
+             var arrStatuses=hsStatus.getValue("life");
+             arrStatuses.forEach(function(status){
+            	 arrResults.push([status[0],self.getFaseName(status[1]),self.getFaseName(status[2])]);
+             });
+             return arrResults;
+         };
 
          self.report.treeIssues.walk(function(issue){
                  issue.getFase=fncGetFase;
                  issue.getFaseLife=fncGetFaseLife;
+                 issue.getFaseName=fncGetFaseName;
          });
     }
 

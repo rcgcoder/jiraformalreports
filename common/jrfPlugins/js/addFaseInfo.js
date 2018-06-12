@@ -120,7 +120,6 @@ var issueExtender=class issueExtender{//this kind of definition allows to hot-re
              return self.getFaseName(status);
       };
          var fncGetFaseLife=function(){
-        	 debugger;
         	 var arrResults=[];
              var hsStatus=this.getFieldLife("status.name");
              var arrStatuses=hsStatus.getValue("life");

@@ -407,26 +407,30 @@ function newIssueFactory(report){
 			return hsItemFieldsCache;
 		}
 		var arrResult=[];
-		var sChangeDate;
-		var issueBase=self.getJiraObject();
-		var arrFieldNames=sFieldName.split(".");
-		if (arrFieldNames.length>0){
-			sFieldName=arrFieldNames[0];
-		}
-		var hsItemFieldsCache;
-		if (isDefined(issueBase.changelog)){
-			var arrHistories=issueBase.changelog.histories;
-			var arrItems;
-			arrHistories.forEach(function(change){
-				arrItems=change.items;
-				sChangeDate=change.created;
-				arrItems.forEach(function(chgField){
-					if ((chgField.field==sFieldName)||
-						(chgField.fieldId==sFieldName)){
-						arrResult.push([(new Date(sChangeDate)),chgField.fromString,chgField.toString]);
-					}
+		if (isDefined(self["get"+theFieldName+"Life"])){
+			arrResult=self["get"+theFieldName+"Life"]();
+		} else {
+			var sChangeDate;
+			var issueBase=self.getJiraObject();
+			var arrFieldNames=sFieldName.split(".");
+			if (arrFieldNames.length>0){
+				sFieldName=arrFieldNames[0];
+			}
+			var hsItemFieldsCache;
+			if (isDefined(issueBase.changelog)){
+				var arrHistories=issueBase.changelog.histories;
+				var arrItems;
+				arrHistories.forEach(function(change){
+					arrItems=change.items;
+					sChangeDate=change.created;
+					arrItems.forEach(function(chgField){
+						if ((chgField.field==sFieldName)||
+							(chgField.fieldId==sFieldName)){
+							arrResult.push([(new Date(sChangeDate)),chgField.fromString,chgField.toString]);
+						}
+					});
 				});
-			});
+			}
 		}
 		arrResult.sort(function(a,b){ " ordered from actual to the past"
 			if (a[0]<b[0]) return 1;

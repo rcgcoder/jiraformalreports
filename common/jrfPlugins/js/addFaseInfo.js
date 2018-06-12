@@ -80,13 +80,22 @@ var issueExtender=class issueExtender{//this kind of definition allows to hot-re
 
     execute(){
          var self=this;
-         debugger;
          var fncGetFase=function(){
                 var status=this.fieldValue("status.name");
                 return self.getFaseOf(status);
-         }
+         };
+         var fncGetFaseLife=function(){
+             var arrStatus=this.getFieldLife("status.name");
+             arrStatus.forEach(function(status){
+            	 status[1]=self.getFaseOf(status[1]);
+            	 status[2]=self.getFaseOf(status[2]);
+             }):
+             return arrStatus;
+         };
+
          self.report.treeIssues.walk(function(issue){
                  issue.getFase=fncGetFase;
+                 issue.getFaseLife=fncGetFaseLife;
          });
     }
 

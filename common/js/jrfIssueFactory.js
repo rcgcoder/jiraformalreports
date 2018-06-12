@@ -112,13 +112,13 @@ function newIssueFactory(report){
 		}
 		return "Undefined getter for fieldName:["+sFieldName+"]";
 	});
-	dynObj.functions.add("fieldAccumChilds",function(theFieldName,bSetProperty,fncItemCustomCalc){
+	dynObj.functions.add("fieldAccumChilds",function(theFieldName,notAdjust,bSetProperty,fncItemCustomCalc){
 		var self=this;
-		return self.fieldAccum(theFieldName,"Childs",bSetProperty,fncItemCustomCalc);
+		return self.fieldAccum(theFieldName,"Childs",bSetProperty,notAdjust,fncItemCustomCalc);
 	});
-	dynObj.functions.add("fieldAccumAdvanceChilds",function(theFieldName,bSetProperty,fncItemCustomCalc){
+	dynObj.functions.add("fieldAccumAdvanceChilds",function(theFieldName,notAdjust,bSetProperty,fncItemCustomCalc){
 		var self=this;
-		return self.fieldAccum(theFieldName,"AdvanceChilds",bSetProperty,fncItemCustomCalc);
+		return self.fieldAccum(theFieldName,"AdvanceChilds",bSetProperty,notAdjust,fncItemCustomCalc);
 	});
 	dynObj.functions.add("appendPrecomputedPropertyValues",function(key,arrValues){
 		var self=this;
@@ -140,7 +140,7 @@ function newIssueFactory(report){
 		if (precomps=="") return "";
 		return precomps.getLast().value;
 	})
-	dynObj.functions.add("fieldAccum",function(theFieldName,dateTime,listAttribName,bSetProperty,fncItemCustomCalc){
+	dynObj.functions.add("fieldAccum",function(theFieldName,dateTime,listAttribName,bSetProperty,notAdjust,fncItemCustomCalc){
 		var self=this;
 		var app=System.webapp;
 		var accumValue=0;
@@ -192,7 +192,8 @@ function newIssueFactory(report){
 			log("Isssue"+self.getKey()+ " returns value:"+accumValue);
 		}
 		
-		accumValue=self.getReport().adjustAccumItem(childType,accumValue,self);
+		var auxNotAdjust=(isDefined(notAdjust)&&notAdjust); // not adjust uses only if TRUE is received
+		accumValue=self.getReport().adjustAccumItem(childType,accumValue,self,theFieldName,notAdjust);
 //		accumCache.add(cacheKey,accumValue);
 		keyValuesCache.add((isUndefined(dateTime)?"now":dateTime),accumValue);
 		if ((self.getReport().updatePrecomputedAccumulators)

@@ -20,11 +20,11 @@ var jrfReport=class jrfReport {
 		self.updatePrecomputedAccumulators=false;
 		self.adjustAccumItemFunctions=newHashMap();
 	}
-	adjustAccumItem(accumType,accumValue,issue){
+	adjustAccumItem(accumType,accumValue,issue,fieldName,notAdjust){
 		var self=this;
 		var fnc=self.adjustAccumItemFunctions.getValue(accumType);
 		if (fnc!=""){
-			return fnc(accumValue,issue);
+			return fnc(accumValue,issue,fieldName,notAdjust);
 		}
 		return accumValue;
 	}

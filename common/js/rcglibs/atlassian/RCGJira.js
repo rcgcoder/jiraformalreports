@@ -184,12 +184,14 @@ class RCGJira{
 									));
 				for (var k=0;k<arrProperties.length;k++){
 					var vFieldId=arrProperties[k];
-					if (vFieldId!=="__proto__"){
+					if ((vFieldId!=="__proto__")&&(vFieldId!=="constructor")){
 						var sDesc=response.names[vFieldId];
 						if (typeof response.schema[vFieldId]!=="undefined"){
 							var sType=response.schema[vFieldId].type;
-							var objField={name:sDesc,key:vFieldId,schema:response.schema[vFieldId]};
-							self.processJsonField(objField);
+							if (typeof sType!=="undefined"){
+								var objField={name:sDesc,key:vFieldId,schema:response.schema[vFieldId]};
+								self.processJsonField(objField);
+							}
 						} 
 					}
 				}

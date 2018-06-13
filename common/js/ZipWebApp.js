@@ -75,13 +75,13 @@ class ZipWebApp{
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 //			}
 			);
-			self.addStep("Getting All field info.... ",function(){
+/*			self.addStep("Getting All field info.... ",function(){
 				var jira=self.getJira();
 				jira.getFieldsAndSchema();
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 //			}
 			);
-	
+	*/
 			self.addStep("Getting All Epics  to do a list.... ",function(){
 				var jira=self.getJira();
 				jira.getAllEpics();

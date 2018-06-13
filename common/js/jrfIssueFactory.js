@@ -444,7 +444,6 @@ function newIssueFactory(report){
 	});
 	dynObj.functions.add("getFieldValueAtDateTime",function(sFieldName,dateTime){
 		var self=this;
-		debugger;
 		var dateCreated=new Date(self.fieldValue("created"));
 		if (dateCreated>dateTime) return "";
 		var hsFieldLife=self.getFieldLife(sFieldName);

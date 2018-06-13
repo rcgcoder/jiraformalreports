@@ -141,32 +141,62 @@ class RCGJira{
 	}
 	getProjectsAndMetaInfo(){
 		var self=this;
-		self.pushCallback(function(sResponse,xhr,sUrl,headers){
-			//log("getAllProjects:"+response);
-			if (sResponse!=""){
-				var response=JSON.parse(sResponse);
-				for (var i=0;i<response.projects.length;i++){
-					var project=response.projects[i];
-					self.processJsonProject(project);
-					for (var j=0;j<project.issuetypes.length;j++){
-						var issuetype=project.issuetypes[j];
-						self.processJsonIssueType(issuetype);
-						var arrProperties=Object.getOwnPropertyNames(issuetype.fields.__proto__).concat(Object.getOwnPropertyNames(issuetype.fields));
-						for (var k=0;k<arrProperties.length;k++){
-							var vPropName=arrProperties[k];
-							if (vPropName!=="__proto__"){
-								var field=issuetype.fields[vPropName];
-								if (typeof field==="object"){
-									self.processJsonField(field)
-								} 
+		self.addStep("Getting Projects and Meta Info",function(){
+			self.pushCallback(function(sResponse,xhr,sUrl,headers){
+				//log("getAllProjects:"+response);
+				if (sResponse!=""){
+					var response=JSON.parse(sResponse);
+					for (var i=0;i<response.projects.length;i++){
+						var project=response.projects[i];
+						self.processJsonProject(project);
+						for (var j=0;j<project.issuetypes.length;j++){
+							var issuetype=project.issuetypes[j];
+							self.processJsonIssueType(issuetype);
+/*							var arrProperties=Object.getOwnPropertyNames(issuetype.fields.__proto__).concat(Object.getOwnPropertyNames(issuetype.fields));
+							for (var k=0;k<arrProperties.length;k++){
+								var vPropName=arrProperties[k];
+								if (vPropName!=="__proto__"){
+									var field=issuetype.fields[vPropName];
+									if (typeof field==="object"){
+										self.processJsonField(field)
+									} 
+								}
 							}
+							*/
 						}
 					}
 				}
-			}
-			self.popCallback([self.projects]);
+				self.popCallback([self.projects]);
+			});
+			self.apiCall("/rest/api/latest/issue/createmeta?expand=projects.issuetypes.fields");
 		});
-		self.apiCall("/rest/api/latest/issue/createmeta?expand=projects.issuetypes.fields");
+		self.addStep("Getting Field Definitions and Schema",function(){
+			self.pushCallback(function(sResponse,xhr,sUrl,headers){
+				//log("getAllProjects:"+response);
+				if (sResponse!=""){
+					var response=JSON.parse(sResponse);
+					var arrProperties=Object.getOwnPropertyNames(
+										response.names.__proto__
+										).concat(Object.getOwnPropertyNames(
+										response.names
+										));
+					for (var k=0;k<arrProperties.length;k++){
+						var vFieldId=arrProperties[k];
+						if (vFieldId!=="__proto__"){
+							var sDesc=response.names[vFieldId];
+							if (typeof response.schema[vFieldId]!=="undefined"){
+								var sType=response.schema[vFieldId].type;
+								var obj={name:sDesc,key:vFieldId,schema:response.schema[vFieldId]};
+								self.processJsonField(field)
+							} 
+						}
+					}
+				}
+				self.popCallback([self.projects]);
+			});
+			self.apiCall("rest/api/2/search?jql=&expand=names,schema");
+		});
+	
 	}
 	getIssueLinkTypes(){
 		var self=this;

@@ -67,29 +67,30 @@ function newIssueFactory(report){
 	dynObj.functions.add("fieldValue",function(theFieldName,bRendered,dateTime,otherParams){
 		var self=this;
 		var sFieldName=self.getExistentFieldId(theFieldName.trim());
-		if (isDefined(dateTime)){
-			return self.getFieldValueAtDateTime(theFieldName,dateTime,otherParams);
-		}
 		var bGetAttribute=false;
 		var arrFieldNames=sFieldName.split(".");
 		if (arrFieldNames.length>1){
 			bGetAttribute=true;
 			sFieldName=arrFieldNames[0];
 		}
-		var fncAux=self["get"+sFieldName];
 		var bDefined=false;
 		var fieldValue="";
-		if (isDefined(fncAux)){
+		if (isDefined(dateTime)){
 			bDefined=true;
-			fieldValue=self["get"+sFieldName](otherParams);
-			bDefined=true;
+			fieldValue=self.getFieldValueAtDateTime(theFieldName,dateTime,otherParams);
 		} else {
-			var jiraObj=self.getJiraObject();
-			var jsonFields=jiraObj.fields;
-			var jsonField=jsonFields[sFieldName];
-			if (isDefined(jsonField)&&(jsonField!=null)){
-				fieldValue=jsonField;
+			var fncAux=self["get"+sFieldName];
+			if (isDefined(fncAux)){
 				bDefined=true;
+				fieldValue=self["get"+sFieldName](otherParams);
+			} else {
+				var jiraObj=self.getJiraObject();
+				var jsonFields=jiraObj.fields;
+				var jsonField=jsonFields[sFieldName];
+				if (isDefined(jsonField)&&(jsonField!=null)){
+					fieldValue=jsonField;
+					bDefined=true;
+				}
 			}
 		}
 		if (bDefined){
@@ -105,10 +106,8 @@ function newIssueFactory(report){
 				if (isDefined(fieldValue.name)) return fieldValue.name;
 				if (isDefined(fieldValue.key)) return fieldValue.key;
 				if (isDefined(fieldValue.id)) return fieldValue.id;
-				return fieldValue;
-			} else {
-				return fieldValue;
 			}
+			return fieldValue;
 		}
 		return "Undefined getter for fieldName:["+sFieldName+"]";
 	});

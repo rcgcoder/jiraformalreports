@@ -144,6 +144,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		if ((acumFasesEstimado.toFixed(1)==1)||(acumFasesEstimado.toFixed(1)==0)){
 			if ((objImportes.importesEstimados.Total.toFixed(1)==1)||(objImportes.importesEstimados.Total.toFixed(1)==0)){
 				// si el total estimado es 0 o es 1 quiere decir que hay que cogerlo del tiempo de jira.
+				var hourCost=otherParams.getValue("hourCost");
 				totalEstimado=(tEstimado/(60*60))*hourCost;
 			} else {
 				// si hay un total estimado.... se coge del total..

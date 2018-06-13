@@ -19,7 +19,7 @@ var jrfField=class jrfField{//this kind of definition allows to hot-reload
 			log("There is not function.... in reportElem:it appears to be a jrfReport element");
 		} else {
 			log("There is function fieldValue.... in reportElem:"+self.reportElem.getKey());
-			var arrParams=[];
+			var hsParams=newHashMap();
 			if (self.moreParams!=""){
 				debugger;
 				var splitParams=self.moreParams.split(",");
@@ -30,10 +30,10 @@ var jrfField=class jrfField{//this kind of definition allows to hot-reload
 					if (paramParts.length>1){
 						paramValue=paramParts[1];
 					}
-					arrParams.push({name:paramName,value:paramValue});
+					hsParams.add(paramName,paramValue);
 				});
 			}
-			sValue=self.reportElem.fieldValue(self.fieldName,true,auxDateTime,arrParams);
+			sValue=self.reportElem.fieldValue(self.fieldName,true,auxDateTime,hsParams);
 			if (isString(sValue)&&(sValue.indexOf("&lt;jrf")>=0)){// if there is jrf tokens in the description
 				var sHtml=decodeEntities(sValue);
 				var theModel;

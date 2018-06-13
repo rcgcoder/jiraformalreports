@@ -151,13 +151,13 @@ var issueExtender=class issueExtender{//this kind of definition allows to hot-re
     	arrFields.push(["Importe Estimado Diseño","Disenado","importesEstimados"]);
     	arrFields.push(["Importe Estimado Implementación","Implementado","importesEstimados"]);
     	arrFields.push(["Importe Estimado Despliegue","Desplegado","importesEstimados"]);
-    	arrFields.push(["Importe Estimado Total","Total","importesEstimados"]);
+//    	arrFields.push(["Importe Estimado Total","Total","importesEstimados"]);
 
     	arrFields.push(["Importe Real Aprobación","Aprobado","importesReales"]);
     	arrFields.push(["Importe Real Diseño","Diseñado","importesReales"]);
     	arrFields.push(["Importe Real Implementación","Implementado","importesReales"]);
     	arrFields.push(["Importe Real Despliegue","Desplegado","importesReales"]);
-    	arrFields.push(["Importe Real Total","Total","importesReales"]);
+//    	arrFields.push(["Importe Real Total","Total","importesReales"]);
     	var vValue;
     	var bWithValue;
     	arrFields.forEach(function (fieldImporte){

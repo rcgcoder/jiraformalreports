@@ -3,7 +3,7 @@ var jrfField=class jrfField{//this kind of definition allows to hot-reload
 		var self=this;
 		model.extendToken(self,tag,reportElem);
 		self.fieldName=self.getAttrVal("field");
-		self.dateTime=self.getAttrVal("atDateTime");
+		self.datetime=self.getAttrVal("atDateTime").trim();
 		self.format=self.getAttrVal("inFormat");
 		self.moreParams=self.getAttrVal("aditionalparameters");
 	}
@@ -13,7 +13,8 @@ var jrfField=class jrfField{//this kind of definition allows to hot-reload
 		var sValue;
 		var auxDateTime;
 		if (self.dateTime!=""){
-			auxDateTime=toDateNormalDDMMYYYYHHMMSS(self.dateTime);			
+			debugger;
+			auxDateTime=toDateNormalDDMMYYYYHHMMSS(self.datetime);			
 		}
 		if (!isDefined(self.reportElem.fieldValue)){
 			log("There is not function.... in reportElem:it appears to be a jrfReport element");

@@ -183,51 +183,52 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		}
 		return objImportes;
     }
+    var getBillingLife(otherParams){
+	   	 var self=this;
+	   	 var arrResults=[];
+	   	 var arrFields=self.getBillingFieldUsed();
+	   	 var hsDateChanges=newHashMap();
+	   	 arrFields.arrBaseFields.forEach(function (fieldName){
+	            var hsStatus=self.getFieldLife(fieldName);
+	            var arrStatuses=hsStatus.getValue("life");
+	            arrStatuses.forEach(function(status){
+	           	 	if (!hsDateChanges.exists(status[0])) hsDateChanges.add(status[0],status[0]);
+	            });
+	   	 });
+	   	 arrFields.arrFieldsForCalc.forEach(function (fieldInfo){
+	            var hsStatus=self.getFieldLife(fieldInfo[0]);
+	            var arrStatuses=hsStatus.getValue("life");
+	            arrStatuses.forEach(function(status){
+	           	 	if (!hsDateChanges.exists(status[0])) hsDateChanges.add(status[0],status[0]);
+	            });
+	   	 });
+	   	 hsDateChanges.walk(function(atDatetime){
+	   		var billing=self.getBilling(otherParams,atDatetime);
+	      	arrResults.push([atDatetime,"",billing]);
+	   	 });
+	   	 
+	   	 debugger;
+	   	 
+	   	 arrResults.sort(function(a,b){
+	   		if (a[0]<b[0]) return 1;
+	   		if (a[0]>b[0]) return -1;
+	   		return 0;
+	   	 });
+	   	 for (var i=0;i<(arrResults.length-1);i++){
+	   		 arrResults[i][1]=arrResults[i+1][2];
+	   	 }
+	     return arrResults;
+    }
     
     
     execute(){
          var selfPlg=this;
-         var fncGetBillingLife=function(otherParams){
-        	 var self=this;
-        	 var arrResults=[];
-        	 var arrFields=self.getBillingFieldUsed();
-        	 var hsDateChanges=newHashMap();
-        	 arrFields.arrBaseFields.forEach(function (fieldName){
-                 var hsStatus=self.getFieldLife(fieldName);
-                 var arrStatuses=hsStatus.getValue("life");
-                 arrStatuses.forEach(function(status){
-                	 if (!hsDateChanges.exists(status[0])) hsDateChanges.add(status[0],status[0]);
-                 });
-        	 });
-        	 arrFields.arrFieldsForCalc.forEach(function (fieldInfo){
-                 var hsStatus=self.getFieldLife(fieldInfo[0]);
-                 var arrStatuses=hsStatus.getValue("life");
-                 arrStatuses.forEach(function(status){
-                	 if (!hsDateChanges.exists(status[0])) hsDateChanges.add(status[0],status[0]);
-                 });
-        	 });
-        	 hsDateChanges.walk(function(atDatetime){
-        		var billing=self.getBilling(otherParams,atDatetime) 
-           	 	arrResults.push([atDatetime,"",billing]);
-        	 });
-        	 debugger;
-        	 arrResults.sort(function(a,b){
-        		if (a[0]<b[0]) return 1;
-        		if (a[0]>b[0]) return -1;
-        		return 0;
-        	 });
-        	 for (var i=arrResults.length-1;i>0;i--){
-        		 arrResults[i][1]=arrResults[i-1][2];
-        	 }
-             return arrResults;
-         };
-
          selfPlg.report.treeIssues.walk(function(issue){
                  issue.getFieldFaseBillingName=selfPlg.getFieldFaseBillingName;
                  issue.getBillingFieldUsed=selfPlg.getBillingFieldUsed;
                  issue.initializeBilling=selfPlg.initializeBilling;
                  issue.getBilling=selfPlg.getBilling;
-                 issue.getBillingLife=fncGetBillingLife;
+                 issue.getBillingLife=selfPlg.getBillingLife;
          });
     }
 

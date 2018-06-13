@@ -200,6 +200,7 @@ var issueExtender=class issueExtender{//this kind of definition allows to hot-re
     }
     
     getBilling(atDatetime,hourCost){
+   	 	debugger;
     	// initialize and load the importes structure
     	var objImportes=initilizeImportes(atDatetime);
     	var vPorc;
@@ -286,7 +287,6 @@ var issueExtender=class issueExtender{//this kind of definition allows to hot-re
              return arrResults;
          };
          var fncGetFaseNameLife=function(){
-        	 debugger;
         	 var arrResults=[];
              var hsStatus=this.getFieldLife("Fase");
              var arrStatuses=hsStatus.getValue("life");

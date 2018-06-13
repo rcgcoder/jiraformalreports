@@ -25,10 +25,10 @@ var jrfField=class jrfField{//this kind of definition allows to hot-reload
 				var splitParams=self.moreParams.split(",");
 				splitParams.forEach(function(aParam){
 					var paramParts=aParam.split("=");
-					var paramName=paramParts[0];
+					var paramName=paramParts[0].trim();
 					var paramValue=undefined;
 					if (paramParts.length>1){
-						paramValue=paramParts[1];
+						paramValue=paramParts[1].trim();
 					}
 					hsParams.add(paramName,paramValue);
 				});

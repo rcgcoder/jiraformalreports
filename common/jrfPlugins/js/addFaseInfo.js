@@ -113,11 +113,12 @@ var issueExtender=class issueExtender{//this kind of definition allows to hot-re
 		}
     }
     initilizeBilling(atDatetime){
+    	var self=this;
     	var objImportes={};
-		var faseActual=this.fieldValue("Fase",false,atDatetime);
-		var timeoriginalestimate=this.fieldValue("timeoriginalestimate",false,atDatetime);
-		var timeestimate=this.fieldValue("timeestimate",false,atDatetime);
-		var timespent=this.fieldValue("timespent",false,atDatetime);
+		var faseActual=self.fieldValue("Fase",false,atDatetime);
+		var timeoriginalestimate=self.fieldValue("timeoriginalestimate",false,atDatetime);
+		var timeestimate=self.fieldValue("timeestimate",false,atDatetime);
+		var timespent=self.fieldValue("timespent",false,atDatetime);
 		if (timeoriginalestimate=="") timeoriginalestimate=0; else timeoriginalestimate=parseFloat(timeoriginalestimate);
 		if (timeestimate=="") timeestimate=0; else timeestimate=parseFloat(timeestimate);
 		if (timespent=="") timespent=0; else timespent=parseFloat(timespent);
@@ -161,7 +162,7 @@ var issueExtender=class issueExtender{//this kind of definition allows to hot-re
     	var bWithValue;
     	arrFields.forEach(function (fieldImporte){
     		bWithValue=false;
-    		vValue=this.fieldValue(fieldImporte[0],false,atDatetime);
+    		vValue=self.fieldValue(fieldImporte[0],false,atDatetime);
     		if ((vValue=="") || (isUndefined(vValue)))
     			vValue=0;
     		else {
@@ -182,7 +183,7 @@ var issueExtender=class issueExtender{//this kind of definition allows to hot-re
 			bUndefinedReal=false;
 			impEst=0;
 			impReal=0;
-			fieldFaseName=this.getFieldFaseBillingName(nFase);
+			fieldFaseName=self.getFieldFaseBillingName(nFase);
 			bUndefinedEstimado=(!objImportes.importesdefinidos.importesEstimados[fieldFaseName]);
 			bUndefinedReal=(!objImportes.importesdefinidos.importesReales[fieldFaseName]);
 			if (!bUndefinedEstimado) impEst=objImportes.source.importesEstimados[fieldFaseName];

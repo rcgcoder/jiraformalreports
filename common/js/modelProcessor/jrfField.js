@@ -13,6 +13,7 @@ var jrfField=class jrfField{//this kind of definition allows to hot-reload
 		var sValue;
 		var auxDateTime;
 		if (self.datetime!=""){
+			debugger;
 			auxDateTime=toDateNormalDDMMYYYYHHMMSS(self.datetime);			
 		}
 		if (!isDefined(self.reportElem.fieldValue)){
@@ -21,7 +22,6 @@ var jrfField=class jrfField{//this kind of definition allows to hot-reload
 			log("There is function fieldValue.... in reportElem:"+self.reportElem.getKey());
 			var hsParams=newHashMap();
 			if (self.moreParams!=""){
-				debugger;
 				var splitParams=self.moreParams.split(",");
 				splitParams.forEach(function(aParam){
 					var paramParts=aParam.split("=");

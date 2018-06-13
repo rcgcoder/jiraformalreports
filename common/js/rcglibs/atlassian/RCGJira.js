@@ -202,6 +202,7 @@ class RCGJira{
 			});
 //			self.continueTask();
 		});
+		self.continueTask();
 	}
 	getIssueLinkTypes(){
 		var self=this;

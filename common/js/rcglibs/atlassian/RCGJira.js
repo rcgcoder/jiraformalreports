@@ -170,6 +170,7 @@ class RCGJira{
 		self.apiCall("/rest/api/latest/issue/createmeta?expand=projects.issuetypes.fields");
 	}
 	getFieldsAndSchema(){
+		debugger;
 		var self=this;
 		self.pushCallback(function(sResponse,xhr,sUrl,headers){
 			//log("getAllProjects:"+response);
@@ -195,7 +196,7 @@ class RCGJira{
 			}
 			self.popCallback([self.projects]);
 		});
-		self.apiCall("rest/api/2/search?jql=&expand=names,schema");
+		self.apiCall("/rest/api/2/search?jql=&expand=names,schema");
 	}
 	getIssueLinkTypes(){
 		var self=this;

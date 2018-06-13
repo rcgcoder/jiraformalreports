@@ -12,7 +12,7 @@ var jrfField=class jrfField{//this kind of definition allows to hot-reload
 		var bRendered=(self.format=="jiramarkup");
 		var sValue;
 		var auxDateTime;
-		if (self.dateTime!=""){
+		if (self.datetime!=""){
 			debugger;
 			auxDateTime=toDateNormalDDMMYYYYHHMMSS(self.datetime);			
 		}

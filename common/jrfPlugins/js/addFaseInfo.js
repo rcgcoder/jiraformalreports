@@ -89,7 +89,7 @@ var issueExtender=class issueExtender{//this kind of definition allows to hot-re
 				return "Diseñado";
 			} else if (nFaseNum==1){
 				return "Aprobado";
-			} else if (FaseNum==0) {
+			} else if (nFaseNum==0) {
 				return "Identificado";
 			} else {
 				return "No creado";
@@ -106,7 +106,7 @@ var issueExtender=class issueExtender{//this kind of definition allows to hot-re
 			return "Disenado";
 		} else if (nFaseNum==1){
 			return "Aprobado";
-		} else if (FaseNum==0) {
+		} else if (nFaseNum==0) {
 			return "Identificado";
 		} else {
 			return "NoCreado";

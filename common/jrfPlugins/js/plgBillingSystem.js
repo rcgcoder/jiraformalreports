@@ -40,7 +40,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     	oResult.arrBaseFields=["Fase","timeoriginalestimate","timeestimate","timespent"];
     	return oResult;
     }
-    initiliazeBilling(otherParams,atDatetime){
+    initializeBilling(otherParams,atDatetime){
     	var self=this;
     	var objImportes={};
 		var faseActual=self.fieldValue("Fase",false,atDatetime);

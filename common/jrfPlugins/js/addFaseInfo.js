@@ -202,7 +202,7 @@ var issueExtender=class issueExtender{//this kind of definition allows to hot-re
     getBilling(atDatetime,hourCost){
    	 	debugger;
     	// initialize and load the importes structure
-    	var objImportes=initilizeImportes(atDatetime);
+    	var objImportes=initilizeBilling(atDatetime);
     	var vPorc;
 		var tEstimado;
 		var tReal;

@@ -13,7 +13,6 @@ var jrfField=class jrfField{//this kind of definition allows to hot-reload
 		var sValue;
 		var auxDateTime;
 		if (self.datetime!=""){
-			debugger;
 			auxDateTime=toDateNormalDDMMYYYYHHMMSS(self.datetime);			
 		}
 		if (!isDefined(self.reportElem.fieldValue)){

@@ -369,6 +369,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				} else if (sFormat=="hours"){
 					var sValAdjusted=replaceAll(sValAux+"",",",".");
 					sValAux=normalFormatNumber(sValAdjusted) + " h"; 
+				} else if (sFormat=="SecondsToHours"){
+					var floatVal=parseFloat(sValAux);
+					floatVal=(floatVal/(60*60)).toFixed(2);
+					var sValAdjusted=replaceAll(floatVal+"",",",".");
+					sValAux=normalFormatNumber(sValAdjusted) + " h"; 
 				} else if (sFormat=="%"){
 					var sValAdjusted=replaceAll(sValAux+"",",",".");
 					sValAux=normalFormatNumber(sValAdjusted) + " %"; 

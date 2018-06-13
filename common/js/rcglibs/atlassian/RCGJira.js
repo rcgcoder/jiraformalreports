@@ -159,11 +159,9 @@ class RCGJira{
 		self.apiCall("/rest/api/latest/issue/createmeta?expand=projects.issuetypes.fields");
 	}
 	getFieldsAndSchema(){
-		debugger;
 		var self=this;
 		self.pushCallback(function(sResponse,xhr,sUrl,headers){
 			//log("getAllProjects:"+response);
-			debugger;
 			if (sResponse!=""){
 				var response=JSON.parse(sResponse);
 				var arrProperties=Object.getOwnPropertyNames(

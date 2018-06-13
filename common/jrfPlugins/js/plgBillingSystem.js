@@ -224,7 +224,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
                  issue.getFieldFaseBillingName=self.getFieldFaseBillingName;
                  issue.getBillingFieldUsed=self.getBillingFieldUsed;
                  issue.initializeBilling=self.initializeBilling;
-                 issue.getBilling=self.getBilling();
+                 issue.getBilling=self.getBilling;
                  issue.getBillingLife=fncGetBillingLife;
          });
     }

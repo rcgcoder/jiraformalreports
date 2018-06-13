@@ -40,7 +40,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     	oResult.arrBaseFields=["Fase","timeoriginalestimate","timeestimate","timespent"];
     	return oResult;
     }
-    initilizeBilling(otherParams,atDatetime){
+    initiliazeBilling(otherParams,atDatetime){
     	var self=this;
     	var objImportes={};
 		var faseActual=self.fieldValue("Fase",false,atDatetime);
@@ -120,7 +120,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     getBilling(otherParams,atDatetime){
    	 	debugger;
     	// initialize and load the importes structure
-    	var objImportes=this.initilizeBilling(atDatetime);
+    	var objImportes=this.initializeBilling(atDatetime);
     	var vPorc;
 		var tEstimado;
 		var tReal;
@@ -223,7 +223,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
          self.report.treeIssues.walk(function(issue){
                  issue.getFieldFaseBillingName=self.getFieldFaseBillingName;
                  issue.getBillingFieldUsed=self.getBillingFieldUsed;
-                 issue.initilizeBilling=self.initilizeBilling;
+                 issue.initializeBilling=self.initializeBilling;
                  issue.getBilling=self.getBilling();
                  issue.getBillingLife=fncGetBillingLife;
          });

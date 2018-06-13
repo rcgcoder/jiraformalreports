@@ -98,7 +98,7 @@ function newIssueFactory(report){
 				if (bGetAttribute){
 					var auxValue=fieldValue;
 					for (var i=1;i<arrFieldNames.length;i++){
-						auxValue=fieldValue[arrFieldNames[i]];
+						auxValue=auxValue[arrFieldNames[i]];
 					}
 					return auxValue;
 				}

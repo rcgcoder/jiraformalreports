@@ -74,7 +74,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     							};
     	objImportes.importesdefinidos={importesEstimados:{"Total":false,"Identificado":false,"Aprobado":false,"Disenado":false,"Implementado":false,"Desplegado":false},
     						  importesReales:{"Total":false,"Identificado":false,"Aprobado":false,"Disenado":false,"Implementado":false,"Desplegado":false}};
-    	var arrField=self.getBillingFieldUsed().arrFieldsForCalc;
+    	var arrFields=self.getBillingFieldUsed().arrFieldsForCalc;
     	var vValue;
     	var bWithValue;
     	arrFields.forEach(function (fieldImporte){

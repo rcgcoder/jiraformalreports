@@ -200,7 +200,7 @@ class RCGJira{
 				});
 				self.apiCall("rest/api/2/search?jql=&expand=names,schema");
 			});
-			self.continueTask();
+//			self.continueTask();
 //		});
 	}
 	getIssueLinkTypes(){

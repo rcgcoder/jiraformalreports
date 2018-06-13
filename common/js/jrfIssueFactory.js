@@ -71,7 +71,7 @@ function newIssueFactory(report){
 		var arrFieldNames=sFieldName.split(".");
 		if (arrFieldNames.length>1){
 			bGetAttribute=true;
-			sFieldName=arrFieldNames[0];
+			sFieldName=arrFieldNames[0].trim();
 		}
 		var bDefined=false;
 		var fieldValue="";
@@ -98,7 +98,7 @@ function newIssueFactory(report){
 				if (bGetAttribute){
 					var auxValue=fieldValue;
 					for (var i=1;i<arrFieldNames.length;i++){
-						auxValue=auxValue[arrFieldNames[i]];
+						auxValue=auxValue[arrFieldNames[i].trim()];
 					}
 					return auxValue;
 				}

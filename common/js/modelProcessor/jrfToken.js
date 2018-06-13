@@ -403,12 +403,13 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		}
 		log("executed {{{"+sText+" }}}");
 		log(sResult);
-		log("now let´s replace {{"+sText+"}}");
+		log("now let´s replace {{  "+sText+"  }}");
 		var oSimple=self.replaceVarsComplex(sResult);
 		var vValue=oSimple.text;
 		if (oSimple.values.length>0){
 			vValue=executeFunction(oSimple.values,oSimple.text,self.model.functionCache);
 		}
+		log("Replaced: <<"+sText+">> ->> <<"+vValue+">>");
 		return vValue;
 	}
 	replaceVarsComplex(inText,theOpenTag,theCloseTag,bReplaceVarsByValue){

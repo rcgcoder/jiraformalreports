@@ -141,7 +141,7 @@ class RCGJira{
 	}
 	getProjectsAndMetaInfo(){
 		var self=this;
-		self.pushCallback(function(){
+//		self.pushCallback(function(){
 			self.addStep("Getting Projects and Meta Info",function(){
 				debugger;
 				self.pushCallback(function(sResponse,xhr,sUrl,headers){
@@ -168,7 +168,7 @@ class RCGJira{
 							}
 						}
 					}
-					self.popCallback([self.projects]);
+					self.continueTask();
 				});
 				self.apiCall("/rest/api/latest/issue/createmeta?expand=projects.issuetypes.fields");
 			});
@@ -201,8 +201,7 @@ class RCGJira{
 				self.apiCall("rest/api/2/search?jql=&expand=names,schema");
 			});
 			self.continueTask();
-		});
-		self.popCallback();
+//		});
 	}
 	getIssueLinkTypes(){
 		var self=this;

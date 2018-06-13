@@ -186,20 +186,21 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     
     
     execute(){
-         var self=this;
+         var selfPlg=this;
          var fncGetBillingLife=function(otherParams){
+        	 var self=this;
         	 var arrResults=[];
-        	 var arrFields=this.getBillingFieldUsed();
+        	 var arrFields=self.getBillingFieldUsed();
         	 var hsDateChanges=newHashMap();
         	 arrFields.arrBaseFields.forEach(function (fieldName){
-                 var hsStatus=this.getFieldLife(fieldName);
+                 var hsStatus=self.getFieldLife(fieldName);
                  var arrStatuses=hsStatus.getValue("life");
                  arrStatuses.forEach(function(status){
                 	 if (!hsDateChanges.exists(status[0])) hsDateChanges.add(status[0],status[0]);
                  });
         	 });
         	 arrFields.arrFieldsForCalc.forEach(function (fieldInfo){
-                 var hsStatus=this.getFieldLife(fieldInfo[0]);
+                 var hsStatus=self.getFieldLife(fieldInfo[0]);
                  var arrStatuses=hsStatus.getValue("life");
                  arrStatuses.forEach(function(status){
                 	 if (!hsDateChanges.exists(status[0])) hsDateChanges.add(status[0],status[0]);
@@ -220,11 +221,11 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
              return arrResults;
          };
 
-         self.report.treeIssues.walk(function(issue){
-                 issue.getFieldFaseBillingName=self.getFieldFaseBillingName;
-                 issue.getBillingFieldUsed=self.getBillingFieldUsed;
-                 issue.initializeBilling=self.initializeBilling;
-                 issue.getBilling=self.getBilling;
+         selfPlg.report.treeIssues.walk(function(issue){
+                 issue.getFieldFaseBillingName=selfPlg.getFieldFaseBillingName;
+                 issue.getBillingFieldUsed=selfPlg.getBillingFieldUsed;
+                 issue.initializeBilling=selfPlg.initializeBilling;
+                 issue.getBilling=selfPlg.getBilling;
                  issue.getBillingLife=fncGetBillingLife;
          });
     }

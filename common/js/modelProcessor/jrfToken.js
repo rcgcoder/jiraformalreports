@@ -183,6 +183,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		}
 	}
 	applySetVars(sValAux){
+		debugger;
 		var self=this;
 //		var sValAux=self.getHtmlBuffer();
 

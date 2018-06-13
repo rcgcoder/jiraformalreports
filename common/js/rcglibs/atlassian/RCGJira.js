@@ -186,8 +186,8 @@ class RCGJira{
 							var sDesc=response.names[vFieldId];
 							if (typeof response.schema[vFieldId]!=="undefined"){
 								var sType=response.schema[vFieldId].type;
-								var obj={name:sDesc,key:vFieldId,schema:response.schema[vFieldId]};
-								self.processJsonField(field)
+								var objField={name:sDesc,key:vFieldId,schema:response.schema[vFieldId]};
+								self.processJsonField(objField);
 							} 
 						}
 					}

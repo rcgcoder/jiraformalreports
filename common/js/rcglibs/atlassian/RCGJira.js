@@ -141,7 +141,7 @@ class RCGJira{
 	}
 	getProjectsAndMetaInfo(){
 		var self=this;
-//		self.pushCallback(function(){
+		self.addStep("Getting projects, meta and field info",function(){
 			self.addStep("Getting Projects and Meta Info",function(){
 				debugger;
 				self.pushCallback(function(sResponse,xhr,sUrl,headers){
@@ -201,7 +201,7 @@ class RCGJira{
 				self.apiCall("rest/api/2/search?jql=&expand=names,schema");
 			});
 //			self.continueTask();
-//		});
+		});
 	}
 	getIssueLinkTypes(){
 		var self=this;

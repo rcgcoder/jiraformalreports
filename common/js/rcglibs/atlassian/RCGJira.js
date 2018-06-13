@@ -202,7 +202,7 @@ class RCGJira{
 			});
 			self.continueTask();
 		});
-		self.continueTask();
+		self.popCallback();
 	}
 	getIssueLinkTypes(){
 		var self=this;

@@ -193,8 +193,8 @@ var issueExtender=class issueExtender{//this kind of definition allows to hot-re
 			objImportes.importesEstimados[fieldFaseName]=impEst;
 			objImportes.importesReales[fieldFaseName]=impReal;
 			if (nFase<5) {
-				objImportes.acumFasesEstimado+=impEst;
-				objImportes.acumFasesReal+=impReal;
+				objImportes.source.acumFasesEstimado+=impEst;
+				objImportes.source.acumFasesReal+=impReal;
 			}
 		}
     	return objImportes;
@@ -221,8 +221,8 @@ var issueExtender=class issueExtender{//this kind of definition allows to hot-re
 			if (tEstimado==0) tEstimado=tReal;
 		}
 		
-		var acumFasesEstimado=objImportes.acumFasesEstimado;
-		var acumFasesReal=objImportes.acumFasesReal;
+		var acumFasesEstimado=objImportes.source.acumFasesEstimado;
+		var acumFasesReal=objImportes.source.acumFasesReal;
 		var fieldFaseName;
 		if ((acumFasesEstimado.toFixed(1)==1)||(acumFasesEstimado.toFixed(1)==0)){
 			if ((objImportes.importesEstimados.Total.toFixed(1)==1)||(objImportes.importesEstimados.Total.toFixed(1)==0)){

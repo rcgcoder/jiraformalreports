@@ -69,9 +69,15 @@ class ZipWebApp{
 //			}
 			);  */
 
-			self.addStep("Getting All Project, issuetypes and field info.... ",function(){
+			self.addStep("Getting All Project and issuetypes .... ",function(){
 				var jira=self.getJira();
 				jira.getProjectsAndMetaInfo();
+			},0,1,undefined,undefined,undefined,"INNER",undefined
+//			}
+			);
+			self.addStep("Getting All field info.... ",function(){
+				var jira=self.getJira();
+				jira.getFieldsAndSchema();
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 //			}
 			);

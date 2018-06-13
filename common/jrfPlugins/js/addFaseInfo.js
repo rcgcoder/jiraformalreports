@@ -301,7 +301,7 @@ var issueExtender=class issueExtender{//this kind of definition allows to hot-re
                  issue.getFaseLife=fncGetFaseLife;
                  issue.getFaseName=fncGetFaseName;
                  issue.getFaseNameLife=fncGetFaseNameLife;
-                 issue.getFieldFaseBillingName=this.getFieldFaseBillingName;
+                 issue.getFieldFaseBillingName=self.getFieldFaseBillingName;
                  issue.initilizeBilling=self.initilizeBilling;
                  issue.getBilling=self.getBilling;
          });

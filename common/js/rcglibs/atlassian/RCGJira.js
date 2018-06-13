@@ -141,6 +141,7 @@ class RCGJira{
 	}
 	getProjectsAndMetaInfo(){
 		var self=this;
+		debugger;
 		self.addStep("Getting Projects and Meta Info",function(){
 			self.pushCallback(function(sResponse,xhr,sUrl,headers){
 				//log("getAllProjects:"+response);

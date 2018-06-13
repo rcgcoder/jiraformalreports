@@ -118,7 +118,6 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     }
     
     getBilling(otherParams,atDatetime){
-   	 	debugger;
     	// initialize and load the importes structure
     	var objImportes=this.initializeBilling(atDatetime);
     	var vPorc;
@@ -211,6 +210,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
         		var billing=self.getBilling(otherParams,atDatetime) 
            	 	arrResults.push([atDatetime,"",billing]);
         	 });
+        	 debugger;
         	 arrResults.sort(function(a,b){
         		if (a[0]<b[0]) return 1;
         		if (a[0]>b[0]) return -1;

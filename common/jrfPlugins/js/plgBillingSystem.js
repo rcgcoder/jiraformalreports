@@ -1,99 +1,9 @@
-var issueExtender=class issueExtender{//this kind of definition allows to hot-reload
+var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to hot-reload
     constructor(tag,report,model){
     	 var self=this;
          self.tag=tag;
          self.report=report;
          self.model=model;
-     }
-    getFaseOf(sValue){ //devuelve la fase imputable del requisito o soporte
-		// Requisito:
-		// fase 0: Requisito en fase de identificación.
-		// fase 1: el requisito esta aprobado
-		// fase 2: el requisito esta diseñado
-		// fase 3: el requisito esta implementado
-		// fase 4: Desplegado en PRO.
-		
-		// Soporte:
-		// fase 0: Actuación en fase de identificación/analisis/diseño
-		// fase 1: no existe
-		// fase 2: no existe
-		// fase 3: no existe
-		// fase 3: implementado
-		// fase 4: desplegado en PRO.
-		// Reunion:
-		// fase 4: Celebrada
-		// fase 4: Celebrada
-		// OT
-		var tEstados=[];
-		tEstados["aprobado"]=1;
-		tEstados["Diseñado"]=2;
-		tEstados["implementado"]=3;
-		tEstados["Abierta"]=0;
-		tEstados["En progreso"]=2;
-		tEstados["NO OK PRE AST"]=3;
-		tEstados["NO OK DES AST"]=3;
-		tEstados["NO OK INTEGRA"]=3;
-		tEstados["Verificado DES AST"]=3;
-		tEstados["En progreso PRE AST"]=3;
-		tEstados["En progreso DES AST"]=3;
-		tEstados["Verificado Integra"]=3;
-		tEstados["En progreso Integra"]=3;
-		tEstados["Enviado a Integra"]=3;
-		tEstados["Validado DES UTE"]=3;
-		tEstados["Validado en DES OT-SAE"]=3;
-		tEstados["Validado en PRE OT-SAE"]=3;
-		tEstados["Validado en Integra OT-SAE"]=3;
-		tEstados["Reabierto"]=3;
-		tEstados["Desplegado en PRO"]=4;
-		tEstados["Desplegado en PRE"]=3;
-		tEstados["Desplegado en DES"]=3;
-		tEstados["Enviado a PRO"]=3;
-		tEstados["Enviado a PRE"]=3;
-		tEstados["Enviado a DES"]=3;
-		tEstados["Validado en Integra UTE"]=3;
-		tEstados["Validado en DES UTE"]=3;
-		tEstados["Validado en PRE UTE"]=3;
-		tEstados["Desplegado en Integra"]=3;
-		tEstados["Abierta"]=0;
-		tEstados["Listo"]=0;
-		tEstados["Por hacer"]=0;
-		tEstados["Realizada"]=4;
-		tEstados["Implementada"]=3;
-		tEstados["Aprobado"]=1;
-		tEstados["En revisión"]=0;
-		tEstados["Implementado"]=3;
-		tEstados["Build Broken"]=1;
-		tEstados["Convocada"]=2;
-		tEstados["Building"]=1;
-		tEstados["Cerrada"]=4;
-		tEstados["Cerrado"]=4;
-		tEstados["Closed"]=4;
-		tEstados["Resolved"]=3;
-		tEstados["Resuelta"]=3;
-		tEstados["Resuelto"]=3;
-		tEstados["Reabierta"]=0;
-		tEstados[""]=-1;
-		var iResult=tEstados[sValue];
-		if (typeof iResult!=="undefined"){
-			return iResult;
-		}
-		return -1;
-    }
-
-    getFaseName(nFaseNum){
-    		if (nFaseNum==4){
-				return "Desplegado";
-			} else if (nFaseNum==3){
-				return "Implementado";
-			} else if (nFaseNum==2){
-				return "Diseñado";
-			} else if (nFaseNum==1){
-				return "Aprobado";
-			} else if (nFaseNum==0) {
-				return "Identificado";
-			} else {
-				return "No creado";
-			}
      }
     getFieldFaseBillingName(nFaseNum){
 		if (nFaseNum==5){
@@ -112,7 +22,25 @@ var issueExtender=class issueExtender{//this kind of definition allows to hot-re
 			return "NoCreado";
 		}
     }
-    initilizeBilling(atDatetime){
+    getBillingFieldUsed(){
+    	var oResult={};
+    	var arrFields=[];
+    	arrFields.push(["Importe Estimado Aprobación","Aprobado","importesEstimados"]);
+    	arrFields.push(["Importe Estimado Diseño","Disenado","importesEstimados"]);
+    	arrFields.push(["Importe Estimado Implementación","Implementado","importesEstimados"]);
+    	arrFields.push(["Importe Estimado Despliegue","Desplegado","importesEstimados"]);
+    	arrFields.push(["Importe Estimado Total","Total","importesEstimados"]);
+
+    	arrFields.push(["Importe Real Aprobación","Aprobado","importesReales"]);
+    	arrFields.push(["Importe Real Diseño","Diseñado","importesReales"]);
+    	arrFields.push(["Importe Real Implementación","Implementado","importesReales"]);
+    	arrFields.push(["Importe Real Despliegue","Desplegado","importesReales"]);
+    	arrFields.push(["Importe Real Total","Total","importesReales"]);
+    	oResult.arrFieldsForCalc=arrFields;
+    	oResult.arrBaseFields=["Fase","timeoriginalestimate","timeestimate","timespent"];
+    	return oResult;
+    }
+    initilizeBilling(otherParams,atDatetime){
     	var self=this;
     	var objImportes={};
 		var faseActual=self.fieldValue("Fase",false,atDatetime);
@@ -146,19 +74,7 @@ var issueExtender=class issueExtender{//this kind of definition allows to hot-re
     							};
     	objImportes.importesdefinidos={importesEstimados:{"Total":false,"Identificado":false,"Aprobado":false,"Disenado":false,"Implementado":false,"Desplegado":false},
     						  importesReales:{"Total":false,"Identificado":false,"Aprobado":false,"Disenado":false,"Implementado":false,"Desplegado":false}};
-   
-    	var arrFields=[];
-    	arrFields.push(["Importe Estimado Aprobación","Aprobado","importesEstimados"]);
-    	arrFields.push(["Importe Estimado Diseño","Disenado","importesEstimados"]);
-    	arrFields.push(["Importe Estimado Implementación","Implementado","importesEstimados"]);
-    	arrFields.push(["Importe Estimado Despliegue","Desplegado","importesEstimados"]);
-    	arrFields.push(["Importe Estimado Total","Total","importesEstimados"]);
-
-    	arrFields.push(["Importe Real Aprobación","Aprobado","importesReales"]);
-    	arrFields.push(["Importe Real Diseño","Diseñado","importesReales"]);
-    	arrFields.push(["Importe Real Implementación","Implementado","importesReales"]);
-    	arrFields.push(["Importe Real Despliegue","Desplegado","importesReales"]);
-    	arrFields.push(["Importe Real Total","Total","importesReales"]);
+    	var arrField=self.getBillingFieldUsed().arrFieldsForCalc;
     	var vValue;
     	var bWithValue;
     	arrFields.forEach(function (fieldImporte){
@@ -201,7 +117,7 @@ var issueExtender=class issueExtender{//this kind of definition allows to hot-re
     	return objImportes;
     }
     
-    getBilling(atDatetime,hourCost){
+    getBilling(otherParams,atDatetime){
    	 	debugger;
     	// initialize and load the importes structure
     	var objImportes=this.initilizeBilling(atDatetime);
@@ -271,44 +187,45 @@ var issueExtender=class issueExtender{//this kind of definition allows to hot-re
     
     execute(){
          var self=this;
-         var fncGetFase=function(){
-                var status=this.fieldValue("status.name");
-                return self.getFaseOf(status);
-         };
-         var fncGetFaseName=function(){
-             var status=this.fieldValue("Fase");
-             return self.getFaseName(status);
-      };
-         var fncGetFaseLife=function(){
+         var fncGetBillingLife=function(otherParams){
         	 var arrResults=[];
-             var hsStatus=this.getFieldLife("status.name");
-             var arrStatuses=hsStatus.getValue("life");
-             arrStatuses.forEach(function(status){
-            	 arrResults.push([status[0],self.getFaseOf(status[1]),self.getFaseOf(status[2])]);
-             });
-             return arrResults;
-         };
-         var fncGetFaseNameLife=function(){
-        	 var arrResults=[];
-             var hsStatus=this.getFieldLife("Fase");
-             var arrStatuses=hsStatus.getValue("life");
-             arrStatuses.forEach(function(status){
-            	 arrResults.push([status[0],self.getFaseName(status[1]),self.getFaseName(status[2])]);
-             });
+        	 var arrFields=this.getBillingFieldUsed();
+        	 var hsDateChanges=newHashMap();
+        	 arrFields.arrBaseFields.forEach(function (fieldName){
+                 var hsStatus=this.getFieldLife(fieldName);
+                 var arrStatuses=hsStatus.getValue("life");
+                 arrStatuses.forEach(function(status){
+                	 if (!hsDateChanges.exists(status[0])) hsDateChanges.add(status[0],status[0]);
+                 });
+        	 });
+        	 arrFields.arrFieldsForCalc.forEach(function (fieldInfo){
+                 var hsStatus=this.getFieldLife(fieldInfo[0]);
+                 var arrStatuses=hsStatus.getValue("life");
+                 arrStatuses.forEach(function(status){
+                	 if (!hsDateChanges.exists(status[0])) hsDateChanges.add(status[0],status[0]);
+                 });
+        	 });
+        	 hsDateChanges.walk(function(atDatetime){
+        		var billing=self.getBilling(otherParams,atDatetime) 
+           	 	arrResults.push([atDatetime,"",billing]);
+        	 });
+        	 arrResults.sort(function(a,b){
+        		if (a[0]<b[0]) return 1;
+        		if (a[0]>b[0]) return -1;
+        		return 0;
+        	 });
+        	 for (var i=arrResults.length-1;i>0;i--){
+        		 arrResults[i][1]=arrResults[i-1][2];
+        	 }
              return arrResults;
          };
 
          self.report.treeIssues.walk(function(issue){
-                 issue.getFase=fncGetFase;
-                 issue.getFaseLife=fncGetFaseLife;
-                 issue.getFaseName=fncGetFaseName;
-                 issue.getFaseNameLife=fncGetFaseNameLife;
                  issue.getFieldFaseBillingName=self.getFieldFaseBillingName;
+                 issue.getBillingFieldUsed=self.getBillingFieldUsed;
                  issue.initilizeBilling=self.initilizeBilling;
-                 issue.getBilling=self.getBilling;
+                 issue.getBilling=self.getBilling();
          });
     }
-
-     
 
 }

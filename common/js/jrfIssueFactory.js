@@ -64,11 +64,11 @@ function newIssueFactory(report){
 		log("Error getting correct id of Field:"+sFieldName);
 		return sFieldName;
 	});
-	dynObj.functions.add("fieldValue",function(theFieldName,bRendered,dateTime){
+	dynObj.functions.add("fieldValue",function(theFieldName,bRendered,dateTime,otherParams){
 		var self=this;
 		var sFieldName=self.getExistentFieldId(theFieldName.trim());
 		if (isDefined(dateTime)){
-			return self.getFieldValueAtDateTime(theFieldName,dateTime);
+			return self.getFieldValueAtDateTime(theFieldName,dateTime,otherParams);
 		}
 		var bGetAttribute=false;
 		var arrFieldNames=sFieldName.split(".");
@@ -81,7 +81,7 @@ function newIssueFactory(report){
 		var fieldValue="";
 		if (isDefined(fncAux)){
 			bDefined=true;
-			fieldValue=self["get"+sFieldName]();
+			fieldValue=self["get"+sFieldName](otherParams);
 			bDefined=true;
 		} else {
 			var jiraObj=self.getJiraObject();
@@ -397,18 +397,21 @@ function newIssueFactory(report){
 			})
 		});
 	});
-	dynObj.functions.add("getFieldLife",function(theFieldName){
+	dynObj.functions.add("getFieldLife",function(theFieldName,otherParams){
 		var self=this;
 		var sFieldName=theFieldName;
 		var hsItemFieldsCache;
 		var hsFieldLifesCaches=self.getFieldLifeCaches();
 		if (hsFieldLifesCaches.exists(sFieldName)){
 			hsItemFieldsCache=hsFieldLifesCaches.getValue(sFieldName);
+			if (isDefined(self["get"+theFieldName+"Life_LoadFromCacheAdjust"])){
+				hsItemFieldsCache=self["get"+theFieldName+"Life_LoadFromCacheAdjust"](hsItemFieldsCache,otherParams);
+			}
 			return hsItemFieldsCache;
 		}
 		var arrResult=[];
 		if (isDefined(self["get"+theFieldName+"Life"])){
-			arrResult=self["get"+theFieldName+"Life"]();
+			arrResult=self["get"+theFieldName+"Life"](otherParams);
 		} else {
 			var sChangeDate;
 			var issueBase=self.getJiraObject();
@@ -439,14 +442,18 @@ function newIssueFactory(report){
 		});
 		hsItemFieldsCache=newHashMap();
 		hsItemFieldsCache.add("life",arrResult);
-		hsFieldLifesCaches.add(theFieldName,hsItemFieldsCache);
+		if (isDefined(self["get"+theFieldName+"Life_SaveToCacheAdjust"])){
+			hsItemFieldsCache=self["get"+theFieldName+"Life_SaveToCacheAdjust"](hsItemFieldsCache,hsFieldLifesCaches,otherParams);
+		} else {
+			hsFieldLifesCaches.add(theFieldName,hsItemFieldsCache);
+		}
 		return hsItemFieldsCache;
 	});
-	dynObj.functions.add("getFieldValueAtDateTime",function(sFieldName,dateTime){
+	dynObj.functions.add("getFieldValueAtDateTime",function(sFieldName,dateTime,otherParams){
 		var self=this;
 		var dateCreated=new Date(self.fieldValue("created"));
 		if (dateCreated>dateTime) return "";
-		var hsFieldLife=self.getFieldLife(sFieldName);
+		var hsFieldLife=self.getFieldLife(sFieldName,otherParams);
 		if (hsFieldLife.exists(dateTime)){
 			return hsFieldLife.getValue(dateTime);
 		}
@@ -454,12 +461,11 @@ function newIssueFactory(report){
 		if (arrLife.length>0){
 			log("Debug here");
 		}
-		var auxVal=	self.fieldValue(sFieldName); // getting actual Value
+		var auxVal=	self.fieldValue(sFieldName,false,undefined,otherParams); // getting actual Value
 		var history;
 		var bLocated=false;
 		for (var i=0;(i<arrLife.length) &&(!bLocated);i++){
 			history=arrLife[i];
-	
 			log("Valor Actual:" +auxVal+ "  Valor:"+ history[0] + " From:"+history[1] + " To:"+history[2]);
 			if (history[0]<=dateTime){
 				bLocated=true;

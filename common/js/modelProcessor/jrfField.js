@@ -5,6 +5,7 @@ var jrfField=class jrfField{//this kind of definition allows to hot-reload
 		self.fieldName=self.getAttrVal("field");
 		self.dateTime=self.getAttrVal("atDateTime");
 		self.format=self.getAttrVal("inFormat");
+		self.moreParams=self.getAttrVal("aditionalparameters");
 	}
 	apply(){
 		var self=this;
@@ -18,7 +19,20 @@ var jrfField=class jrfField{//this kind of definition allows to hot-reload
 			log("There is not function.... in reportElem:it appears to be a jrfReport element");
 		} else {
 			log("There is function fieldValue.... in reportElem:"+self.reportElem.getKey());
-			sValue=self.reportElem.fieldValue(self.fieldName,true,auxDateTime);
+			var arrParams=[];
+			if (self.moreParams!=""){
+				var splitParams=self.moreParams.split(",");
+				splitParams.forEach(function(aParam){
+					var paramParts=aParam.split("=");
+					var paramName=paramParts[0];
+					var paramValue=undefined;
+					if (paramParts.length>1){
+						paramValue=paramParts[1];
+					}
+					arrParams.push({name:paramName,value:paramValue});
+				});
+			}
+			sValue=self.reportElem.fieldValue(self.fieldName,true,auxDateTime,arrParams);
 			if (isString(sValue)&&(sValue.indexOf("&lt;jrf")>=0)){// if there is jrf tokens in the description
 				var sHtml=decodeEntities(sValue);
 				var theModel;

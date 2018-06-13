@@ -225,6 +225,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
                  issue.getBillingFieldUsed=self.getBillingFieldUsed;
                  issue.initilizeBilling=self.initilizeBilling;
                  issue.getBilling=self.getBilling();
+                 issue.getBillingLife=fncGetBillingLife;
          });
     }
 

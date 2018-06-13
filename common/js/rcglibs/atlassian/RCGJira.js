@@ -151,17 +151,6 @@ class RCGJira{
 					for (var j=0;j<project.issuetypes.length;j++){
 						var issuetype=project.issuetypes[j];
 						self.processJsonIssueType(issuetype);
-/*							var arrProperties=Object.getOwnPropertyNames(issuetype.fields.__proto__).concat(Object.getOwnPropertyNames(issuetype.fields));
-							for (var k=0;k<arrProperties.length;k++){
-								var vPropName=arrProperties[k];
-								if (vPropName!=="__proto__"){
-									var field=issuetype.fields[vPropName];
-									if (typeof field==="object"){
-										self.processJsonField(field)
-									} 
-								}
-							}
-							*/
 					}
 				}
 			}

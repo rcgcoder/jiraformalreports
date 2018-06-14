@@ -396,21 +396,22 @@ function newIssueFactory(report){
 			})
 		});
 	});
-	dynObj.functions.add("getFieldLife",function(theFieldName,otherParams){
+	dynObj.functions.add("getFieldLife",function(theFieldName,atDatetime,otherParams){
 		var self=this;
 		var sFieldName=theFieldName;
+		var sCacheKey=sFieldName;
+		if (isDefined(self["get"+sFieldName+"CacheKeyPostText"])){
+			sCacheKey+=self["get"+sFieldName+"CacheKeyPostText"](atDatetime,otherParams);
+		}
 		var hsItemFieldsCache;
 		var hsFieldLifesCaches=self.getFieldLifeCaches();
-		if (hsFieldLifesCaches.exists(sFieldName)){
-			hsItemFieldsCache=hsFieldLifesCaches.getValue(sFieldName);
-			if (isDefined(self["get"+theFieldName+"Life_LoadFromCacheAdjust"])){
-				hsItemFieldsCache=self["get"+theFieldName+"Life_LoadFromCacheAdjust"](hsItemFieldsCache,otherParams);
-			}
+		if (hsFieldLifesCaches.exists(sCacheKey)){
+			hsItemFieldsCache=hsFieldLifesCaches.getValue(sCacheKey);
 			return hsItemFieldsCache;
 		}
 		var arrResult=[];
 		if (isDefined(self["get"+theFieldName+"Life"])){
-			arrResult=self["get"+theFieldName+"Life"](otherParams);
+			arrResult=self["get"+theFieldName+"Life"](atDatetime,otherParams);
 		} else {
 			var sChangeDate;
 			var issueBase=self.getJiraObject();
@@ -441,11 +442,7 @@ function newIssueFactory(report){
 		});
 		hsItemFieldsCache=newHashMap();
 		hsItemFieldsCache.add("life",arrResult);
-		if (isDefined(self["get"+theFieldName+"Life_SaveToCacheAdjust"])){
-			hsItemFieldsCache=self["get"+theFieldName+"Life_SaveToCacheAdjust"](hsItemFieldsCache,hsFieldLifesCaches,otherParams);
-		} else {
-			hsFieldLifesCaches.add(theFieldName,hsItemFieldsCache);
-		}
+		hsFieldLifesCaches.add(sCacheKey,hsItemFieldsCache);
 		return hsItemFieldsCache;
 	});
 	dynObj.functions.add("getFieldValueAtDateTime",function(sFieldName,dateTime,otherParams){

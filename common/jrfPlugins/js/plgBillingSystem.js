@@ -272,7 +272,19 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 	   	 }
 	     return arrResults;
     }
-    
+    getBillingCacheKeyPostText(atDatetime,otherParams){
+		var hourCost=parseFloat(otherParams.getValue("hourCost"));
+		var fromDatetime=otherParams.getValue("fromDatetime");
+		if (fromDatetime!=""){
+			fromDatetime=toDateNormalDDMMYYYYHHMMSS(fromDatetime).getTime()+"";
+		}
+		var toDateTime="";
+		if (isDefined(atDatetime)){
+			toDateTime=atDatetime.getTime()+"";
+		}
+		var sKey=hourCost+"-"+fromDatetime+"-"+toDateTime;
+		return sKey;
+    }
     
     execute(){
          var selfPlg=this;
@@ -282,6 +294,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
                  issue.initializeBilling=selfPlg.initializeBilling;
                  issue.getBilling=selfPlg.getBilling;
                  issue.getBillingLife=selfPlg.getBillingLife;
+                 issue.getBillingCacheKeyPostText=selfPlg.getBillingCacheKeyPostText;
          });
     }
 

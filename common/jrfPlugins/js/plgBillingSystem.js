@@ -245,6 +245,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 	   	 var hsDateChanges=newHashMap();
 	   	 arrFields.arrBaseFields.forEach(function (fieldName){
 	            var hsStatus=self.getFieldLife(fieldName);
+	            hsStatus.swing();
 	            var arrStatuses=hsStatus.getValue("life");
 	            arrStatuses.forEach(function(status){
 	           	 	if (!hsDateChanges.exists(status[0])) hsDateChanges.add(status[0],status[0]);

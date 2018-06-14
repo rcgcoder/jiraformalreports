@@ -188,7 +188,6 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 //		var sValAux=self.getHtmlBuffer();
 		
 		if (self.setVars!=""){ 
-			debugger;
 			var arrVars=self.setVars.split(",");
 			for (var i=0;i<arrVars.length;i++){
 				var arrVarParts=arrVars[i].split("=");

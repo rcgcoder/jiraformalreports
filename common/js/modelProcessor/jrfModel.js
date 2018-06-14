@@ -287,6 +287,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 	}
 	getTokenName(tag){
 		var tagAttrs=tag.getAttributes();
+		debugger;
 		var sTokenName="jrfNoop";
 		if (tagAttrs.exists("foreach")){
 			sTokenName="jrfForEach";

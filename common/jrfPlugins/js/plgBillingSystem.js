@@ -182,14 +182,15 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 				objImportes.importesReales[fieldFaseName]=totalReal*vPorc;
 			}
 		}
-		debugger;
 		var fromDatetime=otherParams.getValue("fromDatetime");
 		if (fromDatetime!=""){
+			debugger;
 			fromDatetime=toDateNormalDDMMYYYYHHMMSS(fromDatetime);
 		}
 		var antImportes="";
 		var antFase=0;
 		if ((fromDatetime!="")&&(fromDatetime!=atDatetime)){
+			debugger;
 			antImportes=this.getBilling(otherParams,atDatetime);
 			antFase=antImportes.source.faseActual;
 		}

@@ -189,10 +189,17 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		}
 		var antImportes="";
 		var antFase=0;
-		if ((fromDatetime!="")&&(fromDatetime!=atDatetime)){
-			debugger;
-			antImportes=this.getBilling(otherParams,fromDatetime);
-			antFase=antImportes.source.faseActual;
+		if (fromDatetime!=""){
+			var timeFrom=fromDatetime.getTime();
+			var timeAt=0;
+			if (atDatetime!=""){
+				timeAt=atDatetime.getTime();
+			}
+			if (timeAt!=timeFrom){
+				debugger;
+				antImportes=this.getBilling(otherParams,fromDatetime);
+				antFase=antImportes.source.faseActual;
+			}
 		}
 		var actFase=objImportes.source.faseActual;
 		var antFaseImporte=0;

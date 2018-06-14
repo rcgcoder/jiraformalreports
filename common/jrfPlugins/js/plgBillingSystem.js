@@ -238,6 +238,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		return objImportes;
     }
     getBillingLife(otherParams){
+    	 debugger;
 	   	 var self=this;
 	   	 var arrResults=[];
 	   	 var arrFields=self.getBillingFieldUsed();

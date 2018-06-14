@@ -89,6 +89,9 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     			vValue=0;
     		} else {
     			vValue=parseFloat(vValue);
+    			if (isNaN(vValue)){
+    				vValue=0;  
+    			}
     			bWithValue=true;
     		}
 			objImportes.importesdefinidos[fieldImporte[2]][fieldImporte[1]]=bWithValue;

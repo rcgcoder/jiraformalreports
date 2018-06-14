@@ -25,6 +25,7 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
 		// fase 4: Celebrada
 		// OT
 		var tEstados=[];
+		tEstados["Open"]=0;
 		tEstados["aprobado"]=1;
 		tEstados["Diseñado"]=2;
 		tEstados["implementado"]=3;

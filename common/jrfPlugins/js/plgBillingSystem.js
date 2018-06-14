@@ -184,6 +184,9 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		}
 		debugger;
 		var fromDatetime=otherParams.getValue("fromDatetime");
+		if (fromDateTime!=""){
+			fromDateTime=toDateNormalDDMMYYYYHHMMSS(fromDateTime);
+		}
 		var antImportes="";
 		var antFase=0;
 		if ((fromDatetime!="")&&(fromDatetime!=atDatetime)){

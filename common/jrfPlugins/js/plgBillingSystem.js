@@ -217,8 +217,8 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 				if (antFase>=nFase){
 					objImportes.calculos.aprobado+=antFaseImporte;
 					objImportes.calculos.pendiente+=(actFaseImporte-antFaseImporte);
-				} else {
-					objImportes.calculos.aprobado+=antFaseImporte;
+				} else { // 
+					objImportes.calculos.pendiente+=actFaseImporte;
 				}
 			}
 		}

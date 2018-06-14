@@ -85,9 +85,9 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     	arrFields.forEach(function (fieldImporte){
     		bWithValue=false;
     		vValue=self.fieldValue(fieldImporte[0],false,atDatetime);
-    		if ((vValue=="") || (isUndefined(vValue)))
+    		if ((vValue=="") || (isUndefined(vValue)) || (isNaN(vValue))) {
     			vValue=0;
-    		else {
+    		} else {
     			vValue=parseFloat(vValue);
     			bWithValue=true;
     		}

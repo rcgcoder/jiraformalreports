@@ -185,7 +185,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	applySetVars(sValAux){
 		var self=this;
 		
-		log(tokenName+" - Apply Set Vars:<"+sValAux+">");
+		log(self.tokenName+" - Apply Set Vars:<"+sValAux+">");
 //		var sValAux=self.getHtmlBuffer();
 		
 		if (self.setVars!=""){ 

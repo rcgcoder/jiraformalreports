@@ -213,7 +213,9 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				if (vVar.length()>0){// replace as a pop/push
 					vVar.pop();
 				}
+			    log("Popped --- Variable Stack Elements:"+vVar.length());
 				vVar.push(varValue);
+			    log("Pusshed:"+varValue +" --- Variable Stack Elements:"+vVar.length());
 
 				log("Value ["+varName+"] setted:["+varValue+"]");
 			}

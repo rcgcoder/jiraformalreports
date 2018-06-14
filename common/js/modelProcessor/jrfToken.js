@@ -203,19 +203,19 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				log("Looking for Value ["+varName+"] to set:["+varValue+"]");
 				var vVar=self.variables.getVars(varName);
 				try {
-				    log("Variable Stack Elements:"+vVar.length());
+				    log(varName+" Variable Stack Elements:"+vVar.length());
 				}
 				catch(err) {
-					log("Error retrieving variable:["+varName+"]... trying again to debug");
+					log(varName+" Error retrieving variable:["+varName+"]... trying again to debug");
 					vVar=self.variables.getVars(varName);
 				}
 				
 				if (vVar.length()>0){// replace as a pop/push
 					vVar.pop();
 				}
-			    log("Popped --- Variable Stack Elements:"+vVar.length());
+			    log(varName+" Popped --- Variable Stack Elements:"+vVar.length());
 				vVar.push(varValue);
-			    log("Pusshed:"+varValue +" --- Variable Stack Elements:"+vVar.length());
+			    log(varName+" Pusshed:"+varValue +" --- Variable Stack Elements:"+vVar.length());
 
 				log("Value ["+varName+"] setted:["+varValue+"]");
 			}

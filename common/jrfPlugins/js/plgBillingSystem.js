@@ -273,14 +273,18 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 	     return arrResults;
     }
     getBillingCacheKeyPostText(atDatetime,otherParams){
-		var hourCost=parseFloat(otherParams.getValue("hourCost"));
-		var fromDatetime=otherParams.getValue("fromDatetime");
-		if (fromDatetime!=""){
-			fromDatetime=toDateNormalDDMMYYYYHHMMSS(fromDatetime).getTime()+"";
-		}
+		var hourCost="";
+		var fromDatetime="";
 		var toDateTime="";
 		if (isDefined(atDatetime)){
 			toDateTime=atDatetime.getTime()+"";
+		}
+		if (isDefined(otherParams)){
+			hourCost=parseFloat(otherParams.getValue("hourCost"));
+			fromDatetime=otherParams.getValue("fromDatetime");
+		}
+		if (fromDatetime!=""){
+			fromDatetime=toDateNormalDDMMYYYYHHMMSS(fromDatetime).getTime()+"";
 		}
 		var sKey=hourCost+"-"+fromDatetime+"-"+toDateTime;
 		return sKey;

@@ -124,7 +124,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     
     getBilling(otherParams,atDatetime){
     	// initialize and load the importes structure
-    	var objImportes=this.initializeBilling(atDatetime);
+    	var objImportes=this.initializeBilling(otherParams,atDatetime);
     	var vPorc;
 		var tEstimado;
 		var tReal;

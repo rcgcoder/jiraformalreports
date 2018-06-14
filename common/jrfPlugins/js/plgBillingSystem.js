@@ -74,6 +74,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     							};
     	objImportes.importesdefinidos={importesEstimados:{"Total":false,"Identificado":false,"Aprobado":false,"Disenado":false,"Implementado":false,"Desplegado":false},
     						  importesReales:{"Total":false,"Identificado":false,"Aprobado":false,"Disenado":false,"Implementado":false,"Desplegado":false}};
+    	objImportes.calculos={aprobado:0,pendiente:0,resto:0,comentarios:""};
     	var arrFields=self.getBillingFieldUsed().arrFieldsForCalc;
     	var vValue;
     	var bWithValue;
@@ -179,6 +180,46 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 				fieldFaseName=this.getFieldFaseBillingName(nFase);
 				vPorc=objImportes.importesReales[fieldFaseName];
 				objImportes.importesReales[fieldFaseName]=totalReal*vPorc;
+			}
+		}
+		var fromDatetime=parseFloat(otherParams.getValue("fromDatetime"));
+		var antImportes="";
+		var antFase=0;
+		if ((fromDatetime!="")&&(fromDatetime!=atDatetime)){
+			antImportes=self.getBilling(otherParams,atDatetime);
+			antFase=antImportes.source.faseActual;
+		}
+		var actFase=objImportes.source.faseActual;
+		var antFaseImporte=0;
+		var actFaseImporte=0;
+		var sComentarios="";
+		if (actFase<antFase){
+			sComentarios+="\nRetrocedido a la fase:"+fieldFaseName+" antes:"+this.getFieldFaseBillingName(antFase);
+		}
+		debugger;
+		for (var nFase=0;nFase<5;nFase++){
+			fieldFaseName=this.getFieldFaseBillingName(nFase);
+			actFaseImporte=objImportes.importesReales[fieldFaseName];
+			if (antImportes!=""){
+				antFaseImporte=antImportes.importesReales[fieldFaseName];
+				if (actFaseImporte<antFaseImporte){
+					sComentarios+="\nReducido el importe de la fase:"+fieldFaseName+" antes:"+antFaseImporte+" ahora:"+actFaseImporte;
+				}
+				if (actFaseImporte>antFaseImporte){
+					sComentarios+="\nIncrementado el importe de la fase:"+fieldFaseName+" antes:"+antFaseImporte+" ahora:"+actFaseImporte;
+				}
+			} else {
+				antFaseImporte=0;
+			}
+			if (actFase<nFase){
+				objImportes.calculos.resto+=actFaseImporte;
+			} else { 
+				if (antFase>=nFase){
+					objImportes.calculos.aprobado+=antFaseImporte;
+					objImportes.calculos.pendiente+=(actFaseImporte-antFaseImporte);
+				} else {
+					objImportes.calculos.aprobado+=antFaseImporte;
+				}
 			}
 		}
 		return objImportes;

@@ -1,7 +1,6 @@
 var jrfNoop=class jrfNoop{//this kind of definition allows to hot-reload
 	constructor(tag,reportElem,model){
 		var self=this;
-		debugger;
 		model.extendToken(self,tag,reportElem);
 		self.autoAddPostHtml=false;
 	}

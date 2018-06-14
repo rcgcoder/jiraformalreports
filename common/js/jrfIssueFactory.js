@@ -449,7 +449,7 @@ function newIssueFactory(report){
 		var self=this;
 		var dateCreated=new Date(self.fieldValue("created"));
 		if (dateCreated>dateTime) return "";
-		var hsFieldLife=self.getFieldLife(sFieldName,otherParams);
+		var hsFieldLife=self.getFieldLife(sFieldName,dateTime,otherParams);
 		if (hsFieldLife.exists(dateTime)){
 			return hsFieldLife.getValue(dateTime);
 		}

@@ -217,7 +217,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				vVar.push(varValue);
 			    log(varName+" Pusshed:"+varValue +" --- Variable Stack Elements:"+vVar.length());
 
-				log("Value ["+varName+"] setted:["+varValue+"]");
+				log("Value ["+varName+"] setted:["+varValue+"] -- get ["+self.variables.getVar(varName)+"]");
 			}
 		}
 		return sValAux;

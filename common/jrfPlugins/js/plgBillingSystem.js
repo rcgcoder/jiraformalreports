@@ -192,7 +192,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		if (fromDatetime!=""){
 			var timeFrom=fromDatetime.getTime();
 			var timeAt=0;
-			if ((isDefined(atDatetime))||(atDatetime!="")){
+			if ((isDefined(atDatetime))&&(atDatetime!="")){
 				timeAt=atDatetime.getTime();
 			}
 			if (timeAt!=timeFrom){

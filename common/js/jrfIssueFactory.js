@@ -411,7 +411,7 @@ function newIssueFactory(report){
 		}
 		var arrResult=[];
 		if (isDefined(self["get"+theFieldName+"Life"])){
-			arrResult=self["get"+theFieldName+"Life"](atDatetime,otherParams);
+			arrResult=self["get"+theFieldName+"Life"](otherParams,atDatetime);
 		} else {
 			var sChangeDate;
 			var issueBase=self.getJiraObject();

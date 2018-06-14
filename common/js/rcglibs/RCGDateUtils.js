@@ -25,6 +25,7 @@ class RCGDateUtils {
 		dResult.setHours(curr_hr);
 		dResult.setMinutes(curr_min);
 		dResult.setSeconds(curr_sc);
+		dResult.setMilliseconds(0);
 		return dResult;
 	}
 

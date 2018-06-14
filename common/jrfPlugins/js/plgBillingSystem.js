@@ -182,6 +182,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 				objImportes.importesReales[fieldFaseName]=totalReal*vPorc;
 			}
 		}
+		debugger;
 		var fromDatetime=parseFloat(otherParams.getValue("fromDatetime"));
 		var antImportes="";
 		var antFase=0;
@@ -196,7 +197,6 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		if (actFase<antFase){
 			sComentarios+="\nRetrocedido a la fase:"+fieldFaseName+" antes:"+this.getFieldFaseBillingName(antFase);
 		}
-		debugger;
 		for (var nFase=0;nFase<5;nFase++){
 			fieldFaseName=this.getFieldFaseBillingName(nFase);
 			actFaseImporte=objImportes.importesReales[fieldFaseName];

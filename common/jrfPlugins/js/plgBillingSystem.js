@@ -184,7 +184,6 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		}
 		var fromDatetime=otherParams.getValue("fromDatetime");
 		if (fromDatetime!=""){
-			debugger;
 			fromDatetime=toDateNormalDDMMYYYYHHMMSS(fromDatetime);
 		}
 		var antImportes="";
@@ -196,7 +195,6 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 				timeAt=atDatetime.getTime();
 			}
 			if (timeAt!=timeFrom){
-				debugger;
 				antImportes=this.getBilling(otherParams,fromDatetime);
 				antFase=antImportes.source.faseActual;
 			}
@@ -259,7 +257,6 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 	      	arrResults.push([atDatetime,"",billing]);
 	   	 });
 	   	 
-	   	 debugger;
 	   	 
 	   	 arrResults.sort(function(a,b){
 	   		if (a[0]<b[0]) return 1;

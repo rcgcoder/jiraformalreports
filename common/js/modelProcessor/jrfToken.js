@@ -183,11 +183,13 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		}
 	}
 	applySetVars(sValAux){
-		log("Apply Set Vars:<"+sValAux+">");
 		var self=this;
+		
+		log(tokenName+" - Apply Set Vars:<"+sValAux+">");
 //		var sValAux=self.getHtmlBuffer();
 		
 		if (self.setVars!=""){ 
+			debugger;
 			var arrVars=self.setVars.split(",");
 			for (var i=0;i<arrVars.length;i++){
 				var arrVarParts=arrVars[i].split("=");

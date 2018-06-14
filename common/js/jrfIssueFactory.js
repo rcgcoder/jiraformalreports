@@ -448,10 +448,12 @@ function newIssueFactory(report){
 	dynObj.functions.add("getFieldValueAtDateTime",function(sFieldName,dateTime,otherParams){
 		var self=this;
 		var dateCreated=new Date(self.fieldValue("created"));
+		var sDateTime="unknown";
+		if (isDefined(dateTime)) sDateTime=dateTime.getTime();
 		if (dateCreated>dateTime) return "";
 		var hsFieldLife=self.getFieldLife(sFieldName,dateTime,otherParams);
-		if (hsFieldLife.exists(dateTime)){
-			return hsFieldLife.getValue(dateTime);
+		if (hsFieldLife.exists(sDateTime)){
+			return hsFieldLife.getValue(sDateTime);
 		}
 		var arrLife=hsFieldLife.getValue("life");
 		if (arrLife.length>0){
@@ -472,7 +474,7 @@ function newIssueFactory(report){
 		if ((auxVal==null)||(isUndefined(auxVal))){
 			auxVal="";
 		}
-		hsFieldLife.add(dateTime,auxVal);
+		hsFieldLife.add(sDateTime,auxVal);
 		return auxVal;
 	});
 	

@@ -43,6 +43,8 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     initializeBilling(otherParams,atDatetime){
     	var self=this;
     	var objImportes={};
+    	var status=self.fieldValue("status.name",false,atDatetime);
+    	var created=self.fieldValue("created",false,atDatetime);
 		var faseActual=self.fieldValue("Fase",false,atDatetime);
 		var timeoriginalestimate=self.fieldValue("timeoriginalestimate",false,atDatetime);
 		var timeestimate=self.fieldValue("timeestimate",false,atDatetime);
@@ -55,6 +57,8 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     				  timeestimate:timeestimate,
     				  timespent:timespent,
     				  faseActual:faseActual,
+    				  status:status,
+    				  created:created,
 	    			  importesEstimados:{"Total":"","Identificado":"","Aprobado":"","Disenado":"","Implementado":"","Desplegado":""},
 					  importesReales:{"Total":"","Identificado":"","Aprobado":"","Disenado":"","Implementado":"","Desplegado":""},
 					  bImportesRealesBlanco:false,

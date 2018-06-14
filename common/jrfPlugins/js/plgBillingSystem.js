@@ -191,7 +191,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		var antFase=0;
 		if ((fromDatetime!="")&&(fromDatetime!=atDatetime)){
 			debugger;
-			antImportes=this.getBilling(otherParams,atDatetime);
+			antImportes=this.getBilling(otherParams,fromDatetime);
 			antFase=antImportes.source.faseActual;
 		}
 		var actFase=objImportes.source.faseActual;

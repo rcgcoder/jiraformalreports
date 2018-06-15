@@ -220,9 +220,17 @@ var jrfReport=class jrfReport {
 		self.addStep("Processing root elements.... ",function(){
 			if (self.bFinishReport) return self.continueTask();
 			//self.treeIssues=newHashMap();
+			var bAlerted=false;
 			self.rootIssues.walk(function(value,iProf,key){
 				log("Root Issue: "+key);
 				var issue=self.allIssues.getById(key);
+				if (issue==""){
+					if (!bAlerted) {
+						alert("The issue:"+key+" is not in the scope... al roots have to be in the scope");
+					} else {
+						log("The issue:"+key+" is not in the scope... al roots have to be in the scope");
+					}
+				} 
 			})
 			self.rootProjects.walk(function(value,iProf,key){
 				log("Root Project: "+key);

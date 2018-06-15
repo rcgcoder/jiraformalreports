@@ -243,16 +243,26 @@ var jrfReport=class jrfReport {
 
 		var issuesAdded=newHashMap();
 		self.treeIssues=issuesAdded;
+		var bAlerted=false;
 		// assing childs and advance childs to root elements
 		self.addStep("Assign Childs and Advance",function(){
 			self.rootIssues.walk(function(value,iProf,key){
 				log("Root Issue: "+key);
 				var issue=self.allIssues.getById(key);
-				if (!issuesAdded.exists(key)){
-					issuesAdded.add(key,issue);
-				}
-				if (!self.childs.exists(key)){
-					self.childs.add(key,issue);
+				if (issue==""){
+					if (!bAlerted) {
+						alert("The issue:"+key+" is not in scope.... ommiting");
+						bAlerted=true;
+					} else {
+						log("The issue:"+key+" is not in scope.... ommiting");
+					}
+				} else {
+					if (!issuesAdded.exists(key)){
+						issuesAdded.add(key,issue);
+					}
+					if (!self.childs.exists(key)){
+						self.childs.add(key,issue);
+					}
 				}
 			});
 			var formulaChild=self.config.billingHierarchy;
@@ -333,6 +343,9 @@ var jrfReport=class jrfReport {
 				}
 	
 				self.childs.walk(function(childIssue){
+					if (childIssue==""){
+						log("ChildIssue is ''");
+					}
 					fncGetIssueChilds(childIssue);
 				});
 			}

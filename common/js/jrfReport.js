@@ -302,6 +302,8 @@ var jrfReport=class jrfReport {
 					var auxKey="Report";
 					if (isDefined(issueParent.getKey)){
 						auxKey="Issue:"+issueParent.getKey();
+					} else {
+						log("The parent has not key... maybe an error?");
 					}
 					self.addStep("Getting childs for " + auxKey + "....",function(){
 					//walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){

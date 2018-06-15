@@ -300,9 +300,9 @@ var jrfReport=class jrfReport {
 				});
 				var fncGetIssueChilds=function(issueParent){
 					var auxKey="Report";
-	//				if (isDefined(issueParent.getKey)){
+					if (isDefined(issueParent.getKey)){
 						auxKey="Issue:"+issueParent.getKey();
-	//				}
+					}
 					self.addStep("Getting childs for " + auxKey + "....",function(){
 					//walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
 						log("Task Manager Status:"+self.getRunningTask().parent.actStep + " " + self.getRunningTask().parent.steps.length);

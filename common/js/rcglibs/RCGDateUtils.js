@@ -52,7 +52,20 @@ class RCGDateUtils {
 		if (date1.getDate()!=date2.getDate()) return false;
 		return true;
 	}
-	
+	dateDiff(date1,date2,units){
+		var diffMillis=date1-date2;
+		var ret = diffMillis;   
+		switch(interval.toLowerCase()) {
+		    case 'week'   :  ret = (diffMillis/(1000*60*60*24*7));  break;
+		    case 'day'    :  ret = (diffMillis/(1000*60*60*24));  break;
+		    case 'hour'   :  ret = (diffMillis/(1000*60*60));  break;
+		    case 'minute' :  ret = (diffMillis/(1000*60));  break;
+		    case 'second' :  ret = (diffMillis/(1000));  break;
+		    default       :  ret = diffMillis;   break;
+		}
+		return ret;
+		
+	}
 	dateAdd(date, interval, units) {
 	  var ret = new Date(date); //don't change original date
 	  switch(interval.toLowerCase()) {

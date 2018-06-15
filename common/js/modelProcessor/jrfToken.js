@@ -302,8 +302,10 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				} else {
 					vAux=self.replaceVars(vAux);
 				}
-				if (typeof vAux==="string") vAux=vAux.trim();
-				while (vAux.indexOf("  ")>=0) vAux=replaceAll(vAux,"  "," ");				
+				if (typeof vAux==="string") {
+					vAux=vAux.trim();
+					while (vAux.indexOf("  ")>=0) vAux=replaceAll(vAux,"  "," ");				
+				}
 				return vAux;
 			}
 /*		} else if (self.model.report.allFieldNames.exists(idAttr)){

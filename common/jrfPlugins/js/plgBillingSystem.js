@@ -292,11 +292,12 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		if (isDefined(otherParams)){
 			hourCost=parseFloat(otherParams.getValue("hourCost"));
 			fromDatetime=otherParams.getValue("fromDatetime");
+			minFacturableFase=otherParams.getValue("minFacturableFase");
 		}
 		if (fromDatetime!=""){
 			fromDatetime=toDateNormalDDMMYYYYHHMMSS(fromDatetime).getTime()+"";
 		}
-		var sKey=hourCost+"-"+fromDatetime+"-"+toDateTime;
+		var sKey=hourCost+"-"+minFacturableFase+"-"+fromDatetime+"-"+toDateTime;
 		return sKey;
     }
     

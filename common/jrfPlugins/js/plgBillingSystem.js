@@ -78,7 +78,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     							};
     	objImportes.importesdefinidos={importesEstimados:{"Total":false,"Identificado":false,"Aprobado":false,"Disenado":false,"Implementado":false,"Desplegado":false},
     						  importesReales:{"Total":false,"Identificado":false,"Aprobado":false,"Disenado":false,"Implementado":false,"Desplegado":false}};
-    	objImportes.calculos={aprobado:0,pendiente:0,resto:0,comentarios:""};
+    	objImportes.calculos={aprobado:0,pendiente:0,resto:0,total:0,comentarios:""};
     	var arrFields=self.getBillingFieldUsed().arrFieldsForCalc;
     	var vValue;
     	var bWithValue;
@@ -242,6 +242,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 					objImportes.calculos.pendiente+=actFaseImporte;
 				}
 			}
+			objImportes.calculos.total+=actFaseImporte;
 		}
 		return objImportes;
     }

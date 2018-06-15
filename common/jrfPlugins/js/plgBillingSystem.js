@@ -204,7 +204,13 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 			}
 		}
 		var bAntFacturado=true;
-		if (antFase<2) bAntFacturado=false;
+		var minFacturableFase=otherParams.getValue("minFacturableFase");
+		if (minFacturableFase!=""){
+			minFacturableFase=parseInt(minFacturableFase);
+		} else {
+			minFacturableFase=4;
+		}
+		if (antFase<minFacturableFase) bAntFacturado=false;
 		var actFase=objImportes.source.faseActual;
 		var antFaseImporte=0;
 		var actFaseImporte=0;

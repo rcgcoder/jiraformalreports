@@ -203,6 +203,8 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 				antFase=antImportes.source.faseActual;
 			}
 		}
+		var bAntFacturado=true;
+		if (antFase<2) bAntFacturado=false;
 		var actFase=objImportes.source.faseActual;
 		var antFaseImporte=0;
 		var actFaseImporte=0;
@@ -227,7 +229,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 			if (actFase<nFase){
 				objImportes.calculos.resto+=actFaseImporte;
 			} else { 
-				if (antFase>=nFase){
+				if ((antFase>=nFase)&&(bAntFacturado)){
 					objImportes.calculos.aprobado+=antFaseImporte;
 					objImportes.calculos.pendiente+=(actFaseImporte-antFaseImporte);
 				} else { // 

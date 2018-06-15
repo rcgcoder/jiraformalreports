@@ -225,6 +225,7 @@ var jrfReport=class jrfReport {
 				log("Root Issue: "+key);
 				var issue=self.allIssues.getById(key);
 				if (issue==""){
+					debugger;
 					if (!bAlerted) {
 						alert("The issue:"+key+" is not in the scope... al roots have to be in the scope");
 					} else {
@@ -250,6 +251,7 @@ var jrfReport=class jrfReport {
 				log("Root Issue: "+key);
 				var issue=self.allIssues.getById(key);
 				if (issue==""){
+					debugger;
 					if (!bAlerted) {
 						alert("The issue:"+key+" is not in scope.... ommiting");
 						bAlerted=true;
@@ -283,6 +285,7 @@ var jrfReport=class jrfReport {
 					try{
 						bIsChild=fncIsChild(issueChild,issueParent);
 					} catch(err){
+						debugger;
 						log ("somthing es not good in child formula:"+sFncFormulaChild);
 						log ("using child: "+JSON.stringify(issueChild));
 						log ("using parent: "+JSON.stringify(issueParent));
@@ -301,6 +304,7 @@ var jrfReport=class jrfReport {
 					try{
 						bIsAdvPart=fncIsAdvPart(issueChild,issueParent);
 					} catch(err){
+						debugger;
 						log ("somthing es not good in advance formula:"+sFncFormulaAdv);
 						log ("using child: "+JSON.stringify(issueChild));
 						log ("using parent: "+JSON.stringify(issueParent));
@@ -321,6 +325,7 @@ var jrfReport=class jrfReport {
 					if (isDefined(issueParent.getKey)){
 						auxKey="Issue:"+issueParent.getKey();
 					} else {
+						debugger;
 						log("The parent has not key... maybe an error?");
 					}
 					self.addStep("Getting childs for " + auxKey + "....",function(){

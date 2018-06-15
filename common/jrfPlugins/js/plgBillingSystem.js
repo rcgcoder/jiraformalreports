@@ -286,6 +286,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		var hourCost="";
 		var fromDatetime="";
 		var toDateTime="";
+		var minFacturableFase="";
 		if (isDefined(atDatetime)){
 			toDateTime=atDatetime.getTime()+"";
 		}

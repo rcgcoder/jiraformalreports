@@ -66,7 +66,8 @@ function newIssueFactory(report){
 	});
 	dynObj.functions.add("fieldValue",function(theFieldName,bRendered,dateTime,otherParams){
 		var self=this;
-		var sFieldName=self.getExistentFieldId(theFieldName.trim());
+		var auxFieldName=theFieldName.trim();
+		var sFieldName=self.getExistentFieldId(auxFieldName);
 		var bGetAttribute=false;
 		var arrFieldNames=sFieldName.split(".");
 		if (arrFieldNames.length>1){

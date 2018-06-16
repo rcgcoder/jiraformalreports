@@ -365,7 +365,6 @@ function newIssueFactory(report){
 	
 	dynObj.functions.add("updateInfo",function(){
 		var self=this;
-		debugger;
 		var jiraObject=self.getJiraObject();
 		var issueFields=jiraObject.fields;
 		var useFields=theReport.config.useFields;
@@ -398,60 +397,6 @@ function newIssueFactory(report){
 				}
 			})
 		});
-		// applying "Jira Formal Report Adjusts"
-		var sTokenAdjustComment="Jira Formal Report Adjusts";
-		var hsReportAdjusts=self.getCommentsStartsWith(sTokenAdjustComment);
-		hsReportAdjusts.walk(function(sAdjustComment){
-			var sAux=sAdjustComment.substring(sTokenAdjustComment.length+1,sAdjustComment.length);
-			var oAdjusts=JSON.parse(sAux); // may be a object (single change) or an array (multiple changes)
-			if (!Array.isArray(oAdjusts)){ // if only one change
-				oAdjusts=[oAdjust]; // create as array
-			}
-			oAdjusts.forEach(function (oAdjust){
-				var fieldName="";
-				var fieldValue="";
-				var changeDate="";
-				var isLifeChange=false;
-				if (isDefined(oAdjust.changeDate)){
-					isLifeChange=true;
-					changeDate=toDateNormalDDMMYYYYHHMMSS(oAdjust.changeDate);
-				}
-				fieldName=oAdjust.field; // may be simple name (timespent) or complex (status.name)
-				fieldValue=oAdjust.newValue; // may be a simple value (16000) or complex ( {name:"the new name",id:14,...})
-				var arrFieldPath=fieldName.split(".");
-				var sField=arrFieldPath[0];
-				if (!isLifeChange){
-					if (!isDefined(self["set"+sField])){//the field is in the "field interest list"
-						log("Only can adjust interested fields... the field:"+sField + " is not in the list");
-					} else if (arrFieldPath.length==1){ // simple field
-						self["set"+sField](fieldValue);
-					} else {
-						var actValue=self["get"+sField]();
-						for (var i=1;i<arrFieldPath.length-1;i++){
-							var sSubPath=arrFieldPath[i];
-							if (isUndefined(actValue[sSubPath])){
-								actValue[sSubPath]={};
-							}
-							actValue=actValue[sSubPath];
-						}
-						actValue[arrFieldPath[arrFieldPath.length-1]]=fieldValue;
-					}
-				} else {
-					var hsLifeAdjusts=self.getFieldLifeAdjustById(sField);
-					if (!hsLifeAdjusts==""){
-						hsLifeAdjusts=newHashMap();
-						self.getFieldLifeAdjusts().add(sField,hsLifeAdjusts);
-					}
-					var oLifeChange={};
-					oLifeChange.effectDate=changeDate;
-					oLifeChange.newValue=fieldValue;
-					oLifeChange.fieldPath=arrFieldPath;
-					hsLifeAdjusts.add(changeDate.getTime()+"",oLifeChange);
-				}
-			});
-		});
-		var oAdjusts
-		// loading "Jira Formal Report Life Adjusts"
 	});
 	dynObj.functions.add("getFieldLife",function(theFieldName,atDatetime,otherParams){
 		var self=this;

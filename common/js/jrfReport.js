@@ -406,7 +406,7 @@ var jrfReport=class jrfReport {
 							var sAux=sCommentBody.substring(sTokenAdjustComment.length+1,sCommentBody.length);
 							var oAdjusts=JSON.parse(sAux); // may be a object (single change) or an array (multiple changes)
 							if (!Array.isArray(oAdjusts)){ // if only one change
-								oAdjusts=[oAdjust]; // create as array
+								oAdjusts=[oAdjusts]; // create as array
 							}
 							oAdjusts.forEach(function (oAdjust){
 								var fieldName="";

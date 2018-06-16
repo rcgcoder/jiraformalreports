@@ -421,6 +421,7 @@ var jrfReport=class jrfReport {
 								fieldValue=oAdjust.newValue; // may be a simple value (16000) or complex ( {name:"the new name",id:14,...})
 								var arrFieldPath=fieldName.split(".");
 								var sField=arrFieldPath[0];
+								var sField=issue.getExistentFieldId(sField);
 								if (!isLifeChange){
 									if (!isDefined(issue["set"+sField])){//the field is in the "field interest list"
 										log("Only can adjust interested fields... the field:"+sField + " is not in the list");

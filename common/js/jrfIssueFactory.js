@@ -527,12 +527,15 @@ function newIssueFactory(report){
 		for (var i=0;(i<arrLife.length) &&(!bLocated);i++){
 			history=arrLife[i];
 			log(sFieldName+" Life evaluating. Actual Value:" +JSON.stringify(auxVal)+ 
-					"  Date:"+ history[0] + 
+					" Type:"+ history[3] + 
+					" Date:"+ history[0] + 
 					" From:"+(history[1]!=null?JSON.stringify(history[1]):"null") + 
 					" To:"+(history[2]!=null?JSON.stringify(history[2]):"null") );
-			if (history[0]<=dateTime){
+			if (history[3]=="adjust") {
+				auxVal=history[2]; // apply the adjust.... 
+			} else if (history[0]<=dateTime){ // if next is < that the date.... finish
 				bLocated=true;
-			} else {
+			} else if (history[3]=="system") {
 				auxVal=history[1];
 			}
 		}

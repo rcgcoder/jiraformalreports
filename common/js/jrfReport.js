@@ -439,7 +439,7 @@ var jrfReport=class jrfReport {
 									}
 								} else {
 									var hsLifeAdjusts=issue.getFieldLifeAdjustById(sField);
-									if (!hsLifeAdjusts==""){
+									if (hsLifeAdjusts==""){
 										hsLifeAdjusts=newHashMap();
 										issue.getFieldLifeAdjusts().add(sField,hsLifeAdjusts);
 									}

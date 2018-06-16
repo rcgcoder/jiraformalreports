@@ -415,7 +415,7 @@ function newIssueFactory(report){
 					isLifeChange=true;
 					changeDate=toDateNormalDDMMYYYYHHMMSS(oAdjust.changeDate);
 				}
-				fieldName=oAdjust.fieldKey; // may be simple name (timespent) or complex (status.name)
+				fieldName=oAdjust.field; // may be simple name (timespent) or complex (status.name)
 				fieldValue=oAdjust.newValue; // may be a simple value (16000) or complex ( {name:"the new name",id:14,...})
 				var arrFieldPath=fieldName.split(".");
 				var sField=arrFieldPath[0];

@@ -55,8 +55,14 @@ class RCGDateUtils {
 		if (date1.getDate()!=date2.getDate()) return false;
 		return true;
 	}
+	dateIsNewer(date1,date2){
+		var diffMillis=date1.getTime()-date2.getTime();
+		if (diffMillis>0) return 1; //date1 is higger than date2
+		if (diffMillis<0) return -1; //date1 is lower than date2
+		return 0;					// date1 is equal than date2
+	}
 	dateDiff(date1,date2,units){
-		var diffMillis=date1-date2;
+		var diffMillis=date1.getTime()-date2.getTime();
 		var ret = diffMillis;   
 		switch(interval.toLowerCase()) {
 		    case 'week'   :  ret = (diffMillis/(1000*60*60*24*7));  break;

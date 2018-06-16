@@ -13,13 +13,13 @@ class RCGDateUtils {
 	    var curr_hr= 0;
 	    var curr_min = 0;
 	    var curr_sc= 0;
-		if (sDate.length>12){
+		if (arrTime[0]!=""){
 			curr_hr= parseInt(arrTime[0]);
 		}
-		if (sDate.length>15){
+		if (arrTime.length>1){
 			curr_min = parseInt(arrTime[1]);
 		}
-		if (sDate.length>18){
+		if (arrTime.length>2){
 			curr_sc= parseInt(arrTime[2]);
 		}
 		

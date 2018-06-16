@@ -526,7 +526,7 @@ function newIssueFactory(report){
 		var bLocated=false;
 		for (var i=0;(i<arrLife.length) &&(!bLocated);i++){
 			history=arrLife[i];
-			log("Actual Value:" +JSON.stringify(auxVal)+ 
+			log(sFieldName+" Life evaluating. Actual Value:" +JSON.stringify(auxVal)+ 
 					"  Date:"+ history[0] + 
 					" From:"+(history[1]!=null?JSON.stringify(history[1]):"null") + 
 					" To:"+(history[2]!=null?JSON.stringify(history[2]):"null") );

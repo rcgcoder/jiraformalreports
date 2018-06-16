@@ -1,8 +1,11 @@
 'use strict';
 class RCGDateUtils {
 	toDateNormalDDMMYYYYHHMMSS(sDate){ //dd/mm/yyyy hh:mm:ss
-		var arrDate=sDate.split(" ");
-		var arrDate=arrDate[0].split("/");
+		var sAuxDate=replaceAll(sDate," ","");//.split(" ");
+		var arrDate=sAuxDate.split("/");
+		var sAuxTime=arrDate[2].substring(4,arrDate[2].length);
+		arrDate[2]=arrDate[2].substring(0,4);
+		var arrTime=sAuxTime.split(":");
 		
 	    var curr_date= parseInt(arrDate[0]);
 	    var curr_month = parseInt(arrDate[1])-1;
@@ -11,13 +14,13 @@ class RCGDateUtils {
 	    var curr_min = 0;
 	    var curr_sc= 0;
 		if (sDate.length>12){
-			curr_hr= parseInt(sDate.substring(11,13));
+			curr_hr= parseInt(arrTime[0]);
 		}
 		if (sDate.length>15){
-			curr_min = parseInt(sDate.substring(14,16));
+			curr_min = parseInt(arrTime[1]);
 		}
 		if (sDate.length>18){
-			curr_sc= parseInt(sDate.substring(17,19));
+			curr_sc= parseInt(arrTime[2]);
 		}
 		
 		var dResult= new Date();

@@ -20,7 +20,8 @@ function newIssueFactory(report){
 			 {name:"Comment", description:"Comments in Issue",type:"object"},
 			 {name:"AccumulatorsCache",description:"Cache the values of accumulator calls",type:"object"},
 			 {name:"PrecomputedProperty",description:"List of properties with values of hidden childs computed by a user with permissions",type:"object"},
-			 {name:"FieldLifeCache",description:"Cache the life of the fields to speed up the reutilization of values",type:"object"}
+			 {name:"FieldLifeCache",description:"Cache the life of the fields to speed up the reutilization of values",type:"object"},
+			 {name:"FieldLifeAdjust",description:"List of manual adjusts to field values usually saved as comment in the issue",type:"object"}
 			]
 			,
 			allFieldDefinitions.concat(["JiraObject"])
@@ -396,6 +397,21 @@ function newIssueFactory(report){
 				}
 			})
 		});
+		// applying "Jira Formal Report Adjusts"
+		var sTokenAdjustComment="Jira Formal Report Adjusts";
+		var arrReportAdjusts=self.getCommentsStartsWith(sTokenAdjustComment);
+		arrReportAdjusts.forEach(function(sAdjustComment){
+			var sAux=sAdjustComment.substring(sTokenAdjustComment.length+1,sAdjustComment.length);
+			var oAdjust=JSON.parse(sAux);
+			var isLifeChange=false;
+			var changeDate="";
+			if (isDefined(oAdjust.changeDate)){
+				isLifeChange=true;
+				changeDate=toDateNormalDDMMYYYYHHMMSS(oAdjust.changeDate);
+			}
+		});
+		var oAdjusts
+		// loading "Jira Formal Report Life Adjusts"
 	});
 	dynObj.functions.add("getFieldLife",function(theFieldName,atDatetime,otherParams){
 		var self=this;

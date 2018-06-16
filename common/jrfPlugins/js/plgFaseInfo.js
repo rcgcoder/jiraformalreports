@@ -109,10 +109,11 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
       };
          var fncGetFaseLife=function(){
         	 var arrResults=[];
+        	 debugger;
              var hsStatus=this.getFieldLife("status.name");
              var arrStatuses=hsStatus.getValue("life");
              arrStatuses.forEach(function(status){
-            	 arrResults.push([status[0],self.getFaseOf(status[1]),self.getFaseOf(status[2])]);
+            	 arrResults.push([status[0],self.getFaseOf(status[1]),self.getFaseOf(status[2]),"system"]);
              });
              return arrResults;
          };
@@ -121,7 +122,7 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
              var hsStatus=this.getFieldLife("Fase");
              var arrStatuses=hsStatus.getValue("life");
              arrStatuses.forEach(function(status){
-            	 arrResults.push([status[0],self.getFaseName(status[1]),self.getFaseName(status[2])]);
+            	 arrResults.push([status[0],self.getFaseName(status[1]),self.getFaseName(status[2]),"system"]);
              });
              return arrResults;
          };

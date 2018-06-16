@@ -400,9 +400,10 @@ var jrfReport=class jrfReport {
 						// applying "Jira Formal Report Adjusts"
 						var sTokenAdjustComment="Jira Formal Report Adjusts";
 						var hsReportAdjusts=issue.getCommentsStartsWith(sTokenAdjustComment);
-						hsReportAdjusts.walk(function(sAdjustComment){
+						hsReportAdjusts.walk(function(oAdjustComment){
 							debugger;
-							var sAux=sAdjustComment.substring(sTokenAdjustComment.length+1,sAdjustComment.length);
+							var sCommentBody=oAdjustComment.body;
+							var sAux=sCommentBody.substring(sTokenAdjustComment.length+1,sCommentBody.length);
 							var oAdjusts=JSON.parse(sAux); // may be a object (single change) or an array (multiple changes)
 							if (!Array.isArray(oAdjusts)){ // if only one change
 								oAdjusts=[oAdjust]; // create as array

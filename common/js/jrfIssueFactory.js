@@ -448,6 +448,9 @@ function newIssueFactory(report){
 			if (a[0]>b[0]) return -1;
 			return 0
 		});
+		for (var i=0;i<arrResult.length-1;i++){
+			arrResult[i][1]=arrResult[i+1][2];
+		}
 		hsItemFieldsCache=newHashMap();
 		hsItemFieldsCache.add("life",arrResult);
 		hsFieldLifesCaches.add(sCacheKey,hsItemFieldsCache);
@@ -477,11 +480,9 @@ function newIssueFactory(report){
 					" Date:"+ history[0] + 
 					" From:"+(history[1]!=null?JSON.stringify(history[1]):"null") + 
 					" To:"+(history[2]!=null?JSON.stringify(history[2]):"null") );
-			if (history[3]=="adjust") {
-				auxVal=history[2]; // apply the adjust.... 
-			} else if (history[0]<=dateTime){ // if next is < that the date.... finish
+			if (history[0]<=dateTime){ // if next is < that the date.... finish
 				bLocated=true;
-			} else if (history[3]=="system") {
+			} else {
 				auxVal=history[1];
 			}
 		}

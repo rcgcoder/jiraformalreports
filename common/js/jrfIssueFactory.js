@@ -365,6 +365,7 @@ function newIssueFactory(report){
 	
 	dynObj.functions.add("updateInfo",function(){
 		var self=this;
+		debugger;
 		var jiraObject=self.getJiraObject();
 		var issueFields=jiraObject.fields;
 		var useFields=theReport.config.useFields;
@@ -401,7 +402,6 @@ function newIssueFactory(report){
 		var sTokenAdjustComment="Jira Formal Report Adjusts";
 		var hsReportAdjusts=self.getCommentsStartsWith(sTokenAdjustComment);
 		hsReportAdjusts.walk(function(sAdjustComment){
-			debugger;
 			var sAux=sAdjustComment.substring(sTokenAdjustComment.length+1,sAdjustComment.length);
 			var oAdjusts=JSON.parse(sAux); // may be a object (single change) or an array (multiple changes)
 			if (!Array.isArray(oAdjusts)){ // if only one change

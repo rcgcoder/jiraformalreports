@@ -399,8 +399,8 @@ function newIssueFactory(report){
 		});
 		// applying "Jira Formal Report Adjusts"
 		var sTokenAdjustComment="Jira Formal Report Adjusts";
-		var arrReportAdjusts=self.getCommentsStartsWith(sTokenAdjustComment);
-		arrReportAdjusts.forEach(function(sAdjustComment){
+		var hsReportAdjusts=self.getCommentsStartsWith(sTokenAdjustComment);
+		hsReportAdjusts.walk(function(sAdjustComment){
 			var sAux=sAdjustComment.substring(sTokenAdjustComment.length+1,sAdjustComment.length);
 			var oAdjust=JSON.parse(sAux);
 			var isLifeChange=false;

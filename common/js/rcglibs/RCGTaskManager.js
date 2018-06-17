@@ -452,7 +452,7 @@ class RCGTaskManager{
 		//self.extendObject(obj);
 		self.asyncTaskCalls=true;
 		self.asyncTaskCallsDelay=0;
-		self.asyncTaskCallsBlock=3000;
+		self.asyncTaskCallsBlock=1000;
 		self.timeoutsCalled=0;
 		self.timeoutsAvoided=0;
 		self.lastTimeout=0;

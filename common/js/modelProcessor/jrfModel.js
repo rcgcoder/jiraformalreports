@@ -463,10 +463,11 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		self.continueTask();
 	}
 	processDirectiveTags(){
+		debugger;
 		var self=this;
 		self.tagFactory.list.walk(function(tag){
 			if (self.getTokenName(tag)=="jrfDirective"){
-				var uses=self.getAttrVal("use").trim();
+				var uses=tag.getAttrVal("use").trim();
 				if (uses!=""){
 					var arrUses=uses.split(",");
 					arrUses.forEach(function(use){

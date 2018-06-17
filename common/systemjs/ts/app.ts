@@ -54,7 +54,7 @@ class App {
             });
             self.addStep("Postprocessing systemjs components.... ",function(){
                 var fncAddPostProcessStep=function(i){
-                    self.addStep("PostProcessing..."+i,function(){
+                    self.addStep("PostProcessing..."+i+"/"+System.postProcess.length,function(){
                         System.postProcess[i]();
                     }
                 }

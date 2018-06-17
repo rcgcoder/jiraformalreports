@@ -483,7 +483,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 	process(sPhase){
 		var self=this;
 		var auxPhase="all";
-		if (isDefined(sPhase)&&(sPhase!="")){
+		if (isDefined(sPhase)||(sPhase!="")){
 			self.rootTag=self.tagFactory.new();
 			auxPhase=sPhase;
 		}

@@ -198,6 +198,7 @@ class RCGTask{
 			}
 			if (typeof theMethod==="undefined"){
 				log("The method is undefined.... may be finished!");
+				theTask.continueTask();
 			} else {
 				theMethod.apply(context,newArgs);
 			}

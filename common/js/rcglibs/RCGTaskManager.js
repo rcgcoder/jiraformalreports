@@ -208,7 +208,9 @@ class RCGTask{
 		self.changeStatus();
 		if (self.getTaskManager().asyncTaskCalls) {
 			var contRunningTime=Date.now()-self.lastTimeout;
-			if ((asyncTaskCallsBlock==0)||(self.lastTimeout==0)||(contRunningTime>asyncTaskCallsBlock)){
+			if ((self.asyncTaskCallsBlock==0)
+					||(self.lastTimeout==0)
+					||(contRunningTime>self.asyncTaskCallsBlock)){
 				fncAsyncApply();
 			} else {
 				fncApply();

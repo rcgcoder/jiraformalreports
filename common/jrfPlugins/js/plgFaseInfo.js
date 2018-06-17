@@ -109,7 +109,7 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
       };
          var fncGetFaseLife=function(){
         	 var arrResults=[];
-        	 debugger;
+        	 //debugger;
              var hsStatus=this.getFieldLife("status.name");
              var arrStatuses=hsStatus.getValue("life");
              arrStatuses.forEach(function(status){

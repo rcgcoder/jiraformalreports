@@ -84,7 +84,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     	var bWithValue;
     	arrFields.forEach(function (fieldImporte){
     		bWithValue=false;
-    		debugger;
+    		//debugger;
     		vValue=self.fieldValue(fieldImporte[0],false,atDatetime);
     		if ((vValue=="") || (isUndefined(vValue)) || (isNaN(vValue))) {
     			vValue=0;
@@ -248,7 +248,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		return objImportes;
     }
     getBillingLife(otherParams){
-    	 debugger;
+    	 //debugger;
 	   	 var self=this;
 	   	 var arrResults=[];
 	   	 var arrFields=self.getBillingFieldUsed();

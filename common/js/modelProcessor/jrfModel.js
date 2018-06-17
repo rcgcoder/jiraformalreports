@@ -484,11 +484,11 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		var self=this;
 		var auxPhase="all";
 		if (isDefined(sPhase)||(sPhase!="")){
-			self.rootTag=self.tagFactory.new();
 			auxPhase=sPhase;
 		}
 		if ((sPhase=="all")||(sPhase=="parse")) { 
 			self.addStep("Parsing Model",function(){
+				self.rootTag=self.tagFactory.new();
 				self.parse(self.inputHtml,self.rootTag);
 			});
 		}

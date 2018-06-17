@@ -56,6 +56,7 @@ class App {
                 var fncAddPostProcessStep=function(i){
                     self.addStep("PostProcessing..."+i+"/"+System.postProcess.length,function(){
                         System.postProcess[i]();
+                        self.continueTask();
                     }
                 }
                 for (var i=0;i<System.postProcess.length;i++){

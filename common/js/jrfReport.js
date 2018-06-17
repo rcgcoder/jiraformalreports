@@ -410,6 +410,7 @@ var jrfReport=class jrfReport {
 						sVersions+=",";
 					}
 					sVersions+=versionName;
+					verCounter++;
 				});
 				if ((verCounter>0)&&(verCounter<10)){
 					fncGetVersionsIssues(sVersions);

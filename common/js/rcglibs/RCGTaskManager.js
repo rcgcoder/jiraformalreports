@@ -190,19 +190,31 @@ class RCGTask{
 		}
 		var theTask=self;
 		var fncApply=function(){
-			self.initTime=(new Date).getTime();
+			self.initTime=Date.now();
 			self.getTaskManager().setRunningTask(theTask);
 			if (theTask.description!=""){
 				log("Calling method of task: "+theTask.description);
 			}
 			theMethod.apply(context,newArgs);
 		}
-		self.changeStatus();
-		if (self.getTaskManager().asyncTaskCalls) {
+		var fncAsyncApply=function(){
+			self.lastTimeout=Date.now();
 			if (self.getTaskManager().asyncTaskCallsDelay>0){
 				setTimeout(fncApply,self.getTaskManager().asyncTaskCallsDelay);
 			} else {
 				setTimeout(fncApply);
+			}
+		}
+		self.changeStatus();
+		if (self.getTaskManager().asyncTaskCalls) {
+			fncAsyncApply();
+		} else if (asyncTaskCallsBlock>0) {
+			var contRunningTime=Date.now()-self.lastTimeout;
+			if ((self.lastTimeout==0)||(contRunningTime>asyncTaskCallsBlock)){
+				fncAsyncApply();
+			} else {
+				fncApply();
+				
 			}
 		} else {
 			fncApply();
@@ -431,6 +443,8 @@ class RCGTaskManager{
 		//self.extendObject(obj);
 		self.asyncTaskCalls=true;
 		self.asyncTaskCallsDelay=0;
+		self.asyncTaskCallsBlock=3000;
+		self.lastTimeout=0;
 		self.updateStatusDelay=1000;
 		self.changeStatusNeedsNotify=false;
 		self.changeStatusUpdateScheduled=false;

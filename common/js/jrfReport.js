@@ -372,12 +372,48 @@ var jrfReport=class jrfReport {
 			theModel.process("parse"); // parse....
 		});
 		self.addStep("Processing Directives",function(){
-			debugger;
+			var hsVersions=newHashMap();
 			self.objModel.directives.walk(function(hsDirectives,iProof,sDirectiveKey){
 				hsDirectives.walk(function(sValue){
 					log(sDirectiveKey + " directive setted:"+sValue);
+					if (sValue=="versions"){
+						self.treeIssues.walk(function(issue){
+							var arrVersions=issue.fieldValue("fixVersions");
+							arrVersions.forEach(function(version){
+								var name=version.name;
+								var released=version.released;
+								if (!hsVersions.exists(name)){
+									hsVersions.add(name,name);
+								};
+							});
+						});
+					}
 				});
 			});
+			log("Versions in report:"+hsVersions.length());
+			if (hsVersions.length()>0){
+				var verCounter=0;
+				var sVersions="";
+				var fncGetVersionsIssues=function(sVersions){
+					self.addStep("Getting versions ("+sVersions+") issues",function(){
+						self.continueTask();
+					});
+				}
+				hsVersions.walk(function(versionName){
+					if (verCounter>=10){
+						fncGetVersionsIssues(sVersions);
+						verCounter=0;
+						sVersions="";
+					}
+					if (verCounter>0){
+						sVersions+=",";
+					}
+					sVersions+=versionName;
+				});
+				if ((verCounter>0)&&(verCounter<10)){
+					fncGetVersionsIssues(sVersions);
+				}
+			}
 			self.continueTask();
 		});
 

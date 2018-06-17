@@ -467,22 +467,19 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		var self=this;
 		self.tagFactory.list.walk(function(tag){
 			if (self.getTokenName(tag)=="jrfDirective"){
-				var uses=tag.getAttrVal("use").trim();
-				if (uses!=""){
-					var arrUses=uses.split(",");
-					arrUses.forEach(function(use){
-						var hsUseDirectives;
-						if (self.directives.exists("use")){
-							hsUseDirectives=self.directives.getValue("use");
-						} else {
-							hsUseDirectives=newHashMap();
-							self.directives.add("use",hsUseDirectives);
-						}
-						if (!hsUseDirectives.exists(use)){
-							hsUseDirectives.add(use,use);
-						}
-					});
-				}
+				var auxTagApplier=self.prepareTag(tag);
+				auxTagApplier.uses.walk(function(use){
+					var hsUseDirectives;
+					if (self.directives.exists("use")){
+						hsUseDirectives=self.directives.getValue("use");
+					} else {
+						hsUseDirectives=newHashMap();
+						self.directives.add("use",hsUseDirectives);
+					}
+					if (!hsUseDirectives.exists(use)){
+						hsUseDirectives.add(use,use);
+					}
+				});
 			}
 		});
 		self.continueTask();

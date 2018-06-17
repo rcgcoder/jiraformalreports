@@ -6,6 +6,7 @@ var jrfReport=class jrfReport {
 		self.reuseAllIssues=false;
 		self.config=theConfig;
 		self.config.model=System.webapp.model;
+		self.objModel;
 		self.childs=newHashMap();
 		self.advanceChilds=newHashMap();
 		self.treeIssues=newHashMap();
@@ -356,6 +357,19 @@ var jrfReport=class jrfReport {
 			}
 			self.continueTask();
 		});
+		// load report model and submodels
+		// Process Model with The Report
+		self.addStep("Parsing Model",function(){
+			var theModel=new jrfModel(self);
+			self.objModel=theModel;
+			if (isDefined(self.config.listDefaultVariables)){
+				self.config.listDefaultVariables.forEach(function(defaultVar){
+					theModel.variables.initVar(defaultVar[0]);				
+					theModel.variables.pushVar(defaultVar[0],defaultVar[1]);				
+				})
+			}
+			theModel.process("parse"); // parse....
+		});
 
 		// load comments of issues
 		self.addStep("Loading comments of "+ issuesAdded.length()+"issues",function(){
@@ -475,14 +489,7 @@ var jrfReport=class jrfReport {
 		// load report model and submodels
 		// Process Model with The Report
 		self.addStep("Processing Model",function(){
-			var theModel=new jrfModel(self);
-			if (isDefined(self.config.listDefaultVariables)){
-				self.config.listDefaultVariables.forEach(function(defaultVar){
-					theModel.variables.initVar(defaultVar[0]);				
-					theModel.variables.pushVar(defaultVar[0],defaultVar[1]);				
-				})
-			}
-			theModel.process(); // hash inner task....
+			self.theModel.process("encode"); // hash inner task....
 		});
 		
 

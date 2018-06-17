@@ -145,7 +145,7 @@ class RCGTask{
 		self.isDone=true;
 		self.finishTime=(new Date()).getTime();
 		self.changeStatus();
-		self.method=undefined;
+		self.method="";
 	}
 	
 
@@ -182,7 +182,7 @@ class RCGTask{
 		if (obj==""){
 			context=undefined;
 		}
-		if (typeof theMethod==="string"){
+		if ((typeof theMethod==="string")&&(theMethod!="")){
 			theMethod=context[theMethod];
 		}
 		var newArgs=aArgs;
@@ -197,7 +197,7 @@ class RCGTask{
 			if (theTask.description!=""){
 				log("Calling method of task: "+theTask.description);
 			}
-			if (typeof theMethod==="undefined"){
+			if ((typeof theMethod==="undefined")||(theMethod=="")){
 				debugger;
 			}
 			

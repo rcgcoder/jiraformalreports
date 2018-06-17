@@ -13,11 +13,11 @@ export class TabReports {
         System.addPostProcess(function(){
             log("TabReports constructor called");
             System.webapp.getTaskManager().extendObject(self);
-            var theList=$("#ulDwarfers");
+/*            var theList=$("#ulDwarfers");
             console.log("List items:"+theList.length);
             console.log("Updating List");
             theList.append('<li><a href="#">Menu item Dyn</a></li>');
-            
+  */          
             //AJS.$("#select2-example").append('<option value="test">Dyn Created</option>');
             //System.bindObj(self);
         });

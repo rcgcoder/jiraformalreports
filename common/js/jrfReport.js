@@ -377,6 +377,7 @@ var jrfReport=class jrfReport {
 					log(sDirectiveKey + " directive setted:"+sValue);
 				});
 			});
+			self.continueTask();
 		});
 
 		// load comments of issues

@@ -215,8 +215,12 @@ class RCGTask{
 			if ((theTaskManager.asyncTaskCallsBlock==0)
 					||(theTaskManager.lastTimeout==0)
 					||(contRunningTime>theTaskManager.asyncTaskCallsBlock)){
+				theTaskManager.timeoutsCalled++;
+				log("Continuous running time:"+contRunningTime+" running async (with setTimeout "+theTaskManager.timeoutsCalled+"/"+theTaskManager.timeoutsAvoided+")");
 				fncAsyncApply();
 			} else {
+				theTaskManager.timeoutsAvoided++;
+				log("Continuous running time:"+contRunningTime+" running sync (without setTimeout "+theTaskManager.timeoutsCalled+"/"+theTaskManager.timeoutsAvoided+")");				
 				fncApply();
 			}
 		} else {
@@ -447,6 +451,8 @@ class RCGTaskManager{
 		self.asyncTaskCalls=true;
 		self.asyncTaskCallsDelay=0;
 		self.asyncTaskCallsBlock=3000;
+		self.timeoutsCalled=0;
+		self.timeoutsAvoided=0;
 		self.lastTimeout=0;
 		self.updateStatusDelay=1000;
 		self.changeStatusNeedsNotify=false;

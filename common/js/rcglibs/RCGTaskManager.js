@@ -196,6 +196,9 @@ class RCGTask{
 			if (theTask.description!=""){
 				log("Calling method of task: "+theTask.description);
 			}
+			if (typeof theMethod==="undefined"){
+				debugger;
+			}
 			theMethod.apply(context,newArgs);
 		}
 		var fncAsyncApply=function(){

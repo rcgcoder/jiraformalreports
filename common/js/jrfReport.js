@@ -372,6 +372,7 @@ var jrfReport=class jrfReport {
 			theModel.process("parse"); // parse....
 		});
 		self.addStep("Processing Directives",function(){
+			debugger;
 			var hsVersions=newHashMap();
 			self.objModel.directives.walk(function(hsDirectives,iProof,sDirectiveKey){
 				hsDirectives.walk(function(sValue){

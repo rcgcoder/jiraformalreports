@@ -463,7 +463,6 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		self.continueTask();
 	}
 	processDirectiveTags(){
-		debugger;
 		var self=this;
 		self.tagFactory.list.walk(function(tag){
 			if (self.getTokenName(tag)=="jrfDirective"){

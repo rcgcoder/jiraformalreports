@@ -29,6 +29,7 @@ class RCGBarrier{
 		self.nItems--;
 		if (self.nItems<=0){
 			log("Barrier "+self.id+" Barrier reached!");
+			debugger;
 			self.tasksBarried=[]; // remove the arrays for free memory
 			self.tasksReached=[]; // remove the arrays for free memory
 			var theCallback=self.callback;

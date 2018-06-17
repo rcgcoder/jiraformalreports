@@ -16,6 +16,9 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		self.markdownConverter = new showdown.Converter();
 		self.report=theReport;
 		self.processingRoot="";
+		self.rootTag="";
+		
+		
 		self.accumulatorList=newHashMap();
 		self.tagFactory=newDynamicObjectFactory(
 				[{name:"Child",description:"subTags",type:"object"},
@@ -477,27 +480,33 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 	
 	
 	
-	process(){
+	process(sPhase){
 		var self=this;
-		var sModel=self.inputHtml;
-		var rootJRF=self.tagFactory.new();
-		var report=self.report;
-		var htmlBufferIndex;
-		self.addStep("Parsing Model",function(){
-			self.parse(sModel,rootJRF);
-		});
-		self.addStep("Encoding model with Jira Info",function(){
-			htmlBufferIndex=self.pushHtmlBuffer();
-			self.encode(rootJRF);
-		});
-		self.addStep("Returning result HTML to process caller",function(){
-//			log(sHtml);
-			var sHtml=self.popHtmlBuffer(htmlBufferIndex);
-			if ((self.html.length>0)||(self.htmlStack.length()>0)){
-				log("There si more html in the buffer.... Maybe someone has push hmtl without pop");
-			}
-			self.continueTask([sHtml]);
-		});
+		var auxPhase="all";
+		if (isDefined(sPhase)&&(sPhase!="")){
+			self.rootTag=self.tagFactory.new();
+			auxPhase=sPhase;
+		}
+		if ((sPhase=="all")||(sPhase=="parse")) { 
+			self.addStep("Parsing Model",function(){
+				self.parse(self.inputHtml,self.rootTag);
+			});
+		}
+		if ((sPhase=="all")||(sPhase=="encode")) {
+			var htmlBufferIndex;
+			self.addStep("Encoding model with Jira Info",function(){
+				htmlBufferIndex=self.pushHtmlBuffer();
+				self.encode(self.rootTag);
+			});
+			self.addStep("Returning result HTML to process caller",function(){
+	//			log(sHtml);
+				var sHtml=self.popHtmlBuffer(htmlBufferIndex);
+				if ((self.html.length>0)||(self.htmlStack.length()>0)){
+					log("There si more html in the buffer.... Maybe someone has push hmtl without pop");
+				}
+				self.continueTask([sHtml]);
+			});
+		}
 		self.continueTask();
 	}
 }

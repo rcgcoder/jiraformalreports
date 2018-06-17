@@ -53,10 +53,15 @@ class App {
                           System.webapp.loadRemoteFiles(arrFiles);
             });
             self.addStep("Postprocessing systemjs components.... ",function(){
-                for (var i=0;i<System.postProcess.length;i++){
-                    System.postProcess[i]();
+                var fncAddPostProcessStep=function(i){
+                    self.addStep("PostProcessing..."+i,function(){
+                        System.postProcess[i]();
+                    }
                 }
-                self.popCallback();
+                for (var i=0;i<System.postProcess.length;i++){
+                    fncAddPostProcessStep(i);
+                }
+                self.continueTask();
             });
             self.continueTask();
         } else {

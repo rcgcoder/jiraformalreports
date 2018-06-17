@@ -226,7 +226,7 @@ var jrfReport=class jrfReport {
 				log("Root Issue: "+key);
 				var issue=self.allIssues.getById(key);
 				if (issue==""){
-					debugger;
+//					debugger;
 					if (!bAlerted) {
 						alert("The issue:"+key+" is not in the scope... al roots have to be in the scope");
 					} else {
@@ -252,7 +252,7 @@ var jrfReport=class jrfReport {
 				log("Root Issue: "+key);
 				var issue=self.allIssues.getById(key);
 				if (issue==""){
-					debugger;
+//					debugger;
 					if (!bAlerted) {
 						alert("The issue:"+key+" is not in scope.... ommiting");
 						bAlerted=true;
@@ -286,7 +286,7 @@ var jrfReport=class jrfReport {
 					try{
 						bIsChild=fncIsChild(issueChild,issueParent);
 					} catch(err){
-						debugger;
+						//debugger;
 						log ("somthing es not good in child formula:"+sFncFormulaChild);
 						log ("using child: "+JSON.stringify(issueChild));
 						log ("using parent: "+JSON.stringify(issueParent));
@@ -305,7 +305,7 @@ var jrfReport=class jrfReport {
 					try{
 						bIsAdvPart=fncIsAdvPart(issueChild,issueParent);
 					} catch(err){
-						debugger;
+						//debugger;
 						log ("somthing es not good in advance formula:"+sFncFormulaAdv);
 						log ("using child: "+JSON.stringify(issueChild));
 						log ("using parent: "+JSON.stringify(issueParent));
@@ -415,7 +415,7 @@ var jrfReport=class jrfReport {
 						var sTokenAdjustComment="Jira Formal Report Adjusts";
 						var hsReportAdjusts=issue.getCommentsStartsWith(sTokenAdjustComment);
 						hsReportAdjusts.walk(function(oAdjustComment){
-							debugger;
+							//debugger;
 							var sCommentBody=oAdjustComment.body;
 							var sAux=sCommentBody.substring(sTokenAdjustComment.length+1,sCommentBody.length);
 							var oAdjusts=JSON.parse(sAux); // may be a object (single change) or an array (multiple changes)

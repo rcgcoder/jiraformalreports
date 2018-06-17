@@ -211,7 +211,7 @@ class RCGTask{
 		}
 		self.changeStatus();
 		if (theTaskManager.asyncTaskCalls) {
-			var contRunningTime=Date.now()-self.lastTimeout;
+			var contRunningTime=Date.now()-theTaskManager.lastTimeout;
 			if ((theTaskManager.asyncTaskCallsBlock==0)
 					||(theTaskManager.lastTimeout==0)
 					||(contRunningTime>theTaskManager.asyncTaskCallsBlock)){

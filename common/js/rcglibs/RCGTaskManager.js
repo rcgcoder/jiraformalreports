@@ -189,32 +189,32 @@ class RCGTask{
 			newArgs=[aArgs];
 		}
 		var theTask=self;
+		var theTaskManager=self.getTaskManager();
 		var fncApply=function(){
 			self.initTime=Date.now();
-			self.getTaskManager().setRunningTask(theTask);
+			theTaskManager.setRunningTask(theTask);
 			if (theTask.description!=""){
 				log("Calling method of task: "+theTask.description);
 			}
 			theMethod.apply(context,newArgs);
 		}
 		var fncAsyncApply=function(){
-			self.lastTimeout=Date.now();
-			if (self.getTaskManager().asyncTaskCallsDelay>0){
-				setTimeout(fncApply,self.getTaskManager().asyncTaskCallsDelay);
+			theTaskManager.lastTimeout=Date.now();
+			if (theTaskManager.asyncTaskCallsDelay>0){
+				setTimeout(fncApply,theTaskManager.asyncTaskCallsDelay);
 			} else {
 				setTimeout(fncApply);
 			}
 		}
 		self.changeStatus();
-		if (self.getTaskManager().asyncTaskCalls) {
+		if (theTaskManager.asyncTaskCalls) {
 			var contRunningTime=Date.now()-self.lastTimeout;
-			if ((self.asyncTaskCallsBlock==0)
-					||(self.lastTimeout==0)
-					||(contRunningTime>self.asyncTaskCallsBlock)){
+			if ((theTaskManager.asyncTaskCallsBlock==0)
+					||(theTaskManager.lastTimeout==0)
+					||(contRunningTime>theTaskManager.asyncTaskCallsBlock)){
 				fncAsyncApply();
 			} else {
 				fncApply();
-				
 			}
 		} else {
 			fncApply();

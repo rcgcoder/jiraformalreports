@@ -15,6 +15,137 @@
     another part
     </div>
 </div>
+<hr>
+<hr>
+lorem ipsum
+<br>
+<div class="aui-group">
+    <div class="aui-item">
+    	<docxSaver name="testDocx" id="testDocx">
+    	</docxSaver>
+    </div>
+</div>
+<div class="aui-group">
+    <div class="aui-item">
+	<button (click)="doMemoryLeaksTest()" class="aui-button">Process Memory Leaks Testing</button>
+	<button (click)="doProcessModel()" class="aui-button">Process Model Testing</button>
+
+	<button (click)="doUpdateIssuePropertyTest()" class="aui-button">Test updating Issue Property</button>
+    
+    
+	<button (click)="doOpenJQL()" class="aui-button">Open JQL Tab</button>
+	<jqlExtendedParser name="testJQL"></jqlExtendedParser>
+    
+    <br>
+    <atlassianSelector name="selProjects" 
+    				   typeDescriptor="Projects"
+    				    atlassianAplication="webapp"
+    				    atlassianObjectFunction="getListProjects"
+    		>
+    </atlassianSelector >
+  	<br>    
+    <atlassianSelector name="selTypes" 
+    				   typeDescriptor="Issue Types"
+    				    atlassianAplication="webapp"
+    				    atlassianObjectFunction="getListIssueTypes"
+    		>
+    </atlassianSelector >
+
+    <br>
+    <atlassianSelector name="selLabels" 
+    				   typeDescriptor="Labels"
+    				    atlassianAplication="webapp"
+    				    atlassianObjectFunction="getListLabels"
+    		>
+    </atlassianSelector >
+
+    <br>
+    <atlassianSelector name="selEpics" 
+    				   typeDescriptor="Epics"
+    				   multiple="true"
+    				    atlassianAplication="webapp"
+    				    atlassianObjectFunction="getListEpics"
+    		>
+    </atlassianSelector >
+    <br>
+    <atlassianSelector name="selFilters" 
+    				   typeDescriptor="Filters"
+    				   multiple="true"
+    				    atlassianAplication="webapp"
+    				    atlassianObjectFunction="getListFilters"
+    		>
+    </atlassianSelector >
+    <br>
+    <atlassianSelector name="selFields" 
+    				   typeDescriptor="Issue Fields"
+    				    atlassianAplication="webapp"
+    				    atlassianObjectFunction="getListFields"
+    		>
+    </atlassianSelector >
+    <br>
+    <aui-label for="sync-product-single-select">Choose your product synchronously:</aui-label>
+    <p>
+        <aui-select
+            id="sync-product-single-select"
+            name="product"
+            placeholder="Select a product"
+        >
+            <aui-option>HipChat</aui-option>
+            <aui-option>JIRA</aui-option>
+            <aui-option>Confluence</aui-option>
+            <aui-option>Stash</aui-option>
+            <aui-option>FeCru</aui-option>
+        </aui-select>
+    </p>
+     
+	    <!-- Trigger -->
+		<a href="#dwarfers" 
+			aria-owns="dwarfers" 
+			aria-haspopup="true" 
+			class="aui-button aui-style-default aui-dropdown2-trigger">Dropdown trigger</a>
+		
+		<!-- Dropdown -->
+		<div id="dwarfers" class="aui-style-default aui-dropdown2">
+		    <ul id="ulDwarfers" class="aui-list-truncate">
+		        <li><a href="#">Menu item</a></li>
+		        <li><a href="#">Menu item</a></li>
+		        <li><a href="#">Menu item</a></li>
+		        <li><a href="#">Menu item</a></li>
+		    </ul>
+		</div>
+    </div>
+    <div class="aui-item">
+    <aui-label for="gzip-compression">Use gzip compression</aui-label>
+    <aui-toggle id="gzip-compression" label="use gzip compression"></aui-toggle>    
+    
+    
+    
+<!-- Trigger -->
+<a href="#dropdown2-icons-wrap-trigger" aria-owns="dropdown2-icons-wrap" aria-haspopup="true" class="aui-button aui-style-default aui-dropdown2-trigger">Dropdown trigger</a>
+
+<!-- Dropdown -->
+<div id="dropdown2-icons-wrap" class="aui-style-default aui-dropdown2">
+    <ul>
+        <li>
+            <a href="http://example.com/" class="aui-icon-container">
+                <span class="icon icon-example">Alt text</span> Icon span pattern
+            </a>
+        </li>
+        <li>
+            <a href="http://example.com/" class="aui-icon-container">
+                <img src="images/icon-test-16x16.png"> Icon as IMG element
+            </a>
+        </li>
+        <li>
+            <a href="http://example.com/" class="aui-icon-container icon-example">Icon as background image</a>
+        </li>
+    </ul>
+</div>    
+       </div>
+</div>
+<dlgSelectionTable name="ProjectSelector2" (onSelected)="onSelectedProjects($event)"></dlgSelectionTable>
+
+<hr>
 <br>
 <br>
 <jsExecutor id="executor" name="executor">

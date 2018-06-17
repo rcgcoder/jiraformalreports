@@ -5,6 +5,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		self.functionCache=newHashMap();
 		self.actualElement=actualElement;
 		self.variables=new RCGVarEngine();
+		self.directives=newHashMap();
 		self.tokenBase=new jrfToken(self);
 		if (isDefined(inputHtml)){
 			self.inputHtml=inputHtml;
@@ -307,6 +308,8 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			sTokenName="jrfDebug";
 		} else if (tagAttrs.exists("include")){
 			sTokenName="jrfInclude";
+		} else if (tagAttrs.exists("directive")){
+			sTokenName="jrfDirective";
 		} else {
 			sTokenName="jrfNoop";
 		}
@@ -372,6 +375,9 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 				parentTag.setPostHTML(sTagRest);
 			}
 			self.continueTask();
+		});
+		self.addStep("Processing Directives", function(){
+			self.processDirectiveTags();
 		});
 		self.addStep("Processing Includes", function(){
 			self.processIncludeTags();
@@ -455,6 +461,25 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		});
 		
 		self.continueTask();
+	}
+	processDirectiveTags(){
+		var self=this;
+		self.tagFactory.list.walk(function(tag){
+			if (self.getTokenName(tag)=="jrfInclude"){
+				tag.uses.walk(function(use){
+					var hsUseDirectives;
+					if (model.directives.exists("use",self.uses)){
+						hsUseDirectives=model.directives.getValue("use");
+					} else {
+						hsUseDirectives=newHashMap();
+						model.directives.add("use",hsUseDirectives);
+					}
+					if (!hsUseDirectives.exists(use)){
+						hsUseDirectives.add(use,use);
+					}
+				});
+			}
+		});
 	}
 	processIncludeTags(){
 		var self=this;

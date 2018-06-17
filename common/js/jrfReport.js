@@ -492,6 +492,14 @@ var jrfReport=class jrfReport {
 			self.objModel.process("encode"); // hash inner task....
 		});
 		
+		self.addStep("Processing Directives",function(){
+			debugger;
+			self.objModel.directives.walk(function(hsDirectives,iProof,sDirectiveKey){
+				hsDirectives.walk(function(sValue){
+					log(sDirectiveKey + " directive setted:"+sValue);
+				});
+			});
+		});
 
 		self.addStep("Setting the HTML",function(sModelProcessedResult){
 	        var jqResult=$("#ReportResult");

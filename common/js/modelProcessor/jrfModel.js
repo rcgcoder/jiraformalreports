@@ -465,7 +465,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 	processDirectiveTags(){
 		var self=this;
 		self.tagFactory.list.walk(function(tag){
-			if (self.getTokenName(tag)=="jrfInclude"){
+			if (self.getTokenName(tag)=="jrfDirective"){
 				tag.uses.walk(function(use){
 					var hsUseDirectives;
 					if (model.directives.exists("use",self.uses)){

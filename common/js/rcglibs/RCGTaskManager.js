@@ -197,9 +197,10 @@ class RCGTask{
 				log("Calling method of task: "+theTask.description);
 			}
 			if (typeof theMethod==="undefined"){
-				debugger;
+				log("The method is undefined.... may be finished!");
+			} else {
+				theMethod.apply(context,newArgs);
 			}
-			theMethod.apply(context,newArgs);
 		}
 		var fncAsyncApply=function(){
 			theTaskManager.lastTimeout=Date.now();

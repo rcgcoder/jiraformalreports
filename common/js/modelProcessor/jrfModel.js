@@ -376,7 +376,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			}
 			self.continueTask();
 		});
-		self.addStep("Processing Directives", function(){
+		self.addStep("Processing Model Directives..", function(){
 			self.processDirectiveTags();
 		});
 		self.addStep("Processing Includes", function(){
@@ -480,6 +480,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 				});
 			}
 		});
+		self.continueTask();
 	}
 	processIncludeTags(){
 		var self=this;

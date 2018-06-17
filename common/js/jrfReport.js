@@ -489,7 +489,7 @@ var jrfReport=class jrfReport {
 		// load report model and submodels
 		// Process Model with The Report
 		self.addStep("Processing Model",function(){
-			self.theModel.process("encode"); // hash inner task....
+			self.objModel.process("encode"); // hash inner task....
 		});
 		
 

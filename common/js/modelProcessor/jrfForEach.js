@@ -75,6 +75,7 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 				sAux=replaceAll(sAux,"'",'"');
 				elemsInForEach=self.replaceVarsAndExecute(sAux);
 			} else if (self.sourceJS!=""){
+				debugger;
 				elemsInForEach=self.sourceJS;
 			}
 			var hsAux=newHashMap();

@@ -397,7 +397,23 @@ var jrfReport=class jrfReport {
 				var sVersions="";
 				var fncGetVersionsIssues=function(sVersions){
 					self.addStep("Getting versions ("+sVersions+") issues",function(){
-						self.continueTask();
+						var fncProcessIssue=function(issue){
+							debugger;
+							var oIssue;
+							if (!self.allIssues.list.exists(issue.key)){
+								oIssue=self.allIssues.new(issue.fields.summary,issue.key);
+								oIssue.setJiraObject(issue);
+								oIssue.updateInfo();
+								oIssue.setKey(issue.key);
+							} else {
+								oIssue=self.allIssues.list.getValue(issue.key);
+							}
+							if (!self.treeIssues.exists(issue.key)){
+								self.treeIssues.add(issue.key,oIssue);
+							}
+						}
+						self.jira.processJQLIssues("fixVersion in ("+sVersions+")",
+												  fncProcessIssue);
 					});
 				}
 				hsVersions.walk(function(versionName){

@@ -151,7 +151,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	applyInitVars(){
 		var self=this;
 		if (self.initVars!=""){
-			if (initVars.indexOf("srcVersions")>=0){
+			if (self.initVars.indexOf("srcVersions")>=0){
 				debugger;
 			}
 			var arrVars=self.initVars.split(",");

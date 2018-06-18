@@ -10,7 +10,7 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 		self.source=self.getAttrVal("source");
 		self.recursive=self.getAttrVal("recursive");
 		self.sourceJson=self.getAttrVal("sourcejson");
-		debugger;
+		self.sourceJS=self.getAttrVal("sourcejs");
 		self.sourceFormula=self.getAttrVal("sourceformula");
 		self.whereCondition=self.getAttrVal("where",undefined,false);
 		self.countProcessedElements=self.getAttrVal("count");
@@ -74,6 +74,8 @@ var jrfForEach=class jrfForEach{//this kind of definition allows to hot-reload
 				sAux=replaceAll(sAux,";",",");
 				sAux=replaceAll(sAux,"'",'"');
 				elemsInForEach=self.replaceVarsAndExecute(sAux);
+			} else if (self.sourceJS!=""){
+				elemsInForEach=self.sourceJS;
 			}
 			var hsAux=newHashMap();
 			for (var i=0;i<elemsInForEach.length;i++){

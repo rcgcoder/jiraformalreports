@@ -13,8 +13,7 @@ var jrfLoopBase=class jrfLoopBase{//this kind of definition allows to hot-reload
 		self.sourceJS=self.getAttrVal("sourcejs");
 		self.sourceFormula=self.getAttrVal("sourceformula");
 		self.whereCondition=self.getAttrVal("where",undefined,false);
-		self.countProcessedElements=self.getAttrVal("count");
-
+		self.initialize();
 	}
 	processSourceArrayElements(){
 		var self=this;
@@ -57,6 +56,7 @@ var jrfLoopBase=class jrfLoopBase{//this kind of definition allows to hot-reload
 		} else if (self.sourceJS!=""){
 			elemsInForEach=self.sourceJS;
 		}
+		return elemsInForEach;
 	}
 	getElementsInForEach(){
 		var self=this;

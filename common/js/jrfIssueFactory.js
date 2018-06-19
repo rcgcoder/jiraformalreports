@@ -65,11 +65,20 @@ function newIssueFactory(report){
 		log("Error getting correct id of Field:"+sFieldName);
 		return sFieldName;
 	});
-	dynObj.functions.add("fieldValue",function(theFieldName,bRendered,dateTime,otherParams){
+	dynObj.functions.add("fieldValue",function(theFieldName,bRendered,dateTime,inOtherParams){
 		var self=this;
 		var auxFieldName=theFieldName.trim();
 		var sFieldName=self.getExistentFieldId(auxFieldName);
 		var bGetAttribute=false;
+		var otherParams;
+		if (Array.isArray(inOtherParams)){
+			otherParams=newHashMap();
+			inOtherParams.forEach(function(param){
+				otherParams.add(param.key,param.value);
+			});
+		} else {
+			otherParams=inOtherParams;
+		}
 		var arrFieldNames=sFieldName.split(".");
 		if (arrFieldNames.length>1){
 			bGetAttribute=true;

@@ -12,7 +12,6 @@ var jrfLoopBase=class jrfLoopBase{//this kind of definition allows to hot-reload
 		self.sourceJson=self.getAttrVal("sourcejson");
 		self.sourceJS=self.getAttrVal("sourcejs");
 		self.sourceFormula=self.getAttrVal("sourceformula");
-		debugger;
 		self.whereCondition=self.getAttrVal("where",undefined,false);
 		self.initialize();
 	}
@@ -94,18 +93,26 @@ var jrfLoopBase=class jrfLoopBase{//this kind of definition allows to hot-reload
 		if (self.whereCondition=="") return elemsInForEach;
 		debugger;
 		var hsResult=newHashMap();
-		var sWhere=self.replaceVars(self.whereCondition);
+		var sWhere="";
 		var bWhereResult=false;
 		self.variables.pushVarEnv();
+		var iCounter=0;
+		var iSelectedCounter=0;
 		elemsInForEach.walk(function(eachElem,deep,key){
 			if (self.innerVarName!=""){
 				self.variables.pushVar(self.innerVarName,eachElem);
 			}
+			self.variables.pushVar("counter",iCounter);
+			self.variables.pushVar("counter_selected",iSelectedCounter);
 			sWhere=self.replaceVars(self.whereCondition);
 			bWhereResult=self.replaceVarsAndExecute(sWhere);
 			if (bWhereResult){
+				iSelectedCounter++;
 				hsResult.add(key,eachElem);
 			}
+			self.variables.popVar("counter_selected");
+			self.variables.popVar("counter");
+			iCounter++;
 			if (self.innerVarName!=""){
 				self.variables.popVar(self.innerVarName);
 			}

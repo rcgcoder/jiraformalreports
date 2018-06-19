@@ -101,11 +101,12 @@ var jrfReport=class jrfReport {
 								"js/modelProcessor/jrfToken.js",
 								"js/modelProcessor/jrfNoop.js",
 								"js/modelProcessor/jrfDebug.js",
-								"js/modelProcessor/jrfForEach.js",
 								"js/modelProcessor/jrfField.js",
 								"js/modelProcessor/jrfGetVar.js",
 								"js/modelProcessor/jrfSum.js",
 								"js/modelProcessor/jrfFormula.js",
+								"js/modelProcessor/jrfLoopBase.js",
+								"js/modelProcessor/jrfForEach.js",
 								"js/modelProcessor/jrfDirective.js",
 								"js/modelProcessor/jrfInclude.js"
 	/*							"js/rcglibs/RCGLogUtils.js",

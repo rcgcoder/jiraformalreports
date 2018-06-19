@@ -17,6 +17,7 @@ var jrfLoopBase=class jrfLoopBase{//this kind of definition allows to hot-reload
 
 	}
 	processSourceArrayElements(){
+		var self=this;
 		var elemsInForEach;
 		if (self.source!=""){
 			var sAux=self.source;
@@ -73,6 +74,17 @@ var jrfLoopBase=class jrfLoopBase{//this kind of definition allows to hot-reload
 				hsAux.push(elemsInForEach[i]);
 			}
 			return hsAux;
+		} else if (self.type=="list"){
+			log("Proccessing array");
+			var elemsInForEach=self.processSourceArrayElements();
+			if (Array.isArray(elemsInForEach)){
+				var hsAux=newHashMap();
+				for (var i=0;i<elemsInForEach.length;i++){
+					hsAux.push(elemsInForEach[i]);
+				}
+				return hsAux;
+			} 
+			return elemsInForEach;
 		}
 		return newHashMap();
 	}

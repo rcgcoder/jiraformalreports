@@ -155,12 +155,12 @@ var jrfLoopBase=class jrfLoopBase{//this kind of definition allows to hot-reload
 		if (startAt==""){
 			startAt=0; 
 		} else {
-			startAt=parseInt(startAt);
+			startAt=parseInt(""+startAt);
 		}
 		if (limit==""){
 			limit=-1; 
 		} else {
-			limit=parseInt(limit);
+			limit=parseInt(""+limit);
 		}
 		var counter=0;
 		var iPos=0;

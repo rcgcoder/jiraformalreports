@@ -91,6 +91,7 @@ var jrfLoopBase=class jrfLoopBase{//this kind of definition allows to hot-reload
 	filter(elemsInForEach){
 		var self=this;
 		if (self.whereCondition=="") return elemsInForEach;
+		debugger;
 		var hsResult=newHashMap();
 		elemsInForEach.walk(function(eachElem,deep,key){
 			var sWhere=self.replaceVars(self.whereCondition);

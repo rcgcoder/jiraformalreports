@@ -93,13 +93,23 @@ var jrfLoopBase=class jrfLoopBase{//this kind of definition allows to hot-reload
 		if (self.whereCondition=="") return elemsInForEach;
 		debugger;
 		var hsResult=newHashMap();
+		var sWhere=self.replaceVars(self.whereCondition);
+		var bWhereResult=false;
+		self.variables.pushVarEnv();
 		elemsInForEach.walk(function(eachElem,deep,key){
-			var sWhere=self.replaceVars(self.whereCondition);
+			if (self.innerVarName!=""){
+				self.variables.pushVar(self.innerVarName,eachElem);
+			}
+			sWhere=self.replaceVars(self.whereCondition);
 			bWhereResult=self.replaceVarsAndExecute(sWhere);
 			if (bWhereResult){
 				hsResult.add(key,eachElem);
 			}
+			if (self.innerVarName!=""){
+				self.variables.popVar(self.innerVarName);
+			}
 		});
+		self.variables.popVarEnv();
 		return hsResult;
 	}
 	

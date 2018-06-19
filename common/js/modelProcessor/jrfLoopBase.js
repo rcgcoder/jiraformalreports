@@ -89,6 +89,7 @@ var jrfLoopBase=class jrfLoopBase{//this kind of definition allows to hot-reload
 		return newHashMap();
 	}
 	filter(elemsInForEach){
+		var self=this;
 		if (self.whereCondition=="") return elemsInForEach;
 		var hsResult=newHashMap();
 		elemsInForEach.walk(function(eachElem,deep,key){

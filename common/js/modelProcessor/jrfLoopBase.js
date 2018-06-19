@@ -12,6 +12,7 @@ var jrfLoopBase=class jrfLoopBase{//this kind of definition allows to hot-reload
 		self.sourceJson=self.getAttrVal("sourcejson");
 		self.sourceJS=self.getAttrVal("sourcejs");
 		self.sourceFormula=self.getAttrVal("sourceformula");
+		debugger;
 		self.whereCondition=self.getAttrVal("where",undefined,false);
 		self.initialize();
 	}

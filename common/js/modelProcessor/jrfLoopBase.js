@@ -147,6 +147,7 @@ var jrfLoopBase=class jrfLoopBase{//this kind of definition allows to hot-reload
 		return hsResult;
 	}
 	bounds(elemsInForEach){
+		var self=this;
 		var startAt=self.boundStartAt;
 		var limit=self.boundLimit;
 		if ((startAt=="")&&(limit=="")) return elemsInForEach;

@@ -13,6 +13,9 @@ var jrfLoopBase=class jrfLoopBase{//this kind of definition allows to hot-reload
 		self.sourceJS=self.getAttrVal("sourcejs");
 		self.sourceFormula=self.getAttrVal("sourceformula");
 		self.whereCondition=self.getAttrVal("where",undefined,false);
+		self.orderFormula=self.getAttrVal("order",undefined,false);
+		self.boundStartAt=self.getAttrVal("start",undefined,false);
+		self.boundLimit=self.getAttrVal("limit",undefined,false);
 		self.initialize();
 	}
 	processSourceArrayElements(){
@@ -91,7 +94,6 @@ var jrfLoopBase=class jrfLoopBase{//this kind of definition allows to hot-reload
 	filter(elemsInForEach){
 		var self=this;
 		if (self.whereCondition=="") return elemsInForEach;
-		debugger;
 		var hsResult=newHashMap();
 		var sWhere="";
 		var bWhereResult=false;
@@ -120,6 +122,58 @@ var jrfLoopBase=class jrfLoopBase{//this kind of definition allows to hot-reload
 		self.variables.popVarEnv();
 		return hsResult;
 	}
+	order(elemsInForEach){
+		var self=this;
+		if (self.orderFormula=="") return elemsInForEach;
+		var hsResult=newHashMap();
+		var arrElems=[];
+		elemsInForEach.walk(function(elem){
+			arrElems.push(elem);
+		});
+		var sComp=self.replaceVars(self.orderFormula);
+		var sFncFormula=`
+			""; // to close the var result= instruction inserted by executefunction
+			var elemA=_arrRefs_[0];
+			var elemB=_arrRefs_[1];
+			`+sContent+`;
+			`;
+		arrElems.sort(function(a,b){
+			var vValue=executeFunction([a,b],sFncFormula);
+			return vValue;
+		});	
+		arrElems.forEach(function(elem){
+			hsResult.push(elem);
+		});
+		return hsResult;
+	}
+	bounds(elemsInForEach){
+		var startAt=self.boundStartAt;
+		var limit=self.boundLimit;
+		if ((startAt=="")&&(limit=="")) return elemsInForEach;
+		var hsResult=newHashMap();
+		if (startAt==""){
+			startAt=0; 
+		} else {
+			startAt=parseInt(startAt);
+		}
+		if (limit==""){
+			limit=-1; 
+		} else {
+			limit=parseInt(limit);
+		}
+		var counter=0;
+		var iPos=0;
+		elemsInForEach.walk(function(elem){
+			if (iPos>=startAt){
+				if ((limit<0)||(counter<limit)){
+					hsResult.push(elem);
+					counter++;
+				}
+			}
+			iPos++;
+		});
+		return hsResult;
+	}
 	
 	apply(){
 		var self=this;
@@ -129,6 +183,8 @@ var jrfLoopBase=class jrfLoopBase{//this kind of definition allows to hot-reload
 		}
 		var elemsInForEach=self.getElementsInForEach();
 		elemsInForEach=self.filter(elemsInForEach);
+		elemsInForEach=self.order(elemsInForEach);
+		elemsInForEach=self.bounds(elemsInForEach);
 		
 //		var nItem=0;
 		var rootBackUp=self.model.processingRoot;

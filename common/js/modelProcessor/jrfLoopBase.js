@@ -241,7 +241,6 @@ var jrfLoopBase=class jrfLoopBase{//this kind of definition allows to hot-reload
 				if (bAllRoots) self.model.processingRoot=rootBackUp;
 				self.addPostHtml();
 				self.addHtml("<!-- END INNER LOOP OF ITEM "+ (self.processedItemNumber) + " IN FOREACH JRF TOKEN -->");
-				processedItemNumber++;
 				if ((self.subType=="row")
 						//&&(bLastShowed)
 						//&&((processedItemNumber+processedItemJumped)<(elemsInForEach.length()))

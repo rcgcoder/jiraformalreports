@@ -26,19 +26,6 @@ var jrfLoopBase=class jrfLoopBase{//this kind of definition allows to hot-reload
 			return self.reportElem.getAdvanceChilds();
 		} else if (self.type=="array"){
 			log("Proccessing array");
-		}
-		return newHashMap();
-	}
-	
-	apply(){
-		var self=this;
-		var bAllRoots=false;
-		if (self.reportElem==self.model.report){
-			bAllRoots=true;
-		}
-		var elemsInForEach;
-		if (self.type=="array"){
-			// getting array from source, sourcejson, sourceformula
 			if (self.source!=""){
 				var sAux=self.source;
 				var arrAux=sAux.split(",");
@@ -82,10 +69,18 @@ var jrfLoopBase=class jrfLoopBase{//this kind of definition allows to hot-reload
 			for (var i=0;i<elemsInForEach.length;i++){
 				hsAux.push(elemsInForEach[i]);
 			}
-			elemsInForEach=hsAux;
-		} else {
-			elemsInForEach=self.getElementsInForEach();
+			return hsAux;
 		}
+		return newHashMap();
+	}
+	
+	apply(){
+		var self=this;
+		var bAllRoots=false;
+		if (self.reportElem==self.model.report){
+			bAllRoots=true;
+		}
+		var elemsInForEach=self.getElementsInForEach();
 		
 //		var nItem=0;
 		var rootBackUp=self.model.processingRoot;

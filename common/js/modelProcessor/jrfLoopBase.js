@@ -88,6 +88,18 @@ var jrfLoopBase=class jrfLoopBase{//this kind of definition allows to hot-reload
 		}
 		return newHashMap();
 	}
+	filter(elemsInForEach){
+		if (self.whereCondition=="") return elemsInForEach;
+		var hsResult=newHashMap();
+		elemsInForEach.walk(function(eachElem,deep,key){
+			var sWhere=self.replaceVars(self.whereCondition);
+			bWhereResult=self.replaceVarsAndExecute(sWhere);
+			if (bWhereResult){
+				hsResult.add(key,eachElem);
+			}
+		});
+		return hsResult;
+	}
 	
 	apply(){
 		var self=this;
@@ -96,6 +108,7 @@ var jrfLoopBase=class jrfLoopBase{//this kind of definition allows to hot-reload
 			bAllRoots=true;
 		}
 		var elemsInForEach=self.getElementsInForEach();
+		elemsInForEach=self.filter(elemsInForEach);
 		
 //		var nItem=0;
 		var rootBackUp=self.model.processingRoot;
@@ -119,45 +132,32 @@ var jrfLoopBase=class jrfLoopBase{//this kind of definition allows to hot-reload
 				self.continueTask();
 			});
 			self.addStep("Processing Element in For Each",function(){
-				var bWhereResult=true;
-				if (self.whereCondition!=""){
-					var sWhere=self.replaceVars(self.whereCondition);
-					bWhereResult=self.replaceVarsAndExecute(sWhere);
-				}
-				if (bWhereResult){
-					bLastShowed=true;
-					self.addStep("Processing all Childs elements",function(){
-						self.processAllChilds(self.tag.getChilds(),newParent);
+				self.addStep("Processing all Childs elements",function(){
+					self.processAllChilds(self.tag.getChilds(),newParent);
+				});
+				if ((self.recursive!="")&&((self.replaceVars(self.recursive)+"").trim().toLowerCase()=="true")){
+					log("Recursive!");
+					self.addStep("Encoding recursive childs...",function(){
+						self.addHtml("<!-- Start Recursive -->");
+						self.variables.pushVarEnv();
+						var iDeep=self.variables.getVar("RecursiveDeep");
+						if (iDeep==""){
+							iDeep=1;
+						} else {
+							iDeep++;
+						}
+						self.variables.pushVar("RecursiveDeep",iDeep);
+						self.variables.pushVar("parentRecursiveElement",self.reportElem);
+						self.reportElem=eachElem;
+						self.encode();
 					});
-					if ((self.recursive!="")&&((self.replaceVars(self.recursive)+"").trim().toLowerCase()=="true")){
-						log("Recursive!");
-
-						
-						self.addStep("Encoding recursive childs...",function(){
-							self.addHtml("<!-- Start Recursive -->");
-							self.variables.pushVarEnv();
-							var iDeep=self.variables.getVar("RecursiveDeep");
-							if (iDeep==""){
-								iDeep=1;
-							} else {
-								iDeep++;
-							}
-							self.variables.pushVar("RecursiveDeep",iDeep);
-							self.variables.pushVar("parentRecursiveElement",self.reportElem);
-							self.reportElem=eachElem;
-							self.encode();
-						});
-						self.addStep("Encoding recursive childs...",function(){
-							self.addHtml("<!-- End Recursive -->");
-							self.variables.popVar("RecursiveDeep");
-							self.reportElem=self.variables.popVar("parentRecursiveElement");
-							self.variables.popVarEnv();
-							self.continueTask();
-						});
-					}
-				} else {
-					bLastShowed=false;
-					processedItemJumped++;
+					self.addStep("Encoding recursive childs...",function(){
+						self.addHtml("<!-- End Recursive -->");
+						self.variables.popVar("RecursiveDeep");
+						self.reportElem=self.variables.popVar("parentRecursiveElement");
+						self.variables.popVarEnv();
+						self.continueTask();
+					});
 				}
 				self.continueTask();
 			});
@@ -167,35 +167,19 @@ var jrfLoopBase=class jrfLoopBase{//this kind of definition allows to hot-reload
 				self.addHtml("<!-- END INNER LOOP OF ITEM "+ (self.processedItemNumber) + " IN FOREACH JRF TOKEN -->");
 				processedItemNumber++;
 				if ((self.subType=="row")
-						&&(bLastShowed)
-						&&((processedItemNumber+processedItemJumped)<(elemsInForEach.length()))){
+						//&&(bLastShowed)
+						//&&((processedItemNumber+processedItemJumped)<(elemsInForEach.length()))
+					 ){
 					self.addHtml("<!-- ADDED BY FOREACH ROW ==>>  --></td></tr><tr><td><!-- <== ADDED BY FOREACH ROW -->");
 				} else if ((self.subType=="subrow")
-							&&(bLastShowed)
-							&&((processedItemNumber+processedItemJumped)<(elemsInForEach.length()))){
+//							&&(bLastShowed)
+//							&&((processedItemNumber+processedItemJumped)<(elemsInForEach.length()))
+						){
 					self.addHtml("<!-- ADDED BY FOREACH SUBROW ==>>  --></td></tr><tr><td><!-- <== ADDED BY FOREACH SUBROW -->");
 				}
 				self.continueTask();
 			});
 		});
-//		log("All steps added in for each");
-/*		self.elemsInForEach.walk(function(newParent){
-			self.addHtml("<!-- START INNER LOOP OF ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
-			if (self.innerVarName!=""){
-				self.variables.pushVar(self.innerVarName,newParent);
-			}
-			if (bAllRoots) self.model.processingRoot=newParent;
-			self.processAllChilds(self.tag.getChilds(),newParent);
-			if (bAllRoots) self.model.processingRoot=rootBackUp;
-			self.addPostHtml();
-
-			if ((self.subType=="row")&&(self.elemsInForEach.getLast().value.getKey()
-										!=newParent.getKey())){
-				self.addHtml("</td></tr><tr><td>");
-			}
-			self.addHtml("<!-- END INNER LOOP OF ITEM "+ (nItem) + " IN FOREACH JRF TOKEN -->");
-			nItem++;
-		});*/
 	}
 
 }

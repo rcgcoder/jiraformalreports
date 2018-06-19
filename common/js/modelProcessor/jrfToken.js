@@ -297,6 +297,10 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				if (isUndefined(vAux)){
 					vAux="";
 				}
+				vAux=replaceAll(vAux,"greaterThan",">");
+				vAux=replaceAll(vAux,"lessThan","<");
+				vAux=replaceAll(vAux,"greaterOrEqualThan",">=");
+				vAux=replaceAll(vAux,"lessOrEqualThan","<=");
 				if (isDefined(bReplaceVars)&&(!bReplaceVars)){
 					log ("not replace Vars");
 				} else {

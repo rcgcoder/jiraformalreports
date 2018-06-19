@@ -182,6 +182,7 @@ var jrfLoopBase=class jrfLoopBase{//this kind of definition allows to hot-reload
 		if (self.reportElem==self.model.report){
 			bAllRoots=true;
 		}
+		debugger;
 		var elemsInForEach=self.getElementsInForEach();
 		elemsInForEach=self.filter(elemsInForEach);
 		elemsInForEach=self.order(elemsInForEach);
@@ -192,8 +193,6 @@ var jrfLoopBase=class jrfLoopBase{//this kind of definition allows to hot-reload
 		// counting total elements
 		elemsInForEach.walk(function(eachElem){
 			var newParent;
-			var processedItemNumber=0;
-			var processedItemJumped=0;
 			var bLastShowed=true;
 			if ((self.type=="root")||(self.type=="child")||(self.type=="advchild")){
 				newParent=eachElem;

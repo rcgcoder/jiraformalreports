@@ -26,6 +26,7 @@ var jrfLoopBase=class jrfLoopBase{//this kind of definition allows to hot-reload
 			return self.reportElem.getAdvanceChilds();
 		} else if (self.type=="array"){
 			log("Proccessing array");
+			var elemsInForEach;
 			if (self.source!=""){
 				var sAux=self.source;
 				var arrAux=sAux.split(",");

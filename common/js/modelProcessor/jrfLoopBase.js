@@ -130,12 +130,12 @@ var jrfLoopBase=class jrfLoopBase{//this kind of definition allows to hot-reload
 		elemsInForEach.walk(function(elem){
 			arrElems.push(elem);
 		});
-		var sComp=self.replaceVars(self.orderFormula);
+		var sFormulaBody=self.replaceVars(self.orderFormula);
 		var sFncFormula=`
 			""; // to close the var result= instruction inserted by executefunction
 			var elemA=_arrRefs_[0];
 			var elemB=_arrRefs_[1];
-			`+sContent+`;
+			`+sFormulaBody+`;
 			`;
 		arrElems.sort(function(a,b){
 			var vValue=executeFunction([a,b],sFncFormula);

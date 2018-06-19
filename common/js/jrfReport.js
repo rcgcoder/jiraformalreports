@@ -373,7 +373,7 @@ var jrfReport=class jrfReport {
 			theModel.process("parse"); // parse....
 		});
 		self.addStep("Processing Directives",function(){
-			debugger;
+			//debugger;
 			var hsVersions=newHashMap();
 			self.objModel.directives.walk(function(hsDirectives,iProof,sDirectiveKey){
 				hsDirectives.walk(function(sValue){
@@ -399,7 +399,7 @@ var jrfReport=class jrfReport {
 				var fncGetVersionsIssues=function(sVersions){
 					self.addStep("Getting versions ("+sVersions+") issues",function(){
 						var fncProcessIssue=function(issue){
-							debugger;
+							//debugger;
 							var oIssue;
 							if (!self.allIssues.list.exists(issue.key)){
 								oIssue=self.allIssues.new(issue.fields.summary,issue.key);

@@ -16,6 +16,47 @@ var jrfLoopBase=class jrfLoopBase{//this kind of definition allows to hot-reload
 		self.countProcessedElements=self.getAttrVal("count");
 
 	}
+	processSourceArrayElements(){
+		var elemsInForEach;
+		if (self.source!=""){
+			var sAux=self.source;
+			var arrAux=sAux.split(",");
+			sAux="";
+			for (var i=0;i<arrAux.length;i++){
+				if (i>0){
+					sAux+=",";
+				}
+				sAux+='"'+arrAux[i]+'"';
+			}
+			sAux="["+sAux+"]";
+			elemsInForEach=JSON.parse(sAux);
+		} else if (self.sourceJson!=""){
+			var fncAdjustText=function(sText,search,replace){
+				var sAux=sText;
+				while (sAux.indexOf(search)>=0){
+					sAux=replaceAll(sAux,search,replace);
+				}
+				return sAux;
+			}
+			self.sourceJson=fncAdjustText(self.sourceJson,'\t','');
+			self.sourceJson=fncAdjustText(self.sourceJson,'\n','');
+			self.sourceJson=fncAdjustText(self.sourceJson,'\r','');
+			self.sourceJson=fncAdjustText(self.sourceJson,String.fromCharCode(160),'');
+			self.sourceJson=fncAdjustText(self.sourceJson,' ,',',');
+			self.sourceJson=fncAdjustText(self.sourceJson,', ',',');
+			self.sourceJson=fncAdjustText(self.sourceJson,"'",'"');
+			self.sourceJson=fncAdjustText(self.sourceJson,'" ','"');
+			self.sourceJson=fncAdjustText(self.sourceJson,' "','"');
+			elemsInForEach=JSON.parse(self.sourceJson);
+		} else if (self.sourceFormula!=""){
+			var sAux=self.replaceVars(self.sourceFormula);
+			sAux=replaceAll(sAux,";",",");
+			sAux=replaceAll(sAux,"'",'"');
+			elemsInForEach=self.replaceVarsAndExecute(sAux);
+		} else if (self.sourceJS!=""){
+			elemsInForEach=self.sourceJS;
+		}
+	}
 	getElementsInForEach(){
 		var self=this;
 		if (self.type=="root"){
@@ -26,46 +67,7 @@ var jrfLoopBase=class jrfLoopBase{//this kind of definition allows to hot-reload
 			return self.reportElem.getAdvanceChilds();
 		} else if (self.type=="array"){
 			log("Proccessing array");
-			var elemsInForEach;
-			if (self.source!=""){
-				var sAux=self.source;
-				var arrAux=sAux.split(",");
-				sAux="";
-				for (var i=0;i<arrAux.length;i++){
-					if (i>0){
-						sAux+=",";
-					}
-					sAux+='"'+arrAux[i]+'"';
-				}
-				sAux="["+sAux+"]";
-				elemsInForEach=JSON.parse(sAux);
-			} else if (self.sourceJson!=""){
-				var fncAdjustText=function(sText,search,replace){
-					var sAux=sText;
-					while (sAux.indexOf(search)>=0){
-						sAux=replaceAll(sAux,search,replace);
-					}
-					return sAux;
-				}
-				self.sourceJson=fncAdjustText(self.sourceJson,'\t','');
-				self.sourceJson=fncAdjustText(self.sourceJson,'\n','');
-				self.sourceJson=fncAdjustText(self.sourceJson,'\r','');
-				self.sourceJson=fncAdjustText(self.sourceJson,String.fromCharCode(160),'');
-				self.sourceJson=fncAdjustText(self.sourceJson,' ,',',');
-				self.sourceJson=fncAdjustText(self.sourceJson,', ',',');
-				self.sourceJson=fncAdjustText(self.sourceJson,"'",'"');
-				self.sourceJson=fncAdjustText(self.sourceJson,'" ','"');
-				self.sourceJson=fncAdjustText(self.sourceJson,' "','"');
-				elemsInForEach=JSON.parse(self.sourceJson);
-			} else if (self.sourceFormula!=""){
-				var sAux=self.replaceVars(self.sourceFormula);
-				sAux=replaceAll(sAux,";",",");
-				sAux=replaceAll(sAux,"'",'"');
-				elemsInForEach=self.replaceVarsAndExecute(sAux);
-			} else if (self.sourceJS!=""){
-				debugger;
-				elemsInForEach=self.sourceJS;
-			}
+			var elemsInForEach=self.processSourceArrayElements();
 			var hsAux=newHashMap();
 			for (var i=0;i<elemsInForEach.length;i++){
 				hsAux.push(elemsInForEach[i]);

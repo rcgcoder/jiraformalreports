@@ -3,6 +3,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		super(tag,reportElem,model);
 		var self=this;
 		self.autoAddPostHtml=false;
+		self.subType=self.getAttrVal("subtype");
 		self.bAllRoots=false;
 		self.rootBackup;
 	}
@@ -77,6 +78,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 			}
 			self.continueTask();
 		});
+		return true; //allways continue
 	}
 	loopEnd(){
 		

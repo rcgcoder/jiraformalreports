@@ -5,7 +5,6 @@ var jrfSubset=class jrfSubset{//this kind of definition allows to hot-reload
 //		self.autoAddPostHtml=false;
 		self.name=self.getAttrVal("name");
 		self.type=self.getAttrVal("type");
-		self.subType=self.getAttrVal("subtype");
 //		self.where=self.getAttrVal("where",undefined,false);
 		self.innerVarName=self.getAttrVal("as");
 		self.resultVarName=self.getAttrVal("resultvarname");

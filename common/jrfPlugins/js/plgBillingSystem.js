@@ -32,7 +32,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     	arrFields.push(["Importe Estimado Total","Total","importesEstimados"]);
 
     	arrFields.push(["Importe Real Aprobación","Aprobado","importesReales"]);
-    	arrFields.push(["Importe Real Diseño","Diseñado","importesReales"]);
+    	arrFields.push(["Importe Real Diseño","Disenado","importesReales"]);
     	arrFields.push(["Importe Real Implementación","Implementado","importesReales"]);
     	arrFields.push(["Importe Real Despliegue","Desplegado","importesReales"]);
     	arrFields.push(["Importe Real Total","Total","importesReales"]);

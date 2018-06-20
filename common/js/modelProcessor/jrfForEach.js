@@ -16,6 +16,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		self.rootBackUp=self.model.processingRoot;
 	}
 	loopItemProcess(eachElem){
+		var self=this;
 		var newParent;
 		var bLastShowed=true;
 		if ((self.type=="root")||(self.type=="child")||(self.type=="advchild")){

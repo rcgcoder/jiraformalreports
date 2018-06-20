@@ -184,11 +184,11 @@ var jrfSubset=class jrfSubset{//this kind of definition allows to hot-reload
 		elemsInForEach=self.filter(elemsInForEach);
 		elemsInForEach=self.order(elemsInForEach);
 		elemsInForEach=self.bounds(elemsInForEach);
-		var varName=self.resultVarName;
+/*		var varName=self.resultVarName;
 		if (varName!=""){
 			self.variables.pushVar(varName,elemsInForEach,-1); //if variable does not exists... it puts in parent block
 		}
-		return elemsInForEach;
+*/		return elemsInForEach;
 	}
 
 }

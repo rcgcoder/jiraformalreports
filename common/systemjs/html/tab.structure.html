@@ -40,30 +40,40 @@
 			<button (click)="killTasks()" class="aui-button">Kill Tasks</button>
 		</div>
 	</div>
-	<div class="flatpack-box">
-		<strong>Contract Time Bounds</strong><br>
-		<div class="aui-group">
-		    <div class="aui-item">
-				Contract Init Date: <input class=flatpickr id="ContractInitDate" type="text" placeholder="Select Date..">
-		    </div>
-		    <div class="aui-item">
-				Contract End Date: <input class=flatpickr id="ContractEndDate" type="text" placeholder="Select Date..">
-		    </div>
-		    <div class="aui-item">
-				<aui-toggle id="toggle_AdvancedWorks" 
-		                        label="The contractor advance works before init"
-		                        ></aui-toggle>
-				Contract Advanced Works From: <input class=flatpickr id="ContractAdvancedDate" type="text" placeholder="Select Date..">
-		    </div>
+	<div class="aui-group">
+		<div class="aui-item">
+			<div class="flatpack-box">
+				<strong>Contract Time Bounds</strong><br>
+				<div class="aui-group">
+	    			<div class="aui-item">
+						Contract Init Date: <input class=flatpickr id="ContractInitDate" type="text" placeholder="Select Date..">
+	    			</div>
+	    			<div class="aui-item">
+						Contract End Date: <input class=flatpickr id="ContractEndDate" type="text" placeholder="Select Date..">
+	    			</div>
+	    		</div>
+				<div class="aui-group">
+				    <div class="aui-item">
+						<aui-toggle id="toggle_AdvancedWorks" 
+				                        label="The contractor advanced works before the formal init of the contract"
+				                        ></aui-toggle> The contractor advanced works before the formal init of the contract
+				        <br>
+						Contract Advanced Works From: <input class=flatpickr id="ContractAdvancedDate" type="text" placeholder="Select Date..">
+				    </div>
+				</div>
+			</div>
 		</div>
-		<strong>Report Time Bounds</strong><br>
-		<div class="aui-group">
-		    <div class="aui-item">
-				Report Init Date: <input class=flatpickr id="ReportInitDate" type="text" placeholder="Select Date..">
-		    </div>
-		    <div class="aui-item">
-				Report End Date: <input class=flatpickr id="ReportEndDate" type="text" placeholder="Select Date..">
-		    </div>
+		<div class="aui-item">
+			<div class="flatpack-box">
+			<strong>Report Time Bounds</strong><br>
+			<div class="aui-group">
+			    <div class="aui-item">
+					Report Init Date: <input class=flatpickr id="ReportInitDate" type="text" placeholder="Select Date..">
+			    </div>
+			    <div class="aui-item">
+					Report End Date: <input class=flatpickr id="ReportEndDate" type="text" placeholder="Select Date..">
+			    </div>
+			</div>
 		</div>
 	</div>
 	<div class="flatpack-box">

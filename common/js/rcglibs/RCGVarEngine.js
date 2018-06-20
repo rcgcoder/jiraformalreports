@@ -13,12 +13,18 @@ var RCGVarEngine=class RCGVarEngine{ //this kind of definition allows to hot-rel
 	topVarEnv(){
 		return this.localVars.top();
 	}
-	pushVar(varName,value){
+	pushVar(varName,value,levelFromTop){
 		var self=this;
 		var hsVars=self.getVars(varName);
 		if (hsVars==""){
 			hsVars=newHashMap();
-			self.topVarEnv().add(varName,hsVars);
+			var nEnvs=self.localVars.length();
+			var nEnv=nEnvs;
+			if (isDefined(levelFromTop)){
+				nEnv-=Math.abs(levelFromTop);
+			}
+			var auxVarEnv=self.localVars.findByInd(nEnv);
+			auxVarEnv.add(varName,hsVars);
 		}
 		hsVars.push(value);
 	}

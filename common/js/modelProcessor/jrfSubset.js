@@ -20,6 +20,7 @@ var jrfSubset=class jrfSubset{//this kind of definition allows to hot-reload
 		self.orderFormula=self.getAttrVal("order",undefined,false);
 		self.boundStartAt=self.getAttrVal("start",undefined,false);
 		self.boundLimit=self.getAttrVal("limit",undefined,false);
+		self.initialize();
 	}
 	processSourceArrayElements(){
 		var self=this;

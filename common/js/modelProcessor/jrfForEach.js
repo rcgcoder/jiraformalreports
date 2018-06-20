@@ -29,7 +29,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 			if (self.innerVarName!=""){
 				self.variables.pushVar(self.innerVarName,eachElem);
 			}
-			if (bAllRoots) self.model.processingRoot=newParent;
+			if (self.bAllRoots) self.model.processingRoot=newParent;
 			self.continueTask();
 		});
 		self.addStep("Processing Element in For Each",function(){
@@ -63,7 +63,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 			self.continueTask();
 		});
 		self.addStep("Continue...",function(){
-			if (bAllRoots) self.model.processingRoot=rootBackUp;
+			if (self.bAllRoots) self.model.processingRoot=rootBackUp;
 			self.addPostHtml();
 			self.addHtml("<!-- END INNER LOOP OF ITEM "+ (self.processedItemNumber) + " IN FOREACH JRF TOKEN -->");
 			if ((self.subType=="row")

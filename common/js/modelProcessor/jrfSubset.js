@@ -12,8 +12,8 @@ var jrfSubset=class jrfSubset{//this kind of definition allows to hot-reload
 		self.source=self.getAttrVal("source");
 		self.recursive=self.getAttrVal("recursive");
 		self.sourceJson=self.getAttrVal("sourcejson");
-		self.sourceJS=self.getAttrVal("sourcejs");
-		self.sourceFormula=self.getAttrVal("sourceformula");
+		self.sourceJS=self.getAttrVal("sourcejs",undefined,false);
+		self.sourceFormula=self.getAttrVal("sourceformula",undefined,false);
 		
 		self.whereCondition=self.getAttrVal("where",undefined,false);
 		self.orderFormula=self.getAttrVal("order",undefined,false);

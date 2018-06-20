@@ -23,6 +23,9 @@ var RCGVarEngine=class RCGVarEngine{ //this kind of definition allows to hot-rel
 				var nEnv=(nEnvs-1);// last env
 				var auxVarEnv;
 				nEnv-=Math.abs(levelFromTop);
+				if (nEnv<=0){
+					nEnv=0;
+				}
 				auxVarEnv=self.localVars.findByInd(nEnv);
 			} else {
 				auxVarEnv=self.topVarEnv();

@@ -4,6 +4,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		var self=this;
 		self.autoAddPostHtml=false;
 		self.subType=self.getAttrVal("subtype");
+		self.recursive=self.getAttrVal("recursive");
 		self.bAllRoots=false;
 		self.rootBackup;
 	}

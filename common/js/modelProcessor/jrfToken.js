@@ -43,6 +43,10 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.ifCondition=obj.getAttrVal("if");
 		obj.processOrder=obj.getAttrVal("processOrder");
 		obj.visibility=obj.getAttrVal("visibility");
+		obj.datetimeSource=self.getAttrVal("atDateTime");
+		obj.datetime=undefined;
+		obj.moreParams=self.getAttrVal("aditionalparameters");
+		obj.otherParams=newHashMap();
 		obj.ifConditionResult=true;
 		obj.autoAddPostHtml=true;
 	}
@@ -254,6 +258,25 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		// process the if parameter 
 		self.applyIfCondition();
 		if (self.ifConditionResult){
+			var auxDateTime;
+			if (self.datetimeSource!=""){
+				auxDateTime=toDateNormalDDMMYYYYHHMMSS(self.datetimeSource);
+				self.datetime;
+			}
+			var hsParams=self.otherParams;
+			hsParams.clear();
+			if (self.moreParams!=""){
+				var splitParams=self.moreParams.split(",");
+				splitParams.forEach(function(aParam){
+					var paramParts=aParam.split("=");
+					var paramName=paramParts[0].trim();
+					var paramValue=undefined;
+					if (paramParts.length>1){
+						paramValue=paramParts[1].trim();
+					}
+					hsParams.add(paramName,paramValue);
+				});
+			}
 			self.applyInitVars();
 		}
 	}

@@ -3,6 +3,7 @@ var jrfStatistics=class jrfStatistics extends jrfLoopBase{//this kind of definit
 		super(tag,reportElem,model);
 		var self=this;
 		self.operationSource=self.getAttrVal("operation");
+		self.field=self.getAttrVal("field");
 		self.opType="";
 		self.counter=0;
 		self.accumulator=0;
@@ -24,6 +25,11 @@ var jrfStatistics=class jrfStatistics extends jrfLoopBase{//this kind of definit
 		var self=this;
 		if (self.opType=="count"){
 			self.counter++;
+		} else if (self.opType=="sum"){
+			var fldValue=eachElem.fieldValue(self.field,false,self.dateTime,self.otherParams);
+			if (fldValue!=""){
+				self.accumulator+=parseFloat(fldValue);
+			}
 		}
 		return true; //allways continue
 	}
@@ -31,6 +37,8 @@ var jrfStatistics=class jrfStatistics extends jrfLoopBase{//this kind of definit
 		var self=this;
 		if (self.opType=="count"){
 			self.addHtml(self.counter);
+		} else if (self.opType=="sum"){
+			self.addHtml(self.accumulator);
 		}
 	}
 }

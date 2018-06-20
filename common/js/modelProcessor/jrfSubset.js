@@ -10,9 +10,7 @@ var jrfSubset=class jrfSubset{//this kind of definition allows to hot-reload
 		self.resultVarName=self.getAttrVal("resultvarname");
 		
 		self.source=self.getAttrVal("source");
-		self.recursive=self.getAttrVal("recursive");
 		self.sourceJson=self.getAttrVal("sourcejson");
-		debugger;
 		self.sourceJS=self.getAttrVal("sourcejs",undefined,false);
 		self.sourceFormula=self.getAttrVal("sourceformula",undefined,false);
 		
@@ -81,7 +79,7 @@ var jrfSubset=class jrfSubset{//this kind of definition allows to hot-reload
 			}
 			return hsAux;
 		} else if (self.type=="list"){
-			log("Proccessing array");
+			log("Proccessing list...HashMap");
 			var elemsInForEach=self.processSourceArrayElements();
 			if (Array.isArray(elemsInForEach)){
 				var hsAux=newHashMap();

@@ -1,5 +1,6 @@
 var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition allows to hot-reload
-	initialize(){
+	constructor(tag,reportElem,model){
+		super(tag,reportElem,model);
 		var self=this;
 		self.autoAddPostHtml=false;
 	}

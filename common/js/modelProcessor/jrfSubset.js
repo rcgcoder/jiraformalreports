@@ -1,4 +1,4 @@
-var jrfSelect=class jrfSelect{//this kind of definition allows to hot-reload
+var jrfSubset=class jrfSubset{//this kind of definition allows to hot-reload
 	constructor(tag,reportElem,model){
 		var self=this;
 		model.extendToken(self,tag,reportElem);

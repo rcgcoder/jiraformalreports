@@ -294,8 +294,8 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		var sTokenName="jrfNoop";
 		if (tagAttrs.exists("foreach")){
 			sTokenName="jrfForEach";
-		} else if (tagAttrs.exists("select")){
-			sTokenName="jrfSelect";
+		} else if (tagAttrs.exists("subset")){
+			sTokenName="jrfSubset";
 		} else if (tagAttrs.exists("formula")){
 			sTokenName="jrfFormula";
 		} else if (tagAttrs.exists("field")){

@@ -105,7 +105,7 @@ var jrfReport=class jrfReport {
 								"js/modelProcessor/jrfGetVar.js",
 								"js/modelProcessor/jrfSum.js",
 								"js/modelProcessor/jrfFormula.js",
-								"js/modelProcessor/jrfSelect.js",
+								"js/modelProcessor/jrfSubset.js",
 								"js/modelProcessor/jrfLoopBase.js",
 								"js/modelProcessor/jrfForEach.js",
 								"js/modelProcessor/jrfDirective.js",

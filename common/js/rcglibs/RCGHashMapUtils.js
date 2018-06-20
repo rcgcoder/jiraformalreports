@@ -12,6 +12,7 @@ class RCGHashMapFactory{
 				    root:"",
 					nodeCache:"",
 					nNodes:0}
+			obj.name="";
 			obj.getFirst=this.getFirst;
 			obj.getLast=this.getLast;
 			obj.resetNode=this.resetNode;

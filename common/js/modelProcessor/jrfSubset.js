@@ -3,6 +3,7 @@ var jrfSubset=class jrfSubset{//this kind of definition allows to hot-reload
 		var self=this;
 		model.extendToken(self,tag,reportElem);
 //		self.autoAddPostHtml=false;
+		self.name=self.getAttrVal("name");
 		self.type=self.getAttrVal("type");
 		self.subType=self.getAttrVal("subtype");
 //		self.where=self.getAttrVal("where",undefined,false);
@@ -184,6 +185,7 @@ var jrfSubset=class jrfSubset{//this kind of definition allows to hot-reload
 		elemsInForEach=self.filter(elemsInForEach);
 		elemsInForEach=self.order(elemsInForEach);
 		elemsInForEach=self.bounds(elemsInForEach);
+		if (self.name!="") elemsInForEach.name=self.name;
 		var varName=self.resultVarName;
 		if (varName!=""){
 			self.variables.pushVar(varName,elemsInForEach,-1); //if variable does not exists... it puts in parent block

@@ -63,7 +63,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 			self.continueTask();
 		});
 		self.addStep("Continue...",function(){
-			if (self.bAllRoots) self.model.processingRoot=rootBackUp;
+			if (self.bAllRoots) self.model.processingRoot=self.rootBackUp;
 			self.addPostHtml();
 			self.addHtml("<!-- END INNER LOOP OF ITEM "+ (self.processedItemNumber) + " IN FOREACH JRF TOKEN -->");
 			if ((self.subType=="row")

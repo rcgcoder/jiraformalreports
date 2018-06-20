@@ -2,7 +2,7 @@ var jrfSubset=class jrfSubset{//this kind of definition allows to hot-reload
 	constructor(tag,reportElem,model){
 		var self=this;
 		model.extendToken(self,tag,reportElem);
-		self.autoAddPostHtml=false;
+//		self.autoAddPostHtml=false;
 		self.type=self.getAttrVal("type");
 		self.subType=self.getAttrVal("subtype");
 //		self.where=self.getAttrVal("where",undefined,false);

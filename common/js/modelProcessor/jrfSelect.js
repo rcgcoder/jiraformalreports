@@ -179,6 +179,7 @@ var jrfSelect=class jrfSelect{//this kind of definition allows to hot-reload
 	}
 	apply(){
 		var self=this;
+		debugger;
 		var elemsInForEach=self.getElementsInForEach();
 		elemsInForEach=self.filter(elemsInForEach);
 		elemsInForEach=self.order(elemsInForEach);

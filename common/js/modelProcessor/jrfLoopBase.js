@@ -19,7 +19,7 @@ var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition al
 		self.loopElements=super.apply();
 		self.loopStart();
 		// processing total elements
-		elemsInForEach.walk(function(eachElem){
+		self.loopElements.walk(function(eachElem){
 			var bContinue=self.loopItemProcess(elem);
 			if (isDefined(bContinue)&&(!bContinue)){
 				return false;

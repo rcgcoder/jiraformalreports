@@ -17,7 +17,7 @@ var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition al
 	apply(){
 		var self=this;
 		self.loopElements=super.apply();
-		loopStart();
+		self.loopStart();
 		// processing total elements
 		elemsInForEach.walk(function(eachElem){
 			var bContinue=self.loopItemProcess(elem);
@@ -25,7 +25,7 @@ var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition al
 				return false;
 			}
 		});
-		loopEnd();
+		self.loopEnd();
 	}
 
 }

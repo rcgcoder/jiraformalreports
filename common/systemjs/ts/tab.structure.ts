@@ -33,6 +33,8 @@ export class TabStructure {
                     self.report.config.reuseIssues=bReuseIssues;
                 }
             });
+            flatpickr("#ReportInitDate", {});
+            flatpickr("#ReportEndDate", {});
         });
     }
  

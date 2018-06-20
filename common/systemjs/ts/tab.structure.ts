@@ -33,8 +33,14 @@ export class TabStructure {
                     self.report.config.reuseIssues=bReuseIssues;
                 }
             });
-            flatpickr("#ReportInitDate", {});
-            flatpickr("#ReportEndDate", {});
+            flatpickr("#ReportInitDate", {
+                enableTime: true,
+                dateFormat: "d-m-Y HH:i",
+            });
+            flatpickr("#ReportEndDate", {
+                enableTime: true,
+                dateFormat: "d-m-Y HH:i",
+            });
         });
     }
  

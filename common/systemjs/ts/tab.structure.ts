@@ -49,6 +49,11 @@ export class TabStructure {
                 enableTime: true,
                 dateFormat: "d-m-Y H:i",
             });
+            flatpickr("#ContractAdvancedDate", {
+                enableTime: true,
+                dateFormat: "d-m-Y H:i",
+            });
+            
         });
     }
  

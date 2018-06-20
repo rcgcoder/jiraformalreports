@@ -35,11 +35,19 @@ export class TabStructure {
             });
             flatpickr("#ReportInitDate", {
                 enableTime: true,
-                dateFormat: "d-m-Y HH:i",
+                dateFormat: "d-m-Y H:i",
             });
             flatpickr("#ReportEndDate", {
                 enableTime: true,
-                dateFormat: "d-m-Y HH:i",
+                dateFormat: "d-m-Y H:i",
+            });
+            flatpickr("#ContractInitDate", {
+                enableTime: true,
+                dateFormat: "d-m-Y H:i",
+            });
+            flatpickr("#ContractEndDate", {
+                enableTime: true,
+                dateFormat: "d-m-Y H:i",
             });
         });
     }

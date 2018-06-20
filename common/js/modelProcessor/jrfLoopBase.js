@@ -2,7 +2,6 @@ var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition al
 	constructor(tag,reportElem,model){
 		super(tag,reportElem,model);
 		var self=this;
-		self.autoAddPostHtml=false;
 		self.loopElements;
 	}
 	loopStart(){

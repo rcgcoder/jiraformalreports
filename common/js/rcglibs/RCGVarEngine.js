@@ -19,9 +19,9 @@ var RCGVarEngine=class RCGVarEngine{ //this kind of definition allows to hot-rel
 		if (hsVars==""){
 			hsVars=newHashMap();
 			var nEnvs=self.localVars.length();
-			var nEnv=nEnvs;
-			var auxVarEnv;
-			if (isDefined(levelFromTop)){
+			if (isDefined(levelFromTop)&&(levelFromTop!=0)){
+				var nEnv=(nEnvs-1);// last env
+				var auxVarEnv;
 				nEnv-=Math.abs(levelFromTop);
 				auxVarEnv=self.localVars.findByInd(nEnv);
 			} else {

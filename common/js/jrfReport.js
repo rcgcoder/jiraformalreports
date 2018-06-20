@@ -108,6 +108,7 @@ var jrfReport=class jrfReport {
 								"js/modelProcessor/jrfSubset.js",
 								"js/modelProcessor/jrfLoopBase.js",
 								"js/modelProcessor/jrfForEach.js",
+								"js/modelProcessor/jrfStatistics.js",
 								"js/modelProcessor/jrfDirective.js",
 								"js/modelProcessor/jrfInclude.js"
 	/*							"js/rcglibs/RCGLogUtils.js",

@@ -60,7 +60,7 @@ var jrfSubset=class jrfSubset{//this kind of definition allows to hot-reload
 			sAux=replaceAll(sAux,"'",'"');
 			elemsInForEach=self.replaceVarsAndExecute(sAux);
 		} else if (self.sourceJS!=""){
-			elemsInForEach=self.sourceJS;
+			elemsInForEach=self.replaceVars(self.sourceJS);
 		}
 		return elemsInForEach;
 	}

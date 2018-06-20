@@ -41,8 +41,10 @@ class App {
         log("Checking if Systemjs app is loaded");
         if (theApp.length>0){
             log("App loaded!");
-            self.addStep("Applying AUI.... ",function(){
+            self.addStep("Applying AUI and other interface components.... ",function(){
                 var arrFiles=[
+                              "js/libs/flatpickr/flatpickr.css",
+                              "js/libs/flatpickr/flatpickr.js",
                               "aui/js/aui.js",
                               "aui/css/aui.css",
                               "aui/css/aui-experimental.css",

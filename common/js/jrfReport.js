@@ -372,6 +372,21 @@ var jrfReport=class jrfReport {
 					theModel.variables.pushVar(defaultVar[0],defaultVar[1]);				
 				})
 			}
+            var arrDates=["ReportInitDate","ReportEndDate","ContractInitDate",
+                "ContractEndDate", "ContractAdvancedDate"];
+		    arrDates.forEach(function(dateParam){
+		      if (isDefined(self.config['dates'][dateParam])){
+				  theModel.variables.initVar(dateParam);				
+				  theModel.variables.pushVar(dateParam,self.config['dates'][dateParam]);				
+		      }
+		    });
+	    	theModel.variables.initVar("withAdvancedWorks");				
+		    if (isDefined(self.config['dates']["withAdvancedWorks"])){
+				theModel.variables.pushVar("withAdvancedWorks",self.config['dates']["withAdvancedWorks"]);				
+		    } else {
+				theModel.variables.pushVar("withAdvancedWorks",false);				
+		    }
+			
 			theModel.process("parse"); // parse....
 		});
 		self.addStep("Processing Directives",function(){

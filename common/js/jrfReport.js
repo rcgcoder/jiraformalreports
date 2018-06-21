@@ -376,13 +376,17 @@ var jrfReport=class jrfReport {
                 "ContractEndDate", "ContractAdvancedDate"];
 		    arrDates.forEach(function(dateParam){
 		      if (isDefined(self.config['dates'][dateParam])){
-				  theModel.variables.initVar(dateParam);				
-				  theModel.variables.pushVar(dateParam,self.config['dates'][dateParam]);				
+				  theModel.variables.initVar(dateParam);
+				  var dateValue=self.config['dates'][dateParam];
+				  if (dateValue!=""){
+					  dateValue=toDateNormalDDMMYYYYHHMMSS(dateValue);
+				  }
+				  theModel.variables.pushVar(dateParam,dateValue);				
 		      }
 		    });
 	    	theModel.variables.initVar("withAdvancedWorks");				
-		    if (isDefined(self.config['dates']["withAdvancedWorks"])){
-				theModel.variables.pushVar("withAdvancedWorks",self.config['dates']["withAdvancedWorks"]);				
+		    if (isDefined(self.config['dates']["withAdvancedWorks"])&&(self.config['dates']["withAdvancedWorks"]!="")){
+				theModel.variables.pushVar("withAdvancedWorks",toDateNormalDDMMYYYYHHMMSS(self.config['dates']["withAdvancedWorks"]));				
 		    } else {
 				theModel.variables.pushVar("withAdvancedWorks",false);				
 		    }

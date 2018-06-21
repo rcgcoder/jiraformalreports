@@ -218,11 +218,11 @@ class RCGTask{
 					||(theTaskManager.lastTimeout==0)
 					||(contRunningTime>theTaskManager.asyncTaskCallsBlock)){
 				theTaskManager.timeoutsCalled++;
-				log("Continuous running time:"+contRunningTime+" running async (with setTimeout "+theTaskManager.timeoutsCalled+"/"+theTaskManager.timeoutsAvoided+")");
+				//log("Continuous running time:"+contRunningTime+" running async (with setTimeout "+theTaskManager.timeoutsCalled+"/"+theTaskManager.timeoutsAvoided+")");
 				fncAsyncApply();
 			} else {
 				theTaskManager.timeoutsAvoided++;
-				log("Continuous running time:"+contRunningTime+" running sync (without setTimeout "+theTaskManager.timeoutsCalled+"/"+theTaskManager.timeoutsAvoided+")");				
+				//log("Continuous running time:"+contRunningTime+" running sync (without setTimeout "+theTaskManager.timeoutsCalled+"/"+theTaskManager.timeoutsAvoided+")");				
 				fncApply();
 			}
 		} else {

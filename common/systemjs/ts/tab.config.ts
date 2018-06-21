@@ -182,6 +182,18 @@ export class TabConfig {
             auxObj=System.getAngularDomObject(textareaName)[0];
             dfReport[textareaName]=auxObj.value;
         });
+        
+        var arrDates=["ReportInitDate","ReportEndDate","ContractInitDate",
+                          "ContractEndDate", "ContractAdvancedDate"];
+        dfReport['dates']=[];
+        arrDates.forEach(function(dateParam){
+            auxObj=System.getAngularDomObject(dateParam)[0];
+            dfReport['dates'][dateParam]=auxObj.value;
+        });
+        auxObj=$('#toggle_AdvancedWorks');
+        dfReport['dates']["withAdvancedWorks"]=(auxObj.attr("checked")=="checked");
+        
+        
         return dfReport;
     }
     applyConfig(config){
@@ -288,7 +300,21 @@ export class TabConfig {
                 auxObj.value=config[textareaName];
             }
         });
-        
+
+        if (isDefined(config['dates'])){
+            var arrDates=["ReportInitDate","ReportEndDate","ContractInitDate",
+                          "ContractEndDate", "ContractAdvancedDate"];
+            arrDates.forEach(function(dateParam){
+                if (isDefined(config['dates'][dateParam])){
+                    auxObj=System.getAngularDomObject(dateParam)[0];
+                    auxObj.value=config['dates'][dateParam];
+                }
+            });
+            if (isDefined(config['dates']["withAdvancedWorks"])&&config['dates']["withAdvancedWorks"]){
+                auxObj=$('#toggle_AdvancedWorks');
+                auxObj.attr("checked","checked");
+            }
+        }
         System.getAngularObject("tabConfig",true).updateCorrelators();
         
     }

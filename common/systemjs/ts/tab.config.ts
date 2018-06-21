@@ -185,7 +185,7 @@ export class TabConfig {
         
         var arrDates=["ReportInitDate","ReportEndDate","ContractInitDate",
                           "ContractEndDate", "ContractAdvancedDate"];
-        dfReport['dates']=[];
+        dfReport['dates']={};
         arrDates.forEach(function(dateParam){
             auxObj=System.getAngularDomObject(dateParam)[0];
             dfReport['dates'][dateParam]=auxObj.value;

@@ -386,8 +386,8 @@ var jrfReport=class jrfReport {
 		      }
 		    });
 	    	theModel.variables.initVar("withAdvancedWorks");				
-		    if (isDefined(self.config['dates']["withAdvancedWorks"])&&(self.config['dates']["withAdvancedWorks"]!="")){
-				theModel.variables.pushVar("withAdvancedWorks",toDateNormalDDMMYYYYHHMMSS(self.config['dates']["withAdvancedWorks"]));				
+		    if (isDefined(self.config['dates']["withAdvancedWorks"])&&(self.config['dates']["withAdvancedWorks"])){
+				theModel.variables.pushVar("withAdvancedWorks",self.config['dates']["withAdvancedWorks"]);
 		    } else {
 				theModel.variables.pushVar("withAdvancedWorks",false);				
 		    }

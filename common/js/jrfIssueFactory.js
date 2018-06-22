@@ -255,6 +255,8 @@ function newIssueFactory(report){
 		var self=this;
 		var sKey=self.getKey();
 		var sUrl=self.getJiraObject().self;
+		var arrUrlParts=sUrl.split('rest');
+		sUrl=arrUrlParts[0]+"browse/"+sKey;
 		var sHtml='<a target="_blank" href='+sUrl+'>'+sKey+'</a>';
 		return sHtml;
 	});

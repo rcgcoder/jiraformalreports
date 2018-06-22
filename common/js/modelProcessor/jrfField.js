@@ -3,6 +3,9 @@ var jrfField=class jrfField{//this kind of definition allows to hot-reload
 		var self=this;
 		model.extendToken(self,tag,reportElem);
 		self.fieldName=self.getAttrVal("field");
+		if ("Billing.calculos.pendiente"==self.fieldName.trim()){
+			debugger;
+		}
 		self.format=self.getAttrVal("inFormat");
 	}
 	apply(){

@@ -378,11 +378,16 @@ var jrfReport=class jrfReport {
 		    arrDates.forEach(function(dateParam){
 		      if (isDefined(self.config['dates'][dateParam])){
 				  theModel.variables.initVar(dateParam);
+				  theModel.variables.initVar(dateParam+"_text");
 				  var dateValue=self.config['dates'][dateParam];
 				  if (dateValue!=""){
+					  theModel.variables.pushVar(dateParam+"_text",dateValue);				
 					  dateValue=toDateNormalDDMMYYYYHHMMSS(dateValue);
+					  theModel.variables.pushVar(dateParam,dateValue);				
+				  } else {
+					  theModel.variables.pushVar(dateParam+"_text","");				
+					  theModel.variables.pushVar(dateParam,"");				
 				  }
-				  theModel.variables.pushVar(dateParam,dateValue);				
 		      }
 		    });
 	    	theModel.variables.initVar("withAdvancedWorks");				

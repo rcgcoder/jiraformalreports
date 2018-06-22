@@ -122,13 +122,13 @@ function newIssueFactory(report){
 		}
 		return "Undefined getter for fieldName:["+sFieldName+"]";
 	});
-	dynObj.functions.add("fieldAccumChilds",function(theFieldName,notAdjust,bSetProperty,fncItemCustomCalc){
+	dynObj.functions.add("fieldAccumChilds",function(theFieldName,datetime,inOtherParams,notAdjust,bSetProperty,fncItemCustomCalc){
 		var self=this;
-		return self.fieldAccum(theFieldName,"Childs",bSetProperty,notAdjust,fncItemCustomCalc);
+		return self.fieldAccum(theFieldName,"Childs",datetime,bSetProperty,inOtherParams,notAdjust,fncItemCustomCalc);
 	});
-	dynObj.functions.add("fieldAccumAdvanceChilds",function(theFieldName,notAdjust,bSetProperty,fncItemCustomCalc){
+	dynObj.functions.add("fieldAccumAdvanceChilds",function(theFieldName,datetime,inOtherParams,notAdjust,bSetProperty,fncItemCustomCalc){
 		var self=this;
-		return self.fieldAccum(theFieldName,"AdvanceChilds",bSetProperty,notAdjust,fncItemCustomCalc);
+		return self.fieldAccum(theFieldName,"AdvanceChilds",datetime,inOtherParams,bSetProperty,notAdjust,fncItemCustomCalc);
 	});
 	dynObj.functions.add("appendPrecomputedPropertyValues",function(key,arrValues){
 		var self=this;
@@ -150,13 +150,14 @@ function newIssueFactory(report){
 		if (precomps=="") return "";
 		return precomps.getLast().value;
 	})
-	dynObj.functions.add("fieldAccum",function(theFieldName,dateTime,listAttribName,bSetProperty,notAdjust,fncItemCustomCalc){
+	dynObj.functions.add("fieldAccum",function(theFieldName,hierarchyType,dateTime,inOtherParams,bSetProperty,notAdjust,fncItemCustomCalc){
 		var self=this;
+		debugger;
 		var app=System.webapp;
 		var accumValue=0;
 		var childType="Childs";
-		if (isDefined(listAttribName)){
-			childType=listAttribName;
+		if (isDefined(hierarchyType)){
+			childType=hierarchyType;
 		}
 		var cacheKey=childType+"."+theFieldName;
 		var accumCache=self.getAccumulatorsCaches();
@@ -176,7 +177,7 @@ function newIssueFactory(report){
 		var allChilds=self["get"+childType]();
 		if (allChilds.length()>0){
 			allChilds.walk(function(child){
-				childValue=child.fieldAccum(theFieldName,childType);
+				childValue=child.fieldAccum(theFieldName,childType,dateTime,inOtherParams,bSetProperty,notAdjust,fncItemCustomCalc);
 				accumValue+=childValue;
 			});
 		} else {
@@ -187,7 +188,7 @@ function newIssueFactory(report){
 				childValue=precompValue.value;
 			}
 			if (childValue==""){ // if precomputed==""..... there is not precomputed value
-				var childValue=self.fieldValue(theFieldName);
+				var childValue=self.fieldValue(theFieldName,false,dateTime,inOtherParams);
 			}
 			if (childValue==""){
 				childValue=0;

@@ -72,6 +72,7 @@ var jrfSubset=class jrfSubset{//this kind of definition allows to hot-reload
 			return self.reportElem.getAdvanceChilds();
 		} else if (self.type=="array"){
 			log("Proccessing array");
+			debugger;
 			var elemsInForEach=self.processSourceArrayElements();
 			var hsAux=newHashMap();
 			for (var i=0;i<elemsInForEach.length;i++){
@@ -80,6 +81,7 @@ var jrfSubset=class jrfSubset{//this kind of definition allows to hot-reload
 			return hsAux;
 		} else if (self.type=="list"){
 			log("Proccessing list...HashMap");
+			debugger;
 			var elemsInForEach=self.processSourceArrayElements();
 			if (Array.isArray(elemsInForEach)){
 				var hsAux=newHashMap();

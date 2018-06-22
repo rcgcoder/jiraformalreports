@@ -32,7 +32,7 @@ var newBillingObject=function (){
 var getBillingFieldListRecursive=function (sPropertyPath,obj){
 	var arrResults=[];
 	var arrAux;
-	var arrProps=getAllProperties(objImportes);
+	var arrProps=getAllProperties(obj);
 	for (var i=0;i<arrProps.length;i++){
 		var propName=arrProps[i];
 		var propPath=sPropertyPath+(sPropertyPath==""?"":".")+propName;

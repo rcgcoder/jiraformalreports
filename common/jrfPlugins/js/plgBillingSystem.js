@@ -1,12 +1,12 @@
 var newBillingObject=function (){
     	var objImportes={};
     	objImportes.source={
-				  timeoriginalestimate:timeoriginalestimate,
-				  timeestimate:timeestimate,
-				  timespent:timespent,
-				  faseActual:faseActual,
-				  status:status,
-				  created:created,
+				  timeoriginalestimate:"",
+				  timeestimate:"",
+				  timespent:"",
+				  faseActual:"",
+				  status:"",
+				  created:"",
 				  importesEstimados:{"Total":0,"Identificado":0,"Aprobado":0,"Disenado":0,"Implementado":0,"Desplegado":0},
 				  importesReales:{"Total":0,"Identificado":0,"Aprobado":0,"Disenado":0,"Implementado":0,"Desplegado":0},
 				  bImportesRealesBlanco:false,

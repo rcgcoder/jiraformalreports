@@ -21,7 +21,11 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		var self=this;
 		var newParent;
 		var bLastShowed=true;
-		if ((self.type=="root")||(self.type=="child")||(self.type=="advchild")){
+		if ((self.type=="root")||
+			(self.type=="child")||
+			(self.type=="advchild")||
+			(self.type=="list")
+			){
 			newParent=eachElem;
 		} else if (self.type=="array"){
 			newParent=self.reportElem;

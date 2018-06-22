@@ -372,7 +372,7 @@ var jrfReport=class jrfReport {
 					theModel.variables.pushVar(defaultVar[0],defaultVar[1]);				
 				})
 			}
-			debugger;
+			//debugger;
             var arrDates=["ReportInitDate","ReportEndDate","ContractInitDate",
                 "ContractEndDate", "ContractAdvancedDate"];
 		    arrDates.forEach(function(dateParam){

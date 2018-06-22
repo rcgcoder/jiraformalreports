@@ -159,10 +159,12 @@ function newIssueFactory(report){
 		if (isDefined(hierarchyType)){
 			childType=hierarchyType;
 		}
-		var cacheKey=childType+"."+theFieldName;
+/*		var cacheKey=childType+"."+theFieldName;
 		var accumCache=self.getAccumulatorsCaches();
 		var keyValuesCache;
-		if (accumCache.exists(cacheKey)){
+		var bExistsCacheKey=accumCache.exists(cacheKey);
+		bExistsCacheKey=false;
+		if (bExistsCacheKey){
 			keyValuesCache=accumCache.getValue(cacheKey);
 			if (isUndefined(dateTime)){
 				return keyValuesCache.getValue("now");
@@ -174,7 +176,7 @@ function newIssueFactory(report){
 			keyValuesCache=newHashMap();
 			accumCache.add(cacheKey,keyValuesCache);
 		}
-		var allChilds=self["get"+childType]();
+*/		var allChilds=self["get"+childType]();
 		if (allChilds.length()>0){
 			allChilds.walk(function(child){
 				childValue=child.fieldAccum(theFieldName,childType,dateTime,inOtherParams,bSetProperty,notAdjust,fncItemCustomCalc);
@@ -206,7 +208,7 @@ function newIssueFactory(report){
 		var auxNotAdjust=(isDefined(notAdjust)&&notAdjust); // not adjust uses only if TRUE is received
 		accumValue=self.getReport().adjustAccumItem(childType,accumValue,self,theFieldName,notAdjust);
 //		accumCache.add(cacheKey,accumValue);
-		keyValuesCache.add((isUndefined(dateTime)?"now":dateTime),accumValue);
+/*		keyValuesCache.add((isUndefined(dateTime)?"now":dateTime),accumValue);
 		if ((self.getReport().updatePrecomputedAccumulators)
 				&&
 			(isUndefined(bSetProperty) || (isDefined(bSetProperty)&&(bSetProperty)))){
@@ -243,7 +245,7 @@ function newIssueFactory(report){
 		        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
 			}
 		}
-		return accumValue;
+*/		return accumValue;
 	});
 	
 	dynObj.functions.add("linkValue",function(sLinkName){

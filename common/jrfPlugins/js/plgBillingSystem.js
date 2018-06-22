@@ -1,3 +1,60 @@
+var newBillingObject=function (){
+    	var objImportes={};
+    	objImportes.source={
+				  timeoriginalestimate:timeoriginalestimate,
+				  timeestimate:timeestimate,
+				  timespent:timespent,
+				  faseActual:faseActual,
+				  status:status,
+				  created:created,
+				  importesEstimados:{"Total":0,"Identificado":0,"Aprobado":0,"Disenado":0,"Implementado":0,"Desplegado":0},
+				  importesReales:{"Total":0,"Identificado":0,"Aprobado":0,"Disenado":0,"Implementado":0,"Desplegado":0},
+				  bImportesRealesBlanco:false,
+				  bImportesRealesCero:false,
+				  acumFasesEstimado:0,
+				  acumFasesReal:0
+				};
+		objImportes.importesPorcentajeRef={"Total":1,"Identificado":0,"Aprobado":0,"Disenado":0.1,"Implementado":0.8,"Desplegado":0.1};
+		objImportes.importesEstimados={"Total":0,"Aprobado":0,"Disenado":0,
+								"Implementado":0,"Desplegado":0,
+								"Identificado":0
+								};
+		objImportes.importesReales={"Total":0,"Aprobado":0,"Disenado":0,
+										"Implementado":0,
+										"Desplegado":0,
+										"Identificado":0
+								};
+		objImportes.importesdefinidos={importesEstimados:{"Total":false,"Identificado":false,"Aprobado":false,"Disenado":false,"Implementado":false,"Desplegado":false},
+							  importesReales:{"Total":false,"Identificado":false,"Aprobado":false,"Disenado":false,"Implementado":false,"Desplegado":false}};
+		objImportes.calculos={aprobado:0,pendiente:0,resto:0,total:0,comentarios:""};
+		return objImportes;
+    }
+var getBillingFieldListRecursive=function (sPropertyPath,obj){
+	var arrResults=[];
+	var arrAux;
+	var arrProps=getAllProperties(objImportes);
+	for (var i=0;i<arrProps.length;i++){
+		var propName=arrProps[i];
+		var propPath=sPropertyPath+(sPropertyPath==""?"":".")+propName;
+		var propValue=obj[propName];
+		if (isDefined(propValue)&&(typeof propValue==="object")){
+			arrAux=self.getBillingFieldListRecursive(propPath,propValue);
+			arrAux.forEach(function(auxPropPath){
+				arrResults.push(auxPropPath);
+			});
+		} else {
+			arrResults.push(propPath);
+		}
+	}
+	return arrResults;
+}
+
+var getBillingFieldList=function(){
+    	var objImportes=newBillingObject();
+    	var arrPropPaths=getBillingFieldListRecursive("",objImportes);
+    	return arrPropPaths;
+    }
+
 var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to hot-reload
     constructor(tag,report,model){
     	 var self=this;
@@ -42,7 +99,6 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     }
     initializeBilling(otherParams,atDatetime){
     	var self=this;
-    	var objImportes={};
     	var status=self.fieldValue("status.name",false,atDatetime);
     	var created=self.fieldValue("created",false,atDatetime);
 		var faseActual=self.fieldValue("Fase",false,atDatetime);
@@ -52,34 +108,14 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		if (timeoriginalestimate=="") timeoriginalestimate=0; else timeoriginalestimate=parseFloat(timeoriginalestimate);
 		if (timeestimate=="") timeestimate=0; else timeestimate=parseFloat(timeestimate);
 		if (timespent=="") timespent=0; else timespent=parseFloat(timespent);
-    	objImportes.source={
-    				  timeoriginalestimate:timeoriginalestimate,
-    				  timeestimate:timeestimate,
-    				  timespent:timespent,
-    				  faseActual:faseActual,
-    				  status:status,
-    				  created:created,
-	    			  importesEstimados:{"Total":0,"Identificado":0,"Aprobado":0,"Disenado":0,"Implementado":0,"Desplegado":0},
-					  importesReales:{"Total":0,"Identificado":0,"Aprobado":0,"Disenado":0,"Implementado":0,"Desplegado":0},
-					  bImportesRealesBlanco:false,
-					  bImportesRealesCero:false,
-					  acumFasesEstimado:0,
-					  acumFasesReal:0
-    				};
-    	objImportes.importesPorcentajeRef={"Total":1,"Identificado":0,"Aprobado":0,"Disenado":0.1,"Implementado":0.8,"Desplegado":0.1};
-    	objImportes.importesEstimados={"Total":0,"Aprobado":0,"Disenado":0,
-    							"Implementado":0,"Desplegado":0,
-    							"Identificado":0
-    							};
-    	objImportes.importesReales={"Total":0,"Aprobado":0,"Disenado":0,
-    									"Implementado":0,
-    									"Desplegado":0,
-    									"Identificado":0
-    							};
-    	objImportes.importesdefinidos={importesEstimados:{"Total":false,"Identificado":false,"Aprobado":false,"Disenado":false,"Implementado":false,"Desplegado":false},
-    						  importesReales:{"Total":false,"Identificado":false,"Aprobado":false,"Disenado":false,"Implementado":false,"Desplegado":false}};
-    	objImportes.calculos={aprobado:0,pendiente:0,resto:0,total:0,comentarios:""};
-    	var arrFields=self.getBillingFieldUsed().arrFieldsForCalc;
+    	var objImportes=newBillingObject();
+    	objImportes.source.timeoriginalestimate=timeoriginalestimate;
+    	objImportes.source.timeestimate=timeestimate;
+    	objImportes.source.timespent=timespent;
+    	objImportes.source.faseActual=faseActual;
+    	objImportes.source.status=status;
+    	objImportes.source.created=created;
+		var arrFields=self.getBillingFieldUsed().arrFieldsForCalc;
     	var vValue;
     	var bWithValue;
     	arrFields.forEach(function (fieldImporte){

@@ -251,6 +251,14 @@ function newIssueFactory(report){
 	dynObj.functions.add("getReport",function(){
 		return theReport;
 	});
+	dynObj.functions.add("getKeyWithUrl",function(){
+		var self=this;
+		var sKey=self.getKey();
+		var sUrl=self.getJiraObject().self;
+		var sHtml='<a target="_blank" href='+sUrl+'>'+sKey+'</a>';
+		return sHtml;
+	});
+	
 	dynObj.functions.add("addLinkValue",function(sLinkTypeId,value){
 		var self=this;
 		var hsLinkTypes=self.getLinkTypes();

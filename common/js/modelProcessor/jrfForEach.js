@@ -1,7 +1,7 @@
 var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition allows to hot-reload
 	constructor(tag,reportElem,model){
 		super(tag,reportElem,model);
-		debugger;
+		//debugger;
 		var self=this;
 		self.autoAddPostHtml=false;
 		self.subType=self.getAttrVal("subtype");

@@ -51,7 +51,7 @@ var getBillingFieldListRecursive=function (sPropertyPath,obj){
 
 var getBillingFieldList=function(){
     	var objImportes=newBillingObject();
-    	debugger;
+    	//debugger;
     	var arrPropPaths=getBillingFieldListRecursive("Billing",objImportes);
     	var hsProps=newHashMap();
     	arrPropPaths.forEach(function(propName){

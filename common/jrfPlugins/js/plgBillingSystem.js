@@ -53,7 +53,11 @@ var getBillingFieldList=function(){
     	var objImportes=newBillingObject();
     	debugger;
     	var arrPropPaths=getBillingFieldListRecursive("Billing",objImportes);
-    	return arrPropPaths;
+    	var hsProps=newHashMap();
+    	arrPropPaths.forEach(function(propName){
+    		hsProps.push(propName);
+    	});
+    	return hsProps;
     }
 
 var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to hot-reload

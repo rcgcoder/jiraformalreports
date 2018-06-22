@@ -185,11 +185,11 @@ function newIssueFactory(report){
 		} else {
 			// let´s find if field have a precomputed value
 			var childValue="";
-			var precompValue=self.getLastPrecomputedPropertyValue(cacheKey);
+/*			var precompValue=self.getLastPrecomputedPropertyValue(cacheKey);
 			if (precompValue!=""){
 				childValue=precompValue.value;
 			}
-			if (childValue==""){ // if precomputed==""..... there is not precomputed value
+*/			if (childValue==""){ // if precomputed==""..... there is not precomputed value
 				var childValue=self.fieldValue(theFieldName,false,dateTime,inOtherParams);
 			}
 			if (childValue==""){

@@ -134,10 +134,11 @@ var jrfSubset=class jrfSubset{//this kind of definition allows to hot-reload
 					self.variables.popVar(self.innerVarName);
 				}
 			});
+			self.variables.popVarEnv();
 		} else {
 			self.hsResult=elemsInForEach;
 		}
-		self.variables.popVarEnv();
+
 		return self.hsResult;
 	}
 	order(elemsInForEach){
@@ -203,11 +204,11 @@ var jrfSubset=class jrfSubset{//this kind of definition allows to hot-reload
 		if (self.name!="") elemsInForEach.name=self.name;
 		var varName=self.resultVarName;
 		if (varName!=""){
-			self.variables.pushVar(varName,elemsInForEach,-2); //if variable does not exists... it puts in parent block
+			self.variables.pushVar(varName,elemsInForEach,-1); //if variable does not exists... it puts in parent block
 		}
 		if (self.bWithRest){
 			varName=self.restVarName;
-			self.variables.pushVar(varName,self.hsRest,-2); //if variable does not exists... it puts in parent block
+			self.variables.pushVar(varName,self.hsRest,-1); //if variable does not exists... it puts in parent block
 			
 		}
 		return elemsInForEach;

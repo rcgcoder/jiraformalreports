@@ -124,7 +124,7 @@ var jrfSubset=class jrfSubset{//this kind of definition allows to hot-reload
 				if (bWhereResult){
 					iSelectedCounter++;
 					self.hsResult.add(key,eachElem);
-				} else if (bWithRest){
+				} else if (self.bWithRest){
 					self.hsRest.add(key,eachElem);
 				}
 				self.variables.popVar("counter_selected");

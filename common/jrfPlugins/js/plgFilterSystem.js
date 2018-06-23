@@ -12,18 +12,10 @@ var plgFilterSystem=class plgFilterSystem{//this kind of definition allows to ho
 	 }
 	 newFilters(customFilters){
 		 customFilters.newFilter("wUTE",`
-				 function(){
-					/*Trabajo de la UTE (wUTE)*/
-					if (
-						{{issue}}.fieldValue('Proyecto.key') !='OT'
-					   ) { 
-					   return true;
-					} else {
-				 		return false;
-				 	}
-				 	}()
-					
-					`);
+				/*Trabajo de la UTE (wUTE)*/
+				(
+					{{issue}}.fieldValue('Proyecto.key') !='OT'
+				)`);
 		customFilters.newFilter("wAdvIssues",`
 				/*Trabajo Adelantado (wAdvIssues)*/
 				(
@@ -175,9 +167,9 @@ var plgFilterSystem=class plgFilterSystem{//this kind of definition allows to ho
 		customFilters.newFilter("errorTimespentInforme",`
 				/*- caso 1 - que hayan facturado o sean facturables y no se pueda calcular el tiempo trabajado acumulado (errorTimespentInforme))
 				(
-					(useFilter('wAlgoFacturado') || useFilter('wFacturable')) 
+					((useFilter('wAlgoFacturado')) || (useFilter('wFacturable')) )
 					&& 
-					useFilter('childTimespentError')
+					(useFilter('childTimespentError'))
 				)`);
 	 }
 }

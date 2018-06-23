@@ -119,7 +119,11 @@ var jrfSubset=class jrfSubset{//this kind of definition allows to hot-reload
 				}
 				self.variables.pushVar("counter",iCounter);
 				self.variables.pushVar("counter_selected",iSelectedCounter);
-				sWhere=self.replaceVars(self.whereCondition);
+				sWhere=self.whereCondition;
+				if (sWhere.indexOf("useFilter")>=0){
+					sWhere=self.model.filters.useFilter(sWhere);
+				} 
+				sWhere=self.replaceVars(sWhere);
 				bWhereResult=self.replaceVarsAndExecute(sWhere);
 				if (bWhereResult){
 					iSelectedCounter++;

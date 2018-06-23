@@ -379,6 +379,17 @@ class factoryObjects{
 					//return getFromListaById(this["List"+vNameAttribute+"s"],id);
 					return this["list_"+vNameAttribute+"s"].getValue(id);
 				});
+				this.functions.add("set"+vNameAttribute,function(id,value){
+					var hsList=this["get"+vNameAttribute+"s"]();
+					if (hsList.exists(id)){
+						hsList.setValue(id,value);
+					} else {
+						hsList.add(id,value);
+					}
+				});
+				this.functions.add("exists"+vNameAttribute,function(id){
+					return this["get"+vNameAttribute+"s"]().exists(id);
+				});
 			} else if (Array.isArray(vNameAttribute)){
 				for (var i=0;i<vNameAttribute.length;i++){
 					if (typeof vNameAttribute[i]==="string"){

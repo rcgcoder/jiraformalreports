@@ -4,10 +4,16 @@ var jrfSubset=class jrfSubset{//this kind of definition allows to hot-reload
 		model.extendToken(self,tag,reportElem);
 //		self.autoAddPostHtml=false;
 		self.name=self.getAttrVal("name");
+		self.nameRest=self.getAttrVal("nameRest");
 		self.type=self.getAttrVal("type");
 //		self.where=self.getAttrVal("where",undefined,false);
 		self.innerVarName=self.getAttrVal("as");
 		self.resultVarName=self.getAttrVal("resultvarname");
+		self.restVarName=self.getAttrVal("restvarname");
+		
+		self.bWithRest=false;
+		self.hsResult;
+		self.hsRest;
 		
 		self.source=self.getAttrVal("source");
 		self.sourceJson=self.getAttrVal("sourcejson");
@@ -96,34 +102,43 @@ var jrfSubset=class jrfSubset{//this kind of definition allows to hot-reload
 	}
 	filter(elemsInForEach){
 		var self=this;
-		if (self.whereCondition=="") return elemsInForEach;
-		var hsResult=newHashMap();
-		var sWhere="";
-		var bWhereResult=false;
-		self.variables.pushVarEnv();
-		var iCounter=0;
-		var iSelectedCounter=0;
-		elemsInForEach.walk(function(eachElem,deep,key){
-			if (self.innerVarName!=""){
-				self.variables.pushVar(self.innerVarName,eachElem);
-			}
-			self.variables.pushVar("counter",iCounter);
-			self.variables.pushVar("counter_selected",iSelectedCounter);
-			sWhere=self.replaceVars(self.whereCondition);
-			bWhereResult=self.replaceVarsAndExecute(sWhere);
-			if (bWhereResult){
-				iSelectedCounter++;
-				hsResult.add(key,eachElem);
-			}
-			self.variables.popVar("counter_selected");
-			self.variables.popVar("counter");
-			iCounter++;
-			if (self.innerVarName!=""){
-				self.variables.popVar(self.innerVarName);
-			}
-		});
+		self.hsResult=newHashMap();
+		if (isDefined(self.restVarName)&&(self.restVarName!="")){
+			self.hsRest=newHashMap();
+			self.bWithRest=true;
+		}
+		if (self.whereCondition!="") {
+			var sWhere="";
+			var bWhereResult=false;
+			self.variables.pushVarEnv();
+			var iCounter=0;
+			var iSelectedCounter=0;
+			elemsInForEach.walk(function(eachElem,deep,key){
+				if (self.innerVarName!=""){
+					self.variables.pushVar(self.innerVarName,eachElem);
+				}
+				self.variables.pushVar("counter",iCounter);
+				self.variables.pushVar("counter_selected",iSelectedCounter);
+				sWhere=self.replaceVars(self.whereCondition);
+				bWhereResult=self.replaceVarsAndExecute(sWhere);
+				if (bWhereResult){
+					iSelectedCounter++;
+					self.hsResult.add(key,eachElem);
+				} else if (bWithRest){
+					self.hsRest.add(key,eachElem);
+				}
+				self.variables.popVar("counter_selected");
+				self.variables.popVar("counter");
+				iCounter++;
+				if (self.innerVarName!=""){
+					self.variables.popVar(self.innerVarName);
+				}
+			});
+		} else {
+			self.hsResult=elemsInForEach;
+		}
 		self.variables.popVarEnv();
-		return hsResult;
+		return self.hsResult;
 	}
 	order(elemsInForEach){
 		var self=this;
@@ -189,6 +204,11 @@ var jrfSubset=class jrfSubset{//this kind of definition allows to hot-reload
 		var varName=self.resultVarName;
 		if (varName!=""){
 			self.variables.pushVar(varName,elemsInForEach,-1); //if variable does not exists... it puts in parent block
+		}
+		if (self.bWithRest){
+			varName=self.restVarName;
+			self.variables.pushVar(varName,self.hsRest,-1); //if variable does not exists... it puts in parent block
+			
 		}
 		return elemsInForEach;
 	}

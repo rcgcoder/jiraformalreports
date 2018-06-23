@@ -102,6 +102,26 @@ class RCGStringUtils{
 	    textArea.innerHTML = encodedString;
 	    return textArea.value;
 	}
+	removeInnerTags(sHtml,bClear){
+		var sTagText=sHtml;
+		var indCloseTag;
+		var sInnerChar=" ";
+		if (isDefined(bClear)&&bClear){
+			sInnerChar="";
+		}
+
+		var indFirstCloseTag=sTagText.indexOf(">");
+		var indOpenTag=sTagText.substring(0,indFirstCloseTag).lastIndexOf("<");
+
+		while((indOpenTag>=0)&&(indOpenTag<indFirstCloseTag)){
+			indCloseTag=sTagText.indexOf(">",indOpenTag+1);
+			sTagText=sTagText.substring(0,indOpenTag)+ sInnerChar +sTagText.substring(indCloseTag+1,sTagText.length);
+			indFirstCloseTag=sTagText.indexOf(">");
+			indOpenTag=sTagText.substring(0,indFirstCloseTag).lastIndexOf("<");
+		}
+		return sTagText;
+	}
+
 	prepareComparation(str,bCaseInsensitive,bRemoveSpecials){
 			var sValue=str;
 			if (typeof bCaseInsensitive !=="undefined"){

@@ -6,6 +6,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		self.actualElement=actualElement;
 		self.variables=new RCGVarEngine();
 		self.directives=newHashMap();
+		self.filters=newRCGFilterManager();
 		self.tokenBase=new jrfToken(self);
 		if (isDefined(inputHtml)){
 			self.inputHtml=inputHtml;
@@ -196,23 +197,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 	 *  4> <G/> </jrf> <H/>
 	 */
 	removeInnerTags(sHtml,bClear){
-		var sTagText=sHtml;
-		var indCloseTag;
-		var sInnerChar=" ";
-		if (isDefined(bClear)&&bClear){
-			sInnerChar="";
-		}
-
-		var indFirstCloseTag=sTagText.indexOf(">");
-		var indOpenTag=sTagText.substring(0,indFirstCloseTag).lastIndexOf("<");
-
-		while((indOpenTag>=0)&&(indOpenTag<indFirstCloseTag)){
-			indCloseTag=sTagText.indexOf(">",indOpenTag+1);
-			sTagText=sTagText.substring(0,indOpenTag)+ sInnerChar +sTagText.substring(indCloseTag+1,sTagText.length);
-			indFirstCloseTag=sTagText.indexOf(">");
-			indOpenTag=sTagText.substring(0,indFirstCloseTag).lastIndexOf("<");
-		}
-		return sTagText;
+		return removeInnerTags(sHtml,bClear);
 	}
 	processRecursive(arrJRFs,indexAct,parentTag,sInitialPrependText){
 		var self=this;
@@ -539,5 +524,14 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			});
 		}
 		self.continueTask();
+	}
+	addFilter(name,sFilter){
+		var self=this;
+		var filters=self.filters;
+		if (filters.exists(name)){
+			filters.setValue(name,sFilter);
+		} else {
+			filters.add(name,sFilter);
+		}
 	}
 }

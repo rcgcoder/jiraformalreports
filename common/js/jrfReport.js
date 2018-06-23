@@ -96,6 +96,7 @@ var jrfReport=class jrfReport {
 //								"js/libs/FileSaver.js",
 								"js/libs/wiki2html.js",
 								"js/rcglibs/RCGVarEngine.js",
+								"js/rcglibs/RCGFilterManager.js",
 								"js/rcglibs/RCGFileUtils.js",
 								"js/modelProcessor/jrfModel.js",
 								"js/modelProcessor/jrfToken.js",

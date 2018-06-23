@@ -12,10 +12,18 @@ var plgFilterSystem=class plgFilterSystem{//this kind of definition allows to ho
 	 }
 	 newFilters(customFilters){
 		 customFilters.newFilter("wUTE",`
+				 function(){
 					/*Trabajo de la UTE (wUTE)*/
-					(
+					if (
 						{{issue}}.fieldValue('Proyecto.key') !='OT'
-					)`);
+					   ) { 
+					   return true;
+					} else {
+				 		return false;
+				 	}
+				 	}()
+					
+					`);
 		customFilters.newFilter("wAdvIssues",`
 				/*Trabajo Adelantado (wAdvIssues)*/
 				(

@@ -33,7 +33,7 @@ var newRCGFilterManagerFactory=function(){
 		var sResultAux="";
 		var iPos=sPartialResult.indexOf("useFilter");
 		while (iPos>=0){
-			arrFilterParts=ssPartialResult.split("useFilter(");
+			arrFilterParts=sPartialResult.split("useFilter(");
 			sResult="";
 			if (iPos==0){
 				iFilterRow=0;

@@ -8,15 +8,15 @@ var plgFilterSystem=class plgFilterSystem{//this kind of definition allows to ho
 	 execute(){
         var selfPlg=this;
         var filters=selfPlg.model.filters;
-        selfPlg.addFilters(filters);
+        selfPlg.newFilters(filters);
 	 }
-	 addFilters(customFilters){
-		 customFilters.addFilter("wUTE",`
+	 newFilters(customFilters){
+		 customFilters.newFilter("wUTE",`
 					/*Trabajo de la UTE (wUTE)*/
 					(
 						{{issue}}.fieldValue('Proyecto.key') !='OT'
 					)`);
-		customFilters.addFilter("wAdvIssues",`
+		customFilters.newFilter("wAdvIssues",`
 				/*Trabajo Adelantado (wAdvIssues)*/
 				(
 					useFilter('wUTE') 
@@ -25,7 +25,7 @@ var plgFilterSystem=class plgFilterSystem{//this kind of definition allows to ho
 					&& 
 					(new Date({{issue}}.fieldValue('created')) lessThan {{ContractAdvancedDate}})
 				) `);
-		customFilters.addFilter("wIssues",`
+		customFilters.newFilter("wIssues",`
 				/*Trabajo no Adelantado (wIssues) */
 				(
 					useFilter('wUTE')
@@ -33,7 +33,7 @@ var plgFilterSystem=class plgFilterSystem{//this kind of definition allows to ho
 					(new Date({{issue}}.fieldValue('created')) greaterThan {{ContractAdvancedDate}})
 				)`);
 
-		customFilters.addFilter("wProrroga",`
+		customFilters.newFilter("wProrroga",`
 				/*Trabajo de la Prorroga (wProrroga) */
 				(
 					useFilter('wAdvIssues')
@@ -41,7 +41,7 @@ var plgFilterSystem=class plgFilterSystem{//this kind of definition allows to ho
 					useFilter('wIssues')
 				)`);
 
-		customFilters.addFilter("wAlgoFacturado",`
+		customFilters.newFilter("wAlgoFacturado",`
 				/*Trabajo con importe aprobado (wAlgoFacturado) */
 				(
 					(
@@ -56,7 +56,7 @@ var plgFilterSystem=class plgFilterSystem{//this kind of definition allows to ho
 					({{issue}}.fieldValue('Fase',false,{{ReportInitDate}}) greaterOrEqualThan {{MinFacturableFase_Prorroga}})
 					)
 				)`);
-		customFilters.addFilter("wFaseFacturable",`
+		customFilters.newFilter("wFaseFacturable",`
 				/*Trabajo en Fase Facturable (wFaseFacturable)*/
 				(
 					(
@@ -73,7 +73,7 @@ var plgFilterSystem=class plgFilterSystem{//this kind of definition allows to ho
 				)`);
 
 
-		customFilters.addFilter("wMismaFase",`
+		customFilters.newFilter("wMismaFase",`
 				/*Trabajo sin cambio de Fase durante el periodo (wMismaFase)*/
 				(  
 					useFilter('wProrroga')
@@ -85,7 +85,7 @@ var plgFilterSystem=class plgFilterSystem{//this kind of definition allows to ho
 					) 
 				)`);
 
-		customFilters.addFilter("wAvanceFase",`
+		customFilters.newFilter("wAvanceFase",`
 				/*Trabajo con cambio de Fase durante el periodo (wAvanceFase)*/
 				(  
 					useFilter('wProrroga')
@@ -100,14 +100,14 @@ var plgFilterSystem=class plgFilterSystem{//this kind of definition allows to ho
 					({{issue}}.fieldValue('Fase',false,{{ReportInitDate}}))
 					) 
 				)`);
-		customFilters.addFilter("wFacturablePorFase",`
+		customFilters.newFilter("wFacturablePorFase",`
 				/*Trabajo Facturable durante el periodo por haber cambiado de fase (wFacturablePorFase)*/
 				(  
 					useFilter('wAvanceFase') 
 					&& 
 					useFilter('wFaseFacturable')
 				)`);
-		customFilters.addFilter("wFacturablePorTiempoTrabajado",`
+		customFilters.newFilter("wFacturablePorTiempoTrabajado",`
 				/*Trabajo Facturable durante el periodo por haber incrementado el tiempo trabajado acumulado (wFacturablePorTiempoTrabajado)*/
 				(   
 					useFilter('wMismaFase')
@@ -121,7 +121,7 @@ var plgFilterSystem=class plgFilterSystem{//this kind of definition allows to ho
 					)
 				)`);
 
-		customFilters.addFilter("wRetrocedidoFase",`
+		customFilters.newFilter("wRetrocedidoFase",`
 				/*Trabajo con cambio de Fase durante el periodo que ha retrocedido de Fase (wRetrocedidoFase)*/
 				(  
 					useFilter('wProrroga') 
@@ -132,7 +132,7 @@ var plgFilterSystem=class plgFilterSystem{//this kind of definition allows to ho
 					({{issue}}.fieldValue('Fase',false,{{ReportInitDate}}))
 					) 
 				)`);
-		customFilters.addFilter("wReducidoTimespent",`
+		customFilters.newFilter("wReducidoTimespent",`
 				/*Trabajo sin cambio de Fase durante el periodo que ha reducido el tiempo trabajado acumulado (wReducidoTimespent)*/
 				(  
 					useFilter('wProrroga')
@@ -143,19 +143,19 @@ var plgFilterSystem=class plgFilterSystem{//this kind of definition allows to ho
 					)
 				)`);
 
-		customFilters.addFilter("childTimespentAtEnd",`
+		customFilters.newFilter("childTimespentAtEnd",`
 				/*Tiempo Acumulado en hijos al final del periodo (childTimespentAtEnd)*/
 				(
 					{{issue}}.fieldAccumChilds ('timespent',{{ReportEndDate}})
 				)`);
 
-		customFilters.addFilter("childTimespentAtIni",`
+		customFilters.newFilter("childTimespentAtIni",`
 				/*Tiempo Acumulado en hijos al inicio del periodo (childTimespentAtIni)*/
 				(
 					{{issue}}.fieldAccumChilds ( 'timespent',{{ReportInitDate}} )
 				)`);
 
-		customFilters.addFilter("childTimespentError",`
+		customFilters.newFilter("childTimespentError",`
 				/*- Error en Tiempo Acumulado en hijos (childTimespentError)
 				(
 					(isUndefined(useFilter('childTimespentAtEnd')))
@@ -164,7 +164,7 @@ var plgFilterSystem=class plgFilterSystem{//this kind of definition allows to ho
 					||(isNaN(useFilter('childTimespentAtEnd')))
 				)`);
 
-		customFilters.addFilter("errorTimespentInforme",`
+		customFilters.newFilter("errorTimespentInforme",`
 				/*- caso 1 - que hayan facturado o sean facturables y no se pueda calcular el tiempo trabajado acumulado (errorTimespentInforme))
 				(
 					(useFilter('wAlgoFacturado') || useFilter('wFacturable')) 

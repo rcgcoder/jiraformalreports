@@ -5,25 +5,13 @@ var newRCGFilterManagerFactory=function(){
 						],
 					[],
 					[]);
-	dynObj.functions.add("addFilter",function(filterName,filterBody){
-		var self=this;
-		if (self.existsFilter(filterName)){
-			var hsCache=self.getFilterCaches();
-			hsCache.remove(filterName);
-			self.setFilter(filterName,filterBody);
-		} else {
-			debugger;
-			self.executeParentMethod("addFilter",[filterName,filterBody]);
-		}
-	});
-	dynObj.functions.add("addFilterCache",function(filterName,filterBodyCache){
+	dynObj.functions.add("newFilter",function(filterName,filterBody){
 		var self=this;
 		if (self.existsFilterCache(filterName)){
-			self.setFilterCache(filterName,filterBodyCache);
-		} else {
-			debugger;
-			self.executeParentMethod("addFilterCache",[filterName,filterBodyCache]);
+			var hsCache=self.getFilterCaches();
+			hsCache.remove(filterName);
 		}
+		self.setFilter(filterName,filterBody);
 	});
 	dynObj.functions.add("useFilter",function(filterString){
 		var self=this;
@@ -71,7 +59,7 @@ var newRCGFilterManagerFactory=function(){
 				sPartialResult=sResult;
 				iPos=sPartialResult.indexOf("useFilter");
 			}
-			self.addFilterCache(filterString,sResult);
+			self.setFilterCache(filterString,sResult);
 			return sResult;
 		}
 		return sResult;

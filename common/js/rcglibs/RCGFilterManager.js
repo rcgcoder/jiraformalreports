@@ -12,6 +12,7 @@ var newRCGFilterManagerFactory=function(){
 			hsCache.remove(filterName);
 			self.setFilter(filterName,filterBody);
 		} else {
+			debugger;
 			self.executeParentMethod("addFilter",[filterName,filterBody]);
 		}
 	});
@@ -20,6 +21,7 @@ var newRCGFilterManagerFactory=function(){
 		if (self.existsFilterCache(filterName)){
 			self.setFilterCache(filterName,filterBodyCache);
 		} else {
+			debugger;
 			self.executeParentMethod("addFilterCache",[filterName,filterBodyCache]);
 		}
 	});

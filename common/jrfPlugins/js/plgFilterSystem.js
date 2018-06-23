@@ -165,7 +165,7 @@ var plgFilterSystem=class plgFilterSystem{//this kind of definition allows to ho
 				)`);
 
 		customFilters.newFilter("errorTimespentInforme",`
-				/*- caso 1 - que hayan facturado o sean facturables y no se pueda calcular el tiempo trabajado acumulado (errorTimespentInforme))
+				/*- caso 1 - que hayan facturado o sean facturables y no se pueda calcular el tiempo trabajado acumulado (errorTimespentInforme))*/
 				(
 					((useFilter('wAlgoFacturado')) || (useFilter('wFacturable')) )
 					&& 

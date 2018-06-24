@@ -17,6 +17,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.changeBrackets=self.changeBrackets;
 		obj.indHtmlBuffer=0;
 		obj.indTokenHtmlBuffer=0;
+		obj.adjustSyntax=self.adjustSyntax;
 		obj.getAttrVal=self.getAttrVal;
 		obj.encode=self.encode;
 		obj.processAllChilds=self.processAllChilds;

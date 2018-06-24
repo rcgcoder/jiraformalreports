@@ -43,6 +43,9 @@ var newRCGFilterManagerFactory=function(){
 			}
 			while (iFilterRow<arrFilterParts.length){
 				sFilterRow=arrFilterParts[iFilterRow];
+				if (sFilterRow.substring(sFilterRow.length-1,sFilterRow.length)==")"){
+					sFilterRow+="  ";
+				}
 				arrFilterNameParts=sFilterRow.split(")");
 				sSubFilterName=arrFilterNameParts[0];// "filtername" or 'filtername' or `filtername`
 				sSubFilterName=replaceAll(sSubFilterName,"'","");
@@ -55,7 +58,10 @@ var newRCGFilterManagerFactory=function(){
 				sResultAux=self.useFilter(sSubFilterName);
 				sResult+=sResultAux;
 				for (var j=1;j<arrFilterNameParts.length;j++){
-					sResult+=(")"+arrFilterNameParts[j]);
+					if (j>1){
+						sResult+=")";
+					}
+					sResult+=arrFilterNameParts[j];
 				}
 				iFilterRow++;
 			}

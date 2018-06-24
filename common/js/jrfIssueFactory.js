@@ -153,7 +153,7 @@ function newIssueFactory(report){
 		if (precomps=="") return "";
 		var changes=precomps.changes;
 		var auxDate=new Date();
-		if (isDefined(auxDate)){
+		if (isDefined(atDateTime)){
 			auxDate=atDateTime;
 		}
 		var resultValue=changes[0][2];

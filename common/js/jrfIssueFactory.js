@@ -249,7 +249,7 @@ function newIssueFactory(report){
 			var precompObj={lastSave:new Date(),
 							numChilds:allChilds.length(),
 							changes:arrChanges};
-			hsMixedLife.walk(function(value,iDeep,datekey){
+			hsMixedLife.walk(function(value,iDeep,dateKey){
 				arrChanges.push([dateKey,"",value]);
 			});
 			arrChanges.sort(function(a,b){

@@ -91,7 +91,7 @@ var plgFilterSystem=class plgFilterSystem{//this kind of definition allows to ho
 					useFilter('wProrroga')
 					&& 
 					(!
-						useFilter('wMismaFase´)
+						useFilter('wMismaFase')
 					) 
 					&&
 					(

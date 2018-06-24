@@ -165,10 +165,15 @@ function newIssueFactory(report){
 			});
 		});
 		var vAccum=0;
+		var vAux=0;
 		hsMixLife.walk(function(sDate,iDeep,dateKey){
 			vAccum=0;
 			hsIssues.walk(function(issue){
-				vAccum+=issue.fieldValue(fieldName,false,dateKey);
+				vAux=issue.fieldValue(fieldName,false,dateKey);
+				if (isString(vAux)){
+					vAux=parseFloat(vAux);
+				}
+				vAccum+=vAux;
 			});
 			hsMixLife.setValue(dateKey,vAccum);
 		});

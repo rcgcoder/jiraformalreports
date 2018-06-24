@@ -170,8 +170,10 @@ function newIssueFactory(report){
 		if (bExistsCacheKey){
 			keyValuesCache=accumCache.getValue(cacheKey);
 			debugger;
-			var vResultFromCache=keyValuesCache.getValue(cacheTimeKey);
-			return vResultFromCache; 
+			if (keyValuesCache.exists(cacheTimeKey)){
+				var vResultFromCache=keyValuesCache.getValue(cacheTimeKey);
+				return vResultFromCache; 
+			}
 		} else {
 			keyValuesCache=newHashMap();
 			accumCache.add(cacheKey,keyValuesCache);

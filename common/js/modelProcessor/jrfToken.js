@@ -497,7 +497,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					if (hsValues.exists(sInnerText)){
 						iVar=hsValues.getValue(sInnerText);
 					} else {
-						vValues.push(sInnerText);
+						vValues.push(vInnerVarValue);
 						iVar=vValues.length-1;
 						hsValues.add(sInnerText,iVar);
 					}

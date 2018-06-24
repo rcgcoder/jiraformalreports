@@ -23,9 +23,14 @@ var jrfDirective=class jrfDirective{//this kind of definition allows to hot-relo
 				var accumRelationField=arrTypeField[1];
 				var sKey=accumTypeRelation+"."+accumRelationField;
 				//.....add(sKey,{key:sKey,type:typeRelation,field:fieldName});
-				if (!self.accumulators.exists(sKey)){
-					self.accumulators.add(sKey,{key:sKey,type:accumTypeRelation,field:accumRelationField});
+				var hsAux;
+				if (!self.accumulators.exists(accumTypeRelation)){
+					hsAux=newHashMap();
+					self.accumulators.add(accumTypeRelation,hsAux);
+				} else {
+					hsAux=self.accumulators.getValue(accumTypeRelation);
 				}
+				hsAux.add(sKey,{key:sKey,type:accumTypeRelation,field:accumRelationField});
 			});
 		}
 	}

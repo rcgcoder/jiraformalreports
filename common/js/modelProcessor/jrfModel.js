@@ -380,23 +380,23 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		var self=this;
 		var hsAccumulators=self.extractAccumulators(self.inputHtml);
 		var hsAccumAux=newHashMap();
-		hsAccumulators.walk(function(oAccum,iDeep,key){
+		hsAccumulators.walk(function(hsAccum,iDeep,key){
 			if (!self.accumulatorList.exists(key)){
-				self.accumulatorList.add(key,oAccum);
-				hsAccumAux.add(key,oAccum);
+				self.accumulatorList.add(key,hsAccum);
+				hsAccumAux.add(key,hsAccum);
 			};
 		});
 		// add the accumulators identified in directives
 		self.directives.walk(function(hsDirectives,iProof,sDirectiveKey){
-			hsDirectives.walk(function(oValue,iDeep,sKey){
+			hsDirectives.walk(function(hsAccum,iDeep,sKey){
 				log(sDirectiveKey + " directive setted:"+sKey);
 				if (sDirectiveKey=="use") {
 					//log("the use directive is processed by the report");
 				} else if (sDirectiveKey=="accumulators"){
 					//.....add(sKey,{key:sKey,type:typeRelation,field:fieldName});
 					if (!self.accumulatorList.exists(sKey)){
-						self.accumulatorList.add(sKey,oValue);
-						hsAccumAux.add(sKey,oValue);
+						self.accumulatorList.add(sKey,hsAccum);
+						hsAccumAux.add(sKey,hsAccum);
 					};
 				}
 			});

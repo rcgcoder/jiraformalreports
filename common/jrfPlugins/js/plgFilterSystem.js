@@ -120,12 +120,23 @@ var plgFilterSystem=class plgFilterSystem{//this kind of definition allows to ho
 						useFilter('childTimespentAtIni')
 					)
 				)`);
+		
+		customFilters.newFilter("wFacturadoOFacturable",`
+				/*Trabajo con cambio de Fase durante el periodo que ha retrocedido de Fase (wRetrocedidoFase)*/
+				(  
+					useFilter('wAlgoFacturado') 
+					|| 
+					useFilter('wFacturablePorFase')
+					|| 
+					useFilter('wFacturablePorTiempoTrabajado')
+				)`);
+		
 
 		customFilters.newFilter("wRetrocedidoFase",`
 				/*Trabajo con cambio de Fase durante el periodo que ha retrocedido de Fase (wRetrocedidoFase)*/
 				(  
 					useFilter('wProrroga') 
-					&& (!useFilter('wMismaFase')) && (useFilter('wAlgoFacturado') || useFilter('wFaseFacturable')) 
+					&& (!useFilter('wMismaFase'))  
 					(
 					({{issue}}.fieldValue('Fase',false,{{ReportEndDate}})) 
 						lessThan 
@@ -137,7 +148,6 @@ var plgFilterSystem=class plgFilterSystem{//this kind of definition allows to ho
 				(  
 					useFilter('wProrroga')
 					&& (useFilter('wMismaFase')) 
-					&& (useFilter('wAlgoFacturado') || useFilter('wFaseFacturable')) 
 					&&	(
 						useFilter('childTimespentAtEnd') lessThan useFilter('childTimespentAtEnd')
 					)

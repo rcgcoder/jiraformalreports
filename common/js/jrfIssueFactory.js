@@ -160,21 +160,18 @@ function newIssueFactory(report){
 			childType=hierarchyType;
 		}
 		var cacheKey=childType+"."+theFieldName;
+		var cacheTimeKey="now";
+		if (isDefined(dateTime)){
+			cacheTimeKey=dateTime.getTime()+"";
+		}
 		var accumCache=self.getAccumulatorsCaches();
 		var keyValuesCache;
 		var bExistsCacheKey=accumCache.exists(cacheKey);
 		if (bExistsCacheKey){
 			keyValuesCache=accumCache.getValue(cacheKey);
-			if (isUndefined(dateTime)){
-				debugger;
-				var vResultFromCache=keyValuesCache.getValue("now");
-				return vResultFromCache; 
-			}
-			if (accumCache.exists(dateTime.getTime()+"")){
-				debugger;
-				var vResultFromCache=keyValuesCache.getValue(dateTime);
-				return vResultFromCache; 
-			} 
+			debugger;
+			var vResultFromCache=keyValuesCache.getValue(cacheTimeKey);
+			return vResultFromCache; 
 		} else {
 			keyValuesCache=newHashMap();
 			accumCache.add(cacheKey,keyValuesCache);
@@ -211,7 +208,7 @@ function newIssueFactory(report){
 		var auxNotAdjust=(isDefined(notAdjust)&&notAdjust); // not adjust uses only if TRUE is received
 		accumValue=self.getReport().adjustAccumItem(childType,accumValue,self,theFieldName,notAdjust);
 //		accumCache.add(cacheKey,accumValue);
-		keyValuesCache.add((isUndefined(dateTime)?"now":dateTime.getTime()+""),accumValue);
+		keyValuesCache.add(cacheTimeKey,accumValue);
 /*		if ((self.getReport().updatePrecomputedAccumulators)
 				&&
 			(isUndefined(bSetProperty) || (isDefined(bSetProperty)&&(bSetProperty)))){

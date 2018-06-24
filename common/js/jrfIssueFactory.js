@@ -243,6 +243,7 @@ function newIssueFactory(report){
 		keyValuesCache.add(cacheTimeKey,accumValue);
 		debugger;
 		if (allChilds.length()>0){
+			debugger;
 			var hsMixedLife=self.mixIssuesFieldLife(allChilds,theFieldName);
 			var arrChanges=[];
 			var precompObj={lastSave:new Date(),

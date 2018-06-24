@@ -210,7 +210,7 @@ function newIssueFactory(report){
 		
 		var auxNotAdjust=(isDefined(notAdjust)&&notAdjust); // not adjust uses only if TRUE is received
 		accumValue=self.getReport().adjustAccumItem(childType,accumValue,self,theFieldName,notAdjust);
-		accumCache.add(cacheKey,accumValue);
+//		accumCache.add(cacheKey,accumValue);
 		keyValuesCache.add((isUndefined(dateTime)?"now":dateTime.getTime()+""),accumValue);
 /*		if ((self.getReport().updatePrecomputedAccumulators)
 				&&

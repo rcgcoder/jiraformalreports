@@ -396,7 +396,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 					//.....add(sKey,{key:sKey,type:typeRelation,field:fieldName});
 					if (!self.accumulatorList.exists(sKey)){
 						self.accumulatorList.add(sKey,oValue);
-						hsAccumAux.add(key,oValue);
+						hsAccumAux.add(sKey,oValue);
 					};
 				}
 			});

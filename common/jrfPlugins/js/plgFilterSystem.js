@@ -136,7 +136,9 @@ var plgFilterSystem=class plgFilterSystem{//this kind of definition allows to ho
 				/*Trabajo con cambio de Fase durante el periodo que ha retrocedido de Fase (wRetrocedidoFase)*/
 				(  
 					useFilter('wProrroga') 
-					&& (!useFilter('wMismaFase'))  
+					&& 
+					(!useFilter('wMismaFase'))  
+					&&
 					(
 					({{issue}}.fieldValue('Fase',false,{{ReportEndDate}})) 
 						lessThan 

@@ -473,6 +473,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			log("You are using a undefined text.... this may be a big error!");
 		}
 		var vValues=[];
+		var hsValues=newHashMap();
 		var sVarRef="";
 		var iVar=0;
 		var openInd=sText.lastIndexOf(openTag);
@@ -482,15 +483,25 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			var sInnerText=sText.substring(openInd+closeTag.length,closeInd).trim();
 			sInnerText=self.model.removeInnerTags(sInnerText,true);
 			if (!bReplaceVars){
-				vValues.push(sInnerText);
+				if (hsValues.exists(sInnerText)){
+					iVar=hsValues.getValue(sInnerText);
+				} else {
+					vValues.push(sInnerText);
+					iVar=vValues.length-1;
+					hsValues.add(sInnerText,iVar);
+				}
 				sVarRef="_arrRefs_["+iVar+"]";
-				iVar++;
 			} else {
 				var vInnerVarValue=self.variables.getVar(sInnerText);
 				if (isObject(vInnerVarValue)){
-					vValues.push(vInnerVarValue);
+					if (hsValues.exists(sInnerText)){
+						iVar=hsValues.getValue(sInnerText);
+					} else {
+						vValues.push(sInnerText);
+						iVar=vValues.length-1;
+						hsValues.add(sInnerText,iVar);
+					}
 					sVarRef="_arrRefs_["+iVar+"]";
-					iVar++;
 				} else {
 					sVarRef=vInnerVarValue;
 				}

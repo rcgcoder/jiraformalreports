@@ -159,24 +159,27 @@ function newIssueFactory(report){
 		if (isDefined(hierarchyType)){
 			childType=hierarchyType;
 		}
-/*		var cacheKey=childType+"."+theFieldName;
+		var cacheKey=childType+"."+theFieldName;
 		var accumCache=self.getAccumulatorsCaches();
 		var keyValuesCache;
 		var bExistsCacheKey=accumCache.exists(cacheKey);
-		bExistsCacheKey=false;
 		if (bExistsCacheKey){
 			keyValuesCache=accumCache.getValue(cacheKey);
 			if (isUndefined(dateTime)){
-				return keyValuesCache.getValue("now");
+				debugger;
+				var vResultFromCache=keyValuesCache.getValue("now");
+				return vResultFromCache; 
 			}
 			if (accumCache.exists(dateTime)){
-				return keyValuesCache.getValue(dateTime);
+				debugger;
+				var vResultFromCache=keyValuesCache.getValue(dateTime);
+				return vResultFromCache; 
 			} 
 		} else {
 			keyValuesCache=newHashMap();
 			accumCache.add(cacheKey,keyValuesCache);
 		}
-*/		var allChilds=self["get"+childType]();
+		var allChilds=self["get"+childType]();
 		if (allChilds.length()>0){
 			allChilds.walk(function(child){
 				childValue=child.fieldAccum(theFieldName,childType,dateTime,inOtherParams,bSetProperty,notAdjust,fncItemCustomCalc);
@@ -207,9 +210,9 @@ function newIssueFactory(report){
 		
 		var auxNotAdjust=(isDefined(notAdjust)&&notAdjust); // not adjust uses only if TRUE is received
 		accumValue=self.getReport().adjustAccumItem(childType,accumValue,self,theFieldName,notAdjust);
-//		accumCache.add(cacheKey,accumValue);
-/*		keyValuesCache.add((isUndefined(dateTime)?"now":dateTime),accumValue);
-		if ((self.getReport().updatePrecomputedAccumulators)
+		accumCache.add(cacheKey,accumValue);
+		keyValuesCache.add((isUndefined(dateTime)?"now":dateTime),accumValue);
+/*		if ((self.getReport().updatePrecomputedAccumulators)
 				&&
 			(isUndefined(bSetProperty) || (isDefined(bSetProperty)&&(bSetProperty)))){
 			// save to jira property

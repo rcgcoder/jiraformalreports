@@ -130,19 +130,49 @@ function newIssueFactory(report){
 		var self=this;
 		return self.fieldAccum(theFieldName,"AdvanceChilds",datetime,inOtherParams,bSetProperty,notAdjust,fncItemCustomCalc);
 	});
-	dynObj.functions.add("appendPrecomputedPropertyValues",function(key,arrValues){
+	dynObj.functions.add("setPrecomputedPropertyLife",function(key,oPrecomputedLife){
 		var self=this;
+		// prepare object
+		var objAux=oPrecomputedLife;
+		objAux.lastSave=new Date(objAux.lastSave);
+		objAux.changes.forEach(function(change){
+			change[0]=new Date(change[0]);
+		});
 		var precomps=self.getPrecomputedPropertys();
 		var hsValues;
 		if (!precomps.exists(key)){
-			hsValues=newHashMap();
-			precomps.add(key,hsValues);
+			precomps.add(key,objAux);
 		} else {
-			hsValues=precomps.getValue(key);
+			precomps.setValue(key,objAux);
 		}
-		arrValues.forEach(function(elem){
-			hsValues.add(elem.date,elem);
-		})
+	})
+	dynObj.functions.add("getPrecomputedPropertyValue",function(key,atDateTime){
+		var self=this;
+		var precomps=self.getPrecomputedPropertyById(key);
+		if (precomps=="") return "";
+		var changes=precomps.changes;
+		var auxDate=new Date();
+		if (isDefined(auxDate)){
+			auxDate=atDateTime;
+		}
+		var resultValue=changes[0][2];
+		var i=0;
+		var bContinue=true;
+		var change;
+		while ((i<changes.length)&&(bContinue)){
+			change=changes[i];
+			if (change[0]>auxDate){
+				resultValue=change[1];
+			}
+			i++;
+		}
+		if ((resultValue=="")||(resultValue==null)||(isUndefined(resultValue))){
+			return "";
+		}
+		if (isString(resultValue)){
+			resultValue=parseFloat(resultValue);
+		}
+		return resultValue;
 	})
 	dynObj.functions.add("getLastPrecomputedPropertyValue",function(key){
 		var self=this;
@@ -182,6 +212,7 @@ function newIssueFactory(report){
 	
 	dynObj.functions.add("fieldAccum",function(theFieldName,hierarchyType,dateTime,inOtherParams,bSetProperty,notAdjust,fncItemCustomCalc){
 		var self=this;
+		var bPrecomputed=false;
 		//debugger;
 		var app=System.webapp;
 		var accumValue=0;
@@ -217,12 +248,13 @@ function newIssueFactory(report){
 		} else {
 			// let´s find if field have a precomputed value
 			var childValue="";
-/*			var precompValue=self.getLastPrecomputedPropertyValue(cacheKey);
+			var precompValue=self.getPrecomputedPropertyValue(cacheKey,dateTime);
 			if (precompValue!=""){
-				childValue=precompValue.value;
+				bPrecomputed=true;
+				childValue=precompValue;
 			}
-*/			if (childValue==""){ // if precomputed==""..... there is not precomputed value
-				var childValue=self.fieldValue(theFieldName,false,dateTime,inOtherParams);
+			if (childValue==""){ // if precomputed==""..... there is not precomputed value
+				childValue=self.fieldValue(theFieldName,false,dateTime,inOtherParams);
 			}
 			if (childValue==""){
 				childValue=0;
@@ -241,7 +273,8 @@ function newIssueFactory(report){
 		accumValue=self.getReport().adjustAccumItem(childType,accumValue,self,theFieldName,notAdjust);
 //		accumCache.add(cacheKey,accumValue);
 		keyValuesCache.add(cacheTimeKey,accumValue);
-		if ((allChilds.length()>0) 
+		if ((allChilds.length()>0)
+			&&(!bPrecomputed)
 			&&(self.getReport().updatePrecomputedAccumulators)
 			&&(isUndefined(bSetProperty) || (isDefined(bSetProperty)&&(bSetProperty)))
 			){

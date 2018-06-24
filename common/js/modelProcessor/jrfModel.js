@@ -444,7 +444,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 						self.addStep("Petition:"+iPet+" Processing result "+propKey+" of "+ issue.getKey() +" and Trying Next Call...",function(objProperty){
 							if (objProperty!=""){
 								log("Start adding properties "+objProperty.key +" to issue:"+issue.getKey() );
-								issue.appendPrecomputedPropertyValues(objProperty.key,objProperty.value);
+								issue.setPrecomputedPropertyLife(objProperty.key,objProperty.value);
 								log("End of adding properties "+objProperty.key +" to issue:"+issue.getKey() );
 							}
 							if (hsIssueGetProperties.length()>0){

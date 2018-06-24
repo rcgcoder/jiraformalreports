@@ -115,6 +115,7 @@ var jrfSubset=class jrfSubset{//this kind of definition allows to hot-reload
 			var iSelectedCounter=0;
 			sWhere=self.whereCondition;
 			if (sWhere.indexOf("useFilter")>=0){
+				debugger;
 				sWhere=self.model.filters.useFilter(sWhere);
 			}
 			sWhere=self.adjustSyntax(sWhere);

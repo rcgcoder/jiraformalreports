@@ -156,7 +156,7 @@ var plgFilterSystem=class plgFilterSystem{//this kind of definition allows to ho
 				)`);
 
 		customFilters.newFilter("childTimespentError",`
-				/*- Error en Tiempo Acumulado en hijos (childTimespentError)
+				/*- Error en Tiempo Acumulado en hijos (childTimespentError)*/
 				(
 					(isUndefined(useFilter('childTimespentAtEnd')))
 					||(useFilter('childTimespentAtEnd')=="")
@@ -171,6 +171,9 @@ var plgFilterSystem=class plgFilterSystem{//this kind of definition allows to ho
 					&& 
 					(useFilter('childTimespentError'))
 				)`);
+		
+		
+		
 	 }
 }
 

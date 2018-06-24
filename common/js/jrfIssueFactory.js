@@ -243,7 +243,27 @@ function newIssueFactory(report){
 		keyValuesCache.add(cacheTimeKey,accumValue);
 		debugger;
 		if (allChilds.length()>0){
-			self.mixIssuesFieldLife(allChilds,theFieldName);
+			var hsMixedLife=self.mixIssuesFieldLife(allChilds,theFieldName);
+			var arrChanges=[];
+			var precompObj={lastSave:new Date(),
+							numChilds:allChilds.length(),
+							changes:arrChanges};
+			hsMixedLife.walk(function(value,iDeep,datekey){
+				arrChanges.push([dateKey,"",value]);
+			});
+			arrChanges.sort(function(a,b){
+				if (a[0]>b[0]) return -1;
+				if (a[0]<b[0]) return 1;
+				return 0;
+			});
+			for (var i=0;i<arrChanges.length-1;i++){
+				arrChanges[i][1]=arrChanges[i+1][2];
+			}
+			System.webapp.addStep("Saving life of :"+cacheKey+" of issue "+ self.getKey() +" value:"+JSON.stringify(precompObj) ,function(){
+				var jira=System.webapp.getJira();
+				jira.setProperty(self.getKey(),cacheKey,precompObj);
+	        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
+			
 		}
 /*		if ((self.getReport().updatePrecomputedAccumulators)
 				&&

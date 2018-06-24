@@ -1,82 +1,102 @@
-var vResult=
+var result=
 				/*Trabajo con cambio de Fase durante el periodo que ha retrocedido de Fase (wRetrocedidoFase)*/
 				(  
-					
 					/*Trabajo con importe aprobado (wAlgoFacturado) */
 					(
 						(
-						
 							/*Trabajo Adelantado (wAdvIssues)*/
 							(
-								
 										/*Trabajo de la UTE (wUTE)*/
 										(
-											_arrRefs_[111].fieldValue('Proyecto.key') !='OT'
+											_arrRefs_[123].fieldValue('Proyecto.key') !='OT'
 										) 
 								&&
-								(_arrRefs_[110].fieldValue('Fase',false,_arrRefs_[109]) < 4) 
+								(_arrRefs_[122].fieldValue('Fase',false,_arrRefs_[121]) < 4) 
 								&& 
-								(new Date(_arrRefs_[108].fieldValue('created')) < _arrRefs_[107])
+								(new Date(_arrRefs_[120].fieldValue('created')) < _arrRefs_[119])
 							) 
 						&& 
-						(_arrRefs_[106].fieldValue('Fase',false,_arrRefs_[105]) >= 2)
+						(_arrRefs_[118].fieldValue('Fase',false,_arrRefs_[117]) >= 2)
 						)
 						||
 						(
-						
 							/*Trabajo no Adelantado (wIssues) */
 							(
-								
 										/*Trabajo de la UTE (wUTE)*/
 										(
-											_arrRefs_[104].fieldValue('Proyecto.key') !='OT'
+											_arrRefs_[116].fieldValue('Proyecto.key') !='OT'
 										)
 								&&
-								(new Date(_arrRefs_[103].fieldValue('created')) > _arrRefs_[102])
+								(new Date(_arrRefs_[115].fieldValue('created')) > _arrRefs_[114])
 							)   
 						&& 
-						(_arrRefs_[101].fieldValue('Fase',false,_arrRefs_[100]) >= 2)
+						(_arrRefs_[113].fieldValue('Fase',false,_arrRefs_[112]) >= 2)
 						)
 					)   
 					|| 
-					
 					/*Trabajo Facturable durante el periodo por haber cambiado de fase (wFacturablePorFase)*/
 					(  
-						
 							/*Trabajo con cambio de Fase durante el periodo (wAvanceFase)*/
 							(  
-								
 										/*Trabajo de la Prorroga (wProrroga) */
 										(
-											
 														/*Trabajo Adelantado (wAdvIssues)*/
 														(
-															
 																	/*Trabajo de la UTE (wUTE)*/
 																	(
-																		_arrRefs_[99].fieldValue('Proyecto.key') !='OT'
+																		_arrRefs_[111].fieldValue('Proyecto.key') !='OT'
 																	) 
 															&&
-															(_arrRefs_[98].fieldValue('Fase',false,_arrRefs_[97]) < 4) 
+															(_arrRefs_[110].fieldValue('Fase',false,_arrRefs_[109]) < 4) 
 															&& 
-															(new Date(_arrRefs_[96].fieldValue('created')) < _arrRefs_[95])
+															(new Date(_arrRefs_[108].fieldValue('created')) < _arrRefs_[107])
 														) 
 											|| 
-											
 														/*Trabajo no Adelantado (wIssues) */
 														(
-															
 																	/*Trabajo de la UTE (wUTE)*/
 																	(
-																		_arrRefs_[94].fieldValue('Proyecto.key') !='OT'
+																		_arrRefs_[106].fieldValue('Proyecto.key') !='OT'
 																	)
 															&&
-															(new Date(_arrRefs_[93].fieldValue('created')) > _arrRefs_[92])
+															(new Date(_arrRefs_[105].fieldValue('created')) > _arrRefs_[104])
 														)  
 										)  
 								&& 
 								(!
-									wMismaFase´
+										/*Trabajo sin cambio de Fase durante el periodo (wMismaFase)*/
+										(  
+														/*Trabajo de la Prorroga (wProrroga) */
+														(
+																		/*Trabajo Adelantado (wAdvIssues)*/
+																		(
+																					/*Trabajo de la UTE (wUTE)*/
+																					(
+																						_arrRefs_[103].fieldValue('Proyecto.key') !='OT'
+																					) 
+																			&&
+																			(_arrRefs_[102].fieldValue('Fase',false,_arrRefs_[101]) < 4) 
+																			&& 
+																			(new Date(_arrRefs_[100].fieldValue('created')) < _arrRefs_[99])
+																		) 
+															||
+																		/*Trabajo no Adelantado (wIssues) */
+																		(
+																					/*Trabajo de la UTE (wUTE)*/
+																					(
+																						_arrRefs_[98].fieldValue('Proyecto.key') !='OT'
+																					)
+																			&&
+																			(new Date(_arrRefs_[97].fieldValue('created')) > _arrRefs_[96])
+																		)  
+														)  
+											&&
+											(
+											(_arrRefs_[95].fieldValue('Fase',false,_arrRefs_[94])) 
+												== 
+											(_arrRefs_[93].fieldValue('Fase',false,_arrRefs_[92]))
+											) 
+										)  
 								) 
 								&&
 								(
@@ -86,14 +106,11 @@ var vResult=
 								) 
 							)   
 						&& 
-						
 							/*Trabajo en Fase Facturable (wFaseFacturable)*/
 							(
 								(
-								
 									/*Trabajo Adelantado (wAdvIssues)*/
 									(
-										
 												/*Trabajo de la UTE (wUTE)*/
 												(
 													_arrRefs_[87].fieldValue('Proyecto.key') !='OT'
@@ -108,10 +125,8 @@ var vResult=
 								)
 								||
 								(
-								
 									/*Trabajo no Adelantado (wIssues) */
 									(
-										
 												/*Trabajo de la UTE (wUTE)*/
 												(
 													_arrRefs_[80].fieldValue('Proyecto.key') !='OT'
@@ -125,41 +140,34 @@ var vResult=
 							)  
 					)  
 					|| 
-					
 					/*Trabajo Facturable durante el periodo por haber incrementado el tiempo trabajado acumulado (wFacturablePorTiempoTrabajado)*/
 					(   
-						
 							/*Trabajo sin cambio de Fase durante el periodo (wMismaFase)*/
 							(  
-								
-										/*Trabajo de la Prorroga (wProrroga) */
-										(
-											
-														/*Trabajo Adelantado (wAdvIssues)*/
-														(
-															
-																	/*Trabajo de la UTE (wUTE)*/
-																	(
-																		_arrRefs_[75].fieldValue('Proyecto.key') !='OT'
-																	) 
-															&&
-															(_arrRefs_[74].fieldValue('Fase',false,_arrRefs_[73]) < 4) 
-															&& 
-															(new Date(_arrRefs_[72].fieldValue('created')) < _arrRefs_[71])
-														) 
-											|| 
-											
-														/*Trabajo no Adelantado (wIssues) */
-														(
-															
-																	/*Trabajo de la UTE (wUTE)*/
-																	(
-																		_arrRefs_[70].fieldValue('Proyecto.key') !='OT'
-																	)
-															&&
-															(new Date(_arrRefs_[69].fieldValue('created')) > _arrRefs_[68])
-														)  
-										)  
+											/*Trabajo de la Prorroga (wProrroga) */
+											(
+															/*Trabajo Adelantado (wAdvIssues)*/
+															(
+																		/*Trabajo de la UTE (wUTE)*/
+																		(
+																			_arrRefs_[75].fieldValue('Proyecto.key') !='OT'
+																		) 
+																&&
+																(_arrRefs_[74].fieldValue('Fase',false,_arrRefs_[73]) < 4) 
+																&& 
+																(new Date(_arrRefs_[72].fieldValue('created')) < _arrRefs_[71])
+															) 
+												|| 
+															/*Trabajo no Adelantado (wIssues) */
+															(
+																		/*Trabajo de la UTE (wUTE)*/
+																		(
+																			_arrRefs_[70].fieldValue('Proyecto.key') !='OT'
+																		)
+																&&
+																(new Date(_arrRefs_[69].fieldValue('created')) > _arrRefs_[68])
+															)  
+											)  
 								&&
 								(
 								(_arrRefs_[67].fieldValue('Fase',false,_arrRefs_[66])) 
@@ -168,14 +176,11 @@ var vResult=
 								) 
 							)  
 						&& 
-						
 							/*Trabajo en Fase Facturable (wFaseFacturable)*/
 							(
 								(
-								
 									/*Trabajo Adelantado (wAdvIssues)*/
 									(
-										
 												/*Trabajo de la UTE (wUTE)*/
 												(
 													_arrRefs_[63].fieldValue('Proyecto.key') !='OT'
@@ -190,10 +195,8 @@ var vResult=
 								)
 								||
 								(
-								
 									/*Trabajo no Adelantado (wIssues) */
 									(
-										
 												/*Trabajo de la UTE (wUTE)*/
 												(
 													_arrRefs_[56].fieldValue('Proyecto.key') !='OT'
@@ -205,15 +208,13 @@ var vResult=
 								(_arrRefs_[53].fieldValue('Fase',false,_arrRefs_[52]) >= 2)
 								)
 							)  
-						&&	
+						&&
 						(
-							
 							/*Tiempo Acumulado en hijos al final del periodo (childTimespentAtEnd)*/
 							(
 								_arrRefs_[51].fieldAccumChilds ('timespent',_arrRefs_[50])
 							) 
 							> 
-							
 							/*Tiempo Acumulado en hijos al inicio del periodo (childTimespentAtIni)*/
 							(
 								_arrRefs_[49].fieldAccumChilds ( 'timespent',_arrRefs_[48] )
@@ -223,13 +224,10 @@ var vResult=
 				)   &&    (
 				/*Trabajo con cambio de Fase durante el periodo que ha retrocedido de Fase (wRetrocedidoFase)*/
 				(  
-					
 					/*Trabajo de la Prorroga (wProrroga) */
 					(
-						
 									/*Trabajo Adelantado (wAdvIssues)*/
 									(
-										
 												/*Trabajo de la UTE (wUTE)*/
 												(
 													_arrRefs_[47].fieldValue('Proyecto.key') !='OT'
@@ -240,10 +238,8 @@ var vResult=
 										(new Date(_arrRefs_[44].fieldValue('created')) < _arrRefs_[43])
 									) 
 						|| 
-						
 									/*Trabajo no Adelantado (wIssues) */
 									(
-										
 												/*Trabajo de la UTE (wUTE)*/
 												(
 													_arrRefs_[42].fieldValue('Proyecto.key') !='OT'
@@ -255,35 +251,30 @@ var vResult=
 					&& (!
 					/*Trabajo sin cambio de Fase durante el periodo (wMismaFase)*/
 					(  
-						
-								/*Trabajo de la Prorroga (wProrroga) */
-								(
-									
-												/*Trabajo Adelantado (wAdvIssues)*/
-												(
-													
-															/*Trabajo de la UTE (wUTE)*/
-															(
-																_arrRefs_[39].fieldValue('Proyecto.key') !='OT'
-															) 
-													&&
-													(_arrRefs_[38].fieldValue('Fase',false,_arrRefs_[37]) < 4) 
-													&& 
-													(new Date(_arrRefs_[36].fieldValue('created')) < _arrRefs_[35])
-												) 
-									|| 
-									
-												/*Trabajo no Adelantado (wIssues) */
-												(
-													
-															/*Trabajo de la UTE (wUTE)*/
-															(
-																_arrRefs_[34].fieldValue('Proyecto.key') !='OT'
-															)
-													&&
-													(new Date(_arrRefs_[33].fieldValue('created')) > _arrRefs_[32])
-												)  
-								)  
+									/*Trabajo de la Prorroga (wProrroga) */
+									(
+													/*Trabajo Adelantado (wAdvIssues)*/
+													(
+																/*Trabajo de la UTE (wUTE)*/
+																(
+																	_arrRefs_[39].fieldValue('Proyecto.key') !='OT'
+																) 
+														&&
+														(_arrRefs_[38].fieldValue('Fase',false,_arrRefs_[37]) < 4) 
+														&& 
+														(new Date(_arrRefs_[36].fieldValue('created')) < _arrRefs_[35])
+													) 
+										|| 
+													/*Trabajo no Adelantado (wIssues) */
+													(
+																/*Trabajo de la UTE (wUTE)*/
+																(
+																	_arrRefs_[34].fieldValue('Proyecto.key') !='OT'
+																)
+														&&
+														(new Date(_arrRefs_[33].fieldValue('created')) > _arrRefs_[32])
+													)  
+									)  
 						&&
 						(
 						(_arrRefs_[31].fieldValue('Fase',false,_arrRefs_[30])) 
@@ -299,13 +290,10 @@ var vResult=
 				)   ||  
 				/*Trabajo sin cambio de Fase durante el periodo que ha reducido el tiempo trabajado acumulado (wReducidoTimespent)*/
 				(  
-					
 					/*Trabajo de la Prorroga (wProrroga) */
 					(
-						
 									/*Trabajo Adelantado (wAdvIssues)*/
 									(
-										
 												/*Trabajo de la UTE (wUTE)*/
 												(
 													_arrRefs_[23].fieldValue('Proyecto.key') !='OT'
@@ -316,10 +304,8 @@ var vResult=
 										(new Date(_arrRefs_[20].fieldValue('created')) < _arrRefs_[19])
 									) 
 						|| 
-						
 									/*Trabajo no Adelantado (wIssues) */
 									(
-										
 												/*Trabajo de la UTE (wUTE)*/
 												(
 													_arrRefs_[18].fieldValue('Proyecto.key') !='OT'
@@ -331,35 +317,30 @@ var vResult=
 					&& (
 					/*Trabajo sin cambio de Fase durante el periodo (wMismaFase)*/
 					(  
-						
-								/*Trabajo de la Prorroga (wProrroga) */
-								(
-									
-												/*Trabajo Adelantado (wAdvIssues)*/
-												(
-													
-															/*Trabajo de la UTE (wUTE)*/
-															(
-																_arrRefs_[15].fieldValue('Proyecto.key') !='OT'
-															) 
-													&&
-													(_arrRefs_[14].fieldValue('Fase',false,_arrRefs_[13]) < 4) 
-													&& 
-													(new Date(_arrRefs_[12].fieldValue('created')) < _arrRefs_[11])
-												) 
-									|| 
-									
-												/*Trabajo no Adelantado (wIssues) */
-												(
-													
-															/*Trabajo de la UTE (wUTE)*/
-															(
-																_arrRefs_[10].fieldValue('Proyecto.key') !='OT'
-															)
-													&&
-													(new Date(_arrRefs_[9].fieldValue('created')) > _arrRefs_[8])
-												)  
-								)  
+									/*Trabajo de la Prorroga (wProrroga) */
+									(
+													/*Trabajo Adelantado (wAdvIssues)*/
+													(
+																/*Trabajo de la UTE (wUTE)*/
+																(
+																	_arrRefs_[15].fieldValue('Proyecto.key') !='OT'
+																) 
+														&&
+														(_arrRefs_[14].fieldValue('Fase',false,_arrRefs_[13]) < 4) 
+														&& 
+														(new Date(_arrRefs_[12].fieldValue('created')) < _arrRefs_[11])
+													) 
+										|| 
+													/*Trabajo no Adelantado (wIssues) */
+													(
+																/*Trabajo de la UTE (wUTE)*/
+																(
+																	_arrRefs_[10].fieldValue('Proyecto.key') !='OT'
+																)
+														&&
+														(new Date(_arrRefs_[9].fieldValue('created')) > _arrRefs_[8])
+													)  
+									)  
 						&&
 						(
 						(_arrRefs_[7].fieldValue('Fase',false,_arrRefs_[6])) 
@@ -368,7 +349,6 @@ var vResult=
 						) 
 					)  ) 
 					&&	(
-						
 					/*Tiempo Acumulado en hijos al final del periodo (childTimespentAtEnd)*/
 					(
 						_arrRefs_[3].fieldAccumChilds ('timespent',_arrRefs_[2])
@@ -380,3 +360,4 @@ var vResult=
 					)
 				)  )  
 		;
+	 return result;

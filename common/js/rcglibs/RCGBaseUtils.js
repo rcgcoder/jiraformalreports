@@ -189,7 +189,12 @@ function createFunction(arrValues,sFunctionBody,functionCache){
 	 return result;`;
 	log("Execute Formula-----");
 	for (var i=0;i<arrValues.length;i++){
-		log(`_arrRefs_['"+i+"']:["+arrValues[i]+"]`);
+		var vValue=arrValues[i];
+		if (typeof (vValue)!=="object"){
+			log("_arrRefs_['"+i+"']:["+JSON.stringify(vValue)+"]");
+		} else {
+			log("_arrRefs_['"+i+"']:["+JSON.stringify(vValue)+"]");
+		}
 	}
 	log(sFncFormula);
 	var theHash;

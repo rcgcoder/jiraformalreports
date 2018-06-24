@@ -15,7 +15,7 @@ var jrfDirective=class jrfDirective{//this kind of definition allows to hot-relo
 		}
 		var accumulators=self.getAttrVal("accumulators").trim();
 		if (accumulators!=""){
-			debugger;
+			//debugger;
 			var arrAccums=accumulators.split(",");
 			arrAccums.forEach(function(accum){
 				var arrTypeField=accum.split("=");

@@ -3,10 +3,10 @@ var jrfField=class jrfField{//this kind of definition allows to hot-reload
 		var self=this;
 		model.extendToken(self,tag,reportElem);
 		self.fieldName=self.getAttrVal("field");
-		if (self.fieldName.trim().toLowerCase()=="status.name"){
+/*		if (self.fieldName.trim().toLowerCase()=="status.name"){
 			debugger;
 		}
-		self.format=self.getAttrVal("inFormat");
+*/		self.format=self.getAttrVal("inFormat");
 	}
 	apply(){
 		var self=this;

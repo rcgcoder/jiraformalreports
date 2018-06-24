@@ -150,9 +150,34 @@ function newIssueFactory(report){
 		if (precomps=="") return "";
 		return precomps.getLast().value;
 	})
+	dynObj.functions.add("mixIssuesFieldLife",function(hsIssues,fieldName){
+		var self=this;
+		var hsLife;
+		var hsMixLife=newHashMap();
+		var arrLife;
+		hsIssues.walk(function(issue){
+			hsLife=issue.getFieldLife(fieldName);
+			arrLife=hsLife.getValue("life");
+			arrLife.forEach(function(episode){
+				if (!hsMixLife.exists(episode[0])){
+					hsMixLife.add(episode[0],0);
+				}
+			});
+		});
+		var vAccum=0;
+		hsMixLife.walk(function(sDate,iDeep,sDateKey){
+			vAccum=0;
+			hsIssues.walk(function(issue){
+				vAccum+=issue.fieldValue(sDate);
+			});
+			hsMixLife.setValue(sDateKey,vAccum);
+		});
+		return hsMixLife;
+	})
+	
 	dynObj.functions.add("fieldAccum",function(theFieldName,hierarchyType,dateTime,inOtherParams,bSetProperty,notAdjust,fncItemCustomCalc){
 		var self=this;
-		debugger;
+		//debugger;
 		var app=System.webapp;
 		var accumValue=0;
 		var childType="Childs";
@@ -169,7 +194,7 @@ function newIssueFactory(report){
 		var bExistsCacheKey=accumCache.exists(cacheKey);
 		if (bExistsCacheKey){
 			keyValuesCache=accumCache.getValue(cacheKey);
-			debugger;
+			//debugger;
 			if (keyValuesCache.exists(cacheTimeKey)){
 				var vResultFromCache=keyValuesCache.getValue(cacheTimeKey);
 				return vResultFromCache; 
@@ -211,6 +236,10 @@ function newIssueFactory(report){
 		accumValue=self.getReport().adjustAccumItem(childType,accumValue,self,theFieldName,notAdjust);
 //		accumCache.add(cacheKey,accumValue);
 		keyValuesCache.add(cacheTimeKey,accumValue);
+		if (allChilds.length>0){
+			debugger;
+			self.mixIssuesFieldLife(allChilds,theFieldName);
+		}
 /*		if ((self.getReport().updatePrecomputedAccumulators)
 				&&
 			(isUndefined(bSetProperty) || (isDefined(bSetProperty)&&(bSetProperty)))){
@@ -247,7 +276,8 @@ function newIssueFactory(report){
 		        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
 			}
 		}
-*/		return accumValue;
+		*/
+		return accumValue;
 	});
 	
 	dynObj.functions.add("linkValue",function(sLinkName){

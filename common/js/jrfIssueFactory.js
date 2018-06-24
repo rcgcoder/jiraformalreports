@@ -170,7 +170,7 @@ function newIssueFactory(report){
 				var vResultFromCache=keyValuesCache.getValue("now");
 				return vResultFromCache; 
 			}
-			if (accumCache.exists(dateTime)){
+			if (accumCache.exists(dateTime.getTime())){
 				debugger;
 				var vResultFromCache=keyValuesCache.getValue(dateTime);
 				return vResultFromCache; 
@@ -211,7 +211,7 @@ function newIssueFactory(report){
 		var auxNotAdjust=(isDefined(notAdjust)&&notAdjust); // not adjust uses only if TRUE is received
 		accumValue=self.getReport().adjustAccumItem(childType,accumValue,self,theFieldName,notAdjust);
 		accumCache.add(cacheKey,accumValue);
-		keyValuesCache.add((isUndefined(dateTime)?"now":dateTime),accumValue);
+		keyValuesCache.add((isUndefined(dateTime)?"now":dateTime.getTime()),accumValue);
 /*		if ((self.getReport().updatePrecomputedAccumulators)
 				&&
 			(isUndefined(bSetProperty) || (isDefined(bSetProperty)&&(bSetProperty)))){

@@ -120,15 +120,23 @@ var plgFilterSystem=class plgFilterSystem{//this kind of definition allows to ho
 						useFilter('childTimespentAtIni')
 					)
 				)`);
-		
-		customFilters.newFilter("wFacturadoOFacturable",`
-				/*Trabajo con cambio de Fase durante el periodo que ha retrocedido de Fase (wRetrocedidoFase)*/
+		customFilters.newFilter("wFacturable",`
+				/*Trabajo pendiente de facturación 
+				  en este informe (wFacturable)*/
 				(  
-					useFilter('wAlgoFacturado') 
-					|| 
 					useFilter('wFacturablePorFase')
 					|| 
 					useFilter('wFacturablePorTiempoTrabajado')
+				)`);
+		
+		
+		customFilters.newFilter("wFacturadoOFacturable",`
+				/*Trabajo Facturado anteriormente o pendiente de facturación 
+				  en este informe (wFacturadoOFacturable)*/
+				(  
+					useFilter('wAlgoFacturado') 
+					|| 
+					useFilter('wFacturable')
 				)`);
 		
 

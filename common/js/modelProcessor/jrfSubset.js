@@ -113,23 +113,24 @@ var jrfSubset=class jrfSubset{//this kind of definition allows to hot-reload
 			self.variables.pushVarEnv();
 			var iCounter=0;
 			var iSelectedCounter=0;
+			if (sWhere.indexOf("useFilter")>=0){
+				debugger;
+				sWhere=self.model.filters.useFilter(sWhere);
+				/*sWhere=`
+						"";
+						debugger;
+						var vResultAux=`+sWhere+`;
+						return vResultAux;
+						`;*/
+			}
+			sWhere=self.adjustSyntax(sWhere);
+			
 			elemsInForEach.walk(function(eachElem,deep,key){
 				if (self.innerVarName!=""){
 					self.variables.pushVar(self.innerVarName,eachElem);
 				}
 				self.variables.pushVar("counter",iCounter);
 				self.variables.pushVar("counter_selected",iSelectedCounter);
-				sWhere=self.adjustSyntax(self.whereCondition);
-				if (sWhere.indexOf("useFilter")>=0){
-					debugger;
-					sWhere=self.model.filters.useFilter(sWhere);
-					/*sWhere=`
-							"";
-							debugger;
-							var vResultAux=`+sWhere+`;
-							return vResultAux;
-							`;*/
-				}
 				bWhereResult=self.replaceVarsAndExecute(sWhere);
 				if (bWhereResult){
 					iSelectedCounter++;

@@ -15,6 +15,7 @@ var jrfDirective=class jrfDirective{//this kind of definition allows to hot-relo
 		}
 		var accumulators=self.getAttrVal("accumulators").trim();
 		if (accumulators!=""){
+			debugger;
 			var arrAccums=accumulators.split(",");
 			arrAccums.forEach(function(accum){
 				var arrTypeField=accum.split("=");
@@ -23,7 +24,7 @@ var jrfDirective=class jrfDirective{//this kind of definition allows to hot-relo
 				var sKey=accumTypeRelation+"."+accumRelationField;
 				//.....add(sKey,{key:sKey,type:typeRelation,field:fieldName});
 				if (!self.accumulators.exists(sKey)){
-					self.accumulators.add(sKey,{key:sKey,type:typeRelation,field:fieldName});
+					self.accumulators.add(sKey,{key:sKey,type:accumTypeRelation,field:accumRelationField});
 				}
 			});
 		}

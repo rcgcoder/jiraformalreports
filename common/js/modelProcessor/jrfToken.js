@@ -313,7 +313,13 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		self.addHtml(self.tag.getPostHTML());
 		if (self.model.report.config.htmlDebug) self.addHtml("<!-- END POSTHTML  IN FORMULA JRF TOKEN ["+self.tokenName+"] -->");
 	}
-
+	adjustSyntax(sJsCode){
+		var vAux=replaceAll(sJsCode,"greaterThan",">");
+		vAux=replaceAll(vAux,"lessThan","<");
+		vAux=replaceAll(vAux,"greaterOrEqualThan",">=");
+		vAux=replaceAll(vAux,"lessOrEqualThan","<=");
+		return vAux;
+	}
 	getAttrVal(attrName,objSrc,bReplaceVars){
 		var self=this;
 		var idAttr=attrName.toLowerCase();
@@ -324,10 +330,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				if (isUndefined(vAux)){
 					vAux="";
 				}
-				vAux=replaceAll(vAux,"greaterThan",">");
-				vAux=replaceAll(vAux,"lessThan","<");
-				vAux=replaceAll(vAux,"greaterOrEqualThan",">=");
-				vAux=replaceAll(vAux,"lessOrEqualThan","<=");
+				vAux=self.adjustSyntax(vAux);
 				if (isDefined(bReplaceVars)&&(!bReplaceVars)){
 					log ("not replace Vars");
 				} else {

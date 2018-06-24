@@ -55,7 +55,7 @@ var newRCGFilterManagerFactory=function(){
 				sResultAux=self.useFilter(sSubFilterName);
 				sResult+=sResultAux;
 				for (var j=1;j<arrFilterNameParts.length;j++){
-					sResult+=arrFilterNameParts[j];
+					sResult+=(")"+arrFilterNameParts[j]);
 				}
 				iFilterRow++;
 			}

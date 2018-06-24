@@ -190,10 +190,10 @@ function createFunction(arrValues,sFunctionBody,functionCache){
 	log("Execute Formula-----");
 	for (var i=0;i<arrValues.length;i++){
 		var vValue=arrValues[i];
-		if (typeof (vValue)!=="object"){
+		if (!isObject(vValue)){
 			log("_arrRefs_['"+i+"']:["+JSON.stringify(vValue)+"]");
 		} else {
-			log("_arrRefs_['"+i+"']:["+JSON.stringify(vValue)+"]");
+			log("_arrRefs_['"+i+"']:["+vValue.constructor.name+"]");
 		}
 	}
 	log(sFncFormula);

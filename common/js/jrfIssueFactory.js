@@ -148,6 +148,7 @@ function newIssueFactory(report){
 	})
 	dynObj.functions.add("getPrecomputedPropertyValue",function(key,atDateTime){
 		var self=this;
+		debugger;
 		var precomps=self.getPrecomputedPropertyById(key);
 		if (precomps=="") return "";
 		var changes=precomps.changes;

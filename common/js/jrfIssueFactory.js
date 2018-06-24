@@ -162,8 +162,10 @@ function newIssueFactory(report){
 		var change;
 		while ((i<changes.length)&&(bContinue)){
 			change=changes[i];
-			if (change[0]>auxDate){
+			if (change[0]>=auxDate){
 				resultValue=change[1];
+			} else {
+				bContinue=false;
 			}
 			i++;
 		}

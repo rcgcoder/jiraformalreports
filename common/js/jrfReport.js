@@ -406,7 +406,7 @@ var jrfReport=class jrfReport {
 			self.objModel.directives.walk(function(hsDirectives,iProof,sDirectiveKey){
 				hsDirectives.walk(function(sValue){
 					log(sDirectiveKey + " directive setted:"+sValue);
-					if (sValue=="versions"){
+					if ((sDirectiveKey=="use") && (sValue=="versions")){
 						self.treeIssues.walk(function(issue){
 							var arrVersions=issue.fieldValue("fixVersions");
 							arrVersions.forEach(function(version){
@@ -417,6 +417,8 @@ var jrfReport=class jrfReport {
 								};
 							});
 						});
+					} else if (sDirectiveKey=="accumulators"){
+						// the directive accumulators is processed by the model 
 					}
 				});
 			});

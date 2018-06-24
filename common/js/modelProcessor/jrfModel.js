@@ -380,12 +380,29 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		var self=this;
 		var hsAccumulators=self.extractAccumulators(self.inputHtml);
 		var hsAccumAux=newHashMap();
-		hsAccumulators.walk(function(hsAccum,iDeep,key){
+		hsAccumulators.walk(function(oAccum,iDeep,key){
 			if (!self.accumulatorList.exists(key)){
-				self.accumulatorList.add(key,hsAccum);
-				hsAccumAux.add(key,hsAccum);
+				self.accumulatorList.add(key,oAccum);
+				hsAccumAux.add(key,oAccum);
 			};
 		});
+		// add the accumulators identified in directives
+		self.directives.walk(function(hsDirectives,iProof,sDirectiveKey){
+			hsDirectives.walk(function(oValue,iDeep,sKey){
+				log(sDirectiveKey + " directive setted:"+sKey);
+				if (sDirectiveKey=="use") {
+					//log("the use directive is processed by the report");
+				} else if (sDirectiveKey=="accumulators"){
+					//.....add(sKey,{key:sKey,type:typeRelation,field:fieldName});
+					if (!self.accumulatorList.exists(sKey)){
+						self.accumulatorList.add(sKey,oValue);
+						hsAccumAux.add(key,oValue);
+					};
+				}
+			});
+		});
+		
+		
 		var petCounter=0;
 		var hsIssueGetProperties=newHashMap();
 		self.addStep("Preparing the pool of getproperty calls", function(){
@@ -453,19 +470,32 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 	}
 	processDirectiveTags(){
 		var self=this;
+		var hsUseDirectives;
+		if (self.directives.exists("use")){
+			hsUseDirectives=self.directives.getValue("use");
+		} else {
+			hsUseDirectives=newHashMap();
+			self.directives.add("use",hsUseDirectives);
+		}
+		var hsAccumDirectives;
+		if (self.directives.exists("accumulators")){
+			hsAccumDirectives=self.directives.getValue("accumulators");
+		} else {
+			hsAccumDirectives=newHashMap();
+			self.directives.add("accumulators",hsAccumDirectives);
+		}
+
 		self.tagFactory.list.walk(function(tag){
 			if (self.getTokenName(tag)=="jrfDirective"){
 				var auxTagApplier=self.prepareTag(tag);
 				auxTagApplier.uses.walk(function(use){
-					var hsUseDirectives;
-					if (self.directives.exists("use")){
-						hsUseDirectives=self.directives.getValue("use");
-					} else {
-						hsUseDirectives=newHashMap();
-						self.directives.add("use",hsUseDirectives);
-					}
 					if (!hsUseDirectives.exists(use)){
 						hsUseDirectives.add(use,use);
+					}
+				});
+				auxTagApplier.accumulators.walk(function(accum){
+					if (!hsAccumDirectives.exists(accum)){
+						hsAccumDirectives.add(accum,accum);
 					}
 				});
 			}

@@ -236,8 +236,8 @@ function newIssueFactory(report){
 		accumValue=self.getReport().adjustAccumItem(childType,accumValue,self,theFieldName,notAdjust);
 //		accumCache.add(cacheKey,accumValue);
 		keyValuesCache.add(cacheTimeKey,accumValue);
+		debugger;
 		if (allChilds.length>0){
-			debugger;
 			self.mixIssuesFieldLife(allChilds,theFieldName);
 		}
 /*		if ((self.getReport().updatePrecomputedAccumulators)

@@ -241,9 +241,10 @@ function newIssueFactory(report){
 		accumValue=self.getReport().adjustAccumItem(childType,accumValue,self,theFieldName,notAdjust);
 //		accumCache.add(cacheKey,accumValue);
 		keyValuesCache.add(cacheTimeKey,accumValue);
-		debugger;
-		if (allChilds.length()>0){
-			debugger;
+		if ((allChilds.length()>0) 
+			&&(self.getReport().updatePrecomputedAccumulators)
+			&&(isUndefined(bSetProperty) || (isDefined(bSetProperty)&&(bSetProperty)))
+			){
 			var hsMixedLife=self.mixIssuesFieldLife(allChilds,theFieldName);
 			var arrChanges=[];
 			var precompObj={lastSave:new Date(),
@@ -266,43 +267,6 @@ function newIssueFactory(report){
 	        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
 			
 		}
-/*		if ((self.getReport().updatePrecomputedAccumulators)
-				&&
-			(isUndefined(bSetProperty) || (isDefined(bSetProperty)&&(bSetProperty)))){
-			// save to jira property
-			if ((allChilds.length()>0)){
-				var antValue=0;
-				var precompValue=self.getLastPrecomputedPropertyValue(cacheKey);
-				if (precompValue!=""){
-					antValue=precompValue.value;
-				}
-				if (antValue==""){
-					antValue=0;
-				}
-				if (accumValue!=antValue){
-					self.appendPrecomputedPropertyValues(cacheKey,[{"date":Date.now(),"value":accumValue}]);
-					System.webapp.addStep("Saving result:"+accumValue+" to property:"+cacheKey+" of Issue:"+self.getKey(),function(){
-						var jira=System.webapp.getJira();
-						var arrPropertyToJira=[];
-						self.getPrecomputedPropertyById(cacheKey).walk(function(elem,iProf,key){
-							arrPropertyToJira.push(elem);
-						});
-						jira.setProperty(self.getKey(),cacheKey,arrPropertyToJira);
-			        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
-				}
-			} else {
-				self.appendPrecomputedPropertyValues(cacheKey,[{"date":Date.now(),"value":0}]);
-				System.webapp.addStep("Forcing the save of result:"+ 0 +" to property:"+cacheKey+" of Issue:"+self.getKey(),function(){
-					var jira=System.webapp.getJira();
-					var arrPropertyToJira=[];
-					self.getPrecomputedPropertyById(cacheKey).walk(function(elem,iProf,key){
-						arrPropertyToJira.push(elem);
-					});
-					jira.setProperty(self.getKey(),cacheKey,arrPropertyToJira);
-		        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
-			}
-		}
-		*/
 		return accumValue;
 	});
 	

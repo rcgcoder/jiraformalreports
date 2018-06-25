@@ -299,6 +299,7 @@ function newIssueFactory(report){
 			for (var i=0;i<arrChanges.length-1;i++){
 				arrChanges[i][1]=arrChanges[i+1][2];
 			}
+			self.setPrecomputedPropertyLife(self.getKey(),precompObj);
 			System.webapp.addStep("Saving life of :"+cacheKey+" of issue "+ self.getKey() +" value:"+JSON.stringify(precompObj) ,function(){
 				var jira=System.webapp.getJira();
 				jira.setProperty(self.getKey(),cacheKey,precompObj);

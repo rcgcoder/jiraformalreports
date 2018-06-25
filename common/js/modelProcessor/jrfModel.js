@@ -430,7 +430,6 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			var jira=System.webapp.getJira();
 			var fncAddThread=function(iThread){
 				self.addStep("Property Getter Thread "+iThread,function(){
-					debugger;
 					var fncGetAccumulator=self.createManagedCallback(function(){
 						if (hsIssueGetProperties.length()==0)return;
 						var iPet=hsIssueGetProperties.length()-1;

@@ -295,13 +295,30 @@ function newIssueFactory(report){
 				arrChanges[i][1]=arrChanges[i+1][2];
 			}
 			debugger;
-			var antPrecomp=self.getPrecomputedProperty(cacheKey);
-			
-			self.setPrecomputedPropertyLife(cacheKey,precompObj);
-			System.webapp.addStep("Saving life of :"+cacheKey+" of issue "+ self.getKey() +" value:"+JSON.stringify(precompObj) ,function(){
-				var jira=System.webapp.getJira();
-				jira.setProperty(self.getKey(),cacheKey,precompObj);
-	        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
+			var antPrecomp=self.getPrecomputedPropertyById(cacheKey);
+			var bEqualsPrecomps=true;
+			var antChanges=antPrecomp.changes;
+			var actChanges=arrChanges;
+			if (antChanges.length!=actChanges.length){
+				bEqualsPrecomps=false;
+			} else {
+				var antChange;
+				var actChange;
+				for (var i=0;bEqualsPrecomps&&(i<antChanges.length);i++){
+					antChange=antChanges[i];
+					actChange=actChanges[i];
+					for (var j=0;bEqualsPrecomps&&j<antChange.length;j++){
+						bEqualsPrecomps=(antChange[j]==actChange[j]);
+					}
+				}
+			}
+			if (!bEqualsPrecomps){
+				self.setPrecomputedPropertyLife(cacheKey,precompObj);
+				System.webapp.addStep("Saving life of :"+cacheKey+" of issue "+ self.getKey() +" value:"+JSON.stringify(precompObj) ,function(){
+					var jira=System.webapp.getJira();
+					jira.setProperty(self.getKey(),cacheKey,precompObj);
+		        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
+			}
 		}
 		return accumValue;
 	});

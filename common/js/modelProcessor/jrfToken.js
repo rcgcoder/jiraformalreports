@@ -435,6 +435,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					var sValAdjusted=replaceAll(sValAux+"",",",".");
 					sValAux=normalFormatNumber(sValAdjusted) + " %"; 
 				} else if (sFormat.toLowerCase().indexOf("fixed")>=0){
+					debugger;
 					var arrParts=sFormat.split("=");
 					var nDigits=0;
 					if (arrParts.length>1){

@@ -6,6 +6,7 @@ function newIssueFactory(report){
 	
 	var allFieldDefinitions=[];
 	theReport.config.useFields.forEach(function(element){
+		debugger;
 		allFieldDefinitions.push({name:element.key,description:element.name});
 		hsFieldNames.add(element.name,element.key); // to do a reverse search
 	});

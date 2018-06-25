@@ -433,6 +433,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					sValAux=normalFormatNumber(sValAdjusted) + " %"; 
 				} else if ((sFormat.toLowerCase().indexOf("fixed")>=0)
 							&&(!isDate(sValAux))){
+					debugger;
 					sValAux=self.replaceVars(sValAux);
 					sValAux=self.model.removeInnerTags(sValAux,true).trim();
 					var arrParts=sFormat.split("=");

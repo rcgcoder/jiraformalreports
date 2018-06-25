@@ -117,6 +117,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 
 	encode(){
 		var self=this;
+		var indTokenHtmlBuffer;
 		self.indHtmlBuffer=self.pushHtmlBuffer();
 		if (self.model.report.config.htmlDebug){
 			self.addHtml("<!-- " + self.changeBrackets(self.tag.getTagText())+" -->");
@@ -132,6 +133,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			self.continueTask();
 		});
 		self.addStep("Encode part...",function(){
+			indTokenHtmlBuffer=self.pushHtmlBuffer();
 			if (self.ifConditionResult){
 				self.apply(); // the apply function not returns anything... only writes text to buffer
 			}
@@ -142,23 +144,6 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			self.continueTask();
 		});
 		self.addStep("PostProcess all token and return...",function(){
-			if (self.visibility!=""){
-				if (self.visibility=="hidden"){
-					var sHtml=self.popHtmlBuffer(self.indHtmlBuffer);
-					//sHtml=self.replaceVars(sHtml);
-					self.addHtml("");
-				} else if (self.visibility=="hideable"){
-					var sHtml=self.popHtmlBuffer(self.indHtmlBuffer);
-					//sHtml=self.replaceVars(sHtml);
-					var newId=(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
-					self.addHtml(`
-					             <button onclick="interactiveFunctions.elemShowHide('`+newId+`')">Show/Hide</button>
-								 <div id='`+newId+`' style="display: none">`
-							     +   sHtml
-								 +`</div>`
-								 );
-				}
-			}
 			self.variables.popVarEnv();
 			self.continueTask();
 		});
@@ -311,6 +296,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 //			sAux=self.popHtmlBuffer();
 //			self.addHtml(sAux);
 			self.addHtml(sValAux);
+			
+
 			if (self.autoAddPostHtml){
 				self.addPostHtml();
 			}
@@ -321,6 +308,23 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	}
 	addPostHtml(){
 		var self=this;
+		if (self.visibility!=""){
+			if (self.visibility=="hidden"){
+				var sHtml=self.popHtmlBuffer(self.indTokenHtmlBuffer);
+				//sHtml=self.replaceVars(sHtml);
+				self.addHtml("");
+			} else if (self.visibility=="hideable"){
+				var sHtml=self.popHtmlBuffer(self.indTokenHtmlBuffer);
+				//sHtml=self.replaceVars(sHtml);
+				var newId=(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
+				self.addHtml(`
+				             <button onclick="interactiveFunctions.elemShowHide('`+newId+`')">Show/Hide</button>
+							 <div id='`+newId+`' style="display: none">`
+						     +   sHtml
+							 +`</div>`
+							 );
+			}
+		}
 		if (self.model.report.config.htmlDebug) self.addHtml("<!-- START POSTHTML IN FORMULA JRF TOKEN ["+self.tokenName+"] -->");
 		//self.addHtml(self.replaceVars(self.tag.getPostHTML()));
 		self.addHtml(self.tag.getPostHTML());

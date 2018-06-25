@@ -8,7 +8,7 @@ class RCGDateUtils {
 			return false;
 		}
 		if (isString(value)){
-			try{vAux=parseFloat(value);return false;} catch(err){};
+			if (!isNaN(value)) return false;
 			try{vAux=new Date(value);return true;} catch(err){};
 			try{vAux=toDateNormalDDMMYYYYHHMMSS(value);return true;} catch(err){};
 			try{vAux=toDateNormalYYYYMMDD(value);return true;} catch(err){};

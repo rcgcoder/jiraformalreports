@@ -549,7 +549,7 @@ function newIssueFactory(report){
 		}
 		var arrLife=hsFieldLife.getValue("life");
 		if (arrLife.length>0){
-			var firstChange=arrLife[arrLife.length-1];
+			var firstChange=arrLife[arrLife.length-1][0];
 			if (firstChange<dateCreated){
 				dateCreated=firstChange;
 			}

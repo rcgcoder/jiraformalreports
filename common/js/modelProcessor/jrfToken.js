@@ -447,7 +447,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 						var sValAdjusted;
 						if (nDigits==2){
 							sValue=replaceAll(sValue,",",".");
-							sValAdjusted=normalFormatNumber(sValAdjusted); 
+							sValAdjusted=normalFormatNumber(sValue); 
 						} else {
 							sValAdjusted=replaceAll(Math.round(parseFloat(sValue),nDigits)+"","\.",",");
 						}

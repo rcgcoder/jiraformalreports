@@ -104,6 +104,10 @@ export class TabConfig {
         dfReport["logHtmlDebug"]=(auxObj.attr("checked")=="checked");
         auxObj=$('#toggle_RootsByJQL');
         dfReport["rootsByJQL"]=(auxObj.attr("checked")=="checked");
+
+        auxObj=$('#toggle_EnsureDependentIssues');
+        dfReport["getIssuesNotInScope"]=(auxObj.attr("checked")=="checked");
+
         auxObj=$('#toggle_RootsByProject');
         dfReport["rootsByProject"]=(auxObj.attr("checked")=="checked");
         auxObj=$('#toggle_ForceReloadFiles');
@@ -204,6 +208,10 @@ export class TabConfig {
         if(isDefined(config.reuseIssues)&&config.reuseIssues)auxObj.attr("checked","checked");
         auxObj=$('#toggle_RootsByJQL');
         if(isDefined(config.rootsByJQL)&&config.rootsByJQL)auxObj.attr("checked","checked");
+
+        auxObj=$('#toggle_EnsureDependentIssues');
+        if(isDefined(config.getIssuesNotInScope)&&config.getIssuesNotInScope)auxObj.attr("checked","checked");
+        
         auxObj=$('#toggle_RootsByProject');
         if(isDefined(config.rootsByProject)&&config.rootsByProject)auxObj.attr("checked","checked");
         auxObj=$('#toggle_ForceReloadFiles');

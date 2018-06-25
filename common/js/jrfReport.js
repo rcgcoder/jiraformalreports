@@ -247,6 +247,143 @@ var jrfReport=class jrfReport {
 			    "		Issues in scope:"+ self.allIssues.list.length());
 			self.continueTask();
 		});
+/*		self.addStep("Getting root elements dependent not in scope.... ",function(){
+			if (isDefined(self.config.getIssuesNotInScope)&&(!self.config.getIssuesNotInScope)) return self.continueTask();
+			var arrKeyGroups=[];
+			var keyGroup=[];
+			arrKeyGroups.push(keyGroup);
+			var hsLinks;
+			var linkedIssue;
+			var fncGetLinkedIssues=function(hsIssueList){
+				hsIssueList.walk(function (issue){
+					var arrLinkTypes=self.config.useIssueLinkTypes;
+					if (isDefined(arrLinkTypes)){
+						arrLinkTypes.forEach(function(linkType){
+							var hsLinks=issue.getLinkTypeById(linkType);
+							if (hsLinks!=""){
+								hsLinks.issues.walk(function(auxIssue,iDeep,linkedIssueKey)){
+									linkedIssue=self.allIssues.getById(linkedIssueKey);
+									if (linkedIssue==""){
+										if (keyGroup.length>10){
+											keyGroup=[];
+											arrKeyGroups.push(keyGroup);
+										}
+										keyGroup.push(linkedIssueKey);
+									}
+								});
+							}
+						});
+					}
+				});
+			}
+			fncGetLinkedIssues(self.rootIssues);
+			var fncFetchIssues=self.createManagedCallback(function(jsonIssues){
+				var oIssues=JSON.parse(jsonIssues);
+				var arrIssues=oIssues.issues;
+				var key;
+				var issue;
+				var comments;
+				var htmlComments;
+				var comment;
+				var htmlComment;
+				var objComment;
+				arrIssues.forEach(function (jsonIssue){
+					key=jsonIssue.key;
+					if (issuesAdded.exists(key)){
+						issue=issuesAdded.getValue(key);
+						comments=jsonIssue.fields.comment.comments;
+						htmlComments=jsonIssue.renderedFields.comment.comments;
+						var bFind=false;
+						for (var i=0;i<comments.length;i++){
+							comment=comments[i];
+							htmlComment=htmlComments[i];
+							objComment={id:comment.created.trim(),body:comment.body.trim(),htmlBody:htmlComment.body.trim()};
+							issue.addComment(objComment);
+							bFind=true;
+						}
+//						if (bFind){
+//							var vResult=issue.getHtmlLastCommentStartsWith("Descripción Formal",true,"<br/>",true);
+//							log (vResult);
+//						}
+						// applying "Jira Formal Report Adjusts"
+						var sTokenAdjustComment="Jira Formal Report Adjusts";
+						var hsReportAdjusts=issue.getCommentsStartsWith(sTokenAdjustComment);
+						hsReportAdjusts.walk(function(oAdjustComment){
+							debugger;
+							var sCommentBody=oAdjustComment.body;
+							var sAux=sCommentBody.substring(sTokenAdjustComment.length+1,sCommentBody.length);
+							var oAdjusts=JSON.parse(sAux); // may be a object (single change) or an array (multiple changes)
+							if (!Array.isArray(oAdjusts)){ // if only one change
+								oAdjusts=[oAdjusts]; // create as array
+							}
+							oAdjusts.forEach(function (oAdjust){
+								var fieldName="";
+								var fieldValue="";
+								var changeDate="";
+								var isLifeChange=false;
+								if (isDefined(oAdjust.changeDate)){
+									isLifeChange=true;
+									changeDate=toDateNormalDDMMYYYYHHMMSS(oAdjust.changeDate);
+								}
+								fieldName=oAdjust.field; // may be simple name (timespent) or complex (status.name)
+								fieldValue=oAdjust.newValue; // may be a simple value (16000) or complex ( {name:"the new name",id:14,...})
+								var arrFieldPath=fieldName.split(".");
+								var sField=arrFieldPath[0];
+								var sField=issue.getExistentFieldId(sField);
+								if (!isLifeChange){
+									if (!isDefined(issue["set"+sField])){//the field is in the "field interest list"
+										log("Only can adjust interested fields... the field:"+sField + " is not in the list");
+									} else if (arrFieldPath.length==1){ // simple field
+										issue["set"+sField](fieldValue);
+									} else {
+										var actValue=issue["get"+sField]();
+										for (var i=1;i<arrFieldPath.length-1;i++){
+											var sSubPath=arrFieldPath[i];
+											if (isUndefined(actValue[sSubPath])){
+												actValue[sSubPath]={};
+											}
+											actValue=actValue[sSubPath];
+										}
+										actValue[arrFieldPath[arrFieldPath.length-1]]=fieldValue;
+									}
+								} else {
+									var hsLifeAdjusts=issue.getFieldLifeAdjustById(sField);
+									if (hsLifeAdjusts==""){
+										hsLifeAdjusts=newHashMap();
+										issue.getFieldLifeAdjusts().add(sField,hsLifeAdjusts);
+									}
+									var oLifeChange={};
+									oLifeChange.effectDate=changeDate;
+									oLifeChange.newValue=fieldValue;
+									oLifeChange.fieldPath=arrFieldPath;
+									hsLifeAdjusts.add(changeDate.getTime()+"",oLifeChange);
+								}
+							});
+						});
+					} else {
+						log("The issue ["+key+"] does not exists... Error");
+					}
+				});
+			});
+			arrKeyGroups.forEach(function(group){
+				if (group.length>0){
+					var sIssues="";
+					group.forEach(function (key){
+						sIssues+=((sIssues!=""?",":"")+key);
+					});
+					if (sIssues!="") {
+						var theJQL="id in ("+sIssues+")";
+						self.addStep("Retrieving issues of Group ["+sIssues+"]",function(){
+							self.jira.processJQLIssues(
+									theJQL,
+									fncFetchIssues);
+						});
+					}
+				}
+			});
+			self.continueTask();
+		});
+*/			
 
 		var issuesAdded=newHashMap();
 		self.treeIssues=issuesAdded;

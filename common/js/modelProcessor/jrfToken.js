@@ -367,6 +367,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	}
 	applyIfCondition(){
 		var self=this;
+		debugger;
 		if (self.ifCondition!=""){
 			var sProcesed=executeFunction([],self.ifCondition,self.model.functionCache);
 			self.ifConditionResult=sProcesed;			
@@ -477,7 +478,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			sResult=replaceAll(sResult,sRef,sValue);
 			sResult=sResult.trim();
 		}
-		log("executed {{{"+sText+" }}}");
+		var sTextToLog=self.model.removeInnerTags(sText,true);
+		log("executed {{{"+sTextToLog+" }}}");
 		log(sResult);
 		log("now let´s replace {{  "+sText+"  }}");
 		var oSimple=self.replaceVarsComplex(sResult);

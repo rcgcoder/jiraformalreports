@@ -135,6 +135,10 @@ function newIssueFactory(report){
 		// prepare object
 		var objAux=oPrecomputedLife;
 		objAux.lastSave=new Date(objAux.lastSave);
+		if (isUndefined(objAux.changes)){
+			log("Debug me");
+			debugger;
+		}
 		objAux.changes.forEach(function(change){
 			change[0]=new Date(change[0]);
 		});

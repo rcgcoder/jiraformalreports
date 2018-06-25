@@ -543,15 +543,18 @@ function newIssueFactory(report){
 		var dateCreated=new Date(self.fieldValue("created"));
 		var sDateTime="unknown";
 		if (isDefined(dateTime)) sDateTime=dateTime.getTime()+"";
-		if (dateCreated>dateTime) return "";
 		var hsFieldLife=self.getFieldLife(sFieldName,dateTime,otherParams);
 		if (hsFieldLife.exists(sDateTime)){
 			return hsFieldLife.getValue(sDateTime);
 		}
 		var arrLife=hsFieldLife.getValue("life");
 		if (arrLife.length>0){
-			log("Debug here");
-		}
+			var firstChange=arrLife[arrLife.length-1];
+			if (firstChange>dateCreated){
+				dateCreated=firstChange;
+			}
+		} 
+		if (dateCreated>dateTime) return "";
 		var auxVal=	self.fieldValue(sFieldName,false,undefined,otherParams); // getting actual Value
 		var history;
 		var bLocated=false;

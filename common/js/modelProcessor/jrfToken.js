@@ -147,7 +147,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					var sHtml=self.popHtmlBuffer(self.indHtmlBuffer);
 					//sHtml=self.replaceVars(sHtml);
 					self.addHtml("");
-				} else if (self.visibility=="hideable"){
+/*				} else if (self.visibility=="hideable"){
 					var sHtml=self.popHtmlBuffer(self.indHtmlBuffer);
 					//sHtml=self.replaceVars(sHtml);
 					var newId=(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
@@ -170,7 +170,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 							     +   sHtml
 								 +`</div>`
 								 );
-				}
+*/				}
 			}
 			self.variables.popVarEnv();
 			self.continueTask();

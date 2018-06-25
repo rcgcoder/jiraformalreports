@@ -440,8 +440,13 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					if (arrParts.length>1){
 						nDigits=parseInt(arrParts[1]);
 					}
-					var sValAdjusted=replaceAll(Math.round(parseFloat(sValAux+""),nDigits)+"",".",",");
-					sValAux=sValAdjusted; 
+					if (nDigits==2){
+						var sValAdjusted=replaceAll(sValAux+"",",",".");
+						sValAux=normalFormatNumber(sValAdjusted); 
+					} else {
+						var sValAdjusted=replaceAll(Math.round(parseFloat(sValAux+""),nDigits)+"","\.",",");
+						sValAux=sValAdjusted; 
+					}
 				}
 			}
 		}

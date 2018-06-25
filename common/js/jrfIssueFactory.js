@@ -145,7 +145,8 @@ function newIssueFactory(report){
 		} else {
 			precomps.setValue(key,objAux);
 		}
-	})
+	});
+	
 	dynObj.functions.add("getPrecomputedPropertyValue",function(key,atDateTime){
 		var self=this;
 		debugger;
@@ -176,12 +177,6 @@ function newIssueFactory(report){
 			resultValue=parseFloat(resultValue);
 		}
 		return resultValue;
-	})
-	dynObj.functions.add("getLastPrecomputedPropertyValue",function(key){
-		var self=this;
-		var precomps=self.getPrecomputedPropertyById(key);
-		if (precomps=="") return "";
-		return precomps.getLast().value;
 	})
 	dynObj.functions.add("mixIssuesFieldLife",function(hsIssues,fieldName){
 		var self=this;
@@ -299,12 +294,14 @@ function newIssueFactory(report){
 			for (var i=0;i<arrChanges.length-1;i++){
 				arrChanges[i][1]=arrChanges[i+1][2];
 			}
-			self.setPrecomputedPropertyLife(self.getKey(),precompObj);
+			debugger;
+			var antPrecomp=self.getPrecomputedProperty(cacheKey);
+			
+			self.setPrecomputedPropertyLife(cacheKey,precompObj);
 			System.webapp.addStep("Saving life of :"+cacheKey+" of issue "+ self.getKey() +" value:"+JSON.stringify(precompObj) ,function(){
 				var jira=System.webapp.getJira();
 				jira.setProperty(self.getKey(),cacheKey,precompObj);
 	        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
-			
 		}
 		return accumValue;
 	});

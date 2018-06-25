@@ -203,10 +203,12 @@ function newIssueFactory(report){
 			vAccum=0;
 			hsIssues.walk(function(issue){
 				vAux=issue.fieldValue(fieldName,false,dateKey);
-				if (isString(vAux)){
-					vAux=parseFloat(vAux);
+				if (isDefined(vAux)&& (vAux!="")&&(vAux!=null)&&(!isObject(vAux))){
+					if (isString(vAux)){
+						vAux=parseFloat(vAux);
+					}
+					vAccum+=vAux;
 				}
-				vAccum+=vAux;
 			});
 			hsMixLife.setValue(dateKey,vAccum);
 		});

@@ -157,7 +157,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					             		elem=jqElem[0];
 					             		if (isUndefined(elem.visible)
 					             			||
-					             			(isDefined(elem.visible)&&(!elem.visible))){
+					             			(isDefined(elem.visible)&&(!elem.visible))
+					             			){
 					             			jqElem.show();
 					             			elem.visible=true;
 					             		} else {
@@ -165,7 +166,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					             			elem.visible=false;
 					             		}
 					             	}">Show/Hide</button>
-								 <div id=`+newId+` style="visibility: hidden"`
+								 <div id='`+newId+`' style="visibility: hidden"`
 							     +   sHtml
 								 +`</div>`
 								 );

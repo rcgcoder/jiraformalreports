@@ -136,8 +136,8 @@ function newIssueFactory(report){
 		var objAux=oPrecomputedLife;
 		objAux.lastSave=new Date(objAux.lastSave);
 		if (isUndefined(objAux.changes)){
-			log("Debug me");
-			debugger;
+			log("The precomputed info is not valid... discarding");
+			return;
 		}
 		objAux.changes.forEach(function(change){
 			change[0]=new Date(change[0]);

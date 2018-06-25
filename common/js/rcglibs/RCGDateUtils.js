@@ -1,9 +1,12 @@
 'use strict';
 class RCGDateUtils {
 	isDate(value){
-		debugger;
 		var vAux=value;
-		if ((isUndefined(vAux)||(vAux==null)||(vAux=="")) return false;
+		if ((isUndefined(vAux))
+			 ||(vAux==null)
+			 ||(vAux=="")) {
+			return false;
+		}
 		if (isString(value)){
 			var bIsDate=true;
 			try{vAux=new Date(value);} catch(err){bIsDate=false};

@@ -431,7 +431,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				} else if (sFormat=="%"){
 					var sValAdjusted=replaceAll(sValAux+"",",",".");
 					sValAux=normalFormatNumber(sValAdjusted) + " %"; 
-				} else if ((sFormat.toLowerCase().indexOf("fixed")>=0)&&(!isDate(sValAux)){
+				} else if ((sFormat.toLowerCase().indexOf("fixed")>=0)
+							&&(!isDate(sValAux))){
 					sValAux=self.replaceVars(sValAux);
 					sValAux=self.model.removeInnerTags(sValAux,true).trim();
 					var arrParts=sFormat.split("=");

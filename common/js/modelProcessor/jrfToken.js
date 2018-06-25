@@ -142,10 +142,34 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			self.continueTask();
 		});
 		self.addStep("PostProcess all token and return...",function(){
-			if ((self.visibility!="")&&(self.visibility=="hidden")){
+			if (self.visibility!=""){
+				if (self.visibility=="hidden"){
 					var sHtml=self.popHtmlBuffer(self.indHtmlBuffer);
 					//sHtml=self.replaceVars(sHtml);
 					self.addHtml("");
+				} else if (self.visibility=="hideable"){
+					var sHtml=self.popHtmlBuffer(self.indHtmlBuffer);
+					//sHtml=self.replaceVars(sHtml);
+					var sNewId=(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
+					self.addHtml(`
+					             <button onclick="function('`+newId+`'){
+					             		var jqElem=$('#`+newId+`');
+					             		elem=jqElem[0];
+					             		if (isUndefined(elem.visible)
+					             			||
+					             			(isDefined(elem.visible)&&(!elem.visible))){
+					             			jqElem.show();
+					             			elem.visible=true;
+					             		} else {
+					             			jqElem.hide();
+					             			elem.visible=false;
+					             		}
+					             	}">Show/Hide</button>
+								 <div id=`+newId+` style="visibility: hidden"`
+							     +   sHtml
+								 +`</div>`
+								 );
+				}
 			}
 			self.variables.popVarEnv();
 			self.continueTask();

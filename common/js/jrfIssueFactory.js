@@ -322,7 +322,7 @@ function newIssueFactory(report){
 						actValue=actChange[j];
 						if (typeof antValue !== typeof actValue){
 							bEqualsPrecomps=false;
-						} else if (antValue instanceof Date){
+						} else if (isDate(antValue)){
 							bEqualsPrecomps=(antValue.getTime()==actValue.getTime());
 						} else {
 							bEqualsPrecomps=(antValue==actValue);

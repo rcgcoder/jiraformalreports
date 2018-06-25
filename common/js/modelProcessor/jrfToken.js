@@ -420,9 +420,6 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				if (sFormat=="money"){
 					var sValAdjusted=replaceAll(sValAux+"",",",".");
 					sValAux=inEuros(sValAdjusted,true); 
-				} else if (sFormat=="hh"){
-					var sValAdjusted=replaceAll(sValAux+"",",",".");
-					sValAux=(parseFloat(sValAdjusted).toFixed(2) * 22.1).toFixed(2); 
 				} else if (sFormat=="hours"){
 					var sValAdjusted=replaceAll(sValAux+"",",",".");
 					sValAux=normalFormatNumber(sValAdjusted) + " h"; 
@@ -434,7 +431,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				} else if (sFormat=="%"){
 					var sValAdjusted=replaceAll(sValAux+"",",",".");
 					sValAux=normalFormatNumber(sValAdjusted) + " %"; 
-				} else if (sFormat.toLowerCase().indexOf("fixed")>=0){
+				} else if ((sFormat.toLowerCase().indexOf("fixed")>=0)&&(!isDate(sValAux)){
 					sValAux=self.replaceVars(sValAux);
 					sValAux=self.model.removeInnerTags(sValAux,true).trim();
 					var arrParts=sFormat.split("=");

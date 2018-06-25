@@ -1,5 +1,19 @@
 'use strict';
 class RCGDateUtils {
+	isDate(value){
+		var vAux=value;
+		if (isUndefined(vAux)) return false;
+		if (vAux==null) return false;
+		if (isString(value)){
+			var bIsDate=true;
+			try{vAux=new Date(value);} catch(err){bIsDate=false};
+			if (!bIsDate){bIsDate=true;try{vAux=new toDateNormalDDMMYYYYHHMMSS(value);} catch(err){bIsDate=false};}
+			if (!bIsDate){bIsDate=true;try{vAux=new toDateNormalYYYYMMDD(value);} catch(err){bIsDate=false};}
+			if (bIsDate) return true;
+			return false;
+		}
+		return (vAux instanceof Date);
+	}
 	toDateNormalDDMMYYYYHHMMSS(sDate){ //dd/mm/yyyy hh:mm:ss
 		var sAuxDate=replaceAll(sDate," ","");//.split(" ");
 		var arrDate=sAuxDate.split("/");

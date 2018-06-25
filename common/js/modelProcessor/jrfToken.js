@@ -434,6 +434,14 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				} else if (sFormat=="%"){
 					var sValAdjusted=replaceAll(sValAux+"",",",".");
 					sValAux=normalFormatNumber(sValAdjusted) + " %"; 
+				} else if (sFormat.toLowerCase().indexOf("fixed")>=0){
+					var arrParts=sFormat.split("=");
+					var nDigits=0;
+					if (arrParts.length>1){
+						nDigits=parseInt(arrParts[1]);
+					}
+					var sValAdjusted=replaceAll(Math.round(parseFloat(sValAux+""),nDigits)+"",".",",");
+					sValAux=sValAdjusted; 
 				}
 			}
 		}

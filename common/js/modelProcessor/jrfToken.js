@@ -373,14 +373,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		}
 	}
 	
-	applyInFormat(sValue){
+	applyInFormat(sValAux){
 		var self=this;
 		if (self.inFormat!=""){
 //			var sFormats=self.replaceVars(self.inFormat);
 			var arrFormats=self.inFormat.split(",");
-			var sValAux=self.replaceVars(sValue);
-			sValAux=self.model.removeInnerTags(sValAux,true).trim();
-
 			arrFormats.forEach(function(sFormat){
 				var arrParts=sFormat.split("=")
 				var sFormatId=arrParts[0];
@@ -388,6 +385,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					sValAux=sValAux.wiki2html(); 
 				} else 
 */				if (sFormatId=="fixed"){
+					sValAux=self.replaceVars(sValAux);
+					sValAux=self.model.removeInnerTags(sValAux,true).trim();
 					if (sValAux=="") return;
 					var nDigits=2;
 					if (arrParts.length>1){
@@ -416,8 +415,6 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		if (self.outFormat!=""){
 			var arrFormats=self.outFormat.split(",");
 			var sFormat;
-			var sValAux=self.replaceVars(sValue);
-			sValAux=self.model.removeInnerTags(sValAux,true).trim();
 			for (var i=0;i<arrFormats.length;i++){
 				sFormat=arrFormats[i];
 				if (sFormat=="money"){
@@ -438,7 +435,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					var sValAdjusted=replaceAll(sValAux+"",",",".");
 					sValAux=normalFormatNumber(sValAdjusted) + " %"; 
 				} else if (sFormat.toLowerCase().indexOf("fixed")>=0){
-					debugger;
+					sValAux=self.replaceVars(sValAux);
+					sValAux=self.model.removeInnerTags(sValAux,true).trim();
 					var arrParts=sFormat.split("=");
 					var nDigits=0;
 					if (arrParts.length>1){

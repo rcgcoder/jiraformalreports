@@ -304,11 +304,21 @@ function newIssueFactory(report){
 			} else {
 				var antChange;
 				var actChange;
+				var antValue;
+				var actValue;
 				for (var i=0;bEqualsPrecomps&&(i<antChanges.length);i++){
 					antChange=antChanges[i];
 					actChange=actChanges[i];
 					for (var j=0;bEqualsPrecomps&&j<antChange.length;j++){
-						bEqualsPrecomps=(antChange[j]==actChange[j]);
+						antValue=antChange[j];
+						actValue=actChange[j];
+						if (typeof antValue !== typeof actValue){
+							bEqualsPrecomps=false;
+						} else if (antValue instanceof Date){
+							bEqualsPrecomps=(antValue.getTime()==actValue.getTime());
+						} else 
+							bEqualsPrecomps=(antChange[j]==actChange[j]);
+						}
 					}
 				}
 			}

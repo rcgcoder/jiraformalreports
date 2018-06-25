@@ -272,8 +272,12 @@ function newIssueFactory(report){
 			log("Isssue"+self.getKey()+ " returns value:"+accumValue);
 		}
 		
+		
 		var auxNotAdjust=(isDefined(notAdjust)&&notAdjust); // not adjust uses only if TRUE is received
-		accumValue=self.getReport().adjustAccumItem(childType,accumValue,self,theFieldName,notAdjust);
+		if (!bPrecomputed) {
+			debugger;
+			accumValue=self.getReport().adjustAccumItem(childType,accumValue,self,theFieldName,notAdjust);
+		}
 //		accumCache.add(cacheKey,accumValue);
 		keyValuesCache.add(cacheTimeKey,accumValue);
 		if ((allChilds.length()>0)

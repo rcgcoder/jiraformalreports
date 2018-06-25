@@ -8,12 +8,10 @@ class RCGDateUtils {
 			return false;
 		}
 		if (isString(value)){
-			var bIsDate=true;
-			try{vAux=new Date(value);} catch(err){bIsDate=false};
-			if (!bIsDate){bIsDate=true;try{vAux=new toDateNormalDDMMYYYYHHMMSS(value);} catch(err){bIsDate=false};}
-			if (!bIsDate){bIsDate=true;try{vAux=new toDateNormalYYYYMMDD(value);} catch(err){bIsDate=false};}
-			if (bIsDate) return true;
-			return false;
+			try{vAux=parseFloat(value);return false;} catch(err){};
+			try{vAux=new Date(value);return true;} catch(err){};
+			try{vAux=toDateNormalDDMMYYYYHHMMSS(value);return true;} catch(err){};
+			try{vAux=toDateNormalYYYYMMDD(value);return true;} catch(err){};
 		}
 		return (vAux instanceof Date);
 	}

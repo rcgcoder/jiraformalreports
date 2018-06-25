@@ -6,7 +6,6 @@ function newIssueFactory(report){
 	
 	var allFieldDefinitions=[];
 	theReport.config.useFields.forEach(function(element){
-		debugger;
 		allFieldDefinitions.push({name:element.key,description:element.name});
 		hsFieldNames.add(element.name,element.key); // to do a reverse search
 	});
@@ -182,7 +181,7 @@ function newIssueFactory(report){
 		}
 		return resultValue;
 	})
-	dynObj.functions.add("mixIssuesFieldLife",function(hsIssues,fieldName){
+	dynObj.functions.add("mixIssuesFieldLife",function(hsIssues,fieldName,childType,notAdjust){
 		var self=this;
 		var hsLife;
 		var hsMixLife=newHashMap();
@@ -206,6 +205,8 @@ function newIssueFactory(report){
 					if (isString(vAux)){
 						vAux=parseFloat(vAux);
 					}
+					accumValue=self.getReport().adjustAccumItem(childType,vAux,issue,fieldName,notAdjust);
+
 					vAccum+=vAux;
 				}
 			});
@@ -275,9 +276,8 @@ function newIssueFactory(report){
 		
 		
 		var auxNotAdjust=(isDefined(notAdjust)&&notAdjust); // not adjust uses only if TRUE is received
-		if (!bPrecomputed) {
-			debugger;
-			accumValue=self.getReport().adjustAccumItem(childType,accumValue,self,theFieldName,notAdjust);
+		if ((!bPrecomputed)&&(!auxNotAdjust)) {
+			accumValue=self.getReport().adjustAccumItem(childType,accumValue,self,theFieldName,auxNotAdjust);
 		}
 //		accumCache.add(cacheKey,accumValue);
 		keyValuesCache.add(cacheTimeKey,accumValue);
@@ -286,7 +286,7 @@ function newIssueFactory(report){
 			&&(self.getReport().updatePrecomputedAccumulators)
 			&&(isUndefined(bSetProperty) || (isDefined(bSetProperty)&&(bSetProperty)))
 			){
-			var hsMixedLife=self.mixIssuesFieldLife(allChilds,theFieldName);
+			var hsMixedLife=self.mixIssuesFieldLife(allChilds,theFieldName,childType,auxNotAdjust);
 			var arrChanges=[];
 			var precompObj={lastSave:new Date(),
 							numChilds:allChilds.length(),

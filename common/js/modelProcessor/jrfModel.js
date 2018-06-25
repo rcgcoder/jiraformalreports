@@ -565,3 +565,19 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		}
 	}
 }
+var interactiveFunctions={
+		elemShowHide:function(elemId){
+			var jqElem=$('#'+elemId);
+			var elem=jqElem[0];
+			if (isUndefined(elem.visible)
+				||
+				(isDefined(elem.visible)&&(!elem.visible))
+				){
+				jqElem.show();
+				elem.visible=true;
+			} else {
+				jqElem.hide();
+				elem.visible=false;
+			}
+	}
+};

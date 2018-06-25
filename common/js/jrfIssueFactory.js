@@ -297,11 +297,9 @@ function newIssueFactory(report){
 			var bEqualsPrecomps=true;
 			var antChanges=antPrecomp.changes;
 			var actChanges=arrChanges;
-			if (isUndefined(antChanges)||(isUndefined(actChanges))){
-				log("debug here");
-				debugger;
-			}
-			if (antChanges.length!=actChanges.length){
+			if (antPrecomp==""){
+				bEqualsPrecomps=false;
+			} else if (antChanges.length!=actChanges.length){
 				bEqualsPrecomps=false;
 			} else {
 				var antChange;

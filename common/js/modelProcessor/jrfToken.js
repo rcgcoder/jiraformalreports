@@ -378,6 +378,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		if (self.inFormat!=""){
 //			var sFormats=self.replaceVars(self.inFormat);
 			var arrFormats=self.inFormat.split(",");
+			var sValue;
 			arrFormats.forEach(function(sFormat){
 				var arrParts=sFormat.split("=")
 				var sFormatId=arrParts[0];
@@ -385,9 +386,9 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					sValAux=sValAux.wiki2html(); 
 				} else 
 */				if (sFormatId=="fixed"){
-					sValAux=self.replaceVars(sValAux);
-					sValAux=self.model.removeInnerTags(sValAux,true).trim();
-					if (sValAux=="") return;
+					sValue=self.replaceVars(sValAux);
+					sValue=self.model.removeInnerTags(sValue,true).trim();
+					if (sValue=="") return;
 					var nDigits=2;
 					if (arrParts.length>1){
 						nDigits=arrParts[1];
@@ -400,8 +401,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 						log("Parse done... the rest is return result")
 						// execute function inserts the last ";" automatically
 						`;
-					sValAux=replaceAll(sValAux,"\n"," ").trim();
-					sValAux=executeFunction([sValAux],sFncFormula,self.model.functionCache);
+					sValue=replaceAll(sValue,"\n"," ").trim();
+					sValAux=executeFunction([sValue],sFncFormula,self.model.functionCache);
 				}  
 			});
 		}
@@ -431,21 +432,25 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				} else if (sFormat=="%"){
 					var sValAdjusted=replaceAll(sValAux+"",",",".");
 					sValAux=normalFormatNumber(sValAdjusted) + " %"; 
-				} else if ((sFormat.toLowerCase().indexOf("fixed")>=0)
-							&&(!isDate(sValAux))){
+				} else if (sFormat.toLowerCase().indexOf("fixed")>=0)
+							{
 					debugger;
-					sValAux=self.replaceVars(sValAux);
-					sValAux=self.model.removeInnerTags(sValAux,true).trim();
-					var arrParts=sFormat.split("=");
-					var nDigits=0;
-					if (arrParts.length>1){
-						nDigits=parseInt(arrParts[1]);
-					}
-					if (nDigits==2){
-						var sValAdjusted=replaceAll(sValAux+"",",",".");
-						sValAux=normalFormatNumber(sValAdjusted); 
-					} else {
-						var sValAdjusted=replaceAll(Math.round(parseFloat(sValAux+""),nDigits)+"","\.",",");
+					var sValue=self.replaceVars(sValAux);
+					sValue=self.model.removeInnerTags(sValue,true).trim();
+					if (!isDate(sValue)){
+						var arrParts=sFormat.split("=");
+						var nDigits=0;
+						if (arrParts.length>1){
+							nDigits=parseInt(arrParts[1]);
+						}
+						sValue=replaceAll(sValue+"","\n"," ");
+						var sValAdjusted;
+						if (nDigits==2){
+							sValue=replaceAll(sValue,",",".");
+							sValAdjusted=normalFormatNumber(sValAdjusted); 
+						} else {
+							sValAdjusted=replaceAll(Math.round(parseFloat(sValue),nDigits)+"","\.",",");
+						}
 						sValAux=sValAdjusted; 
 					}
 				}

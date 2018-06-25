@@ -408,7 +408,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		return sValAux;
 //		self.addHtml(sValAux);
 	}
-	applyOutFormat(sValue){
+	applyOutFormat(sValAux){
 		var self=this;
 //		var sValAux=self.popHtmlBuffer(self.indTokenHtmlBuffer);
 //		self.indTokenHtmlBuffer=self.pushHtmlBuffer();

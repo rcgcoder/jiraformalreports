@@ -205,8 +205,7 @@ function newIssueFactory(report){
 					if (isString(vAux)){
 						vAux=parseFloat(vAux);
 					}
-					accumValue=self.getReport().adjustAccumItem(childType,vAux,issue,fieldName,notAdjust);
-
+					vAux=self.getReport().adjustAccumItem(childType,vAux,issue,fieldName,notAdjust);
 					vAccum+=vAux;
 				}
 			});

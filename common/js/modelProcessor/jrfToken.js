@@ -150,9 +150,9 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				} else if (self.visibility=="hideable"){
 					var sHtml=self.popHtmlBuffer(self.indHtmlBuffer);
 					//sHtml=self.replaceVars(sHtml);
-					var sNewId=(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
+					var newId=(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
 					self.addHtml(`
-					             <button onclick="function('`+newId+`'){
+					             <button onclick="function(){
 					             		var jqElem=$('#`+newId+`');
 					             		elem=jqElem[0];
 					             		if (isUndefined(elem.visible)

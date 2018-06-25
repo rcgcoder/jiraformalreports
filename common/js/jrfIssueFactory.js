@@ -149,7 +149,6 @@ function newIssueFactory(report){
 	
 	dynObj.functions.add("getPrecomputedPropertyValue",function(key,atDateTime){
 		var self=this;
-		debugger;
 		var precomps=self.getPrecomputedPropertyById(key);
 		if (precomps=="") return "";
 		var changes=precomps.changes;
@@ -294,11 +293,14 @@ function newIssueFactory(report){
 			for (var i=0;i<arrChanges.length-1;i++){
 				arrChanges[i][1]=arrChanges[i+1][2];
 			}
-			debugger;
 			var antPrecomp=self.getPrecomputedPropertyById(cacheKey);
 			var bEqualsPrecomps=true;
 			var antChanges=antPrecomp.changes;
 			var actChanges=arrChanges;
+			if (isUndefined(antChanges)||(isUndefined(actChanges))){
+				log("debug here");
+				debugger;
+			}
 			if (antChanges.length!=actChanges.length){
 				bEqualsPrecomps=false;
 			} else {

@@ -218,7 +218,7 @@ function newIssueFactory(report){
 	dynObj.functions.add("fieldAccum",function(theFieldName,hierarchyType,dateTime,inOtherParams,bSetProperty,notAdjust,fncItemCustomCalc){
 		var self=this;
 		var bPrecomputed=false;
-		//debugger;
+		debugger;
 		var app=System.webapp;
 		var accumValue=0;
 		var childType="Childs";

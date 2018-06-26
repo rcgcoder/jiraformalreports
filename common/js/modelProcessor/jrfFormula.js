@@ -7,7 +7,6 @@ var jrfFormula=class jrfFormula{//this kind of definition allows to hot-reload
 
 	apply(){
 		var self=this;
-		debugger;
 		// processing inner childs in a buffer to get the plain formula
 		var frmIndHtmlBuffer=self.pushHtmlBuffer();
 		self.addStep("Process all Childs",function(){

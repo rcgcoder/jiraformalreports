@@ -443,8 +443,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				} else if (sFormat=="%"){
 					var sValAdjusted=replaceAll(sValAux+"",",",".");
 					sValAux=normalFormatNumber(sValAdjusted) + " %"; 
-				} else if (sFormat.toLowerCase().indexOf("fixed")>=0)
-							{
+				} else if (sFormat.toLowerCase().indexOf("fixed")>=0) {
 					var sValue=self.replaceVars(sValAux);
 					sValue=self.model.removeInnerTags(sValue,true).trim();
 					if (!isDate(sValue)){
@@ -454,14 +453,9 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 							nDigits=parseInt(arrParts[1]);
 						}
 						sValue=replaceAll(sValue+"","\n"," ");
-						var sValAdjusted;
-						if (nDigits==2){
-							sValue=replaceAll(sValue,",",".");
-							sValAdjusted=normalFormatNumber(sValue); 
-						} else {
-							sValAdjusted=replaceAll(Math.round(parseFloat(sValue),nDigits)+"","\.",",");
-						}
-						sValAux=sValAdjusted; 
+						sValue=replaceAll(sValue,",",".");
+						sValue=Math.round(parseFloat(sValue),nDigits);
+						sValAux=sValue; 
 					}
 				}
 			}

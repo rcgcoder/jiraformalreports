@@ -215,11 +215,11 @@ class RCGTask{
 		if (theTaskManager.asyncTaskCalls) {
 			var contRunningTime=Date.now()-theTaskManager.lastTimeout;
 			if (
-					//(theTaskManager.asyncTaskCallsBlock==0)
+					(theTaskManager.asyncTaskCallsBlock==0)
 					//||(theTaskManager.lastTimeout==0)
-					//||
+					||
 					(theTaskManager.asyncTaskCallsMaxDeep<theTaskManager.asyncTaskCallActDeep)
-					//||(contRunningTime>theTaskManager.asyncTaskCallsBlock)
+					||(contRunningTime>theTaskManager.asyncTaskCallsBlock)
 				){
 				theTaskManager.timeoutsCalled++;
 				theTaskManager.asyncTaskCallActDeep=0;
@@ -458,7 +458,7 @@ class RCGTaskManager{
 		//self.extendObject(obj);
 		self.asyncTaskCalls=true;
 		self.asyncTaskCallsDelay=0;
-		self.asyncTaskCallsBlock=0;  // do not use.... it breaks always
+		self.asyncTaskCallsBlock=3000;  // do not use.... it breaks always
 		self.asyncTaskCallsMaxDeep=100;  // do not use.... it breaks always
 		self.asyncTaskCallActDeep=0;
 		self.timeoutsCalled=0;

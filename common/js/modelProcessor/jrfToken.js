@@ -369,7 +369,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var self=this;
 		if (self.ifCondition!=""){
 			debugger;
-			var bProcessed=executeFunction([],self.ifCondition,self.model.functionCache);
+			var bProcessed=self.replaceVars(self.ifCondition);
 			self.ifConditionResult=bProcessed;
 			if (!bProcessed){
 				log("If condition = false... avoiding tag");

@@ -214,10 +214,13 @@ class RCGTask{
 		self.changeStatus();
 		if (theTaskManager.asyncTaskCalls) {
 			var contRunningTime=Date.now()-theTaskManager.lastTimeout;
-			if ((theTaskManager.asyncTaskCallsBlock==0)
-					||(theTaskManager.lastTimeout==0)
-					||(theTaskManager.asyncTaskCallsMaxDeep<theTaskManager.asyncTaskCallActDeep)
-					||(contRunningTime>theTaskManager.asyncTaskCallsBlock)){
+			if (
+					//(theTaskManager.asyncTaskCallsBlock==0)
+					//||(theTaskManager.lastTimeout==0)
+					//||
+					(theTaskManager.asyncTaskCallsMaxDeep<theTaskManager.asyncTaskCallActDeep)
+					//||(contRunningTime>theTaskManager.asyncTaskCallsBlock)
+				){
 				theTaskManager.timeoutsCalled++;
 				theTaskManager.asyncTaskCallActDeep=0;
 				//log("Continuous running time:"+contRunningTime+" running async (with setTimeout "+theTaskManager.timeoutsCalled+"/"+theTaskManager.timeoutsAvoided+")");

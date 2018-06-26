@@ -101,6 +101,7 @@ var jrfReport=class jrfReport {
 								"js/modelProcessor/jrfModel.js",
 								"js/modelProcessor/jrfToken.js",
 								"js/modelProcessor/jrfNoop.js",
+								"js/modelProcessor/jrfCondition.js",
 								"js/modelProcessor/jrfDebug.js",
 								"js/modelProcessor/jrfField.js",
 								"js/modelProcessor/jrfGetVar.js",

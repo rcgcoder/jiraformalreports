@@ -223,17 +223,17 @@ class RCGTask{
 				){
 				theTaskManager.timeoutsCalled++;
 				theTaskManager.asyncTaskCallActDeep=0;
-				log("Continuous running time:"+contRunningTime
+/*				log("Continuous running time:"+contRunningTime
 						+" running ASYNC: " + theTaskManager.asyncTaskCallActDeep + "/" +theTaskManager.asyncTaskCallsMaxDeep
 						+" setTimeout relation: "+theTaskManager.timeoutsCalled+"/"+theTaskManager.timeoutsAvoided);
-				fncAsyncApply();
+*/				fncAsyncApply();
 			} else {
 				theTaskManager.timeoutsAvoided++;
 				theTaskManager.asyncTaskCallActDeep++;
-				log("Continuous running time:"+contRunningTime
+/*				log("Continuous running time:"+contRunningTime
 						+" running SYNC: " + theTaskManager.asyncTaskCallActDeep + "/" +theTaskManager.asyncTaskCallsMaxDeep
 						+" setTimeout relation:"+theTaskManager.timeoutsCalled+"/"+theTaskManager.timeoutsAvoided);
-				fncApply();
+*/				fncApply();
 			}
 		} else {
 			fncApply();
@@ -462,8 +462,8 @@ class RCGTaskManager{
 		//self.extendObject(obj);
 		self.asyncTaskCalls=true;
 		self.asyncTaskCallsDelay=0;
-		self.asyncTaskCallsBlock=3000;  // do not use.... it breaks always
-		self.asyncTaskCallsMaxDeep=100;  // do not use.... it breaks always
+		self.asyncTaskCallsBlock=0;  // do not use.... it breaks always
+		self.asyncTaskCallsMaxDeep=0;  // do not use.... it breaks always
 		self.asyncTaskCallActDeep=0;
 		self.timeoutsCalled=0;
 		self.timeoutsAvoided=0;

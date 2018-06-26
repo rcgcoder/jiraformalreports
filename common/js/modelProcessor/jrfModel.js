@@ -299,8 +299,8 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			sTokenName="jrfInclude";
 		} else if (tagAttrs.exists("directive")){
 			sTokenName="jrfDirective";
-		} else if (tagAttrs.exists("if")){
-			sTokenName="jrfCondition";
+//		} else if (tagAttrs.exists("if")){
+//			sTokenName="jrfCondition";
 		} else {
 			sTokenName="jrfNoop";
 		}

@@ -133,7 +133,6 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			self.continueTask();
 		});
 		self.addStep("Encode part...",function(){
-			self.indTokenHtmlBuffer=self.pushHtmlBuffer();
 			if (self.ifConditionResult){
 				self.apply(); // the apply function not returns anything... only writes text to buffer
 			}
@@ -317,10 +316,12 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		if (self.visibility!=""){
 			if (self.visibility=="hidden"){
 				var sHtml=self.popHtmlBuffer(self.indTokenHtmlBuffer);
+				self.indTokenHtmlBuffer=self.pushHtmlBuffer();
 				//sHtml=self.replaceVars(sHtml);
 				self.addHtml("");
 			} else if (self.visibility=="hideable"){
 				var sHtml=self.popHtmlBuffer(self.indTokenHtmlBuffer);
+				self.indTokenHtmlBuffer=self.pushHtmlBuffer();
 				//sHtml=self.replaceVars(sHtml);
 				var newId=(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
 				self.addHtml(`

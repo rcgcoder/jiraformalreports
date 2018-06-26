@@ -481,10 +481,10 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			sResult=replaceAll(sResult,sRef,sValue);
 			sResult=sResult.trim();
 		}
-		var sTextToLog=self.model.removeInnerTags(sText,true);
+		var sTextToLog=self.model.removeInnerTags(sResult,true);
 		log("executed {{{"+sTextToLog+" }}}");
-		log(sResult);
-		log("now let´s replace {{  "+sText+"  }}");
+//		log(sResult);
+		log("now let´s replace {{  "+sResult+"  }}");
 		var oSimple=self.replaceVarsComplex(sResult);
 		var vValue=oSimple.text;
 		if (oSimple.values.length>0){

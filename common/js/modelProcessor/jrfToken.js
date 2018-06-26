@@ -50,6 +50,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.otherParams=newHashMap();
 		obj.ifConditionResult=true;
 		obj.autoAddPostHtml=true;
+		obj.processVarsAtEnd=false;
 	}
 	processAllChilds(childList,reportElement){
 		var self=this;
@@ -117,7 +118,6 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 
 	encode(){
 		var self=this;
-		var indTokenHtmlBuffer;
 		self.indHtmlBuffer=self.pushHtmlBuffer();
 		if (self.model.report.config.htmlDebug){
 			self.addHtml("<!-- " + self.changeBrackets(self.tag.getTagText())+" -->");
@@ -133,7 +133,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			self.continueTask();
 		});
 		self.addStep("Encode part...",function(){
-			indTokenHtmlBuffer=self.pushHtmlBuffer();
+			self.indTokenHtmlBuffer=self.pushHtmlBuffer();
 			if (self.ifConditionResult){
 				self.apply(); // the apply function not returns anything... only writes text to buffer
 			}
@@ -300,6 +300,12 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 
 			if (self.autoAddPostHtml){
 				self.addPostHtml();
+			}
+			
+			if (self.processVarsAtEnd){
+				var sContent=self.popHtmlBuffer(self.indTokenHtmlBuffer);
+				sContent=self.replaceVars(sContent);
+				self.addHtml(sContent);
 			}
 //		} else {
 //			sAux=self.popHtmlBuffer();

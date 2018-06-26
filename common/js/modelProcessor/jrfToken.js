@@ -290,6 +290,16 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var self=this;
 		var sAux="";
 		if (self.ifConditionResult){
+			if (self.autoAddPostHtml){
+				self.addPostHtml();
+			}
+			
+			if (self.processVarsAtEnd){
+				var sContent=self.popHtmlBuffer(self.indTokenHtmlBuffer);
+				self.indTokenHtmlBuffer=self.pushHtmlBuffer();
+				sContent=self.replaceVars(sContent);
+				self.addHtml(sContent);
+			}
 			var sValAux=self.popHtmlBuffer(self.indTokenHtmlBuffer);
 			self.indTokenHtmlBuffer=self.pushHtmlBuffer();
 
@@ -302,15 +312,6 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			self.addHtml(sValAux);
 			
 
-			if (self.autoAddPostHtml){
-				self.addPostHtml();
-			}
-			
-			if (self.processVarsAtEnd){
-				var sContent=self.popHtmlBuffer(self.indTokenHtmlBuffer);
-				sContent=self.replaceVars(sContent);
-				self.addHtml(sContent);
-			}
 //		} else {
 //			sAux=self.popHtmlBuffer();
 //			self.addHtml(sAux);

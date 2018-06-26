@@ -5,8 +5,8 @@ var jrfNoop=class jrfNoop{//this kind of definition allows to hot-reload
 		self.processVarsAtEnd=true;
 	}
 	apply(){
-		debugger;
 		var self=this;
+		debugger;
 		self.addStep("Processing all Childs of NOOP",function(){
 			self.processAllChilds();
 		});

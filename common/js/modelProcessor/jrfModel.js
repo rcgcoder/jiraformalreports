@@ -584,6 +584,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 }
 var interactiveFunctions={
 		elemShowHide:function(elemId){
+			debugger;
 			var jqElem=$('#'+elemId);
 			var elem=jqElem[0];
 			if (isUndefined(elem.visible)

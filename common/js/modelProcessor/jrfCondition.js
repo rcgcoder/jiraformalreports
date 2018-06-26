@@ -6,7 +6,7 @@ var jrfCondition=class jrfCondition{//this kind of definition allows to hot-relo
 	}
 	apply(){
 		var self=this;
-		debugger;
+		//debugger;
 		if (self.ifConditionResult){
 			var noopIndHtmlBuffer=self.pushHtmlBuffer();
 			self.addStep("Processing all Childs of NOOP",function(){

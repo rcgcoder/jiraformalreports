@@ -124,7 +124,7 @@ function newIssueFactory(report){
 	});
 	dynObj.functions.add("fieldAccumChilds",function(theFieldName,datetime,inOtherParams,notAdjust,bSetProperty,fncItemCustomCalc){
 		var self=this;
-		debugger;
+		//debugger;
 		return self.fieldAccum(theFieldName,"Childs",datetime,bSetProperty,inOtherParams,notAdjust,fncItemCustomCalc);
 	});
 	dynObj.functions.add("fieldAccumAdvanceChilds",function(theFieldName,datetime,inOtherParams,notAdjust,bSetProperty,fncItemCustomCalc){

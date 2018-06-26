@@ -124,6 +124,21 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		log("PUSH HTMLBuffer new length:"+indStack);
 		return indStack;
 	}
+	topHtmlBuffer(fromIndex){
+		var self=this;
+		var sResult="";
+		var newInd=self.htmlStack.length()-1;
+		if (isDefined(fromIndex)){
+			newInd=fromIndex;
+		}
+		if (self.htmlStack.length()<=newInd){
+			return "";
+		}
+		for (var i=newInd;i<self.htmlStack.length();i++){
+			sResult+="\n" + i +" - " +self.htmlStack.findByInd(i);
+		}
+		return sResult;
+	}
 	popHtmlBuffer(fromIndex){
 		var self=this;
 		var html=self.html;

@@ -12,6 +12,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.variables=self.model.variables;
 		obj.pushHtmlBuffer=function(){return self.model.pushHtmlBuffer();};
 		obj.popHtmlBuffer=function(index){return self.model.popHtmlBuffer(index);};
+		obj.topHtmlBuffer=function(index){return self.model.topHtmlBuffer(index);};
 		obj.getHtmlBuffer=function(){return self.model.html;};
 		obj.addHtml=function(sHtml){self.model.addHtml(sHtml);};
 		obj.changeBrackets=self.changeBrackets;
@@ -119,6 +120,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	encode(){
 		var self=this;
 		self.indHtmlBuffer=self.pushHtmlBuffer();
+		log(self.topHtmlBuffer(self.indHtmlBuffer-2));
 		if (self.model.report.config.htmlDebug){
 			self.addHtml("<!-- " + self.changeBrackets(self.tag.getTagText())+" -->");
 			self.addHtml("<!-- " + self.changeBrackets(self.model.traceTag(self.tag))+ " -->");
@@ -134,11 +136,14 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		});
 		self.addStep("Encode part...",function(){
 			if (self.ifConditionResult){
+				log(self.topHtmlBuffer(self.indHtmlBuffer-2));
 				self.apply(); // the apply function not returns anything... only writes text to buffer
+				log(self.topHtmlBuffer(self.indHtmlBuffer-2));
 			}
 			self.continueTask();
 		});
 		self.addStep("Post-Encode part...",function(){
+			log(self.topHtmlBuffer(self.indHtmlBuffer-2));
 			self.endApplyToken();
 			self.continueTask();
 		});

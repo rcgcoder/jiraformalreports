@@ -310,8 +310,6 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 //			sAux=self.popHtmlBuffer();
 //			self.addHtml(sAux);
 			self.addHtml(sValAux);
-			
-
 //		} else {
 //			sAux=self.popHtmlBuffer();
 //			self.addHtml(sAux);

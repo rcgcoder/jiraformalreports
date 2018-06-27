@@ -232,7 +232,7 @@ Array.prototype.saReplaceInnerText=function(openTag,closeTag,replaceBy,bReplaceA
 				replaceCount++;
 				if (bReplaceAll){
 					findStartPos=objResult.arrPrevious.length-1;
-					sAux=[objResult.arrPrevious,objResult.arrPosterior];
+					saAux=[objResult.arrPrevious,objResult.arrPosterior];
 					bRetry=true;
 				} else {
 					objResult.bLocated=true;

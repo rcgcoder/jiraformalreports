@@ -485,7 +485,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			sValue=(sValue+"").trim();
 			var sRef="_arrRefs_["+i+"]";
 			sResult=replaceAll(sResult,sRef,sValue);
-			sResult=stringArray_trim(sResult);
+			sResult=sResult.saTrim();
 		}
 /*		var sTextToLog=self.model.removeInnerTags(sResult,true);
 		log("executed {{{"+sTextToLog+" }}}");
@@ -494,7 +494,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 */		var oSimple=self.replaceVarsComplexArray(sResult);
 		var vValue=oSimple.text;
 		if (oSimple.values.length>0){
-			vValue=stringArray_toString(vValue);
+			vValue=vValue.saToString();
 			vValue=executeFunction(oSimple.values,oSimple.text,self.model.functionCache);
 		}
 //		log("Replaced: <<"+sText+">> ->> <<"+vValue+">>");

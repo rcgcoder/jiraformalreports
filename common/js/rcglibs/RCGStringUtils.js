@@ -330,6 +330,14 @@ class RCGStringUtils{
 		return objResult;
 	}
 	
+	stringArray_toString(saInput){
+		var sAux="";
+		saInput.forEach(function(sString){
+			sAux=sAux+sString;
+		});
+		return sAux;
+	}
+	
 	
 	
 	

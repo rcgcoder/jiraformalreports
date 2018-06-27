@@ -16,3 +16,4 @@ var jrfInteractive=class jrfInteractive {//this kind of definition allows to hot
 	}
 }
 
+var modelInteractiveFunctions=new jrfInteractive();

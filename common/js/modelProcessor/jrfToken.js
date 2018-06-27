@@ -329,7 +329,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				//sHtml=self.replaceVars(sHtml);
 				var newId=(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
 				self.addHtml(`
-				             <button onclick="jrfInteractive.elemShowHide('`+newId+`')">Show/Hide</button>
+				             <button onclick="modelInteractiveFunctions.elemShowHide('`+newId+`')">Show/Hide</button>
 							 <div id='`+newId+`' style="display: none">`
 						     +   sHtml
 							 +`</div>`

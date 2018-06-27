@@ -157,6 +157,28 @@ class RCGStringUtils{
 			  return "";
 		  } else return sResult;
 	};
+
+	stringArray_trim(arrStrings){
+		// first left
+		if (isUndefined(arrStrings)) return [];
+		if (arrStrings.length==0) return arrStrings;
+		if (isString(arrStrings)){
+			arrStrings=[arrStrings];
+		}
+		while ((arrStrings.length>0)&&(arrStrings[0].trimLeft()=="")){
+			arrStrings.unshift();
+		}
+		if (arrStrings.length>0) arrStrings[0]=arrStrings[0].trimLeft();
+
+		while ((arrStrings.length>0)&&(arrStrings[arrStrings.length-1].trimRight()=="")){
+			arrStrings.unshift();
+		}
+		if (arrStrings.length>0) arrStrings[arrStrings.length-1]=arrStrings[arrStrings.length-1].trimRight();
+		
+		return arrStrings;
+	}
+	
+	
 	
 	
 	

@@ -296,13 +296,13 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				self.addPostHtml();
 			}
 			
-			if (self.processVarsAtEnd){
+/*			if (self.processVarsAtEnd){
 				var sContent=self.popHtmlBuffer(self.indTokenHtmlBuffer);
 				self.indTokenHtmlBuffer=self.pushHtmlBuffer();
 				sContent=self.replaceVars(sContent);
 				self.addHtml(sContent);
 			}
-			var sValAux=self.popHtmlBuffer(self.indTokenHtmlBuffer);
+*/			var sValAux=self.popHtmlBuffer(self.indTokenHtmlBuffer);
 			self.indTokenHtmlBuffer=self.pushHtmlBuffer();
 
 			sValAux=self.applyInFormat(sValAux);

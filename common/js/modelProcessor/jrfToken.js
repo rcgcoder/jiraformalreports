@@ -485,7 +485,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	}
 	replaceVars(sText){
 		if (isString(sText)) {
-			if ((sText.indexOf("hourCost={{CosteHora_")>=0)){
+			if ((sText.indexOf("{{{")>=0)){
 				debugger;
 			}
 		}

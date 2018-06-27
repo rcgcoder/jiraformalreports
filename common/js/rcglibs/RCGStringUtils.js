@@ -172,7 +172,7 @@ var RCGStringUtils= class RCGStringUtils{ // allow dynamically load
 		if (isDefined(bClear)&&bClear){
 			sInnerChar="";
 		}
-		
+		if (isArray(sHtml)) return sHtml.saReplaceInnerText("<",">",sInnerChar,true);
 
 		var indFirstCloseTag=sTagText.indexOf(">");
 		var indOpenTag=sTagText.substring(0,indFirstCloseTag).lastIndexOf("<");

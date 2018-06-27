@@ -13,7 +13,7 @@ String.prototype.trimRight = String.prototype.trimRight || function () {
     return this.slice( 0,start);
 };
 
-class RCGStringUtils{
+var RCGStringUtils= class RCGStringUtils{
 	number_format(number,ndecimals,decPoint,milesPoint){
 		var nAux=parseFloat(number).toFixed(ndecimals);
 		var nStr = ''+nAux;

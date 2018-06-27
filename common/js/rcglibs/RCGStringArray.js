@@ -1,5 +1,5 @@
 Array.prototype.saTrim = function () {
-	var arrString=this;
+	var arrStrings=this;
 	if (isUndefined(arrStrings)) return [];
 	if (arrStrings.length==0) return arrStrings;
 	if (isString(arrStrings)){

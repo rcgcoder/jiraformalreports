@@ -355,7 +355,7 @@ class RCGStringUtils{
 		var replaceCount=0;
 		while (bRetry){
 			bLocated=false;
-			openInd=stringArrayIndexOf(saAux,openTag,true,true,findStartPos);
+			openInd=stringArray_indexOf(saAux,openTag,true,true,findStartPos);
 			if (openInd.bLocated){
 				closeInd=stringArrayIndexOf(openInd.arrPosterior,closeTag,false,true);
 				if (closeInd.bLocated){

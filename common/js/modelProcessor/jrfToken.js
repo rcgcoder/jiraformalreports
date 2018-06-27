@@ -479,7 +479,9 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		return vValue;
 	}
 	replaceVars(sText){
-		debugger;
+		if (isString(sText)&&sText.indexOf("{")){
+			debugger;
+		}
 		var self=this;
 		var oScripts=self.replaceVarsComplexArray(sText,"{{{","}}}",false);
 		var sResult=oScripts.text;

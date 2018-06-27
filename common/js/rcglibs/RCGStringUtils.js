@@ -6,6 +6,7 @@ String.prototype.trimLeft = String.prototype.trimLeft || function () {
     while( this.charCodeAt(++start) < 33 );
     return this.slice( start, this.length);
 };
+
 String.prototype.trimRight = String.prototype.trimRight || function () {
     var start = this.length;
     while( this.charCodeAt(--start) < 33 );

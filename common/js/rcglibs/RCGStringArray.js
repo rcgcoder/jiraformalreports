@@ -41,6 +41,7 @@ Array.prototype.saIndexOf= function (sTag,bFindLast,bDivide,startPos,startSubArr
 		} else {
 			var vSubArray=arrStrings[0];
 			if (isArray(vSubArray) ){
+				debugger;
 				bWithSubArrays=true;
 				vProcessArray=[];
 				var iAux=0;
@@ -218,7 +219,6 @@ Array.prototype.saReplaceInnerText=function(openTag,closeTag,replaceBy,bReplaceA
 			} else if (bLocated) {
 				var vReplaceAux=replaceBy;
 				if (isMethod(replaceBy)){
-					debugger;
 					vReplaceAux=replaceBy(objResult.arrInner);
 				}
 				if (isString(vReplaceAux)){

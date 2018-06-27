@@ -144,7 +144,11 @@ Array.prototype.saIndexOf= function (sTag,bFindLast,bDivide,startPos,startSubArr
 		var strPos=-1;
 		var sTrgString="";
 		if (bLocated) {
-			arrPrevious=vProcessArray.slice(0,iPos-1);
+			if (iPos-1<=0){
+				arrPrevious=[vProcessArray[0]];
+			} else {
+				arrPrevious=vProcessArray.slice(0,iPos-1);
+			}
 			arrPosterior=vProcessArray.slice(iPos+1);
 			sTrgString=vProcessArray[iPos];
 			if (bLast) {

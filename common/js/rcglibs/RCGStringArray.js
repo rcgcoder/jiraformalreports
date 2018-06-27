@@ -194,7 +194,7 @@ Array.prototype.saReplaceInnerText=function(openTag,closeTag,replaceBy,bReplaceA
 		if (isDefined(replaceBy)){
 			bReplace=true;
 		}
-		var findStartPos=saAux.length;
+		var findStartPos=saAux.length-1;
 		var replaceCount=0;
 		while (bRetry){
 			bLocated=false;
@@ -231,7 +231,7 @@ Array.prototype.saReplaceInnerText=function(openTag,closeTag,replaceBy,bReplaceA
  				}
 				replaceCount++;
 				if (bReplaceAll){
-					findStartPos=objResult.arrPrevious.length;
+					findStartPos=objResult.arrPrevious.length-1;
 					sAux=[objResult.arrPrevious,objResult.arrPosterior];
 					bRetry=true;
 				} else {

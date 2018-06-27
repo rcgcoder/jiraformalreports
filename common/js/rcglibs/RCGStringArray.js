@@ -22,7 +22,7 @@ Array.prototype.saIndexOf= function (sTag,bFindLast,bDivide,startPos,startSubArr
 		var arrStrings=this;
 		var objResult={bLocated:false,
 				arrPrevious:[]};
-		var bLast=(isDefined(bLast)&&(bLast));
+		var bLast=(isDefined(bFindLast)&&(bFindLast));
 		var iPos=0;
 		var iPosLocated=-1;
 		var bLocated=false;

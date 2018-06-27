@@ -522,7 +522,13 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		}
 		var asInnerText=arrInnerText.saTrim();
 		asInnerText=asInnerText.saReplaceInnerText("<",">","",true);
-		asInnerText=asInnerText.arrPrevious.concat(asInnerText.arrInner).concat(asInnerText.arrPosterior);
+		arrInnerText=asInnerText.arrPrevious;
+		if (isDefined(asInnerText.arrInner)){
+			arrInnerText=arrInnerText.concat(asInnerText.arrInner);
+		}
+		if (isDefined(asInnerText.arrPosterior)){
+			arrInnerText=arrInnerText.concat(asInnerText.arrPosterior);
+		}
 		var sInnerText=asInnerText.saToString();
 		var sVarRef;
 		var iVar;

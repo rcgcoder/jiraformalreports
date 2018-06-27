@@ -588,7 +588,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				bReplaceVars:bReplaceVars
 			};
 		var objResult=sText.saReplaceInnerText(openTag,closeTag,self.getStringReplaced,true,otherParams);
-		return {text:objResult.arrPrevious,values:vValues};
+		return {text:objResult.arrPrevious.concat(objResult.arrPosterior),values:vValues};
 	}
 	replaceVarsComplex(inText,theOpenTag,theCloseTag,bReplaceVarsByValue){
 		var self=this;

@@ -365,9 +365,12 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				} else {
 					vAux=self.replaceVars(vAux);
 				}
-				if (typeof vAux==="string") {
+				if (isString(vAux)) {
 					vAux=vAux.trim();
 					while (vAux.indexOf("  ")>=0) vAux=replaceAll(vAux,"  "," ");				
+				} else if (isArray(vAux)){
+					vAux=vAux.saTrim();
+					while (vAux.saIndexOf("  ")>=0) vAux=replaceAll(vAux,"  "," ");				
 				}
 				return vAux;
 			}

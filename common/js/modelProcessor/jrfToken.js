@@ -35,6 +35,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.executeFunction=self.executeFunction;
 		obj.replaceVars=self.replaceVars;		
 		obj.replaceVarsComplex=self.replaceVarsComplex;		
+		obj.replaceVarsComplexArray=self.replaceVarsComplexArray;		
 		obj.replaceVarsAndExecute=self.replaceVarsAndExecute;		
 		obj.initVars=obj.getAttrVal("initVar");
 		obj.initVarsReuse=obj.getAttrVal("initVarReuse");
@@ -474,6 +475,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		return vValue;
 	}
 	replaceVars(sText){
+		debugger;
 		var self=this;
 		var oScripts=self.replaceVarsComplexArray(sText,"{{{","}}}",false);
 		var sResult=oScripts.text;

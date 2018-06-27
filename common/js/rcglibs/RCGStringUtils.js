@@ -338,6 +338,68 @@ class RCGStringUtils{
 		return sAux;
 	}
 	
+	stringArray_replaceInnerText(saInput,openTag,closeTag,replaceBy,bReplaceAll){
+		var saAux=saInput;
+		var bRetry=true;
+		var openInd;
+		var closeInd;
+		var objResult={bLocated:false,
+				       nReplaced:0,
+					   arrPrevious:saAux};
+		var bLocated;
+		var bReplace=false;
+		if (isDefined(replaceBy)){
+			bReplace=true;
+		}
+		var findStartPos=saAux.length;
+		var replaceCount=0;
+		while (bRetry){
+			bLocated=false;
+			openInd=stringArrayIndexOf(saAux,openTag,true,true,findStartPos);
+			if (openInd.bLocated){
+				closeInd=stringArrayIndexOf(openInd.arrPosterior,closeTag,false,true);
+				if (closeInd.bLocated){
+					objResult={bLocated:true,
+							nReplaced:0,
+							arrPrevious:openInd.arrPrevious,
+							arrPosterior:closeInd.arrPosterior,
+							arrInner:closeInd.arrPrevious,
+							};
+					bLocated=true;
+				}
+			}
+			if ((!bReplace)||(!bLocated)){
+				objResult.bLocated=bLocated;
+				bRetry=false;
+				return objResult;
+			} else if (bLocated) {
+				var vReplaceAux=replaceBy;
+				if (isMethod(replaceBy)){
+					vReplaceAux=replaceBy(objResult.arrInner);
+				}
+				if (isString(vReplaceAux)){
+					objResult.arrPrevious.push(vReplaceAux);
+					objResult.arrInner=[];
+				} else if (isArray(vReplaceAux)){
+					objResult.arrPrevious.concat(vReplaceAux);
+					objResult.arrInner=[];
+				} else {
+					log ("error");
+				}
+				replaceCount++;
+				if (bReplaceAll){
+					findStartPos=objResult.arrPrevious.length;
+					sAux=[objResult.arrPrevious,objResult.arrPosterior];
+					bRetry=true;
+				} else {
+					objResult.bLocated=true;
+					objResult.nReplaced=replaceCount;
+					return objResult;
+				}
+			}
+		}
+	}
+	
 	
 	
 	

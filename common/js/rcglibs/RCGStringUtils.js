@@ -181,6 +181,7 @@ var RCGStringUtils= class RCGStringUtils{ // allow dynamically load
 			if (isDefined(obResult.arrPosterior)){
 				arrResult=arrResult.concat(obResult.arrPosterior);
 			}
+			return arrResult;
 		}
 
 		var indFirstCloseTag=sTagText.indexOf(">");

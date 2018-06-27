@@ -529,7 +529,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		if (isDefined(asInnerText.arrPosterior)){
 			arrInnerText=arrInnerText.concat(asInnerText.arrPosterior);
 		}
-		var sInnerText=asInnerText.saToString();
+		var sInnerText=arrInnerText.saToString();
 		var sVarRef;
 		var iVar;
 		if (!otherParams.bReplaceVars){

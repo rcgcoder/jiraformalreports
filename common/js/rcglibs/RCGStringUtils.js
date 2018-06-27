@@ -178,6 +178,157 @@ class RCGStringUtils{
 		return arrStrings;
 	}
 	
+	stringArray_indexOf(arrStrings,sTag,bFindLast,bDivide,startPos,startSubArrayPos){
+		var objResult={bLocated:false,
+				arrPrevious:[]};
+		var bLast=(isDefined(bLast)&&(bLast));
+		var iPos=0;
+		var iPosLocated=-1;
+		var bLocated=false;
+		var vSubArray;
+		var vProcessArray;
+		var bWithSubArrays=false;
+		var auxStartPos;
+		var auxSubArrayStartPos;
+		var bDefinedSubStartPos=isDefined(startSubArrayPos);
+		var bDefinedStartPos=isDefined(startPos);
+		
+		if (isString(arrStrings)){
+			bDefinedSubStartPos=false;
+			bDefinedStartPos=false;
+			vProcessArray=[arrStrings];
+		} else {
+			var vSubArray=arrStrings[0];
+			if (isArray(vSubArray) ){
+				bWithSubArrays=true;
+				vProcessArray=[];
+				var iAux=0;
+				var arrAux;
+				for (var i=0;i<arrStrings.length;i++){
+					arrAux=arrStrings[i];
+					if (bDefinedSubStartPos){
+						if (i<auxSubArrayStartPos){
+							iAux+=arrAux.length;
+						} else if(i==auxSubArrayStartPos) {
+							if (bDefinedStartPos){
+								iAux+=startPos;
+							} else {
+								iAux+=arrAux.length-1;
+							}
+							auxStartPos=iAux;
+						}
+					}
+					vProcessArray=vProcessArray.concat(arrAux);
+				}
+			} else {
+				bDefinedSubStartPos=false;
+				vProcessArray=arrStrings;
+			}
+		}
+		if (!bDefinedSubStartPos){
+			if (bDefinedStartPos){
+				auxStartPos=startPos;
+			} else {
+				auxStartPos=(bLast?vProcessArray.length-1:0);
+			}
+		}
+		var iPos=auxStartPos;
+		var indOf;
+		var sRow;
+		var iSubArray=auxSubArrayStartPos;
+		bLocated=false;
+		var bHigherPart=false;
+		if (bLast){
+			while ((!bLocated) && (
+					((!bHiggerPart)&&(iPos>=0)) 
+					|| 
+					((bHiggerPart)&&(iPos>auxStartPos))
+					)
+				   ){
+				sRow=vProcessArray[iPos];
+				if (iPos>0){
+					sRow=vProcessArray[iPos-1]+sRow;
+				}
+				indOf=sRow.lastIndexOf(sTag);
+				if (indOf>=0){
+					bLocated=true;
+					if (iPos>0) {
+						if (indOf>vProcessArray[iPos-1].length){
+							indOf-=vProcessArray[iPos-1].length;
+						} else {
+							iPos--;
+						}
+					}
+				} else {
+					iPos--;
+					if ((iPos<0)&&(!bHiggerPart)){
+						bHiggerPart=true;
+						iPos=vProcessArray.length-1;
+					}
+				}
+			}
+		} else {
+			var vLength=vProcessArray.length;
+			bHiggerPart=true;
+			while ((!bLocated) && (
+					((bHiggerPart)&&(iPos<vLength)) 
+					|| 
+					((!bHiggerPart)&&(iPos<auxStartPos))
+					)
+				   ){
+				sRow=vProcessArray[iPos];
+				if (iPos<vLength){
+					sRow+=vProcessArray[iPos+1];
+				}
+				indOf=sRow.indexOf(sTag);
+				if (indOf>=0){
+					bLocated=true;
+					if (indOf>vProcessArray[iPos].length){
+						indOf-=vProcessArray[iPos].length;
+						iPos++;
+					}
+				} else {
+					iPos++;
+					if ((iPos>=vLength)&&(bHiggerPart)){
+						bHiggerPart=false;
+						iPos=0;
+					}
+				}
+			}
+		}
+		
+		var arrPrevious=[];
+		var arrPosterior=[];
+		var strPos=-1;
+		var sTrgString="";
+		if (bLocated) {
+			arrPrevious=vProcessArray.slice(0,iPos-1);
+			arrPosterior=vProcessArray.slice(iPos+1);
+			sTrgString=arrText[iPos];
+			if (bLast) {
+				strPos=sTrgString.lastIndexOf(sTag);
+			} else {
+				strPos=sTrgString.indexOf(sTag);
+			}
+			if (isDefined(bDivide)&&bDivide){
+				var sAux=sTrgString.substring(0,strPos);
+				arrPrevious.push(sAux);
+				sAux=sTrgString.substring(strPos+sTag.length,sTrgString.length);
+				arrPosterior.unshift(sAux);
+				sTrgString=sTag;
+				strPos=0;
+			}
+		} else {
+			arrPrevious = vProcessArray;
+		}
+		var objResult={bLocated:bLocated,
+						arrPrevious:arrPrevious,
+						arrPosterior:arrPosterior,
+						sString:sTrgString,
+						iPos:strPos
+						};
+		return objResult;
+	}
 	
 	
 	

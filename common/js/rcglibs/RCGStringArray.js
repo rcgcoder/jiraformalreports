@@ -145,7 +145,7 @@ Array.prototype.saIndexOf= function (sTag,bFindLast,bDivide,startPos,startSubArr
 		if (bLocated) {
 			arrPrevious=vProcessArray.slice(0,iPos-1);
 			arrPosterior=vProcessArray.slice(iPos+1);
-			sTrgString=arrText[iPos];
+			sTrgString=vProcessArray[iPos];
 			if (bLast) {
 				strPos=sTrgString.lastIndexOf(sTag);
 			} else {

@@ -516,6 +516,9 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			if (!isArray(sText)&&(!isString(sText))){
 				sText=""+sText;
 			} 
+			if (isString(sText)){
+				sText=[sText];
+			}
 		} else {
 			log("You are using a undefined text.... this may be a big error!");
 		}
@@ -527,9 +530,9 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var iVar=0;
 		var iActPos=0;
 		var fncReplace=function(arrInnerText){
-			var asInnerText=stringArray_trim(arrInnerText);
-			asInnerText=stringArray_replaceInnerText(asInnerText,"<",">","",true);
-			var sInnerText=stringArray_toString(asInnerText);
+			var asInnerText=arrInnerText.saTrim();
+			asInnerText=asInnerText.saReplaceInnerText("<",">","",true);
+			var sInnerText=asInnerText.saToString();
 			if (!bReplaceVars){
 				if (hsValues.exists(sInnerText)){
 					iVar=hsValues.getValue(sInnerText);

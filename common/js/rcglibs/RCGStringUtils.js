@@ -1,6 +1,17 @@
 'use strict';
 // creates a list of global functions for habitual use of strings
 
+String.prototype.trimLeft = String.prototype.trimLeft || function () {
+    var start = -1;
+    while( this.charCodeAt(++start) < 33 );
+    return this.slice( start, this.length);
+};
+
+String.prototype.trimRight = String.prototype.trimRight || function () {
+    var start = this.length;
+    while( this.charCodeAt(--start) < 33 );
+    return this.slice( 0,start);
+};
 
 class RCGStringUtils{
 	number_format(number,ndecimals,decPoint,milesPoint){

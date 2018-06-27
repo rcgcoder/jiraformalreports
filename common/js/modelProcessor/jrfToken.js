@@ -459,6 +459,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					if (isString(sValue)){
 						sValue=sValue.trim();
 					} else {
+						debugger;
 						sValue=sValue.saTrim();
 						sValue=sValue.saToString();
 					}

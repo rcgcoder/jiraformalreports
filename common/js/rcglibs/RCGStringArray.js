@@ -21,7 +21,8 @@ Array.prototype.saTrim = function () {
 Array.prototype.saIndexOf= function (sTag,bFindLast,bDivide,startPos,startSubArrayPos){
 		var arrStrings=this;
 		var objResult={bLocated:false,
-				arrPrevious:[]};
+				arrPrevious:[],
+				arrPosterior:[]};
 		var bLast=(isDefined(bFindLast)&&(bFindLast));
 		var iPos=0;
 		var iPosLocated=-1;
@@ -189,6 +190,7 @@ Array.prototype.saReplaceInnerText=function(openTag,closeTag,replaceBy,bReplaceA
 		var closeInd;
 		var objResult={bLocated:false,
 				       nReplaced:0,
+				       arrPosterior:[],
 					   arrPrevious:saAux};
 		var bLocated;
 		var bReplace=false;

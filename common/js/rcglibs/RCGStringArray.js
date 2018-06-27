@@ -218,6 +218,7 @@ Array.prototype.saReplaceInnerText=function(openTag,closeTag,replaceBy,bReplaceA
 			} else if (bLocated) {
 				var vReplaceAux=replaceBy;
 				if (isMethod(replaceBy)){
+					debugger;
 					vReplaceAux=replaceBy(objResult.arrInner);
 				}
 				if (isString(vReplaceAux)){

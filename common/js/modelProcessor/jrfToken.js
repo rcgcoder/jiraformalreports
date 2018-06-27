@@ -479,7 +479,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		return vValue;
 	}
 	replaceVars(sText){
-		if (isString(sText)&&sText.indexOf("{")){
+		if ((isString(sText)&&(sText.indexOf("{")>=0)){
 			debugger;
 		}
 		var self=this;

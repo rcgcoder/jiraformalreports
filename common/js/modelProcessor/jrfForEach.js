@@ -1,7 +1,7 @@
 var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition allows to hot-reload
 	constructor(tag,reportElem,model){
 		super(tag,reportElem,model);
-		debugger;
+//		debugger;
 		var self=this;
 		self.autoAddPostHtml=false;
 		self.subType=self.getAttrVal("subtype");
@@ -11,7 +11,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 	}
 	loopStart(){
 		var self=this;
-		debugger;
+//		debugger;
 		if (self.reportElem==self.model.report){
 			self.bAllRoots=true;
 		}
@@ -20,7 +20,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 	}
 	loopItemProcess(eachElem){
 		var self=this;
-		debugger;
+//		debugger;
 		var newParent;
 		var bLastShowed=true;
 		if ((self.type=="root")||

@@ -13,7 +13,7 @@ String.prototype.trimRight = String.prototype.trimRight || function () {
     return this.slice( 0,start);
 };
 
-var RCGStringUtils= class RCGStringUtils{
+var RCGStringUtils= class RCGStringUtils{ // allow dynamically load
 	number_format(number,ndecimals,decPoint,milesPoint){
 		var nAux=parseFloat(number).toFixed(ndecimals);
 		var nStr = ''+nAux;
@@ -240,9 +240,9 @@ var RCGStringUtils= class RCGStringUtils{
 		var bHigherPart=false;
 		if (bLast){
 			while ((!bLocated) && (
-					((!bHiggerPart)&&(iPos>=0)) 
+					((!bHigerPart)&&(iPos>=0)) 
 					|| 
-					((bHiggerPart)&&(iPos>auxStartPos))
+					((bHigerPart)&&(iPos>auxStartPos))
 					)
 				   ){
 				sRow=vProcessArray[iPos];
@@ -261,19 +261,19 @@ var RCGStringUtils= class RCGStringUtils{
 					}
 				} else {
 					iPos--;
-					if ((iPos<0)&&(!bHiggerPart)){
-						bHiggerPart=true;
+					if ((iPos<0)&&(!bHigerPart)){
+						bHigerPart=true;
 						iPos=vProcessArray.length-1;
 					}
 				}
 			}
 		} else {
 			var vLength=vProcessArray.length;
-			bHiggerPart=true;
+			bHigerPart=true;
 			while ((!bLocated) && (
-					((bHiggerPart)&&(iPos<vLength)) 
+					((bHigerPart)&&(iPos<vLength)) 
 					|| 
-					((!bHiggerPart)&&(iPos<auxStartPos))
+					((!bHigerPart)&&(iPos<auxStartPos))
 					)
 				   ){
 				sRow=vProcessArray[iPos];
@@ -289,8 +289,8 @@ var RCGStringUtils= class RCGStringUtils{
 					}
 				} else {
 					iPos++;
-					if ((iPos>=vLength)&&(bHiggerPart)){
-						bHiggerPart=false;
+					if ((iPos>=vLength)&&(bHigerPart)){
+						bHigerPart=false;
 						iPos=0;
 					}
 				}

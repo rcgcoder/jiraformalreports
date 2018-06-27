@@ -483,12 +483,12 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		return vValue;
 	}
 	replaceVars(sText){
-/*		if (isString(sText)) {
-			if ((sText.indexOf("{")>=0)){
+		if (isString(sText)) {
+			if ((sText.indexOf("hourCost={{CosteHora_")>=0)){
 				debugger;
 			}
 		}
-*/		var self=this;
+		var self=this;
 		var oScripts=self.replaceVarsComplexArray(sText,"{{{","}}}",false);
 		var sResult=oScripts.text;
 		for (var i=0;i<oScripts.values.length;i++){
@@ -512,6 +512,45 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 //		log("Replaced: <<"+sText+">> ->> <<"+vValue+">>");
 		return vValue;
 	}
+	getStringReplaced(sText,otherParams){
+		var arrInnerText;
+		if (isString(sText)){
+			arrInnerText=[sText];
+		} else {
+			arrInnerText=sText;
+		}
+		var asInnerText=arrInnerText.saTrim();
+		asInnerText=asInnerText.saReplaceInnerText("<",">","",true);
+		var sInnerText=asInnerText.arrPrevious.saToString();
+		var sVarRef;
+		var iVar;
+		if (!otherParams.bReplaceVars){
+			if (otherParams.hsValues.exists(sInnerText)){
+				iVar=hsValues.getValue(sInnerText);
+			} else {
+				otherParams.vValues.push(sInnerText);
+				iVar=otherParams.vValues.length-1;
+				otherParams.hsValues.add(sInnerText,iVar);
+			}
+			sVarRef="_arrRefs_["+iVar+"]";
+		} else {
+			var vInnerVarValue=otherParams.self.variables.getVar(sInnerText);
+			if (isObject(vInnerVarValue)){
+				if (otherParams.hsValues.exists(sInnerText)){
+					iVar=otherParams.hsValues.getValue(sInnerText);
+				} else {
+					otherParams.vValues.push(vInnerVarValue);
+					iVar=otherParams.vValues.length-1;
+					otherParams.hsValues.add(sInnerText,iVar);
+				}
+				sVarRef="_arrRefs_["+iVar+"]";
+			} else {
+				sVarRef=vInnerVarValue;
+			}
+		}
+		return sVarRef;
+	}
+	
 	replaceVarsComplexArray(inText,theOpenTag,theCloseTag,bReplaceVarsByValue){
 		var self=this;
 		var bReplaceVars=true;
@@ -541,37 +580,13 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var sVarRef="";
 		var iVar=0;
 		var iActPos=0;
-		var fncReplace=function(arrInnerText){
-			var asInnerText=arrInnerText.saTrim();
-			asInnerText=asInnerText.saReplaceInnerText("<",">","",true);
-			var sInnerText=asInnerText.arrPrevious.saToString();
-			if (!bReplaceVars){
-				if (hsValues.exists(sInnerText)){
-					iVar=hsValues.getValue(sInnerText);
-				} else {
-					vValues.push(sInnerText);
-					iVar=vValues.length-1;
-					hsValues.add(sInnerText,iVar);
-				}
-				sVarRef="_arrRefs_["+iVar+"]";
-			} else {
-				var vInnerVarValue=self.variables.getVar(sInnerText);
-				if (isObject(vInnerVarValue)){
-					if (hsValues.exists(sInnerText)){
-						iVar=hsValues.getValue(sInnerText);
-					} else {
-						vValues.push(vInnerVarValue);
-						iVar=vValues.length-1;
-						hsValues.add(sInnerText,iVar);
-					}
-					sVarRef="_arrRefs_["+iVar+"]";
-				} else {
-					sVarRef=vInnerVarValue;
-				}
-			}
-			return sVarRef;
-		}
-		var objResult=sText.saReplaceInnerText(openTag,closeTag,fncReplace,true);
+		var otherParams={
+				hsValues:hsValues,
+				vValues:vValues,
+				self:self,
+				bReplaceVars:bReplaceVars
+			};
+		var objResult=sText.saReplaceInnerText(openTag,closeTag,fncReplace,true,otherParams);
 		return {text:objResult.arrPrevious,values:vValues};
 	}
 	replaceVarsComplex(inText,theOpenTag,theCloseTag,bReplaceVarsByValue){

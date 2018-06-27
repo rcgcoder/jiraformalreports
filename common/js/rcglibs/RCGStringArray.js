@@ -106,7 +106,7 @@ Array.prototype.saIndexOf= function (sTag,bFindLast,bDivide,startPos,startSubArr
 					if ((iPos<0)&&(!bHigherPart)){
 						bHigherPart=true;
 						iPos=vProcessArray.length-1;
-					}
+					} 
 				}
 			}
 		} else {
@@ -181,7 +181,7 @@ Array.prototype.saToString= function (){
 		return sAux;
 	};
 	
-Array.prototype.saReplaceInnerText=function(openTag,closeTag,replaceBy,bReplaceAll){
+Array.prototype.saReplaceInnerText=function(openTag,closeTag,replaceBy,bReplaceAll,otherParams){
 		var saInput=this;
 		var saAux=saInput;
 		var bRetry=true;
@@ -219,7 +219,7 @@ Array.prototype.saReplaceInnerText=function(openTag,closeTag,replaceBy,bReplaceA
 			} else if (bLocated) {
 				var vReplaceAux=replaceBy;
 				if (isMethod(replaceBy)){
-					vReplaceAux=replaceBy(objResult.arrInner);
+					vReplaceAux=replaceBy(objResult.arrInner,otherParams);
 				}
 				if (isString(vReplaceAux)){
 					objResult.arrPrevious.push(vReplaceAux);

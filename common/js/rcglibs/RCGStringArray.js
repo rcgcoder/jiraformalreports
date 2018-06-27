@@ -6,12 +6,12 @@ Array.prototype.saTrim = function () {
 		arrStrings=[arrStrings];
 	}
 	while ((arrStrings.length>0)&&(arrStrings[0].trimLeft()=="")){
-		arrStrings.unshift();
+		arrStrings.shift();
 	}
 	if (arrStrings.length>0) arrStrings[0]=arrStrings[0].trimLeft();
 
 	while ((arrStrings.length>0)&&(arrStrings[arrStrings.length-1].trimRight()=="")){
-		arrStrings.unshift();
+		arrStrings.pop();
 	}
 	if (arrStrings.length>0) arrStrings[arrStrings.length-1]=arrStrings[arrStrings.length-1].trimRight();
 	

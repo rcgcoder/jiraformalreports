@@ -90,63 +90,6 @@ class RCGStringUtils{
 	replaceAllWithoutBrackets(sText,find,replace,bModulator){
 		return sText.replace(new RegExp(find, bModulator), replace);
 	}
-	replaceAll(str, find, replace, bInsensitive) {
-		  if (isUndefined(str)||(str==null)) return "";
-		  var bModulator='g';
-		  if (isDefined(bInsensitive)&&(bInsensitive)){
-			  bModulator="i"+bModulator;
-		  }
-		  var replaceFnc;
-		  if ((find.indexOf("[")>=0)||(find.indexOf("]")>=0)){
-			  /*
-			   * [ ] are special cases in find.... 
-			   */
-			  replaceFnc=replaceAllWithBrackets;
-		  } else {
-			  replaceFnc=replaceAllWithoutBrackets;
-		  }
-		  if (isString(str)){
-			  return replaceFnc(str,find,replace,bModulator);
-		  }
-		  if (!isArray(str)) return "";
-		  if (str.length==0) return "";
-		  var sResult=[];
-		  var sAux;
-		  var sSubstr;
-		  var fLength=find.length;
-		  var strLength=(str.length-1);
-		  var bNext=true;
-		  var iRow=-1;
-		  while (iRow<strLength){
-			  if (bNext){
-				  iRow++;
-				  sAux=sAux+str[iRow];
-			  }
-			  if ((sAux=="")||()(sAux.length<fLength)){
-				  bNext=true;
-			  } else {
-				  sAux=replaceFnc(sAux,find,replace,bModulator);
-				  if (sAux.length>fLength){// there is more letter... cut
-					  sSubstr=sAux.substring(0,sAux.length-fLength);
-					  sResult.push(sSubstr);
-					  sAux=sAux.substring(sAux.length-fLength,sAux.length);
-					  bNext=true;
-				  }
-			  }
-		  }
-		  if (sAux!=""){
-			  if (sAux.length>fLength){
-				  sAux=replaceFnc(sAux,find,replace,bModulator);
-			  }
-			  sResult.push(sAux);
-		  }
-		  if (sResult.length==1){
-			  return sResult[0];
-		  } else if (sResult.length==0){
-			  return "";
-		  } else return sResult;
-	};
-	
 	
 	
 	decodeEntities(encodedString) {

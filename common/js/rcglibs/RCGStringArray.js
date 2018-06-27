@@ -198,9 +198,9 @@ Array.prototype.saReplaceInnerText=function(openTag,closeTag,replaceBy,bReplaceA
 		var replaceCount=0;
 		while (bRetry){
 			bLocated=false;
-			openInd=stringArray_indexOf(saAux,openTag,true,true,findStartPos);
+			openInd=saAux.saIndexOf(openTag,true,true,findStartPos);
 			if (openInd.bLocated){
-				closeInd=stringArrayIndexOf(openInd.arrPosterior,closeTag,false,true);
+				closeInd=openInd.arrPosterior.saIndexOf(closeTag,false,true);
 				if (closeInd.bLocated){
 					objResult={bLocated:true,
 							nReplaced:0,

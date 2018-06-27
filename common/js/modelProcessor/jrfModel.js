@@ -117,16 +117,30 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		var self=this;
 		var indStack=self.htmlStack.length();
 		self.htmlStack.push(self.html);
+/* 
 		self.html="";
 		if (isDefined(sText)){
 			self.html=sText;
 		}
+*/
+		self.html="";
+		if (isDefined(sText)){
+			if (isString(sText)){
+				self.html=sText;
+			} else if (isArray(sText)){
+				sText.forEach(function(sRow){
+					self.htmlStack.push(sRow);
+				});
+			}
+		}
+
 		log("PUSH HTMLBuffer new length:"+indStack);
 		return indStack;
 	}
 	topHtmlBuffer(fromIndex){
 		var self=this;
-		var sResult="";
+//		var sResult="";
+		var sResult=[];
 		var newInd=self.htmlStack.length()-1;
 		if (isDefined(fromIndex)){
 			newInd=fromIndex;
@@ -134,14 +148,18 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		if (self.htmlStack.length()<=newInd){
 			return "";
 		}
+		var i=newInd;
 		for (var i=newInd;i<self.htmlStack.length();i++){
-			sResult+="\n" + i +" - " +self.htmlStack.findByInd(i);
+			sResult.push("\n" + i +" - ");
+			sResult.push(self.htmlStack.findByInd(i));
 		}
 		return sResult;
 	}
 	popHtmlBuffer(fromIndex){
 		var self=this;
-		var html=self.html;
+		var html=[];
+		//var html=self.html;
+		html.push(self.html);
 		var newInd=self.htmlStack.length()-1;
 		if (isDefined(fromIndex)){
 			newInd=fromIndex;
@@ -150,9 +168,11 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			log("HTMLBuffer error popping a html buffer");
 		}
 		while (self.htmlStack.length()>(newInd+1)){
-			html=self.htmlStack.pop()+html;
+			//html=self.htmlStack.pop()+html;
+			html.unshift(self.htmlStack.pop());
 		}
-		self.html=self.htmlStack.pop();
+		//self.html=self.htmlStack.pop();
+		html.unshift(self.htmlStack.pop());
 		log("Stack Length after pop("+fromIndex+"):"+self.htmlStack.length()+" == "+fromIndex);
 		log("POP HTMLBuffer new length:"+self.htmlStack.length());
 		return html;
@@ -168,7 +188,11 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 				    log("Mega Error");
 				}
 			}
-			self.html+="\n"+sText;
+			if (isArray(sText)){
+				self.pushHtmlBuffer(sText);
+			} else {
+				self.html+="\n"+sText;
+			}
 		}
 	}
 

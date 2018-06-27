@@ -120,7 +120,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	encode(){
 		var self=this;
 		self.indHtmlBuffer=self.pushHtmlBuffer();
-		log(self.topHtmlBuffer(self.indHtmlBuffer-2));
+		//log(self.topHtmlBuffer(self.indHtmlBuffer-2));
 		if (self.model.report.config.htmlDebug){
 			self.addHtml("<!-- " + self.changeBrackets(self.tag.getTagText())+" -->");
 			self.addHtml("<!-- " + self.changeBrackets(self.model.traceTag(self.tag))+ " -->");
@@ -136,14 +136,14 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		});
 		self.addStep("Encode part...",function(){
 			if (self.ifConditionResult){
-				log(self.topHtmlBuffer(self.indHtmlBuffer-2));
+				//log(self.topHtmlBuffer(self.indHtmlBuffer-2));
 				self.apply(); // the apply function not returns anything... only writes text to buffer
-				log(self.topHtmlBuffer(self.indHtmlBuffer-2));
+				//log(self.topHtmlBuffer(self.indHtmlBuffer-2));
 			}
 			self.continueTask();
 		});
 		self.addStep("Post-Encode part...",function(){
-			log(self.topHtmlBuffer(self.indHtmlBuffer-2));
+			//log(self.topHtmlBuffer(self.indHtmlBuffer-2));
 			self.endApplyToken();
 			self.continueTask();
 		});
@@ -475,7 +475,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	}
 	replaceVars(sText){
 		var self=this;
-		var oScripts=self.replaceVarsComplex(sText,"{{{","}}}",false);
+		var oScripts=self.replaceVarsComplexArray(sText,"{{{","}}}",false);
 		var sResult=oScripts.text;
 		for (var i=0;i<oScripts.values.length;i++){
 			var sScript=oScripts.values[i];
@@ -483,21 +483,22 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			sValue=(sValue+"").trim();
 			var sRef="_arrRefs_["+i+"]";
 			sResult=replaceAll(sResult,sRef,sValue);
-			sResult=sResult.trim();
+			sResult=stringArray_trim(sResult);
 		}
-		var sTextToLog=self.model.removeInnerTags(sResult,true);
+/*		var sTextToLog=self.model.removeInnerTags(sResult,true);
 		log("executed {{{"+sTextToLog+" }}}");
 //		log(sResult);
 		log("now let´s replace {{  "+sResult+"  }}");
-		var oSimple=self.replaceVarsComplex(sResult);
+*/		var oSimple=self.replaceVarsComplexArray(sResult);
 		var vValue=oSimple.text;
 		if (oSimple.values.length>0){
+			vValue=stringArray_toString(vValue);
 			vValue=executeFunction(oSimple.values,oSimple.text,self.model.functionCache);
 		}
-		log("Replaced: <<"+sText+">> ->> <<"+vValue+">>");
+//		log("Replaced: <<"+sText+">> ->> <<"+vValue+">>");
 		return vValue;
 	}
-	replaceVarsComplex(inText,theOpenTag,theCloseTag,bReplaceVarsByValue){
+	replaceVarsComplexArray(inText,theOpenTag,theCloseTag,bReplaceVarsByValue){
 		var self=this;
 		var bReplaceVars=true;
 		var openTag="{{";
@@ -510,9 +511,68 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		if (isDefined(theCloseTag)) closeTag=theCloseTag;
 		if (isDefined(inText)){
 			sText=inText;
-			if (!isString(sText)){
+			if (!isArray(sText)&&(!isString(sText))){
 				sText=""+sText;
+			} 
+		} else {
+			log("You are using a undefined text.... this may be a big error!");
+		}
+		var arrAux=[];
+		var arrResult=[];
+		var vValues=[];
+		var hsValues=newHashMap();
+		var sVarRef="";
+		var iVar=0;
+		var iActPos=0;
+		var fncReplace=function(arrInnerText){
+			var asInnerText=stringArray_trim(arrInnerText);
+			asInnerText=stringArray_replaceInnerText(asInnerText,"<",">","",true);
+			var sInnerText=stringArray_toString(asInnerText);
+			if (!bReplaceVars){
+				if (hsValues.exists(sInnerText)){
+					iVar=hsValues.getValue(sInnerText);
+				} else {
+					vValues.push(sInnerText);
+					iVar=vValues.length-1;
+					hsValues.add(sInnerText,iVar);
+				}
+				sVarRef="_arrRefs_["+iVar+"]";
+			} else {
+				var vInnerVarValue=self.variables.getVar(sInnerText);
+				if (isObject(vInnerVarValue)){
+					if (hsValues.exists(sInnerText)){
+						iVar=hsValues.getValue(sInnerText);
+					} else {
+						vValues.push(vInnerVarValue);
+						iVar=vValues.length-1;
+						hsValues.add(sInnerText,iVar);
+					}
+					sVarRef="_arrRefs_["+iVar+"]";
+				} else {
+					sVarRef=vInnerVarValue;
+				}
 			}
+		}
+		var objResult=stringArray_replaceInnerText(sText,openTag,closeTag,fncReplace,true);
+		return {text:objResult.arrPrevious,values:vValues};
+	}
+	replaceVarsComplex(inText,theOpenTag,theCloseTag,bReplaceVarsByValue){
+		var self=this;
+		if (isArray(inText)) return self.replaceVarsComplexArray(inText,theOpenTag,theCloseTag,bReplaceVarsByValue);
+		var bReplaceVars=true;
+		var openTag="{{";
+		var closeTag="}}";
+		var sText="";
+		if (isDefined(bReplaceVarsByValue)){
+			bReplaceVars=bReplaceVarsByValue;
+		}
+		if (isDefined(theOpenTag)) openTag=theOpenTag;
+		if (isDefined(theCloseTag)) closeTag=theCloseTag;
+		if (isDefined(inText)){
+			sText=inText;
+			if (!isArray(sText)&&(!isString(sText))){
+				sText=""+sText;
+			} 
 		} else {
 			log("You are using a undefined text.... this may be a big error!");
 		}
@@ -520,6 +580,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var hsValues=newHashMap();
 		var sVarRef="";
 		var iVar=0;
+		
 		var openInd=sText.lastIndexOf(openTag);
 		var closeInd;
 		while (openInd>=0){

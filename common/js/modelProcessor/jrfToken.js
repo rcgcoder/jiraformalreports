@@ -503,7 +503,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var vValue=oSimple.text;
 		if (oSimple.values.length>0){
 			vValue=vValue.saToString();
-			vValue=executeFunction(oSimple.values,oSimple.text,self.model.functionCache);
+			vValue=executeFunction(oSimple.values,vValue,self.model.functionCache);
 		}
 //		log("Replaced: <<"+sText+">> ->> <<"+vValue+">>");
 		return vValue;

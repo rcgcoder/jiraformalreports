@@ -540,7 +540,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var fncReplace=function(arrInnerText){
 			var asInnerText=arrInnerText.saTrim();
 			asInnerText=asInnerText.saReplaceInnerText("<",">","",true);
-			var sInnerText=asInnerText.saToString();
+			var sInnerText=asInnerText.arrPrevious.saToString();
 			if (!bReplaceVars){
 				if (hsValues.exists(sInnerText)){
 					iVar=hsValues.getValue(sInnerText);

@@ -385,7 +385,7 @@ var RCGStringUtils= class RCGStringUtils{ // allow dynamically load
 					objResult.arrInner=[];
 				} else {
 					log ("error");
-				}
+ 				}
 				replaceCount++;
 				if (bReplaceAll){
 					findStartPos=objResult.arrPrevious.length;

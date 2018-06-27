@@ -455,8 +455,9 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					sValAux=normalFormatNumber(sValAdjusted) + " %"; 
 				} else if (sFormat.toLowerCase().indexOf("fixed")>=0) {
 					var sValue=self.replaceVars(sValAux);
-					sValue=self.model.removeInnerTags(sValue,true).asTrim();
-					sValue=sValue.asToString();
+					sValue=self.model.removeInnerTags(sValue,true);
+					sValue=sValue.saTrim();
+					sValue=sValue.saToString();
 					if (!isDate(sValue)){
 						var arrParts=sFormat.split("=");
 						var nDigits=0;

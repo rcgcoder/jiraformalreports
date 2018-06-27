@@ -3,7 +3,6 @@ var jrfInclude=class jrfInclude{//this kind of definition allows to hot-reload
 	constructor(tag,reportElem,model){
 		var self=this;
 		model.extendToken(self,tag,reportElem);
-		debugger;
 		self.type=self.getAttrVal("include").trim(); // supports only confluence and url 
 		self.subtype=self.getAttrVal("subtype").trim(); // now only content or javascript
 		self.url=self.getAttrVal("url").trim();

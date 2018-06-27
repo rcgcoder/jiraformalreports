@@ -42,7 +42,7 @@ Array.prototype.saIndexOf= function (sTag,bFindLast,bDivide,startPos,startSubArr
 		} else {
 			var vSubArray=arrStrings[0];
 			if (isArray(vSubArray) ){
-				debugger;
+//				debugger;
 				bWithSubArrays=true;
 				vProcessArray=[];
 				var iAux=0;

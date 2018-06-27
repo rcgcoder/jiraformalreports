@@ -565,6 +565,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					sVarRef=vInnerVarValue;
 				}
 			}
+			return sVarRef;
 		}
 		var objResult=sText.saReplaceInnerText(openTag,closeTag,fncReplace,true);
 		return {text:objResult.arrPrevious,values:vValues};

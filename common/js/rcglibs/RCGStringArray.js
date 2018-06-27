@@ -145,22 +145,18 @@ Array.prototype.saIndexOf= function (sTag,bFindLast,bDivide,startPos,startSubArr
 		var sTrgString="";
 		if (bLocated) {
 			if (iPos-1<=0){
-				arrPrevious=[vProcessArray[0]];
+				arrPrevious=[];
 			} else {
 				arrPrevious=vProcessArray.slice(0,iPos-1);
 			}
 			arrPosterior=vProcessArray.slice(iPos+1);
 			sTrgString=vProcessArray[iPos];
-			if (bLast) {
-				strPos=sTrgString.lastIndexOf(sTag);
-			} else {
-				strPos=sTrgString.indexOf(sTag);
-			}
+			strPos=indOf;
 			if (isDefined(bDivide)&&bDivide){
 				var sAux=sTrgString.substring(0,strPos);
-				arrPrevious.push(sAux);
+				if (sAux!="") arrPrevious.push(sAux);
 				sAux=sTrgString.substring(strPos+sTag.length,sTrgString.length);
-				arrPosterior.unshift(sAux);
+				if (sAux!="") arrPosterior.unshift(sAux);
 				sTrgString=sTag;
 				strPos=0;
 			}

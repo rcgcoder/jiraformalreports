@@ -81,9 +81,9 @@ Array.prototype.saIndexOf= function (sTag,bFindLast,bDivide,startPos,startSubArr
 		var bHigherPart=false;
 		if (bLast){
 			while ((!bLocated) && (
-					((!bHigerPart)&&(iPos>=0)) 
+					((!bHigherPart)&&(iPos>=0)) 
 					|| 
-					((bHigerPart)&&(iPos>auxStartPos))
+					((bHigherPart)&&(iPos>auxStartPos))
 					)
 				   ){
 				sRow=vProcessArray[iPos];
@@ -102,19 +102,19 @@ Array.prototype.saIndexOf= function (sTag,bFindLast,bDivide,startPos,startSubArr
 					}
 				} else {
 					iPos--;
-					if ((iPos<0)&&(!bHigerPart)){
-						bHigerPart=true;
+					if ((iPos<0)&&(!bHigherPart)){
+						bHigherPart=true;
 						iPos=vProcessArray.length-1;
 					}
 				}
 			}
 		} else {
 			var vLength=vProcessArray.length;
-			bHigerPart=true;
+			bHigherPart=true;
 			while ((!bLocated) && (
-					((bHigerPart)&&(iPos<vLength)) 
+					((bHigherPart)&&(iPos<vLength)) 
 					|| 
-					((!bHigerPart)&&(iPos<auxStartPos))
+					((!bHigherPart)&&(iPos<auxStartPos))
 					)
 				   ){
 				sRow=vProcessArray[iPos];
@@ -130,8 +130,8 @@ Array.prototype.saIndexOf= function (sTag,bFindLast,bDivide,startPos,startSubArr
 					}
 				} else {
 					iPos++;
-					if ((iPos>=vLength)&&(bHigerPart)){
-						bHigerPart=false;
+					if ((iPos>=vLength)&&(bHigherPart)){
+						bHigherPart=false;
 						iPos=0;
 					}
 				}

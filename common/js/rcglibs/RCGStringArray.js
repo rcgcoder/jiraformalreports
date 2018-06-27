@@ -118,7 +118,7 @@ Array.prototype.saIndexOf= function (sTag,bFindLast,bDivide,startPos,startSubArr
 					)
 				   ){
 				sRow=vProcessArray[iPos];
-				if (iPos<vLength){
+				if (iPos<(vLength-1)){
 					sRow+=vProcessArray[iPos+1];
 				}
 				indOf=sRow.indexOf(sTag);

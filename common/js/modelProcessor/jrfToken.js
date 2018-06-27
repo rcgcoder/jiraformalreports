@@ -475,7 +475,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	replaceVarsAndExecute(sText){
 		var self=this;
 		var oReplaced=self.replaceVarsComplex(sText);
-		var vValue=executeFunction(oReplaced.values,oReplaced.text,self.model.functionCache);
+		var vValue=oReplaced.text;
+		if (isArray(vValue)){
+			vValue=vValue.saToString();
+		}
+		var vValue=executeFunction(oReplaced.values,vValue,self.model.functionCache);
 		return vValue;
 	}
 	replaceVars(sText){

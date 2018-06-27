@@ -208,7 +208,8 @@ class RCGTask{
 			if (theTaskManager.asyncTaskCallsDelay>0){
 				setTimeout(fncApply,theTaskManager.asyncTaskCallsDelay);
 			} else {
-				setTimeout(fncApply);
+				//setTimeout(fncApply);
+				requestAnimationFrame(fncApply);
 			}
 		}
 		self.changeStatus();

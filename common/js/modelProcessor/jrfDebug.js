@@ -4,6 +4,7 @@ var jrfDebug=class jrfDebug{//this kind of definition allows to hot-reload
 		model.extendToken(self,tag,reportElem);
 	}
 	apply(){
+		debugger;
 		log("Push here a breakPoint");
 	}
 

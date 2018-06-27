@@ -122,7 +122,7 @@ var RCGStringUtils= class RCGStringUtils{ // allow dynamically load
 		  if (!isArray(str)) return "";
 		  if (str.length==0) return "";
 		  var sResult=[];
-		  var sAux;
+		  var sAux="";
 		  var sSubstr;
 		  var fLength=find.length;
 		  var strLength=(str.length-1);

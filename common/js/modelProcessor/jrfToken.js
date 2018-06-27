@@ -522,7 +522,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		}
 		var asInnerText=arrInnerText.saTrim();
 		asInnerText=asInnerText.saReplaceInnerText("<",">","",true);
-		var sInnerText=asInnerText.arrPrevious.saToString();
+		asInnerText=asInnerText.arrPrevious.concat(asInnerText.arrInner).concat(asInnerText.arrPosterior);
+		var sInnerText=asInnerText.saToString();
 		var sVarRef;
 		var iVar;
 		if (!otherParams.bReplaceVars){

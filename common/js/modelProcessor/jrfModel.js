@@ -114,7 +114,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 	}
 	pushHtmlBuffer(sText){
 		var self=this;
-		var indStack=self.htmlStack.length();
+		var indStack=self.htmlStack.length;
 		if (isDefined(sText)){
 			if (isString(sText)){
 				self.htmlStack.push(sText);
@@ -131,28 +131,27 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		var self=this;
 //		var sResult="";
 		var sResult=[];
-		var newInd=self.htmlStack.length()-1;
+		var newInd=self.htmlStack.length-1;
 		if (isDefined(fromIndex)){
 			newInd=fromIndex;
 		}
-		if (self.htmlStack.length()<=newInd){
+		if (self.htmlStack.length<=newInd){
 			return "";
 		}
 		var i=newInd;
-		for (var i=newInd;i<self.htmlStack.length();i++){
-			sResult.push("\n" + i +" - ");
-			sResult.push(self.htmlStack.findByInd(i));
+		for (var i=newInd;i<self.htmlStack.length;i++){
+			sResult.push("\n" + i +" - " + self.htmlStack[i]);
 		}
 		return sResult;
 	}
 	popHtmlBuffer(fromIndex){
 		var self=this;
 		var htmlResult;
-		var newInd=self.htmlStack.length()-1;
+		var newInd=self.htmlStack.length-1;
 		if (isDefined(fromIndex)){
 			newInd=fromIndex;
 		}
-		if (newInd==self.htmlStack.length()){
+		if (newInd==self.htmlStack.length){
 			log("HTMLBuffer error popping a html buffer");
 		}
 		htmlResult=self.htmlStack.splice(newInd, 2);

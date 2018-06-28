@@ -724,11 +724,15 @@ var jrfReport=class jrfReport {
 		// load report model and submodels
 		// Process Model with The Report
 		self.addStep("Processing Model",function(){
+			var tm=self.getTaskManager();
+			tm.asyncTaskCallsBlock=3000;
 			self.objModel.process("encode"); // hash inner task....
 		});
 		
 
 		self.addStep("Setting the HTML",function(sModelProcessedResult){
+			var tm=self.getTaskManager();
+			tm.asyncTaskCallsBlock=0;
 	        var jqResult=$("#ReportResult");
 	        jqResult.html(sModelProcessedResult.saToString());
 			loggerFactory.getLogger().enabled=true;

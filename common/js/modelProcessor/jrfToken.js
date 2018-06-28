@@ -294,6 +294,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var self=this;
 		var sAux="";
 		if (self.ifConditionResult){
+			self.indTokenHtmlBuffer=self.pushHtmlBuffer();
 			if (self.autoAddPostHtml){
 				self.addPostHtml();
 			}

@@ -7,34 +7,34 @@ var jrfFormula=class jrfFormula{//this kind of definition allows to hot-reload
 
 	apply(){
 		var self=this;
-		debugger;
+//		debugger;
 		// processing inner childs in a buffer to get the plain formula
 		var frmIndHtmlBuffer=self.pushHtmlBuffer();
-		log("Top Buffer("+(frmIndHtmlBuffer)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer).saToString());
-		log("Top Buffer -1("+(frmIndHtmlBuffer-1)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-1).saToString());
-		log("Top Buffer -2("+(frmIndHtmlBuffer-2)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-2).saToString());
+//		log("Top Buffer("+(frmIndHtmlBuffer)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer).saToString());
+//		log("Top Buffer -1("+(frmIndHtmlBuffer-1)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-1).saToString());
+//		log("Top Buffer -2("+(frmIndHtmlBuffer-2)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-2).saToString());
 		self.addStep("Process all Childs",function(){
-			log("Top Buffer("+(frmIndHtmlBuffer)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer).saToString());
-			log("Top Buffer -1("+(frmIndHtmlBuffer-1)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-1).saToString());
-			log("Top Buffer -2("+(frmIndHtmlBuffer-2)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-2).saToString());
+//			log("Top Buffer("+(frmIndHtmlBuffer)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer).saToString());
+//			log("Top Buffer -1("+(frmIndHtmlBuffer-1)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-1).saToString());
+//			log("Top Buffer -2("+(frmIndHtmlBuffer-2)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-2).saToString());
 			self.processAllChilds();
-			log("Top Buffer("+(frmIndHtmlBuffer)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer).saToString());
-			log("Top Buffer -1("+(frmIndHtmlBuffer-1)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-1).saToString());
-			log("Top Buffer -2("+(frmIndHtmlBuffer-2)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-2).saToString());
+//			log("Top Buffer("+(frmIndHtmlBuffer)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer).saToString());
+//			log("Top Buffer -1("+(frmIndHtmlBuffer-1)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-1).saToString());
+//			log("Top Buffer -2("+(frmIndHtmlBuffer-2)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-2).saToString());
 		});
 		self.addStep("Process the rest of the formula",function(){
-			log("Top Buffer("+(frmIndHtmlBuffer)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer).saToString());
-			log("Top Buffer -1("+(frmIndHtmlBuffer-1)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-1).saToString());
-			log("Top Buffer -2("+(frmIndHtmlBuffer-2)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-2).saToString());
+//			log("Top Buffer("+(frmIndHtmlBuffer)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer).saToString());
+//			log("Top Buffer -1("+(frmIndHtmlBuffer-1)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-1).saToString());
+//			log("Top Buffer -2("+(frmIndHtmlBuffer-2)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-2).saToString());
 			self.addPostHtml();
-			log("Top Buffer("+(frmIndHtmlBuffer)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer).saToString());
-			log("Top Buffer -1("+(frmIndHtmlBuffer-1)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-1).saToString());
-			log("Top Buffer -2("+(frmIndHtmlBuffer-2)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-2).saToString());
+//			log("Top Buffer("+(frmIndHtmlBuffer)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer).saToString());
+//			log("Top Buffer -1("+(frmIndHtmlBuffer-1)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-1).saToString());
+//			log("Top Buffer -2("+(frmIndHtmlBuffer-2)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-2).saToString());
 			var sContent=self.popHtmlBuffer(frmIndHtmlBuffer); // getting the formula with possible html tags inside
 			self.pushHtmlBuffer();
-			log("Top Buffer("+(frmIndHtmlBuffer)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer).saToString());
-			log("Top Buffer -1("+(frmIndHtmlBuffer-1)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-1).saToString());
-			log("Top Buffer -2("+(frmIndHtmlBuffer-2)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-2).saToString());
+//			log("Top Buffer("+(frmIndHtmlBuffer)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer).saToString());
+//			log("Top Buffer -1("+(frmIndHtmlBuffer-1)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-1).saToString());
+//			log("Top Buffer -2("+(frmIndHtmlBuffer-2)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-2).saToString());
 			//var dbgContent=sContent;
 			sContent=sContent.saRemoveInnerHtmlTags(); // remove al tags.... there are not allowed
 			log("Formula Content previous of replace returns and Vars:"+sContent);

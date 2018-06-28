@@ -228,17 +228,17 @@ class RCGTask{
 				){
 				theTaskManager.timeoutsCalled++;
 				theTaskManager.asyncTaskCallActDeep=0;
-/*				log("Continuous running time:"+contRunningTime
+				log("Continuous running time:"+contRunningTime
 						+" running ASYNC: " + theTaskManager.asyncTaskCallActDeep + "/" +theTaskManager.asyncTaskCallsMaxDeep
 						+" setTimeout relation: "+theTaskManager.timeoutsCalled+"/"+theTaskManager.timeoutsAvoided);
-*/				fncAsyncApply();
+				fncAsyncApply();
 			} else {
 				theTaskManager.timeoutsAvoided++;
 				theTaskManager.asyncTaskCallActDeep++;
-/*				log("Continuous running time:"+contRunningTime
+				log("Continuous running time:"+contRunningTime
 						+" running SYNC: " + theTaskManager.asyncTaskCallActDeep + "/" +theTaskManager.asyncTaskCallsMaxDeep
 						+" setTimeout relation:"+theTaskManager.timeoutsCalled+"/"+theTaskManager.timeoutsAvoided);
-*/				fncApply();
+				fncApply();
 			}
 		} else {
 			fncApply();

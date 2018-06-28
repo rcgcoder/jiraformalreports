@@ -484,6 +484,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		return vValue;
 	}
 	replaceVars(sText){
+		debugger;
 		var self=this;
 		var sTextToLog=sText.saRemoveInnerHtmlTags().saTrim().saToString();
 		sTextToLog=sText.saRemoveInnerHtmlTags().saTrim().saToString();

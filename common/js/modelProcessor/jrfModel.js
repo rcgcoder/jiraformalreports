@@ -120,7 +120,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 				self.htmlStack.push(sText);
 			} else if (isArray(sText)){
 				sText.forEach(function(sRow){
-					self.pushHtmlBuffer(sText);
+					self.pushHtmlBuffer(sRow);
 				});
 			}
 		}

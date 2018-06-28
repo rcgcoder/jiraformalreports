@@ -10,6 +10,7 @@ var jrfSum=class jrfSum{//this kind of definition allows to hot-reload
 		var hsValues=self.variables.getVars(self.varName);
 		var sValue=0;
 		hsValues.walk(function(elem){
+			if (isArray(elem)) elem=elem.asToString();
 			var vValue=0;
 			if ($.isNumeric(elem)){
 				vValue=parseFloat(elem);

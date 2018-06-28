@@ -511,10 +511,12 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var vAux=vValue;
 		if (isString(vAux)||isArray(vAux)){
 			vAux=vAux.saRemoveInnerHtmlTags().saTrim().saToString();
+		} else if (isObject(vAux)) {
+			vAux="Object of type:"+vValue.constructor.name;	
 		}
 		sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + vAux;
 		log("Fase 2  {{ }} Final Result:"+sTextToLog);
-		return vAux;
+		return vValue;
 	}
 	getStringReplaced(sText,otherParams){
 		var arrInnerText;

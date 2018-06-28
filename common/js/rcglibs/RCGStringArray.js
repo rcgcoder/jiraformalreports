@@ -187,6 +187,10 @@ Array.prototype.saRemoveInnerHtmlTags= function (sReplaceText){
 	}
 	return saResult;
 };
+String.prototype.saRemoveInnerHtmlTags= function (sReplaceText){
+	return [this].saRemoveInnerHtmlTags(sReplaceText);
+}
+
 	
 Array.prototype.saToString= function (){
 		var saInput=this;

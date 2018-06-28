@@ -156,7 +156,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		if (newInd==self.htmlStack.length){
 			log("HTMLBuffer error popping a html buffer");
 		}
-		htmlResult=self.htmlStack.splice(newInd, 2);
+		htmlResult=self.htmlStack.splice(newInd);
 		return htmlResult;
 	}
 	addHtml(sText){

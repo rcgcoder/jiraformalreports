@@ -148,7 +148,7 @@ Array.prototype.saIndexOf= function (sTag,bFindLast,bDivide,startPos,startSubArr
 			if (iPos-1<=0){
 				arrPrevious=[];
 			} else {
-				arrPrevious=vProcessArray.slice(0,iPos-1);
+				arrPrevious=vProcessArray.slice(0,iPos);
 			}
 			arrPosterior=vProcessArray.slice(iPos+1);
 			sTrgString=vProcessArray[iPos];

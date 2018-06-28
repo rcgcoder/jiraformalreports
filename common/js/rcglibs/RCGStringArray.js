@@ -173,6 +173,21 @@ Array.prototype.saIndexOf= function (sTag,bFindLast,bDivide,startPos,startSubArr
 		return objResult;
 	};
 	
+Array.prototype.saRemoveInnerHtmlTags= function (sReplaceText){
+	var arrStrings=this;
+	var replaceBy="";
+	if (isDefined(sReplaceText)) replaceBy=sReplaceText;
+	var objResult=this.saReplaceInnerText("<",">",replaceBy,true);
+	var saResult=objResult.arrPrevious;
+	if (isDefined(objResult.arrInner)&&(objResult.arrInner.length>0)){
+		saResult=saResult.concat(objResult.arrInner);
+	}
+	if (isDefined(objResult.arrPosterior)&&(objResult.arrPosterior.length>0)){
+		saResult=saResult.concat(objResult.arrPosterior);
+	}
+	return saResult;
+};
+	
 Array.prototype.saToString= function (){
 		var saInput=this;
 		var sAux="";

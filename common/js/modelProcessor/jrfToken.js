@@ -408,7 +408,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				} else 
 */				if (sFormatId=="fixed"){
 					sValue=self.replaceVars(sValAux);
-					sValue=self.model.removeInnerTags(sValue,true).trim();
+					sValue=sValue.saRemoveInnerTags();
+					sValue=sValue.saToString();
 					if (sValue=="") return;
 					var nDigits=2;
 					if (arrParts.length>1){
@@ -422,7 +423,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 						log("Parse done... the rest is return result")
 						// execute function inserts the last ";" automatically
 						`;
-					sValue=replaceAll(sValue,"\n"," ").trim();
+					sValue=replaceAll(sValue,"\n"," ");
 					sValAux=executeFunction([sValue],sFncFormula,self.model.functionCache);
 				}  
 			});
@@ -455,14 +456,9 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					sValAux=normalFormatNumber(sValAdjusted) + " %"; 
 				} else if (sFormat.toLowerCase().indexOf("fixed")>=0) {
 					var sValue=self.replaceVars(sValAux);
-					sValue=self.model.removeInnerTags(sValue,true);
-					if (isString(sValue)){
-						sValue=sValue.trim();
-					} else {
-						debugger;
-						sValue=sValue.saTrim();
-						sValue=sValue.saToString();
-					}
+					sValue=sValue.removeInnerTags(sValue,true);
+					sValue=sValue.saTrim();
+					sValue=sValue.saToString();
 					if (!isDate(sValue)){
 						var arrParts=sFormat.split("=");
 						var nDigits=0;
@@ -471,6 +467,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 						}
 						sValue=replaceAll(sValue+"","\n"," ");
 						sValue=replaceAll(sValue,",",".");
+						sValue=sValue.saToString();
 						sValue=Math.round(parseFloat(sValue),nDigits);
 						sValAux=sValue; 
 					}
@@ -603,67 +600,5 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			};
 		var objResult=sText.saReplaceInnerText(openTag,closeTag,self.getStringReplaced,true,otherParams);
 		return {text:objResult.arrPrevious.concat(objResult.arrPosterior),values:vValues};
-	}
-	replaceVarsComplex(inText,theOpenTag,theCloseTag,bReplaceVarsByValue){
-		var self=this;
-		if (isArray(inText)) return self.replaceVarsComplexArray(inText,theOpenTag,theCloseTag,bReplaceVarsByValue);
-		var bReplaceVars=true;
-		var openTag="{{";
-		var closeTag="}}";
-		var sText="";
-		if (isDefined(bReplaceVarsByValue)){
-			bReplaceVars=bReplaceVarsByValue;
-		}
-		if (isDefined(theOpenTag)) openTag=theOpenTag;
-		if (isDefined(theCloseTag)) closeTag=theCloseTag;
-		if (isDefined(inText)){
-			sText=inText;
-			if (!isArray(sText)&&(!isString(sText))){
-				sText=""+sText;
-			} 
-		} else {
-			log("You are using a undefined text.... this may be a big error!");
-		}
-		var vValues=[];
-		var hsValues=newHashMap();
-		var sVarRef="";
-		var iVar=0;
-		
-		var openInd=sText.lastIndexOf(openTag);
-		var closeInd;
-		while (openInd>=0){
-			var closeInd=sText.indexOf(closeTag,openInd+closeTag.length);
-			var sInnerText=sText.substring(openInd+closeTag.length,closeInd).trim();
-			sInnerText=self.model.removeInnerTags(sInnerText,true);
-			if (!bReplaceVars){
-				if (hsValues.exists(sInnerText)){
-					iVar=hsValues.getValue(sInnerText);
-				} else {
-					vValues.push(sInnerText);
-					iVar=vValues.length-1;
-					hsValues.add(sInnerText,iVar);
-				}
-				sVarRef="_arrRefs_["+iVar+"]";
-			} else {
-				var vInnerVarValue=self.variables.getVar(sInnerText);
-				if (isObject(vInnerVarValue)){
-					if (hsValues.exists(sInnerText)){
-						iVar=hsValues.getValue(sInnerText);
-					} else {
-						vValues.push(vInnerVarValue);
-						iVar=vValues.length-1;
-						hsValues.add(sInnerText,iVar);
-					}
-					sVarRef="_arrRefs_["+iVar+"]";
-				} else {
-					sVarRef=vInnerVarValue;
-				}
-			}
-			sText=sText.substring(0,openInd)+
-					sVarRef+
-				  sText.substring(closeInd+closeTag.length,sText.length);
-			openInd=sText.lastIndexOf(openTag);
-		}
-		return {text:sText,values:vValues};
 	}
 }

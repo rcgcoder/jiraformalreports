@@ -60,9 +60,11 @@ var newRCGFilterManagerFactory=function(){
 				sSubFilterName=replaceAll(sSubFilterName,"\r","");
 				sSubFilterName=replaceAll(sSubFilterName,"\t","");
 				sSubFilterName=replaceAll(sSubFilterName," ","");
-				sSubFilterName=removeInnerTags(sSubFilterName,true);
+				sSubFilterName=sSubFilterName.saRemoveInnerTags();
+				sSubFilterName=sSubFilterName.saToString();
 				sResultAux=self.useFilter(sSubFilterName,iDeepAux+1);
 				sResultAux=replaceAll(sResultAux,"\n","\n"+sLeftChars);
+				sResultAux=sResultAux.saToString();
 				sResult+=sResultAux;
 				for (var j=1;j<arrFilterNameParts.length;j++){
 					if (j>1){

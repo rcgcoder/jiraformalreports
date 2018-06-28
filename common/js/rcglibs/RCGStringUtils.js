@@ -172,18 +172,10 @@ var RCGStringUtils= class RCGStringUtils{ // allow dynamically load
 		if (isDefined(bClear)&&bClear){
 			sInnerChar="";
 		}
-		if (isArray(sHtml)){
-			var obResult=sHtml.saReplaceInnerText("<",">",sInnerChar,true);
-			var arrResult=obResult.arrPrevious;
-			if (isDefined(obResult.arrInner)){
-				arrResult=arrResult.concat(obResult.arrInner);
-			}
-			if (isDefined(obResult.arrPosterior)){
-				arrResult=arrResult.concat(obResult.arrPosterior);
-			}
-			return arrResult;
+/*		if (isArray(sHtml)){
+			return sHtml.saReplaceInnerText("<",">",sInnerChar,true);
 		}
-
+*/
 		var indFirstCloseTag=sTagText.indexOf(">");
 		var indOpenTag=sTagText.substring(0,indFirstCloseTag).lastIndexOf("<");
 

@@ -71,7 +71,8 @@ var jrfInclude=class jrfInclude{//this kind of definition allows to hot-reload
         				sJs=replaceAll(sJs,sTag.toUpperCase(),"\n");
     				});
     				sJs=self.model.removeInnerTags(sJs,true);
-    				log(sJs);
+    				//log(sJs);
+    				if (isArray(sJs)) sJs=sJs.asToString();
     				System.webapp.addJavascriptString(sJs);
     				var issExtender=new issueExtender(tag,self.model.report,self.model);
     				issExtender.extendTreeIssues();

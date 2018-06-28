@@ -17,8 +17,8 @@ var jrfFormula=class jrfFormula{//this kind of definition allows to hot-reload
 			self.addPostHtml();
 			var sContent=self.popHtmlBuffer(frmIndHtmlBuffer); // getting the formula with possible html tags inside
 			self.pushHtmlBuffer();
-			var dbgContent=sContent;
-			sContent=self.model.removeInnerTags(sContent,true); // remove al tags.... there are not allowed
+			//var dbgContent=sContent;
+			sContent=sContent.saRemoveInnerTags(); // remove al tags.... there are not allowed
 			log("Formula Content previous of replace returns and Vars:"+sContent);
 			sContent=replaceAll(sContent,"\n"," ");
 			sContent=self.replaceVars(sContent);

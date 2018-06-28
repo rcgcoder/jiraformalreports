@@ -236,7 +236,14 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 	 *  4> <G/> </jrf> <H/>
 	 */
 	removeInnerTags(sHtml,bClear){
-		return removeInnerTags(sHtml,bClear);
+		var sResult;
+		if (isString(sHtml)) {
+			sResult=removeInnerTags(sHtml,bClear);
+		} else {
+			sResult=sHtml.saRemoveInnerTags(bClear?"":" ");
+			sResult=sResult.asToString();
+		}
+		return sResult;
 	}
 	processRecursive(arrJRFs,indexAct,parentTag,sInitialPrependText){
 		var self=this;

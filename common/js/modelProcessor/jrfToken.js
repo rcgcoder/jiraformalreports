@@ -238,13 +238,17 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			for (var i=0;i<arrVars.length;i++){
 				var arrVarParts=arrVars[i].split("=");
 				var varName=self.replaceVars(arrVarParts[0].trim());
+				varName=varName.saToString();
 				var varValue;
 				if (arrVarParts.length>1){
 					varValue=self.replaceVars(arrVarParts[1]);
 				} else {
 					varValue=sValAux;
 				}
-				if (isString(varValue)||isArray(varValue)) varValue=varValue.saRemoveInnerHtmlTags();
+				if (isString(varValue)||isArray(varValue)) {
+					varValue=varValue.saRemoveInnerHtmlTags();
+					varValue=varValue.saToString();
+				}
 				log("Looking for Value ["+varName+"] pushed:["+varValue+"]");
 				var vVar=self.variables.getVars(varName);
 				if (vVar==""){

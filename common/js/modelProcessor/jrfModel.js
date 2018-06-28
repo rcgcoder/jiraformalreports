@@ -123,6 +123,8 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 					self.pushHtmlBuffer(sRow);
 				});
 			}
+		} else {
+			self.htmlStack.push("");
 		}
 //		log("PUSH HTMLBuffer new length:"+indStack);
 		return indStack;

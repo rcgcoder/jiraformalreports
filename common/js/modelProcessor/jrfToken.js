@@ -428,6 +428,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					sValAux=sValAux.wiki2html(); 
 				} else 
 */				if (sFormatId=="fixed"){
+					debugger;
 					sValue=self.replaceVars(sValAux);
 					sValue=sValue.saRemoveInnerHtmlTags();
 					sValue=replaceAll(sValue,"\n"," ");
@@ -466,7 +467,6 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					sValAdjusted=sValAdjusted.saToString();
 					sValAux=inEuros(sValAdjusted,true); 
 				} else if (sFormat=="hours"){
-					debugger;
 					var sValAdjusted=replaceAll(sValAux,",",".");
 					sValAdjusted=sValAdjusted.saToString();
 					sValAux=normalFormatNumber(sValAdjusted) + " h"; 

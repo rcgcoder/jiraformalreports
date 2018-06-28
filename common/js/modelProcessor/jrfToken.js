@@ -484,11 +484,6 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		return vValue;
 	}
 	replaceVars(sText){
-		if (isString(sText)) {
-			if ((sText.indexOf("{{{")>=0)){
-				debugger;
-			}
-		}
 		var self=this;
 		var oScripts=self.replaceVarsComplexArray(sText,"{{{","}}}",false);
 		var sResult=oScripts.text;
@@ -501,15 +496,16 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			sResult=sResult.saTrim();
 		}
 		var sTextToLog=sResult.saRemoveInnerHtmlTags().saTrim().saToString();
-		log("executed {{{"+sTextToLog+" }}}");
+		sTextToLog="{{{"+sText.saRemoveInnerHtmlTags().saTrim().saToString()+" }}} --> "+sTextToLog
+		log("executed "+sTextToLog);
 //		log(sResult);
-		log("now let´s replace {{  "+sResult+"  }}");
+//		log("now let´s replace {{  "+sResult+"  }}");
 		var oSimple=self.replaceVarsComplexArray(sResult);
 		var vValue=oSimple.text;
 		if (oSimple.values.length>0){
 			vValue=executeFunction(oSimple.values,vValue,self.model.functionCache);
 		}
-		log("Replaced: <<"+sText.saToString()+">> ->> <<"+vValue.saToString()+">>");
+		log("Replaced: "+sTextToLog+" ->> <<"+vValue.saToString()+">>");
 		return vValue;
 	}
 	getStringReplaced(sText,otherParams){

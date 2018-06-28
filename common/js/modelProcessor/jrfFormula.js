@@ -4,6 +4,7 @@ var jrfFormula=class jrfFormula{//this kind of definition allows to hot-reload
 //		debugger;
 		model.extendToken(self,tag,reportElem);
 		self.autoAddPostHtml=false;
+		self.processVarsAtEnd=false;
 	}
 
 	apply(){

@@ -116,10 +116,10 @@ var RCGStringUtils= class RCGStringUtils{ // allow dynamically load
 		  } else {
 			  replaceFnc=replaceAllWithoutBrackets;
 		  }
+		  if ((!isArray(str))&&(!isString(str))) str=str+"";
 		  if (isString(str)){
 			  return replaceFnc(str,find,replace,bModulator);
 		  }
-		  if (!isArray(str)) return "";
 		  if (str.length==0) return "";
 		  var sResult=[];
 		  var sAux="";

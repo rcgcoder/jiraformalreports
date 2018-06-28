@@ -462,12 +462,12 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			for (var i=0;i<arrFormats.length;i++){
 				sFormat=arrFormats[i];
 				if (sFormat=="money"){
-					var sValAdjusted=replaceAll(sValAux+"",",",".");
+					var sValAdjusted=replaceAll(sValAux,",",".");
 					sValAdjusted=sValAdjusted.saToString();
 					sValAux=inEuros(sValAdjusted,true); 
 				} else if (sFormat=="hours"){
 					debugger;
-					var sValAdjusted=replaceAll(sValAux+"",",",".");
+					var sValAdjusted=replaceAll(sValAux,",",".");
 					sValAdjusted=sValAdjusted.saToString();
 					sValAux=normalFormatNumber(sValAdjusted) + " h"; 
 				} else if (sFormat=="SecondsToHours"){

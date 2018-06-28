@@ -202,7 +202,7 @@ var jrfSubset=class jrfSubset{//this kind of definition allows to hot-reload
 		return hsResult;
 	}
 	apply(){
-		debugger;
+//		debugger;
 		var self=this;
 		var elemsInForEach=self.getElementsInForEach();
 		elemsInForEach=self.filter(elemsInForEach);

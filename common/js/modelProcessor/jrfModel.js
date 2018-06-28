@@ -575,9 +575,6 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			self.addStep("Returning result HTML to process caller",function(){
 	//			log(sHtml);
 				var sHtml=self.popHtmlBuffer(htmlBufferIndex);
-				if ((self.html.length>0)||(self.htmlStack.length()>0)){
-					log("There si more html in the buffer.... Maybe someone has push hmtl without pop");
-				}
 				self.continueTask([sHtml]);
 			});
 		}

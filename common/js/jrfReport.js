@@ -80,7 +80,7 @@ var jrfReport=class jrfReport {
 		}
 		var issuesAdded=self.treeIssues;
 		var bAlerted=false;
-		self.rootIssues.clear();
+//		self.rootIssues.clear();
 		
 		self.addStep("Getting Confluence Report Model.... ",function(){
 	        var cfc=System.webapp.getConfluence();

@@ -160,6 +160,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		var html=[];
 		//var html=self.html;
 		html.push(self.html);
+		self.html="";
 		var newInd=self.htmlStack.length()-1;
 		if (isDefined(fromIndex)){
 			newInd=fromIndex;

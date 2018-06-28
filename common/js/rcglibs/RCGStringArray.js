@@ -189,7 +189,7 @@ Array.prototype.saRemoveInnerHtmlTags= function (sReplaceText){
 };
 String.prototype.saRemoveInnerHtmlTags= function (sReplaceText){
 	return [this].saRemoveInnerHtmlTags(sReplaceText);
-}
+};
 
 	
 Array.prototype.saToString= function (){

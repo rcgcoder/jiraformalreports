@@ -196,7 +196,7 @@ class RCGTask{
 		var fncApply=function(){
 			self.initTime=Date.now();
 			theTaskManager.setRunningTask(theTask);
-			theTaskManager.asyncTimeWasted+=self.initTime-tCallCalled;
+			theTaskManager.asyncTimeWasted+=(self.initTime-tCallCalled);
 			if (theTask.description!=""){
 				log("Calling method of task: "+theTask.description);
 			}
@@ -218,7 +218,6 @@ class RCGTask{
 			}
 		}
 		self.changeStatus();
-		tCallCalled=Date.now();
 		if (theTaskManager.asyncTaskCalls) {
 			var contRunningTime=Date.now()-theTaskManager.lastTimeout;
 			if (
@@ -233,6 +232,7 @@ class RCGTask{
 				log("Continuous running time:"+contRunningTime
 						+" running ASYNC: " + theTaskManager.asyncTaskCallActDeep + "/" +theTaskManager.asyncTaskCallsMaxDeep
 						+" setTimeout relation: "+theTaskManager.timeoutsCalled+"/"+theTaskManager.timeoutsAvoided);
+				tCallCalled=Date.now();
 				fncAsyncApply();
 			} else {
 				theTaskManager.timeoutsAvoided++;
@@ -240,9 +240,11 @@ class RCGTask{
 				log("Continuous running time:"+contRunningTime
 						+" running SYNC: " + theTaskManager.asyncTaskCallActDeep + "/" +theTaskManager.asyncTaskCallsMaxDeep
 						+" setTimeout relation:"+theTaskManager.timeoutsCalled+"/"+theTaskManager.timeoutsAvoided);
+				tCallCalled=Date.now();
 				fncApply();
 			}
 		} else {
+			tCallCalled=Date.now();
 			fncApply();
 		}
 	}

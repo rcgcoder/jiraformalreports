@@ -194,7 +194,7 @@ class RCGTask{
 		var fncApply=function(){
 			self.initTime=Date.now();
 			theTaskManager.setRunningTask(theTask);
-			theTaskManager.asyncTimeWasted+=self.initTime.getTime()-theTaskManager.lastTimeout.getTime();
+			theTaskManager.asyncTimeWasted+=self.initTime-theTaskManager.lastTimeout;
 			if (theTask.description!=""){
 				log("Calling method of task: "+theTask.description);
 			}

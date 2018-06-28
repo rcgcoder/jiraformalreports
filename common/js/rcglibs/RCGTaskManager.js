@@ -197,10 +197,10 @@ class RCGTask{
 			self.initTime=Date.now();
 			theTaskManager.setRunningTask(theTask);
 			theTaskManager.asyncTimeWasted+=(self.initTime-tCallCalled);
-			if (theTask.description!=""){
+/*			if (theTask.description!=""){
 				log("Calling method of task: "+theTask.description);
 			}
-			if ((typeof theMethod==="undefined")||(theMethod=="")){
+*/			if ((typeof theMethod==="undefined")||(theMethod=="")){
 				debugger;
 			}
 			
@@ -229,18 +229,18 @@ class RCGTask{
 				){
 				theTaskManager.timeoutsCalled++;
 				theTaskManager.asyncTaskCallActDeep=0;
-				log("Continuous running time:"+contRunningTime
+/*				log("Continuous running time:"+contRunningTime
 						+" running ASYNC: " + theTaskManager.asyncTaskCallActDeep + "/" +theTaskManager.asyncTaskCallsMaxDeep
 						+" setTimeout relation: "+theTaskManager.timeoutsCalled+"/"+theTaskManager.timeoutsAvoided);
-				tCallCalled=Date.now();
+*/				tCallCalled=Date.now();
 				fncAsyncApply();
 			} else {
 				theTaskManager.timeoutsAvoided++;
 				theTaskManager.asyncTaskCallActDeep++;
-				log("Continuous running time:"+contRunningTime
+/*				log("Continuous running time:"+contRunningTime
 						+" running SYNC: " + theTaskManager.asyncTaskCallActDeep + "/" +theTaskManager.asyncTaskCallsMaxDeep
 						+" setTimeout relation:"+theTaskManager.timeoutsCalled+"/"+theTaskManager.timeoutsAvoided);
-				tCallCalled=Date.now();
+*/				tCallCalled=Date.now();
 				fncApply();
 			}
 		} else {
@@ -957,7 +957,7 @@ class RCGTaskManager{
 	}
 	extended_addStep(description,method,progressMin,progressMax,newObj,totalWeight,methodWeight,sForkType,barrier){
 		var self=this;
-		log("Adding Step:["+description+"]");
+//		log("Adding Step:["+description+"]");
 		var tm=self.getTaskManager();
 		var runningTask=tm.getRunningTask();
 		var theObj=newObj;

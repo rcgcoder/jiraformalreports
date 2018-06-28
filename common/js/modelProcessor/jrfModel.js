@@ -134,7 +134,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			}
 		}
 
-		log("PUSH HTMLBuffer new length:"+indStack);
+//		log("PUSH HTMLBuffer new length:"+indStack);
 		return indStack;
 	}
 	topHtmlBuffer(fromIndex){
@@ -173,8 +173,8 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		}
 		//self.html=self.htmlStack.pop();
 		html.unshift(self.htmlStack.pop());
-		log("Stack Length after pop("+fromIndex+"):"+self.htmlStack.length()+" == "+fromIndex);
-		log("POP HTMLBuffer new length:"+self.htmlStack.length());
+//		log("Stack Length after pop("+fromIndex+"):"+self.htmlStack.length()+" == "+fromIndex);
+//		log("POP HTMLBuffer new length:"+self.htmlStack.length());
 		return html;
 	}
 	addHtml(sText){

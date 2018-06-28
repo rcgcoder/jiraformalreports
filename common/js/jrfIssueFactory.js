@@ -157,6 +157,9 @@ function newIssueFactory(report){
 		var precomps=self.getPrecomputedPropertyById(key);
 		if (precomps=="") return "";
 		var changes=precomps.changes;
+		if (isUndefined(changes)||(changes.length==0)){
+			return "";
+		}
 		var auxDate=new Date();
 		if (isDefined(atDateTime)){
 			auxDate=atDateTime;

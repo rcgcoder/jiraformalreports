@@ -143,7 +143,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			if (self.model.report.config.htmlDebug) self.addHtml("<!-- START PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
 			self.addHtml(self.tag.getPreviousHTML());
 			if (self.model.report.config.htmlDebug) self.addHtml("<!-- END PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
-			obj.indInnerContentHtmlBuffer=self.pushHtmlBuffer();
+			self.indInnerContentHtmlBuffer=self.pushHtmlBuffer();
 			self.startApplyToken();
 			self.continueTask();
 		});

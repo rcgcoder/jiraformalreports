@@ -27,6 +27,7 @@ var jrfFormula=class jrfFormula{//this kind of definition allows to hot-reload
 //			log("Top Buffer("+(frmIndHtmlBuffer)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer).saToString());
 //			log("Top Buffer -1("+(frmIndHtmlBuffer-1)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-1).saToString());
 //			log("Top Buffer -2("+(frmIndHtmlBuffer-2)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-2).saToString());
+			self.indPostContentHtmlBuffer=self.pushHtmlBuffer();
 			self.addPostHtml();
 //			log("Top Buffer("+(frmIndHtmlBuffer)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer).saToString());
 //			log("Top Buffer -1("+(frmIndHtmlBuffer-1)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-1).saToString());

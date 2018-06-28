@@ -762,7 +762,7 @@ var jrfReport=class jrfReport {
 		});
 		
 		self.addStep("Storing issue info or Removing all Issues in the scope.... ",function(){
-			if (!self.isReusingIssueList()){
+			if (!self.reuseAllIssues){
 				self.allIssues.list.clear();
 				log("Report uses "+ self.allIssues.list.length()+ " issues");
 				self.childs=newHashMap();

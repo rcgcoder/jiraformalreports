@@ -71,11 +71,11 @@ var jrfReport=class jrfReport {
         
         if (!self.isReusingIssueList()){
 			self.allIssues=undefined; // unassing allIssues.... to free memory
-			self.childs.clear();
-			self.advanceChilds.clear();
-			self.rootElements.clear();
-			self.rootIssues.clear();
-			self.rootProjects.clear();
+			self.childs=newHashMap();
+			self.advanceChilds=newHashMap();
+			self.rootElements=newHashMap();
+			self.rootIssues=newHashMap();
+			self.rootProjects=newHashMap();
 			self.treeIssues=newHashMap();
 		}
 		var issuesAdded=self.treeIssues;

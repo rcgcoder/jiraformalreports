@@ -35,7 +35,6 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.executeFunction=self.executeFunction;
 		obj.replaceVars=self.replaceVars;		
 		obj.getStringReplaced=self.getStringReplaced;		
-		obj.replaceVarsComplex=self.replaceVarsComplex;		
 		obj.replaceVarsComplexArray=self.replaceVarsComplexArray;		
 		obj.replaceVarsAndExecute=self.replaceVarsAndExecute;		
 		obj.initVars=obj.getAttrVal("initVar");
@@ -456,9 +455,9 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					sValAux=normalFormatNumber(sValAdjusted) + " %"; 
 				} else if (sFormat.toLowerCase().indexOf("fixed")>=0) {
 					var sValue=self.replaceVars(sValAux);
-					sValue=sValue.removeInnerTags(sValue,true);
-					sValue=sValue.saTrim();
+					sValue=sValue.saRemoveInnerTags(sValue,true);
 					sValue=sValue.saToString();
+					sValue=sValue.trim();
 					if (!isDate(sValue)){
 						var arrParts=sFormat.split("=");
 						var nDigits=0;

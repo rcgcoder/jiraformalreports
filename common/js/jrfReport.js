@@ -730,7 +730,7 @@ var jrfReport=class jrfReport {
 
 		self.addStep("Setting the HTML",function(sModelProcessedResult){
 	        var jqResult=$("#ReportResult");
-	        jqResult.html(sModelProcessedResult);
+	        jqResult.html(sModelProcessedResult.saToString());
 			loggerFactory.getLogger().enabled=true;
 			self.result=sModelProcessedResult;
 			self.continueTask();

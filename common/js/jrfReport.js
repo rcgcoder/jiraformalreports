@@ -56,19 +56,37 @@ var jrfReport=class jrfReport {
 		//clean the destination html.... to save memory when run more than one intents
         var jqResult=$("#ReportResult");
         jqResult.html("");
-		if (!self.isReusingIssueList()){
+
+        debugger;
+        if (self.isReusingIssueList()){
+			var issueCache=System.webapp.IssueCache;
+			if (isDefined(issueCache)){
+				self.allIssues=issueCache.allIssues; 
+				self.childs=issueCache.childs;
+				self.advanceChilds=issueCache.advanceChilds;
+				self.rootElements=issueCache.rootElements;
+				self.rootIssues=issueCache.rootIssues;
+				self.rootProjects=issueCache.rootProjects;
+				self.treeIssues=issueCache.treeIssues;
+			} else {
+				self.setReusingIssueList(false);
+			}
+        }
+        
+        if (!self.isReusingIssueList()){
 			self.allIssues=undefined; // unassing allIssues.... to free memory
 			self.childs.clear();
 			self.advanceChilds.clear();
 			self.rootElements.clear();
 			self.rootIssues.clear();
 			self.rootProjects.clear();
-
+			self.treeIssues=newHashMap();
 		}
+		var issuesAdded=self.treeIssues;
+		var bAlerted=false;
 		self.rootIssues.clear();
 		
 		self.addStep("Getting Confluence Report Model.... ",function(){
-
 	        var cfc=System.webapp.getConfluence();
 			//cfc.getAllPages();
 			self.addStep("Manipulating Content",function(content){
@@ -152,10 +170,7 @@ var jrfReport=class jrfReport {
 	    		var fncFormula=Function("actualValue","issue",sAdvanceAdjustFunction);
 	    		self.adjustAccumItemFunctions.add("AdvanceChilds",fncFormula);
 	        }
-
         // change de "fieldValue" method
-	        
-
 			self.continueTask();
 		});
 		// first launch all issue retrieve ...
@@ -169,7 +184,6 @@ var jrfReport=class jrfReport {
 				oIssue.updateInfo();
 				oIssue.setKey(issue.key);
 			}
-			
 			self.jira.processJQLIssues(self.config.jqlScope.jql,
 									  fncProcessIssue);
 		});	
@@ -182,6 +196,9 @@ var jrfReport=class jrfReport {
 		// get root elements.... issues and/or projects
 		self.addStep("Getting root elements.... ",function(){
 			log("Getting root elements");
+			if (self.isReusingIssueList()){
+				return self.continueTask();
+			}
 			if (self.config.rootsByProject){
 				if (self.config.rootProjects.length>0){
 					log("Loading projects selected to be roots");
@@ -227,6 +244,9 @@ var jrfReport=class jrfReport {
 		});
 		
 		self.addStep("Processing root elements.... ",function(){
+			if (self.isReusingIssueList()){
+				return self.continueTask();
+			}
 			if (self.bFinishReport) return self.continueTask();
 			//self.treeIssues=newHashMap();
 			var bAlerted=false;
@@ -387,12 +407,11 @@ var jrfReport=class jrfReport {
 			self.continueTask();
 		});
 */			
-
-		var issuesAdded=newHashMap();
-		self.treeIssues=issuesAdded;
-		var bAlerted=false;
 		// assing childs and advance childs to root elements
 		self.addStep("Assign Childs and Advance",function(){
+			if (self.isReusingIssueList()){
+				return self.continueTask();
+			}
 			self.rootIssues.walk(function(value,iProf,key){
 				log("Root Issue: "+key);
 				var issue=self.allIssues.getById(key);
@@ -608,6 +627,9 @@ var jrfReport=class jrfReport {
 
 		// load comments of issues
 		self.addStep("Loading comments of "+ issuesAdded.length()+"issues",function(){
+			if (self.isReusingIssueList()){
+				return self.continueTask();
+			}
 			var arrKeyGroups=[];
 			var keyGroup=[];
 			arrKeyGroups.push(keyGroup);
@@ -743,15 +765,27 @@ var jrfReport=class jrfReport {
 			self.continueTask();
 		});
 		
-		self.addStep("Removing all Issues in the scope.... ",function(){
-			self.allIssues.list.clear();
-			log("Report uses "+ self.allIssues.list.length()+ " issues");
-			self.childs=newHashMap();
-			self.advanceChilds=newHashMap();
-			//self.treeIssues=newHashMap();
-			self.rootElements=newHashMap();
-			self.rootIssues=newHashMap();
-			self.rootProjects=newHashMap();
+		self.addStep("Storing issue info or Removing all Issues in the scope.... ",function(){
+			if (!self.isReusingIssueList()){
+				self.allIssues.list.clear();
+				log("Report uses "+ self.allIssues.list.length()+ " issues");
+				self.childs=newHashMap();
+				self.advanceChilds=newHashMap();
+				//self.treeIssues=newHashMap();
+				self.rootElements=newHashMap();
+				self.rootIssues=newHashMap();
+				self.rootProjects=newHashMap();
+			} else {
+				var issueCache={}
+				issueCache.allIssues=self.allIssues; 
+				issueCache.childs=self.childs;
+				issueCache.advanceChilds=self.advanceChilds;
+				issueCache.self.rootElements=self.rootElements;
+				issueCache.rootIssues=self.rootIssues;
+				issueCache.rootProjects=self.rootProjects;
+				issueCache.treeIssues=self.treeIssues;
+				System.webapp.IssueCache=issueCache;
+			}
 			self.continueTask();
 		});	
 

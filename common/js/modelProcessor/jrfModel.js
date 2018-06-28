@@ -13,7 +13,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		} else {
 			self.inputHtml=theReport.config.model;
 		}
-		self.htmlStack=newHashMap();
+		self.htmlStack=[];
 		self.markdownConverter = new showdown.Converter();
 		self.report=theReport;
 		self.processingRoot="";

@@ -507,9 +507,13 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		if (oSimple.values.length>0){
 			vValue=executeFunction(oSimple.values,vValue,self.model.functionCache);
 		}
-		sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + vValue;
+		var vAux=vValue;
+		if (isString(vAux)||isArray(vAux)){
+			vAux=vAux.saRemoveInnerHtmlTags().saTrim().saToString();
+		}
+		sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + vAux;
 		log("Fase 2  {{ }} Final Result:"+sTextToLog);
-		return vValue;
+		return vAux;
 	}
 	getStringReplaced(sText,otherParams){
 		var arrInnerText;

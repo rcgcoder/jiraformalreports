@@ -193,9 +193,16 @@ String.prototype.saRemoveInnerHtmlTags= function (sReplaceText){
 	return [this].saRemoveInnerHtmlTags(sReplaceText);
 };
 
-String.prototype.saToString= function (saToString){
+String.prototype.saToString= function (){
 	return this;
 };
+String.prototype.saTrim= function (){
+	return this.trim();
+};
+String.prototype.saIndexOf= function (sTag,bFindLast,bDivide,startPos,startSubArrayPos){
+	return [this].saIndexOf(sTag,bFindLast,bDivide,startPos,startSubArrayPos);
+}
+
 	
 Array.prototype.saToString= function (){
 		var saInput=this;

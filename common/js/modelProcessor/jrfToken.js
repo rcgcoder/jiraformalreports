@@ -500,16 +500,16 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			sResult=replaceAll(sResult,sRef,sValue);
 			sResult=sResult.saTrim();
 		}
-/*		var sTextToLog=self.model.removeInnerTags(sResult,true);
+		var sTextToLog=sResult.saRemoveInnerHtmlTags().saTrim().saToString();
 		log("executed {{{"+sTextToLog+" }}}");
 //		log(sResult);
 		log("now let´s replace {{  "+sResult+"  }}");
-*/		var oSimple=self.replaceVarsComplexArray(sResult);
+		var oSimple=self.replaceVarsComplexArray(sResult);
 		var vValue=oSimple.text;
 		if (oSimple.values.length>0){
 			vValue=executeFunction(oSimple.values,vValue,self.model.functionCache);
 		}
-//		log("Replaced: <<"+sText+">> ->> <<"+vValue+">>");
+		log("Replaced: <<"+sText.saToString()+">> ->> <<"+vValue.saToString()+">>");
 		return vValue;
 	}
 	getStringReplaced(sText,otherParams){

@@ -34,6 +34,7 @@ Array.prototype.saIndexOf= function (sTag,bFindLast,bDivide,startPos,startSubArr
 		var auxSubArrayStartPos;
 		var bDefinedSubStartPos=isDefined(startSubArrayPos);
 		var bDefinedStartPos=isDefined(startPos);
+		var nSelectedBlocks=0;
 		
 		if (isString(arrStrings)){
 			bDefinedSubStartPos=false;
@@ -89,18 +90,16 @@ Array.prototype.saIndexOf= function (sTag,bFindLast,bDivide,startPos,startSubArr
 					)
 				   ){
 				sRow=vProcessArray[iPos];
+				nSelectedBlocks=1;
 				if (iPos>0){
+					nSelectedBlocks=2;
 					sRow=vProcessArray[iPos-1]+sRow;
 				}
 				indOf=sRow.lastIndexOf(sTag);
 				if (indOf>=0){
 					bLocated=true;
 					if (iPos>0) {
-						if (indOf>vProcessArray[iPos-1].length){
-							indOf-=vProcessArray[iPos-1].length;
-						} else {
-							iPos--;
-						}
+						iPos--;
 					}
 				} else {
 					iPos--;
@@ -119,17 +118,17 @@ Array.prototype.saIndexOf= function (sTag,bFindLast,bDivide,startPos,startSubArr
 					((!bHigherPart)&&(iPos<auxStartPos))
 					)
 				   ){
+				bInterStrings=false;
 				sRow=vProcessArray[iPos];
+				nSelectedBlocks=1;
 				if (iPos<(vLength-1)){
+					nSelectedBlocks=2;
 					sRow+=vProcessArray[iPos+1];
 				}
 				indOf=sRow.indexOf(sTag);
 				if (indOf>=0){
 					bLocated=true;
-					if (indOf>vProcessArray[iPos].length){
-						indOf-=vProcessArray[iPos].length;
-						iPos++;
-					}
+					// do not change the iPos
 				} else {
 					iPos++;
 					if ((iPos>=vLength)&&(bHigherPart)){
@@ -150,8 +149,8 @@ Array.prototype.saIndexOf= function (sTag,bFindLast,bDivide,startPos,startSubArr
 			} else {
 				arrPrevious=vProcessArray.slice(0,iPos);
 			}
-			arrPosterior=vProcessArray.slice(iPos+1);
-			sTrgString=vProcessArray[iPos];
+			arrPosterior=vProcessArray.slice(iPos+nSelectedBlocks);
+			sTrgString=sRow;
 			strPos=indOf;
 			if (isDefined(bDivide)&&bDivide){
 				var sAux=sTrgString.substring(0,strPos);

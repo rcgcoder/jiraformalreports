@@ -191,10 +191,11 @@ class RCGTask{
 		}
 		var theTask=self;
 		var theTaskManager=self.getTaskManager();
+		var bIsAsync=false;
 		var fncApply=function(){
 			self.initTime=Date.now();
 			theTaskManager.setRunningTask(theTask);
-			theTaskManager.asyncTimeWasted+=self.initTime-theTaskManager.lastTimeout;
+			if (bIsAsync) theTaskManager.asyncTimeWasted+=self.initTime-theTaskManager.lastTimeout;
 			if (theTask.description!=""){
 				log("Calling method of task: "+theTask.description);
 			}
@@ -207,8 +208,10 @@ class RCGTask{
 		var fncAsyncApply=function(){
 			theTaskManager.lastTimeout=Date.now();
 			if (theTaskManager.asyncTaskCallsDelay>0){
+				bIsAsync=false;
 				setTimeout(fncApply,theTaskManager.asyncTaskCallsDelay);
 			} else {
+				bIsAsync=true;
 				//setTimeout(fncApply);
 				requestAnimationFrame(fncApply);
 			}

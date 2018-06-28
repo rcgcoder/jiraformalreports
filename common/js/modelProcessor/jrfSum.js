@@ -6,6 +6,7 @@ var jrfSum=class jrfSum{//this kind of definition allows to hot-reload
 	}
 	apply(){
 		var self=this;
+		debugger;
 		var hsValues=self.variables.getVars(self.varName);
 		var sValue=0;
 		hsValues.walk(function(elem){

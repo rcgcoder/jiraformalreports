@@ -203,8 +203,9 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				var varValue;
 				if (arrVarParts.length>1){
 					varValue=self.replaceVars(arrVarParts[1]);
+					varValue=varValue.saRemoveInnerHtmlTags();
 				} else {
-					varValue=sValAux;
+					varValue=sValAux.saRemoveInnerHtmlTags();
 				}
 				log("Looking for Value ["+varName+"] to set:["+varValue+"]");
 				var vVar=self.variables.getVars(varName);

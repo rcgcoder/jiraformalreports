@@ -326,6 +326,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	}
 	addPostHtml(){
 		var self=this;
+		debugger;
 		if (self.visibility!=""){
 			if (self.visibility=="hidden"){
 				var sHtml=self.popHtmlBuffer(self.indTokenHtmlBuffer);

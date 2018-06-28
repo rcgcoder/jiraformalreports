@@ -14,7 +14,6 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			self.inputHtml=theReport.config.model;
 		}
 		self.htmlStack=newHashMap();
-		self.html="";
 		self.markdownConverter = new showdown.Converter();
 		self.report=theReport;
 		self.processingRoot="";
@@ -116,24 +115,15 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 	pushHtmlBuffer(sText){
 		var self=this;
 		var indStack=self.htmlStack.length();
-		self.htmlStack.push(self.html);
-/* 
-		self.html="";
-		if (isDefined(sText)){
-			self.html=sText;
-		}
-*/
-		self.html="";
 		if (isDefined(sText)){
 			if (isString(sText)){
-				self.html=sText;
+				self.htmlStack.push(sText);
 			} else if (isArray(sText)){
 				sText.forEach(function(sRow){
 					self.htmlStack.push(sRow);
 				});
 			}
 		}
-
 //		log("PUSH HTMLBuffer new length:"+indStack);
 		return indStack;
 	}
@@ -157,10 +147,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 	}
 	popHtmlBuffer(fromIndex){
 		var self=this;
-		var html=[];
-		//var html=self.html;
-		html.push(self.html);
-		self.html="";
+		var htmlResult;
 		var newInd=self.htmlStack.length()-1;
 		if (isDefined(fromIndex)){
 			newInd=fromIndex;
@@ -168,15 +155,8 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		if (newInd==self.htmlStack.length()){
 			log("HTMLBuffer error popping a html buffer");
 		}
-		while (self.htmlStack.length()>(newInd+1)){
-			//html=self.htmlStack.pop()+html;
-			html.unshift(self.htmlStack.pop());
-		}
-		//self.html=self.htmlStack.pop();
-		html.unshift(self.htmlStack.pop());
-//		log("Stack Length after pop("+fromIndex+"):"+self.htmlStack.length()+" == "+fromIndex);
-//		log("POP HTMLBuffer new length:"+self.htmlStack.length());
-		return html;
+		htmlResult=self.htmlStack.splice(newInd, 2);
+		return htmlResult;
 	}
 	addHtml(sText){
 		var self=this;
@@ -192,7 +172,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			if (isArray(sText)){
 				self.pushHtmlBuffer(sText);
 			} else {
-				self.html+="\n"+sText;
+				self.pushHtmlBuffer("\n"+sText);
 			}
 		}
 	}

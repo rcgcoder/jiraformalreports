@@ -726,6 +726,7 @@ var jrfReport=class jrfReport {
 		self.addStep("Processing Model",function(){
 			var tm=self.getTaskManager();
 			tm.asyncTaskCallsBlock=3000;
+			tm.asyncTaskCallsMaxDeep=30;
 			self.objModel.process("encode"); // hash inner task....
 		});
 		
@@ -733,6 +734,7 @@ var jrfReport=class jrfReport {
 		self.addStep("Setting the HTML",function(sModelProcessedResult){
 			var tm=self.getTaskManager();
 			tm.asyncTaskCallsBlock=0;
+			tm.asyncTaskCallsMaxDeep=0;
 	        var jqResult=$("#ReportResult");
 	        jqResult.html(sModelProcessedResult.saToString());
 			loggerFactory.getLogger().enabled=true;

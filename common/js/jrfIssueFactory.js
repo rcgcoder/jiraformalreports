@@ -62,7 +62,7 @@ function newIssueFactory(report){
 				return sFieldKey;
 			}
 		}
-		log("Error getting correct id of Field:"+sFieldName);
+//		log("Error getting correct id of Field:"+sFieldName);
 		return sFieldName;
 	});
 	dynObj.functions.add("fieldValue",function(theFieldName,bRendered,dateTime,inOtherParams){
@@ -594,12 +594,12 @@ function newIssueFactory(report){
 		var bLocated=false;
 		for (var i=0;(i<arrLife.length) &&(!bLocated);i++){
 			history=arrLife[i];
-			log(sFieldName+" Life evaluating. Actual Value:" +JSON.stringify(auxVal)+ 
+/*			log(sFieldName+" Life evaluating. Actual Value:" +JSON.stringify(auxVal)+ 
 					" Type:"+ history[3] + 
 					" Date:"+ history[0] + 
 					" From:"+(history[1]!=null?JSON.stringify(history[1]):"null") + 
 					" To:"+(history[2]!=null?JSON.stringify(history[2]):"null") );
-			if ((i==0)&&(history[3]=="adjust")){
+*/			if ((i==0)&&(history[3]=="adjust")){
 				auxVal=history[2];
 			} else if (history[0]<=dateTime){ // if next is < that the date.... finish
 				bLocated=true;

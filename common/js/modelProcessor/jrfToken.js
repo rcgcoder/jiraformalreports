@@ -16,8 +16,10 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.getHtmlBuffer=function(){return self.model.html;};
 		obj.addHtml=function(sHtml){self.model.addHtml(sHtml);};
 		obj.changeBrackets=self.changeBrackets;
-		obj.indHtmlBuffer=0;
-		obj.indTokenHtmlBuffer=0;
+		obj.indStartTokenHtmlBuffer=0;
+		obj.indPreviosContentHtmlBuffer=0;
+		obj.indInnerContentHtmlBuffer=0;
+		obj.indPostContentHtmlBuffer=0;
 		obj.adjustSyntax=self.adjustSyntax;
 		obj.getAttrVal=self.getAttrVal;
 		obj.encode=self.encode;
@@ -120,7 +122,15 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 
 	encode(){
 		var self=this;
-		self.indHtmlBuffer=self.pushHtmlBuffer();
+
+/*		obj.indStartTokenHtmlBuffer=0;
+		obj.indPreviosContentHtmlBuffer=0;
+		obj.indInnerContentHtmlBuffer=0;
+		obj.indPostContentHtmlBuffer=0;
+*/		
+		
+		
+		self.indStartTokenHtmlBuffer=self.pushHtmlBuffer();
 		//log(self.topHtmlBuffer(self.indHtmlBuffer-2));
 		if (self.model.report.config.htmlDebug){
 			self.addHtml("<!-- " + self.changeBrackets(self.tag.getTagText())+" -->");
@@ -129,9 +139,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 
 		self.addStep("Pre-Encode part...",function(){
 			self.variables.pushVarEnv();
+			self.indPreviosContentHtmlBuffer=self.pushHtmlBuffer();
 			if (self.model.report.config.htmlDebug) self.addHtml("<!-- START PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
 			self.addHtml(self.tag.getPreviousHTML());
 			if (self.model.report.config.htmlDebug) self.addHtml("<!-- END PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
+			obj.indInnerContentHtmlBuffer=self.pushHtmlBuffer();
 			self.startApplyToken();
 			self.continueTask();
 		});
@@ -264,7 +276,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	}
 	startApplyToken(){
 		var self=this;
-		self.indTokenHtmlBuffer=self.pushHtmlBuffer();
+//		//self.indTokenHtmlBuffer=self.pushHtmlBuffer();
 		// process the if parameter 
 		self.applyIfCondition();
 		if (self.ifConditionResult){
@@ -298,18 +310,19 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var self=this;
 		var sAux="";
 		if (self.ifConditionResult){
+			self.indPostContentHtmlBuffer=self.pushHtmlBuffer();
 			if (self.autoAddPostHtml){
 				self.addPostHtml();
 			}
 			
 /*			if (self.processVarsAtEnd){
 				var sContent=self.popHtmlBuffer(self.indTokenHtmlBuffer);
-				self.indTokenHtmlBuffer=self.pushHtmlBuffer();
+				//self.indTokenHtmlBuffer=self.pushHtmlBuffer();
 				sContent=self.replaceVars(sContent);
 				self.addHtml(sContent);
 			}
-*/			var sValAux=self.popHtmlBuffer(self.indTokenHtmlBuffer);
-			self.indTokenHtmlBuffer=self.pushHtmlBuffer();
+*/			var sValAux=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
+			//self.indTokenHtmlBuffer=self.pushHtmlBuffer();
 
 			sValAux=self.applyInFormat(sValAux);
 			sValAux=self.applySetVars(sValAux);
@@ -328,13 +341,13 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		debugger;
 		if (self.visibility!=""){
 			if (self.visibility=="hidden"){
-				var sHtml=self.popHtmlBuffer(self.indTokenHtmlBuffer);
-				self.indTokenHtmlBuffer=self.pushHtmlBuffer();
+				var sHtml=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
+				//self.indTokenHtmlBuffer=self.pushHtmlBuffer();
 				//sHtml=self.replaceVars(sHtml);
 				self.addHtml("");
 			} else if (self.visibility=="hideable"){
-				var sHtml=self.popHtmlBuffer(self.indTokenHtmlBuffer);
-				self.indTokenHtmlBuffer=self.pushHtmlBuffer();
+				var sHtml=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
+				//self.indTokenHtmlBuffer=self.pushHtmlBuffer();
 				//sHtml=self.replaceVars(sHtml);
 				var newId=(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
 				self.addHtml(`
@@ -442,7 +455,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	applyOutFormat(sValAux){
 		var self=this;
 //		var sValAux=self.popHtmlBuffer(self.indTokenHtmlBuffer);
-//		self.indTokenHtmlBuffer=self.pushHtmlBuffer();
+//		//self.indTokenHtmlBuffer=self.pushHtmlBuffer();
 		if (self.outFormat!=""){
 			var arrFormats=self.outFormat.split(",");
 			var sFormat;

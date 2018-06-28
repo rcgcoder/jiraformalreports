@@ -10,7 +10,7 @@ var jrfFormula=class jrfFormula{//this kind of definition allows to hot-reload
 		var self=this;
 //		debugger;
 		// processing inner childs in a buffer to get the plain formula
-		var frmIndHtmlBuffer=self.pushHtmlBuffer();
+//		var frmIndHtmlBuffer=self.pushHtmlBuffer();
 //		log("Top Buffer("+(frmIndHtmlBuffer)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer).saToString());
 //		log("Top Buffer -1("+(frmIndHtmlBuffer-1)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-1).saToString());
 //		log("Top Buffer -2("+(frmIndHtmlBuffer-2)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-2).saToString());
@@ -31,7 +31,7 @@ var jrfFormula=class jrfFormula{//this kind of definition allows to hot-reload
 //			log("Top Buffer("+(frmIndHtmlBuffer)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer).saToString());
 //			log("Top Buffer -1("+(frmIndHtmlBuffer-1)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-1).saToString());
 //			log("Top Buffer -2("+(frmIndHtmlBuffer-2)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-2).saToString());
-			var sContent=self.popHtmlBuffer(frmIndHtmlBuffer); // getting the formula with possible html tags inside
+			var sContent=self.popHtmlBuffer(self.indInnerContentHtmlBuffer); // getting the formula with possible html tags inside
 			self.pushHtmlBuffer();
 //			log("Top Buffer("+(frmIndHtmlBuffer)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer).saToString());
 //			log("Top Buffer -1("+(frmIndHtmlBuffer-1)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer-1).saToString());

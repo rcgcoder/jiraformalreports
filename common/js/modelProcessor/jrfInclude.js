@@ -87,13 +87,12 @@ var jrfInclude=class jrfInclude{//this kind of definition allows to hot-reload
 	}
 	apply(){
 		var self=this;
-		var noopIndHtmlBuffer=self.pushHtmlBuffer();
 		self.addStep("Processing all Childs of jrfInclude",function(){
 			self.processAllChilds();
 		});
 		self.addStep("Finalizing the jrfInclude",function(){
 			self.addPostHtml();
-			var sContent=self.popHtmlBuffer(noopIndHtmlBuffer);
+			var sContent=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
 			sContent=self.replaceVars(sContent);
 			self.addHtml(sContent);
 			self.continueTask();

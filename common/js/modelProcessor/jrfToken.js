@@ -465,6 +465,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					var sValAdjusted=replaceAll(sValAux+"",",",".");
 					sValAux=inEuros(sValAdjusted,true); 
 				} else if (sFormat=="hours"){
+					debugger;
 					var sValAdjusted=replaceAll(sValAux+"",",",".");
 					sValAux=normalFormatNumber(sValAdjusted) + " h"; 
 				} else if (sFormat=="SecondsToHours"){

@@ -463,18 +463,22 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				sFormat=arrFormats[i];
 				if (sFormat=="money"){
 					var sValAdjusted=replaceAll(sValAux+"",",",".");
+					sValAdjusted=sValAdjusted.saToString();
 					sValAux=inEuros(sValAdjusted,true); 
 				} else if (sFormat=="hours"){
 					debugger;
 					var sValAdjusted=replaceAll(sValAux+"",",",".");
+					sValAdjusted=sValAdjusted.saToString();
 					sValAux=normalFormatNumber(sValAdjusted) + " h"; 
 				} else if (sFormat=="SecondsToHours"){
 					var floatVal=parseFloat(sValAux);
 					floatVal=(floatVal/(60*60)).toFixed(2);
 					var sValAdjusted=replaceAll(floatVal+"",",",".");
+					sValAdjusted=sValAdjusted.saToString();
 					sValAux=normalFormatNumber(sValAdjusted) + " h"; 
 				} else if (sFormat=="%"){
 					var sValAdjusted=replaceAll(sValAux+"",",",".");
+					sValAdjusted=sValAdjusted.saToString();
 					sValAux=normalFormatNumber(sValAdjusted) + " %"; 
 				} else if (sFormat.toLowerCase().indexOf("fixed")>=0) {
 					var sValue=self.replaceVars(sValAux);

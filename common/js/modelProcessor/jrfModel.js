@@ -240,7 +240,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		if (isString(sHtml)) {
 			sResult=removeInnerTags(sHtml,bClear);
 		} else {
-			sResult=sHtml.saRemoveInnerTags(bClear?"":" ");
+			sResult=sHtml.saRemoveInnerHtmlTags(bClear?"":" ");
 			sResult=sResult.asToString();
 		}
 		return sResult;

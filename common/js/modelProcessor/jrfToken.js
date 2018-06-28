@@ -407,7 +407,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				} else 
 */				if (sFormatId=="fixed"){
 					sValue=self.replaceVars(sValAux);
-					sValue=sValue.saRemoveInnerTags();
+					sValue=sValue.saRemoveInnerHtmlTags();
 					sValue=replaceAll(sValue,"\n"," ");
 					sValue=sValue.saToString();
 					if (sValue=="") return;
@@ -455,8 +455,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					sValAux=normalFormatNumber(sValAdjusted) + " %"; 
 				} else if (sFormat.toLowerCase().indexOf("fixed")>=0) {
 					var sValue=self.replaceVars(sValAux);
-					debugger;
-					sValue=(""+sValue).saRemoveInnerTags(true);
+					sValue=sValue.saRemoveInnerHtmlTags();
 					sValue=sValue.saToString();
 					sValue=sValue.trim();
 					if (!isDate(sValue)){

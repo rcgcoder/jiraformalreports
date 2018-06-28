@@ -879,6 +879,7 @@ class RCGTaskManager{
 						},3000);
 			}
 			log("-->   FINISHED !! InnerForks:"+self.innerForks.length+" Global Forks:"+self.globalForks.length);
+			self.asyncTimeWasted=0;
 			return "";
 		}
 	}

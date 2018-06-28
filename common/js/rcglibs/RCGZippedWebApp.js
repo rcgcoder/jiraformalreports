@@ -1019,7 +1019,7 @@ class RCGZippedApp{
 				  '   </span>'+
 				  '   <progress class="tm-progress" id="sbProgress" value="'+(Math.round(perc100))+'" max="100">Progress Text</progress>'+
 				  '   '+((item.timeSpent/1000).toFixed(2))+' segs '+
-						    (currentDeep==0?"Timeout Wasted: "+(tm.asyncTimeWasted/1000).toFixed(2)+" ":"")
+						    (currentDeep==0?"Timeout Wasted: "+(tm.asyncTimeWasted/1000).toFixed(2)+" tOuts:"+tm.timeoutsCalled+" ":"")
 						    +(tTotal>0?(' (ETA: '+tETA+' segs)'):'')+
 				  '</div>';
 				var sSubItems="";

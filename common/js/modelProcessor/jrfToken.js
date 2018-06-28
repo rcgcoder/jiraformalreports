@@ -505,7 +505,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		if (oSimple.values.length>0){
 			vValue=executeFunction(oSimple.values,vValue,self.model.functionCache);
 		}
-		log("Replaced: "+sTextToLog+" ->> <<"+vValue.saToString()+">>");
+		log("Replaced: "+sTextToLog+" ->> <<"+vValue+">>");
 		return vValue;
 	}
 	getStringReplaced(sText,otherParams){

@@ -484,11 +484,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		return vValue;
 	}
 	replaceVars(sText){
-		debugger;
 		var self=this;
 		var sTextToLog=sText.saRemoveInnerHtmlTags().saTrim().saToString();
 		sTextToLog=sText.saRemoveInnerHtmlTags().saTrim().saToString();
 		log("Replace Vars of:"+sTextToLog);
+		debugger;
 		var oScripts=self.replaceVarsComplexArray(sText,"{{{","}}}",false);
 		var sResult=oScripts.text;
 		for (var i=0;i<oScripts.values.length;i++){

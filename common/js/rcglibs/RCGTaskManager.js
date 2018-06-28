@@ -131,14 +131,14 @@ class RCGTask{
 	}
 	changeStatus(){
 		var self=this;
-		if (self.onChangeStatus!=""){
-			self.onChangeStatus();
+		var itmAux=self;
+		while (itmAux!=""){
+			if (itmAux.onChangeStatus!=""){
+				itmAux.onChangeStatus();
+			}
+			itmAux=itmAux.parent;
 		}
-		if (self.parent!=""){
-			self.parent.changeStatus();
-		} else {
-			self.getTaskManager().changeStatus();
-		}
+		self.getTaskManager().changeStatus();
 	}
 	done(){
 		var self=this;

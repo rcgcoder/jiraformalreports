@@ -194,7 +194,7 @@ String.prototype.saRemoveInnerHtmlTags= function (sReplaceText){
 };
 
 String.prototype.saToString= function (saToString){
-	return [this].saToString();
+	return this;
 };
 	
 Array.prototype.saToString= function (){

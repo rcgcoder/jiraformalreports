@@ -43,7 +43,7 @@ var jrfReport=class jrfReport {
 	}
 	isReusingIssueList(){
 		var self=this;
-		if ((isDefined(self.allIssues)&&(self.reuseAllIssues))){
+		if ((isDefined(System.webapp.IssueCache)&&(self.reuseAllIssues))){
 			return true;
 		}
 		return false;
@@ -60,17 +60,13 @@ var jrfReport=class jrfReport {
         debugger;
         if (self.isReusingIssueList()){
 			var issueCache=System.webapp.IssueCache;
-			if (isDefined(issueCache)){
-				self.allIssues=issueCache.allIssues; 
-				self.childs=issueCache.childs;
-				self.advanceChilds=issueCache.advanceChilds;
-				self.rootElements=issueCache.rootElements;
-				self.rootIssues=issueCache.rootIssues;
-				self.rootProjects=issueCache.rootProjects;
-				self.treeIssues=issueCache.treeIssues;
-			} else {
-				self.setReusingIssueList(false);
-			}
+			self.allIssues=issueCache.allIssues; 
+			self.childs=issueCache.childs;
+			self.advanceChilds=issueCache.advanceChilds;
+			self.rootElements=issueCache.rootElements;
+			self.rootIssues=issueCache.rootIssues;
+			self.rootProjects=issueCache.rootProjects;
+			self.treeIssues=issueCache.treeIssues;
         }
         
         if (!self.isReusingIssueList()){

@@ -156,6 +156,7 @@ var jrfSubset=class jrfSubset{//this kind of definition allows to hot-reload
 			arrElems.push(elem);
 		});
 		var sFormulaBody=self.replaceVars(self.orderFormula);
+		var sFormulaBody=sFormulaBody.saToString();
 		var sFncFormula=`
 			""; // to close the var result= instruction inserted by executefunction
 			var elemA=_arrRefs_[0];

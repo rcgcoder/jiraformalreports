@@ -216,7 +216,11 @@ function createFunction(arrValues,sFunctionBody,functionCache){
 }
 
 function executeFunction(arrValues,sFunctionBody,functionCache){
-	var fncFormula=createFunction(arrValues,sFunctionBody,functionCache);
+	var sFncBody=sFunctionBody;
+	if (isArray(sFunctionBody)){
+		sFncBody=sFunctionBody.saToString();
+	} 
+	var fncFormula=createFunction(arrValues,sFncBody,functionCache);
 	var vValue=fncFormula(arrValues);
 	return vValue;
 }

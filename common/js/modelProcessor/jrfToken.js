@@ -409,6 +409,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 */				if (sFormatId=="fixed"){
 					sValue=self.replaceVars(sValAux);
 					sValue=sValue.saRemoveInnerTags();
+					sValue=replaceAll(sValue,"\n"," ");
 					sValue=sValue.saToString();
 					if (sValue=="") return;
 					var nDigits=2;
@@ -423,7 +424,6 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 						log("Parse done... the rest is return result")
 						// execute function inserts the last ";" automatically
 						`;
-					sValue=replaceAll(sValue,"\n"," ");
 					sValAux=executeFunction([sValue],sFncFormula,self.model.functionCache);
 				}  
 			});
@@ -479,11 +479,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	}
 	replaceVarsAndExecute(sText){
 		var self=this;
-		var oReplaced=self.replaceVarsComplex(sText);
+		var oReplaced=self.replaceVarsComplexArray(sText);
 		var vValue=oReplaced.text;
-		if (isArray(vValue)){
-			vValue=vValue.saToString();
-		}
 		var vValue=executeFunction(oReplaced.values,vValue,self.model.functionCache);
 		return vValue;
 	}
@@ -511,7 +508,6 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 */		var oSimple=self.replaceVarsComplexArray(sResult);
 		var vValue=oSimple.text;
 		if (oSimple.values.length>0){
-			vValue=vValue.saToString();
 			vValue=executeFunction(oSimple.values,vValue,self.model.functionCache);
 		}
 //		log("Replaced: <<"+sText+">> ->> <<"+vValue+">>");

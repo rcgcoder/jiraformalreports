@@ -22,6 +22,7 @@ var jrfFormula=class jrfFormula{//this kind of definition allows to hot-reload
 			log("Formula Content previous of replace returns and Vars:"+sContent);
 			sContent=replaceAll(sContent,"\n"," ");
 			sContent=self.replaceVars(sContent);
+			sContent=sContent.saToString();
 			var sFncFormula=`
 							""; // to close the var result= instruction inserted by executefunction
 							var elem=_arrRefs_[0];

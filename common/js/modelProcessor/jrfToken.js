@@ -54,7 +54,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.otherParams=newHashMap();
 		obj.ifConditionResult=true;
 		obj.autoAddPostHtml=true;
-		obj.processVarsAtEnd=false;
+		obj.processVarsAtEnd=true;
 	}
 	processAllChilds(childList,reportElement){
 		var self=this;

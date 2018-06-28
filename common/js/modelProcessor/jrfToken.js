@@ -485,6 +485,9 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	}
 	replaceVars(sText){
 		var self=this;
+		var sTextToLog=sText.saRemoveInnerHtmlTags().saTrim().saToString();
+		sTextToLog=sText.saRemoveInnerHtmlTags().saTrim().saToString();
+		log("Replace Vars of:"+sTextToLog);
 		var oScripts=self.replaceVarsComplexArray(sText,"{{{","}}}",false);
 		var sResult=oScripts.text;
 		for (var i=0;i<oScripts.values.length;i++){
@@ -495,9 +498,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			sResult=replaceAll(sResult,sRef,sValue);
 			sResult=sResult.saTrim();
 		}
-		var sTextToLog=sResult.saRemoveInnerHtmlTags().saTrim().saToString();
-		sTextToLog="{{{"+sText.saRemoveInnerHtmlTags().saTrim().saToString()+" }}} --> "+sTextToLog
-		log("executed "+sTextToLog);
+		sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + sResult.saRemoveInnerHtmlTags().saTrim().saToString();
+		log("Fase 1  {{{ }}} result:"+sTextToLog);
 //		log(sResult);
 //		log("now let´s replace {{  "+sResult+"  }}");
 		var oSimple=self.replaceVarsComplexArray(sResult);
@@ -505,7 +507,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		if (oSimple.values.length>0){
 			vValue=executeFunction(oSimple.values,vValue,self.model.functionCache);
 		}
-		log("Replaced: "+sTextToLog+" ->> <<"+vValue+">>");
+		sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + vValue;
+		log("Fase 2  {{ }} Final Result:"+sTextToLog);
 		return vValue;
 	}
 	getStringReplaced(sText,otherParams){

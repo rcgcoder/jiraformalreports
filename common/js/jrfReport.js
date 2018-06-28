@@ -726,7 +726,7 @@ var jrfReport=class jrfReport {
 		self.addStep("Processing Model",function(){
 			var tm=self.getTaskManager();
 			tm.asyncTimeWasted=0;
-			tm.asyncTaskCallsBlock=1000;
+			tm.asyncTaskCallsBlock=3000;
 			tm.asyncTaskCallsMaxDeep=10;
 			self.objModel.process("encode"); // hash inner task....
 		});

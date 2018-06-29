@@ -8,7 +8,7 @@ var jrfFormula=class jrfFormula extends jrfToken{//this kind of definition allow
 
 	apply(){
 		var self=this;
-//		debugger;
+		debugger;
 		// processing inner childs in a buffer to get the plain formula
 //		var frmIndHtmlBuffer=self.pushHtmlBuffer();
 //		log("Top Buffer("+(frmIndHtmlBuffer)+"):"+self.topHtmlBuffer(frmIndHtmlBuffer).saToString());

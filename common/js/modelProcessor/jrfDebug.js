@@ -5,9 +5,12 @@ var jrfDebug=class jrfDebug extends jrfNoop{//this kind of definition allows to 
 //		model.extendToken(self,tag,reportElem);
 	}
 */	apply(){
+		var antLogStatus=loggerFactory.getLogger().enabled;
+		loggerFactory.getLogger().enabled=true;
+		log("Hardcoded breakPoint!!");
 		debugger;
-		log("Push here a breakPoint");
 		super.apply();
+		if (!antLogStatus)loggerFactory.getLogger().enabled=false;
 	}
 
 }

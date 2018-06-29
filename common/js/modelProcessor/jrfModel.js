@@ -135,7 +135,11 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		var sResult=[];
 		var newInd=self.htmlStack.length-1;
 		if (isDefined(fromIndex)){
-			newInd=fromIndex;
+			if (fromIndex>=0){
+				newInd=fromIndex;
+			} else {
+				newInd=self.htmlStack.length+fromIndex;
+			}
 		}
 		if (self.htmlStack.length<=newInd){
 			return "";

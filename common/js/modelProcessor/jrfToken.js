@@ -529,6 +529,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var vAux=vValue;
 		if (isString(vAux)||isArray(vAux)){
 			vAux=vAux.saRemoveInnerHtmlTags().saTrim().saToString();
+			vValue=vAux;
 		} else if (isObject(vAux)) {
 			vAux="Object of type:"+vValue.constructor.name;	
 		}

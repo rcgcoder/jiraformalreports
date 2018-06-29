@@ -4,7 +4,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	}
 	constructor(tag,reportElem,model){
 		var self=this;
-		debugger;
+		//debugger;
 		self.model=model;
 		System.webapp.getTaskManager().extendObject(self);
 		self.extendObj(self,tag,reportElem);

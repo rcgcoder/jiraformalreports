@@ -55,7 +55,7 @@ var getBillingFieldList=function(){
     	var arrPropPaths=getBillingFieldListRecursive("Billing",objImportes);
     	var hsProps=newHashMap();
     	arrPropPaths.forEach(function(propName){
-    		hsProps.push(propName);
+    		hsProps.add(propName,propName);
     	});
     	return hsProps;
     }

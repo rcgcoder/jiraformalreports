@@ -39,11 +39,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.processVarsAtEnd=true;
 		obj.loadOwnProperties();
 	}
-	pushHtmlBuffer(){return self.model.pushHtmlBuffer();};
-	popHtmlBuffer(index){return self.model.popHtmlBuffer(index);};
-	topHtmlBuffer(index){return self.model.topHtmlBuffer(index);};
-	getHtmlBuffer(){return self.model.html;};
-	addHtml(sHtml){self.model.addHtml(sHtml);};
+	pushHtmlBuffer(){return this.model.pushHtmlBuffer();};
+	popHtmlBuffer(index){return this.model.popHtmlBuffer(index);};
+	topHtmlBuffer(index){return this.model.topHtmlBuffer(index);};
+	getHtmlBuffer(){return this.model.html;};
+	addHtml(sHtml){this.model.addHtml(sHtml);};
 	processAllChilds(childList,reportElement){
 		var self=this;
 		var sKey="";

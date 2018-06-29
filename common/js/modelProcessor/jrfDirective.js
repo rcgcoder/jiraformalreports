@@ -1,7 +1,6 @@
-var jrfDirective=class jrfDirective{//this kind of definition allows to hot-reload
-	constructor(tag,reportElem,model){
+var jrfDirective=class jrfDirective extends jrfToken{//this kind of definition allows to hot-reload
+	loadOwnProperties(){
 		var self=this;
-		model.extendToken(self,tag,reportElem);
 		self.uses=newHashMap();
 		self.accumulators=newHashMap();
 		var uses=self.getAttrVal("use").trim();

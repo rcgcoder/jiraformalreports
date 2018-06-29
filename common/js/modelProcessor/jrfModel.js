@@ -107,11 +107,11 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		}
 		return hsAccumulators;
 	}
-	extendToken(tagApplier,tag,reportElem){
+/*	extendToken(tagApplier,tag,reportElem){
 		var self=this;
 		System.webapp.getTaskManager().extendObject(tagApplier);
 		self.tokenBase.extendObj(tagApplier,tag,reportElem);
-	}
+	}*/
 	pushHtmlBuffer(sText){
 		var self=this;
 		var indStack=self.htmlStack.length;

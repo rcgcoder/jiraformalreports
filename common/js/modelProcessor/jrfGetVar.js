@@ -1,7 +1,6 @@
-var jrfGetVar=class jrfGetVar{//this kind of definition allows to hot-reload
-	constructor(tag,reportElem,model){
+var jrfGetVar=class jrfGetVar extends jrfToken{//this kind of definition allows to hot-reload
+	loadOwnProperties(){
 		var self=this;
-		model.extendToken(self,tag,reportElem);
 		self.varName=self.getAttrVal("getvar");
 	}
 	apply(){

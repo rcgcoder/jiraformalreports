@@ -1,7 +1,12 @@
 var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
-	constructor(model){
+	loadOwnProperties(){
+		
+	}
+	constructor(tag,reportElem,model){
 		var self=this;
 		self.model=model;
+		System.webapp.getTaskManager().extendObject(self);
+		self.extendObj(self,tag,reportElem);
 	}
 	extendObj(obj,tag,reportElem){
 		var self=this;
@@ -10,35 +15,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.tag=tag;
 		obj.reportElem=reportElem;
 		obj.variables=self.model.variables;
-		obj.pushHtmlBuffer=function(){return self.model.pushHtmlBuffer();};
-		obj.popHtmlBuffer=function(index){return self.model.popHtmlBuffer(index);};
-		obj.topHtmlBuffer=function(index){return self.model.topHtmlBuffer(index);};
-		obj.getHtmlBuffer=function(){return self.model.html;};
-		obj.addHtml=function(sHtml){self.model.addHtml(sHtml);};
 		obj.changeBrackets=self.changeBrackets;
 		obj.indStartTokenHtmlBuffer=0;
 		obj.indPreviosContentHtmlBuffer=0;
 		obj.indInnerContentHtmlBuffer=0;
 		obj.indPostContentHtmlBuffer=0;
-		obj.adjustSyntax=self.adjustSyntax;
-		obj.getAttrVal=self.getAttrVal;
-		obj.encode=self.encode;
-		obj.processAllChilds=self.processAllChilds;
-		obj.addPostHtml=self.addPostHtml;
-		obj.startApplyToken=self.startApplyToken;
-		obj.endApplyToken=self.endApplyToken;
-		obj.applyIfCondition=self.applyIfCondition;
-		obj.applyInFormat=self.applyInFormat;
-		obj.applyOutFormat=self.applyOutFormat;
-		obj.applyInitVars=self.applyInitVars;
-		obj.applyInitVarsReuse=self.applyInitVarsReuse;
-		obj.applyPushVars=self.applyPushVars;
-		obj.applySetVars=self.applySetVars;
-		obj.executeFunction=self.executeFunction;
-		obj.replaceVars=self.replaceVars;		
-		obj.getStringReplaced=self.getStringReplaced;		
-		obj.replaceVarsComplexArray=self.replaceVarsComplexArray;		
-		obj.replaceVarsAndExecute=self.replaceVarsAndExecute;		
 		obj.initVars=obj.getAttrVal("initVar");
 		obj.initVarsReuse=obj.getAttrVal("initVarReuse");
 		obj.pushVars=obj.getAttrVal("pushVar");
@@ -55,7 +36,13 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.ifConditionResult=true;
 		obj.autoAddPostHtml=true;
 		obj.processVarsAtEnd=true;
+		obj.loadOwnProperties();
 	}
+	pushHtmlBuffer(){return self.model.pushHtmlBuffer();};
+	popHtmlBuffer(index){return self.model.popHtmlBuffer(index);};
+	topHtmlBuffer(index){return self.model.topHtmlBuffer(index);};
+	getHtmlBuffer(){return self.model.html;};
+	addHtml(sHtml){self.model.addHtml(sHtml);};
 	processAllChilds(childList,reportElement){
 		var self=this;
 		var sKey="";

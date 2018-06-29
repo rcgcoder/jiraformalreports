@@ -1,8 +1,7 @@
-var jrfNoop=class jrfNoop{//this kind of definition allows to hot-reload
-	constructor(tag,reportElem,model){
+var jrfNoop=class jrfNoop extends jrfToken{//this kind of definition allows to hot-reload
+	loadOwnProperties(){
 //		debugger;
 		var self=this;
-		model.extendToken(self,tag,reportElem);
 		self.processVarsAtEnd=true;
 	}
 	apply(){

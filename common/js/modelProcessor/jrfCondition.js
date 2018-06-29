@@ -1,7 +1,6 @@
-var jrfCondition=class jrfCondition{//this kind of definition allows to hot-reload
-	constructor(tag,reportElem,model){
+var jrfCondition=class jrfCondition extends jrfToken{//this kind of definition allows to hot-reload
+	loadOwnProperties(){
 		var self=this;
-		model.extendToken(self,tag,reportElem);
 		self.autoAddPostHtml=true;
 	}
 	apply(){

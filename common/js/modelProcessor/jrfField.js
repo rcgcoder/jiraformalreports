@@ -1,7 +1,6 @@
-var jrfField=class jrfField{//this kind of definition allows to hot-reload
-	constructor(tag,reportElem,model){
+var jrfField=class jrfField extends jrfToken{//this kind of definition allows to hot-reload
+	loadOwnProperties(){
 		var self=this;
-		model.extendToken(self,tag,reportElem);
 		self.fieldName=self.getAttrVal("field");
 /*		if (self.fieldName.trim().toLowerCase()=="status.name"){
 			//debugger;

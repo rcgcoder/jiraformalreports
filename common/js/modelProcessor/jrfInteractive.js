@@ -1,7 +1,7 @@
 var jrfInteractive=class jrfInteractive {//this kind of definition allows to hot-reload
 	elemShowHide(elemId){
         System.webapp.addStep("Show/Hide element", function(){
-        	debugger;
+        	//debugger;
     		var jqElem=$('#'+elemId);
     		var elem=jqElem[0];
     		if (isUndefined(elem.visible)

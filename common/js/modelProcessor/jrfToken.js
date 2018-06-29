@@ -427,7 +427,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					sValAux=sValAux.wiki2html(); 
 				} else 
 */				if (sFormatId=="fixed"){
-					debugger;
+					//debugger;
 					sValue=self.replaceVars(sValAux);
 					sValue=sValue.saRemoveInnerHtmlTags();
 					sValue=replaceAll(sValue,"\n"," ");
@@ -513,9 +513,9 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var self=this;
 		var sTextToLog=sText.saRemoveInnerHtmlTags().saTrim().saToString();
 		sTextToLog=sText.saRemoveInnerHtmlTags().saTrim().saToString();
-		if (sTextToLog=="{{ AST_HHAccumFaseImplementacion }} + {{  AST_HHDespliegue }}"){
-			debugger;
-		}
+		//if (sTextToLog=="{{ AST_HHAccumFaseImplementacion }} + {{  AST_HHDespliegue }}"){
+			//debugger;
+		//}
 		log("Replace Vars of:"+sTextToLog);
 	//	debugger;
 		var oScripts=self.replaceVarsComplexArray(sText,"{{{","}}}",false);

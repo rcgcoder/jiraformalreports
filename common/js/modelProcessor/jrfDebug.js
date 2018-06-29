@@ -15,6 +15,9 @@ var jrfDebug=class jrfDebug extends jrfNoop{//this kind of definition allows to 
 		log("Hardcoded breakPoint!!");
 		debugger;
 		super.apply();
+	}
+	endApplyToken(){
+		super.endApplyToken();
 		if (!self.antLogStatus)loggerFactory.getLogger().enabled=false;
 	}
 

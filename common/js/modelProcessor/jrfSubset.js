@@ -1,6 +1,6 @@
 var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows to hot-reload
 	loadOwnProperties(){
-		debugger;
+//		debugger;
 		var self=this;
 //		self.autoAddPostHtml=false;
 		self.name=self.getAttrVal("name");

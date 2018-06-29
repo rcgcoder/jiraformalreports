@@ -317,15 +317,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			sValAux=self.applyOutFormat(sValAux);
 //			sAux=self.popHtmlBuffer();
 //			self.addHtml(sAux);
-			self.addHtml(sValAux);
+			self.addHtml(sValAux);		
 //		} else {
 //			sAux=self.popHtmlBuffer();
 //			self.addHtml(sAux);
 		}
-	}
-	addPostHtml(){
-		var self=this;
-		//debugger;
 		if (self.visibility!=""){
 			if (self.visibility=="hidden"){
 				var sHtml=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
@@ -345,6 +341,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 							 );
 			}
 		}
+		
+	}
+	addPostHtml(){
+		var self=this;
+		//debugger;
 		if (self.model.report.config.htmlDebug) self.addHtml("<!-- START POSTHTML IN FORMULA JRF TOKEN ["+self.tokenName+"] -->");
 		//self.addHtml(self.replaceVars(self.tag.getPostHTML()));
 		self.addHtml(self.tag.getPostHTML());

@@ -1,5 +1,6 @@
 var jrfStatistics=class jrfStatistics extends jrfLoopBase{//this kind of definition allows to hot-reload
 	loadOwnProperties(){
+		super.loadOwnProperties();
 		var self=this;
 		self.operationSource=self.getAttrVal("operation");
 		self.field=self.getAttrVal("field");

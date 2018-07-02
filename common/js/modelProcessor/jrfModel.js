@@ -350,6 +350,10 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		var self=this;
 		var htmlBufferIndex=self.pushHtmlBuffer();
 		var tagApplier=self.prepareTag(tag,reportElem);
+		if (tag.countParentsChild()==0){
+			tagApplier.processVarsAtEnd=false;
+			tagApplier.postProcess=false;
+		}
 		self.addStep("Encoding the tag... "+tagApplier.changeBrackets(tag.getTagText()),function(){
 			tagApplier.encode(); // it has steps... into
 		});

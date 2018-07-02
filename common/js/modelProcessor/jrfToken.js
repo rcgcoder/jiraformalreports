@@ -32,8 +32,10 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.visibility=obj.getAttrVal("visibility");
 		obj.datetimeSource=obj.getAttrVal("atDateTime");
 		obj.processVarsAtEnd=true;
+		debugger;
 		obj.postProcess=obj.getAttrVal("postprocess");
 		if (obj.postProcess!=""){
+			debugger;
 			obj.postProcess=(obj.postProcess.toLowerCase()=="true");
 			obj.processVarsAtEnd=obj.postProcess;
 		}
@@ -307,7 +309,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				self.indPostContentHtmlBuffer=self.pushHtmlBuffer();
 				self.addPostHtml();
 			}
-			
+			debugger;
 			if (self.processVarsAtEnd){
 				var sContent=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
 				sContent=self.replaceVars(sContent);

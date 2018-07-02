@@ -3,7 +3,7 @@ var jrfFormula=class jrfFormula extends jrfToken{//this kind of definition allow
 		var self=this;
 //		debugger;
 		self.autoAddPostHtml=false;
-		self.processVarsAtEnd=false;
+		self.postProcess="notMe";
 	}
 
 	apply(){

@@ -351,7 +351,6 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		var htmlBufferIndex=self.pushHtmlBuffer();
 		var tagApplier=self.prepareTag(tag,reportElem);
 		if (tag.countParentsChild()==0){
-			tagApplier.processVarsAtEnd=false;
 			tagApplier.postProcess=false;
 		}
 		self.addStep("Encoding the tag... "+tagApplier.changeBrackets(tag.getTagText()),function(){
@@ -573,7 +572,6 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		if ((sPhase=="all")||(sPhase=="parse")) { 
 			self.addStep("Parsing Model",function(){
 				self.rootTag=self.tagFactory.new();
-				self.rootTag.processVarsAtEnd=false;
 				self.rootTag.postProcess=false;
 
 				self.parse(self.inputHtml,self.rootTag);

@@ -31,14 +31,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.processOrder=obj.getAttrVal("processOrder");
 		obj.visibility=obj.getAttrVal("visibility");
 		obj.datetimeSource=obj.getAttrVal("atDateTime");
-		obj.processVarsAtEnd=true;
-//		debugger;
 		obj.postProcess=obj.getAttrVal("postprocess");
-		if (obj.postProcess!=""){
-//			debugger;
-			obj.postProcess=(obj.postProcess.toLowerCase()=="true");
-			obj.processVarsAtEnd=obj.postProcess;
-		}
 		obj.datetime=undefined;
 		obj.moreParams=obj.getAttrVal("aditionalparameters");
 		obj.otherParams=newHashMap();
@@ -310,15 +303,19 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				self.addPostHtml();
 			}
 			var sContentDebug=self.topHtmlBuffer(self.indInnerContentHtmlBuffer).saToString();
-			if (sContentDebug.indexOf("table")>=0){
-				debugger;
-				loggerFactory.getLogger().enabled=true;
-				log(self.tag.getTagText()+" Post Processing:"+self.processVarsAtEnd);
-			}
-			if (self.processVarsAtEnd){
+			if (self.postProcess==""){
 				var sContent=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
 				sContent=self.replaceVars(sContent);
 				self.addHtml(sContent);
+			} else if (self.postProcess=="false"){
+				var hsParents=self.getListParentsChild();
+				var fncChangePostProcess=function(theParent){
+					theParent.postProcess="false";
+					var hsParentsAux=theParent.getListParentsChild();
+					hsParentsAux.walk(fncChangePostProcess);
+				}
+				hsParents.walk(fncChangePostProcess);
+			}
 //				log("Result Content:"+sContent);
 //			} else {
 //				log("Result Content:"+"Not post processed ");

@@ -310,7 +310,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				self.addPostHtml();
 			}
 			var sContentDebug=self.topHtmlBuffer(self.indInnerContentHtmlBuffer).saToString();
-			if (sContentDebug.indexOf("table")){
+			if (sContentDebug.indexOf("table")>=0){
 				debugger;
 				loggerFactory.getLogger().enabled=true;
 				log(self.tag.getTagText()+" Post Processing:"+self.processVarsAtEnd);

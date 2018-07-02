@@ -2,6 +2,7 @@ var jrfDebug=class jrfDebug extends jrfNoop{//this kind of definition allows to 
 	loadOwnProperties(){
 		super.loadOwnProperties();
 		var self=this;
+		self.postProcess="false";
 		self.logAfterBreak=self.getAttrVal("continueLog");
 		self.antLogStatus=loggerFactory.getLogger().enabled;
 	}

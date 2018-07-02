@@ -2,14 +2,10 @@ var jrfDebug=class jrfDebug extends jrfNoop{//this kind of definition allows to 
 	loadOwnProperties(){
 		super.loadOwnProperties();
 		var self=this;
+		self.logAfterBreak=self.getAttrVal("continueLog");
 		self.antLogStatus=loggerFactory.getLogger().enabled;
 	}
-	/*	constructor(tag,reportElem,model){
-		super(tag,reportElem,model);
-//		var self=this;
-//		model.extendToken(self,tag,reportElem);
-	}
-*/	apply(){
+	apply(){
 		self.antLogStatus=loggerFactory.getLogger().enabled;
 		loggerFactory.getLogger().enabled=true;
 		log("Hardcoded breakPoint!!");
@@ -18,7 +14,9 @@ var jrfDebug=class jrfDebug extends jrfNoop{//this kind of definition allows to 
 	}
 	endApplyToken(){
 		super.endApplyToken();
-		if (!self.antLogStatus)loggerFactory.getLogger().enabled=false;
+		if ((self.logAfterBreak!="")&&(self.logAfterBreak.toLowerCase()=="false")){
+			if (!self.antLogStatus)loggerFactory.getLogger().enabled=false;
+		}
 	}
 
 }

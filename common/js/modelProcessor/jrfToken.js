@@ -322,7 +322,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					hsParents.walk(fncChangePostProcess);
 				}
 			}
-			loggerFactory.getLogger().enabled=false;
+//			loggerFactory.getLogger().enabled=false;
 			var sValAux=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
 			//self.indTokenHtmlBuffer=self.pushHtmlBuffer();
 

@@ -310,13 +310,17 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				self.addHtml(sContent);
 			} else if (self.postProcess=="false"){
 				debugger;
-				var hsParents=self.tag.getListParentsChild();
-				var fncChangePostProcess=function(theParentTag){
-					theParentTag.token.postProcess="false";
-					var hsParentsAux=theParentTag.getListParentsChild();
-					hsParentsAux.walk(fncChangePostProcess);
+				if (self.tag.countParentsChild()>0){
+					var hsParents=self.tag.getListParentsChild();
+					var fncChangePostProcess=function(theParentTag){
+						theParentTag.token.postProcess="false";
+						if (theParentTag.countParentsChild()>0){
+							var hsParentsAux=theParentTag.getListParentsChild();
+							hsParentsAux.walk(fncChangePostProcess);
+						}
+					}
+					hsParents.walk(fncChangePostProcess);
 				}
-				hsParents.walk(fncChangePostProcess);
 			}
 			loggerFactory.getLogger().enabled=false;
 			var sValAux=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);

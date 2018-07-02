@@ -310,7 +310,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				self.addPostHtml();
 			}
 			loggerFactory.getLogger().enabled=true;
-			log(self.tag.getTagText()+" Post Processing:"+self.processVarAtEnd);
+			log(self.tag.getTagText()+" Post Processing:"+self.processVarsAtEnd);
 			log("Content:"+self.topHtmlBuffer(self.indInnerContentHtmlBuffer));
 			if (self.processVarsAtEnd){
 				var sContent=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);

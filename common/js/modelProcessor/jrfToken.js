@@ -316,10 +316,6 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				}
 				hsParents.walk(fncChangePostProcess);
 			}
-//				log("Result Content:"+sContent);
-//			} else {
-//				log("Result Content:"+"Not post processed ");
-			}
 			loggerFactory.getLogger().enabled=false;
 			var sValAux=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
 			//self.indTokenHtmlBuffer=self.pushHtmlBuffer();

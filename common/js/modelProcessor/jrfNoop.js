@@ -2,7 +2,7 @@ var jrfNoop=class jrfNoop extends jrfToken{//this kind of definition allows to h
 	loadOwnProperties(){
 //		debugger;
 		var self=this;
-		self.processVarsAtEnd=true;
+		if (self.postprocess=="") self.processVarsAtEnd=true;
 	}
 	apply(){
 		var self=this;

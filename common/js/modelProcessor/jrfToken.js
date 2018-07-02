@@ -31,17 +31,17 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.processOrder=obj.getAttrVal("processOrder");
 		obj.visibility=obj.getAttrVal("visibility");
 		obj.datetimeSource=obj.getAttrVal("atDateTime");
+		obj.processVarsAtEnd=true;
 		obj.postProcess=obj.getAttrVal("postprocess");
+		if (obj.postProcess!=""){
+			obj.postProcess=(obj.postProcess.toLowerCase()=="true");
+			obj.processVarsAtEnd=obj.postProcess;
+		}
 		obj.datetime=undefined;
 		obj.moreParams=obj.getAttrVal("aditionalparameters");
 		obj.otherParams=newHashMap();
 		obj.ifConditionResult=true;
 		obj.autoAddPostHtml=true;
-		obj.processVarsAtEnd=true;
-		debugger;
-		if (obj.postProcess!=""){
-			obj.processVarsAtEnd=obj.postProcess;
-		}
 		obj.loadOwnProperties();
 	}
 	pushHtmlBuffer(){return this.model.pushHtmlBuffer();};

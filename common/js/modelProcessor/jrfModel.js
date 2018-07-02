@@ -569,6 +569,9 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		if ((sPhase=="all")||(sPhase=="parse")) { 
 			self.addStep("Parsing Model",function(){
 				self.rootTag=self.tagFactory.new();
+				self.rootTag.processVarsAtEnd=false;
+				self.rootTag.postProcess=false;
+
 				self.parse(self.inputHtml,self.rootTag);
 			});
 		}

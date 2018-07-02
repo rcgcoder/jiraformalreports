@@ -38,6 +38,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.ifConditionResult=true;
 		obj.autoAddPostHtml=true;
 		obj.processVarsAtEnd=true;
+		debugger;
 		if (obj.postProcess!=""){
 			obj.processVarsAtEnd=obj.postProcess;
 		}

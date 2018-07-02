@@ -522,6 +522,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		//}
 		log("Replace Vars of:"+sTextToLog);
 	//	debugger;
+		var iReplaced=0;
 		var oScripts=self.replaceVarsComplexArray(sText,"{{{","}}}",false);
 		var sResult=oScripts.text;
 		for (var i=0;i<oScripts.values.length;i++){
@@ -531,6 +532,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			var sRef="_arrRefs_["+i+"]";
 			sResult=replaceAll(sResult,sRef,sValue);
 			sResult=sResult.saTrim();
+			iReplaced++;
 		}
 		sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + sResult.saRemoveInnerHtmlTags().saTrim().saToString();
 		log("Fase 1  {{{ }}} result:"+sTextToLog);

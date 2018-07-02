@@ -6,6 +6,7 @@ var jrfDebug=class jrfDebug extends jrfNoop{//this kind of definition allows to 
 		self.antLogStatus=loggerFactory.getLogger().enabled;
 	}
 	apply(){
+		var self=this;
 		self.antLogStatus=loggerFactory.getLogger().enabled;
 		loggerFactory.getLogger().enabled=true;
 		log("Hardcoded breakPoint!!");
@@ -13,6 +14,7 @@ var jrfDebug=class jrfDebug extends jrfNoop{//this kind of definition allows to 
 		super.apply();
 	}
 	endApplyToken(){
+		var self=this;
 		super.endApplyToken();
 		if ((self.logAfterBreak!="")&&(self.logAfterBreak.toLowerCase()=="false")){
 			if (!self.antLogStatus)loggerFactory.getLogger().enabled=false;

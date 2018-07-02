@@ -309,6 +309,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				sContent=self.replaceVars(sContent);
 				self.addHtml(sContent);
 			} else if (self.postProcess=="false"){
+				debugger;
 				var hsParents=self.tag.getListParentsChild();
 				var fncChangePostProcess=function(theParentTag){
 					theParentTag.token.postProcess="false";

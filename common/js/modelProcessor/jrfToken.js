@@ -521,7 +521,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	}
 	replaceVars(sText,inOtherParams){
 		var self=this;
-		var sTextToLog=sText.saToString().saRemoveInnerHtmlTags().saTrim();
+		var sTextToLog=sText.saRemoveInnerHtmlTags().saTrim().saToString();
 		//if (sTextToLog=="{{ AST_HHAccumFaseImplementacion }} + {{  AST_HHDespliegue }}"){
 			//debugger;
 		//}
@@ -543,7 +543,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		if (sResult.saExists("{{{")){
 			debugger;
 			sResult=self.replaceVarsComplexArray(sResult,"{{{","}}}",otherParams,self.getStringReplacedScript);
-			sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + sResult.saToString().saRemoveInnerHtmlTags().saTrim();
+			sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + sResult.saToString();
 			log("Fase 0 Replaced {{{ }}} result:"+sTextToLog);
 		}
 //		log(sResult);
@@ -563,7 +563,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			}
 			sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + vAux;
 */			
-			sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + sResult.saToString().trim();
+			sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + sResult.saToString();
 			log("Fase 2  {{ }} Final Result:"+sTextToLog);
 		}
 		return sResult;

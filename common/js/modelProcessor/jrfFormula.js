@@ -41,7 +41,7 @@ var jrfFormula=class jrfFormula extends jrfToken{//this kind of definition allow
 			sContent=sContent.saRemoveInnerHtmlTags(); // remove al tags.... there are not allowed
 			log("Formula Content previous of replace returns and Vars:"+sContent);
 			sContent=replaceAll(sContent,"\n"," ");
-			otherParams={
+			var otherParams={
 					hsValues:newHashMap(),
 					vValues:[],
 					self:self,
@@ -51,9 +51,11 @@ var jrfFormula=class jrfFormula extends jrfToken{//this kind of definition allow
 			otherParams.hsValues.add("root",1);
 			otherParams.vValues.push(self.reportElem);
 			otherParams.vValues.push(self.model.processingRoot);
+			var sValue=self.getStringReplacedScript(sContent,otherParams);
+/*
 			sContent=self.replaceVarsAndExecute(sContent,otherParams);
 			if (isArray(sContent)) sContent=sContent.saToString();
-/*			var sFncFormula=`
+			var sFncFormula=`
 							""; // to close the var result= instruction inserted by executefunction
 							var elem=_arrRefs_[0];
 							var root=_arrRefs_[1];

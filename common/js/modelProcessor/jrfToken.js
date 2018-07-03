@@ -541,14 +541,14 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			};
 		}
 		var sResult=sText;
-		if (sResult.saIndexOf("{{{")>=0){
+		if (sResult.saExists("{{{")){
 			sResult=self.replaceVarsComplexArray(sResult,"{{{","}}}",otherParams,self.getStringReplacedScript);
 			sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + sResult.saToString().saRemoveInnerHtmlTags().saTrim();
 			log("Fase 0 Replaced {{{ }}} result:"+sTextToLog);
 		}
 //		log(sResult);
 //		log("now let´s replace {{  "+sResult+"  }}");
-		if (sResult.saIndexOf("{{")>=0){
+		if (sResult.saExists("{{")){
 			sResult=self.replaceVarsComplexArray(sResult,"{{","}}",otherParams,self.getStringReplaced);
 /*			if (oSimple.values.length>0){
 				vValue=executeFunction(oSimple.values,vValue,self.model.functionCache);

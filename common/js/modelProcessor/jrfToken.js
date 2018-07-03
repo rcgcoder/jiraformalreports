@@ -536,7 +536,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				hsValues:newHashMap(),
 				vValues:[],
 				self:self,
-				bReplaceVars:true
+				bReplaceVars:false;
 			};
 		}
 		var sResult=sText;
@@ -579,7 +579,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		if ((sInnerText.saExists("{{"))){ // its valid for {{ and for  {{{
 			sInnerText=otherParams.self.replaceVars(sInnerText,otherParams);
 		}
-		var vValue=executeFunction(otherParams.vValues,sInnerText,otherParams.self.model.functionCache);
+		var vValuesProcessed=[];
+		otherParams.vValues.forEach(function(vValue){
+			vValuesProcessed.push(otherParams.self.variables.getVar(vValue));
+		});
+		var vValue=executeFunction(vValuesProcessed,sInnerText,otherParams.self.model.functionCache);
 		return vValue;
 	}
 	getStringReplaced(sText,otherParams){

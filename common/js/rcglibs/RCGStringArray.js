@@ -286,8 +286,11 @@ Array.prototype.saReplaceInnerText=function(openTag,closeTag,replaceBy,bReplaceA
 				} else if (isArray(vReplaceAux)){
 					objResult.arrPrevious.concat(vReplaceAux);
 					objResult.arrInner=[];
-				} else {
+				} else if (isObject(vReplaceAux)) {
 					log ("error");
+ 				} else { // is primitive
+					objResult.arrPrevious.push(vReplaceAux+"");
+					objResult.arrInner=[]; 					
  				}
 				replaceCount++;
 				if (bReplaceAll){

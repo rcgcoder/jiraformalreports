@@ -41,7 +41,7 @@ var jrfFormula=class jrfFormula extends jrfToken{//this kind of definition allow
 			sContent=sContent.saRemoveInnerHtmlTags(); // remove al tags.... there are not allowed
 			log("Formula Content previous of replace returns and Vars:"+sContent);
 			sContent=replaceAll(sContent,"\n"," ");
-			sContent=self.replaceVars(sContent);
+			sContent=self.replaceVars(sContent,undefined,true);
 			if (isArray(sContent)) sContent=sContent.saToString();
 			var sFncFormula=`
 							""; // to close the var result= instruction inserted by executefunction

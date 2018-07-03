@@ -520,7 +520,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var vValue=self.getStringReplacedScript(sText,otherParams);// executeFunction(otherParams.vValues,sFncBody,self.model.functionCache);
 		return vValue;
 	}
-	replaceVars(sText,inOtherParams){
+	replaceVars(sText,inOtherParams,bReplaceVars){
 		var self=this;
 		var sTextToLog=sText.saRemoveInnerHtmlTags().saTrim().saToString();
 		//if (sTextToLog=="{{ AST_HHAccumFaseImplementacion }} + {{  AST_HHDespliegue }}"){
@@ -539,6 +539,9 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				self:self,
 				bReplaceVars:false
 			};
+		}
+		if (isDefined(bReplaceVars)){
+			otherParams.bReplaceVars=bReplaceVars;
 		}
 		var sResult=sText;
 		if (sResult.saExists("{{{")){

@@ -536,7 +536,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				hsValues:newHashMap(),
 				vValues:[],
 				self:self,
-				bReplaceVars:false
+				bReplaceVars:true
 			};
 		}
 		var sResult=sText;

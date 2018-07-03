@@ -508,50 +508,75 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	}
 	replaceVarsAndExecute(sText){
 		var self=this;
-		var oReplaced=self.replaceVarsComplexArray(sText);
-		var vValue=oReplaced.text;
-		var vValue=executeFunction(oReplaced.values,vValue,self.model.functionCache);
+		var otherParams={
+				hsValues:[],
+				vValues:[],
+				self:self,
+				bReplaceVars:false
+			};
+		var sFncBody=self.replaceVars(sText,otherParams);
+		var vValue=executeFunction(otherParams.vValues,sFncBody,self.model.functionCache);
 		return vValue;
 	}
-	replaceVars(sText){
+	replaceVars(sText,inOtherParams){
 		var self=this;
-		var sTextToLog=sText.saRemoveInnerHtmlTags().saTrim().saToString();
-		sTextToLog=sText.saRemoveInnerHtmlTags().saTrim().saToString();
+		var sTextToLog=sText.saToString().saRemoveInnerHtmlTags().saTrim();
 		//if (sTextToLog=="{{ AST_HHAccumFaseImplementacion }} + {{  AST_HHDespliegue }}"){
 			//debugger;
 		//}
 		log("Replace Vars of:"+sTextToLog);
 	//	debugger;
 		var iReplaced=0;
-		var oScripts=self.replaceVarsComplexArray(sText,"{{{","}}}",false);
-		var sResult=oScripts.text;
-		for (var i=0;i<oScripts.values.length;i++){
-			var sScript=oScripts.values[i];
-			var sValue=self.replaceVarsAndExecute(sScript);
-			sValue=(sValue+"").trim();
-			var sRef="_arrRefs_["+i+"]";
-			sResult=replaceAll(sResult,sRef,sValue);
-			sResult=sResult.saTrim();
-			iReplaced++;
+		var otherParams;
+		if (isDefined(inOtherParams)){
+			otherParams=inOtherParams;
+		} else {
+			otherParams={
+				hsValues:[],
+				vValues:[],
+				self:self,
+				bReplaceVars:false
+			};
 		}
-		sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + sResult.saRemoveInnerHtmlTags().saTrim().saToString();
-		log("Fase 1  {{{ }}} result:"+sTextToLog);
+		sResult=sText;
+		if (sResult.saIndexOf("{{{")>=0){
+			sResult=self.replaceVarsComplexArray(sResult,"{{{","}}}",otherParams,self.getStringReplacedScript);
+			sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + sResult.saToString().saRemoveInnerHtmlTags().saTrim();
+			log("Fase 0 Replaced {{{ }}} result:"+sTextToLog);
+		}
 //		log(sResult);
 //		log("now let´s replace {{  "+sResult+"  }}");
-		var oSimple=self.replaceVarsComplexArray(sResult);
-		var vValue=oSimple.text;
-		if (oSimple.values.length>0){
-			vValue=executeFunction(oSimple.values,vValue,self.model.functionCache);
+		if (sResult.saIndexOf("{{")>=0){
+			sResult=self.replaceVarsComplexArray(sResult,"{{","}}",otherParams,self.getStringReplaced);
+/*			if (oSimple.values.length>0){
+				vValue=executeFunction(oSimple.values,vValue,self.model.functionCache);
+			}
+			var vAux=vValue;
+			if (isString(vAux)||isArray(vAux)){
+				vAux=vAux.saRemoveInnerHtmlTags().saTrim().saToString();
+				vValue=vAux;
+			} else if (isObject(vAux)) {
+				vAux="Object of type:"+vValue.constructor.name;	
+			}
+			sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + vAux;
+*/			
+			sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + sResult.saToString().trim();
+			log("Fase 2  {{ }} Final Result:"+sTextToLog);
 		}
-		var vAux=vValue;
-		if (isString(vAux)||isArray(vAux)){
-			vAux=vAux.saRemoveInnerHtmlTags().saTrim().saToString();
-			vValue=vAux;
-		} else if (isObject(vAux)) {
-			vAux="Object of type:"+vValue.constructor.name;	
+		return sResult;
+	}
+	getStringReplacedScript(sText,otherParams){ //sText is {{{ sText }}} may have {{ }} items
+		var arrInnerText;
+		if (isString(sText)){
+			arrInnerText=[sText];
+		} else {
+			arrInnerText=sText;
 		}
-		sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + vAux;
-		log("Fase 2  {{ }} Final Result:"+sTextToLog);
+		var sInnerText=arrInnerText.saRemoveInnerHtmlTags(""); // remove inner tags
+		if ((sInnerText.saIndexOf("{{{")>=0)||(sInnerText.saIndexOf("{{")>=0)){
+			sInnerText=self.replaceVars(sInnerText,otherParams);
+		}
+		var vValue=executeFunction(otherParams.vValues,sInnerText,self.model.functionCache);
 		return vValue;
 	}
 	getStringReplaced(sText,otherParams){
@@ -561,16 +586,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		} else {
 			arrInnerText=sText;
 		}
-		var asInnerText=arrInnerText.saTrim();
-		asInnerText=asInnerText.saReplaceInnerText("<",">","",true);
-		arrInnerText=asInnerText.arrPrevious;
-		if (isDefined(asInnerText.arrInner)){
-			arrInnerText=arrInnerText.concat(asInnerText.arrInner);
-		}
-		if (isDefined(asInnerText.arrPosterior)){
-			arrInnerText=arrInnerText.concat(asInnerText.arrPosterior);
-		}
-		var sInnerText=arrInnerText.saToString();
+		var sInnerText=arrInnerText.saRemoveInnerHtmlTags("").saToString().trim();
 		var sVarRef;
 		var iVar;
 		if (!otherParams.bReplaceVars){
@@ -600,14 +616,16 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		return sVarRef;
 	}
 	
-	replaceVarsComplexArray(inText,theOpenTag,theCloseTag,bReplaceVarsByValue){
+	replaceVarsComplexArray(inText,theOpenTag,theCloseTag,otherParams,replaceFnc){
 		var self=this;
 		var bReplaceVars=true;
 		var openTag="{{";
 		var closeTag="}}";
 		var sText="";
-		if (isDefined(bReplaceVarsByValue)){
-			bReplaceVars=bReplaceVarsByValue;
+		if (isDefined(otherParams)){
+			if (isDefined(otherParams.bReplaceVars)){
+				bReplaceVars=otherParams.bReplaceVars;
+			}
 		}
 		if (isDefined(theOpenTag)) openTag=theOpenTag;
 		if (isDefined(theCloseTag)) closeTag=theCloseTag;
@@ -621,21 +639,9 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			}
 		} else {
 			log("You are using a undefined text.... this may be a big error!");
+			sText=[""];
 		}
-		var arrAux=[];
-		var arrResult=[];
-		var vValues=[];
-		var hsValues=newHashMap();
-		var sVarRef="";
-		var iVar=0;
-		var iActPos=0;
-		var otherParams={
-				hsValues:hsValues,
-				vValues:vValues,
-				self:self,
-				bReplaceVars:bReplaceVars
-			};
-		var objResult=sText.saReplaceInnerText(openTag,closeTag,self.getStringReplaced,true,otherParams);
-		return {text:objResult.arrPrevious.concat(objResult.arrPosterior),values:vValues};
+		var objResult=sText.saReplaceInnerText(openTag,closeTag,replaceFnc,true,otherParams);
+		return objResult.arrPrevious.concat(objResult.arrPosterior);
 	}
 }

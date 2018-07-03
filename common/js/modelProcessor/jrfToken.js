@@ -304,11 +304,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				self.addPostHtml();
 			}
 			var sContentDebug=self.topHtmlBuffer(self.indInnerContentHtmlBuffer).saToString();
-			if (self.postProcess==""){
+//			if (self.postProcess==""){
 				var sContent=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
 				sContent=self.replaceVars(sContent);
 				self.addHtml(sContent);
-			} else if (self.postProcess=="false"){
+/*			} else if (self.postProcess=="false"){
 //				debugger;
 				if (self.tag.countParentsChild()>0){
 					var hsParents=self.tag.getListParentsChild();
@@ -322,6 +322,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					hsParents.walk(fncChangePostProcess);
 				}
 			}
+			*/
 //			loggerFactory.getLogger().enabled=false;
 			var sValAux=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
 			//self.indTokenHtmlBuffer=self.pushHtmlBuffer();

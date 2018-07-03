@@ -540,7 +540,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				bReplaceVars:false
 			};
 		}
-		sResult=sText;
+		var sResult=sText;
 		if (sResult.saIndexOf("{{{")>=0){
 			sResult=self.replaceVarsComplexArray(sResult,"{{{","}}}",otherParams,self.getStringReplacedScript);
 			sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + sResult.saToString().saRemoveInnerHtmlTags().saTrim();

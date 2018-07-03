@@ -521,7 +521,6 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	}
 	replaceVars(sText,inOtherParams){
 		var self=this;
-		debugger;
 		var sTextToLog=sText.saToString().saRemoveInnerHtmlTags().saTrim();
 		//if (sTextToLog=="{{ AST_HHAccumFaseImplementacion }} + {{  AST_HHDespliegue }}"){
 			//debugger;
@@ -542,6 +541,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		}
 		var sResult=sText;
 		if (sResult.saExists("{{{")){
+			debugger;
 			sResult=self.replaceVarsComplexArray(sResult,"{{{","}}}",otherParams,self.getStringReplacedScript);
 			sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + sResult.saToString().saRemoveInnerHtmlTags().saTrim();
 			log("Fase 0 Replaced {{{ }}} result:"+sTextToLog);
@@ -549,6 +549,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 //		log(sResult);
 //		log("now let´s replace {{  "+sResult+"  }}");
 		if (sResult.saExists("{{")){
+			debugger;
 			sResult=self.replaceVarsComplexArray(sResult,"{{","}}",otherParams,self.getStringReplaced);
 /*			if (oSimple.values.length>0){
 				vValue=executeFunction(oSimple.values,vValue,self.model.functionCache);

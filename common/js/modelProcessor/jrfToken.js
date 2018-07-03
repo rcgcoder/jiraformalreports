@@ -507,6 +507,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		return sValAux;
 	}
 	replaceVarsAndExecute(sText){
+		debugger;
 		var self=this;
 		var otherParams={
 				hsValues:[],
@@ -520,6 +521,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	}
 	replaceVars(sText,inOtherParams){
 		var self=this;
+		debugger;
 		var sTextToLog=sText.saToString().saRemoveInnerHtmlTags().saTrim();
 		//if (sTextToLog=="{{ AST_HHAccumFaseImplementacion }} + {{  AST_HHDespliegue }}"){
 			//debugger;

@@ -1,6 +1,6 @@
 var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition allows to hot-reload
 	loadOwnProperties(){
-		debugger;
+		//debugger;
 		super.loadOwnProperties();
 //		debugger;
 		var self=this;

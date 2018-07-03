@@ -41,25 +41,19 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 			sAux="["+sAux+"]";
 			elemsInForEach=JSON.parse(sAux);
 		} else if (self.sourceJson!=""){
-			var fncAdjustText=function(sText,search,replace){
-				var sAux=sText;
-				while (sAux.indexOf(search)>=0){
-					sAux=replaceAll(sAux,search,replace);
-				}
-				return sAux;
-			}
-			self.sourceJson=fncAdjustText(self.sourceJson,'\t','');
-			self.sourceJson=fncAdjustText(self.sourceJson,'\n','');
-			self.sourceJson=fncAdjustText(self.sourceJson,'\r','');
-			self.sourceJson=fncAdjustText(self.sourceJson,String.fromCharCode(160),'');
-			self.sourceJson=fncAdjustText(self.sourceJson,' ,',',');
-			self.sourceJson=fncAdjustText(self.sourceJson,', ',',');
-			self.sourceJson=fncAdjustText(self.sourceJson,"'",'"');
-			self.sourceJson=fncAdjustText(self.sourceJson,'" ','"');
-			self.sourceJson=fncAdjustText(self.sourceJson,' "','"');
+			self.sourceJson=replaceAll(self.sourceJson,'\t','');
+			self.sourceJson=replaceAll(self.sourceJson,'\n','');
+			self.sourceJson=replaceAll(self.sourceJson,'\r','');
+			self.sourceJson=replaceAll(self.sourceJson,String.fromCharCode(160),'');
+			self.sourceJson=replaceAll(self.sourceJson,' ,',',');
+			self.sourceJson=replaceAll(self.sourceJson,', ',',');
+			self.sourceJson=replaceAll(self.sourceJson,"'",'"');
+			self.sourceJson=replaceAll(self.sourceJson,'" ','"');
+			self.sourceJson=replaceAll(self.sourceJson,' "','"');
+			if (isArray(self.sourceJson)) self.sourceJson=self.sourceJson.saToString()
 			elemsInForEach=JSON.parse(self.sourceJson);
 		} else if (self.sourceFormula!=""){
-			var sAux=self.replaceVars(self.sourceFormula);
+			var sAux=self.replaceVarsAndExecute(self.sourceFormula); // replace the name of variable for the value
 			sAux=replaceAll(sAux,";",",");
 			sAux=replaceAll(sAux,"'",'"');
 			elemsInForEach=self.replaceVarsAndExecute(sAux);

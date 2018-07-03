@@ -20,9 +20,25 @@ Array.prototype.saTrim = function () {
 Array.prototype.saExists= function (sTag){
 	var self=this;
 	if (isString(self))return (self.indexOf(sTag)>=0);
-	self.forEach(function(sRow){
+	if (self.length==0) return false;
+	for (var i=0;i<self.length;i++) {
+		if (self[i].indexOf(sTag)>=0) return true;
+	}
+	var sRow;
+	var i=0;
+	sRow=self[i];
+	var sLength=self.length;
+	var stLength=sTag.length;
+	while (i<sLength){
+		while ((sRow.length<stLength)&&(i<sLength)){
+			i++;
+			sRow+=self[i];
+		}
 		if (sRow.indexOf(sTag)>=0) return true;
-	});
+		i++;
+		if (i>=sLength) return false;
+		sRow=sRow.substring(sRow.length-stLength,sRow.length)+self[i];
+	}
 	return false;
 }
 

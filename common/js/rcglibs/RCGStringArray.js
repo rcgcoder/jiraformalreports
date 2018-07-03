@@ -210,7 +210,7 @@ String.prototype.saIndexOf= function (sTag,bFindLast,bDivide,startPos,startSubAr
 	return [this].saIndexOf(sTag,bFindLast,bDivide,startPos,startSubArrayPos);
 }
 String.prototype.saExists= function (sTag){
-	return [this].saExists(sTag);
+	return (this.indexOf(sTag)>=0);
 }
 
 	

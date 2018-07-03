@@ -336,7 +336,7 @@ class RCGJira{
 	}
 	getJQLIssues(jql,cbBlock){
 		var self=this;
-		var sCacheKey="issues_"+sJQL;
+		var sCacheKey="issues_"+jql;
 		var vCache=self.getFromCache(sCacheKey);
 		if (vCache!="") return self.continueTask([vCache]);
 		self.addStep("Getting All Issues from JQL", function(){

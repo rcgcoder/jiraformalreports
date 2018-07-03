@@ -5,6 +5,9 @@ class RCGJira{
 		self.subPath="";
 		self.tokenAccess="";
 		self.tokenTime=0;
+		self.withCache=false;
+		self.issuesCache=newHashMap();
+		self.jqlCache=newHashMap();
 		taskManager.extendObject(self);
 		self.renderContent=function(sContent){
 			atlassian.renderContent(self,sContent);
@@ -296,6 +299,21 @@ class RCGJira{
 //		self.apiCall("/plugins/servlet/applinks/proxy?appId=d1015b5f-d448-3745-a3d3-3dff12863286&path=https://rcgcoder.atlassian.net/rest/api/2/search");
 		//expand=changelog&jql=updateddate>'2018/03/01'
 	}
+	getFromCache(sCacheKey){
+		if (self.withCache){
+			if (self.jqlCache.exists(sCacheKey)){
+				return self.jqlCache.getValue(sCacheKey);
+			}
+		}
+		return "";
+	}
+	addToCache(sCacheKey,value){
+		if (self.withCache){
+			if (!self.jqlCache.exists(sCacheKey)){
+				return self.jqlCache.add(sCacheKey,value);
+			}
+		}
+	}
 	getComments(arrIssues,cbBlock){
 		var self=this;
 		var sJQL="";
@@ -303,20 +321,29 @@ class RCGJira{
 			sJQL+=((sJQL!=""?",":"")+issueKey);
 		});
 		sJQL="issue in ("+sJQL+")";
+		var sCacheKey="Comments_"+sJQL;
+		var vCache=self.getFromCache(sCacheKey);
+		if (vCache!="") return self.continueTask([vCache]);
+
 		self.addStep("Getting All Issues from JQL:["+sJQL+"]", function(){
 			self.getFullList("/rest/api/2/search?fields=comment&expand=renderedFields&jql="+sJQL,"issues",undefined,undefined,cbBlock);
 		});
 		self.addStep("Returning all Issues from JQL:["+sJQL+"]", function(response,xhr,sUrl,headers){
+			self.addToCache(sCacheKey,response);
 			self.continueTask([response]);
 		});
 		self.continueTask();
 	}
 	getJQLIssues(jql,cbBlock){
 		var self=this;
+		var sCacheKey="issues_"+sJQL;
+		var vCache=self.getFromCache(sCacheKey);
+		if (vCache!="") return self.continueTask([vCache]);
 		self.addStep("Getting All Issues from JQL", function(){
 			self.getFullList("/rest/api/2/search?jql="+jql+"&expand=renderedFields,changelog","issues",undefined,undefined,cbBlock);
 		});
 		self.addStep("Returning all Issues from JQL", function(response,xhr,sUrl,headers){
+			self.addToCache(sCacheKey,response);
 			self.continueTask([response]);
 		});
 		self.continueTask();

@@ -78,7 +78,7 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 			return self.reportElem.getAdvanceChilds();
 		} else if (self.type=="array"){
 			log("Proccessing array");
-			//debugger;
+			debugger;
 			var elemsInForEach=self.processSourceArrayElements();
 			var hsAux=newHashMap();
 			for (var i=0;i<elemsInForEach.length;i++){

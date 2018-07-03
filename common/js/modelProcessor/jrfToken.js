@@ -507,7 +507,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		return sValAux;
 	}
 	replaceVarsAndExecute(sText){
-		debugger;
+		//debugger;
 		var self=this;
 		var otherParams={
 				hsValues:newHashMap(),
@@ -541,7 +541,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		}
 		var sResult=sText;
 		if (sResult.saExists("{{{")){
-			debugger;
+			//debugger;
 			sResult=self.replaceVarsComplexArray(sResult,"{{{","}}}",otherParams,self.getStringReplacedScript);
 			sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + sResult.saToString();
 			log("Fase 0 Replaced {{{ }}} result:"+sTextToLog);
@@ -549,7 +549,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 //		log(sResult);
 //		log("now let´s replace {{  "+sResult+"  }}");
 		if (sResult.saExists("{{")){
-			debugger; 
+			//debugger; 
 /*			var bReplaceAnt=
 			if (isUndefined(inOtherParams)){
 				otherParams.bReplaceVars=true;

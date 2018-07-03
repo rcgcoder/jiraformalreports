@@ -579,7 +579,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		if ((sInnerText.saExists("{{"))){ // its valid for {{ and for  {{{
 			sInnerText=self.replaceVars(sInnerText,otherParams);
 		}
-		var vValue=executeFunction(otherParams.vValues,sInnerText,self.model.functionCache);
+		var vValue=executeFunction(otherParams.vValues,sInnerText,otherParams.self.model.functionCache);
 		return vValue;
 	}
 	getStringReplaced(sText,otherParams){

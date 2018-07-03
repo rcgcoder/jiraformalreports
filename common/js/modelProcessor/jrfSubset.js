@@ -102,7 +102,7 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 			self.bWithRest=true;
 		}
 		if (self.whereCondition!="") {
-			debugger;
+			//debugger;
 			var sWhere="";
 			var bWhereResult=false;
 			self.variables.pushVarEnv();

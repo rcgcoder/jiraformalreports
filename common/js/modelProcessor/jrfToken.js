@@ -516,7 +516,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				bReplaceVars:false
 			};
 //		var sFncBody=self.replaceVars(sText,otherParams);
-		var vValue=getStringReplacedScript(sText,otherParams);// executeFunction(otherParams.vValues,sFncBody,self.model.functionCache);
+		var vValue=self.getStringReplacedScript(sText,otherParams);// executeFunction(otherParams.vValues,sFncBody,self.model.functionCache);
 		return vValue;
 	}
 	replaceVars(sText,inOtherParams){

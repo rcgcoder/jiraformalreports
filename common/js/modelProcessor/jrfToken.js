@@ -410,7 +410,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var self=this;
 		if (self.ifCondition!=""){
 			//debugger;
-			var bProcessed=self.replaceVars(self.ifCondition);
+			var bProcessed=self.replaceVarsAndExecute(self.ifCondition);
 			self.ifConditionResult=bProcessed;
 			if (!bProcessed){
 				log("If condition = false... avoiding tag");
@@ -510,13 +510,13 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		debugger;
 		var self=this;
 		var otherParams={
-				hsValues:[],
+				hsValues:newHashMap(),
 				vValues:[],
 				self:self,
 				bReplaceVars:false
 			};
-		var sFncBody=self.replaceVars(sText,otherParams);
-		var vValue=executeFunction(otherParams.vValues,sFncBody,self.model.functionCache);
+//		var sFncBody=self.replaceVars(sText,otherParams);
+		var vValue=getStringReplacedScript(sText,otherParams);// executeFunction(otherParams.vValues,sFncBody,self.model.functionCache);
 		return vValue;
 	}
 	replaceVars(sText,inOtherParams){
@@ -550,12 +550,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 //		log("now let´s replace {{  "+sResult+"  }}");
 		if (sResult.saExists("{{")){
 			debugger; 
-			var bReplaceAnt=otherParams.bReplaceVars;
+/*			var bReplaceAnt=
 			if (isUndefined(inOtherParams)){
 				otherParams.bReplaceVars=true;
 			}
-			sResult=self.replaceVarsComplexArray(sResult,"{{","}}",otherParams,self.getStringReplaced);
-			otherParams.bReplaceVars=bReplaceAnt;
+*/			sResult=self.replaceVarsComplexArray(sResult,"{{","}}",otherParams,self.getStringReplaced);
 /*			if (oSimple.values.length>0){
 				vValue=executeFunction(oSimple.values,vValue,self.model.functionCache);
 			}

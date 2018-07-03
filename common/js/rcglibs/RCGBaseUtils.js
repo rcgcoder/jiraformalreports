@@ -156,7 +156,11 @@ function isNotNull(variable){
 	return (variable!==null);
 }
 function isString(variable){
-	return (typeof variable==="string");
+	if (typeof variable==="string") return true;
+	if (isObject(variable)){
+		if (variable.constructor.name=="String") return true;
+	}
+	return false;
 }
 function isArray(variable){
 	return Array.isArray(variable);

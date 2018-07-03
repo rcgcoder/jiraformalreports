@@ -533,7 +533,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			otherParams=inOtherParams;
 		} else {
 			otherParams={
-				hsValues:[],
+				hsValues:newHashMap(),
 				vValues:[],
 				self:self,
 				bReplaceVars:false

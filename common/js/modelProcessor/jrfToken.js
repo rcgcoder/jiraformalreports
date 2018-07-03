@@ -598,7 +598,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var iVar;
 		if (!otherParams.bReplaceVars){
 			if (otherParams.hsValues.exists(sInnerText)){
-				iVar=hsValues.getValue(sInnerText);
+				iVar=otherParams.hsValues.getValue(sInnerText);
 			} else {
 				otherParams.vValues.push(sInnerText);
 				iVar=otherParams.vValues.length-1;

@@ -546,7 +546,10 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var sResult=sText;
 		if (sResult.saExists("{{{")){
 			//debugger;
+			var bAntReplaceVars=otherParams.bReplaceVars;
+			otherParams.bReplaceVars=false;
 			sResult=self.replaceVarsComplexArray(sResult,"{{{","}}}",otherParams,self.getStringReplacedScript);
+			otherParams.bReplaceVars=bAntReplaceVars;
 //			sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + sResult.saToString();
 //			log("Fase 0 Replaced {{{ }}} result:"+sTextToLog);
 		}

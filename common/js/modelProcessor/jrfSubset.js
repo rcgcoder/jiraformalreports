@@ -120,7 +120,7 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 				}
 				self.variables.pushVar("counter",iCounter);
 				self.variables.pushVar("counter_selected",iSelectedCounter);
-				bWhereResult=self.replaceVars(sWhere);
+				bWhereResult=self.replaceVarsAndExecute(sWhere);
 				if (bWhereResult){
 					iSelectedCounter++;
 					self.hsResult.add(key,eachElem);

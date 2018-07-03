@@ -549,7 +549,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 //		log(sResult);
 //		log("now let´s replace {{  "+sResult+"  }}");
 		if (sResult.saExists("{{")){
-			debugger;
+			debugger; 
 			sResult=self.replaceVarsComplexArray(sResult,"{{","}}",otherParams,self.getStringReplaced);
 /*			if (oSimple.values.length>0){
 				vValue=executeFunction(oSimple.values,vValue,self.model.functionCache);

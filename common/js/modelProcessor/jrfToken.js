@@ -420,7 +420,12 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		self.ifCondition=self.getAttrVal("if",self.reportElem,true,true);
 		if (self.ifCondition!=""){
 			//debugger;
-			var bProcessed=self.replaceVarsAndExecute(self.ifCondition);
+			var bProcessed;
+			if (isString(self.ifCondition)||(isArray(self.ifCondition)){
+				bProcessed=self.replaceVarsAndExecute(self.ifCondition);
+			} else {
+				bProcessed=self.ifCondition;
+			}
 			self.ifConditionResult=bProcessed;
 			if (!bProcessed){
 				log("If condition = false... avoiding tag");

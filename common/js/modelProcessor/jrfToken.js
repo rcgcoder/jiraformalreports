@@ -361,7 +361,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				self.addHtml(`
 				             <button onclick="modelInteractiveFunctions.elemShowHide('`+newId+`')">Show/Hide</button>
 							 <div id='`+newId+`' style="display: none">`
-						     +   sHtml
+						     +   sHtml.saToString()
 							 +`</div>`
 							 );
 			}

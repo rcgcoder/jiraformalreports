@@ -278,6 +278,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					auxDateTime=self.datetimeSource;
 				} else {
 					auxDateTime=toDateNormalDDMMYYYYHHMMSS(self.datetimeSource);
+					self.dateTimeSource=auxDateTime;
 				}
 				self.datetime=auxDateTime;
 			}

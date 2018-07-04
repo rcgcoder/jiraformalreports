@@ -14,6 +14,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
     			jqElem.hide();
     			elem.visible=false;
     		}
+    		self.continueTask();
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN");
 	}
 }

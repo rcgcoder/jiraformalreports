@@ -7,13 +7,15 @@ class RCGDateUtils {
 			 ||(vAux=="")) {
 			return false;
 		}
+		if ((typeof value==="object")&&(value.constructor.name=="Date")) return true;
+		if (vAux instanceof Date) return true;
 		if (isString(value)){
 			if (!isNaN(value)) return false;
 			try{vAux=new Date(value);return true;} catch(err){};
 			try{vAux=toDateNormalDDMMYYYYHHMMSS(value);return true;} catch(err){};
 			try{vAux=toDateNormalYYYYMMDD(value);return true;} catch(err){};
 		}
-		return (vAux instanceof Date);
+		return false;
 	}
 	toDateNormalDDMMYYYYHHMMSS(sDate){ //dd/mm/yyyy hh:mm:ss
 		var sAuxDate=replaceAll(sDate," ","");//.split(" ");

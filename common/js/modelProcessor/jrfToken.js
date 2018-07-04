@@ -289,6 +289,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				splitParams.forEach(function(aParam){
 					var paramParts=aParam.split("=");
 					var paramName=paramParts[0].trim();
+					paramName=self.replaceVarsAndExecute(paramName);
+					paramName=paramName.saToString().trim();
 					var paramValue=undefined;
 					if (paramParts.length>1){
 						paramValue=paramParts[1].trim();

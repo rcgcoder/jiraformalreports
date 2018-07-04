@@ -421,7 +421,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		if (self.ifCondition!=""){
 			//debugger;
 			var bProcessed;
-			if (isString(self.ifCondition)||(isArray(self.ifCondition)){
+			if (isString(self.ifCondition)||(isArray(self.ifCondition))){
 				bProcessed=self.replaceVarsAndExecute(self.ifCondition);
 			} else {
 				bProcessed=self.ifCondition;

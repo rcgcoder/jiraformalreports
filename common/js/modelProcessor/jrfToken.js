@@ -315,7 +315,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			var sContentDebug=self.topHtmlBuffer(self.indInnerContentHtmlBuffer).saToString();
 //			if (self.postProcess==""){
 				var sContent=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
-				sContent=self.replaceVars(sContent);
+				sContent=self.replaceVars(sContent,undefined,true);
 				self.addHtml(sContent);
 /*			} else if (self.postProcess=="false"){
 //				debugger;
@@ -525,15 +525,25 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 //		self.addHtml(sValAux);
 		return sValAux;
 	}
-	replaceVarsAndExecute(sText){
-		//debugger;
-		var self=this;
-		var otherParams={
+	newReplaceParams(inOtherParams){
+		var otherParams;
+		if (isDefined(inOtherParams)){
+			otherParams=inOtherParams;
+		} else {
+			otherParams={
 				hsValues:newHashMap(),
 				vValues:[],
 				self:self,
-				bReplaceVars:false
+				bReplaceVars:false,
+				bInExecution:false
 			};
+		}
+		return otherParams;
+	}
+	replaceVarsAndExecute(sText){
+		//debugger;
+		var self=this;
+		var otherParams=self.newReplaceParams();
 //		var sFncBody=self.replaceVars(sText,otherParams);
 		var vValue=self.getStringReplacedScript(sText,otherParams);// executeFunction(otherParams.vValues,sFncBody,self.model.functionCache);
 		return vValue;
@@ -547,17 +557,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		log("Replace Vars of:"+sTextToLog);
 	//	debugger;
 		var iReplaced=0;
-		var otherParams;
-		if (isDefined(inOtherParams)){
-			otherParams=inOtherParams;
-		} else {
-			otherParams={
-				hsValues:newHashMap(),
-				vValues:[],
-				self:self,
-				bReplaceVars:false
-			};
-		}
+		var otherParams=self.newReplaceParams(inOtherParams);
 		if (isDefined(bReplaceVars)){
 			otherParams.bReplaceVars=bReplaceVars;
 		}
@@ -565,9 +565,13 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		if (sResult.saExists("{{{")){
 			//debugger;
 			var bAntReplaceVars=otherParams.bReplaceVars;
+			var bAntInExecution=otherParams.bInExecution;
 			otherParams.bReplaceVars=false;
+			otherParams.bInExecution=true;
 			sResult=self.replaceVarsComplexArray(sResult,"{{{","}}}",otherParams,self.getStringReplacedScript);
 			otherParams.bReplaceVars=bAntReplaceVars;
+			otherParams.bInExecution=bAntInExecution;
+			
 //			sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + sResult.saToString();
 //			log("Fase 0 Replaced {{{ }}} result:"+sTextToLog);
 		}

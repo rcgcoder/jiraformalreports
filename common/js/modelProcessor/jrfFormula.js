@@ -41,12 +41,7 @@ var jrfFormula=class jrfFormula extends jrfToken{//this kind of definition allow
 			sContent=sContent.saRemoveInnerHtmlTags(); // remove al tags.... there are not allowed
 			log("Formula Content previous of replace returns and Vars:"+sContent);
 			sContent=replaceAll(sContent,"\n"," ");
-			var otherParams={
-					hsValues:newHashMap(),
-					vValues:[],
-					self:self,
-					bReplaceVars:false
-				};
+			var otherParams=self.newReplaceParams(inOtherParams);
 			otherParams.hsValues.add("elem",0);
 			otherParams.hsValues.add("root",1);
 			otherParams.vValues.push(self.reportElem);

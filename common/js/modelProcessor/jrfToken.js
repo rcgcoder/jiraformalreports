@@ -591,8 +591,16 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			sInnerText=otherParams.self.replaceVars(sInnerText,otherParams);
 		}
 		var vValuesProcessed=[];
+		var vValueAux;
 		otherParams.vValues.forEach(function(vValue){
-			vValuesProcessed.push(otherParams.self.variables.getVar(vValue));
+			if (isString(vValue)||isArray(vValue)){
+				vValue=otherParams.self.variables.getVar(vValue);
+				if (isArray(vValue)) vValue=vValue.saToString().trim();
+				if ($.isNumeric(elem)){
+					vValue=parseFloat(vValue);
+				}
+			}
+			vValuesProcessed.push(vValue);
 		});
 		var vValue=executeFunction(vValuesProcessed,sInnerText,otherParams.self.model.functionCache);
 		return vValue;

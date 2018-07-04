@@ -59,6 +59,8 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 				sAux=replaceAll(sAux,";",",");
 				sAux=replaceAll(sAux,"'",'"');
 				elemsInForEach=self.replaceVarsAndExecute(sAux);
+			} else {
+				elemsInForEach=sAux;
 			}
 		} else if (self.sourceJS!=""){
 			elemsInForEach=self.replaceVarsAndExecute(self.sourceJS);

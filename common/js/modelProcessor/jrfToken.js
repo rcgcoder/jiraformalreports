@@ -380,7 +380,6 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		return vAux;
 	}
 	getAttrVal(attrName,objSrc,bReplaceVars,bExecuteIfExists){
-		if (bExecuteIfExists) debugger;
 		var self=this;
 		var idAttr=attrName.toLowerCase();
 		if (self.tag.getAttributes().exists(idAttr)){
@@ -391,6 +390,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					vAux="";
 				}
 				vAux=self.adjustSyntax(vAux);
+				if (bExecuteIfExists) debugger;
 				if (isDefined(bReplaceVars)&&(!bReplaceVars)){
 					log ("not replace Vars");
 				} else if (isDefined(bExecuteIfExists)&&(bExecuteIfExists)){

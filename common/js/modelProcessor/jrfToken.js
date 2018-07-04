@@ -28,10 +28,10 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.setVars=obj.getAttrVal("setVar");
 		obj.inFormat=obj.getAttrVal("informat");
 		obj.outFormat=obj.getAttrVal("format");
-		obj.ifCondition=obj.getAttrVal("if",reportElem,false);
+		obj.ifCondition; // use when it is needed =obj.getAttrVal("if",reportElem,false);
 		obj.processOrder=obj.getAttrVal("processOrder");
 		obj.visibility=obj.getAttrVal("visibility");
-		obj.datetimeSource=obj.getAttrVal("atDateTime",reportElem,true,true);
+		obj.datetimeSource;//use when it is needed   =obj.getAttrVal("atDateTime",reportElem,true,true);
 		obj.postProcess=obj.getAttrVal("postprocess");
 		obj.datetime=undefined;
 		obj.moreParams=obj.getAttrVal("aditionalparameters");
@@ -270,8 +270,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		self.applyIfCondition();
 		if (self.ifConditionResult){
 			var auxDateTime;
+			self.datetimeSource=self.getAttrVal("atDateTime",self.reportElem,true,true);
 			if (self.datetimeSource!=""){
-				debugger;
 				if (isString(self.datetimeSource)||(isArray(self.datetimeSource))){
 					self.datetimeSource=self.datetimeSource.saToString().trim();
 				}
@@ -417,6 +417,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	}
 	applyIfCondition(){
 		var self=this;
+		self.ifCondition=self.getAttrVal("if",self.reportElem,true,true);
 		if (self.ifCondition!=""){
 			//debugger;
 			var bProcessed=self.replaceVarsAndExecute(self.ifCondition);

@@ -339,7 +339,14 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 			minFacturableFase=otherParams.getValue("minFacturableFase");
 		}
 		if (fromDatetime!=""){
-			fromDatetime=toDateNormalDDMMYYYYHHMMSS(fromDatetime).getTime()+"";
+			if ((typeof fromDatetime==="object")&&(fromDatetime.constructor.name=="Date")){
+				fromDatetime=fromDatetime.getTime()+"";
+			} else {
+				if (isString(fromDatetime)||isArray(fromDatetime)){
+					fromDatetime=fromDatetime.saToString().trim();
+				}
+				fromDatetime=toDateNormalDDMMYYYYHHMMSS(fromDatetime).getTime()+"";
+			}
 		}
 		var sKey=hourCost+"-"+minFacturableFase+"-"+fromDatetime+"-"+toDateTime;
 		return sKey;

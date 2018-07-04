@@ -34,7 +34,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.datetimeSource=obj.getAttrVal("atDateTime",reportElem,true,true);
 		obj.postProcess=obj.getAttrVal("postprocess");
 		obj.datetime=undefined;
-		obj.moreParams=obj.getAttrVal("aditionalparameters");
+		obj.moreParams=obj.getAttrVal("aditionalparameters",reportElem,false);
 		obj.otherParams=newHashMap();
 		obj.ifConditionResult=true;
 		obj.autoAddPostHtml=true;
@@ -292,6 +292,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					var paramValue=undefined;
 					if (paramParts.length>1){
 						paramValue=paramParts[1].trim();
+						paramValue=self.replaceVarsAndExecute(paramValue);
 					}
 					hsParams.add(paramName,paramValue);
 				});

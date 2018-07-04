@@ -290,12 +290,12 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					var paramParts=aParam.split("=");
 					var paramName=paramParts[0].trim();
 					debugger;
-					paramName=self.replaceVarsAndExecute(paramName);
+					paramName=self.replaceVars(paramName,undefined,true);
 					paramName=paramName.saToString().trim();
 					var paramValue=undefined;
 					if (paramParts.length>1){
 						paramValue=paramParts[1].trim();
-						paramValue=self.replaceVarsAndExecute(paramValue);
+						paramValue=self.replaceVars(paramValue,undefined,true);
 					}
 					hsParams.add(paramName,paramValue);
 				});

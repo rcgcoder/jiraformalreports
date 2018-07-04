@@ -296,6 +296,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					if (paramParts.length>1){
 						paramValue=paramParts[1].trim();
 						paramValue=self.replaceVars(paramValue,undefined,true);
+						paramValue=paramValue.saToString().trim();
 					}
 					hsParams.add(paramName,paramValue);
 				});

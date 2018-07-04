@@ -18,6 +18,9 @@ class RCGDateUtils {
 		return false;
 	}
 	toDateNormalDDMMYYYYHHMMSS(sDate){ //dd/mm/yyyy hh:mm:ss
+		//if value where a date... return it
+		if ((typeof sDate==="object")&&(sDate.constructor.name=="Date")) return sDate;
+		if (sDate instanceof Date) return sDate;
 		var sAuxDate=replaceAll(sDate," ","");//.split(" ");
 		var arrDate=sAuxDate.split("/");
 		var sAuxTime=arrDate[2].substring(4,arrDate[2].length);

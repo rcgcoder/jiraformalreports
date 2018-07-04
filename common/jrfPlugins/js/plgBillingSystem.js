@@ -329,7 +329,6 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		var hourCost="";
 		var fromDatetime="";
 		var toDateTime="";
-		debugger;
 		var minFacturableFase="";
 		if (isDefined(atDatetime)){
 			toDateTime=atDatetime.getTime()+"";
@@ -343,9 +342,6 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 			if ((typeof fromDatetime==="object")&&(fromDatetime.constructor.name=="Date")){
 				fromDatetime=fromDatetime.getTime()+"";
 			} else {
-				if (isString(fromDatetime)||isArray(fromDatetime)){
-					fromDatetime=fromDatetime.saToString().trim();
-				}
 				fromDatetime=toDateNormalDDMMYYYYHHMMSS(fromDatetime).getTime()+"";
 			}
 		}

@@ -55,9 +55,11 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 		} else if (self.sourceFormula!=""){
 			debugger;
 			var sAux=self.replaceVarsAndExecute(self.sourceFormula); // replace the name of variable for the value
-			sAux=replaceAll(sAux,";",",");
-			sAux=replaceAll(sAux,"'",'"');
-			elemsInForEach=self.replaceVarsAndExecute(sAux);
+			if (isString(sAux)||isArray(sAux)){
+				sAux=replaceAll(sAux,";",",");
+				sAux=replaceAll(sAux,"'",'"');
+				elemsInForEach=self.replaceVarsAndExecute(sAux);
+			}
 		} else if (self.sourceJS!=""){
 			elemsInForEach=self.replaceVarsAndExecute(self.sourceJS);
 		}

@@ -271,6 +271,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		if (self.ifConditionResult){
 			var auxDateTime;
 			if (self.datetimeSource!=""){
+				debugger;
 				if (isString(self.datetimeSource)||(isArray(self.datetimeSource))){
 					self.datetimeSource=self.datetimeSource.saToString().trim();
 				}

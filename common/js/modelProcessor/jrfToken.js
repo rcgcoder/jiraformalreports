@@ -526,6 +526,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		return sValAux;
 	}
 	newReplaceParams(inOtherParams){
+		var self=this;
 		var otherParams;
 		if (isDefined(inOtherParams)){
 			otherParams=inOtherParams;

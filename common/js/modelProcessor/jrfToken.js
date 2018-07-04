@@ -596,7 +596,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			if (isString(vValue)||isArray(vValue)){
 				vValue=otherParams.self.variables.getVar(vValue);
 				if (isArray(vValue)) vValue=vValue.saToString().trim();
-				if ($.isNumeric(elem)){
+				if ($.isNumeric(vValue)){
 					vValue=parseFloat(vValue);
 				}
 			}

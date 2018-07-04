@@ -389,7 +389,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					vAux="";
 				}
 				vAux=self.adjustSyntax(vAux);
-				if (bExecuteIfExists) debugger;
+				//if (bExecuteIfExists) debugger;
 				if (isDefined(bReplaceVars)&&(!bReplaceVars)){
 					log ("not replace Vars");
 				} else if (isDefined(bExecuteIfExists)&&(bExecuteIfExists)){

@@ -31,7 +31,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.ifCondition=obj.getAttrVal("if",reportElem,false);
 		obj.processOrder=obj.getAttrVal("processOrder");
 		obj.visibility=obj.getAttrVal("visibility");
-		obj.datetimeSource=obj.getAttrVal("atDateTime");
+		obj.datetimeSource=obj.getAttrVal("atDateTime",reportElem,false,true);
 		obj.postProcess=obj.getAttrVal("postprocess");
 		obj.datetime=undefined;
 		obj.moreParams=obj.getAttrVal("aditionalparameters");
@@ -379,7 +379,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		vAux=replaceAll(vAux,"lessOrEqualThan","<=");
 		return vAux;
 	}
-	getAttrVal(attrName,objSrc,bReplaceVars){
+	getAttrVal(attrName,objSrc,bReplaceVars,bExecuteIfExists){
 		var self=this;
 		var idAttr=attrName.toLowerCase();
 		if (self.tag.getAttributes().exists(idAttr)){
@@ -392,6 +392,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				vAux=self.adjustSyntax(vAux);
 				if (isDefined(bReplaceVars)&&(!bReplaceVars)){
 					log ("not replace Vars");
+				} else if (isDefined(bExecuteIfExists)&&(bExecuteIfExists)){
+					vAux=self.replaceVarsAndExecute(vAux);
 				} else {
 					vAux=self.replaceVars(vAux);
 				}

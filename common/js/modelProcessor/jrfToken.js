@@ -423,11 +423,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var self=this;
 //		self.ifCondition=self.getAttrVal("if",self.reportElem,true,true);
 		self.ifConditionResult=false;
-		if (self.ifCondition==""){
-			self.ifConditionResult=true;
-		} else if (isBoolean(self.ifCondition)){
+		if (isBoolean(self.ifCondition)){
 			debugger;
 			self.ifConditionResult=self.ifCondition;
+		} else if (self.ifCondition==""){
+			self.ifConditionResult=true;
 		} else if (self.ifCondition!=""){
 			var bProcessed;
 			if (isString(self.ifCondition)||(isArray(self.ifCondition))){

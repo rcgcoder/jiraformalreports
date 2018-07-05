@@ -1,7 +1,64 @@
+var RCGHistoryVar=class RCGHistoryVar{
+	constructor(sVarName,varValue,theDate){
+		var self=this;
+		self.name=sVarName;
+		self.history=newHashMap();
+		self.add(varValue,theDate);
+	}
+	add(varValue,theDate){
+		var vValue=varValue;
+		var vDate=theDate;
+		var sDateTime="undefined";
+		var iDateTime=0;
+		if (isUndefined(varValue)) vValue="";
+		if (isUndefined(theDate)) {
+			vDate="";
+		} else {
+			iDateTime=theDate.getTime();
+			sDateTime=iDateTime+"";
+		}
+		if (self.history.exists(sDateTime)){
+			var antVal=self.history.getValue(sDateTime);
+			antVal.value=vValue;
+		} else {
+			self.history.add(sDateTime,{datetime:iDateTime,value:vValue,date:vDate});
+		}
+	}
+	getLife(){
+		var arrChanges=self.histoy.toArray();
+		arrChanges.sort(function(a,b){
+			if (a.datetime>b.datetime) return -1;
+			if (a.datetime<b.datetime) return 1;
+			return 0;
+		});
+		return arrChanges;
+	}
+	getValue(atDateTime){
+		var arrLife=self.getLife();
+		var historyLength=arrLife.length;
+		if (historyLength<=0) return "";
+		if ((historyLength==1)||(isUndefined(atDateTime))) return arrLife[0].value;
+		var atTimestamp=atDateTime.getTime();
+		var vAux=arrLife.pop();
+		var vAnt=vAux;
+		while ((vAux.datetime>atTimestamp)&&(arrLife.length>0)){
+			vAnt=vAux;
+			vAux=arrLife.pop();
+		}
+		if (vAux.datetime==0) { //if the life is finished and the element has not date
+			return vAnt.value; // returns the first history change
+		}
+/*		if (vAux.datetime>atTimestamp){ // the life is finished... get the first value setted
+			return vAux.value;
+		}*/
+		return vAux.value
+	}
+}
 var RCGVarEngine=class RCGVarEngine{ //this kind of definition allows to hot-reload
 	constructor(){
 		var self=this;
 		self.localVars=newHashMap();
+		self.historyVars=newHashMap();
 	}
 
 	pushVarEnv(){
@@ -42,14 +99,30 @@ var RCGVarEngine=class RCGVarEngine{ //this kind of definition allows to hot-rel
 		if (hsVars=="") return "";
 		return hsVars.pop();
 	}
-	getVar(varName){
+	getVar(varName,atDatetime){
 		var self=this;
+		if (isDefined(atDatetime)){
+			hVar=self.historyVars.getValue(varName);
+			if (hVar!=""){
+				return hVar.getValue(atDatetime);
+			}
+		}
 		var hsVars=self.getVars(varName);
 		if (hsVars=="") return "";
 		return hsVars.top();
 	}
-	setVar(varName,value){
+	setVar(varName,value,atDatetime){
 		var self=this;
+		if (isDefined(atDatetime)){
+			if (!self.historyVars.exists(varName)){
+				var hVar=new RCGHistoryVar(varName,value,atDatetime);
+				self.historyVars.add(varName,hVar);
+			} else {
+				var hVar=self.historyVars.getValue(varName);
+				hVar.add(value,atDatetime);
+			}
+			return;
+		}
 		var hsVars=self.getVars(varName);
 		if (hsVars!=""){
 			if (hsVars.length()>0){

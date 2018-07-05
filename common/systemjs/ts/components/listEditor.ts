@@ -202,13 +202,13 @@ export class listEditor {
                 elemToAdd=auxElements[i];
              }
         
-            if ((!isInArray(self.elements,firstCol,(self.columns==1?undefined:0)))&&(firstCol!="")){
+//            if ((!isInArray(self.elements,firstCol,(self.columns==1?undefined:0)))&&(firstCol!="")){
                 if (bInsertFirst) {
                     self.elements.unshift(elemToAdd);
                 } else {
                     self.elements.push(elemToAdd);
                 }
-            }
+  //          }
         }
         self.refreshTable();
     }   

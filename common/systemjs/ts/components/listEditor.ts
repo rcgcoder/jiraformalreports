@@ -38,7 +38,16 @@ export class listEditor {
                                 `);
                 if (i>0){
                     var sPostIndex="_"+i;
-                    itemAddBox.append('<textarea name="'+self.name+"-text"+sPostIndex+'" rows=6 ></textarea>');
+                    if (isUndefined(column.type)||(column.type=="textarea")){
+                        itemAddBox.append('<textarea name="'+self.name+"-text"+sPostIndex+'" id="'+self.name+"-text"+sPostIndex+'" rows=6 ></textarea>');
+                    } else if (column.type=="toggle"){
+                        itemAddBox.append(`<aui-toggle id="`+self.name+"-text"+sPostIndex+`" 
+                                            label="`+column.caption+`Ensure Dependet Issues"
+                                            ></aui-toggle>`+column.caption);
+                    } else if (column.type=="date"){
+                        itemAddBox.append(`<input class=flatpickr id="`+self.name+"-text"+sPostIndex+`" 
+                                            type="text" placeholder="Select Date..">`);
+                    }
                 }   
                 var taAux=self.getTextArea(i);
                 taAux.width((Math.round(100/self.columns)-10)+"%");

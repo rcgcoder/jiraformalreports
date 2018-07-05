@@ -653,6 +653,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		return vValue;
 	}
 	extractNameAndDate(sText){
+		var self=this;
 		var result={name:"",date:undefined};
 		var findComma=sText.saIndexOf(",",false,true);
 		var sVarName="";
@@ -662,7 +663,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		} else {
 			sVarName=findComma.arrPrevious.saTrim();
 			atDatetime=findComma.arrPosterior.saTrim();
-			atDateTime=otherParams.self.variables.getVar(atDatetime);
+			atDateTime=self.variables.getVar(atDatetime);
 			result.date=atDateTime;
 		}
 		result.name=sVarName;

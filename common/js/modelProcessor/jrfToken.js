@@ -640,7 +640,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var vValueAux;
 		otherParams.vValues.forEach(function(vValue){
 			if (isString(vValue)||isArray(vValue)){
-				var varDetail=extractNameAndDate(vValue);
+				var varDetail=otherParams.self.extractNameAndDate(vValue);
 				vValue=otherParams.self.variables.getVar(varDetail.name,varDetail.date);
 				if (isArray(vValue)) vValue=vValue.saToString().trim();
 				if ($.isNumeric(vValue)){
@@ -688,7 +688,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			}
 			sVarRef="_arrRefs_["+iVar+"]";
 		} else {
-			var varDetail=extractNameAndDate(sInnerText);
+			var varDetail=otherParams.self.extractNameAndDate(sInnerText);
 			var vInnerVarValue=otherParams.self.variables.getVar(varDetail.name,varDetail.date);
 			if (isObject(vInnerVarValue)){
 				if (otherParams.hsValues.exists(sInnerText)){

@@ -155,11 +155,10 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		});
 		self.continueTask();
 	}
-	
-	applyInitVars(){
+	initVariables(sVarsInit,sVarsReuse){
 		var self=this;
-		if (self.initVars!=""){
-			var arrVars=self.initVars.split(",");
+		if (isDefined(sVarsInit)&&(sVarsInit!="")){
+			var arrVars=sVarsInit.split(",");
 			for (var i=0;i<arrVars.length;i++){
 				var arrVarParts=arrVars[i].split("=");
 				var varName=arrVarParts[0].trim();
@@ -172,8 +171,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				log("Initialized Value ["+varName+"] with value ["+vValue+"]");
 			}
 		}
-		if (self.initVarsReuse!=""){
-			var arrVars=self.initVarsReuse.split(",");
+		if (isDefined(sVarsReuse)&&(sVarsReuse!="")){
+			var arrVars=sVarsReuse.split(",");
 			for (var i=0;i<arrVars.length;i++){
 				var arrVarParts=arrVars[i].split("=");
 				var varName=arrVarParts[0].trim();
@@ -183,12 +182,18 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				var vValue="empty";
 				if (arrVarParts.length>1){
 					vValue=arrVarParts[1];
-					self.variables.pushVar(varName,vValue);
+					self.variables.setVar(varName,vValue);
 				}
 				var actValue=self.variables.getVar(varName);
 				log("Initialized reusing Value ["+varName+"] with value ["+vValue+"], actual value["+actValue+"]");
 			}
 		}
+		
+	}
+	
+	applyInitVars(){
+		var self=this;
+		self.initVariables(self.initVars,self.initVarsReuse);
 	}
 	applySetVars(sValAux){
 		var self=this;

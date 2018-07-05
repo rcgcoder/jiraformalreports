@@ -30,9 +30,6 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.outFormat=obj.getAttrVal("format");
 		obj.ifCondition=obj.getAttrVal("if",reportElem,true,true);
 		obj.processOrder=obj.getAttrVal("processOrder");
-		if (obj.getAttrVal("visibility")!=""){
-			debugger;
-		}
 		obj.visibility=obj.getAttrVal("visibility");
 		obj.datetimeSource=obj.getAttrVal("atDateTime",reportElem,true,true);
 		obj.postProcess=obj.getAttrVal("postprocess");

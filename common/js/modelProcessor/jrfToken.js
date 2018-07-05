@@ -28,10 +28,6 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.setVars=obj.getAttrVal("setVar");
 		obj.inFormat=obj.getAttrVal("informat");
 		obj.outFormat=obj.getAttrVal("format");
-		var ifConAux=obj.getAttrVal("if");
-		if (ifConAux!=""){
-			debugger;
-		}
 		obj.ifCondition=obj.getAttrVal("if",reportElem,true,true);
 		obj.processOrder=obj.getAttrVal("processOrder");
 		obj.visibility=obj.getAttrVal("visibility");
@@ -426,7 +422,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	applyIfCondition(){
 		var self=this;
 //		self.ifCondition=self.getAttrVal("if",self.reportElem,true,true);
-		if (self.ifCondition!=""){
+		if (self.ifCondition==""){
+			self.ifConditionResult=true;
+		} else if (self.ifCondition==true){
+			self.ifConditionResult=true;
+		} else if (self.ifCondition!=""){
 			debugger;
 			var bProcessed;
 			if (isString(self.ifCondition)||(isArray(self.ifCondition))){

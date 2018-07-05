@@ -635,11 +635,13 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		if ((sInnerText.saExists("{{"))){ // its valid for {{ and for  {{{
 			sInnerText=otherParams.self.replaceVars(sInnerText,otherParams);
 		}
+
 		var vValuesProcessed=[];
 		var vValueAux;
 		otherParams.vValues.forEach(function(vValue){
 			if (isString(vValue)||isArray(vValue)){
-				vValue=otherParams.self.variables.getVar(vValue);
+				var varDetail=extractNameAndDate(vValue);
+				vValue=otherParams.self.variables.getVar(varDetail.name,varDetail.date);
 				if (isArray(vValue)) vValue=vValue.saToString().trim();
 				if ($.isNumeric(vValue)){
 					vValue=parseFloat(vValue);
@@ -649,6 +651,22 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		});
 		var vValue=executeFunction(vValuesProcessed,sInnerText,otherParams.self.model.functionCache);
 		return vValue;
+	}
+	extractNameAndDate(sText){
+		var result={name:"",date:undefined};
+		var findComma=sInnerText.saIndexOf(",",false,true);
+		var sVarName="";
+		var atDatetime=undefined;
+		if (findComma.bLocated){
+			sVarName=findComma.arrPrevious.saTrim();
+			atDatetime=findComma.arrPosterior.saTrim();
+			atDateTime=otherParams.self.variables.getVar(atDatetime);
+		} else {
+			sVarName=findComma.arrPrevious.saTrim();
+		}
+		result.name=sVarName;
+		result.date=atDateTime;
+		return result;
 	}
 	getStringReplaced(sText,otherParams){
 		var arrInnerText;
@@ -670,7 +688,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			}
 			sVarRef="_arrRefs_["+iVar+"]";
 		} else {
-			var vInnerVarValue=otherParams.self.variables.getVar(sInnerText);
+			var varDetail=extractNameAndDate(sInnerText);
+			var vInnerVarValue=otherParams.self.variables.getVar(varDetail.name,varDetail.date);
 			if (isObject(vInnerVarValue)){
 				if (otherParams.hsValues.exists(sInnerText)){
 					iVar=otherParams.hsValues.getValue(sInnerText);

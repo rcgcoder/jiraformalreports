@@ -104,6 +104,7 @@ var RCGVarEngine=class RCGVarEngine{ //this kind of definition allows to hot-rel
 	}
 	getVar(varName,atDatetime){
 		var self=this;
+		var hVar;
 		if (isDefined(atDatetime)){
 			hVar=self.historyVars.getValue(varName);
 			if (hVar!=""){
@@ -111,8 +112,12 @@ var RCGVarEngine=class RCGVarEngine{ //this kind of definition allows to hot-rel
 			}
 		}
 		var hsVars=self.getVars(varName);
-		if (hsVars=="") return "";
-		return hsVars.top();
+		if (hsVars!="") return hsVars.top();
+		hVar=self.historyVars.getValue(varName);
+		if (hVar!=""){
+			return hVar.getValue(atDatetime);
+		}
+		return "";
 	}
 	setVar(varName,value,atDatetime){
 		var self=this;

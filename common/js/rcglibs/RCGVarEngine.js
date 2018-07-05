@@ -42,11 +42,11 @@ var RCGHistoryVar=class RCGHistoryVar{
 		if (historyLength<=0) return "";
 		if ((historyLength==1)||(isUndefined(atDateTime))) return arrLife[0].value;
 		var atTimestamp=atDateTime.getTime();
-		var vAux=arrLife.pop();
+		var vAux=arrLife.shift();
 		var vAnt=vAux;
 		while ((vAux.datetime>atTimestamp)&&(arrLife.length>0)){
 			vAnt=vAux;
-			vAux=arrLife.pop();
+			vAux=arrLife.shift();
 		}
 		if (vAux.datetime==0) { //if the life is finished and the element has not date
 			return vAnt.value; // returns the first history change

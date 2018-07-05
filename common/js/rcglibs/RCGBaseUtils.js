@@ -168,6 +168,9 @@ function isArray(variable){
 function isObject(obj){
 	return ( (typeof obj === "object") && (obj !== null) && isDefined(obj) );
 }
+function isBoolean(obj){
+	return (typeof obj === "boolean");
+}
 
 function isInArray(theArray,theKey,theField){
 	var bExists=false;

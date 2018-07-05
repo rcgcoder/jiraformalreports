@@ -162,10 +162,12 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			for (var i=0;i<arrVars.length;i++){
 				var arrVarParts=arrVars[i].split("=");
 				var varName=arrVarParts[0].trim();
+				varName=self.replaceVars(varName).saToString().trim();
 				self.variables.initVar(varName);
 				var vValue="empty";
 				if (arrVarParts.length>1){
 					vValue=arrVarParts[1];
+					vValue=self.replaceVars(vValue).saToString().trim();
 					self.variables.setVar(varName,vValue);
 				}
 				log("Initialized Value ["+varName+"] with value ["+vValue+"]");

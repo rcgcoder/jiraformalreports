@@ -7,7 +7,7 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 		self.nameRest=self.getAttrVal("nameRest");
 		self.type=self.getAttrVal("type");
 //		self.where=self.getAttrVal("where",undefined,false);
-		self.innerVarName=self.getAttrVal("as");
+		self.innerVarName=self.getAttrVal("as",false);
 		self.resultVarName=self.getAttrVal("resultvarname");
 		self.restVarName=self.getAttrVal("restvarname");
 		
@@ -121,7 +121,7 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 			
 			elemsInForEach.walk(function(eachElem,deep,key){
 				if (self.innerVarName!=""){
-					self.variables.pushVar(self.innerVarName,eachElem);
+					self.initVariables(self.innerVarName);
 				}
 				self.variables.pushVar("counter",iCounter);
 				self.variables.pushVar("counter_selected",iSelectedCounter);

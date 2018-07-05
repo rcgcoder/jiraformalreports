@@ -530,8 +530,7 @@ var jrfReport=class jrfReport {
 							theModel.variables.initVar(defaultVar[0]);				
 							theModel.variables.pushVar(defaultVar[0],defaultVar[1]);
 					} else {
-						debugger;
-						var dtAux=defaultVar[2];
+						var dtAux=toDateNormalDDMMYYYYHHMMSS(defaultVar[2]);
 						theModel.variables.setVar(defaultVar[0],defaultVar[1],dtAux);
 					}
 				})

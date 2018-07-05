@@ -45,12 +45,18 @@ export class listEditor {
                                             label="`+column.caption+`Ensure Dependet Issues"
                                             ></aui-toggle>`+column.caption);
                     } else if (column.type=="date"){
-                        itemAddBox.append(`<input class=flatpickr id="`+self.name+"-text"+sPostIndex+`" 
-                                            type="text" placeholder="Select Date..">`);
+                       itemAddBox.append(`<input class=flatpickr id="`+self.name+"-text"+sPostIndex+`" 
+                                            type="text" placeholder="Select Date..">`);" +
+                       flatpickr("#"+self.name+"-text"+sPostIndex, {
+                            enableTime: true,
+                            dateFormat: "d/m/Y H:i",
+                        });
+
                     }
                 }   
                 var taAux=self.getTextArea(i);
                 taAux.width((Math.round(100/self.columns)-10)+"%");
+
             }
         }); 
     }

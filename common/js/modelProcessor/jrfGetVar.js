@@ -1,6 +1,7 @@
 var jrfGetVar=class jrfGetVar extends jrfToken{//this kind of definition allows to hot-reload
 	loadOwnProperties(){
 		var self=this;
+		debugger;
 		self.varName=self.getAttrVal("getvar");
 	}
 	apply(){

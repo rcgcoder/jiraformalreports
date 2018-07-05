@@ -169,7 +169,7 @@ function isObject(obj){
 	return ( (typeof obj === "object") && (obj !== null) && isDefined(obj) );
 }
 function isBoolean(obj){
-	return (typeof obj === "boolean");
+	return ( (typeof obj === "boolean") && (obj !== null) && isDefined(obj) );
 }
 
 function isInArray(theArray,theKey,theField){

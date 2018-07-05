@@ -15,6 +15,7 @@ var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition al
 	}
 	apply(){
 		var self=this;
+		debugger;
 		self.loopElements=super.apply();
 		self.loopStart();
 		// processing total elements

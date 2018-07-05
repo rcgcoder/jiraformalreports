@@ -86,7 +86,7 @@ function newIssueFactory(report){
 		}
 		var bDefined=false;
 		var fieldValue="";
-		if (isDefined(dateTime)){
+		if (isDefined(dateTime)&&(dateTime!="")){
 			bDefined=true;
 			fieldValue=self.getFieldValueAtDateTime(sFieldName,dateTime,otherParams);
 		} else {

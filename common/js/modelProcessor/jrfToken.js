@@ -654,7 +654,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	}
 	extractNameAndDate(sText){
 		var result={name:"",date:undefined};
-		var findComma=sInnerText.saIndexOf(",",false,true);
+		var findComma=sText.saIndexOf(",",false,true);
 		var sVarName="";
 		var atDatetime=undefined;
 		if (findComma.bLocated){

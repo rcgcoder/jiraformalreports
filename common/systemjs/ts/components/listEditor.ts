@@ -47,11 +47,11 @@ export class listEditor {
                     } else if (column.type=="date"){
                        itemAddBox.append(`<input class=flatpickr id="`+self.name+"-text"+sPostIndex+`" 
                                             type="text" placeholder="Select Date..">`);" +
-                       flatpickr("#"+self.name+"-text"+sPostIndex, {
+/*                       flatpickr("#"+self.name+"-text"+sPostIndex, {
                             enableTime: true,
                             dateFormat: "d/m/Y H:i",
                         });
-
+*/
                     }
                 }   
                 var taAux=self.getTextArea(i);

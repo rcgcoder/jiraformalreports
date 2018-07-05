@@ -7,7 +7,7 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 		self.nameRest=self.getAttrVal("nameRest");
 		self.type=self.getAttrVal("type");
 //		self.where=self.getAttrVal("where",undefined,false);
-		self.innerVarName=self.getAttrVal("as",false);
+		self.innerVarName=self.getAttrVal("as",undefined,false);
 		self.resultVarName=self.getAttrVal("resultvarname");
 		self.restVarName=self.getAttrVal("restvarname");
 		

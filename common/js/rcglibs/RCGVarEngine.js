@@ -6,6 +6,7 @@ var RCGHistoryVar=class RCGHistoryVar{
 		self.add(varValue,theDate);
 	}
 	add(varValue,theDate){
+		var self=this;
 		var vValue=varValue;
 		var vDate=theDate;
 		var sDateTime="undefined";
@@ -25,6 +26,7 @@ var RCGHistoryVar=class RCGHistoryVar{
 		}
 	}
 	getLife(){
+		var self=this;
 		var arrChanges=self.histoy.toArray();
 		arrChanges.sort(function(a,b){
 			if (a.datetime>b.datetime) return -1;
@@ -34,6 +36,7 @@ var RCGHistoryVar=class RCGHistoryVar{
 		return arrChanges;
 	}
 	getValue(atDateTime){
+		var self=this;
 		var arrLife=self.getLife();
 		var historyLength=arrLife.length;
 		if (historyLength<=0) return "";

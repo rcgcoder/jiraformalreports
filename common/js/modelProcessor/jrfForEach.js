@@ -50,6 +50,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 			self.addStep("Processing all Childs elements",function(){
 				self.processAllChilds(self.tag.getChilds(),newParent);
 			});
+			debugger;
 			if ((self.recursive!="")&&((self.replaceVarsAndExecute(self.recursive)+"").trim().toLowerCase()=="true")){
 				log("Recursive!");
 				self.addStep("Encoding recursive childs...",function(){

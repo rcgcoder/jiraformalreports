@@ -657,15 +657,15 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var findComma=sText.saIndexOf(",",false,true);
 		var sVarName="";
 		var atDatetime=undefined;
-		if (findComma.bLocated){
+		if (!findComma.bLocated){
+			sVarName=findComma.arrPrevious.saTrim();
+		} else {
 			sVarName=findComma.arrPrevious.saTrim();
 			atDatetime=findComma.arrPosterior.saTrim();
 			atDateTime=otherParams.self.variables.getVar(atDatetime);
-		} else {
-			sVarName=findComma.arrPrevious.saTrim();
+			result.date=atDateTime;
 		}
 		result.name=sVarName;
-		result.date=atDateTime;
 		return result;
 	}
 	getStringReplaced(sText,otherParams){

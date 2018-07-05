@@ -27,7 +27,7 @@ var RCGHistoryVar=class RCGHistoryVar{
 	}
 	getLife(){
 		var self=this;
-		var arrChanges=self.histoy.toArray();
+		var arrChanges=self.history.toArray();
 		arrChanges.sort(function(a,b){
 			if (a.datetime>b.datetime) return -1;
 			if (a.datetime<b.datetime) return 1;

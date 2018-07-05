@@ -663,10 +663,10 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		} else {
 			sVarName=findComma.arrPrevious.saTrim();
 			atDatetime=findComma.arrPosterior.saTrim();
-			atDateTime=self.variables.getVar(atDatetime);
-			result.date=atDateTime;
+			atDatetime=self.variables.getVar(atDatetime);
 		}
 		result.name=sVarName;
+		result.date=atDatetime;
 		return result;
 	}
 	getStringReplaced(sText,otherParams){

@@ -202,7 +202,7 @@ export class listEditor {
                 elemToAdd=auxElements[i];
              }
         
-//            if ((!isInArray(self.elements,firstCol,(self.columns==1?undefined:0)))&&(firstCol!="")){
+            if ((self.multiple.trim().toLowerCase()=="true")||((!isInArray(self.elements,firstCol,(self.columns==1?undefined:0)))&&(firstCol!=""))){
                 if (bInsertFirst) {
                     self.elements.unshift(elemToAdd);
                 } else {

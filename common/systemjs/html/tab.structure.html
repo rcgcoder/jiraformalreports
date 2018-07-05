@@ -25,8 +25,8 @@
 		    <button (click)="doEditSelectedModel()" class="aui-button">Quick Modify Model</button>
 			<dlgEditableList id="listDefaultVariables" name="listDefaultVariables" 
 				typeDescriptor="List of Default Variables" 
-				columns=2
-				columnDefinitions='[{"caption":"Var Name"},{"caption":"Default Value"}]'
+				columns=3
+				columnDefinitions='[{"caption":"Var Name"},{"caption":"Default Value"},{"caption":"at Date"}]'
 			    openDialogCaption="List of Default Variables for the Report"
 				(onApply)="onChangeDefaultVariables($event)"
 				>

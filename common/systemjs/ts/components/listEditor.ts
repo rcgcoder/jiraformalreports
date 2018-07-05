@@ -46,7 +46,7 @@ export class listEditor {
                                             ></aui-toggle>`+column.caption);
                     } else if (column.type=="date"){
                        itemAddBox.append(`<input class=flatpickr id="`+self.name+"-text"+sPostIndex+`" 
-                                            type="text" placeholder="Select Date..">`);" +
+                                            type="text" placeholder="Select Date..">`);
 /*                       flatpickr("#"+self.name+"-text"+sPostIndex, {
                             enableTime: true,
                             dateFormat: "d/m/Y H:i",

@@ -524,8 +524,16 @@ var jrfReport=class jrfReport {
 			self.objModel=theModel;
 			if (isDefined(self.config.listDefaultVariables)){
 				self.config.listDefaultVariables.forEach(function(defaultVar){
-					theModel.variables.initVar(defaultVar[0]);				
-					theModel.variables.pushVar(defaultVar[0],defaultVar[1]);				
+					if (isUndefined(defaultVar[2])||
+					    (defaultVar[2]=="undefined")||
+					    (defaultVar[2]=="")){
+							theModel.variables.initVar(defaultVar[0]);				
+							theModel.variables.pushVar(defaultVar[0],defaultVar[1]);
+					} else {
+						debugger;
+						var dtAux=defaultVar[2];
+						theModel.variables.setVar(defaultVar[0],defaultVar[1],dtAux);
+					}
 				})
 			}
 			//debugger;

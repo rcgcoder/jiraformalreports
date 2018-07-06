@@ -75,6 +75,19 @@
 						Report End Date - <i>"{{"ReportEndDate"}}"</i><br> <input class=flatpickr id="ReportEndDate" type="text" placeholder="Select Date..">
 				    </div>
 				</div>
+				<div class="aui-group">
+				    <div class="aui-item">
+						<dlgEditableList id="listReportsHistory" name="listReportsHistory" 
+							typeDescriptor="List of Previous Billed Reports" 
+							columns=3
+							multiple="true"
+							columnDefinitions='[{"caption":"Report Name"},{"caption":"Init Date","type":"date"},{"caption":"End Date","type":"date"}]'
+						    openDialogCaption="List of Previous Billed Reports"
+							(onApply)="onChangeReportsHistory($event)"
+							>
+						</dlgEditableList>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -50,15 +50,24 @@ var getBillingFieldListRecursive=function (sPropertyPath,obj){
 }
 
 var getBillingFieldList=function(){
-    	var objImportes=newBillingObject();
-    	//debugger;
-    	var arrPropPaths=getBillingFieldListRecursive("Billing",objImportes);
-    	var hsProps=newHashMap();
-    	arrPropPaths.forEach(function(propName){
-    		hsProps.add(propName,propName);
-    	});
-    	return hsProps;
-    }
+	var objImportes=newBillingObject();
+	//debugger;
+	var arrPropPaths=getBillingFieldListRecursive("Billing",objImportes);
+	var hsProps=newHashMap();
+	arrPropPaths.forEach(function(propName){
+		hsProps.add(propName,propName);
+	});
+	return hsProps;
+}
+var billingParams={
+		historyVar:"",
+		hourCostVar:"",
+};
+var setBillingParams=function(reportsHistoryDatesVarName,hourCostVarName){
+	billingParams.historyVar=reportsHistoryDatesVarName;
+	billingParams.hourCostVar=hourCostVarName;
+	return "";
+}
 
 var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to hot-reload
     constructor(tag,report,model){

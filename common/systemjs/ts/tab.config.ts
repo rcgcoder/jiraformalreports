@@ -164,7 +164,10 @@ export class TabConfig {
         auxObj=System.getAngularObject('listDefaultVariables',true);
         value=auxObj.getElements();
         dfReport["listDefaultVariables"]=value;
-        
+
+        auxObj=System.getAngularObject('listReportsHistory',true);
+        value=auxObj.getElements();
+        dfReport["listReportsHistory"]=value;
 
         auxObj=System.getAngularObject('selReport',true);
         jql=auxObj.getJQLValue();
@@ -279,7 +282,11 @@ export class TabConfig {
         if (isDefined(config.listDefaultVariables)){
             auxObj.setElements(config.listDefaultVariables);
         }
-
+        
+        auxObj=System.getAngularObject('listReportsHistory',true);
+        if (isDefined(config.listReportsHistory)){
+            auxObj.setElements(config.listReportsHistory);
+        }
         
         auxObj=System.getAngularObject('selReport',true);
         if (isDefined(config.jqlReports)) {

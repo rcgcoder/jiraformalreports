@@ -31,7 +31,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
     				"aui/css/aui.css",
                     "aui/css/aui-experimental.css",
     			 ]; //test
-                System.webapp.loadRemoteFiles(arrFiles,win);
+                System.webapp.loadRemoteFiles(arrFiles,undefined,win);
         	});
         	System.webapp.addStep("Showing the window",function(arrContents){
         	    win.focus();

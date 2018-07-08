@@ -1,9 +1,19 @@
 var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-reload
+	constructor(){
+		var self=this;
+		self.interactiveContents=newHashMap();
+	}
+	addInteractiveContent(id,content){
+		self.interactiveContents.add(id,content);
+	}
 	elemShowHide(elemId){
+		var self=this;
         System.webapp.addStep("Show/Hide element", function(){
         	//debugger;
+    		var sContent=self.interactiveContents(elemId);
     		var jqElem=$('#'+elemId);
     		var elem=jqElem[0];
+    		jqElem.html(sContent.saToString());
     		if (isUndefined(elem.visible)
     			||
     			(isDefined(elem.visible)&&(!elem.visible))
@@ -18,13 +28,13 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN");
 	}
 	openNewWindow(elemId){
+		var self=this;
         System.webapp.addStep("Open New Window", function(){
         	debugger;
+    		var sContent=self.interactiveContents(elemId);
     		var win = window.open("", '_blank');
-    		window.focus();
-    		
-    		var jqElem=$('#'+elemId);
-    		win.document.body.innerHTML = jqElem.html();
+    		win.close();
+    		win.document.body.innerHTML = sContent.saToString();
     		System.webapp.addStep("Including CSS files",function(){
     			var arrFiles=[	//"ts/demo.ts",
     				"css/RCGTaskManager.css",
@@ -34,7 +44,9 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
                 System.webapp.loadRemoteFiles(arrFiles,undefined,win);
         	});
         	System.webapp.addStep("Showing the window",function(arrContents){
-        	    win.focus();
+        		var auxHtml=win.document.body.innerHTML;
+        		var win = window.open("", '_blank');
+        		win.document.body.innerHTML = auxHtml;
         	    System.webapp.continueTask();
         	});
     		System.webapp.continueTask();

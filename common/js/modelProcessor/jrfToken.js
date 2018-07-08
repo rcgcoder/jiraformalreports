@@ -373,16 +373,14 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				//self.indTokenHtmlBuffer=self.pushHtmlBuffer();
 				//sHtml=self.replaceVars(sHtml);
 				var newId=(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
+				modelInteractiveFunctions.addInteractiveContent(newId,sHtml);
 				var theEvent="modelInteractiveFunctions.elemShowHide('"+newId+"')";
+				self.addHtml('<button onclick="'+theEvent+'">Show/Hide</button>');
 				if (self.visibility=="openWindow"){
 					theEvent="modelInteractiveFunctions.openNewWindow('"+newId+"')";
+				} else {
+					self.addHtml('<div id="'+newId+'" style="display: none"></div>');
 				}
-				self.addHtml(`
-				             <button onclick="`+theEvent+`">Show/Hide</button>
-							 <div id='`+newId+`' style="display: none">`
-						     +   sHtml.saToString()
-							 +`</div>`
-							 );
 			}
 		}
 		

@@ -19,7 +19,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	}
 	openNewWindow(elemId){
         System.webapp.addStep("Open New Window", function(){
-        	//debugger;
+        	debugger;
     		var win = window.open("", '_blank');
     		window.focus();
     		

@@ -367,6 +367,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		if (isUndefined(theDatetime)||(theDatetime=="")){
 			atDatetime=self.getReport().reportDateTime;
 		}
+		var atTimestamp=atDatetime.getTime();
 		var configName=otherParams.getValue("config");
 		var hsHistory=self.billingParams.getHistory(configName);  
 		var dtWorksInit=self.billingParams.getWorksInitDate(configName);
@@ -382,9 +383,9 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		var dtAux1;
 		var dtAux2;
 		hsHistory.walk(function(hstAux){
-			var dtAux1=toDateNormalDDMMYYYYHHMMSS(hstAux[1]).getTime();
+			var dtAux1=hstAux;
 			var dtAux2=toDateNormalDDMMYYYYHHMMSS(hstAux[2]).getTime();
-			if ((dtAux2.getTime()<atDatetime) &&
+			if ((dtAux2.getTime()<atTimestamp) &&
 			   ((dtWorksInit=="")?true:dtWorksInit.getTime()<dtAux2.getTime())){
 				arrHistory.push([dtAux1,dtAux2]);
 			}

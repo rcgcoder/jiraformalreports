@@ -541,7 +541,7 @@ var jrfReport=class jrfReport {
 				self.config.listReportsHistory.forEach(function(defaultVar){
 					var dtAux1=toDateNormalDDMMYYYYHHMMSS(defaultVar[1]);
 					var dtAux2=toDateNormalDDMMYYYYHHMMSS(defaultVar[2]);
-					theModel.variables.setVar(defaultVar[0],dtAux1,dtAux2);
+					theModel.variables.setVar(defaultVar[0],[dtAux1,dtAux2],dtAux2);
 				})
 			}
 			//debugger;

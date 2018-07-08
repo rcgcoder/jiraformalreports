@@ -368,6 +368,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				self.addHtml("");
 			} else if ((self.visibility=="hideable")
 					||(self.visibility=="newWindow")){
+				debugger;
 				var sHtml=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
 				//self.indTokenHtmlBuffer=self.pushHtmlBuffer();
 				//sHtml=self.replaceVars(sHtml);

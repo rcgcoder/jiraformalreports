@@ -296,6 +296,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		var acumFasesEstimado=objImportes.source.acumFasesEstimado;
 		var acumFasesReal=objImportes.source.acumFasesReal;
 		var fieldFaseName;
+		var totalEstimado;
 		if ((acumFasesEstimado.toFixed(1)==1)||(acumFasesEstimado.toFixed(1)==0)){
 			if ((objImportes.importesEstimados.Total.toFixed(1)==1)||(objImportes.importesEstimados.Total.toFixed(1)==0)){
 				// si el total estimado es 0 o es 1 quiere decir que hay que cogerlo del tiempo de jira.

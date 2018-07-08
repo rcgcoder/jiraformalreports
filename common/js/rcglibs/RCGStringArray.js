@@ -17,6 +17,10 @@ Array.prototype.saTrim = function () {
 	
 	return arrStrings;
 };
+Array.prototype.saAppend= function (sText){
+	var self=this;
+	self.push(sText);
+}
 Array.prototype.saExists= function (sTag){
 	var self=this;
 	if (isString(self))return (self.indexOf(sTag)>=0);
@@ -221,6 +225,9 @@ String.prototype.saToString= function (){
 };
 String.prototype.saTrim= function (){
 	return this.trim();
+};
+String.prototype.saAppend= function (sText){
+	return this+sText;
 };
 String.prototype.saIndexOf= function (sTag,bFindLast,bDivide,startPos,startSubArrayPos){
 	return [this].saIndexOf(sTag,bFindLast,bDivide,startPos,startSubArrayPos);

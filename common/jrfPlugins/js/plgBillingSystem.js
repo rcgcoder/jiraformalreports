@@ -359,16 +359,9 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     	var last=life[life.length-1][2]; // último snapshot
     	return last; 
     }
-    getBillingLife(otherParams,theDatetime){
+    getBillingLifeDates(otherParams,theDatetime,sErrores){
     	// initialize and load the importes structure
     	var self=this;
-    	var vPorc;
-		var tEstimado;
-		var tReal;
-		var totalEstimado;
-		var totalReal;
-		var sComentarios="";
-		var sErrores="";
 		var atDatetime=theDatetime;
 		if (isUndefined(theDatetime)||(theDatetime=="")){
 			atDatetime=self.getReport().reportDateTime;
@@ -377,10 +370,6 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		var configName=otherParams.getValue("config");
 		var hsHistory=self.billingParams.getHistory(configName);  
 		var dtWorksInit=self.billingParams.getWorksInitDate(configName);
-		var arrSnapshots=[];
-		var snapshot;
-		var hourCost;
-		var minFacturableFase;
 		var arrHistory=[];
 		var tsWorksInit="";
 		if (dtWorksInit!=""){
@@ -430,11 +419,11 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 				} else {
 					var dateIni=formatDate(new Date(dtIni),4);
 					var dateAnt=formatDate(new Date(dtAnt),4);
-					sErrores+="ERROR! La configuración de fechas no es correcta. dtIni:"+dateIni+" debería ser igual a dtAnt:"+dateAnt+" para mantener la coherencia de informes. se añaden ambas fechas";
+					sErrores.saAppend("\nERROR! La configuración de fechas no es correcta. dtIni:"+dateIni+" debería ser igual a dtAnt:"+dateAnt+" para mantener la coherencia de informes. se añaden ambas fechas");
 					if (dtIni>dtAnt){
 						arrHistory.push(dtIni);
 					} else {
-						sErrores+="ERROR! dtIni:"+dateIni+" es menor que dtAnt:"+dateAnt+". No se añade dtIni ("+dateIni+")";
+						sErrores.saAppend("\nERROR! dtIni:"+dateIni+" es menor que dtAnt:"+dateAnt+". No se añade dtIni ("+dateIni+")");
 					}
 				}
 			}
@@ -443,10 +432,23 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 				dtAnt=dtEnd;
 			}
 		}
-		
+		return arrHistory;
+    }
+    getBillingLife(otherParams,theDatetime){
+    	var self=this;
+		var sComentarios=[];
+		var sErrores=[];
 
+		var arrSnapshots=[];
+		var snapshot;
+		var hourCost;
+		var minFacturableFase;
+		
+		
+		var arrHistory=self.getBillingLifeDates(otherParams,theDatetime,sErrores);
+		var dtAux;
 		arrHistory.forEach(function(dtSnapshot){
- 			var dtAux=new Date(dtSnapshot);
+ 			dtAux=new Date(dtSnapshot);
 			hourCost=self.billingParams.getHourCost(configName,dtAux);
 			minFacturableFase=self.billingParams.getMinFaseFacturable(configName,dtAux);  
 			snapshot=self.getBillingSnapShot(dtAux,hourCost,minFacturableFase);
@@ -471,7 +473,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 			actFase=snapshot.source.faseActual;
 			sSnapshotDate=formatDate(snapshot.source.atDatetime,4);
 			if (actFase<antFase){
-				sComentarios+="\n"+sSnapshotDate+" - Retrocedido a la fase:"+self.getFieldFaseBillingName(actFase)+" antes:"+self.getFieldFaseBillingName(antFase)+ " se mantiene la fase anterior";
+				sComentarios.append("\n"+sSnapshotDate+" - Retrocedido a la fase:"+self.getFieldFaseBillingName(actFase)+" antes:"+self.getFieldFaseBillingName(antFase)+ " se mantiene la fase anterior");
 				actFase=antFase;
 			}
 			snapshot.calculos.aprobado=0;
@@ -528,10 +530,10 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 						actFaseImporte=antFaseImporte;
 					}
 					if (actFaseImporte<antFaseImporte){
-						sErrores+="\n ¡¡¡ ERROR !!! "+sSnapshotDate+" - Reducido el importe de la fase:"+fieldFaseName+" antes:"+antFaseImporte+" ahora:"+actFaseImporte+" se mantiene el anterior ("+antFaseImporte+") pero se debe corregir el error";
+						sErrores.saAppend("\n ¡¡¡ ERROR !!! "+sSnapshotDate+" - Reducido el importe de la fase:"+fieldFaseName+" antes:"+antFaseImporte+" ahora:"+actFaseImporte+" se mantiene el anterior ("+antFaseImporte+") pero se debe corregir el error");
 						actFaseImporte=antFaseImporte;
 					} else if (actFaseImporte>antFaseImporte){
-						sComentarios+="\n"+sSnapshotDate+" - Incrementado el importe de la fase:"+fieldFaseName+" antes:"+antFaseImporte+" ahora:"+actFaseImporte;
+						sComentarios.saAppend("\n"+sSnapshotDate+" - Incrementado el importe de la fase:"+fieldFaseName+" antes:"+antFaseImporte+" ahora:"+actFaseImporte);
 					}
 					if ((actFase<minFacturableFase)||(actFase<nFase)){
 						snapshot.calculos.resto+=actFaseImporte;
@@ -594,13 +596,13 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 					
 					var workRemaining=workDefined-workTotal;
 					if (workRemaining<0){
-						sErrores+="\n ¡¡¡ ERROR !!! "+sSnapshotDate+` - El trabajo restante es negativo. Se establece a 0
+						sErrores.saAppend("\n ¡¡¡ ERROR !!! "+sSnapshotDate+` - El trabajo restante es negativo. Se establece a 0
 										Trabajo Aprobado:`+snapshot.calculos.inTimespents.aprobado+`
 										Trabajo Pendiente:`+snapshot.calculos.inTimespents.pendiente+`
 										Resto Trabajo definido:`+workDefined+`
 										Trabajo definido Total:`+snapshot.calculos.inTimespents.resto+`
 										Trabajo Total:`+workTotal+ "(TOE:"+snapshot.source.timeoriginalestimate
-											+",TE"+snapshot.source.timeestimate+",TS:"+snapshot.source.timespent+")";
+											+",TE"+snapshot.source.timeestimate+",TS:"+snapshot.source.timespent+")");
 						workRemaining=0;
 					}
 					var workAux=0;

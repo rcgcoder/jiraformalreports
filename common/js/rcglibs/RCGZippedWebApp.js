@@ -642,7 +642,7 @@ class RCGZippedApp{
 			var sFile=arrRelativePaths[iIntFile];
 			self.addStep("Downloading file:"+ sFile+ " pos:"+iIntFile,function(){
 				self.addStep("Reading File:"+sFile,function(){
-					self.loadFileFromStorage(sFile);
+					self.loadFileFromStorage(sFile,theWindow);
 				});
 				self.addStep("File:"+sFile+" ¿need to load from network?",function(sRelativePath,fileContent,contentType){
 					if (fileContent!=""){
@@ -650,7 +650,7 @@ class RCGZippedApp{
 						return self.continueTask([sRelativePath,fileContent,contentType]);
 					}
 //					log("File "+iIntFile+" "+sRelativePath+ " is not in Storage... loading from network");
-					self.loadFileFromNetwork(sRelativePath,fileContent,contentType);
+					self.loadFileFromNetwork(sRelativePath,fileContent,contentType,theWindow);
 				});
 				self.addStep("File:"+sFile+" fully loaded!",function(sRelativePath,fileContent,contentType){
 //					log("File "+iIntFile+" "+sRelativePath+ " is loaded... updating status");

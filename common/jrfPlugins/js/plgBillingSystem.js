@@ -315,6 +315,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 					objImportes.importesEstimados[self.getFieldFaseBillingName(4)]=1;
 				}
 			}
+			var vPorc;
 			for (var nFase=1;nFase<5;nFase++){
 				fieldFaseName=self.getFieldFaseBillingName(nFase);
 				vPorc=objImportes.importesEstimados[fieldFaseName];

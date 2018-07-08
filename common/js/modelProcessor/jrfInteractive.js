@@ -4,7 +4,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		self.interactiveContents=newHashMap();
 	}
 	addInteractiveContent(id,content){
-		self.interactiveContents.add(id,content);
+		this.interactiveContents.add(id,content);
 	}
 	elemShowHide(elemId){
 		var self=this;

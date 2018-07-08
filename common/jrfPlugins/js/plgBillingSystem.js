@@ -343,7 +343,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     	// initialize and load the importes structure
     	var self=this;
     	debugger;
-    	var hslifeCaches=self.getFieldLife("Billing",self.report.reportDateTime,otherParams);
+    	var hslifeCaches=self.getFieldLife("Billing",self.getReport().reportDateTime,otherParams);
     	var life=hslifeCaches.getValue("life");
     	var last=life[life.length-1][2]; // último snapshot
     	return last; 
@@ -360,7 +360,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		var sErrores="";
 		var atDatetime=theDatetime;
 		if (isUndefined(theDatetime)||(theDatetime=="")){
-			atDatetime=self.report.reportDateTime;
+			atDatetime=self.getReport().reportDateTime;
 		}
 		var configName=otherParams.getValue("config");
 		var hsHistory=self.billingParams.getHistory(configName);  

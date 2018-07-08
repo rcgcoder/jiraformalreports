@@ -101,9 +101,7 @@ var plgBillingParams=class plgBillingParams{
 			var auxObj=self.listParams.getValue(configName);
 			auxObj.setValues(reportsHistoryDatesVarName,hourCostVarName,minFaseFacturableVarName,contractWorksInitDate);
 		} else {
-			self.listParams.add(configName,
-							self.newParams(
-									reportsHistoryDatesVarName,hourCostVarName,minFaseFacturableVarName,contractWorksInitDate));
+			self.listParams.add(configName,self.newParams(reportsHistoryDatesVarName,hourCostVarName,minFaseFacturableVarName,contractWorksInitDate));
 		}
 	}
 	addParams(configName,reportsHistoryDatesVarName,hourCostVarName,minFaseFacturableVarName,contractWorksInitDate){

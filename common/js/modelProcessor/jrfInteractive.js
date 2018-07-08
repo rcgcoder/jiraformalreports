@@ -38,7 +38,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
         System.webapp.addStep("Open New Window", function(){
         	debugger; 
     		var sContent=self.getInteractiveContent(elemId);
-    		otherWindow= window.open("", '_blank');
+    		otherWindow= window.open("", 'newWindow','width=300,height=250');
     		otherWindow.close();
     		otherWindow.document.body.innerHTML = sContent.saToString();
     		System.webapp.addStep("Including CSS files",function(){

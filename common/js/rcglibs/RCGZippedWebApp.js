@@ -519,15 +519,23 @@ class RCGZippedApp{
 		});
  		xhr.send();	
 	}
-	addStyleString(cssContent) {
-	    var node = document.createElement('style');
+	addStyleString(cssContent,theWindow) {
+		var doc=document;
+		if (isDefined(theWindow)){
+			doc=theWindow.document;
+		}
+	    var node = doc.createElement('style');
 	    node.innerHTML = cssContent;
-	    document.body.appendChild(node);
+	    doc.body.appendChild(node);
 	}
-	addJavascriptString(jsContent){
+	addJavascriptString(jsContent,theWindow){
 		var self=this;
-		var oHead=(document.head || document.getElementsByTagName("head")[0]);
-	    var oScript = document.createElement("script");
+		var doc=document;
+		if (isDefined(theWindow)){
+			doc=theWindow.document;
+		}
+		var oHead=(doc.head || doc.getElementsByTagName("head")[0]);
+	    var oScript = doc.createElement("script");
 	    oScript.type = "text\/javascript";
 	    oScript.onerror = self.loadError;
 	    oHead.appendChild(oScript);
@@ -542,16 +550,16 @@ class RCGZippedApp{
 		var jsCompiled=self.tsCompiler.compile(tsContent);
 		self.addJavascriptString(jsCompiled);
 	}*/
-	processFile(sRelativePath,content,contentType){
+	processFile(sRelativePath,content,contentType,theWindow){
 		log("Processing file:"+sRelativePath);
 		var self=this;
 		var auxContent=content;
 	    if (contentType.isJS){ //if filename is a external JavaScript file
-	    	self.addJavascriptString(content);
+	    	self.addJavascriptString(content,theWindow);
 /*	    } else if (contentType.isTS){ //if filename is a external TypeScript file
 		    	self.addTypescriptString(content);
 */	    } else if (contentType.isCSS){ //if filename is an external CSS file
-	    	self.addStyleString(content);
+	    	self.addStyleString(content,theWindow);
 	    } else if (contentType.isIMG){
 	    	auxContent='data:image/bmp;base64,'+auxContent;
 	    } else if (contentType.isDOCX){
@@ -559,33 +567,33 @@ class RCGZippedApp{
 	    }
 	    self.popCallback([sRelativePath,auxContent]);
 	}
-	loadFileFromNetwork(sRelativePath,fileContent,contentType){
+	loadFileFromNetwork(sRelativePath,fileContent,contentType,theWindow){
 		var self=this;
 		if ((fileContent!="")&&(typeof fileContent!=="undefined")) {
 			log(sRelativePath+" loaded from persistent storage");
-			return self.popCallback([sRelativePath,fileContent,contentType]);
+			return self.popCallback([sRelativePath,fileContent,contentType,theWindow]);
 		}
 		log(sRelativePath+" loading from network");
 		var sUrl=self.composeUrl(sRelativePath);
 		self.pushCallback(function(content,xhr,contentType,sRelativePath){
 			log(sRelativePath+" loaded from network");
-			self.popCallback([sRelativePath,content,contentType]);
+			self.popCallback([sRelativePath,content,contentType,theWindow]);
 		});
     	self.downloadFile(sUrl,sRelativePath);
 	}
-	loadFileFromStorage(sRelativePath){
+	loadFileFromStorage(sRelativePath,theWindow){
 		log("Loading "+ sRelativePath + " from storage");
 		var self=this;
 		if ((!self.bWithPersistentStorage)||(self.storage=="")||(self.github=="")){ // if there is not storage initialized or github is not used
 			log("There is not storage engine loaded");
-			return self.popCallback([sRelativePath,""]);
+			return self.popCallback([sRelativePath,"",undefined,theWindow]);
 		}
 		// now there is storage and github
 		
 		// get the last commit id
 		var sCommitId=self.github.commitId;
 		if (sCommitId==""){ // imposible case.... all the repositories has one or more commits
-			return self.popCallback([sRelativePath,""]);
+			return self.popCallback([sRelativePath,"",undefined,theWindow]);
 		}
 		
 		var sContentType=self.storage.get('#FILEINFO#'+sRelativePath);
@@ -604,29 +612,29 @@ class RCGZippedApp{
 				return filesystem.ReadFile(sRelativePath,
 						self.createManagedCallback(function(sStringContent){
 							log("file "+sRelativePath +" readed from storage");
-							self.popCallback([sRelativePath,sStringContent,jsonContentType]);
+							self.popCallback([sRelativePath,sStringContent,jsonContentType,theWindow]);
 						}),
 						self.createManagedCallback(function(e){
 							log("file "+sRelativePath +" Error reading from storage");
-							self.popCallback([sRelativePath,""]);
+							self.popCallback([sRelativePath,"",undefined,theWindow]);
 						})
 						);
 			}
 		}
-		return self.popCallback([sRelativePath,""]);
+		return self.popCallback([sRelativePath,"",undefined,theWindow]);
 	}
 	
-	loadRemoteFile(sRelativePath){
+	loadRemoteFile(sRelativePath,theWindow){
 		var self=this;
 		self.pushCallback(self.processFile);
 		self.pushCallback(self.loadFileFromNetwork);
 		if (self.bWithPersistentStorage){
-			self.loadFileFromStorage(sRelativePath);
+			self.loadFileFromStorage(sRelativePath,theWindow);
 		} else {
-			self.popCallback([sRelativePath,""]);
+			self.popCallback([sRelativePath,"",undefined,theWindow]);
 		}
 	}
-	loadRemoteFiles(arrRelativePaths,fncPostProcessFile){
+	loadRemoteFiles(arrRelativePaths,fncPostProcessFile,theWindow){
 		var self=this;
 		var arrStatus=[];
 		var fncAddStepDownloadRelativePath=function(iFile){
@@ -659,13 +667,14 @@ class RCGZippedApp{
 				self.processFile(fileStatus.path,
 								 fileStatus.content,
 								 fileStatus.type
+								 ,theWindow
 								);
 			});
 			self.addStep("Processed "+iFile+" file:"+fileStatus.path,function(){
 //				log("Processed "+iFile+" file:"+fileStatus.path+"...¿postProcessing?");
 				if (typeof fncPostProcessFile!=="undefined"){
 //					log("YES postprocess file");
-					fncPostProcessFile(iFile);
+					fncPostProcessFile(iFile,theWindow);
 				}
 				self.continueTask();
 			});
@@ -688,6 +697,7 @@ class RCGZippedApp{
 		});
 		self.popCallback();
 	}
+
 	checkForDeploys(iFile){
 		var self=this;
 		var tLastDeploy=0;

@@ -445,6 +445,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		var minFacturableFase;
 		
 		
+		var configName=otherParams.getValue("config");
 		var arrHistory=self.getBillingLifeDates(otherParams,theDatetime,sErrores);
 		var dtAux;
 		arrHistory.forEach(function(dtSnapshot){

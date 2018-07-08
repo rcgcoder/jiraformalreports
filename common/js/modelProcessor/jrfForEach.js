@@ -11,7 +11,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 			self.postProcess="false";
 		}
 		
-		debugger;
+		//debugger;
 		self.recursive=self.getAttrVal("recursive");
 		self.bAllRoots=false;
 		self.rootBackup;

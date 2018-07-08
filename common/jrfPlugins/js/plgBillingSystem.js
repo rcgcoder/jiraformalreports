@@ -684,6 +684,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
                  issue.getBillingLife=selfPlg.getBillingLife;
                  issue.getBillingCacheKeyPostText=selfPlg.getBillingCacheKeyPostText;
                  issue.getBillingSnapShot=selfPlg.getBillingSnapShot;
+                 issue.getBillingLifeDates=selfPlg.getBillingLifeDates;
          });
     }
 

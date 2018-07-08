@@ -132,6 +132,10 @@ var plgBillingParams=class plgBillingParams{
     	var self=this;
 		var config=self.getParams(config);
 		var hsHistory=self.variables.getVars(config.history);
+		if (isUndefined(hsHistory)||(hsHistory=="")){
+			debugger;
+			return "";
+		}
 		hsHistory=hsHistory.history;
 		return hsHistory;
 	}

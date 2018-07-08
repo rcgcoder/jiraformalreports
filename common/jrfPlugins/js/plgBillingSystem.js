@@ -279,7 +279,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		}
     	return objImportes;
     }
-    getBillingSnapShot(atDatetime,fromDatetime,hourCost,minFacturableFase){
+    getBillingSnapShot(atDatetime,hourCost,minFacturableFase){
     	var self=this;
     	var objImportes=self.initializeBilling(atDatetime,hourCost,minFacturableFase);
 		tReal=objImportes.source.timespent;

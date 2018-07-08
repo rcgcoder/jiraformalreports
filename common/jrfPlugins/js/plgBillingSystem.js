@@ -417,7 +417,8 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 			dtEnd=interval[1];
 			if (dtIni!=""){
 				if ((dtAnt=="")||((dtAnt!="")&&(dtAnt==dtIni))){
-					arrHistory.push(dtIni);
+					// the date is already added (dtEnd....)
+					//arrHistory.push(dtIni);
 				} else {
 					var dateIni=formatDate(new Date(dtIni),4);
 					var dateAnt=formatDate(new Date(dtAnt),4);
@@ -672,6 +673,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
                  issue.getBilling=selfPlg.getBilling;
                  issue.getBillingLife=selfPlg.getBillingLife;
                  issue.getBillingCacheKeyPostText=selfPlg.getBillingCacheKeyPostText;
+                 issue.getBillingSnapShot=selfPlg.getBillingSnapShot;
          });
     }
 

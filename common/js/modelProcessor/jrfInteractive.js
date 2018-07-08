@@ -55,6 +55,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 //        		otherWindow= window.open("", 'newWindow','width=300,height=250');
         		otherWindow= window.open("", '_blank');
         		otherWindow.document.body.innerHTML = auxHtml;
+        		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;
         	    System.webapp.continueTask();
         	});
     		System.webapp.continueTask();

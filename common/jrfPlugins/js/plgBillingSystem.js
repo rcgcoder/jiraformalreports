@@ -394,13 +394,13 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		});
 
 		arrHistory.sort(function(a,b){
-			if (a[1]>b[1]) return -1;
-			if (a[1]<b[1]) return 1;
+			if (a[1]>b[1]) return 1;
+			if (a[1]<b[1]) return -1;
 			return 0;
 		});
 		
 		if (arrHistory.length>0){ // pushing the atDateTime last period....
-			tsAux1=arrHistory[0][1];
+			tsAux1=arrHistory[arrHistory[arrHistory.length-1]][1];
 			arrHistory.push([tsAux1,atTimestamp]);
 		}
 		arrHistory.push([atTimestamp,""]); // adding a open period starts with atDateTime....

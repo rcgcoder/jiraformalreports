@@ -208,6 +208,7 @@ var jrfReport=class jrfReport {
 					self.bFinishReport=true;
 				}
 			}
+			debugger;
 			if (self.config.rootsByJQL){
 				var theJQL="";
 				if (self.config.rootIssues.values.length>0){

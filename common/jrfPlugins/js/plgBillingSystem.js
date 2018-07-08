@@ -342,7 +342,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     getBilling(otherParams){
     	// initialize and load the importes structure
     	var self=this;
-    	//debugger;
+    	debugger;
     	var hslifeCaches=self.getFieldLife("Billing",self.report.reportDateTime,otherParams);
     	var life=hslifeCaches.getValue("life");
     	var last=life[life.length-1][2]; // último snapshot

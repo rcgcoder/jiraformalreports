@@ -238,7 +238,7 @@ var jrfReport=class jrfReport {
 					self.continueTask();
 				}
 			}
-			self.continueTask();
+			self.continueTask(); 
 		});
 		
 		self.addStep("Processing root elements.... ",function(){

@@ -35,7 +35,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
         	});
         	System.webapp.addStep("Showing the window",function(arrContents){
         	    win.focus();
-        	    self.continueTask();
+        	    System.webapp.continueTask();
         	});
     		System.webapp.continueTask();
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN");

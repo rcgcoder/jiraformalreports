@@ -410,9 +410,11 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		var dtEnd=0;
 		var dtAnt="";
 		arrHistory=[];
+		var interval;
 		for (var i=0;i<arrHistAux.length;i++){
-			dtIni=arrHistAux[0];
-			dtEnd=arrHistAux[1];
+			interval=arrHistAux[i];
+			dtIni=interval[0];
+			dtEnd=interval[1];
 			if (dtIni!=""){
 				if ((dtAnt=="")||((dtAnt!="")&&(dtAnt==dtIni))){
 					arrHistory.push(dtIni);

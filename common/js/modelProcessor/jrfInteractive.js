@@ -14,7 +14,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	elemShowHide(elemId){
 		var self=this;
         System.webapp.addStep("Show/Hide element", function(){
-        	//debugger;
+        	debugger;
     		var sContent=self.getInteractiveContent(elemId);
     		var jqElem=$('#'+elemId);
     		var elem=jqElem[0];

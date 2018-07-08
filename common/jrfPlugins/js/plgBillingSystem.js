@@ -600,7 +600,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 						workRemaining=0;
 					}
 					var workAux=0;
-					var workAuxMoney=0;
+					var workAuxImporte=0;
 					for (var i=nFase;i<5;i++){
 						fieldFaseName=self.getFieldFaseBillingName(i);
 						percAux=snapshot.importesEstimadosPercs[fieldFaseName];

@@ -9,7 +9,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	}
 	getInteractiveContent(idContent){
 		var self=this;
-		self.interactiveContents.getValue(idContent);
+		return self.interactiveContents.getValue(idContent);
 	}
 	elemShowHide(elemId){
 		var self=this;

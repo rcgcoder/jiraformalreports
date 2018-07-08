@@ -490,7 +490,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 						snapshot.calculos.pendiente+=actFaseImporte;
 						snapshot.calculos.fases.pendiente[fieldFaseName]=actFaseImporte;
 					}
-					objImportes.calculos.total+=actFaseImporte;
+					snapshot.calculos.total+=actFaseImporte;
 				}
 				snapshot.calculos.inTimespents.aprobado=0;
 				snapshot.calculos.inTimespents.pendiente=(snapshot.calculos.pendiente/hourCost)*3600;

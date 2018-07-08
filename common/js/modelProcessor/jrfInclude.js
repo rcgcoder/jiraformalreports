@@ -1,5 +1,5 @@
 var includesCache=newHashMap();
-var jrfInclude=class jrfInclude extends jrfFormula{//this kind of definition allows to hot-reload
+var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allows to hot-reload
 	loadOwnProperties(){
 		var self=this;
 		self.type=self.getAttrVal("include").trim(); // supports only confluence and url 
@@ -84,7 +84,6 @@ var jrfInclude=class jrfInclude extends jrfFormula{//this kind of definition all
 		}
 		self.continueTask();
 	}
-/*
 	apply(){
 		var self=this;
 		self.addStep("Processing all Childs of jrfInclude",function(){
@@ -98,6 +97,6 @@ var jrfInclude=class jrfInclude extends jrfFormula{//this kind of definition all
 			self.continueTask();
 		});
 	}
-*/
+
 }
 

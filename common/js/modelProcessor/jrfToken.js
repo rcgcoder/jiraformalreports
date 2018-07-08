@@ -368,13 +368,13 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				//sHtml=self.replaceVars(sHtml);
 				self.addHtml("");
 			} else if ((self.visibility=="hideable")
-					||(self.visibility=="newWindow")){
+					||(self.visibility=="openWindow")){
 				var sHtml=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
 				//self.indTokenHtmlBuffer=self.pushHtmlBuffer();
 				//sHtml=self.replaceVars(sHtml);
 				var newId=(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
 				var theEvent="modelInteractiveFunctions.elemShowHide('"+newId+"')";
-				if (self.visibility=="newWindow"){
+				if (self.visibility=="openWindow"){
 					theEvent="modelInteractiveFunctions.openNewWindow('"+newId+"')";
 				}
 				self.addHtml(`

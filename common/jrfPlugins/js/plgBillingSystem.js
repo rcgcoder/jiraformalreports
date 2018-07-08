@@ -400,7 +400,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		});
 		
 		if (arrHistory.length>0){ // pushing the atDateTime last period....
-			tsAux1=arrHistory[arrHistory[arrHistory.length-1]][1];
+			tsAux1=arrHistory[arrHistory.length-1][1];
 			arrHistory.push([tsAux1,atTimestamp]);
 		}
 		arrHistory.push([atTimestamp,""]); // adding a open period starts with atDateTime....

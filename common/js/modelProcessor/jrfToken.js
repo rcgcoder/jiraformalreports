@@ -376,10 +376,10 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				//sHtml=self.replaceVars(sHtml);
 				var newId=(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
 				modelInteractiveFunctions.addInteractiveContent(newId,sHtml);
-				var theEvent="modelInteractiveFunctions.elemShowHide('"+newId+"')";
+				var theEvent="modelInteractiveFunctions.elemShowHide('"+newId+"',window)";
 				var withDiv=true;
 				if (self.visibility=="openWindow"){
-					theEvent="modelInteractiveFunctions.openNewWindow('"+newId+"')";
+					theEvent="modelInteractiveFunctions.openNewWindow('"+newId+"',window)";
 					withDiv=false;
 				} 
 				self.addHtml('<button onclick="'+theEvent+'">Show/Hide</button>');

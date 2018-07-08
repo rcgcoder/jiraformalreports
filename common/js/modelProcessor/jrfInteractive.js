@@ -11,10 +11,13 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		var self=this;
 		return self.interactiveContents.getValue(idContent);
 	}
-	elemShowHide(elemId){
+	elemShowHide(elemId,actWindow){
 		var self=this;
 		var theWindow=window;
-        System.webapp.addStep("Show/Hide element", function(){
+		if (isDefined(actWindow)){
+			theWindow=actWindow;
+		}
+//        System.webapp.addStep("Show/Hide element", function(){
         	debugger;
     		var sContent=self.getInteractiveContent(elemId);
     		var jqElem=$(theWindow.document.body).find('#'+elemId);
@@ -30,8 +33,8 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
     			jqElem.hide();
     			elem.visible=false;
     		}
-    		System.webapp.continueTask();
-        },0,1,undefined,undefined,undefined,"GLOBAL_RUN");
+ //   		System.webapp.continueTask();
+ //       },0,1,undefined,undefined,undefined,"GLOBAL_RUN");
 	}
 	openNewWindow(elemId){
 		var self=this;

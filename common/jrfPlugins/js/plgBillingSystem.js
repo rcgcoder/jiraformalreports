@@ -297,6 +297,8 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		var acumFasesReal=objImportes.source.acumFasesReal;
 		var fieldFaseName;
 		var totalEstimado;
+		var vPorc;
+		var totalReal;
 		if ((acumFasesEstimado.toFixed(1)==1)||(acumFasesEstimado.toFixed(1)==0)){
 			if ((objImportes.importesEstimados.Total.toFixed(1)==1)||(objImportes.importesEstimados.Total.toFixed(1)==0)){
 				// si el total estimado es 0 o es 1 quiere decir que hay que cogerlo del tiempo de jira.
@@ -315,7 +317,6 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 					objImportes.importesEstimados[self.getFieldFaseBillingName(4)]=1;
 				}
 			}
-			var vPorc;
 			for (var nFase=1;nFase<5;nFase++){
 				fieldFaseName=self.getFieldFaseBillingName(nFase);
 				vPorc=objImportes.importesEstimados[fieldFaseName];
@@ -323,7 +324,6 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 				objImportes.importesEstimadosPercs[fieldFaseName]=vPorc;
 			}
 		}
-		
 		if ((acumFasesReal.toFixed(1)==1)||(acumFasesReal.toFixed(1)==0)){
 			if ((objImportes.importesReales.Total.toFixed(1)==1)
 				||(objImportes.importesReales.Total.toFixed(1)==0)){

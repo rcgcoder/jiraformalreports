@@ -196,7 +196,7 @@ var jrfReport=class jrfReport {
 			if (self.isReusingIssueList()){
 				return self.continueTask();
 			}
-			if (self.config.rootsByProject){
+/*			if (self.config.rootsByProject){
 				if (self.config.rootProjects.length>0){
 					log("Loading projects selected to be roots");
 					self.config.rootProjects.forEach(function(projectId) {
@@ -208,7 +208,7 @@ var jrfReport=class jrfReport {
 					self.bFinishReport=true;
 				}
 			}
-			debugger;
+*/			debugger;
 			if (self.config.rootsByJQL){
 				var theJQL="";
 				if (self.config.rootIssues.values.length>0){

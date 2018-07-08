@@ -13,10 +13,11 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	}
 	elemShowHide(elemId){
 		var self=this;
+		var theWindow=window;
         System.webapp.addStep("Show/Hide element", function(){
         	debugger;
     		var sContent=self.getInteractiveContent(elemId);
-    		var jqElem=$('#'+elemId);
+    		var jqElem=$(theWindow.document.body).find('#'+elemId);
     		var elem=jqElem[0];
     		jqElem.html(sContent.saToString());
     		if (isUndefined(elem.visible)

@@ -93,7 +93,7 @@ var plgBillingParams=class plgBillingParams{
 		var self=this;
 		objParams.history=reportsHistoryDatesVarName;
 		objParams.hourCost=hourCostVarName;
-		objParams.minFaseFacturable=minFaseFacturableVarName;
+		objParams.minFaseFacturable=minFaseFacturable;
 		objParams.worksInitDate=contractWorksInitDate;
 	}
 	setParams(configName,reportsHistoryDatesVarName,hourCostVarName,minFaseFacturableVarName,contractWorksInitDate){

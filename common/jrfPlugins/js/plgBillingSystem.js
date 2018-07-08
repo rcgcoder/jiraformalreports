@@ -541,7 +541,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 						snapshot.calculos.fases.pendiente[fieldFaseName]=importePendiente;
 						snapshot.calculos.inTimespents.pendiente+=(importePendiente/hourCost)*3600;
 					}
-					objImportes.calculos.total+=actFaseImporte;
+					snapshot.calculos.total+=actFaseImporte;
 				}
 				var arrFaseUndefined=[];
 				// segunda parte .... antFase -- 6 ... para incorporar las nuevas fases trabajadas

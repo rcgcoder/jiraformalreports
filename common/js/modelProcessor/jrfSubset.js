@@ -121,7 +121,7 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 			
 			elemsInForEach.walk(function(eachElem,deep,key){
 				if (self.innerVarName!=""){
-					self.initVariables(self.innerVarName);
+					self.initVariables(self.innerVarName,undefined,eachElem);
 				}
 				self.variables.pushVar("counter",iCounter);
 				self.variables.pushVar("counter_selected",iSelectedCounter);

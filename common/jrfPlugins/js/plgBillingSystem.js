@@ -137,7 +137,11 @@ var plgBillingParams=class plgBillingParams{
     getParamValue(config,key,atDatetime){
     	var self=this;
 		var config=self.getParams(config);
-		var value=self.variables.getVar(config[key],atDatetime);
+		var varName=config[key];
+		var value="";
+		if (isDefined(varName)){
+			value=self.variables.getVar(config[key],atDatetime);
+		}
     	return value;
     }
 	

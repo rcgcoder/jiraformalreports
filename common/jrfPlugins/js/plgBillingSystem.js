@@ -416,7 +416,9 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 			dtIni=interval[0];
 			dtEnd=interval[1];
 			if (dtIni!=""){
-				if ((dtAnt=="")||((dtAnt!="")&&(dtAnt==dtIni))){
+				if (dtAnt==""){
+					arrHistory.push(dtIni);
+				}else if ((dtAnt!="")&&(dtAnt==dtIni)){
 					// the date is already added (dtEnd....)
 					//arrHistory.push(dtIni);
 				} else {

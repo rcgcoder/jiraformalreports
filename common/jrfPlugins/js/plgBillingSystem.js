@@ -77,6 +77,84 @@ var getBillingFieldList=function(){
 	});
 	return hsProps;
 }
+
+var getBillingLifeDates=function(otherParams,theDatetime,sErrores){
+	// initialize and load the importes structure
+	var atDatetime=theDatetime;
+	if (isUndefined(theDatetime)||(theDatetime=="")){
+		var objModel=otherParams.getValue("model");
+		var objReport=objModel.report;
+		atDatetime=objReport.reportDateTime;
+	}
+	var atTimestamp=atDatetime.getTime();
+	var configName=otherParams.getValue("config");
+	var hsHistory=billingParams.getHistory(configName);  
+	var dtWorksInit=billingParams.getWorksInitDate(configName);
+	var arrHistory=[];
+	var tsWorksInit="";
+	if (dtWorksInit!=""){
+		tsWorksInit=dtWorksInit.getTime();
+		arrHistory.push(["",tsWorksInit]);
+	}
+	var bPush;
+	var tsAux1;
+	var tsAux2;
+	hsHistory.walk(function(hstAux){
+		tsAux1=hstAux.value[0].getTime();
+		tsAux2=hstAux.value[1].getTime();
+		if ((tsAux2<atTimestamp) &&
+		   ((dtWorksInit=="")?true:tsWorksInit<tsAux2)){
+			arrHistory.push([tsAux1,tsAux2]);
+		}
+	});
+
+	arrHistory.sort(function(a,b){
+		if (a[1]>b[1]) return 1;
+		if (a[1]<b[1]) return -1;
+		return 0;
+	});
+	
+	if (arrHistory.length>0){ // pushing the atDateTime last period....
+		tsAux1=arrHistory[arrHistory.length-1][1];
+		arrHistory.push([tsAux1,atTimestamp]);
+	}
+	arrHistory.push([atTimestamp,""]); // adding a open period starts with atDateTime....
+	
+	var arrHistAux=arrHistory;
+	var dtIni=0;
+	var dtEnd=0;
+	var dtAnt="";
+	arrHistory=[];
+	var interval;
+	for (var i=0;i<arrHistAux.length;i++){
+		interval=arrHistAux[i];
+		dtIni=interval[0];
+		dtEnd=interval[1];
+		if (dtIni!=""){
+			if (dtAnt==""){
+				arrHistory.push(dtIni);
+			}else if ((dtAnt!="")&&(dtAnt==dtIni)){
+				// the date is already added (dtEnd....)
+				//arrHistory.push(dtIni);
+			} else {
+				var dateIni=formatDate(new Date(dtIni),4);
+				var dateAnt=formatDate(new Date(dtAnt),4);
+				sErrores.saAppend("\nERROR! La configuración de fechas no es correcta. dtIni:"+dateIni+" debería ser igual a dtAnt:"+dateAnt+" para mantener la coherencia de informes. se añaden ambas fechas");
+				if (dtIni>dtAnt){
+					arrHistory.push(dtIni);
+				} else {
+					sErrores.saAppend("\nERROR! dtIni:"+dateIni+" es menor que dtAnt:"+dateAnt+". No se añade dtIni ("+dateIni+")");
+				}
+			}
+		}
+		if (dtEnd!=""){
+			arrHistory.push(dtEnd);
+			dtAnt=dtEnd;
+		}
+	}
+	return arrHistory;
+}
+
 var plgBillingParams=class plgBillingParams{
 	constructor(){
 		var self=this;
@@ -359,81 +437,6 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     	var last=life[life.length-1][2]; // último snapshot
     	return last; 
     }
-    getBillingLifeDates(otherParams,theDatetime,sErrores){
-    	// initialize and load the importes structure
-    	var self=this;
-		var atDatetime=theDatetime;
-		if (isUndefined(theDatetime)||(theDatetime=="")){
-			atDatetime=self.getReport().reportDateTime;
-		}
-		var atTimestamp=atDatetime.getTime();
-		var configName=otherParams.getValue("config");
-		var hsHistory=self.billingParams.getHistory(configName);  
-		var dtWorksInit=self.billingParams.getWorksInitDate(configName);
-		var arrHistory=[];
-		var tsWorksInit="";
-		if (dtWorksInit!=""){
-			tsWorksInit=dtWorksInit.getTime();
-			arrHistory.push(["",tsWorksInit]);
-		}
-		var bPush;
-		var tsAux1;
-		var tsAux2;
-		hsHistory.walk(function(hstAux){
-			tsAux1=hstAux.value[0].getTime();
-			tsAux2=hstAux.value[1].getTime();
-			if ((tsAux2<atTimestamp) &&
-			   ((dtWorksInit=="")?true:tsWorksInit<tsAux2)){
-				arrHistory.push([tsAux1,tsAux2]);
-			}
-		});
-
-		arrHistory.sort(function(a,b){
-			if (a[1]>b[1]) return 1;
-			if (a[1]<b[1]) return -1;
-			return 0;
-		});
-		
-		if (arrHistory.length>0){ // pushing the atDateTime last period....
-			tsAux1=arrHistory[arrHistory.length-1][1];
-			arrHistory.push([tsAux1,atTimestamp]);
-		}
-		arrHistory.push([atTimestamp,""]); // adding a open period starts with atDateTime....
-		
-		var arrHistAux=arrHistory;
-		var dtIni=0;
-		var dtEnd=0;
-		var dtAnt="";
-		arrHistory=[];
-		var interval;
-		for (var i=0;i<arrHistAux.length;i++){
-			interval=arrHistAux[i];
-			dtIni=interval[0];
-			dtEnd=interval[1];
-			if (dtIni!=""){
-				if (dtAnt==""){
-					arrHistory.push(dtIni);
-				}else if ((dtAnt!="")&&(dtAnt==dtIni)){
-					// the date is already added (dtEnd....)
-					//arrHistory.push(dtIni);
-				} else {
-					var dateIni=formatDate(new Date(dtIni),4);
-					var dateAnt=formatDate(new Date(dtAnt),4);
-					sErrores.saAppend("\nERROR! La configuración de fechas no es correcta. dtIni:"+dateIni+" debería ser igual a dtAnt:"+dateAnt+" para mantener la coherencia de informes. se añaden ambas fechas");
-					if (dtIni>dtAnt){
-						arrHistory.push(dtIni);
-					} else {
-						sErrores.saAppend("\nERROR! dtIni:"+dateIni+" es menor que dtAnt:"+dateAnt+". No se añade dtIni ("+dateIni+")");
-					}
-				}
-			}
-			if (dtEnd!=""){
-				arrHistory.push(dtEnd);
-				dtAnt=dtEnd;
-			}
-		}
-		return arrHistory;
-    }
     getBillingLife(otherParams,theDatetime){
     	var self=this;
 		var sComentarios=[];
@@ -446,7 +449,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		
 		
 		var configName=otherParams.getValue("config");
-		var arrHistory=self.getBillingLifeDates(otherParams,theDatetime,sErrores);
+		var arrHistory=getBillingLifeDates(otherParams,theDatetime,sErrores);
 		var dtAux;
 		arrHistory.forEach(function(dtSnapshot){
  			dtAux=new Date(dtSnapshot);

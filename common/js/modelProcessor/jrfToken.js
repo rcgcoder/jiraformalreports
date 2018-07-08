@@ -299,6 +299,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			}
 			var hsParams=self.otherParams;
 			hsParams.clear();
+			hsParams.add("model",self.model);
 			if (self.moreParams!=""){
 				var splitParams=self.moreParams.split(",");
 				splitParams.forEach(function(aParam){

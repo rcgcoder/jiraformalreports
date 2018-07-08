@@ -6,11 +6,14 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	addInteractiveContent(id,content){
 		this.interactiveContents.add(id,content);
 	}
+	getInteractiveContent(id){
+		this.interactiveContents.getValue(id);
+	}
 	elemShowHide(elemId){
 		var self=this;
         System.webapp.addStep("Show/Hide element", function(){
         	//debugger;
-    		var sContent=self.interactiveContents(elemId);
+    		var sContent=self.getInteractiveContent(elemId);
     		var jqElem=$('#'+elemId);
     		var elem=jqElem[0];
     		jqElem.html(sContent.saToString());
@@ -31,7 +34,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		var self=this;
         System.webapp.addStep("Open New Window", function(){
         	debugger;
-    		var sContent=self.interactiveContents(elemId);
+    		var sContent=self.getInteractiveContent(elemId);
     		var win = window.open("", '_blank');
     		win.close();
     		win.document.body.innerHTML = sContent.saToString();

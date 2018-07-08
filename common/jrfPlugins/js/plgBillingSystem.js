@@ -131,7 +131,8 @@ var plgBillingParams=class plgBillingParams{
 	getHistory(config){
     	var self=this;
 		var config=self.getParams(config);
-		var hsHistory=self.variables.getVars(config.history)
+		var hsHistory=self.variables.getVars(config.history);
+		hsHistory=hsHistory.history;
 		return hsHistory;
 	}
     getParamValue(config,key,atDatetime){

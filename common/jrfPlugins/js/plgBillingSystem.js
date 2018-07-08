@@ -615,7 +615,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 							snapshot.calculos.pendiente+=workAuxImporte;
 							snapshot.calculos.fases.pendiente[fieldFaseName]=workAuxImporte;
 							snapshot.calculos.inTimespents.pendiente+=workAux;
-						}	
+						}	 
 						snapshot.calculos.total+=workAuxImporte;
 					}
 				}

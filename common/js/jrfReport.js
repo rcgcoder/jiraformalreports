@@ -536,6 +536,13 @@ var jrfReport=class jrfReport {
 					}
 				})
 			}
+			if (isDefined(self.config.listReportsHistory)){
+				self.config.listReportsHistory.forEach(function(defaultVar){
+					var dtAux1=toDateNormalDDMMYYYYHHMMSS(defaultVar[1]);
+					var dtAux2=toDateNormalDDMMYYYYHHMMSS(defaultVar[2]);
+					theModel.variables.setVar(defaultVar[0],dtAux1,dtAux2);
+				})
+			}
 			//debugger;
             var arrDates=["ReportInitDate","ReportEndDate","ContractInitDate",
                 "ContractEndDate", "ContractAdvancedDate"];

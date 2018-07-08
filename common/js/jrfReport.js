@@ -20,6 +20,7 @@ var jrfReport=class jrfReport {
 		self.result="";
 		self.updatePrecomputedAccumulators=false;
 		self.adjustAccumItemFunctions=newHashMap();
+		self.reportDateTime=new Date();
 	}
 	adjustAccumItem(accumType,accumValue,issue,fieldName,notAdjust){
 		var self=this;

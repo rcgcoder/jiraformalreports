@@ -146,6 +146,9 @@ var RCGVarEngine=class RCGVarEngine{ //this kind of definition allows to hot-rel
 		var self=this;
 		// localVars is a Stack (hashmap without key) of Var Environments (hashmaps where the key is the var name)
 		// take the top environment
+		if (self.historyVars.exists(varName)){
+			return self.historyVars.getValue(varName);
+		}
 		var nodEnv=self.localVars.getLast();
 		var nodAux;
 		var nodInd;

@@ -39,9 +39,9 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
         	debugger; 
     		var sContent=self.getInteractiveContent(elemId);
     		win = window.open("", '_blank');
+			win.close();
     		win.document.body.innerHTML = sContent.saToString();
     		System.webapp.addStep("Including CSS files",function(){
-    			win.close();
     			var arrFiles=[	//"ts/demo.ts",
     				"css/RCGTaskManager.css",
     				"aui/css/aui.css",

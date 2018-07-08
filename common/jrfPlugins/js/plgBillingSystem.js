@@ -376,18 +376,20 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		var hourCost;
 		var minFacturableFase;
 		var arrHistory=[];
+		var tsWorksInit="";
 		if (dtWorksInit!=""){
-			arrHistory.push(["",dtWorksInit.getTime()]);
+			tsWorksInit=dtWorksInit.getTime();
+			arrHistory.push(["",tsWorksInit]);
 		}
 		var bPush;
-		var dtAux1;
-		var dtAux2;
+		var tsAux1;
+		var tsAux2;
 		hsHistory.walk(function(hstAux){
-			var dtAux1=hstAux;
-			var dtAux2=toDateNormalDDMMYYYYHHMMSS(hstAux[2]).getTime();
-			if ((dtAux2.getTime()<atTimestamp) &&
-			   ((dtWorksInit=="")?true:dtWorksInit.getTime()<dtAux2.getTime())){
-				arrHistory.push([dtAux1,dtAux2]);
+			tsAux1=hstAux.value[0].getTime();
+			tsAux2=hstAux.value[1].getTime();
+			if ((tsAux2<atTimestamp) &&
+			   ((dtWorksInit=="")?true:tsWorksInit<tsAux2)){
+				arrHistory.push([tsAux1,tsAux2]);
 			}
 		});
 
@@ -399,9 +401,9 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		
 		if (arrHistory.length>0){ // pushing the atDateTime last period....
 			dtAux1=arrHistory[0][1];
-			arrHistory.push([dtAux1,atDatetime]);
+			arrHistory.push([dtAux1,atTimestamp]);
 		}
-		arrHistory.push([atDatetime,""]); // adding a open period starts with atDateTime....
+		arrHistory.push([atTimestamp,""]); // adding a open period starts with atDateTime....
 		
 		var arrHistAux=arrHistory;
 		var dtIni=0;

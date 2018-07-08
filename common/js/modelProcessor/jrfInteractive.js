@@ -34,25 +34,25 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	}
 	openNewWindow(elemId){
 		var self=this;
-		var win; 
+		var otherWindow; 
         System.webapp.addStep("Open New Window", function(){
         	debugger; 
     		var sContent=self.getInteractiveContent(elemId);
-    		win = window.open("", '_blank');
-			win.close();
-    		win.document.body.innerHTML = sContent.saToString();
+    		otherWindow= window.open("", '_blank');
+    		otherWindow.close();
+    		otherWindow.document.body.innerHTML = sContent.saToString();
     		System.webapp.addStep("Including CSS files",function(){
     			var arrFiles=[	//"ts/demo.ts",
     				"css/RCGTaskManager.css",
     				"aui/css/aui.css",
                     "aui/css/aui-experimental.css",
     			 ]; //test
-                System.webapp.loadRemoteFiles(arrFiles,undefined,win);
+                System.webapp.loadRemoteFiles(arrFiles,undefined,otherWindow);
         	});
         	System.webapp.addStep("Showing the window",function(arrContents){
-        		var auxHtml=win.document.body.innerHTML;
-        		win = window.open("", '_blank');
-        		win.document.body.innerHTML = auxHtml;
+        		var auxHtml=otherWindow.document.body.innerHTML;
+        		otherWindow= window.open("", '_blank');
+        		otherWindow.document.body.innerHTML = auxHtml;
         	    System.webapp.continueTask();
         	});
     		System.webapp.continueTask();

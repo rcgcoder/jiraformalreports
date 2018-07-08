@@ -165,6 +165,7 @@ export class TabStructure {
         tm.killTasks();
         var auxObj=$('#toggle_ForceReloadFiles');
         auxObj.attr("checked","checked");
+        setTimeout(function(){tm.killTasks()},1000);
 
     }
     doEditSelectedModel(){

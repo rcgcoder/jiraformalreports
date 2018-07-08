@@ -145,6 +145,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		});
 		self.addStep("Post-Encode part...",function(){
 			//log(self.topHtmlBuffer(self.indHtmlBuffer-2));
+			debugger;
 			self.endApplyToken();
 			self.continueTask();
 		});
@@ -368,7 +369,6 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				self.addHtml("");
 			} else if ((self.visibility=="hideable")
 					||(self.visibility=="newWindow")){
-				debugger;
 				var sHtml=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
 				//self.indTokenHtmlBuffer=self.pushHtmlBuffer();
 				//sHtml=self.replaceVars(sHtml);

@@ -521,7 +521,7 @@ class RCGZippedApp{
 	}
 	addStyleString(cssContent,theWindow) {
 		var doc=document;
-		if (typeof theWindow!=="undefined")){
+		if (typeof theWindow!=="undefined"){
 			doc=theWindow.document;
 		}
 	    var node = doc.createElement('style');
@@ -531,7 +531,7 @@ class RCGZippedApp{
 	addJavascriptString(jsContent,theWindow){
 		var self=this;
 		var doc=document;
-		if (typeof theWindow!=="undefined")){
+		if (typeof theWindow!=="undefined"){
 			doc=theWindow.document;
 		}
 		var oHead=(doc.head || doc.getElementsByTagName("head")[0]);

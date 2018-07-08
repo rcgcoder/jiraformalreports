@@ -282,8 +282,8 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     getBillingSnapShot(atDatetime,hourCost,minFacturableFase){
     	var self=this;
     	var objImportes=self.initializeBilling(atDatetime,hourCost,minFacturableFase);
-		tReal=objImportes.source.timespent;
-		tEstimado=objImportes.source.timeoriginalestimate;
+		var tReal=objImportes.source.timespent;
+		var tEstimado=objImportes.source.timeoriginalestimate;
 		
 		var servicio=self.fieldValue("project.key");
 		var tipo=self.fieldValue("issuetype.name");

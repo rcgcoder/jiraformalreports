@@ -464,7 +464,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     	debugger;
     	var hslifeCaches=self.getFieldLife("Billing",self.getReport().reportDateTime,otherParams);
     	var life=hslifeCaches.getValue("life");
-    	var last=life[life.length-1][2]; // último snapshot
+    	var last=life[0][2]; // último snapshot
     	return last; 
     }
     getBillingLife(otherParams,theDatetime){

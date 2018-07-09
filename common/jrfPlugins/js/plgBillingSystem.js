@@ -506,6 +506,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 			minFacturableFase=snapshot.source.minFacturableFase;
 			actFase=snapshot.source.faseActual;
 			sSnapshotDate=formatDate(snapshot.source.atDatetime,4);
+			if (actFase=="") actFase=0;
 			if (actFase<antFase){
 				sComentarios.append("\n"+sSnapshotDate+" - Retrocedido a la fase:"+self.getFieldFaseBillingName(actFase)+" antes:"+self.getFieldFaseBillingName(antFase)+ " se mantiene la fase anterior");
 				actFase=antFase;

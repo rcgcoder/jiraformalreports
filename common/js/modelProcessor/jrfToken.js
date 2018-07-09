@@ -172,7 +172,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				}
 				if (isString(vValue)||(isArray(vValue))){
 					var sFormula=vValue.saToString().trim();
-					if ((sFormula.indexOf("{{{")==0)&&(sFormula.indexOf("}}}")==(sFormula.length-4))){
+					if ((sFormula.indexOf("{{{")==0)&&(sFormula.indexOf("}}}")==(sFormula.length-3))){
 						sFormula=sFormula.substring(3,sFormula.length-3);
 						vValue=self.replaceVarsAndExecute(sFormula);
 					} else {

@@ -679,7 +679,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 						if (snapshot.source.timeestimate>workTotal) workTotal=snapshot.source.timeestimate;
 					}
 					
-					var workRemaining=workDefined-workTotal;
+					var workRemaining=workTotal-workDefined;
 					if (workRemaining<0){
 						sErrores.saAppend("\n ¡¡¡ ERROR !!! "+sSnapshotDate+` - El trabajo restante es negativo. Se establece a 0
 										Trabajo Aprobado:`+snapshot.calculos.inTimespents.aprobado+`

@@ -628,7 +628,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 							   (snapshot.source.importesReales.Total!=1)){
 								sErrores.saAppend("\n ¡¡¡ ERROR !!! "+sSnapshotDate+` - El Tiempo imputado directamente o en sus tareas es 0.
 										Pero se estableció de forma manual un importe real total ` + snapshot.source.importesReales.Total + ` 
-										Se utiliza el importe real establacido manualmente (`+snapshot.source.importesReales.Total `) pero debe corregirse`);
+										Se utiliza el importe real establacido manualmente (`+snapshot.source.importesReales.Total +`) pero debe corregirse`);
 								auxTimespent=snapshot.source.importesReales.Total;
 							} else {
 								// no es un error.... porque es un requisito cerrado antes de ser facturado
@@ -639,7 +639,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 							    (snapshot.source.importesEstimados.Total!=1)){
 								sErrores.saAppend("\n ¡¡¡ ERROR !!! "+sSnapshotDate+` - El Tiempo imputado directamente o en sus tareas es 0.
 										Pero se estableció de forma manual un importe estimado total ` + snapshot.source.importesEstimados.Total + ` 
-										Se utiliza el importe real establacido manualmente (`+snapshot.source.importesEstimados.Total `) pero debe corregirse`);
+										Se utiliza el importe real establacido manualmente (`+snapshot.source.importesEstimados.Total +`) pero debe corregirse`);
 								auxTimespent=snapshot.source.importesEstimados.Total;
 							} else {
 								// no es un error.... porque es un requisito cerrado antes de ser facturado
@@ -649,7 +649,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 					if ((auxTimespent==0)&&(workDefined>0)){
 						sErrores.saAppend("\n ¡¡¡ ERROR !!! "+sSnapshotDate+` - El Tiempo imputado directamente o en sus tareas es 0.
 								Pero en fases anteriores se facturaron importes por ` + (workDefined/3600) + ` horas 
-								Se utiliza el valor facturado anteriormente (`+workDefined `) pero debe corregirse`);
+								Se utiliza el valor facturado anteriormente (`+workDefined +`) pero debe corregirse`);
 						auxTimespent=workDefined;
 					}
 					var falta=auxTimespent-workDefined;

@@ -629,7 +629,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 								sErrores.saAppend("\n ¡¡¡ ERROR !!! "+sSnapshotDate+` - El Tiempo imputado directamente o en sus tareas es 0.
 										Pero se estableció de forma manual un importe real total ` + snapshot.source.importesReales.Total + ` 
 										Se utiliza el importe real establacido manualmente (`+snapshot.source.importesReales.Total +`) pero debe corregirse`);
-								auxTimespent=snapshot.source.importesReales.Total;
+								auxTimespent=(snapshot.source.importesReales.Total/hourCost)*3600;
 							} else {
 								// no es un error.... porque es un requisito cerrado antes de ser facturado
 							}
@@ -640,7 +640,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 								sErrores.saAppend("\n ¡¡¡ ERROR !!! "+sSnapshotDate+` - El Tiempo imputado directamente o en sus tareas es 0.
 										Pero se estableció de forma manual un importe estimado total ` + snapshot.source.importesEstimados.Total + ` 
 										Se utiliza el importe real establacido manualmente (`+snapshot.source.importesEstimados.Total +`) pero debe corregirse`);
-								auxTimespent=snapshot.source.importesEstimados.Total;
+								auxTimespent=(snapshot.source.importesEstimados.Total/hourCost)/3600;
 							} else {
 								// no es un error.... porque es un requisito cerrado antes de ser facturado
 							}

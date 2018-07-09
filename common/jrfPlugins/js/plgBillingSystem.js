@@ -619,11 +619,44 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 					var workDefined=snapshot.calculos.inTimespents.resto
 										 +snapshot.calculos.inTimespents.pendiente
 										 +snapshot.calculos.inTimespents.aprobado;
-					var falta=snapshot.source.timeestimate-workDefined;
-					if (snapshot.source.timeestimate==0){
-						
+					var auxTimespent=snapshot.source.timespent;
+					if (auxTimespent==0){
+						// may be an error
+						if (snapshot.importesdefinidos.importesReales.Total){
+							if ((snapshot.source.importesReales.Total!=0)
+									&&
+							   (snapshot.source.importesReales.Total!=1)){
+								sErrores.saAppend("\n ¡¡¡ ERROR !!! "+sSnapshotDate+` - El Tiempo imputado directamente o en sus tareas es 0.
+										Pero se estableció de forma manual un importe real total ` + snapshot.source.importesReales.Total + ` 
+										Se utiliza el importe real establacido manualmente (`+snapshot.source.importesReales.Total `) pero debe corregirse`);
+								auxTimespent=snapshot.source.importesReales.Total;
+							} else {
+								// no es un error.... porque es un requisito cerrado antes de ser facturado
+							}
+						} else if (snapshot.importesdefinidos.importesEstimados.Total){
+							if ((snapshot.source.importesEstimados.Total!=0)
+									&&
+							    (snapshot.source.importesEstimados.Total!=1)){
+								sErrores.saAppend("\n ¡¡¡ ERROR !!! "+sSnapshotDate+` - El Tiempo imputado directamente o en sus tareas es 0.
+										Pero se estableció de forma manual un importe estimado total ` + snapshot.source.importesEstimados.Total + ` 
+										Se utiliza el importe real establacido manualmente (`+snapshot.source.importesEstimados.Total `) pero debe corregirse`);
+								auxTimespent=snapshot.source.importesEstimados.Total;
+							} else {
+								// no es un error.... porque es un requisito cerrado antes de ser facturado
+							}
+						}
 					}
-					workedPercent=workDefined/snapshot.source.timeestimate;
+					if ((auxTimespent==0)&&(workDefined>0)){
+						sErrores.saAppend("\n ¡¡¡ ERROR !!! "+sSnapshotDate+` - El Tiempo imputado directamente o en sus tareas es 0.
+								Pero en fases anteriores se facturaron importes por ` + (workDefined/3600) + ` horas 
+								Se utiliza el valor facturado anteriormente (`+workDefined `) pero debe corregirse`);
+						auxTimespent=workDefined;
+					}
+					var falta=auxTimespent-workDefined;
+					workedPercent=0;
+					if (auxTimespent>0){
+						workedPercent=workDefined/auxTimespent;
+					}
 					var percAux=0;
 					for (var i=nFase;i<5;i++){
 						fieldFaseName=self.getFieldFaseBillingName(i);
@@ -631,9 +664,15 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 						//example 0.57
 					}
 					var percAcum=percAux;
+					if (percAcum<=0){
+						sErrores.saAppend("\n ¡¡¡ ERROR !!! "+sSnapshotDate+` - El acumulado de los porcentajes de los trabajos pendientes (percAcum) es <= 0. Se establece a 1
+								Esto es un error a) del programa b) de los datos de porcentajes introducidos en la estimación
+								Se debe corregir` );
+						percAcum=1;
+					}
 					var workTotal=0;
 					if (actFase==4){ // si el requisito se cierra el trabajo total es el timespent
-						workTotal=snapshot.source.timespent;
+						workTotal=auxTimespent;
 					} else {
 						// si el requisito no esta cerrado se utiliza el mayor estimado
 						workTotal=snapshot.source.timeoriginalestimate;

@@ -114,6 +114,9 @@ export class TabConfig {
         dfReport["ForceReloadFiles"]=(auxObj.attr("checked")=="checked");
         auxObj=$('#toggle_SaveResult');
         dfReport["SaveResult"]=(auxObj.attr("checked")=="checked");
+        auxObj=$('#toggle_NewWindow');
+        dfReport["NewWindow"]=(auxObj.attr("checked")=="checked");
+        
 
         auxObj=$('#toggle_ResetLeafPrecomputations');
         dfReport["ResetLeafPrecomputations"]=(auxObj.attr("checked")=="checked");
@@ -220,6 +223,10 @@ export class TabConfig {
         auxObj=$('#toggle_ForceReloadFiles');
         if(isDefined(config.ForceReloadFiles)&&config.ForceReloadFiles)auxObj.attr("checked","checked");
 
+        auxObj=$('#toggle_NewWindow');
+        if(isDefined(config.NewWindow)&&config.NewWindow)auxObj.attr("checked","checked");
+        
+        
         auxObj=$('#toggle_ResetLeafPrecomputations');
         if(isDefined(config.ResetLeafPrecomputations)&&config.ResetLeafPrecomputations)auxObj.attr("checked","checked");
         

@@ -777,6 +777,29 @@ var jrfReport=class jrfReport {
 	        jqResult.html(sModelProcessedResult.saToString());
 			loggerFactory.getLogger().enabled=true;
 			self.result=sModelProcessedResult;
+			if (self.config.ResetLeafPrecomputations){
+	    		otherWindow= window.open("", '_blank');
+//	    		otherWindow= window.open("", 'newWindow','width=300,height=250');
+	    		otherWindow.close();
+	    		otherWindow.document.body.innerHTML = sModelProcessedResult;
+	    		self.addStep("Including CSS files",function(){
+	    			var arrFiles=[	//"ts/demo.ts",
+	    				"css/RCGTaskManager.css",
+	    				"aui/css/aui.css",
+	                    "aui/css/aui-experimental.css",
+	    			 ]; //test
+	                self.loadRemoteFiles(arrFiles,undefined,otherWindow);
+	        	});
+	        	self.addStep("Showing the window",function(arrContents){
+	        		var auxHtml=otherWindow.document.body.innerHTML;
+//	        		otherWindow= window.open("", 'newWindow','width=300,height=250');
+	        		otherWindow= window.open("", '_blank');
+	        		otherWindow.document.body.innerHTML = auxHtml;
+	        		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;
+	        	    self.continueTask();
+	        	});
+	    		self.continueTask();
+			}
 			self.continueTask();
 		});
 		

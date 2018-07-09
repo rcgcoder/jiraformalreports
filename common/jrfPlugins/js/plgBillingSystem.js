@@ -547,9 +547,6 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 				if (snapshot.calculos.inTimespents.total>0){
 					snapshot.calculos.workedPercent=snapshot.calculos.inTimespents.pendiente/snapshot.calculos.inTimespents.total;
 				}
-				antSnapshot=snapshot;
-				antFase=actFase;
-				previousDate=snapshot.source.atDatetime;
 			} else {
 				// en dos iteraciones.... 0 -> antFase ... para ver si ha cambiado algun importe facturado
 				snapshot.calculos.inTimespents.aprobado=antSnapshot.calculos.inTimespents.aprobado
@@ -710,10 +707,13 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 						snapshot.calculos.total+=workAuxImporte;
 					}
 				}
-				previousDate=snapshot.source.atDatetime;
 			}
+			antSnapshot=snapshot;
+			antFase=actFase;
+			previousDate=snapshot.source.atDatetime;
 			snapshot.calculos.errores=sErrores;
 			snapshot.calculos.comentarios=sComentarios;
+			
 		});
 	   	 
 		var arrResults=[];

@@ -85,7 +85,7 @@ var getBillingDatesList=function(config,atDatetime){
 	if (isUndefined(atDatetime)){
 		fixedDateTime=new Date();
 	}
-	var arrDates=getBillingLifeDates(auxParams,atDatetime);
+	var arrDates=getBillingLifeDates(auxParams,fixedDateTime);
 	var hsResult=newHashMap();
 	arrDates.forEach(function(auxDate){
 		hsResult.add(auxDate,auxDate);

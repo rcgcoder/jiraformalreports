@@ -1,6 +1,6 @@
 var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	loadOwnProperties(){
-		
+ 		
 	}
 	constructor(tag,reportElem,model){
 		var self=this;

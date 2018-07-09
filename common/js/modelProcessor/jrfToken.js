@@ -32,6 +32,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.visibility=obj.getAttrVal("visibility");
 		obj.datetimeSource=obj.getAttrVal("atDateTime",reportElem,true,true);
 		obj.postProcess=obj.getAttrVal("postprocess");
+		obj.activateVar=obj.getAttrVal("activate");
+		obj.activeVar;
 		obj.datetime=undefined;
 		obj.moreParams=obj.getAttrVal("aditionalparameters",reportElem,false);
 		obj.otherParams=newHashMap();
@@ -49,15 +51,12 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var sKey="";
 		var auxRptElem=reportElement;
 		if (isUndefined(auxRptElem)){
-			auxRptElem=self.reportElem;
+			if (isDefined(self.activeVar)){
+				auxRptElem=self.activeVar;
+			} else {
+				auxRptElem=self.reportElem;
+			}
 		}
-		if (isDefined(auxRptElem.getKey)){
-			sKey=auxRptElem.getKey();
-		}
-		if (sKey=="NOTIFLOPD-120"){
-			log("Review this");
-		}
-
 		var auxList=childList;
 		if (isUndefined(auxList)){
 			auxList=self.tag.getChilds();
@@ -324,6 +323,9 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				});
 			}
 			self.applyInitVars();
+			if (self.activateVar!=""){
+				self.activeVar=self.variables.getVar(self.activateVar.saToString().trim());
+			}
 		}
 	}
 	endApplyToken(){

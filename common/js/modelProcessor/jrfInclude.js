@@ -4,7 +4,11 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
 		var self=this;
 		self.type=self.getAttrVal("include").trim(); // supports only confluence and url 
 		self.subtype=self.getAttrVal("subtype").trim(); // now only content or javascript
-		self.url=self.getAttrVal("url").trim();
+		self.url=replaceAll(self.getAttrVal("url").trim()," ","");
+		self.url=replaceAll(self.url,"\t","");
+		self.url=replaceAll(self.url,"\n","");
+		self.url=replaceAll(self.url,"\r","");
+		
 		self.jsClass=self.getAttrVal("class").trim();
 		self.preprocessed=false;
 		self.includeId="";

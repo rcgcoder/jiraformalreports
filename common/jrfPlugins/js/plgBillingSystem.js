@@ -93,7 +93,13 @@ var getBillingDatesList=function(config,atDatetime){
 	});
 	var hsResult=newHashMap();
 	arrDates.forEach(function(auxDate){
-		hsResult.push(new Date(auxDate));
+		var dtResult=new Date(auxDate);
+		var objResult={
+			fechaText:formatDate(dtResult,4),
+			fecha:dtResult,
+			timestamp:auxDate
+		}
+		hsResult.push(objResult);
 	});
 	return hsResult;
 }

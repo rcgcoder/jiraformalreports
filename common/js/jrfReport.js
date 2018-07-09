@@ -562,6 +562,9 @@ var jrfReport=class jrfReport {
 				  }
 		      }
 		    });
+			theModel.variables.initVar("ReportDateTime");
+			theModel.variables.setVar("ReportDateTime",self.reportDateTime);
+		    
 	    	theModel.variables.initVar("withAdvancedWorks");				
 		    if (isDefined(self.config['dates']["withAdvancedWorks"])&&(self.config['dates']["withAdvancedWorks"])){
 				theModel.variables.pushVar("withAdvancedWorks",self.config['dates']["withAdvancedWorks"]);

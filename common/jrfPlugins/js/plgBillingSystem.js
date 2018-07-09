@@ -77,8 +77,22 @@ var getBillingFieldList=function(){
 	});
 	return hsProps;
 }
+var getBillingDatesList=function(config,model){
+	var auxParams=newHashMap();
+	auxParams.add("config",config);
+	auxParams.add("model",model);
+	var arrDates=getBillingLifeDates(auxPArams);
+	var hsResult=newHashMap();
+	arrDates.forEach(function(auxDate){
+		hsResult.add(auxDate,auxDate);
+	});
+}
 
-var getBillingLifeDates=function(otherParams,theDatetime,sErrores){
+var getBillingLifeDates=function(otherParams,theDatetime,errorsInfo){
+	var sErrores=errorsInfo;
+	if (isUndefined(sErrores)){
+		sErrores=[];
+	}
 	// initialize and load the importes structure
 	var atDatetime=theDatetime;
 	if (isUndefined(theDatetime)||(theDatetime=="")){

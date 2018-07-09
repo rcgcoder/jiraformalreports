@@ -85,7 +85,7 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
 		self.continueTask();
 	}
 	apply(){
-		debugger;
+//		debugger;
 		var self=this;
 		self.addStep("Processing all Childs of jrfInclude",function(){
 			self.processAllChilds();

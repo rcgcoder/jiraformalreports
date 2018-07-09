@@ -555,7 +555,8 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 
 				for (var nFase=0;nFase<=antFase;nFase++){
 					fieldFaseName=self.getFieldFaseBillingName(nFase);
-					antFaseImporte=antSnapshot.calculos.fases[fieldFaseName];
+					antFaseImporte=antSnapshot.calculos.fases.aprobado[fieldFaseName]
+									+ antSnapshot.calculos.fases.pendiente[fieldFaseName]
 /*					objImportes.importesdefinidos={importesEstimados:{"Total":false,"Identificado":false,"Aprobado":false,"Disenado":false,"Implementado":false,"Desplegado":false},
 							  importesReales:{"Total":false,"Identificado":false,"Aprobado":false,"Disenado":false,"Implementado":false,"Desplegado":false}};
 */					

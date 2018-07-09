@@ -77,12 +77,14 @@ var getBillingFieldList=function(){
 	});
 	return hsProps;
 }
-var getBillingDatesList=function(config,model){
-	debugger;
+var getBillingDatesList=function(config,atDatetime){
 	var auxParams=newHashMap();
 	auxParams.add("config",config);
-	auxParams.add("model",model);
-	var arrDates=getBillingLifeDates(auxPArams);
+	var fixedDateTime=atDatetime
+	if (isUndefined(atDatetime)){
+		fixedDateTime=new Date();
+	}
+	var arrDates=getBillingLifeDates(auxPArams,atDatetime);
 	var hsResult=newHashMap();
 	arrDates.forEach(function(auxDate){
 		hsResult.add(auxDate,auxDate);

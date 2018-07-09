@@ -733,7 +733,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     }
     getBillingCacheKeyPostText(atDatetime,otherParams){
 		var configName=otherParams.getValue("config");
-		var hourCost="";
+/*		var hourCost="";
 		var fromDatetime="";
 		var toDateTime="";
 		var minFacturableFase="";
@@ -754,6 +754,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		}
 		//var sKey=hourCost+"-"+minFacturableFase+"-"+fromDatetime+"-"+toDateTime;
 		var sKey=configName+"-"+fromDatetime+"-"+toDateTime;
+*/		var sKey=configName;
 		return sKey;
     }
     

@@ -777,7 +777,7 @@ var jrfReport=class jrfReport {
 	        jqResult.html(sModelProcessedResult.saToString());
 			loggerFactory.getLogger().enabled=true;
 			self.result=sModelProcessedResult;
-			if (self.config.ResetLeafPrecomputations){
+			if (self.config.NewWindow){
 	    		otherWindow= window.open("", '_blank');
 //	    		otherWindow= window.open("", 'newWindow','width=300,height=250');
 	    		otherWindow.close();

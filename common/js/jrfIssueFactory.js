@@ -251,7 +251,11 @@ function newIssueFactory(report){
 		if (allChilds.length()>0){
 			allChilds.walk(function(child){
 				childValue=child.fieldAccum(theFieldName,childType,dateTime,inOtherParams,bSetProperty,notAdjust,fncItemCustomCalc);
-				accumValue+=childValue;
+				if (isString(childValue)||isArray(childValue)){
+					accumValue+=parseFloat(childValue.saToString().trim());
+				} else {
+					accumValue+=childValue;
+				}
 			});
 		} else {
 			// let´s find if field have a precomputed value

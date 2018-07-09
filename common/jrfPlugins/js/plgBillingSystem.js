@@ -86,10 +86,16 @@ var getBillingDatesList=function(config,atDatetime){
 		fixedDateTime=new Date();
 	}
 	var arrDates=getBillingLifeDates(auxParams,fixedDateTime);
+	arrDates.sort(function(a,b){
+		if (a>b) return -1;
+		if (a<b) return 1;
+		return 0;
+	});
 	var hsResult=newHashMap();
 	arrDates.forEach(function(auxDate){
-		hsResult.add(auxDate,auxDate);
+		hsResult.push(new Date(auxDate));
 	});
+	return hsResult;
 }
 
 var getBillingLifeDates=function(otherParams,theDatetime,errorsInfo){

@@ -78,6 +78,7 @@ var getBillingFieldList=function(){
 	return hsProps;
 }
 var getBillingDatesList=function(config,model){
+	debugger;
 	var auxParams=newHashMap();
 	auxParams.add("config",config);
 	auxParams.add("model",model);

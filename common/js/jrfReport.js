@@ -778,7 +778,7 @@ var jrfReport=class jrfReport {
 			loggerFactory.getLogger().enabled=true;
 			self.result=sModelProcessedResult;
 			if (self.config.NewWindow){
-	    		otherWindow= window.open("", '_blank');
+	    		var otherWindow= window.open("", '_blank');
 //	    		otherWindow= window.open("", 'newWindow','width=300,height=250');
 	    		otherWindow.close();
 	    		otherWindow.document.body.innerHTML = sModelProcessedResult;

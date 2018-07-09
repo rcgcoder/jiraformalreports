@@ -501,12 +501,17 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		var sSnapshotDate="";
 		var importePendiente=0;
 		var workedPercent=0;
+		var bNoExiste=false;
 		arrSnapshots.forEach(function(snapshot){
 			hourCost=snapshot.source.hourCost;
 			minFacturableFase=snapshot.source.minFacturableFase;
 			actFase=snapshot.source.faseActual;
 			sSnapshotDate=formatDate(snapshot.source.atDatetime,4);
-			if (actFase=="") actFase=0;
+			bNoExiste=false;
+			if (actFase=="") {
+				actFase=0;
+				bNoExiste=true;
+			}
 			if (actFase<antFase){
 				sComentarios.append("\n"+sSnapshotDate+" - Retrocedido a la fase:"+self.getFieldFaseBillingName(actFase)+" antes:"+self.getFieldFaseBillingName(antFase)+ " se mantiene la fase anterior");
 				actFase=antFase;
@@ -520,7 +525,9 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 			snapshot.calculos.inTimespents.resto=0;
 			snapshot.calculos.inTimespents.total=0;
 			snapshot.calculos.comentarios="";
-			if ((previousDate=="")||(antFase<minFacturableFase)){// is the first or the first facturable
+			if (bNoExiste){
+				// no existia
+			} else if ((previousDate=="")||(antFase<minFacturableFase)){// is the first or the first facturable
 				for (var nFase=0;nFase<5;nFase++){
 					fieldFaseName=self.getFieldFaseBillingName(nFase);
 					actFaseImporte=snapshot.importesReales[fieldFaseName];
@@ -613,6 +620,9 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 										 +snapshot.calculos.inTimespents.pendiente
 										 +snapshot.calculos.inTimespents.aprobado;
 					var falta=snapshot.source.timeestimate-workDefined;
+					if (snapshot.source.timeestimate==0){
+						
+					}
 					workedPercent=workDefined/snapshot.source.timeestimate;
 					var percAux=0;
 					for (var i=nFase;i<5;i++){

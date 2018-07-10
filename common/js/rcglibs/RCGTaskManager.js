@@ -486,9 +486,25 @@ class RCGTaskManager{
 	}
 	getActiveWindow(){
 		var self=this;
-		for (var i=0;i<self.windows.length;i++){
-			var winFocus=self.windows[i].document.hasFocus();
-			if (winFocus) return self.windows[i];
+		var i=0;
+		var iWindows=self.windows.length;
+		while (i<self.windows.length){
+			var auxWindow=self.windows[i];
+			if (auxWindow.closed){
+				self.windows.splice(i, 1);
+			} else {
+				i++;
+			}
+		}
+		if (iWindows!=self.windows.length){
+			log("Windows in array before:"+self.windows.length);
+			log("Windows in array after:"+self.windows.length);
+		}
+		while (i<self.windows.length){
+			var auxWindow=self.windows[i];
+			var winFocus=auxWindow.document.hasFocus();
+			if (winFocus) return auxWindow;
+			i++;
 		}
 		return self.windows[0];
 	}

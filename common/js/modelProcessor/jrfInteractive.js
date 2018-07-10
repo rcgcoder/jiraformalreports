@@ -38,19 +38,11 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
  //   		System.webapp.continueTask();
  //       },0,1,undefined,undefined,undefined,"GLOBAL_RUN");
 	}
-	openNewWindow(elemId,activeWindow){
+	openNewWindow(elemId){
 		var self=this;
-		var actWindow=window;
-		if (isDefined(activeWindow)){
-			actWindow=activeWindow;
-		}
-		log("Opening new Window. base window has focus:"+window.document.hasFocus()+ " active window has focus:"+actWindow.document.hasFocus());
-		debugger;
 		var otherWindow; 
 		var sContent=self.getInteractiveContent(elemId);
 		otherWindow= actWindow.open("", '_blank');
-//    		otherWindow= window.open("", 'newWindow','width=300,height=250');
-//		otherWindow.close();
 		var jqBody=$(otherWindow.document.body);
 		jqBody.html(sContent.saToString());
 		var arrFiles=[	//"ts/demo.ts",
@@ -63,16 +55,8 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			jqBody.append('<link rel="stylesheet" type="text/css" href="'+sAbsPath+'">');
 
 		});
- /*   	var auxHtml=jqBody.html();
-    	var sUrl=System.webapp.composeUrl("proxy:html/empty.html");
-    	sUrl="";
-    	otherWindow= actWindow.open(sUrl, '_blank');
-		$(otherWindow.document).ready(function(){
-			log("execute de document ready");
-    		otherWindow.document.body.innerHTML = auxHtml;
- */   		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;
-    		otherWindow.System=System;
-//		});
+		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;
+    	otherWindow.System=System;
 	}
 }
 

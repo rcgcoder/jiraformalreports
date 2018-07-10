@@ -827,7 +827,7 @@ var jrfReport=class jrfReport {
     	self.addStep("Showing the window",function(arrContents){
     		var auxHtml=otherWindow.document.body.innerHTML;
 //    		otherWindow= window.open("", 'newWindow','width=300,height=250');
-    		otherWindow= window.open("proxy:/html/empty.html", '_blank');
+    		otherWindow= window.open("proxy:html/empty.html", '_blank');
     		$(otherWindow.document).ready(function(){
     			log("execute de document ready");
         		otherWindow.document.body.innerHTML = auxHtml;

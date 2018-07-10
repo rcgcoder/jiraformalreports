@@ -209,12 +209,13 @@ class RCGTask{
 
 		var fncAsyncApply=function(){
 			theTaskManager.lastTimeout=Date.now();
+			var actWindow=theTaskManager.getActiveWindow();
 			if (theTaskManager.asyncTaskCallsDelay>0){
-				setTimeout(fncApply,theTaskManager.asyncTaskCallsDelay);
+				actWindow.setTimeout(fncApply,theTaskManager.asyncTaskCallsDelay);
 			} else {
 				bIsAsync=true;
 				//setTimeout(fncApply);
-				requestAnimationFrame(fncApply);
+				actWindow.requestAnimationFrame(fncApply);
 			}
 		}
 		self.changeStatus();
@@ -464,6 +465,7 @@ class RCGTaskManager{
 		if (typeof description!=="undefined"){
 			self.description=description;
 		}
+		self.windows=[window];
 		self.globalForks=[]; // list of pseudothreaded global tasks
 		self.innerForks=[];   // list of pseudothreaded inner forks (forks in a subtask)
 		self.runningTask="";
@@ -481,6 +483,13 @@ class RCGTaskManager{
 		self.updateStatusDelay=1000;
 		self.changeStatusNeedsNotify=false;
 		self.changeStatusUpdateScheduled=false;
+	}
+	getActiveWindow(){
+		var self=this;
+		for (var i=0;i<self.windows.lenght;i++){
+			if (self.windows[i].document.hasFocus()) return self.windows[i];
+		}
+		return self.windows[0];
 	}
 	setChangeStatusNotifyDelay(millis){
 		var self=this;

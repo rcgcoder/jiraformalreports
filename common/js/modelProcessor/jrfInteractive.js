@@ -36,9 +36,14 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
  //   		System.webapp.continueTask();
  //       },0,1,undefined,undefined,undefined,"GLOBAL_RUN");
 	}
-	openNewWindow(elemId){
+	openNewWindow(elemId,activeWindow){
 		var self=this;
-		log("Opening new Window");
+		var actWindow=window;
+		if (isDefined(activeWindow)){
+			actWindow=activeWindow;
+		}
+		log("Opening new Window. base window has focus:"+window.document.hasFocus()+ " active window has focus:"+actWindow.document.hasFocus());
+		debugger;
 		window.focus();
 		var otherWindow; 
         System.webapp.addStep("Open New Window", function(){

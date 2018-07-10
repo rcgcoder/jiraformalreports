@@ -295,7 +295,7 @@ class RCGZippedApp{
 		}
 		if (sRelativePath.substr(0,"proxy:".length).toLowerCase()=="proxy:"){
 			var sRelPathAux=sRelativePath.substr("proxy:".length,sRelativePath.length);
-			debugger;
+			//debugger;
 			var sAbsolutePath=self.proxyPath;
 			sAbsolutePath+="/proxy";
 			var arrValues=self.rootPath.split("//");

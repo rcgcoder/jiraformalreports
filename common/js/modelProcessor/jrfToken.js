@@ -183,7 +183,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			}
 		}
 		if (isDefined(sVarsReuse)&&(sVarsReuse!="")){
-			debugger;
+			//debugger;
 			var arrVars=sVarsReuse.split(",");
 			for (var i=0;i<arrVars.length;i++){
 				var arrVarParts=arrVars[i].split("=");

@@ -78,7 +78,7 @@ var getBillingFieldList=function(){
 	return hsProps;
 }
 var getBillingDatesList=function(config,atDatetime){
-	debugger;
+	//debugger;
 	var auxParams=newHashMap();
 	auxParams.add("config",config);
 	var fixedDateTime=atDatetime
@@ -241,7 +241,7 @@ var plgBillingParams=class plgBillingParams{
 		var config=self.getParams(config);
 		var hsHistory=self.variables.getVars(config.history);
 		if (isUndefined(hsHistory)||(hsHistory=="")){
-			debugger;
+			//debugger;
 			return "";
 		}
 		hsHistory=hsHistory.history;
@@ -461,7 +461,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     getBilling(otherParams){
     	// initialize and load the importes structure
     	var self=this;
-    	debugger;
+    	//debugger;
     	var hslifeCaches=self.getFieldLife("Billing",self.getReport().reportDateTime,otherParams);
     	var life=hslifeCaches.getValue("life");
     	var last=life[0][2]; // último snapshot

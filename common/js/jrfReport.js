@@ -335,7 +335,7 @@ var jrfReport=class jrfReport {
 						var sTokenAdjustComment="Jira Formal Report Adjusts";
 						var hsReportAdjusts=issue.getCommentsStartsWith(sTokenAdjustComment);
 						hsReportAdjusts.walk(function(oAdjustComment){
-							debugger;
+							//debugger;
 							var sCommentBody=oAdjustComment.body;
 							var sAux=sCommentBody.substring(sTokenAdjustComment.length+1,sCommentBody.length);
 							var oAdjusts=JSON.parse(sAux); // may be a object (single change) or an array (multiple changes)

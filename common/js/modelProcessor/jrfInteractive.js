@@ -67,7 +67,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
         		otherWindow.document.body.innerHTML = auxHtml;
         		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;
         		otherWindow.System=System;
-        		self.getTaskManager().windows.push(otherWindow);
+        		System.webapp.getTaskManager().windows.push(otherWindow);
         	    System.webapp.continueTask();
         	});
     		System.webapp.continueTask();

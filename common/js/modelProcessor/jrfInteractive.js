@@ -62,7 +62,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
         	System.webapp.addStep("Showing the window",function(arrContents){
         		var auxHtml=otherWindow.document.body.innerHTML;
         		var sUrl=System.webapp.composeUrl("proxy:html/empty.html");
-        		otherWindow= window.open(sUrl, '_blank');
+        		otherWindow= actWindow.open(sUrl, '_blank');
         		$(otherWindow.document).ready(function(){
         			log("execute de document ready");
             		otherWindow.document.body.innerHTML = auxHtml;

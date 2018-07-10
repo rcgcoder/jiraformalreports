@@ -62,13 +62,19 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
         	System.webapp.addStep("Showing the window",function(arrContents){
         		var auxHtml=otherWindow.document.body.innerHTML;
         		var sUrl=System.webapp.composeUrl("proxy:html/empty.html");
-        		otherWindow= actWindow.open(sUrl, '_blank');
+        		var newWID=(new Date()).getTime()+"__"+Math.round(Math.random()*1000);
+        		otherWindow= actWindow.open(sUrl, newWID);
         		$(otherWindow.document).ready(function(){
         			log("execute de document ready");
             		otherWindow.document.body.innerHTML = auxHtml;
             		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;
             		otherWindow.System=System;
             		self.getTaskManager().windows.push(otherWindow);
+            		var windAux=otherWindow;
+            		while (isDefined(windAux.parent)){
+            			windAux=windAux.parent;
+            		}
+            		windAux.setFocus();
         		});
         	    System.webapp.continueTask();
         	});

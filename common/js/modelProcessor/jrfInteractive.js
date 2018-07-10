@@ -7,6 +7,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		var self=this;
 		var newId=(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
 		self.interactiveContents.add(newId,content);
+		return newId;
 	}
 	getInteractiveContent(idContent){
 		var self=this;

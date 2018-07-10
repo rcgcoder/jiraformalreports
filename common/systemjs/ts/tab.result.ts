@@ -8,7 +8,7 @@ export class TabResult {
     @Input() header: string = 'this is header';   
     @Input() footer: string = 'this is footer';
     doInNewWindow(){
-        var fork=self.addStep("Testing Load Issues:"+self.name, function(){
+        var fork=System.webapp.addStep("Opening the report in a new tab", function(){
             var report=System.webapp.theReport;
             report.openResultInNewTab();
             System.webapp.continueTask();

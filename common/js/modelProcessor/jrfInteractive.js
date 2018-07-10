@@ -38,7 +38,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		var self=this;
 		var otherWindow; 
 		var sContent=self.getInteractiveContent(elemId);
-		otherWindow= actWindow.open("", '_blank');
+		otherWindow= window.open("", '_blank');
 		var jqBody=$(otherWindow.document.body);
 		jqBody.html(sContent.saToString());
 		var arrFiles=[	//"ts/demo.ts",

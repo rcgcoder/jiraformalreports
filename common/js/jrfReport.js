@@ -227,13 +227,13 @@ var jrfReport=class jrfReport {
 					theJQL=self.config.rootIssues.jql;
 				}
 				if (!self.bFinishReport){
-					var fncProcessIssue=function(issue){
+					var fncProcessRootIssue=function(issue){
 						self.rootIssues.add(issue.key,issue);
 					}
 					self.addStep("Processing jql to get root issues:"+theJQL,function(){
 						self.jira.processJQLIssues(
 										theJQL,
-										fncProcessIssue);
+										fncProcessRootIssue);
 					});
 				} else {
 					self.continueTask();
@@ -330,6 +330,7 @@ var jrfReport=class jrfReport {
 				if (!issuesAdded.exists(key)){
 					var issue=fncProcessIssue(jsonIssue);
 					fncGetLinksOfIssue(issue);
+					self.rootIssues.add(key,jsonIssue);
 					nRetrieved++;
 					if (arrKeyGroups.length>1){
 						var group=arrKeyGroups.shift();

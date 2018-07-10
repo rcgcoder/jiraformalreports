@@ -296,10 +296,20 @@ class RCGZippedApp{
 		if (sRelativePath.substr(0,"proxy:".length).toLowerCase()=="proxy:"){
 			var sRelPathAux=sRelativePath.substr("proxy:".length,sRelativePath.length);
 			debugger;
-			var sAbsolutePath=self.rootPath;
-			var proxyPath=self.proxyPath;
-		}
+			var sAbsolutePath=self.proxyPath;
+			sAbsolutePath+="/proxy";
+			var arrValues=self.rootPath.split("//");
+			var sAux=arrValues[1];
+			sAbsolutePath+="/"+sAux;
+			sAbsolutePath+="/endproxy";
+			sAbsolutePath+="/"+self.github.repository;
+			sAbsolutePath+="/"+self.github.commitId;
+			sAbsolutePath+="/"+prependPath;
+			sAbsolutePath+="/"+sRelPathAux;
+			log(sAbsolutePath);
 //			https://cantabrana.no-ip.org/jfreports/proxy/cdn.rawgit.com/endproxy/rcgcoder/jiraformalreports/fde50453/common/
+			return sAbsolutePath;
+		}
 		var sUrl=self.rootPath; 
 		if (self.github!=""){
 			if (self.github!=""){

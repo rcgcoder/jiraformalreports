@@ -279,7 +279,9 @@ var jrfReport=class jrfReport {
 			var hsLinks;
 			var linkedIssue;
 			var fncGetLinkedIssues=function(hsIssueList){
-				hsIssueList.walk(function (issue){
+				hsIssueList.walk(function (jsonIssue,iDeep,key){
+					log("Root Issue: "+key);
+					var issue=self.allIssues.getById(key);
 					var arrLinkTypes=self.config.useIssueLinkTypes;
 					if (isDefined(arrLinkTypes)){
 						arrLinkTypes.forEach(function(linkType){

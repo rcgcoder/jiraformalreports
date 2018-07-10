@@ -828,10 +828,13 @@ var jrfReport=class jrfReport {
     		var auxHtml=otherWindow.document.body.innerHTML;
 //    		otherWindow= window.open("", 'newWindow','width=300,height=250');
     		otherWindow= window.open("https://cantabrana.no-ip.org/jfreports/proxy/cdn.rawgit.com/endproxy/rcgcoder/jiraformalreports/fde50453/common/html/empty.html", '_blank');
-    		otherWindow.document.body.innerHTML = auxHtml;
-    		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;
-    		otherWindow.System=System;
-    		self.getTaskManager().windows.push(otherWindow);
+    		$(otherWindow.document).ready(function(){
+    			log("execute de document ready");
+        		otherWindow.document.body.innerHTML = auxHtml;
+        		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;
+        		otherWindow.System=System;
+        		self.getTaskManager().windows.push(otherWindow);
+    		});
     	    self.continueTask();
     	});
 	}

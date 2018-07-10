@@ -1,6 +1,7 @@
 var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-reload
-	constructor(){
+	constructor(baseWindow){
 		var self=this;
+		self.baseWindow=baseWindow;
 		self.interactiveContents=newHashMap();
 	}
 	addInteractiveContent(idContent,content){
@@ -38,6 +39,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	}
 	openNewWindow(elemId){
 		var self=this;
+		self.baseWindow.focus();
 		var otherWindow; 
         System.webapp.addStep("Open New Window", function(){
         	debugger; 
@@ -67,4 +69,4 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	}
 }
 
-var modelInteractiveFunctions=new jrfInteractive();
+var modelInteractiveFunctions=new jrfInteractive(window);

@@ -38,6 +38,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	}
 	openNewWindow(elemId){
 		var self=this;
+		log("Opening new Window");
 		window.focus();
 		var otherWindow; 
         System.webapp.addStep("Open New Window", function(){

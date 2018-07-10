@@ -1,7 +1,6 @@
 var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-reload
 	constructor(baseWindow){
 		var self=this;
-		self.baseWindow=baseWindow;
 		self.interactiveContents=newHashMap();
 	}
 	addInteractiveContent(idContent,content){
@@ -39,13 +38,9 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	}
 	openNewWindow(elemId){
 		var self=this;
-		debugger;
-		if (self.baseWindow!=window){
-			self.baseWindow.alert('Jira Formal Reports needs focus to open another one window ');
-		}
+		window.focus();
 		var otherWindow; 
         System.webapp.addStep("Open New Window", function(){
-        	debugger; 
     		var sContent=self.getInteractiveContent(elemId);
     		otherWindow= window.open("", '_blank');
 //    		otherWindow= window.open("", 'newWindow','width=300,height=250');
@@ -72,4 +67,4 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	}
 }
 
-var modelInteractiveFunctions=new jrfInteractive(window);
+var modelInteractiveFunctions=new jrfInteractive();

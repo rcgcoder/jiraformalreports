@@ -500,9 +500,12 @@ class RCGTaskManager{
 			log("Windows in array before:"+iWindows);
 			log("Windows in array after:"+self.windows.length);
 		}
-		self.windows.forEach(function(auxWindow){
+		self.windows.forEach(function(auxWindow,index){
 			var winFocus=auxWindow.document.hasFocus();
-			if (winFocus) return auxWindow;
+			if (winFocus) {
+				log("Window active:"+index);
+				return auxWindow;
+			}
 		});
 		return self.windows[0];
 	}

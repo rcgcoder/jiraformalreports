@@ -7,4 +7,9 @@ import { dlgPrjSelector } from './dialogs/dlgPrjSelector';
 export class TabResult {
     @Input() header: string = 'this is header';   
     @Input() footer: string = 'this is footer';
+    doInNewWindow(){
+        var report=System.webapp.theReport;
+        report.openResultInNewTab();
+        System.webapp.continueTask();
+    }
 }

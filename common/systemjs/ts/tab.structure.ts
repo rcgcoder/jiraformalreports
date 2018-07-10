@@ -118,6 +118,7 @@ export class TabStructure {
                     theReport.reuseAllIssues=true;
                 }
                 self.report=theReport;
+                System.webapp.theReport=theReport;
                 theReport.execute(bDontReload);
             });
             self.addStep("Save result to file", function(){

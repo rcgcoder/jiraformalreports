@@ -779,27 +779,7 @@ var jrfReport=class jrfReport {
 			loggerFactory.getLogger().enabled=true;
 			self.result=sModelProcessedResult;
 			if (self.config.NewWindow){
-	    		var otherWindow= window.open("", '_blank');
-//	    		otherWindow= window.open("", 'newWindow','width=300,height=250');
-	    		otherWindow.close();
-	    		otherWindow.document.body.innerHTML = sModelProcessedResult;
-	    		self.addStep("Including CSS files",function(){
-	    			var arrFiles=[	//"ts/demo.ts",
-	    				"css/RCGTaskManager.css",
-	    				"aui/css/aui.css",
-	                    "aui/css/aui-experimental.css",
-	    			 ]; //test
-	                System.webapp.loadRemoteFiles(arrFiles,undefined,otherWindow);
-	        	});
-	        	self.addStep("Showing the window",function(arrContents){
-	        		var auxHtml=otherWindow.document.body.innerHTML;
-//	        		otherWindow= window.open("", 'newWindow','width=300,height=250');
-	        		otherWindow= window.open("", '_blank');
-	        		otherWindow.document.body.innerHTML = auxHtml;
-	        		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;
-	        		self.getTaskManager().windows.push(otherWindow);
-	        	    self.continueTask();
-	        	});
+				self.openResultInNewTab();
 			}
 			self.continueTask();
 		});
@@ -829,5 +809,29 @@ var jrfReport=class jrfReport {
 		});	
 
 		self.continueTask();
+	}
+	openResultInNewTab(){
+		var self=this;
+		var otherWindow= window.open("", '_blank');
+//		otherWindow= window.open("", 'newWindow','width=300,height=250');
+		otherWindow.close();
+		otherWindow.document.body.innerHTML = self.result;
+		self.addStep("Including CSS files",function(){
+			var arrFiles=[	//"ts/demo.ts",
+				"css/RCGTaskManager.css",
+				"aui/css/aui.css",
+                "aui/css/aui-experimental.css",
+			 ]; //test
+            System.webapp.loadRemoteFiles(arrFiles,undefined,otherWindow);
+    	});
+    	self.addStep("Showing the window",function(arrContents){
+    		var auxHtml=otherWindow.document.body.innerHTML;
+//    		otherWindow= window.open("", 'newWindow','width=300,height=250');
+    		otherWindow= window.open("", '_blank');
+    		otherWindow.document.body.innerHTML = auxHtml;
+    		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;
+    		self.getTaskManager().windows.push(otherWindow);
+    	    self.continueTask();
+    	});
 	}
 }

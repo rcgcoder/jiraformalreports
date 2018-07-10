@@ -326,7 +326,7 @@ var jrfReport=class jrfReport {
 				}
 			});
 			var fncFetchIssues=self.createManagedCallback(function(jsonIssue){
-				key=jsonIssue.key;
+				var key=jsonIssue.key;
 				if (!issuesAdded.exists(key)){
 					var issue=fncProcessIssue(jsonIssue);
 					fncGetLinksOfIssue(issue);

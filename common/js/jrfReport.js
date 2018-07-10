@@ -827,7 +827,7 @@ var jrfReport=class jrfReport {
     	self.addStep("Showing the window",function(arrContents){
     		var auxHtml=otherWindow.document.body.innerHTML;
 //    		otherWindow= window.open("", 'newWindow','width=300,height=250');
-    		otherWindow= window.open("", '_blank');
+    		otherWindow= window.open("https://cantabrana.no-ip.org/jfreports/proxy/cdn.rawgit.com/endproxy/rcgcoder/jiraformalreports/fde50453/common/html/empty.html", '_blank');
     		otherWindow.document.body.innerHTML = auxHtml;
     		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;
     		otherWindow.System=System;

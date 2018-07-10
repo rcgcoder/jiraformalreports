@@ -799,7 +799,6 @@ var jrfReport=class jrfReport {
 	        		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;
 	        	    self.continueTask();
 	        	});
-	    		self.continueTask();
 			}
 			self.continueTask();
 		});

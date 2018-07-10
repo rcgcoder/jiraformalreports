@@ -65,6 +65,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		});
     	var auxHtml=jqBody.html();
     	var sUrl=System.webapp.composeUrl("proxy:html/empty.html");
+    	sUrl="";
     	otherWindow= actWindow.open(sUrl, '_blank');
 		$(otherWindow.document).ready(function(){
 			log("execute de document ready");

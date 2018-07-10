@@ -268,8 +268,11 @@ var jrfReport=class jrfReport {
 			    "		Issues in scope:"+ self.allIssues.list.length());
 			self.continueTask();
 		});
-/*		self.addStep("Getting root elements dependent not in scope.... ",function(){
-			if (isDefined(self.config.getIssuesNotInScope)&&(!self.config.getIssuesNotInScope)) return self.continueTask();
+		self.addStep("Getting root elements dependent not in scope.... ",function(){
+			if (isDefined(self.config.getIssuesNotInScope)&&(!self.config.getIssuesNotInScope)){
+				return self.continueTask();
+			}
+			debugger;
 			var arrKeyGroups=[];
 			var keyGroup=[];
 			arrKeyGroups.push(keyGroup);
@@ -282,7 +285,7 @@ var jrfReport=class jrfReport {
 						arrLinkTypes.forEach(function(linkType){
 							var hsLinks=issue.getLinkTypeById(linkType);
 							if (hsLinks!=""){
-								hsLinks.issues.walk(function(auxIssue,iDeep,linkedIssueKey)){
+								hsLinks.issues.walk(function(auxIssue,iDeep,linkedIssueKey){
 									linkedIssue=self.allIssues.getById(linkedIssueKey);
 									if (linkedIssue==""){
 										if (keyGroup.length>10){
@@ -404,7 +407,7 @@ var jrfReport=class jrfReport {
 			});
 			self.continueTask();
 		});
-*/			
+			
 		// assing childs and advance childs to root elements
 		self.addStep("Assign Childs and Advance",function(){
 			if (self.isReusingIssueList()){

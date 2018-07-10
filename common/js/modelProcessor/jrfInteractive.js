@@ -39,7 +39,9 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	}
 	openNewWindow(elemId){
 		var self=this;
-		self.baseWindow.focus();
+		if (self.baseWindow!=window){
+			self.baseWindow.alert('Jira Formal Reports needs focus to open another one window ');
+		}
 		var otherWindow; 
         System.webapp.addStep("Open New Window", function(){
         	debugger; 

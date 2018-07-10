@@ -19,24 +19,20 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		if (isDefined(actWindow)){
 			theWindow=actWindow;
 		}
-//        System.webapp.addStep("Show/Hide element", function(){
-        	debugger;
-    		var sContent=self.getInteractiveContent(elemId);
-    		var jqElem=$(theWindow.document.body).find('#'+elemId);
-    		var elem=jqElem[0];
-    		jqElem.html(sContent.saToString());
-    		if (isUndefined(elem.visible)
-    			||
-    			(isDefined(elem.visible)&&(!elem.visible))
-    			){
-    			jqElem.show();
-    			elem.visible=true;
-    		} else {
-    			jqElem.hide();
-    			elem.visible=false;
-    		}
- //   		System.webapp.continueTask();
- //       },0,1,undefined,undefined,undefined,"GLOBAL_RUN");
+		var sContent=self.getInteractiveContent(elemId);
+		var jqElem=$(theWindow.document.body).find('#'+elemId);
+		var elem=jqElem[0];
+		jqElem.html(sContent.saToString());
+		if (isUndefined(elem.visible)
+			||
+			(isDefined(elem.visible)&&(!elem.visible))
+			){
+			jqElem.show();
+			elem.visible=true;
+		} else {
+			jqElem.hide();
+			elem.visible=false;
+		}
 	}
 	openNewWindow(elemId){
 		var self=this;

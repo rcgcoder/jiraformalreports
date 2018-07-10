@@ -513,7 +513,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 				bNoExiste=true;
 			}
 			if (actFase<antFase){
-				sComentarios.append("\n"+sSnapshotDate+" - Retrocedido a la fase:"+self.getFieldFaseBillingName(actFase)+" antes:"+self.getFieldFaseBillingName(antFase)+ " se mantiene la fase anterior");
+				sComentarios.saAppend("\n"+sSnapshotDate+" - Retrocedido a la fase:"+self.getFieldFaseBillingName(actFase)+" antes:"+self.getFieldFaseBillingName(antFase)+ " se mantiene la fase anterior");
 				actFase=antFase;
 			}
 			snapshot.calculos.aprobado=0;

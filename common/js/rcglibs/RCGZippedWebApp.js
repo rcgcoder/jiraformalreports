@@ -299,12 +299,21 @@ class RCGZippedApp{
 			var sAbsolutePath=self.proxyPath;
 			sAbsolutePath+="/proxy";
 			var arrValues=self.rootPath.split("//");
-			var sAux=arrValues[1];
-			sAbsolutePath+="/"+sAux;
+			if (arrValues.length>0){
+				var sAux=arrValues[1];
+				sAbsolutePath+="/"+sAux;
+			} else {
+				sAbsolutePath+="/"+arrValues[0];
+				
+			}
 			sAbsolutePath+="/endproxy";
-			sAbsolutePath+="/"+self.github.repository;
-			sAbsolutePath+="/"+self.github.commitId;
-			sAbsolutePath+="/"+self.prependPath;
+			if (self.github!=""){
+				sAbsolutePath+="/"+self.github.repository;
+				sAbsolutePath+="/"+self.github.commitId;
+			}
+			if (self.prependPath!=""){
+				sAbsolutePath+="/"+self.prependPath;
+			}
 			sAbsolutePath+="/"+sRelPathAux;
 			log(sAbsolutePath);
 //			https://cantabrana.no-ip.org/jfreports/proxy/cdn.rawgit.com/endproxy/rcgcoder/jiraformalreports/fde50453/common/
@@ -319,7 +328,7 @@ class RCGZippedApp{
 				sUrl+="/"+self.github.commitId;
 			}
 		}
-		if (self.prependPath){
+		if (self.prependPath!=""){
 			sUrl+="/"+self.prependPath;
 		}
 		if (sRelativePath!=""){

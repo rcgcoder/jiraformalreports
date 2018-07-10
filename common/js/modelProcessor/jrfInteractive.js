@@ -50,7 +50,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		var sContent=self.getInteractiveContent(elemId);
 		otherWindow= actWindow.open("", '_blank');
 //    		otherWindow= window.open("", 'newWindow','width=300,height=250');
-		otherWindow.close();
+//		otherWindow.close();
 		var jqBody=$(otherWindow.document.body);
 		jqBody.html(sContent.saToString());
 		var arrFiles=[	//"ts/demo.ts",
@@ -63,16 +63,16 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			jqBody.append('<link rel="stylesheet" type="text/css" href="'+sAbsPath+'">');
 
 		});
-    	var auxHtml=jqBody.html();
+ /*   	var auxHtml=jqBody.html();
     	var sUrl=System.webapp.composeUrl("proxy:html/empty.html");
     	sUrl="";
     	otherWindow= actWindow.open(sUrl, '_blank');
 		$(otherWindow.document).ready(function(){
 			log("execute de document ready");
     		otherWindow.document.body.innerHTML = auxHtml;
-    		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;
+ */   		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;
     		otherWindow.System=System;
-		});
+//		});
 	}
 }
 

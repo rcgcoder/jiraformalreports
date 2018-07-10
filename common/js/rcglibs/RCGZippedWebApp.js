@@ -304,7 +304,7 @@ class RCGZippedApp{
 			sAbsolutePath+="/endproxy";
 			sAbsolutePath+="/"+self.github.repository;
 			sAbsolutePath+="/"+self.github.commitId;
-			sAbsolutePath+="/"+prependPath;
+			sAbsolutePath+="/"+self.prependPath;
 			sAbsolutePath+="/"+sRelPathAux;
 			log(sAbsolutePath);
 //			https://cantabrana.no-ip.org/jfreports/proxy/cdn.rawgit.com/endproxy/rcgcoder/jiraformalreports/fde50453/common/

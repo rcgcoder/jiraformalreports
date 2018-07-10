@@ -61,12 +61,15 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
         	});
         	System.webapp.addStep("Showing the window",function(arrContents){
         		var auxHtml=otherWindow.document.body.innerHTML;
-//        		otherWindow= window.open("", 'newWindow','width=300,height=250');
-        		otherWindow= actWindow.open("", '_blank');
-        		otherWindow.document.body.innerHTML = auxHtml;
-        		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;
-        		otherWindow.System=System;
-        		System.webapp.getTaskManager().windows.push(otherWindow);
+        		var sUrl=System.webapp.composeUrl("proxy:html/empty.html");
+        		otherWindow= window.open(sUrl, '_blank');
+        		$(otherWindow.document).ready(function(){
+        			log("execute de document ready");
+            		otherWindow.document.body.innerHTML = auxHtml;
+            		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;
+            		otherWindow.System=System;
+            		self.getTaskManager().windows.push(otherWindow);
+        		});
         	    System.webapp.continueTask();
         	});
     		System.webapp.continueTask();

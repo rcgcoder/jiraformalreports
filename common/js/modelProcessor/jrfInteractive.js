@@ -44,11 +44,10 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		}
 		log("Opening new Window. base window has focus:"+window.document.hasFocus()+ " active window has focus:"+actWindow.document.hasFocus());
 		debugger;
-		window.focus();
 		var otherWindow; 
         System.webapp.addStep("Open New Window", function(){
     		var sContent=self.getInteractiveContent(elemId);
-    		otherWindow= window.open("", '_blank');
+    		otherWindow= actWindow.open("", '_blank');
 //    		otherWindow= window.open("", 'newWindow','width=300,height=250');
     		otherWindow.close();
     		otherWindow.document.body.innerHTML = sContent.saToString();
@@ -63,7 +62,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
         	System.webapp.addStep("Showing the window",function(arrContents){
         		var auxHtml=otherWindow.document.body.innerHTML;
 //        		otherWindow= window.open("", 'newWindow','width=300,height=250');
-        		otherWindow= window.open("", '_blank');
+        		otherWindow= actWindow.open("", '_blank');
         		otherWindow.document.body.innerHTML = auxHtml;
         		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;
         		otherWindow.System=System;

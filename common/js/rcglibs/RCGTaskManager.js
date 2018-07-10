@@ -497,7 +497,7 @@ class RCGTaskManager{
 			}
 		}
 		if (iWindows!=self.windows.length){
-			log("Windows in array before:"+self.windows.length);
+			log("Windows in array before:"+iWindows);
 			log("Windows in array after:"+self.windows.length);
 		}
 		self.windows.forEach(function(auxWindow){

@@ -285,7 +285,7 @@ var jrfReport=class jrfReport {
 					var arrLinkTypes=self.config.useIssueLinkTypes;
 					if (isDefined(arrLinkTypes)){
 						arrLinkTypes.forEach(function(linkType){
-							var hsLinks=issue.getLinkTypeById(linkType);
+							var hsLinks=issue.getLinkTypeById(linkType.key);
 							if (hsLinks!=""){
 								hsLinks.issues.walk(function(auxIssue,iDeep,linkedIssueKey){
 									linkedIssue=self.allIssues.getById(linkedIssueKey);

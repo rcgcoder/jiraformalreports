@@ -293,6 +293,13 @@ class RCGZippedApp{
 		if (sRelativePath.substr(0,4).toLowerCase()=="http"){
 			return sRelativePath;
 		}
+		if (sRelativePath.substr(0,"proxy:".length).toLowerCase()=="proxy:"){
+			var sRelPathAux=sRelativePath.substr("proxy:".length,sRelativePath.length);
+			debugger;
+			var sAbsolutePath=self.rootPath;
+			var proxyPath=self.proxyPath;
+		}
+//			https://cantabrana.no-ip.org/jfreports/proxy/cdn.rawgit.com/endproxy/rcgcoder/jiraformalreports/fde50453/common/
 		var sUrl=self.rootPath; 
 		if (self.github!=""){
 			if (self.github!=""){

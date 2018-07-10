@@ -774,7 +774,8 @@ var jrfReport=class jrfReport {
 			tm.asyncTaskCallsBlock=0;
 			tm.asyncTaskCallsMaxDeep=0;
 	        var jqResult=$("#ReportResult");
-	        jqResult.html(sModelProcessedResult.saToString());
+	        sModelProcessedResult=sModelProcessedResult.saToString();
+	        jqResult.html(sModelProcessedResult);
 			loggerFactory.getLogger().enabled=true;
 			self.result=sModelProcessedResult;
 			if (self.config.NewWindow){
@@ -788,7 +789,7 @@ var jrfReport=class jrfReport {
 	    				"aui/css/aui.css",
 	                    "aui/css/aui-experimental.css",
 	    			 ]; //test
-	                self.loadRemoteFiles(arrFiles,undefined,otherWindow);
+	                System.webapp.loadRemoteFiles(arrFiles,undefined,otherWindow);
 	        	});
 	        	self.addStep("Showing the window",function(arrContents){
 	        		var auxHtml=otherWindow.document.body.innerHTML;

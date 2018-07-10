@@ -486,8 +486,9 @@ class RCGTaskManager{
 	}
 	getActiveWindow(){
 		var self=this;
-		for (var i=0;i<self.windows.lenght;i++){
-			if (self.windows[i].document.hasFocus()) return self.windows[i];
+		for (var i=0;i<self.windows.length;i++){
+			var winFocus=self.windows[i].document.hasFocus();
+			if (winFocus) return self.windows[i];
 		}
 		return self.windows[0];
 	}

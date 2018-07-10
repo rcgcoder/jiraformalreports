@@ -812,31 +812,7 @@ var jrfReport=class jrfReport {
 	}
 	openResultInNewTab(){
 		var self=this;
-		var otherWindow= window.open("", '_blank');
-//		otherWindow= window.open("", 'newWindow','width=300,height=250');
-		otherWindow.close();
-		otherWindow.document.body.innerHTML = self.result;
-		self.addStep("Including CSS files",function(){
-			var arrFiles=[	//"ts/demo.ts",
-				"css/RCGTaskManager.css",
-				"aui/css/aui.css",
-                "aui/css/aui-experimental.css",
-			 ]; //test
-            System.webapp.loadRemoteFiles(arrFiles,undefined,otherWindow);
-    	});
-    	self.addStep("Showing the window",function(arrContents){
-    		var auxHtml=otherWindow.document.body.innerHTML;
-//    		otherWindow= window.open("", 'newWindow','width=300,height=250');
-    		var sUrl=System.webapp.composeUrl("proxy:html/empty.html");
-    		otherWindow= window.open(sUrl, '_blank');
-    		self.getTaskManager().windows.push(otherWindow);
-    		$(otherWindow.document).ready(function(){
-    			log("execute de document ready");
-        		otherWindow.document.body.innerHTML = auxHtml;
-        		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;
-        		otherWindow.System=System;
-    		});
-    	    self.continueTask();
-    	});
+		var newId=modelInteractiveFunctions.addInteractiveContent(self.result);
+		modelInteractiveFunctions.openNewWindow(newId);
 	}
 }

@@ -383,8 +383,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				var sHtml=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
 				//self.indTokenHtmlBuffer=self.pushHtmlBuffer();
 				//sHtml=self.replaceVars(sHtml);
-				var newId=(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
-				modelInteractiveFunctions.addInteractiveContent(newId,sHtml);
+				var newId=modelInteractiveFunctions.addInteractiveContent(sHtml);
 				var theEvent="modelInteractiveFunctions.elemShowHide('"+newId+"',window)";
 				var withDiv=true;
 				if (self.visibility=="openWindow"){

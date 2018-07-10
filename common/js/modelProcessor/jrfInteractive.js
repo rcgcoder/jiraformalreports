@@ -3,8 +3,9 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		var self=this;
 		self.interactiveContents=newHashMap();
 	}
-	addInteractiveContent(idContent,content){
+	addInteractiveContent(content){
 		var self=this;
+		var newId=(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
 		self.interactiveContents.add(idContent,content);
 	}
 	getInteractiveContent(idContent){
@@ -45,41 +46,32 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		log("Opening new Window. base window has focus:"+window.document.hasFocus()+ " active window has focus:"+actWindow.document.hasFocus());
 		debugger;
 		var otherWindow; 
-        System.webapp.addStep("Open New Window", function(){
-    		var sContent=self.getInteractiveContent(elemId);
-    		otherWindow= actWindow.open("", '_blank');
+		var sContent=self.getInteractiveContent(elemId);
+		otherWindow= actWindow.open("", '_blank');
 //    		otherWindow= window.open("", 'newWindow','width=300,height=250');
-    		otherWindow.close();
-    		otherWindow.document.body.innerHTML = sContent.saToString();
-    		System.webapp.addStep("Including CSS files",function(){
-    			var arrFiles=[	//"ts/demo.ts",
-    				"css/RCGTaskManager.css",
-    				"aui/css/aui.css",
-                    "aui/css/aui-experimental.css",
-    			 ]; //test
-                System.webapp.loadRemoteFiles(arrFiles,undefined,otherWindow);
-        	});
-        	System.webapp.addStep("Showing the window",function(arrContents){
-        		var auxHtml=otherWindow.document.body.innerHTML;
-        		var sUrl=System.webapp.composeUrl("proxy:html/empty.html");
-        		var newWID=(new Date()).getTime()+"__"+Math.round(Math.random()*1000);
-        		otherWindow= actWindow.open(sUrl, newWID);
-        		$(otherWindow.document).ready(function(){
-        			log("execute de document ready");
-            		otherWindow.document.body.innerHTML = auxHtml;
-            		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;
-            		otherWindow.System=System;
-            		self.getTaskManager().windows.push(otherWindow);
-            		var windAux=otherWindow;
-            		while (isDefined(windAux.parent)){
-            			windAux=windAux.parent;
-            		}
-            		windAux.setFocus();
-        		});
-        	    System.webapp.continueTask();
-        	});
-    		System.webapp.continueTask();
-        },0,1,undefined,undefined,undefined,"GLOBAL_RUN");
+		otherWindow.close();
+		var jqBody=$(otherWindow.document.body);
+		jqBody.html(sContent.saToString());
+		var arrFiles=[	//"ts/demo.ts",
+			"css/RCGTaskManager.css",
+			"aui/css/aui.css",
+            "aui/css/aui-experimental.css",
+            ]; //test
+		arrFiles.forEach(function (sRelativePath){
+			var sAbsPath=System.webapp.composeUrl(sRelativePath);
+			jqBody.append('<link rel="stylesheet" type="text/css" href="'+sAbsPath+'">');
+
+		});
+    	var auxHtml=jqBody.html();
+    	var sUrl=System.webapp.composeUrl("proxy:html/empty.html");
+    	otherWindow= actWindow.open(sUrl, '_blank');
+		$(otherWindow.document).ready(function(){
+			log("execute de document ready");
+    		otherWindow.document.body.innerHTML = auxHtml;
+    		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;
+    		otherWindow.System=System;
+    		self.getTaskManager().windows.push(otherWindow);
+		});
 	}
 }
 

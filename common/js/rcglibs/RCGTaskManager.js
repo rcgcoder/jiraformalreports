@@ -214,8 +214,8 @@ class RCGTask{
 				actWindow.setTimeout(fncApply,theTaskManager.asyncTaskCallsDelay);
 			} else {
 				bIsAsync=true;
-				//setTimeout(fncApply);
-				actWindow.requestAnimationFrame(fncApply);
+				actWindow.setTimeout(fncApply);
+				//actWindow.requestAnimationFrame(fncApply);
 			}
 		}
 		self.changeStatus();

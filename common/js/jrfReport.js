@@ -829,12 +829,12 @@ var jrfReport=class jrfReport {
 //    		otherWindow= window.open("", 'newWindow','width=300,height=250');
     		var sUrl=System.webapp.composeUrl("proxy:html/empty.html");
     		otherWindow= window.open(sUrl, '_blank');
+    		self.getTaskManager().windows.push(otherWindow);
     		$(otherWindow.document).ready(function(){
     			log("execute de document ready");
         		otherWindow.document.body.innerHTML = auxHtml;
         		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;
         		otherWindow.System=System;
-        		self.getTaskManager().windows.push(otherWindow);
     		});
     	    self.continueTask();
     	});

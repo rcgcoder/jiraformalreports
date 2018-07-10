@@ -797,6 +797,7 @@ var jrfReport=class jrfReport {
 	        		otherWindow= window.open("", '_blank');
 	        		otherWindow.document.body.innerHTML = auxHtml;
 	        		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;
+	        		otherWindow.System=System;
 	        	    self.continueTask();
 	        	});
 			}

@@ -22,22 +22,23 @@ var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition al
 			self.continueTask();
 		});
 		// processing total elements
-		var iLoopCounter=0;
+		var iLoopIndex=0;
+		var iLoopElemsCount=self.loopElements.length();
 		var bCancelLoop=false;
 		self.loopElements.walk(function(loopElem){
-			self.addStep("Processing the Loop item:"+iLoopCounter,function(){
+			self.addStep("Processing the Loop item:"+iLoopIndex + " of " +iLoopElemsCount,function(){
 				if (!bCancelLoop) {
 					if (self.innerVarName!=""){
 						self.initVariables(self.innerVarName,undefined,loopElem);
 					}
-					var bContinue=self.loopItemProcess(loopElem);
+					var bContinue=self.loopItemProcess(loopElem,iLoopIndex,iLoopElemsCount);
 					if (isDefined(bContinue)&&(!bContinue)){
 						bCancelLoop=true;;
 					}
 				}
 				self.continueTask();
 			});
-			iLoopCounter++;
+			iLoopIndex++;
 		});
 		self.addStep("Ending processing the Loop",function(){
 			self.loopEnd();

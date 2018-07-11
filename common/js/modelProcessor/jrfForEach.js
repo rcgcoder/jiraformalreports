@@ -25,7 +25,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 //		var nItem=0;
 		self.rootBackUp=self.model.processingRoot;
 	}
-	loopItemProcess(eachElem){
+	loopItemProcess(eachElem,index,loopLength){
 		var self=this;
 //		debugger;
 		var newParent;
@@ -72,29 +72,35 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					self.continueTask();
 				});
 			}
-			self.continueTask();
-		});
-		self.addStep("Continue...",function(){
-			if (self.bAllRoots) self.model.processingRoot=self.rootBackUp;
-			self.addPostHtml();
-			self.addHtml("<!-- END INNER LOOP OF ITEM "+ (self.processedItemNumber) + " IN FOREACH JRF TOKEN -->");
-			if ((self.subType=="row")
-					//&&(bLastShowed)
-					//&&((processedItemNumber+processedItemJumped)<(elemsInForEach.length()))
-				 ){
-				self.addHtml("<!-- ADDED BY FOREACH ROW ==>>  --></td></tr><tr><td><!-- <== ADDED BY FOREACH ROW -->");
-			} else if ((self.subType=="subrow")
-//						&&(bLastShowed)
-//						&&((processedItemNumber+processedItemJumped)<(elemsInForEach.length()))
-					){
-				self.addHtml("<!-- ADDED BY FOREACH SUBROW ==>>  --></td></tr><tr><td><!-- <== ADDED BY FOREACH SUBROW -->");
-			}
+			self.addStep("Continue...",function(){
+				if (self.bAllRoots) self.model.processingRoot=self.rootBackUp;
+				
+				self.addHtml("<!-- END INNER LOOP OF ITEM "+ (self.processedItemNumber) + " IN FOREACH JRF TOKEN -->");
+				if ((self.subType=="row")
+						//&&(bLastShowed)
+						//&&((processedItemNumber+processedItemJumped)<(elemsInForEach.length()))
+					 ){
+					if (index<(loopLength-1)){
+						// intermediate row
+						self.addHtml("<!-- ADDED BY FOREACH ROW ==>>  --></td></tr><tr><td><!-- <== ADDED BY FOREACH ROW -->");
+					}
+				} else if ((self.subType=="subrow")
+//							&&(bLastShowed)
+//							&&((processedItemNumber+processedItemJumped)<(elemsInForEach.length()))
+						){
+					if (index<(loopLength-1)){
+						// intermediate row
+						self.addHtml("<!-- ADDED BY FOREACH SUBROW ==>>  --></td></tr><tr><td><!-- <== ADDED BY FOREACH SUBROW -->");
+					}
+				}
+				self.continueTask();
+			});
 			self.continueTask();
 		});
 		return true; //allways continue
 	}
 	loopEnd(){
-		
+		self.addPostHtml();
 	}
 	
 }

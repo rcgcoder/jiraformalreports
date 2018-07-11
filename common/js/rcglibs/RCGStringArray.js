@@ -212,7 +212,7 @@ Array.prototype.saFindPos=function(sTargetText,bFromEnd){
 	var selfLength=self.length;
 	if (bReverse){
 		iBlock=self.length-1;
-		while (iBlock>=0){
+		while ((iBlock>=0)&&(iPos<0)){
 			while ((auxCad.length<tgtLength)&&(iBlock>=0)){
 				auxCad=self[iBlock]+auxCad;
 				iBlock--;
@@ -226,7 +226,7 @@ Array.prototype.saFindPos=function(sTargetText,bFromEnd){
 		}
 	} else {
 		iBlock=0;
-		while (iBlock<selfLength){
+		while ((iBlock<selfLength)&&(iPos<0)){
 			while ((auxCad.length<tgtLength)&&(iBlock<selfLength)){
 				auxCad=auxCad+self[iBlock];
 				iBlock++;

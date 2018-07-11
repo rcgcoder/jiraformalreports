@@ -288,7 +288,6 @@ var jrfReport=class jrfReport {
 					var issue=self.allIssues.getById(key);
 					if (issue==""){
 						issue=self.loadJSONIssue(jsonIssue);
-						self.allIssues.add(key,issue);
 					}
 					var arrPendingKeys=issue.getPendingLinkedIssueKeys(arrLinkTypes,self.allIssues);
 					arrPendingKeys.forEach(function(issueKey){

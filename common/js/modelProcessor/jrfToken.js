@@ -537,6 +537,10 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					var sValAdjusted=replaceAll(sValAux+"",",",".");
 					sValAdjusted=sValAdjusted.saToString();
 					sValAux=normalFormatNumber(sValAdjusted) + " %"; 
+				} else if (sFormat=="date"){
+					var sValAdjusted=sValAux.saToString().trim();
+					var dtAux=new Date(sValAdjusted);
+					sValAux=formatDate(dtAux,4); 
 				} else if (sFormat.toLowerCase().indexOf("fixed")>=0) {
 					var sValue=self.replaceVars(sValAux);
 					sValue=sValue.saRemoveInnerHtmlTags();

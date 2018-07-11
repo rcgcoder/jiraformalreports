@@ -352,8 +352,12 @@ class factoryObjects{
 						return this["getListParents"+vNameAttribute]().length();
 					}
 				});
-				this.functions.add("add"+vNameAttribute,function(objVal){
-					this["list_"+vNameAttribute+"s"].add(objVal.id,objVal);
+				this.functions.add("add"+vNameAttribute,function(objVal,key){
+					var auxId=key;
+					if (typeof key==="undefined"){
+						auxId=objVal.id;
+					}
+					this["list_"+vNameAttribute+"s"].add(auxId,objVal);
 					if (typeof objVal["listParents_"+vNameAttribute] === "undefined"){ //name de la factory
 						objVal["listParents_"+vNameAttribute]=newHashMap();
 						objVal["getListParents"+vNameAttribute]=function(){

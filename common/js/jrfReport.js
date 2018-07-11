@@ -49,6 +49,15 @@ var jrfReport=class jrfReport {
 		}
 		return false;
 	}
+	loadJSONIssue(jsonIssue){
+		var self=this;
+		var oIssue=self.allIssues.new(jsonIssue.fields.summary,jsonIssue.key);
+		oIssue.setJiraObject(jsonIssue);
+		oIssue.updateInfo();
+		oIssue.setKey(jsonIssue.key);
+		return oIssue;
+	}
+
 	execute(bDontReloadFiles){
 		var self=this;
 		loggerFactory.getLogger().enabled=self.config.logDebug;
@@ -170,13 +179,6 @@ var jrfReport=class jrfReport {
         // change de "fieldValue" method
 			self.continueTask();
 		});
-		var fncProcessIssue=function(jsonIssue){
-			var oIssue=self.allIssues.new(jsonIssue.fields.summary,jsonIssue.key);
-			oIssue.setJiraObject(jsonIssue);
-			oIssue.updateInfo();
-			oIssue.setKey(jsonIssue.key);
-			return oIssue;
-		}
 		// first launch all issue retrieve ...
 		self.addStep("Getting All Issues in the Scope.... ",function(){
 			if (self.isReusingIssueList()){
@@ -249,113 +251,78 @@ var jrfReport=class jrfReport {
 			if (self.bFinishReport) return self.continueTask();
 			//self.treeIssues=newHashMap();
 			var bAlerted=false;
-			self.rootIssues.walk(function(value,iProf,key){
-				log("Root Issue: "+key);
-				var issue=self.allIssues.getById(key);
-				if (issue==""){
-//					debugger;
-					if (!bAlerted) {
-						alert("The issue:"+key+" is not in the scope... al roots have to be in the scope");
-					} else {
-						log("The issue:"+key+" is not in the scope... al roots have to be in the scope");
-					}
-				} 
-			})
-			self.rootProjects.walk(function(value,iProf,key){
-				log("Root Project: "+key);
-			})
-			log("Resume Root issues:"+self.rootIssues.length() +
-			    "		Root project:"+self.rootProjects.length()+
-			    "		Issues in scope:"+ self.allIssues.list.length());
-			self.continueTask();
-		});
-		self.addStep("Getting root elements dependent not in scope.... ",function(){
-			if (isDefined(self.config.getIssuesNotInScope)&&(!self.config.getIssuesNotInScope)){
-				return self.continueTask();
-			}
-			debugger;
-			var nPending=0;
-			var nRetrieved=0;
+			var arrLinkTypes=self.config.useIssueLinkTypes;
 			var arrKeyGroups=[];
 			var keyGroup=[];
-			arrKeyGroups.push(keyGroup);
-			var hsLinks;
-			var linkedIssue;
-			var fncGetLinksOfIssue=function(issue){
-				var arrLinkTypes=self.config.useIssueLinkTypes;
-				if (isDefined(arrLinkTypes)){
-					arrLinkTypes.forEach(function(linkType){
-						var hsLinks=issue.getLinkTypeById(linkType.key);
-						if (hsLinks!=""){
-							hsLinks.issues.walk(function(auxIssue,iDeep,linkedIssueKey){
-								linkedIssue=self.allIssues.getById(linkedIssueKey);
-								if (linkedIssue==""){
-									if (keyGroup.length>10){
-										keyGroup=[];
-										arrKeyGroups.push(keyGroup);
-									}
-									keyGroup.push(linkedIssueKey);
-									nPending++;
-								}
+			var maxItemsInGroup=10;
+			var fncAddToGroup=function(issueKey){
+				if (keyGroup.length>maxItemsInGroup){
+					keyGroup=[];
+					arrKeyGroups.push(keyGroup);
+				}
+				keyGroup.push(issueKey);
+			}
+			var nPending=0;
+			var nRetrieved=0;
+			self.addStep("Getting root base issues",function(){
+				var fncRetrieveGroup=self.createManagedCallback(function(group){
+					if (group.length>0){
+						var sIssues="";
+						group.forEach(function (key){
+							sIssues+=((sIssues!=""?",":"")+key);
+						});
+						if (sIssues!="") {
+							var theJQL="id in ("+sIssues+")";
+							self.addStep("Retrieving issues of Group ["+sIssues+"]",function(){
+								self.jira.processJQLIssues(
+										theJQL,
+										fncExtractPendingKeys);
 							});
 						}
-					});
-				}
-			}
-			var fncGetLinkedIssues=function(hsIssueList){
-				hsIssueList.walk(function (jsonIssue,iDeep,key){
-					log("Root Issue: "+key);
-					var issue=self.allIssues.getById(key);
-					fncGetLinksOfIssue(issue);
-				});
-			}
-			var fncRetrieveGroup=self.createManagedCallback(function(group){
-				if (group.length>0){
-					var sIssues="";
-					group.forEach(function (key){
-						sIssues+=((sIssues!=""?",":"")+key);
-					});
-					if (sIssues!="") {
-						var theJQL="id in ("+sIssues+")";
-						self.addStep("Retrieving issues of Group ["+sIssues+"]",function(){
-							self.jira.processJQLIssues(
-									theJQL,
-									fncFetchIssues);
-						});
 					}
-				}
-			});
-			var fncFetchIssues=self.createManagedCallback(function(jsonIssue){
-				var key=jsonIssue.key;
-				if (!issuesAdded.exists(key)){
-					var issue=fncProcessIssue(jsonIssue);
-					fncGetLinksOfIssue(issue);
-					self.rootIssues.add(key,jsonIssue);
+				});
+				var fncExtractPendingKeys=self.createManagedCallback(function(jsonIssue){
 					nRetrieved++;
-					if (arrKeyGroups.length>1){
+					var key=jsonIssue.key;
+					log("Issue ("+nRetrieved+"): "+key+" Pending:"+nPending);
+					var issue=self.allIssues.getById(key);
+					if (issue==""){
+						issue=self.loadJSONIssue(value);
+						self.allIssues.add(key,issue);
+					}
+					var arrPendingKeys=issue.getPendingLinkedIssueKeys(arrLinkTypes,self.allIssues);
+					arrPendingKeys.forEach(function(issueKey){
+						fncAddToGroup(linkedIssueKey);
+						nPending++;
+					});
+					while(arrKeyGroups.length>1){
 						var group=arrKeyGroups.shift();
 						fncRetrieveGroup(group);
-					} else {
-						if (arrKeyGroups.length==1){
-							var group=arrKeyGroups[0];
-							if ((nRetrieved+group.length)==nPending){
+					} 
+					if (arrKeyGroups.length==1){
+						var group=arrKeyGroups[0];
+						if (((nRetrieved+group.length)==nPending) && (group.length>0)){
 								arrKeyGroups=[];
 								keyGroup=[];
 								arrKeyGroups.push(keyGroup);
 								fncRetrieveGroup(group);
-							}
 						}
 					}
-				};
+				});
+				nPending=self.rootIssues.length();
+				self.rootIssues.walk(fncExtractPendingKeys);
+				self.continueTask();
 			});
-		
-			fncGetLinkedIssues(self.rootIssues);
-			arrKeyGroups.forEach(function(group){
-				fncRetrieveGroup(group);
+
+			self.addStep("Finish loading Root Issues",function(){
+				self.rootProjects.walk(function(value,iProf,key){
+					log("Root Project: "+key);
+				})
+				log("Resume Root issues:"+self.rootIssues.length() +
+				    "		Root project:"+self.rootProjects.length()+
+				    "		Issues in scope:"+ self.allIssues.list.length());
+				self.continueTask();
 			});
-			arrKeyGroups=[];
-			keyGroup=[];
-			arrKeyGroups.push(keyGroup);
 			self.continueTask();
 		});
 			
@@ -364,24 +331,13 @@ var jrfReport=class jrfReport {
 			if (self.isReusingIssueList()){
 				return self.continueTask();
 			}
-			self.rootIssues.walk(function(value,iProf,key){
+			self.rootIssues.walk(function(issue,iProf,key){
 				log("Root Issue: "+key);
-				var issue=self.allIssues.getById(key);
-				if (issue==""){
-//					debugger;
-					if (!bAlerted) {
-						alert("The issue:"+key+" is not in scope.... ommiting");
-						bAlerted=true;
-					} else {
-						log("The issue:"+key+" is not in scope.... ommiting");
-					}
-				} else {
-					if (!issuesAdded.exists(key)){
-						issuesAdded.add(key,issue);
-					}
-					if (!self.childs.exists(key)){
-						self.childs.add(key,issue);
-					}
+				if (!issuesAdded.exists(key)){
+					issuesAdded.add(key,issue);
+				}
+				if (!self.childs.exists(key)){
+					self.childs.add(key,issue);
 				}
 			});
 			var formulaChild=self.config.billingHierarchy;
@@ -403,7 +359,7 @@ var jrfReport=class jrfReport {
 						bIsChild=fncIsChild(issueChild,issueParent);
 					} catch(err){
 						//debugger;
-						log ("somthing es not good in child formula:"+sFncFormulaChild);
+						log ("somthing is not good in child formula:"+sFncFormulaChild);
 						log ("using child: "+JSON.stringify(issueChild));
 						log ("using parent: "+JSON.stringify(issueParent));
 						bIsChild=false;
@@ -448,8 +404,9 @@ var jrfReport=class jrfReport {
 					self.addStep("Getting childs for " + auxKey + "....",function(){
 					//walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
 						log("Task Manager Status:"+self.getRunningTask().parent.actStep + " " + self.getRunningTask().parent.steps.length);
-						self.allIssues.list.walkAsync("Getting childs for "+auxKey
-													,function(issueChild){
+						issueParent.getLinkedIssueKeys().walkAsync("Getting childs for "+auxKey
+													,function(issueChildKey){
+														var issueChild=self.allIssues.getById(issueChildKey);
 														fncProcessChild(issueChild,issueParent)
 													 }
 													,self.createManagedCallback(function(){

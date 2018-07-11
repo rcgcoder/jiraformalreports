@@ -17,6 +17,7 @@ function newIssueFactory(report){
 			[{name:"Child",description:"SubIssues for Billing",type:"object"},
 			 {name:"AdvanceChild",description:"SubIssues for advance calculation",type:"object"},
 			 {name:"LinkType",description:"Relation Types",type:"object"},
+			 {name:"LinkedIssueKey",description:"Keys of Issues Relationed With the issue",type:"object"},
 			 {name:"Comment", description:"Comments in Issue",type:"object"},
 			 {name:"AccumulatorsCache",description:"Cache the values of accumulator calls",type:"object"},
 			 {name:"PrecomputedProperty",description:"List of properties with values of hidden childs computed by a user with permissions",type:"object"},
@@ -363,6 +364,31 @@ function newIssueFactory(report){
 		sUrl=arrUrlParts[0]+"browse/"+sKey;
 		var sHtml='<a target="_blank" href='+sUrl+'>'+sKey+'</a>';
 		return sHtml;
+	});
+	dynObj.functions.add("getPendingLinkedIssueKeys",function(arrLinkTypes,issuesCache){
+		var self=this;
+		var arrResult=[];
+		if (isDefined(arrLinkTypes)){
+			arrLinkTypes.forEach(function(linkType){
+				var hsLinks=self.getLinkTypeById(linkType.key);
+				if (hsLinks!=""){
+					hsLinks.issues.walk(function(auxIssue,iDeep,linkedIssueKey){
+						self.addLinkedIssueKey(linkedIssueKey,linkedIssueKey);
+						linkedIssue=issuesCache.getById(linkedIssueKey);
+						if (linkedIssue==""){
+							arrResult.push(linkedIssueKey);
+							/*if (keyGroup.length>10){
+								keyGroup=[];
+								arrKeyGroups.push(keyGroup);
+							}
+							keyGroup.push(linkedIssueKey);
+							nPending++;*/
+						}
+					});
+				}
+			});
+		}
+		return arrResult;
 	});
 	
 	dynObj.functions.add("addLinkValue",function(sLinkTypeId,value){

@@ -39,7 +39,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					self.model.htmlStack.saReplace(iPosTR,3,'<tr id="caseta_'+self.counter+'_'+iDeep+'" ');
 				}
 				var iVisiParam=visiParam;
-				while ((self.counter==0)&&(iVisiParam<0)){
+				while ((iDeep<=1)&&(self.counter==0)&&(iVisiParam<0)){
 					var iPosTR=self.model.htmlStack.saFindPos("<tr",true,iPosTR);
 					if (iPosTR>=0){
 						self.model.htmlStack.saReplace(iPosTR,3,'<tr id="ROOT_caseta'+iVisiParam+'"');

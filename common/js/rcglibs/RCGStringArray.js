@@ -279,7 +279,7 @@ Array.prototype.saReplace=function(iPosStart,nLetters,sTextToSet){
 			if (nRest==0){
 				var sRest=sAux.substring(nEnd,sAux.length);
 				sResult+=sRest;
-				self[iblock]=sResult;
+				self[iBlock]=sResult;
 				return;
 			}
 			iBlock++;

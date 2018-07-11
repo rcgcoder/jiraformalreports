@@ -349,11 +349,7 @@ var jrfReport=class jrfReport {
 				var fncIsAdvPart=Function("child","parent",sFncFormulaAdv);
 				
 	//			var treeIssues=issuesAdded.toArray([{doFieldName:"self",resultFieldName:"issue"}]);
-				var fncProcessChild=self.createManagedCallback(function(objStep,issueParent){
-					var issueChild=objStep.value;
-					if (issueChild.id=="PDP-36"){
-						log("Testing "+issueChild.id);
-					}
+				var fncProcessChild=self.createManagedCallback(function(issueChild,issueParent){
 					var bIsChild=false;
 					try{
 						bIsChild=fncIsChild(issueChild,issueParent);

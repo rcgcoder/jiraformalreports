@@ -187,6 +187,8 @@ var jrfReport=class jrfReport {
 			}
 			if (self.config.jqlScope.jql!=""){
 				self.jira.processJQLIssues(self.config.jqlScope.jql,function(jsonIssue){self.loadJSONIssue(jsonIssue)});
+			} else {
+				self.continueTask();
 			}
 		});	
 		self.addStep("Asigning all Issues in the scope.... ",function(){

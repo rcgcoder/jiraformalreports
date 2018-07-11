@@ -330,8 +330,9 @@ var jrfReport=class jrfReport {
 			if (self.isReusingIssueList()){
 				return self.continueTask();
 			}
-			self.rootIssues.walk(function(issue,iProf,key){
+			self.rootIssues.walk(function(jsonIssue,iProf,key){
 				log("Root Issue: "+key);
+				var issue=self.allIssues.getById(key);
 				if (!issuesAdded.exists(key)){
 					issuesAdded.add(key,issue);
 				}

@@ -13,7 +13,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		var self=this;
 		return self.interactiveContents.getValue(idContent);
 	}
-	elemShowHide(elemId,actWindow){
+	elemShowHide(elemId,actWindow,btnId,capHidden,capShowed){
 		var self=this;
 		var theWindow=window;
 		if (isDefined(actWindow)){
@@ -33,6 +33,13 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			jqElem.hide();
 			elem.visible=false;
 		}
+		var jqBtn=$(theWindow.document.body).find('#'+btnId);
+		if (elem.visible){
+			jqBtn.prop('value', capShowed);
+		} else {
+			jqBtn.prop('value', capHidden);
+		}
+		
 	}
 	openNewWindow(elemId){
 		var self=this;

@@ -372,25 +372,42 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 //			self.addHtml(sAux);
 		}
 		if (self.visibility!=""){
-			if (self.visibility=="hidden"){
+			var visiType=self.visibility.split("=");
+			var visiParams="";
+			if (visiType.length>1){
+				visiParams=visiType[1].split(":");
+			}
+			visiType=visiType[0].toLowerCase();
+			if (visiType=="hidden"){
 				var sHtml=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
 				//self.indTokenHtmlBuffer=self.pushHtmlBuffer();
 				//sHtml=self.replaceVars(sHtml);
 				self.addHtml("");
-			} else if ((self.visibility=="hideable")
-					||(self.visibility=="openWindow")){
+			} else if ((visiType=="hideable")
+					||(visiType=="openwindow")){
 				//debugger;
 				var sHtml=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
 				//self.indTokenHtmlBuffer=self.pushHtmlBuffer();
 				//sHtml=self.replaceVars(sHtml);
 				var newId=modelInteractiveFunctions.addInteractiveContent(sHtml);
-				var theEvent="modelInteractiveFunctions.elemShowHide('"+newId+"',window)";
+				var capHidden="Show";
+				var capShowed="Hide";
+				if (visiParams!=""){
+					capHidden=visiParams[0];
+					if (visiParams.length==2){
+						capShowed=visiParams[1];
+					} else {
+						capShowed="Hide "+capHidden;
+					}
+				}
+				var btnId="btn"+(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
+				var theEvent="modelInteractiveFunctions.elemShowHide('"+newId+"',window,'"+btnId+"','"+capHidden+"','"+capShowed+"')";
 				var withDiv=true;
 				if (self.visibility=="openWindow"){
-					theEvent="modelInteractiveFunctions.openNewWindow('"+newId+"',window)";
+					theEvent="modelInteractiveFunctions.openNewWindow('"+newId+"',window,'"+btnId+"','"+capHidden+"','"+capShowed+"')";
 					withDiv=false;
 				} 
-				self.addHtml('<button onclick="'+theEvent+'">Show/Hide</button>');
+				self.addHtml('<button id="'+btnId+'" onclick="'+theEvent+'">'+capHidden+'</button>');
 				if (withDiv){
 					self.addHtml('<div id="'+newId+'" style="display: none"></div>');
 				}

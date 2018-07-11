@@ -291,7 +291,7 @@ var jrfReport=class jrfReport {
 					}
 					var arrPendingKeys=issue.getPendingLinkedIssueKeys(arrLinkTypes,self.allIssues);
 					arrPendingKeys.forEach(function(issueKey){
-						fncAddToGroup(linkedIssueKey);
+						fncAddToGroup(issueKey);
 						nPending++;
 					});
 					while(arrKeyGroups.length>1){

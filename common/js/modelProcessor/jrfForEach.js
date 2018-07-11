@@ -91,7 +91,8 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				if (self.bAllRoots) self.model.processingRoot=self.rootBackUp;
 				
 				self.addHtml("<!-- END INNER LOOP OF ITEM "+ (self.processedItemNumber) + " IN FOREACH JRF TOKEN -->");
-				if ((self.subType=="row")
+				self.addPostHtml();
+/*				if ((self.subType=="row")
 						//&&(bLastShowed)
 						//&&((processedItemNumber+processedItemJumped)<(elemsInForEach.length()))
 					 ){
@@ -110,7 +111,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				} else {
 					self.addPostHtml();
 				}
-				self.continueTask();
+*/				self.continueTask();
 			});
 			self.continueTask();
 		});

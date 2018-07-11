@@ -262,9 +262,15 @@ var jrfReport=class jrfReport {
 				}
 				keyGroup.push(issueKey);
 			}
+			var hsEpics=newHashMap();
 			var nPending=0;
 			var nRetrieved=0;
 			self.addStep("Getting root base issues",function(){
+				var fncProcessEpicChilds=self.createManagedCallback(function(jsonIssue){
+					nPending++;
+					fncExtractPendingKeys(jsonIssue);
+				});
+				
 				var fncRetrieveGroup=self.createManagedCallback(function(group){
 					if (group.length>0){
 						var sIssues="";
@@ -294,13 +300,26 @@ var jrfReport=class jrfReport {
 						fncAddToGroup(issueKey);
 						nPending++;
 					});
+					var iType=issue.fieldValue("issuetype");
+					if (iType=="Hito"){
+						if (!hsEpics.exists(key)){
+							hsEpics.add(key,key);
+							var theJQL='"Epic Link" = '+key;
+							self.addStep("Retrieving issues of epic ["+key+"]",function(){
+								self.jira.processJQLIssues(
+										theJQL,
+										fncProcessEpicChilds
+										);
+							});
+						}
+					}
 					while(arrKeyGroups.length>1){
 						var group=arrKeyGroups.shift();
 						fncRetrieveGroup(group);
 					} 
 					if (arrKeyGroups.length==1){
 						var group=arrKeyGroups[0];
-						if (((nRetrieved+group.length)==nPending) && (group.length>0)){
+						if (((nRetrieved+group.length)==nPending)&&(group.length>0)){
 								arrKeyGroups=[];
 								keyGroup=[];
 								arrKeyGroups.push(keyGroup);

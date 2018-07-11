@@ -17,7 +17,7 @@ function newIssueFactory(report){
 			[{name:"Child",description:"SubIssues for Billing",type:"object"},
 			 {name:"AdvanceChild",description:"SubIssues for advance calculation",type:"object"},
 			 {name:"LinkType",description:"Relation Types",type:"object"},
-			 {name:"LinkedIssueKey",description:"Keys of Issues Relationed With the issue",type:"object"},
+			 {name:"LinkedIssueKey",description:"Keys of Issues Relationed With the issue",type:"string"},
 			 {name:"Comment", description:"Comments in Issue",type:"object"},
 			 {name:"AccumulatorsCache",description:"Cache the values of accumulator calls",type:"object"},
 			 {name:"PrecomputedProperty",description:"List of properties with values of hidden childs computed by a user with permissions",type:"object"},
@@ -373,7 +373,7 @@ function newIssueFactory(report){
 				var hsLinks=self.getLinkTypeById(linkType.key);
 				if (hsLinks!=""){
 					hsLinks.issues.walk(function(auxIssue,iDeep,linkedIssueKey){
-						self.addLinkedIssueKey({id:linkedIssueKey,value:linkedIssueKey});
+						self.addLinkedIssueKey(linkedIssueKey,linkedIssueKey);
 						linkedIssue=issuesCache.getById(linkedIssueKey);
 						if (linkedIssue==""){
 							arrResult.push(linkedIssueKey);

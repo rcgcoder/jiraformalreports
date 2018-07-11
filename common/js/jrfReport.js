@@ -312,6 +312,14 @@ var jrfReport=class jrfReport {
 										);
 							});
 						}
+					} else {
+						var eLink=issue.fieldValue("Epic Link");
+						if (isDefined(eLink)&&(eLink!="")){
+							var issueParent=self.allIssues.getById(eLink);
+							if (issueParent!=""){
+								issueParent.addLinkedIssueKey(eLink,eLink);
+							}
+						}
 					}
 					while(arrKeyGroups.length>1){
 						var group=arrKeyGroups.shift();

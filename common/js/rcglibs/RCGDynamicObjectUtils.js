@@ -364,9 +364,11 @@ class factoryObjects{
 							return this["listParents_"+vNameAttribute];
 						}
 					}
-					var nodAux=objVal["getListParents"+vNameAttribute]().find(this.id);
-					if (nodAux==""){
-						objVal["getListParents"+vNameAttribute]().add(this.id,this);
+					if (typeof objVal=="object"){
+						var nodAux=objVal["getListParents"+vNameAttribute]().find(this.id);
+						if (nodAux==""){
+							objVal["getListParents"+vNameAttribute]().add(this.id,this);
+						}
 					}
 					return objVal;
 				});

@@ -55,6 +55,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
     	otherWindow.System=System;
 	}
 	saveToFile(elemId){
+		var self=this;
 		var sContent=self.getInteractiveContent(elemId).saToString();
 		saveDataToFile(sContent, "savedFile.html", "text/html");
 	}

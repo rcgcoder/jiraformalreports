@@ -92,6 +92,8 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 						// intermediate row
 						self.addHtml("<!-- ADDED BY FOREACH SUBROW ==>>  --></td></tr><tr><td><!-- <== ADDED BY FOREACH SUBROW -->");
 					}
+				} else {
+					self.addPostHtml();
 				}
 				self.continueTask();
 			});
@@ -101,7 +103,6 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 	}
 	loopEnd(){
 //		var self=this;
-//		self.addPostHtml();
 	}
 	
 }

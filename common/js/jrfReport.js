@@ -261,6 +261,7 @@ var jrfReport=class jrfReport {
 					arrKeyGroups.push(keyGroup);
 				}
 				keyGroup.push(issueKey);
+				nPending++;
 			}
 			var hsEpics=newHashMap();
 			var nPending=0;
@@ -298,7 +299,6 @@ var jrfReport=class jrfReport {
 					var arrPendingKeys=issue.getPendingLinkedIssueKeys(arrLinkTypes,self.allIssues);
 					arrPendingKeys.forEach(function(issueKey){
 						fncAddToGroup(issueKey);
-						nPending++;
 					});
 					var iType=issue.fieldValue("issuetype");
 					if (iType=="Hito"){
@@ -318,6 +318,8 @@ var jrfReport=class jrfReport {
 							var issueParent=self.allIssues.getById(eLink);
 							if (issueParent!=""){
 								issueParent.addLinkedIssueKey(eLink,eLink);
+							} else {
+								fncAddToGroup(eLink);
 							}
 						}
 					}

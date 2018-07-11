@@ -185,7 +185,9 @@ var jrfReport=class jrfReport {
 			if (self.isReusingIssueList()){
 				return self.continueTask();
 			}
-			self.jira.processJQLIssues(self.config.jqlScope.jql,function(jsonIssue){self.loadJSONIssue(jsonIssue)});
+			if (self.config.jqlScope.jql!=""){
+				self.jira.processJQLIssues(self.config.jqlScope.jql,function(jsonIssue){self.loadJSONIssue(jsonIssue)});
+			}
 		});	
 		self.addStep("Asigning all Issues in the scope.... ",function(){
 			log("All issues in Report:"+ self.allIssues.list.length()+ " issues");

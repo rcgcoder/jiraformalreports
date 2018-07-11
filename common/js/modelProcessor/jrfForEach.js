@@ -20,14 +20,8 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		self.bAllRoots=false;
 		self.rootBackup;
 	}
-	loopStart(){
+	updateTrId(){
 		var self=this;
-//		debugger;
-		if (self.reportElem==self.model.report){
-			self.bAllRoots=true;
-		}
-//		var nItem=0;
-		self.rootBackUp=self.model.processingRoot;
 		var visibility=self.visibility.saToString().trim();
 		if ((visibility!="")&&(self.subType=="subrow")||(self.subType=="row")){
 			var arrVisiParts=visibility.split("=");
@@ -58,6 +52,15 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 			}
 			self.bIsRecursiving=true;
 		}
+	}
+	loopStart(){
+		var self=this;
+//		debugger;
+		if (self.reportElem==self.model.report){
+			self.bAllRoots=true;
+		}
+//		var nItem=0;
+		self.rootBackUp=self.model.processingRoot;
 	}
 	loopItemProcess(eachElem,index,loopLength){
 		var self=this;
@@ -95,6 +98,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					}
 					self.variables.pushVar("RecursiveDeep",iDeep);
 					self.variables.pushVar("parentRecursiveElement",self.reportElem);
+					self.updateTrId();
 					self.reportElem=eachElem;
 					self.encode();
 				});

@@ -287,7 +287,7 @@ var jrfReport=class jrfReport {
 					log("Issue ("+nRetrieved+"): "+key+" Pending:"+nPending);
 					var issue=self.allIssues.getById(key);
 					if (issue==""){
-						issue=self.loadJSONIssue(value);
+						issue=self.loadJSONIssue(jsonIssue);
 						self.allIssues.add(key,issue);
 					}
 					var arrPendingKeys=issue.getPendingLinkedIssueKeys(arrLinkTypes,self.allIssues);

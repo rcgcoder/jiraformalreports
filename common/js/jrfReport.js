@@ -317,7 +317,7 @@ var jrfReport=class jrfReport {
 						if (isDefined(eLink)&&(eLink!="")){
 							var issueParent=self.allIssues.getById(eLink);
 							if (issueParent!=""){
-								issueParent.addLinkedIssueKey(eLink,eLink);
+								issueParent.addLinkedIssueKey(key,key);
 							} else {
 								fncAddToGroup(eLink);
 							}

@@ -218,7 +218,7 @@ Array.prototype.saFindPos=function(sTargetText,bFromEnd,initPos){
 		while (iBlock<selfLength){
 			sAux=self[iBlock];
 			accumLetters+=sAux.length;
-			if (accumLetters<iPosStart){
+			if (accumLetters<initPos){
 				iBlock++;
 			} else {
 				accumLetters-=sAux.length;

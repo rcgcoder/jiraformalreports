@@ -405,8 +405,8 @@ var jrfReport=class jrfReport {
 					//walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
 						log("Task Manager Status:"+self.getRunningTask().parent.actStep + " " + self.getRunningTask().parent.steps.length);
 						issueParent.getLinkedIssueKeys().walkAsync("Getting childs for "+auxKey
-													,function(issueChildKey){
-														var issueChild=self.allIssues.getById(issueChildKey);
+													,function(issueChildStep){
+														var issueChild=self.allIssues.getById(issueChildStep.actualNode.key);
 														fncProcessChild(issueChild,issueParent)
 													 }
 													,self.createManagedCallback(function(){

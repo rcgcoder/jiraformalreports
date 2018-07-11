@@ -28,10 +28,15 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		}
 //		var nItem=0;
 		self.rootBackUp=self.model.processingRoot;
-		if ((self.subType=="subrow")||(self.subType=="row")){
-
-			var visibility=self.visibility;
-			if (visibility.trim().toLowerCase()=="dynamic"){
+		var visibility=visibility.saToString().trim();
+		if ((visibility!="")&&(self.subType=="subrow")||(self.subType=="row")){
+			var arrVisiParts=visibility.split("=");
+			var visiType=arrVisiParts[0];
+			var visiParam="";
+			if (arrVisiParts.length>1){
+				visiParam=parseInt(arrVisiParts[1]);
+			}
+			if (visiType.trim().toLowerCase()=="dynamic"){
 				debugger;
 				//..... first add an id to previous <tr> 
 				var iDeep=self.variables.getVar("RecursiveDeep");
@@ -39,10 +44,14 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				if (iPosTR>=0){
 					self.model.htmlStack.saReplace(iPosTR,3,'<tr id="caseta_'+self.counter+'_'+iDeep+'" ');
 				}
-				if (self.counter==0){
+				var iVisiParam=visiParam;
+				while ((self.counter==0)&&(iVisiParam<0)){
 					var iPosTR=self.model.htmlStack.saFindPos("<tr",true,iPosTR);
 					if (iPosTR>=0){
-						self.model.htmlStack.saReplace(iPosTR,3,'<tr id="ROOT_caseta"');
+						self.model.htmlStack.saReplace(iPosTR,3,'<tr id="ROOT_caseta'+iVisiParam+'"');
+						iVisiParam++;
+					} else {
+						iVisiParam=0;
 					}
 				}
 				self.counter++;

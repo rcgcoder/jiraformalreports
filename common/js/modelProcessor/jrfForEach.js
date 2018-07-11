@@ -12,6 +12,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		}
 */		
 		//debugger;
+		self.counter=0;
 		self.parentId="";
 		self.childId="";
 		self.bIsRecursiving=false;
@@ -34,7 +35,8 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				//..... first add an id to previous <tr> 
 				var iPosTR=self.model.htmlStack.saFindPos("<tr",true);
 				if (iPosTR>=0){
-					self.model.htmlStack.saReplace(iPosTR,3,'<tr id="caseta" ');
+					self.model.htmlStack.saReplace(iPosTR,3,'<tr id="caseta_'+self.counter+'" ');
+					self.counter++;
 				}
 			}
 			self.isRecursiving=true;

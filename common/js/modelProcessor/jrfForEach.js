@@ -37,6 +37,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					self.model.htmlStack.saReplace(iPosTR,3,'<tr id="caseta" ');
 				}
 			}
+			self.isRecursiving=true;
 		}
 	}
 	loopItemProcess(eachElem,index,loopLength){
@@ -76,7 +77,6 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					self.variables.pushVar("RecursiveDeep",iDeep);
 					self.variables.pushVar("parentRecursiveElement",self.reportElem);
 					self.reportElem=eachElem;
-					self.isRecursiving=true;
 					self.encode();
 				});
 				self.addStep("Encoding recursive childs...",function(){

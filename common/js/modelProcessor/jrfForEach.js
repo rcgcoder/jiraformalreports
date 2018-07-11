@@ -28,14 +28,16 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		}
 //		var nItem=0;
 		self.rootBackUp=self.model.processingRoot;
-		if ((!self.bIsRecursiving)&&((self.subType=="subrow")||(self.subType=="row"))){
+		if ((self.subType=="subrow")||(self.subType=="row")){
+
 			var visibility=self.visibility;
 			if (visibility.trim().toLowerCase()=="dynamic"){
 				debugger;
 				//..... first add an id to previous <tr> 
+				var iDeep=self.variables.getVar("RecursiveDeep");
 				var iPosTR=self.model.htmlStack.saFindPos("<tr",true);
 				if (iPosTR>=0){
-					self.model.htmlStack.saReplace(iPosTR,3,'<tr id="caseta_'+self.counter+'" ');
+					self.model.htmlStack.saReplace(iPosTR,3,'<tr id="caseta_'+self.counter+'_'+iDeep+''" ');
 					self.counter++;
 				}
 			}
@@ -93,8 +95,8 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				if (self.bAllRoots) self.model.processingRoot=self.rootBackUp;
 				
 				self.addHtml("<!-- END INNER LOOP OF ITEM "+ (self.processedItemNumber) + " IN FOREACH JRF TOKEN -->");
-				self.addPostHtml();
-/*				if ((self.subType=="row")
+//				self.addPostHtml();
+				if ((self.subType=="row")
 						//&&(bLastShowed)
 						//&&((processedItemNumber+processedItemJumped)<(elemsInForEach.length()))
 					 ){
@@ -113,7 +115,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				} else {
 					self.addPostHtml();
 				}
-*/				self.continueTask();
+				self.continueTask();
 			});
 			self.continueTask();
 		});

@@ -271,7 +271,7 @@ Array.prototype.saReplace=function(iPosStart,nLetters,sTextToSet){
 			var nStart=diff;
 			var nEnd=nStart+nLetters;
 			var nRest=nEnd-sAux.length;
-			if (nEnd<0){
+			if (nRest<0){
 				nRest=0;
 			}
 			sResult=sAux.substring(0,nStart);

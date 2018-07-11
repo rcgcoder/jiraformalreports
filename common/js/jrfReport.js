@@ -18,6 +18,7 @@ var jrfReport=class jrfReport {
 		self.jira=System.webapp.getJira();
 		self.confluence=System.webapp.getConfluence();
 		self.result="";
+		self.resultContentId="";
 		self.updatePrecomputedAccumulators=false;
 		self.adjustAccumItemFunctions=newHashMap();
 		self.reportDateTime=new Date();
@@ -750,7 +751,20 @@ var jrfReport=class jrfReport {
 	}
 	openResultInNewTab(){
 		var self=this;
-		var newId=modelInteractiveFunctions.addInteractiveContent(self.result);
+		var newId=self.resultContentId;
+		if (newId==""){
+			newId=modelInteractiveFunctions.addInteractiveContent(self.result);
+			self.resultContentId=newId;
+		}
 		modelInteractiveFunctions.openNewWindow(newId);
+	}
+	saveResultToFile(){
+		var self=this;
+		var newId=self.resultContentId;
+		if (newId==""){
+			newId=modelInteractiveFunctions.addInteractiveContent(self.result);
+			self.resultContentId=newId;
+		}
+		modelInteractiveFunctions.saveToFile(newId);
 	}
 }

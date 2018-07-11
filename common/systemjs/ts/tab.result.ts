@@ -15,4 +15,8 @@ export class TabResult {
  //       },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
 
     }
+    doSaveToFile(){
+        var report=System.webapp.theReport;
+        report.saveResultToFile();
+    }
 }

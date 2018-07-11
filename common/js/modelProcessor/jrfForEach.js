@@ -97,7 +97,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					 ){
 					if (index<(loopLength-1)){
 						// intermediate row
-						self.addHtml("<!-- ADDED BY FOREACH ROW ==>>  --></td></tr><tr><td><!-- <== ADDED BY FOREACH ROW -->");
+						self.addHtml('<!-- ADDED BY FOREACH ROW ==>>  --></td></tr><tr id="palacio"><td><!-- <== ADDED BY FOREACH ROW -->');
 					}
 				} else if ((self.subType=="subrow")
 //							&&(bLastShowed)
@@ -105,7 +105,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 						){
 					if (index<(loopLength-1)){
 						// intermediate row
-						self.addHtml("<!-- ADDED BY FOREACH SUBROW ==>>  --></td></tr><tr><td><!-- <== ADDED BY FOREACH SUBROW -->");
+						self.addHtml('<!-- ADDED BY FOREACH SUBROW ==>>  --></td></tr><tr id="palacete"><td><!-- <== ADDED BY FOREACH SUBROW -->');
 					}
 				} else {
 					self.addPostHtml();

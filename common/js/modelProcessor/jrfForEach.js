@@ -28,7 +28,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		}
 //		var nItem=0;
 		self.rootBackUp=self.model.processingRoot;
-		var visibility=visibility.saToString().trim();
+		var visibility=self.visibility.saToString().trim();
 		if ((visibility!="")&&(self.subType=="subrow")||(self.subType=="row")){
 			var arrVisiParts=visibility.split("=");
 			var visiType=arrVisiParts[0];

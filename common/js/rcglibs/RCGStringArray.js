@@ -199,7 +199,105 @@ Array.prototype.saIndexOf= function (sTag,bFindLast,bDivide,startPos,startSubArr
 						};
 		return objResult;
 	};
-	
+Array.prototype.saFindPos=function(sTargetText,bFromEnd){
+	var bReverse=bFromEnd;
+	if (isUndefined(bReverse)){
+		bReverse=false;
+	}
+	var self=this;
+	var iPos=-1;
+	var iBlock;
+	var auxCad="";
+	var tgtLength=sTargetText.length;
+	var selfLength=self.length;
+	if (bReverse){
+		iBlock=self.length-1;
+		while (iBlock>=0){
+			while ((auxCad.length<tgtLength)&&(iBlock>=0)){
+				auxCad=self[iBlock]+auxCad;
+				iBlock--;
+			}
+			if (auxCad.length<tgtLength) return -1;
+			iPos=auxCad.indexOf(sTargetText);
+			if (iPos<0){
+				auxCad=auxCad.substring(0,tgtLength-1);
+				iBlock--;
+			} 
+		}
+	} else {
+		iBlock=0;
+		while (iBlock<selfLength){
+			while ((auxCad.length<tgtLength)&&(iBlock<selfLength)){
+				auxCad=auxCad+self[iBlock];
+				iBlock++;
+			}
+			if (auxCad.length<tgtLength) return -1;
+			iPos=auxCad.indexOf(sTargetText);
+			if (iPos<0){
+				auxCad=auxCad.substring(auxCad.length-(tgtLength-1),auxCad.length);
+				iBlock++;
+			} 
+		}
+	}
+	// iBlock is the string element that contains the target text .... or a first part of it
+	var nLetters=0;
+	for (var i=0;i<iBlock;i++){
+		nLetters+=self[i].length;
+	}
+	iPos+=nLetters;
+	return iPos;
+}
+Array.prototype.saReplace=function(iPosStart,nLetters,sTextToSet){
+	// first goto to the block....
+	var self=this;
+	var iPos=0;
+	var sReplace="";
+	if (isDefined(sTextToSet)){
+		sReplace=sTextToSet;
+	}
+	var iBlock=0;
+	var sAux="";
+	var accumLetters=0;
+	var selfLength=self.length;
+	while (iBlock<selfLength){
+		sAux=self[iBlock];
+		accumLetters+=sAux.length;
+		if (accumLetters<iPosStart){
+			iBlock++;
+		} else {
+			accumLetters-=sAux.length;
+			var diff=iPosStart-accumLetters;
+			var sResult;
+			var nStart=accumLetters+diff;
+			var nEnd=nStart+nLetters;
+			var nRest=nEnd-sAux.length;
+			if (nEnd<0){
+				nRest=0;
+			}
+			sResult=sAux.substring(0,nStart);
+			sResult+=sReplace;
+			if (nRest==0){
+				var sRest=sAux.substring(nEnd,sAux.length);
+				sResult+=sRest;
+				self[iblock]=sResult;
+				return;
+			}
+			iBlock++;
+			while (nEnd>0){
+				sAux=self[iBlock];
+				if (sAux.length<nEnd){
+					self[iBlock]="";
+					nEnd-=sAux.length;
+					iblock++;
+				} else {
+					sAux=sAux.substring(nEnd,sAux.length);
+					self[iBlock]=sAux;
+					return;
+				}
+			}
+		}
+	}
+}
 Array.prototype.saRemoveInnerHtmlTags= function (sReplaceText){
 	var arrStrings=this;
 	var replaceBy="";
@@ -229,6 +327,13 @@ String.prototype.saTrim= function (){
 String.prototype.saAppend= function (sText){
 	return this+sText;
 };
+String.prototype.saFindPos= function (sText,bFromEnd){
+	return [this].saFindPos(sText,bFromEnd);
+};
+String.prototype.saReplace= function (iPos,nLetters,sReplacement){
+	return [this].saReplace(iPos,nLetters,sReplacement);
+};
+
 String.prototype.saIndexOf= function (sTag,bFindLast,bDivide,startPos,startSubArrayPos){
 	return [this].saIndexOf(sTag,bFindLast,bDivide,startPos,startSubArrayPos);
 }

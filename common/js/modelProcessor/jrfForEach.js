@@ -24,6 +24,14 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		}
 //		var nItem=0;
 		self.rootBackUp=self.model.processingRoot;
+		var visibility=self.visibility;
+		if (visibility.trim().toLowerCase()=="dynamic"){
+			//..... first add an id to previous <tr> 
+			var iPosTR=self.model.htmlStack.saFindPos("<tr",true);
+			if (iPosTR>=0){
+				self.model.htmlStack.saReplace(iPosTR,3,'<tr id="caseta" ');
+			}
+		}
 	}
 	loopItemProcess(eachElem,index,loopLength){
 		var self=this;

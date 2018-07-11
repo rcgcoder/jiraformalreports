@@ -17,8 +17,10 @@ var jrfDebug=class jrfDebug extends jrfNoop{//this kind of definition allows to 
 	endApplyToken(){
 		var self=this;
 		super.endApplyToken();
-		if ((self.logAfterBreak!="")&&(self.logAfterBreak.toLowerCase()=="false")){
-			if (!self.antLogStatus)loggerFactory.getLogger().enabled=false;
+		if ((self.logAfterBreak!="")&&(self.logAfterBreak.toLowerCase()=="true")){
+			loggerFactory.getLogger().enabled=true;
+		} else {
+			loggerFactory.getLogger().enabled=self.antLogStatus;
 		}
 	}
 

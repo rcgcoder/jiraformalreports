@@ -356,8 +356,8 @@ var jrfReport=class jrfReport {
 					} catch(err){
 						//debugger;
 						log ("somthing is not good in child formula:"+sFncFormulaChild);
-						log ("using child: "+JSON.stringify(issueChild));
-						log ("using parent: "+JSON.stringify(issueParent));
+						log ("using child: "+issueChild.getKey());
+						log ("using parent: "+issueParent.getKey());
 						bIsChild=false;
 					}
 					if (bIsChild){

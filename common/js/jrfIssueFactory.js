@@ -373,7 +373,9 @@ function newIssueFactory(report){
 				var hsLinks=self.getLinkTypeById(linkType.key);
 				if (hsLinks!=""){
 					hsLinks.issues.walk(function(auxIssue,iDeep,linkedIssueKey){
-						self.addLinkedIssueKey(linkedIssueKey,linkedIssueKey);
+						if (!self.getLinkedIssueKeys().exists(linkedIssueKey)){
+							self.addLinkedIssueKey(linkedIssueKey,linkedIssueKey);
+						}
 						linkedIssue=issuesCache.getById(linkedIssueKey);
 						if (linkedIssue==""){
 							arrResult.push(linkedIssueKey);

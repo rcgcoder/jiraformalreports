@@ -288,7 +288,7 @@ Array.prototype.saReplace=function(iPosStart,nLetters,sTextToSet){
 				if (sAux.length<nEnd){
 					self[iBlock]="";
 					nEnd-=sAux.length;
-					iblock++;
+					iBlock++;
 				} else {
 					sAux=sAux.substring(nEnd,sAux.length);
 					self[iBlock]=sAux;

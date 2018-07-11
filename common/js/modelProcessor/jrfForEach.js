@@ -38,8 +38,14 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				var iPosTR=self.model.htmlStack.saFindPos("<tr",true);
 				if (iPosTR>=0){
 					self.model.htmlStack.saReplace(iPosTR,3,'<tr id="caseta_'+self.counter+'_'+iDeep+'" ');
-					self.counter++;
 				}
+				if (self.counter==0){
+					var iPosTR=self.model.htmlStack.saFindPos("<tr",true,iPosTR);
+					if (iPosTR>=0){
+						self.model.htmlStack.saReplace(iPosTR,3,'<tr id="ROOT_caseta"');
+					}
+				}
+				self.counter++;
 			}
 			self.bIsRecursiving=true;
 		}

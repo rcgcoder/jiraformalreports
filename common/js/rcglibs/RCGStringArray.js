@@ -199,19 +199,45 @@ Array.prototype.saIndexOf= function (sTag,bFindLast,bDivide,startPos,startSubArr
 						};
 		return objResult;
 	};
-Array.prototype.saFindPos=function(sTargetText,bFromEnd){
+Array.prototype.saFindPos=function(sTargetText,bFromEnd,initPos){
+	var self=this;
 	var bReverse=bFromEnd;
+	if (self.length==0) return -1;
 	if (isUndefined(bReverse)){
 		bReverse=false;
 	}
-	var self=this;
-	var iPos=-1;
-	var iBlock;
-	var auxCad="";
 	var tgtLength=sTargetText.length;
 	var selfLength=self.length;
+	var iBlock;
+	fncGotoInitPos=function(){
+		if (isUndefined(initPos)) return "";
+		var accumLetters=0;
+		var sAux;
+		var iBlockAnt=iBlock;
+		iBlock=0;
+		while (iBlock<selfLength){
+			sAux=self[iBlock];
+			accumLetters+=sAux.length;
+			if (accumLetters<iPosStart){
+				iBlock++;
+			} else {
+				accumLetters-=sAux.length;
+				var nStart=initPos-accumLetters;
+				if (bReverse){
+					return sResult=sAux.substring(0,nStart);
+				} else {
+					return sResult=sAux.substring(nStart);
+				}
+			}
+		}
+		iBlock=iBlockAnt;
+		return "";
+	}
+	var iPos=-1;
+	var auxCad="";
 	if (bReverse){
 		iBlock=self.length-1;
+		auxCad=fncGotoInitPos();
 		while ((iBlock>=0)&&(iPos<0)){
 			while ((auxCad.length<tgtLength)&&(iBlock>=0)){
 				auxCad=self[iBlock]+auxCad;
@@ -226,6 +252,7 @@ Array.prototype.saFindPos=function(sTargetText,bFromEnd){
 		}
 	} else {
 		iBlock=0;
+		auxCad=fncGotoInitPos();
 		while ((iBlock<selfLength)&&(iPos<0)){
 			while ((auxCad.length<tgtLength)&&(iBlock<selfLength)){
 				auxCad=auxCad+self[iBlock];

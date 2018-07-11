@@ -253,6 +253,7 @@ var jrfReport=class jrfReport {
 			var arrLinkTypes=self.config.useIssueLinkTypes;
 			var arrKeyGroups=[];
 			var keyGroup=[];
+			arrKeyGroups.push(keyGroup);
 			var maxItemsInGroup=10;
 			var fncAddToGroup=function(issueKey){
 				if (keyGroup.length>maxItemsInGroup){

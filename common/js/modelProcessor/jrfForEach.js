@@ -7,10 +7,10 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		self.autoAddPostHtml=false;
 		self.subType=self.getAttrVal("subtype");
 		
-		if (self.subType.toLowerCase()=="row"){
+/*		if (self.subType.toLowerCase()=="row"){
 			self.postProcess="false";
 		}
-		
+*/		
 		//debugger;
 		self.recursive=self.getAttrVal("recursive");
 		self.bAllRoots=false;
@@ -100,7 +100,8 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		return true; //allways continue
 	}
 	loopEnd(){
-		self.addPostHtml();
+//		var self=this;
+//		self.addPostHtml();
 	}
 	
 }

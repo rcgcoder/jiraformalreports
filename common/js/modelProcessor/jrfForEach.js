@@ -5,13 +5,16 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 //		debugger;
 		var self=this;
 		self.autoAddPostHtml=false;
-		self.subType=self.getAttrVal("subtype");
+		self.subType=self.getAttrVal("subtype").trim().toLowerCase();
 		
 /*		if (self.subType.toLowerCase()=="row"){
 			self.postProcess="false";
 		}
 */		
 		//debugger;
+		self.parentId="";
+		self.childId="";
+		self.bIsRecursiving=false;
 		self.recursive=self.getAttrVal("recursive");
 		self.bAllRoots=false;
 		self.rootBackup;
@@ -24,13 +27,15 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		}
 //		var nItem=0;
 		self.rootBackUp=self.model.processingRoot;
-		var visibility=self.visibility;
-		if (visibility.trim().toLowerCase()=="dynamic"){
-			debugger;
-			//..... first add an id to previous <tr> 
-			var iPosTR=self.model.htmlStack.saFindPos("<tr",true);
-			if (iPosTR>=0){
-				self.model.htmlStack.saReplace(iPosTR,3,'<tr id="caseta" ');
+		if ((!self.bIsRecursiving)&&((self.subType=="subrow")||(self.subType=="row"))){
+			var visibility=self.visibility;
+			if (visibility.trim().toLowerCase()=="dynamic"){
+				debugger;
+				//..... first add an id to previous <tr> 
+				var iPosTR=self.model.htmlStack.saFindPos("<tr",true);
+				if (iPosTR>=0){
+					self.model.htmlStack.saReplace(iPosTR,3,'<tr id="caseta" ');
+				}
 			}
 		}
 	}
@@ -71,6 +76,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					self.variables.pushVar("RecursiveDeep",iDeep);
 					self.variables.pushVar("parentRecursiveElement",self.reportElem);
 					self.reportElem=eachElem;
+					self.isRecursiving=true;
 					self.encode();
 				});
 				self.addStep("Encoding recursive childs...",function(){

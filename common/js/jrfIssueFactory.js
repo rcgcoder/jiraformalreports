@@ -75,7 +75,8 @@ function newIssueFactory(report){
 		if (Array.isArray(inOtherParams)){
 			otherParams=newHashMap();
 			inOtherParams.forEach(function(param){
-				otherParams.add(param.key,param.value);
+				if (isString(param.value)||isArray(param.value))param.value=param.value.saToString().trim();
+				otherParams.add(param.key.trim(),param.value);
 			});
 		} else {
 			otherParams=inOtherParams;

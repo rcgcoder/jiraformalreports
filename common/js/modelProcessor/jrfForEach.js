@@ -39,7 +39,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					self.counter++;
 				}
 			}
-			self.isRecursiving=true;
+			self.bIsRecursiving=true;
 		}
 	}
 	loopItemProcess(eachElem,index,loopLength){

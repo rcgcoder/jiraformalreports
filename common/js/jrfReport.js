@@ -375,8 +375,8 @@ var jrfReport=class jrfReport {
 					} catch(err){
 						//debugger;
 						log ("somthing es not good in advance formula:"+sFncFormulaAdv);
-						log ("using child: "+JSON.stringify(issueChild));
-						log ("using parent: "+JSON.stringify(issueParent));
+						log ("using child: "+issueChild.getKey());
+						log ("using parent: "+issueParent.getKey());
 						bIsAdvPart=false;
 					}
 					if (bIsAdvPart){

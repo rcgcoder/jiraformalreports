@@ -23,7 +23,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 	updateTrId(){
 		var self=this;
 		var visibility=self.visibility.saToString().trim();
-		if ((visibility!="")&&(self.subType=="subrow")||(self.subType=="row")){
+		if ((self.bIsRecursiving)&&(visibility!="")&&(self.subType=="subrow")||(self.subType=="row")){
 			var arrVisiParts=visibility.split("=");
 			var visiType=arrVisiParts[0];
 			var visiParam="";

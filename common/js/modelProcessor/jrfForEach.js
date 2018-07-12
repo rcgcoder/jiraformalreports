@@ -20,44 +20,41 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		self.bAllRoots=false;
 		self.rootBackup;
 	}
-	updateTrId(){
+	updateTrId(atLevel,sAppendText){
+		var nLevel=0;
+		if (isDefined(atLevel)) nLevel=atLevel;
 		var self=this;
 		var visibility=self.visibility.saToString().trim();
-		if ((visibility!="")&&(self.subType=="subrow")||(self.subType=="row")){
+		var visiType="";
+		var visiParam="";
+		var iVisiParam=0;
+		if (visibility!=""){
+			visiType=arrVisiParts[0].trim().toLowerCase();
 			var arrVisiParts=visibility.split("=");
-			var visiType=arrVisiParts[0];
-			var visiParam="";
 			if (arrVisiParts.length>1){
 				visiParam=parseInt(arrVisiParts[1]);
 			}
-			if (visiType.trim().toLowerCase()=="dynamic"){
-				debugger;
-				//..... first add an id to previous <tr> 
-				var iDeep=self.variables.getVar("RecursiveDeep");
-				var parentElem=self.variables.getVar("parentRecursiveElement");
-				var sParentKey="No hay";
-				if (parentElem!=""){
-					sParentKey="Si hay";
-				}
-				var iPosTR=self.model.htmlStack.saFindPos("<tr",true);
-				if (iPosTR>=0){
-					self.model.htmlStack.saReplace(iPosTR,3,'<tr id="caseta_'+self.counter+'_'+iDeep+'_'+sParentKey+'" ');
-				}
-				self.counter++;
-				if (!self.bIsRecursiving){
-					var iVisiParam=visiParam;
-					while ((iDeep<=1)&&(iVisiParam<0)){
-						var iPosTR=self.model.htmlStack.saFindPos("<tr",true,iPosTR);
-						if (iPosTR>=0){
-							self.model.htmlStack.saReplace(iPosTR,3,'<tr id="ROOT_caseta_visi'+iVisiParam+'_'+sParentKey+'"');
-							iVisiParam++;
-						} else {
-							iVisiParam=0;
-						}
-					}
-					self.bIsRecursiving=true;
-				}
+			
+		}
+		if ((visiType=="dynamic")&&(self.subType=="subrow")||(self.subType=="row")){
+			debugger;
+			//..... first add an id to previous <tr> 
+			var iDeep=self.variables.getVar("RecursiveDeep");
+			var parentElem=self.variables.getVar("parentRecursiveElement");
+			var sParentKey="No hay";
+			if (parentElem!=""){
+				sParentKey="Si hay";
 			}
+			var iPosCounter=atLevel;
+			var iPosTR=self.model.htmlStack.saFindPos("<tr",true);
+			while ((iPosCounter<0)&&(iPosTR>=0)){
+				iPosCounter++;
+				iPosTR=self.model.htmlStack.saFindPos("<tr",true,iPosTR);
+			}
+			if (iPosTR>=0){
+				self.model.htmlStack.saReplace(iPosTR,3,'<tr id="trId_'+sAppendText+'_counter--'+self.counter+'_deep--'+iDeep+'_parentkey--'+sParentKey+'" ');
+			}
+			self.counter++;
 		}
 	}
 	loopStart(){
@@ -68,7 +65,6 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		}
 //		var nItem=0;
 		self.rootBackUp=self.model.processingRoot;
-		self.updateTrId();
 	}
 	loopItemProcess(eachElem,index,loopLength){
 		var self=this;
@@ -107,6 +103,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					self.variables.pushVar("RecursiveDeep",iDeep);
 					self.variables.pushVar("parentRecursiveElement",self.reportElem);
 					self.reportElem=eachElem;
+					self.updateTrId(0,"PreRecurEncode");
 					self.encode();
 				});
 				self.addStep("Encoding recursive childs...",function(){

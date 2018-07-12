@@ -313,7 +313,7 @@ Array.prototype.saReplace=function(iPosStart,nLetters,sTextToSet){
 	while (iBlock<selfLength){
 		sAux=self[iBlock];
 		if (iPosAux-sAux.length>0){
-			iPosAux-sAux.length;
+			iPosAux-=sAux.length;
 			iBlock++;
 		} else {
 			var sResult=sAux.substring(0,iPosAux);

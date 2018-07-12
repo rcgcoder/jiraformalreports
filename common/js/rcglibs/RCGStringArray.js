@@ -260,10 +260,17 @@ Array.prototype.saFindPos=function(sTargetText,bFromEnd,initPos){
 			iPos=auxCad.indexOf(sTargetText);
 			if (iPos<0){
 				auxCad=auxCad.substring(0,tgtLength-1);
-			} 
+			} else {
+				var iPosAux=iPos;
+				iBlock++;
+				while (self[iBlock].length<iPosAux){
+					iPosAux-=self[iBlock].length;
+					iBlock++;
+				}
+				iPos=iPosAux;
+			}
 		}
 		if (iPos<0) return -1;
-		iBlock++; // block
 	} else {
 		iBlock=0;
 		gotoResult=fncGotoInitPos();
@@ -282,10 +289,22 @@ Array.prototype.saFindPos=function(sTargetText,bFromEnd,initPos){
 			iPos=auxCad.indexOf(sTargetText);
 			if (iPos<0){
 				auxCad=auxCad.substring(auxCad.length-(tgtLength-1),auxCad.length);
-			} 
+			} else {
+				var sBlockStr="";
+				var iLengthAux=auxCad.length;
+				var iPosAux=iPos;
+				iBlock--;
+				sBlockStr=self[iBlock];
+				while ((iLengthAux-self[iBlock].length)>iPosAux){
+					sBlockStr=self[iBlock];
+					iLengthAux-=sBlockStr.length;
+					iBlock--;
+				}
+				var iPosRest=iPosAux-(iLengthAux-sBlockStr.length);
+				iPos=iPosRest;
+			}
 		}
 		if (iPos<0) return -1;
-		iBlock--;
 	}
 	// iBlock is the string element that contains the target text .... or a first part of it
 	iBlock--;

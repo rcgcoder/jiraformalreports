@@ -69,7 +69,6 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		}
 //		var nItem=0;
 		self.rootBackUp=self.model.processingRoot;
-		self.updateTrId(0,"loopStart");
 	}
 	loopItemProcess(eachElem,index,loopLength){
 		var self=this;
@@ -91,6 +90,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 			self.continueTask();
 		});
 		self.addStep("Processing Element in For Each",function(){
+			self.updateTrId(0,"inLoop");
 			self.addStep("Processing all Childs elements",function(){
 				self.processAllChilds(self.tag.getChilds(),newParent);
 			});

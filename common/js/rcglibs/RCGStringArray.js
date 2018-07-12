@@ -210,7 +210,8 @@ Array.prototype.saFindPos=function(sTargetText,bFromEnd,initPos){
 	var selfLength=self.length;
 	var iBlock;
 	fncGotoInitPos=function(){
-		if (isUndefined(initPos)) return "";
+		var result={located:false,iBlockResult:0,sTextPart:""};
+		if (isUndefined(initPos)) return result;
 		var accumLetters=0;
 		var sAux;
 		var iBlockAnt=iBlock;
@@ -221,33 +222,33 @@ Array.prototype.saFindPos=function(sTargetText,bFromEnd,initPos){
 			if (accumLetters<initPos){
 				iBlock++;
 			} else {
-				if (accumLetters>initPos){
-					iBlock--;
-					accumLetters-=sAux.length;
-					sAux=self[iBlock];
-					while (accumLetters>initPos){
-						iBlock--;
-						sAux=self[iBlock];
-						accumLetters-=sAux.length;
-					}
-				}
 				var nStart=initPos-accumLetters;
+				result.located=true;
+				result.iBlockResult=iBlock;
 				if (bReverse){
-					return sResult=sAux.substring(0,nStart);
+					result.sTextPart=sAux.substring(0,nStart);					
 				} else {
-					return sResult=sAux.substring(nStart);
+					result.sTextPart=sAux.substring(nStart,sAux.length);					
 				}
+				return result;
 			}
 		}
-		iBlock=iBlockAnt;
-		return "";
+		return result;
 	}
 	var iPos=-1;
 	var auxCad="";
+	var gotoResult;
+	var bCustomStart=false;
 	if (bReverse){
-		iBlock=self.length-1;
-		auxCad=fncGotoInitPos();
-		while ((iBlock>=0)&&(iPos<0)){
+		iBlock=selfLength-1;
+		gotoResult=fncGotoInitPos();
+		if (gotoResult.located){
+			iBlock=gotoResult.iBlockResult-1;
+			auxCad=gotoResult.sTextPart;
+			bCustomStart=true;
+		}
+		while (bCustomStart||((iBlock>=0)&&(iPos<0))){
+			bCustomStart=false;
 			while ((auxCad.length<tgtLength)&&(iBlock>=0)){
 				auxCad=self[iBlock]+auxCad;
 				iBlock--;
@@ -261,8 +262,14 @@ Array.prototype.saFindPos=function(sTargetText,bFromEnd,initPos){
 		}
 	} else {
 		iBlock=0;
-		auxCad=fncGotoInitPos();
-		while ((iBlock<selfLength)&&(iPos<0)){
+		gotoResult=fncGotoInitPos();
+		if (gotoResult.located){
+			iBlock=gotoResult.iBlockResult+1;
+			auxCad=gotoResult.sTextPart;
+			bCustomStart=true;
+		}
+		while (bCustomStart||((iBlock<selfLength)&&(iPos<0))){
+			bCustomStart=false;
 			while ((auxCad.length<tgtLength)&&(iBlock<selfLength)){
 				auxCad=auxCad+self[iBlock];
 				iBlock++;

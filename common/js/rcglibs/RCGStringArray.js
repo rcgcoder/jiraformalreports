@@ -222,6 +222,9 @@ Array.prototype.saFindPos=function(sTargetText,bFromEnd,initPos){
 			if (accumLetters<initPos){
 				iBlock++;
 			} else {
+				if (accumLetters>initPos){
+					accumLetters-=sAux.length;
+				}
 				var nStart=initPos-accumLetters;
 				result.located=true;
 				result.iBlockResult=iBlock;

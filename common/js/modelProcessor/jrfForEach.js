@@ -52,7 +52,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				iPosTR=self.model.htmlStack.saFindPos("<tr",true,iPosTR);
 			}
 			if (iPosTR>=0){
-				self.model.htmlStack.saReplace(iPosTR,3,'<tr id="trId_'+sAppendText+'_counter--'+self.counter+'_deep--'+iDeep+'_parentkey--'+sParentKey+'" ');
+				self.model.htmlStack.saReplace(iPosTR,3,'<tr id="trId_'+sAppendText+'_counter--'+self.counter+'_deep--'+iDeep+'_parentkey--'+sParentKey+'_visiParam--'+visiParam+'" ');
 			}
 			self.counter++;
 		}

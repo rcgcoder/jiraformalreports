@@ -20,6 +20,6 @@ export class TabResult {
         report.saveResultToFile();
     }
     doRepeatReport(){
-        System.getAngularObject('tabStructure',true).getActualReportConfig();
+        System.getAngularObject('tabStructure',true).executeReport();
     }
 }

@@ -23,7 +23,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 	updateTrId(){
 		var self=this;
 		var visibility=self.visibility.saToString().trim();
-		if ((!self.bIsRecursiving)&&(visibility!="")&&(self.subType=="subrow")||(self.subType=="row")){
+		if ((visibility!="")&&(self.subType=="subrow")||(self.subType=="row")){
 			var arrVisiParts=visibility.split("=");
 			var visiType=arrVisiParts[0];
 			var visiParam="";
@@ -34,23 +34,30 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				debugger;
 				//..... first add an id to previous <tr> 
 				var iDeep=self.variables.getVar("RecursiveDeep");
+				var parentElem=self.variables.getVar("parentRecursiveElement");
+				var sParentKey="No hay";
+				if (parentElem!=""){
+					sParentKey="Si hay";
+				}
 				var iPosTR=self.model.htmlStack.saFindPos("<tr",true);
 				if (iPosTR>=0){
-					self.model.htmlStack.saReplace(iPosTR,3,'<tr id="caseta_'+self.counter+'_'+iDeep+'" ');
-				}
-				var iVisiParam=visiParam;
-				while ((iDeep<=1)&&(self.counter==0)&&(iVisiParam<0)){
-					var iPosTR=self.model.htmlStack.saFindPos("<tr",true,iPosTR);
-					if (iPosTR>=0){
-						self.model.htmlStack.saReplace(iPosTR,3,'<tr id="ROOT_caseta'+iVisiParam+'"');
-						iVisiParam++;
-					} else {
-						iVisiParam=0;
-					}
+					self.model.htmlStack.saReplace(iPosTR,3,'<tr id="caseta_'+self.counter+'_'+iDeep+'_'+sParentKey+'" ');
 				}
 				self.counter++;
+				if (!self.bIsRecursiving){
+					var iVisiParam=visiParam;
+					while ((iDeep<=1)&&(iVisiParam<0)){
+						var iPosTR=self.model.htmlStack.saFindPos("<tr",true,iPosTR);
+						if (iPosTR>=0){
+							self.model.htmlStack.saReplace(iPosTR,3,'<tr id="ROOT_caseta_visi'+iVisiParam+'_'+sParentKey+'"');
+							iVisiParam++;
+						} else {
+							iVisiParam=0;
+						}
+					}
+					self.bIsRecursiving=true;
+				}
 			}
-			self.bIsRecursiving=true;
 		}
 	}
 	loopStart(){

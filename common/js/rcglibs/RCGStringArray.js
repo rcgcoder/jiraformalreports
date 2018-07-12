@@ -221,11 +221,16 @@ Array.prototype.saFindPos=function(sTargetText,bFromEnd,initPos){
 			if (accumLetters<initPos){
 				iBlock++;
 			} else {
-				while(accumLetters>initPos){
-					accumLetters-=sAux.length;
+				if (accumLetters>initPos){
 					iBlock--;
+					accumLetters-=sAux.length;
+					sAux=self[iBlock];
+					while (accumLetters>initPos){
+						iBlock--;
+						sAux=self[iBlock];
+						accumLetters-=sAux.length;
+					}
 				}
-				iBlock++;
 				var nStart=initPos-accumLetters;
 				if (bReverse){
 					return sResult=sAux.substring(0,nStart);
@@ -297,11 +302,16 @@ Array.prototype.saReplace=function(iPosStart,nLetters,sTextToSet){
 		if (accumLetters<iPosStart){
 			iBlock++;
 		} else {
-			while(accumLetters>initPos){
-				accumLetters-=sAux.length;
+			if (accumLetters>iPosStart){
 				iBlock--;
+				accumLetters-=sAux.length;
+				sAux=self[iBlock];
+				while (accumLetters>iPosStart){
+					iBlock--;
+					sAux=self[iBlock];
+					accumLetters-=sAux.length;
+				}
 			}
-			iBlock++;
 			var diff=iPosStart-accumLetters;
 			var sResult;
 			var nStart=diff;

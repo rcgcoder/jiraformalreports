@@ -29,8 +29,8 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		var visiParam="";
 		var iVisiParam=0;
 		if (visibility!=""){
-			visiType=arrVisiParts[0].trim().toLowerCase();
 			var arrVisiParts=visibility.split("=");
+			visiType=arrVisiParts[0].trim().toLowerCase();
 			if (arrVisiParts.length>1){
 				visiParam=parseInt(arrVisiParts[1]);
 			}

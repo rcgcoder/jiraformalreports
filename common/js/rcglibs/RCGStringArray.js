@@ -260,7 +260,6 @@ Array.prototype.saFindPos=function(sTargetText,bFromEnd,initPos){
 			iPos=auxCad.indexOf(sTargetText);
 			if (iPos<0){
 				auxCad=auxCad.substring(0,tgtLength-1);
-				iBlock--;
 			} 
 		}
 	} else {
@@ -281,7 +280,6 @@ Array.prototype.saFindPos=function(sTargetText,bFromEnd,initPos){
 			iPos=auxCad.indexOf(sTargetText);
 			if (iPos<0){
 				auxCad=auxCad.substring(auxCad.length-(tgtLength-1),auxCad.length);
-				iBlock++;
 			} 
 		}
 	}

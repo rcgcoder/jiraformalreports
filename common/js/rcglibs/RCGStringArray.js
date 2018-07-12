@@ -312,12 +312,6 @@ Array.prototype.saReplace=function(iPosStart,nLetters,sTextToSet){
 			if (accumLetters>iPosStart){
 				iBlock--;
 				accumLetters-=sAux.length;
-				sAux=self[iBlock];
-				while (accumLetters>iPosStart){
-					iBlock--;
-					sAux=self[iBlock];
-					accumLetters-=sAux.length;
-				}
 			}
 			var diff=iPosStart-accumLetters;
 			var sResult;

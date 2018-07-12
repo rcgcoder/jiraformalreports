@@ -262,6 +262,8 @@ Array.prototype.saFindPos=function(sTargetText,bFromEnd,initPos){
 				auxCad=auxCad.substring(0,tgtLength-1);
 			} 
 		}
+		if (iPos<0) return -1;
+		iBlock++; // block
 	} else {
 		iBlock=0;
 		gotoResult=fncGotoInitPos();
@@ -282,9 +284,13 @@ Array.prototype.saFindPos=function(sTargetText,bFromEnd,initPos){
 				auxCad=auxCad.substring(auxCad.length-(tgtLength-1),auxCad.length);
 			} 
 		}
+		if (iPos<0) return -1;
+		iBlock--;
 	}
 	// iBlock is the string element that contains the target text .... or a first part of it
-	if ((iBlock>selfLength)&&(iPos<0)) return -1;
+	
+	if (iBlock>selfLength)iBlock=selfLength;
+	
 	var nLetters=0;
 	for (var i=0;(i<iBlock);i++){
 		nLetters+=self[i].length;

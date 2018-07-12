@@ -65,6 +65,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		}
 //		var nItem=0;
 		self.rootBackUp=self.model.processingRoot;
+		self.updateTrId(0,"loopStart");
 	}
 	loopItemProcess(eachElem,index,loopLength){
 		var self=this;
@@ -103,7 +104,6 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					self.variables.pushVar("RecursiveDeep",iDeep);
 					self.variables.pushVar("parentRecursiveElement",self.reportElem);
 					self.reportElem=eachElem;
-					self.updateTrId(0,"PreRecurEncode");
 					self.encode();
 				});
 				self.addStep("Encoding recursive childs...",function(){

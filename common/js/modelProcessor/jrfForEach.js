@@ -34,7 +34,6 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 			if (arrVisiParts.length>1){
 				visiParam=parseInt(arrVisiParts[1]);
 			}
-			
 		}
 		if ((visiType=="dynamic")&&(self.subType=="subrow")||(self.subType=="row")){
 			debugger;

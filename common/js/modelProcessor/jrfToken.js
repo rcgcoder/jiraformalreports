@@ -403,7 +403,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				var btnId="btn"+(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
 				var theEvent="modelInteractiveFunctions.elemShowHide('"+newId+"',window,'"+btnId+"','"+capHidden+"','"+capShowed+"')";
 				var withDiv=true;
-				if (self.visibility=="openWindow"){
+				if (visiType=="openwindow"){
 					theEvent="modelInteractiveFunctions.openNewWindow('"+newId+"',window,'"+btnId+"','"+capHidden+"','"+capShowed+"')";
 					withDiv=false;
 				} 

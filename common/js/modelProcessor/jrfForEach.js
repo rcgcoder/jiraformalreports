@@ -4,6 +4,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		super.loadOwnProperties();
 //		debugger;
 		var self=this;
+		
 		self.autoAddPostHtml=false;
 		self.subType=self.getAttrVal("subtype").trim().toLowerCase();
 		
@@ -15,7 +16,6 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		self.counter=0;
 		self.parentId="";
 		self.childId="";
-		self.bIsRecursiving=false;
 		self.recursive=self.getAttrVal("recursive");
 		self.bAllRoots=false;
 		self.rootBackup;
@@ -83,16 +83,34 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		} else if (self.type=="array"){
 			newParent=self.reportElem;
 		}
+		
 		self.addStep("Start processing Element in For Each",function(){
 			self.addHtml("<!-- START INNER LOOP OF ITEM "+ (self.processedItemNumber) + " IN FOREACH JRF TOKEN -->");
 			if (self.bAllRoots) self.model.processingRoot=newParent;
+			self.variables.pushVarEnv();
+			
+			if ((self.subType=="row")||(self.subType=="subrow")){
+				var treeParentId=self.variables.getVar("recursiveNodeId");
+				var treeNode=newHashMap();
+				var treeNodeId=modelInteractiveFunctions.addContent(treeNode);
+				if (treeParentId!=""){ // its the first
+					var treeParentNode=getInteractiveContent(treeParentId);
+					treeParentNode.add(treeNodeId,treeNode);
+				}
+				self.variables.pushVar("recursiveNodeId",treeNodeId);
+				
+				var iPosTR=self.model.htmlStack.saFindPos("<tr",true);
+				if (iPosTR>=0){
+					self.model.htmlStack.saReplace(iPosTR,3,'<tr "'+treeNodeId+'" ');
+				}
+			}
 			self.continueTask();
 		});
 		self.addStep("Processing Element in For Each",function(){
 			self.addStep("Processing all Childs elements",function(){
 				self.processAllChilds(self.tag.getChilds(),newParent);
 			});
-			self.updateTrId(0,"inLoop");
+			//self.updateTrId(0,"inLoop");
 			if ((self.recursive!="")&&((self.replaceVarsAndExecute(self.recursive)+"").trim().toLowerCase()=="true")){
 				log("Recursive!");
 				self.addStep("Encoding recursive childs...",function(){
@@ -119,6 +137,12 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 			}
 			self.addStep("Continue...",function(){
 				if (self.bAllRoots) self.model.processingRoot=self.rootBackUp;
+				if ((self.subType=="row")||(self.subType=="subrow")){
+					var treeNodeId=self.variables.popVar("recursiveNodeId");
+				}
+				self.variables.popVarEnv();
+				
+				
 				
 				self.addHtml("<!-- END INNER LOOP OF ITEM "+ (self.processedItemNumber) + " IN FOREACH JRF TOKEN -->");
 //				self.addPostHtml();

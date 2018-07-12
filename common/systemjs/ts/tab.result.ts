@@ -19,4 +19,7 @@ export class TabResult {
         var report=System.webapp.theReport;
         report.saveResultToFile();
     }
+    doRepeatReport(){
+        System.getAngularObject('tabStructure',true).getActualReportConfig();
+    }
 }

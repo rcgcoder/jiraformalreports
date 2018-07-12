@@ -144,7 +144,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				if ((self.subType=="row")||(self.subType=="subrow")){
 					var treeNodeId=self.variables.popVar("recursiveNodeId");
 					var iPosTR=self.variables.popVar("InitTR_Pos");
-					var iPosTR=self.model.htmlStack.saFindPos("</td>",false,iPosTr);
+					var iPosTR=self.model.htmlStack.saFindPos("</td>",false,iPosTR);
 					if (iPosTR>=0){
 						self.model.htmlStack.saReplace(iPosTR,5,'<button id="'+""+'" onclick="'+""+'">'+treeNodeId+'</button></td>');
 					}

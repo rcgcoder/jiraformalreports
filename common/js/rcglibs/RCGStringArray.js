@@ -309,44 +309,18 @@ Array.prototype.saReplace=function(iPosStart,nLetters,sTextToSet){
 	var sAux="";
 	var accumLetters=0;
 	var selfLength=self.length;
+	var iPosAux=iPosStart;
 	while (iBlock<selfLength){
 		sAux=self[iBlock];
-		accumLetters+=sAux.length;
-		if (accumLetters<iPosStart){
+		if (iPosAux-sAux.length>0){
+			iPosAux-sAux.length;
 			iBlock++;
 		} else {
-			if (accumLetters>iPosStart){
-				accumLetters-=sAux.length;
-			}
-			var diff=iPosStart-accumLetters;
-			var sResult;
-			var nStart=diff;
-			var nEnd=nStart+nLetters;
-			var nRest=nEnd-sAux.length;
-			if (nRest<0){
-				nRest=0;
-			}
-			sResult=sAux.substring(0,nStart);
+			var sResult=sAux.substring(0,iPosAux);
 			sResult+=sReplace;
-			if (nRest==0){
-				var sRest=sAux.substring(nEnd,sAux.length);
-				sResult+=sRest;
-				self[iBlock]=sResult;
-				return;
-			}
-			iBlock++;
-			while ((nEnd>0)&&(iBlock<selfLength)){
-				sAux=self[iBlock];
-				if (sAux.length<nEnd){
-					self[iBlock]="";
-					nEnd-=sAux.length;
-					iBlock++;
-				} else {
-					sAux=sAux.substring(nEnd,sAux.length);
-					self[iBlock]=sAux;
-					return;
-				}
-			}
+			sResult+=sAux.substring(iPosAux+nLetters,sAux.length);
+			self[iBlock]=sResult;
+			return;
 		}
 	}
 }

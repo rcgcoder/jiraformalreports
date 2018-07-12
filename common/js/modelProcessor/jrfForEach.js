@@ -103,6 +103,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				self.variables.pushVar("recursiveNodeId",treeNodeId);
 				
 				var iPosTR=self.model.htmlStack.saFindPos("<tr",true);
+				self.variables.pushVar("InitTR_Pos",iPosTR);
 				if (iPosTR>=0){
 					self.model.htmlStack.saReplace(iPosTR,3,'<tr id="'+treeNodeId+'" ');
 				}
@@ -142,6 +143,12 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				if (self.bAllRoots) self.model.processingRoot=self.rootBackUp;
 				if ((self.subType=="row")||(self.subType=="subrow")){
 					var treeNodeId=self.variables.popVar("recursiveNodeId");
+					var iPosTR=self.variables.popVar("InitTR_Pos");
+					var iPosTR=self.model.htmlStack.saFindPos("</td>",false,iPosTr);
+					if (iPosTR>=0){
+						self.model.htmlStack.saReplace(iPosTR,5,'<button id="'+""+'" onclick="'+""+'">'+treeNodeId+'</button></td>');
+					}
+					
 				}
 				self.variables.popVarEnv();
 				

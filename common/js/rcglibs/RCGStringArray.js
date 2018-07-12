@@ -267,7 +267,7 @@ Array.prototype.saFindPos=function(sTargetText,bFromEnd,initPos){
 		}
 	}
 	// iBlock is the string element that contains the target text .... or a first part of it
-	if ((iBlock>self.length)&&(iPos<0)) return -1;
+	if ((iBlock>selfLength)&&(iPos<0)) return -1;
 	var nLetters=0;
 	for (var i=0;(i<iBlock);i++){
 		nLetters+=self[i].length;
@@ -311,7 +311,7 @@ Array.prototype.saReplace=function(iPosStart,nLetters,sTextToSet){
 				return;
 			}
 			iBlock++;
-			while (nEnd>0){
+			while ((nEnd>0)&&(iBlock<selfLength)){
 				sAux=self[iBlock];
 				if (sAux.length<nEnd){
 					self[iBlock]="";

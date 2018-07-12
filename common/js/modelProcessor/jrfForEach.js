@@ -53,6 +53,10 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 			}
 			if (iPosTR>=0){
 				self.model.htmlStack.saReplace(iPosTR,3,'<tr id="trId_'+sAppendText+'_counter--'+self.counter+'_deep--'+iDeep+'_parentkey--'+sParentKey+'_visiParam--'+visiParam+'" ');
+				iPosTR=self.model.htmlStack.saFindPos("</td>",false,iPosTR);
+				if (iPosTR>=0){
+					self.model.htmlStack.saReplace(iPosTR,5,'id="trId_'+sAppendText+'_counter--'+self.counter+'_deep--'+iDeep+'_parentkey--'+sParentKey+'_visiParam--'+visiParam+'" </td>');
+				}
 			}
 			self.counter++;
 		}

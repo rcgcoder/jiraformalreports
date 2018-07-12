@@ -90,7 +90,9 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 			self.variables.pushVarEnv();
 			
 			if ((self.subType=="row")||(self.subType=="subrow")){
-				debugger;
+				if (self.reportElem.getKey()=="NOTIFLOPD-124"){
+					debugger;
+				}
 				var treeParentId=self.variables.getVar("recursiveNodeId");
 				var treeNode=newHashMap();
 				var treeNodeId=modelInteractiveFunctions.addInteractiveContent(treeNode);

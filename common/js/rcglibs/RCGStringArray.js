@@ -221,7 +221,11 @@ Array.prototype.saFindPos=function(sTargetText,bFromEnd,initPos){
 			if (accumLetters<initPos){
 				iBlock++;
 			} else {
-				accumLetters-=sAux.length;
+				while(accumLetters>initPos){
+					accumLetters-=sAux.length;
+					iBlock--;
+				}
+				iBlock++;
 				var nStart=initPos-accumLetters;
 				if (bReverse){
 					return sResult=sAux.substring(0,nStart);
@@ -293,7 +297,11 @@ Array.prototype.saReplace=function(iPosStart,nLetters,sTextToSet){
 		if (accumLetters<iPosStart){
 			iBlock++;
 		} else {
-			accumLetters-=sAux.length;
+			while(accumLetters>initPos){
+				accumLetters-=sAux.length;
+				iBlock--;
+			}
+			iBlock++;
 			var diff=iPosStart-accumLetters;
 			var sResult;
 			var nStart=diff;

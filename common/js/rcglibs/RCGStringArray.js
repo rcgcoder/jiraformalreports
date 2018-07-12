@@ -310,7 +310,6 @@ Array.prototype.saReplace=function(iPosStart,nLetters,sTextToSet){
 			iBlock++;
 		} else {
 			if (accumLetters>iPosStart){
-				iBlock--;
 				accumLetters-=sAux.length;
 			}
 			var diff=iPosStart-accumLetters;

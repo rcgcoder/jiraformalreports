@@ -288,9 +288,9 @@ Array.prototype.saFindPos=function(sTargetText,bFromEnd,initPos){
 		iBlock--;
 	}
 	// iBlock is the string element that contains the target text .... or a first part of it
-	
+	iBlock--;
 	var nLetters=0;
-	while (iBlock>=0)){
+	while (iBlock>=0){
 		nLetters+=self[iBlock].length;
 		iBlock--;
 	}

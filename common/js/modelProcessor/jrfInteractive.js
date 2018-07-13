@@ -49,9 +49,9 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		var jqBody=$(otherWindow.document.head);
 		jqBody.html(sContent.saToString());
 		var arrFiles=[	//"ts/demo.ts",
-			"css/RCGTaskManager.css"
-//			"aui/css/aui.css",
-//            "aui/css/aui-experimental.css",
+			"css/RCGTaskManager.css",
+			"aui/css/aui.css",
+            "aui/css/aui-experimental.css",
             ]; //test
 		arrFiles.forEach(function (sRelativePath){
 			var sAbsPath=System.webapp.composeUrl(sRelativePath);
@@ -65,6 +65,13 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
             ]; //test
 		arrFiles.forEach(function (sRelativePath){
 			var sAbsPath=System.webapp.composeUrl(sRelativePath);
+			var oHead=(otherWindow.document.head || otherWindow.document.getElementsByTagName("head")[0]);
+			var oScript = otherWindow.document.createElement("script");
+			oScript.type = "text\/javascript";
+			oScript.onerror = function(){console.log("Error applying javascrip");};
+			oHead.appendChild(oScript);
+			oScript.src= sAbsPath;
+
 			jqBody.append('<script type="text/javascript" src="'+sAbsPath+'"></script>');
 		});
 		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;

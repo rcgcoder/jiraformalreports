@@ -65,7 +65,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
             "aui/js/aui-experimental.min.js",
 			"aui/js/aui-soy.min.js"
             ]; //test
-		sHtmlJSFunction= `var fncLoadJS=function(sAbsPath){
+		var sHtmlJSFunction= `var fncLoadJS=function(sAbsPath){
 								document.createElement('script');
 								oScript.type = "text\/javascript";
 								oScript.onerror = function(){console.log("Error applying javascrip");};

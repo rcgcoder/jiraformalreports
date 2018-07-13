@@ -60,6 +60,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			jqBody.append('<link rel="stylesheet" type="text/css" href="'+sAbsPath+'">');
 
 		});
+		/*
 		var arrFiles=[	//"ts/demo.ts",
 			"aui/js/aui.min.js",
             "aui/js/aui-experimental.min.js",
@@ -90,7 +91,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		oHead.appendChild(oScript);
 		//oScript.src= sAbsPath;
 		oScript.innerHTML =sHtmlJSFunction;
-		
+		*/
 		
 		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;
     	otherWindow.System=System;

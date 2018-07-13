@@ -65,17 +65,24 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
             "aui/js/aui-experimental.min.js",
 			"aui/js/aui-soy.min.js"
             ]; //test
-		var sHtmlJSFunction= `var fncLoadJS=function(sAbsPath){
-								document.createElement('script');
-								oScript.type = "text\/javascript";
-								oScript.onerror = function(){console.log("Error applying javascrip");};
-								oHead.appendChild(oScript);
-								oScript.src=sAbsPath;
-							}`;
+		
+		var sHtmlJSFunction= "";
 		arrFiles.forEach(function (sRelativePath){
 			var sAbsPath=System.webapp.composeUrl(sRelativePath);
 			sHtmlJSFunction+="\n fncLoadJS('"+sAbsPath+"');";
 		});
+		var sHtmlJSFunction= `var fncLoadJS=function(sAbsPath){
+								var oHead=(document.head || document.getElementsByTagName("head")[0]);
+								var oScript = document.createElement('script');
+								oScript.type = "text\/javascript";
+								oScript.onerror = function(){console.log("Error applying javascrip");};
+								oHead.appendChild(oScript);
+								oScript.src=sAbsPath;
+							}
+							setTimeout(function(){
+							    `+sHtmlJSFunction+`
+							},1000);
+							`;
 		var oHead=(otherWindow.document.head || otherWindow.document.getElementsByTagName("head")[0]);
 		var oScript = otherWindow.document.createElement("script");
 		oScript.type = "text\/javascript";

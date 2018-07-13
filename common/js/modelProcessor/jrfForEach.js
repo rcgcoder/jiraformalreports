@@ -143,7 +143,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				if (self.bAllRoots) self.model.processingRoot=self.rootBackUp;
 				if ((self.subType=="row")||(self.subType=="subrow")){
 					var treeNodeId=self.variables.popVar("recursiveNodeId");
-					var treeNode=modelInteractiveFunctions.getInteractiveContent(treeParentId);
+					var treeNode=modelInteractiveFunctions.getInteractiveContent(treeNodeId);
 					if (treeNode.length()>0){
 						var iPosTR=self.variables.popVar("InitTR_Pos");
 						var iPosTR=self.model.htmlStack.saFindPos("</td>",false,iPosTR);

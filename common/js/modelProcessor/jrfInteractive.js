@@ -48,7 +48,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		otherWindow= window.open("", '_blank');
 //		var winPath=System.webapp.composeUrl("html/empty.html");
 //		otherWindow= window.open(winPath, '_blank');
-		var jqBody=$(otherWindow.document.head);
+		var jqBody=$(otherWindow.document.body);
 		jqBody.html(sContent.saToString());
 		var arrFiles=[	//"ts/demo.ts",
 			"css/RCGTaskManager.css",
@@ -60,7 +60,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			jqBody.append('<link rel="stylesheet" type="text/css" href="'+sAbsPath+'">');
 
 		});
-		/*
+		
 		var arrFiles=[	//"ts/demo.ts",
 			"aui/js/aui.min.js",
             "aui/js/aui-experimental.min.js",
@@ -91,7 +91,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		oHead.appendChild(oScript);
 		//oScript.src= sAbsPath;
 		oScript.innerHTML =sHtmlJSFunction;
-		*/
+		
 		
 		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;
     	otherWindow.System=System;

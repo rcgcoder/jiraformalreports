@@ -107,7 +107,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		if (isDefined(actWindow)){
 			theWindow=actWindow;
 		}
-		var hsParentRow=self.getInteractiveContent(elemId).saToString();
+		var hsParentRow=self.getInteractiveContent(elemId);
 		var jqParent=$(theWindow.document.body).find('#'+elemId);
 		var action="show";
 		if (isDefined(jqParent[0].jrfExpanded)){

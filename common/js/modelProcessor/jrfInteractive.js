@@ -101,6 +101,37 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		var sContent=self.getInteractiveContent(elemId).saToString();
 		saveDataToFile(sContent, "savedFile.html", "text/html");
 	}
+	changeDisplayChildRow(elemId,forceHide,actWindow){
+		var self=this;
+		var theWindow=window;
+		if (isDefined(actWindow)){
+			theWindow=actWindow;
+		}
+		var hsParentRow=self.getInteractiveContent(elemId).saToString();
+		var jqParent=$(theWindow.document.body).find('#'+elemId);
+		var action="show";
+		if (isDefined(jqParent[0].jrfExpanded)){
+			if (jqParent[0].jrfExpanded){
+				action="hide";
+			}
+			jqParent[0].jrfExpanded=(!jqParent[0].jrfExpanded);
+		} else {
+			jqParent[0].jrfExpanded=true;
+		}
+		if (isDefined(forceHide)&&forceHide){
+			jqParent[0].jrfExpanded=false;			
+			action="hide";
+		}
+		hsParentRow.walk(function(hsChild,iDeep,childId){
+			var jqElem=$(theWindow.document.body).find('#'+childId);
+			if (action=="show"){
+				jqElem.css('display', '');
+			} else {
+				jqElem.css('display', 'none');
+				self.changeDisplayChildRow(childId,true,theWindow);
+			}
+		});
+	}
 
 }
 

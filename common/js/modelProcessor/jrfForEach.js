@@ -149,7 +149,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					iPosTR=self.model.htmlStack.saFindPos("</td>",false,iPosTR);
 					var sInsertInTd=treeNodeId;
 					if (treeNode.length()>0){
-						sInsertInTd+='<button id="'+""+'" onclick="'+""+'"> ['+ treeNode.length() +']</button>';
+						sInsertInTd+='<button id="btn'+treeNodeId+'" onclick="modelInteractiveFunctions.changeDisplayChildRow('+treeNodeId+',false,window)"> ['+ treeNode.length() +']</button>';
 					}
 					self.model.htmlStack.saReplace(iPosTR,5,sInsertInTd+'</td>');
 					var parentNodeId=self.variables.getVar("recursiveNodeId");

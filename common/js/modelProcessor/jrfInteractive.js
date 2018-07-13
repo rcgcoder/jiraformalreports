@@ -49,14 +49,23 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		var jqBody=$(otherWindow.document.body);
 		jqBody.html(sContent.saToString());
 		var arrFiles=[	//"ts/demo.ts",
-			"css/RCGTaskManager.css",
-			"aui/css/aui.css",
-            "aui/css/aui-experimental.css",
+			"css/RCGTaskManager.css"
+//			"aui/css/aui.css",
+//            "aui/css/aui-experimental.css",
             ]; //test
 		arrFiles.forEach(function (sRelativePath){
 			var sAbsPath=System.webapp.composeUrl(sRelativePath);
 			jqBody.append('<link rel="stylesheet" type="text/css" href="'+sAbsPath+'">');
 
+		});
+		var arrFiles=[	//"ts/demo.ts",
+			"aui/js/aui.min.js",
+            "aui/js/aui-experimental.min.js",
+			"aui/js/aui-soy.min.js"
+            ]; //test
+		arrFiles.forEach(function (sRelativePath){
+			var sAbsPath=System.webapp.composeUrl(sRelativePath);
+			jqBody.append('<script type="text/javascript" src="'+sAbsPath+'"></script>');
 		});
 		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;
     	otherWindow.System=System;

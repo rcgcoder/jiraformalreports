@@ -70,9 +70,8 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			oScript.type = "text\/javascript";
 			oScript.onerror = function(){console.log("Error applying javascrip");};
 			oHead.appendChild(oScript);
+			//oScript.innerHTML = "jsContent;
 			oScript.src= sAbsPath;
-
-			jqBody.append('<script type="text/javascript" src="'+sAbsPath+'"></script>');
 		});
 		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;
     	otherWindow.System=System;

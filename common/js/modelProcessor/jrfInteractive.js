@@ -45,7 +45,9 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		var self=this;
 		var otherWindow; 
 		var sContent=self.getInteractiveContent(elemId);
-		otherWindow= window.open("", '_blank');
+		//otherWindow= window.open("", '_blank');
+		var winPath=System.webapp.composeUrl("html/empty.html");
+		otherWindow= window.open(winPath, '_blank');
 		var jqBody=$(otherWindow.document.head);
 		jqBody.html(sContent.saToString());
 		var arrFiles=[	//"ts/demo.ts",
@@ -63,16 +65,26 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
             "aui/js/aui-experimental.min.js",
 			"aui/js/aui-soy.min.js"
             ]; //test
+		sHtmlJSFunction= `var fncLoadJS=function(sAbsPath){
+								document.createElement('script');
+								oScript.type = "text\/javascript";
+								oScript.onerror = function(){console.log("Error applying javascrip");};
+								oHead.appendChild(oScript);
+								oScript.src=sAbsPath;
+							}`;
 		arrFiles.forEach(function (sRelativePath){
 			var sAbsPath=System.webapp.composeUrl(sRelativePath);
-			var oHead=(otherWindow.document.head || otherWindow.document.getElementsByTagName("head")[0]);
-			var oScript = otherWindow.document.createElement("script");
-			oScript.type = "text\/javascript";
-			oScript.onerror = function(){console.log("Error applying javascrip");};
-			oHead.appendChild(oScript);
-			//oScript.innerHTML = "jsContent;
-			oScript.src= sAbsPath;
+			sHtmlJSFunction+="\n fncLoadJS('"+sAbsPath+"');";
 		});
+		var oHead=(otherWindow.document.head || otherWindow.document.getElementsByTagName("head")[0]);
+		var oScript = otherWindow.document.createElement("script");
+		oScript.type = "text\/javascript";
+		oScript.onerror = function(){console.log("Error applying javascrip");};
+		oHead.appendChild(oScript);
+		//oScript.src= sAbsPath;
+		oScript.innerHTML =sHtmlJSFunction;
+		
+		
 		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;
     	otherWindow.System=System;
 	}

@@ -154,7 +154,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					self.model.htmlStack.saReplace(iPosTR,5,sInsertInTd+'</td>');
 					var parentNodeId=self.variables.getVar("recursiveNodeId");
 					if (parentNodeId!=""){
-						self.model.htmlStack.saReplace(initTR,3,'<tr style="visibility:hidden" ');
+						self.model.htmlStack.saReplace(initTR,3,'<tr style="display:none" ');
 						iPosTR=self.model.htmlStack.saFindPos("</td>",false,iPosTR);
 						
 					}

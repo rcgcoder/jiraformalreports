@@ -151,7 +151,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					if (treeNode.length()>0){
 						var sShowCaption="Show ('"+ treeNode.length() +"') rows"; 
 						var sHideCaption="Hide ('"+ treeNode.length() +"') rows";
-						sInsertInTd+='<button id="btn'+treeNodeId+'" onclick="modelInteractiveFunctions.changeDisplayChildRow(\''+treeNodeId+'\',false,window,'+sShowCaption+','+sHideCaption+')">'+sShowCaption+'</button>';
+						sInsertInTd+='<button id="btn'+treeNodeId+'" onclick="modelInteractiveFunctions.changeDisplayChildRow(\''+treeNodeId+'\',false,window,\''+sShowCaption+'\',\''+sHideCaption+'\')">'+sShowCaption+'</button>';
 					}
 					self.model.htmlStack.saReplace(iPosTR,5,sInsertInTd+'</td>');
 					var parentNodeId=self.variables.getVar("recursiveNodeId");

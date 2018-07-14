@@ -1,48 +1,65 @@
 <div tab-structure id={{name}}>
 	<div class="aui-group">
 	    <div class="aui-item">
-			<aui-toggle id="toggle_DebugLogs" 
-		                        label="Enable logging (reduce the speed)"
-		                        ></aui-toggle>Enable Debug Log
-			<aui-toggle id="toggle_HTMLDebugLogs" 
-		                        label="Include html logging tags (needs more memory)"
-		                        ></aui-toggle>Include HTML Debug Log
-			<aui-toggle id="toggle_ReuseLoadedIssues" 
-		                        label="Do not reload Issues before execute report (increase speed when reexecuting)"
-		                        ></aui-toggle>Reuse Loaded Issues
-			<aui-toggle id="toggle_ForceReloadFiles" 
-		                        label="Reload all files needed by the report (necesary after killTask)"
-		                        ></aui-toggle>Reload all files needed by the report (necesary after killTask)
-			<aui-toggle id="toggle_SaveResult" 
-		                        label="Save Result to Local Disk"
-		                        ></aui-toggle>Save Result to Local Disk
-			<br>
-			<aui-toggle id="toggle_NewWindow" 
-		                        label="Open Result In New Window"
-		                        ></aui-toggle>Open Result In New Window
-			<br>
-			<advSelector name="selReportModel" 
-			    				   typeDescriptor="Report Model"
-			    				    multiple="false"
-			    		>
-			</advSelector>
-		    <button (click)="doEditSelectedModel()" class="aui-button">Quick Modify Model</button>
-			<dlgEditableList id="listDefaultVariables" name="listDefaultVariables" 
-				typeDescriptor="List of Default Variables" 
-				columns=3
-				multiple="true"
-				columnDefinitions='[{"caption":"Var Name"},{"caption":"Default Value"},{"caption":"at Date","type":"date"}]'
-			    openDialogCaption="List of Default Variables for the Report"
-				(onApply)="onChangeDefaultVariables($event)"
-				>
-			</dlgEditableList>
+			<div class="flatpack-box">
+				<aui-toggle id="toggle_DebugLogs" 
+			                        label="Enable logging (reduce the speed)"
+			                        ></aui-toggle>Enable Debug Log
+			    <br>
+				<aui-toggle id="toggle_HTMLDebugLogs" 
+			                        label="Include html logging tags (needs more memory)"
+			                        ></aui-toggle>Include HTML Debug Log
+			    <br>
+				<aui-toggle id="toggle_ReuseLoadedIssues" 
+			                        label="Do not reload Issues before execute report (increase speed when reexecuting)"
+			                        ></aui-toggle>Reuse Loaded Issues
+			    <br>
+				<aui-toggle id="toggle_ForceReloadFiles" 
+			                        label="Reload all files needed by the report (necesary after killTask)"
+			                        ></aui-toggle>Reload all files needed by the report (necesary after killTask)
+			    <br>
+				<advSelector name="selReportModel" 
+				    				   typeDescriptor="Report Model"
+				    				    multiple="false"
+				    		>
+				</advSelector>
+			    <button (click)="doEditSelectedModel()" class="aui-button">Quick Modify Model</button>
+			    <br>
+				<dlgEditableList id="listDefaultVariables" name="listDefaultVariables" 
+					typeDescriptor="List of Default Variables" 
+					columns=3
+					multiple="true"
+					columnDefinitions='[{"caption":"Var Name"},{"caption":"Default Value"},{"caption":"at Date","type":"date"}]'
+				    openDialogCaption="List of Default Variables for the Report"
+					(onApply)="onChangeDefaultVariables($event)"
+					>
+				</dlgEditableList>
+			</div>
 		</div>
 	    <div class="aui-item">
-			<button (click)="executeReport()" class="aui-button">Execute the Report</button>
-			<br>
-			<button (click)="freeMemory()" class="aui-button">Free Memory</button>
-			<br>
-			<button (click)="killTasks()" class="aui-button">Kill Tasks</button>
+			<div class="flatpack-box">
+				<div class="aui-group">
+				    <div class="aui-item">
+						<aui-toggle id="toggle_ResultInteractive" 
+					                        label="Include Interactive Elements in Report"
+					                        ></aui-toggle>Include Interactive Elements in Report
+						<br>
+						<aui-toggle id="toggle_SaveResult" 
+					                        label="Save Result to Local Disk"
+					                        ></aui-toggle>Save Result to Local Disk
+						<br>
+						<aui-toggle id="toggle_NewWindow" 
+					                        label="Open Result In New Window"
+					                        ></aui-toggle>Open Result In New Window
+				    </div>
+				    <div class="aui-item">
+						<button (click)="executeReport()" class="aui-button">Execute the Report</button>
+						<br>
+						<button (click)="freeMemory()" class="aui-button">Free Memory</button>
+						<br>
+						<button (click)="killTasks()" class="aui-button">Kill Tasks</button>
+					</div>
+			</div>
 		</div>
 	</div>
 	<div class="aui-group">

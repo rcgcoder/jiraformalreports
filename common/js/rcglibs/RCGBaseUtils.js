@@ -213,7 +213,17 @@ function createFunction(arrValues,sFunctionBody,functionCache){
 		if (functionCache.exists(theHash)){
 			fncFormula=functionCache.getValue(theHash);
 		} else {
-			fncFormula=Function("_arrRefs_",sFncFormula);
+			try{
+				fncFormula=Function("_arrRefs_",sFncFormula);
+			} catch(err) {
+				var withLogsPrev=loggerFactory.getLogger().enabled;
+				loggerFactory.getLogger().enabled=true;
+				log("Error building function");
+				log(sFncFormula);
+				log("Retry... to generate a exception");
+				loggerFactory.getLogger().enabled=withLogsPrev;
+				fncFormula=Function("_arrRefs_",sFncFormula);
+			}
 			functionCache.add(theHash,fncFormula);
 		}
 	} else {

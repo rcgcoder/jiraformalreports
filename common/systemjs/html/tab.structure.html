@@ -43,8 +43,6 @@
 					                        label="Open Result In New Window"
 					                        ></aui-toggle>Open Result In New Window
 				    </div>
-				</div>
-				<div class="aui-group">
 				    <div class="aui-item">
 						<dlgEditableList id="listDefaultVariables" name="listDefaultVariables" 
 							typeDescriptor="List of Default Variables" 
@@ -55,6 +53,10 @@
 							(onApply)="onChangeDefaultVariables($event)"
 							>
 						</dlgEditableList>
+					</div>
+				</div>
+				<div class="aui-group">
+				    <div class="aui-item">
 						<button (click)="executeReport()" class="aui-button">Execute the Report</button>
 						<button (click)="freeMemory()" class="aui-button">Free Memory</button>
 						<button (click)="killTasks()" class="aui-button">Kill Tasks</button>

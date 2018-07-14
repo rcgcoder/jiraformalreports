@@ -129,12 +129,9 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		
 		hsParentRow.walk(function(hsChild,iDeep,childId){
 			var jqElem=$(theWindow.document.body).find('#'+childId);
-			if (action=="show"){
-				jqElem.css('display', '');
-			} else {
-				jqElem.css('display', 'none');
-				self.changeDisplayChildRow(childId,true,theWindow,sShowText,sHideText);
-			}
+			jqParent[0].jrfExpanded=true;
+			var jqButton=$(theWindow.document.body).find('#btn'+childId);
+			jqButton.click();
 		});
 	}
 

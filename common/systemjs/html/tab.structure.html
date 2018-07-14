@@ -25,15 +25,6 @@
 				</advSelector>
 			    <button (click)="doEditSelectedModel()" class="aui-button">Quick Modify Model</button>
 			    <br>
-				<dlgEditableList id="listDefaultVariables" name="listDefaultVariables" 
-					typeDescriptor="List of Default Variables" 
-					columns=3
-					multiple="true"
-					columnDefinitions='[{"caption":"Var Name"},{"caption":"Default Value"},{"caption":"at Date","type":"date"}]'
-				    openDialogCaption="List of Default Variables for the Report"
-					(onApply)="onChangeDefaultVariables($event)"
-					>
-				</dlgEditableList>
 			</div>
 		</div>
 	    <div class="aui-item">
@@ -52,11 +43,20 @@
 					                        label="Open Result In New Window"
 					                        ></aui-toggle>Open Result In New Window
 				    </div>
+				</div>
+				<div class="aui-group">
 				    <div class="aui-item">
+						<dlgEditableList id="listDefaultVariables" name="listDefaultVariables" 
+							typeDescriptor="List of Default Variables" 
+							columns=3
+							multiple="true"
+							columnDefinitions='[{"caption":"Var Name"},{"caption":"Default Value"},{"caption":"at Date","type":"date"}]'
+						    openDialogCaption="List of Default Variables for the Report"
+							(onApply)="onChangeDefaultVariables($event)"
+							>
+						</dlgEditableList>
 						<button (click)="executeReport()" class="aui-button">Execute the Report</button>
-						<br>
 						<button (click)="freeMemory()" class="aui-button">Free Memory</button>
-						<br>
 						<button (click)="killTasks()" class="aui-button">Kill Tasks</button>
 					</div>
 				</div>

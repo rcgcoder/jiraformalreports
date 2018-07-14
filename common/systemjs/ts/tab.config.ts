@@ -108,6 +108,11 @@ export class TabConfig {
         auxObj=$('#toggle_EnsureDependentIssues');
         dfReport["getIssuesNotInScope"]=(auxObj.attr("checked")=="checked");
 
+        auxObj=$('#toggle_ResultInteractive');
+        dfReport["interactiveResult"]=(auxObj.attr("checked")=="checked");
+
+        
+
         auxObj=$('#toggle_RootsByProject');
         dfReport["rootsByProject"]=(auxObj.attr("checked")=="checked");
         auxObj=$('#toggle_ForceReloadFiles');
@@ -230,6 +235,8 @@ export class TabConfig {
         auxObj=$('#toggle_ResetLeafPrecomputations');
         if(isDefined(config.ResetLeafPrecomputations)&&config.ResetLeafPrecomputations)auxObj.attr("checked","checked");
         
+        auxObj=$('#toggle_ResultInteractive');
+        if(isDefined(config.interactiveResult)&&config.interactiveResult)auxObj.attr("checked","checked");
         
         
         auxObj=$('#toggle_SaveResult');

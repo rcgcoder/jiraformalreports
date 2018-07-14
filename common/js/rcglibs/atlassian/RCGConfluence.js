@@ -25,6 +25,7 @@ class RCGConfluence{
 		self.pushCallback(function(response,xhr,sUrl,headers){
 			self.popCallback();
 		});
+		
 		self.apiCall("/rest/api/content/search?cql=type=page");
 	}
 	getContent(contentId){
@@ -33,5 +34,12 @@ class RCGConfluence{
 			self.popCallback([response]);
 		});
 		self.apiCall("/rest/api/content/"+contentId+"?expand=body.storage");
+	}
+	getContentByTitle(contentTitle){
+		var self=this;
+		self.pushCallback(function(response,xhr,sUrl,headers){
+			self.popCallback([response]);
+		});
+		self.apiCall("/rest/api/content?title="+contentTitle+"&expand=body.storage");
 	}
 }

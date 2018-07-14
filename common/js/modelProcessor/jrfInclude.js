@@ -13,6 +13,9 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
 		self.preprocessed=false;
 		self.includeId="";
 		self.autoAddPostHtml=false;
+		
+		self.titlePostpend=self.getAttrVal("titlePostpend").trim(); // now only content or javascript
+
 	}
 	preload(tag){
 		var self=this;
@@ -40,9 +43,33 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
             self.addStep("Downloading content:"+contentId+" from "+srcUrl,function(){
             	cflc.getContent(contentId);
             });
-            var auxModel;
+            if (self.titlePostpend!=""){
+            	var antJsonObject;
+    			self.addStep("Getting title and prepend:"+self.titlePostpend+" to downlad the especific content of "+srcUrl,function(jsonContent){
+    				var oContent=JSON.parse(jsonContent);
+    				antJsonObject=oContent;
+    				var sTitle=oContent.title;
+    				sTitle+=self.replaceVars(self.titlePostpend).saToString().trim();
+                	cflc.getContentByTitle(sTitle);
+    			});            
+    			self.addStep("Processing Confluence search Content:"+contentId+" from "+srcUrl,function(jsonContent){
+    				var oContent=JSON.parse(jsonContent);
+    				if (oContent.size==0){
+    					self.continueTask([antJsonObject]);
+    				} else {
+    					oContent=oContent.results[0];
+    					self.continueTask([oContent]);
+    				}
+    			});
+            }
+			var auxModel;
 			self.addStep("Processing Confluence Content:"+contentId+" from "+srcUrl,function(jsonContent){
-				var oContent=JSON.parse(jsonContent);
+				var oContent;
+				if (typeof jsonContent==="object") {
+					oContent=jsonContent;
+				} else {
+    				oContent=JSON.parse(jsonContent);
+				}
 				var sContentBody=oContent.body.storage.value;
 				sContentBody=decodeEntities(sContentBody);
 				self.continueTask([sContentBody]);

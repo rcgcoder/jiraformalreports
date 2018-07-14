@@ -487,6 +487,10 @@ var jrfReport=class jrfReport {
 					theModel.variables.setVar(defaultVar[0],[dtAux1,dtAux2],dtAux2);
 				})
 			}
+			if (isDefined(self.config.interactiveResult)){
+				theModel.variables.setVar("interactiveResult",self.config.interactiveResult);
+			}
+
 			//debugger;
             var arrDates=["ReportInitDate","ReportEndDate","ContractInitDate",
                 "ContractEndDate", "ContractAdvancedDate"];

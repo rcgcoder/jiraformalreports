@@ -49,7 +49,7 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
     				var oContent=JSON.parse(jsonContent);
     				antJsonObject=oContent;
     				var sTitle=oContent.title;
-    				sTitle+=self.replaceVars(self.titlePostpend).saToString().trim();
+    				sTitle+=" "+self.replaceVars(self.titlePostpend).saToString().trim();
                 	cflc.getContentByTitle(sTitle);
     			});            
     			self.addStep("Processing Confluence search Content:"+contentId+" from "+srcUrl,function(jsonContent){

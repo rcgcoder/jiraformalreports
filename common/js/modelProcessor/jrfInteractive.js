@@ -134,7 +134,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			} else {
 				jqElem.css('display', 'none');
 			}
-			jqParent[0].jrfExpanded=true;
+			jqElem[0].jrfExpanded=true;
 			var jqButton=$(theWindow.document.body).find('#btn'+childId);
 			jqButton.click();
 		});

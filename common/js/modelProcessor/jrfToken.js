@@ -615,11 +615,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	}
 	replaceVars(sText,inOtherParams,bReplaceVars){
 		var self=this;
-		var sTextToLog=sText.saRemoveInnerHtmlTags().saTrim().saToString();
+//		var sTextToLog=sText.saRemoveInnerHtmlTags().saTrim().saToString();
 		//if (sTextToLog=="{{ AST_HHAccumFaseImplementacion }} + {{  AST_HHDespliegue }}"){
 			//debugger;
 		//}
-		log("Replace Vars of:"+sTextToLog);
+//		log("Replace Vars of:"+sTextToLog);
 	//	debugger;
 		var iReplaced=0;
 		var otherParams=self.newReplaceParams(inOtherParams);

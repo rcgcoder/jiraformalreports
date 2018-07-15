@@ -701,7 +701,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		if (!findComma.bLocated){
 			sVarName=findComma.arrPrevious.saTrim();
 		} else {
-			debugger;
+//			debugger;
 			sVarName=findComma.arrPrevious.saTrim();
 			atDatetime=findComma.arrPosterior.saTrim();
 			atDatetime=self.variables.getVar(atDatetime);

@@ -235,7 +235,9 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				    log(varName+" Variable Stack Elements:"+vVar.length());
 				}
 				catch(err) {
-					log(varName+" Error retrieving variable:["+varName+"]... trying again to debug");
+					loggerFactory.getLogger().enabled=true
+					log(varName+" Error retrieving variable:["+varName+"]... trying again launch exception to debug");
+					loggerFactory.getLogger().enabled=false;
 					vVar=self.variables.getVars(varName);
 				}
 				

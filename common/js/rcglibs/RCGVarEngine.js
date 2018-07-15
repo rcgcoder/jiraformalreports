@@ -182,7 +182,7 @@ var RCGVarEngine=class RCGVarEngine{ //this kind of definition allows to hot-rel
 			hsEnv=self.localVars[varsLevel];
 		} else if ((varsLevel<0)&&(Math.abs(varsLevel)<self.localVars.length)){
 			hsEnv=self.localVars[(self.localVars.length-1)+varsLevel];
-		} else {
+		} else { 
 			log("Vars level "+ varsLevel + "is out of bounds -"+(self.localVars.length-1)+" .. "+(self.localVars.length-1)+" using top vars");
 			hsEnv=self.topVarEnv();
 		} 

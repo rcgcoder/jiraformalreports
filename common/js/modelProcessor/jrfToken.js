@@ -21,6 +21,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.indPreviosContentHtmlBuffer=0;
 		obj.indInnerContentHtmlBuffer=0;
 		obj.indPostContentHtmlBuffer=0;
+		obj.initVarsLevel=obj.getAttrVal("initVarLevel",reportElem,false);
 		obj.initVars=obj.getAttrVal("initVar",reportElem,false);
 		obj.initVarsReuse=obj.getAttrVal("initVarReuse");
 		obj.pushVars=obj.getAttrVal("pushVar");
@@ -158,13 +159,21 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var self=this;
 		var vDefValue="empty";
 		if (isDefined(defaultValue)) vDefValue=defaultValue;
+		var nVarsLevel;
+		if (isDefined(self.initVarsLevel)&&isDefined(sVarsReuse)){
+			var vAux=self.replaceVars(self.initVarsLevel).saToString().trim();
+			if ($.isNumeric(vAux)){
+				nVarsLevel=Math.floor(parseFloat(vAux));
+			}
+		}
+		
 		if (isDefined(sVarsInit)&&(sVarsInit!="")){
 			var arrVars=sVarsInit.split(",");
 			for (var i=0;i<arrVars.length;i++){
 				var arrVarParts=arrVars[i].split("=");
 				var varName=arrVarParts[0].trim();
 				varName=self.replaceVars(varName).saToString().trim();
-				self.variables.initVar(varName);
+				self.variables.initVar(varName,nVarsLevel);
 				var vValue=vDefValue;
 				if (arrVarParts.length>1){
 					vValue=arrVarParts[1];
@@ -179,7 +188,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					}
 				}
 				self.variables.setVar(varName,vValue);
-				log("Initialized Value ["+varName+"] with value ["+vValue+"]");
+				log("Initialized Value ["+varName+"] with value ["+vValue+"]"+ (isDefined(nVarsLevel)?" at level"+nVarsLevel:""));
 			}
 		}
 		if (isDefined(sVarsReuse)&&(sVarsReuse!="")){
@@ -189,7 +198,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				var arrVarParts=arrVars[i].split("=");
 				var varName=arrVarParts[0].trim();
 				if (self.variables.getVars(varName)==""){ // the variable does not exists
-					self.variables.initVar(varName);
+					self.variables.initVar(varName,nVarsLevel);
 					var vValue=vDefValue;
 					if (arrVarParts.length>1){
 						vValue=arrVarParts[1];

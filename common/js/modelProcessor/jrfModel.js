@@ -184,17 +184,22 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 	}
 
 	updateAttributes(tag){
-		var sTag=tag.getTagText();
-		if ((sTag=="")||(isUndefined(sTag))) return;
-		var jqTag=$(sTag);
-		var sResult="";
-		var attrs=jqTag[0].attributes;
-		for (var i=0;i<attrs.length;i++){
-			var element=attrs[i];
-			if (sResult!=""){
-				sResult+="\n";
+		try {
+			var sTag=tag.getTagText();
+			if ((sTag=="")||(isUndefined(sTag))) return;
+			var jqTag=$(sTag);
+			var sResult="";
+			var attrs=jqTag[0].attributes;
+			for (var i=0;i<attrs.length;i++){
+				var element=attrs[i];
+				if (sResult!=""){
+					sResult+="\n";
+				}
+				tag.addAttribute({id:element.name.trim(),value:element.value});
 			}
-			tag.addAttribute({id:element.name.trim(),value:element.value});
+		} catch(except){
+			log("Error is "+tag.getTagText());
+			self.updateAttributes(tag);
 		}
 	}
 	/* 

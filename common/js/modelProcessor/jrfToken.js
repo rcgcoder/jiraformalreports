@@ -336,7 +336,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				self.indPostContentHtmlBuffer=self.pushHtmlBuffer();
 				self.addPostHtml();
 			}
-			var sContentDebug=self.topHtmlBuffer(self.indInnerContentHtmlBuffer).saToString();
+//			var sContentDebug=self.topHtmlBuffer(self.indInnerContentHtmlBuffer).saToString();
 //			if (self.postProcess==""){
 				var sContent=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
 				sContent=self.replaceVars(sContent,undefined,true);

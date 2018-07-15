@@ -111,6 +111,8 @@ export class TabConfig {
         auxObj=$('#toggle_ResultInteractive');
         dfReport["interactiveResult"]=(auxObj.attr("checked")=="checked");
 
+        auxObj=$('#toggle_FullView');
+        dfReport["fullView"]=(auxObj.attr("checked")=="checked");
         
 
         auxObj=$('#toggle_RootsByProject');
@@ -238,6 +240,8 @@ export class TabConfig {
         auxObj=$('#toggle_ResultInteractive');
         if(isDefined(config.interactiveResult)&&config.interactiveResult)auxObj.attr("checked","checked");
         
+        auxObj=$('#toggle_FullView');
+        if(isDefined(config.fullView)&&config.fullView)auxObj.attr("checked","checked");
         
         auxObj=$('#toggle_SaveResult');
         if(isDefined(config.SaveResult)&&config.SaveResult)auxObj.attr("checked","checked");

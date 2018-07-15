@@ -490,7 +490,9 @@ var jrfReport=class jrfReport {
 			if (isDefined(self.config.interactiveResult)){
 				theModel.variables.setVar("interactiveResult",self.config.interactiveResult);
 			}
-
+			if (isDefined(self.config.interactiveResult)){
+				theModel.variables.setVar("fullView",self.config.fullView);
+			}
 			//debugger;
             var arrDates=["ReportInitDate","ReportEndDate","ContractInitDate",
                 "ContractEndDate", "ContractAdvancedDate"];

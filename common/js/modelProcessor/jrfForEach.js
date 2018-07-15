@@ -153,7 +153,9 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 						var sHideCaption="Hide ("+ treeNode.length() +") rows";
 						sInsertInTd+='<button id="btn'+treeNodeId+'" onclick="modelInteractiveFunctions.changeDisplayChildRow(\''+treeNodeId+'\',false,window,\''+sShowCaption+'\',\''+sHideCaption+'\')">'+sShowCaption+'</button>';
 					}
-					self.model.htmlStack.saReplace(iPosTR,5,sInsertInTd+'</td>');
+					if (self.model.report.config.interactiveResult){
+						self.model.htmlStack.saReplace(iPosTR,5,sInsertInTd+'</td>');
+					}
 					var parentNodeId=self.variables.getVar("recursiveNodeId");
 					if (parentNodeId!=""){
 						self.model.htmlStack.saReplace(initTR,3,'<tr style="display:none" ');

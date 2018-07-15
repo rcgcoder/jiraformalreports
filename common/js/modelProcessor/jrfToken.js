@@ -407,9 +407,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					theEvent="modelInteractiveFunctions.openNewWindow('"+newId+"',window,'"+btnId+"','"+capHidden+"','"+capShowed+"')";
 					withDiv=false;
 				} 
-				self.addHtml('<button id="'+btnId+'" onclick="'+theEvent+'">'+capHidden+'</button>');
-				if (withDiv){
-					self.addHtml('<div id="'+newId+'" style="display: none"></div>');
+				if (self.model.report.config.interactiveResult){
+					self.addHtml('<button id="'+btnId+'" onclick="'+theEvent+'">'+capHidden+'</button>');
+					if (withDiv){
+						self.addHtml('<div id="'+newId+'" style="display: none"></div>');
+					}
 				}
 			}
 		}

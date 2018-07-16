@@ -198,6 +198,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 				tag.addAttribute({id:element.name.trim(),value:element.value});
 			}
 		} catch(except){
+			alert("The tag:"+tag.getTagText()+ "may be malformed.\n Please check the model");
 			log("Error is "+tag.getTagText());
 			self.updateAttributes(tag);
 		}

@@ -10,11 +10,12 @@ var jrfSum=class jrfSum extends jrfToken{//this kind of definition allows to hot
 		var hsValues=self.variables.getVars(varName);
 		var sValue=0;
 		if (hsValues==""){
+			alert("The variable "+self.varName + " ("+varName+") used in tag "+ self.tag.getTagText() + " does not exists.\n My be a model error");
 			loggerFactory.getLogger().enabled=true;
+			debugger;
 			var varName=self.replaceVars(self.varName);
 			var hsValues=self.variables.getVars(varName);
 			loggerFactory.getLogger().enabled=false;
-			alert("The variable "+self.varName + " ("+varName+") used in tag "+ self.tag.getTagText() + " does not exists.\n My be a model error");
 		}
 		hsValues.walk(function(elem){
 			if (isArray(elem)) elem=elem.saToString();

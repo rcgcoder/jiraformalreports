@@ -23,7 +23,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.indPostContentHtmlBuffer=0;
 		obj.initVarsLevel=obj.getAttrVal("initVarLevel",reportElem,false);
 		obj.initVars=obj.getAttrVal("initVar",reportElem,false);
-		obj.initVarsReuse=obj.getAttrVal("initVarReuse");
+		obj.initVarsReuse=obj.getAttrVal("initVarReuse",reportElem,false);
 		obj.pushVars=obj.getAttrVal("pushVar");
 		obj.setVars=obj.getAttrVal("setVar");
 		obj.inFormat=obj.getAttrVal("informat");
@@ -156,8 +156,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		}
 
 		self.addStep("Pre-Encode part...",function(){
-			self.pushClosureLevel();
 			self.variables.pushVarEnv();
+			self.pushClosureLevel();
 			self.indPreviosContentHtmlBuffer=self.pushHtmlBuffer();
 			if (self.model.report.config.htmlDebug) self.addHtml("<!-- START PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
 			self.addHtml(self.tag.getPreviousHTML());
@@ -181,8 +181,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			self.continueTask();
 		});
 		self.addStep("PostProcess all token and return...",function(){
-			self.variables.popVarEnv();
 			self.popClosureLevel();
+			self.variables.popVarEnv();
 			self.continueTask();
 		});
 		self.continueTask();

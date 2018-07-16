@@ -62,6 +62,7 @@ var jrfReport=class jrfReport {
 	execute(bDontReloadFiles){
 		var self=this;
 		loggerFactory.getLogger().enabled=self.config.logDebug;
+		loggerFactory.getLogger().setAlertOnError(self.config.AlertErrors);
 		self.config.htmlDebug=self.config.logHtmlDebug;
 		
 		//clean the destination html.... to save memory when run more than one intents

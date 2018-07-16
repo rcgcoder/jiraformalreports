@@ -27,7 +27,7 @@ class LoggerFactory{
 	   }
 	   return self.loggers[sPID];
 	}
-	removeLooger(){
+	removeLogger(){
 		var logger=getLogger();
 		self.loggers[logger.pid]=vUndefined;
 	}
@@ -42,6 +42,7 @@ class RCGLogUtils{
     	self.bAutoTrace=false;
     	self.fncAutoTrace="";
     	self.enabled=true;
+		self.bAlertOnError=false;
     }
 	logClear(){
 		var self=loggerFactory.getLogger();
@@ -67,6 +68,10 @@ class RCGLogUtils{
 		}
 	}
 	*/
+	setAlertOnError(vValue){
+		var self=loggerFactory.getLogger();
+		self.bAlertOnError=vValue;
+	}
 	setLogToBuffer(bVal){
 		var self=loggerFactory.getLogger();
 		self.logToBuffer=bVal;
@@ -80,6 +85,16 @@ class RCGLogUtils{
 		} else {
 			self.bAutoTrace=false;
 		}
+	}
+	logError(sText){
+		var self=loggerFactory.getLogger();
+		var antEnabled=self.enabled;
+		self.enabled=true;
+		log(sText);
+		if (self.bAlertOnError){
+			alert(sText);
+		}
+		self.enabled=antEnabled;
 	}
 	log(sText){
 		var self=loggerFactory.getLogger();

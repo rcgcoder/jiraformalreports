@@ -41,7 +41,49 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.ifConditionResult=true;
 		obj.autoAddPostHtml=true;
 		obj.loadOwnProperties();
+		obj.pushClosureLevel=self.pushClosureLevel;
+		obj.popClosureLevel=self.popClosureLevel;
+		obj.getClosureLevel=self.getClosureLevel;
 	}
+	pushClosureLevel(){
+		var self=this;
+		var hsLevels=self.variables.getVars("ClosureLevel");
+		hsLevels.push(self.variables.localVars.length()-1);
+	}
+	popClosureLevel(){
+		var self=this;
+		var hsLevels=self.variables.getVars("ClosureLevel");
+		var iAct=hsLevels.pop();
+	}
+	getClosureLevel(iLevelRef){
+		var self=this;
+		var hsLevels=self.variables.getVars("ClosureLevel");
+		var iAct;
+		if (isUndefined(iLevelRef)){
+			iAct=hsLevels.top();
+		} else if ((iLevelRef>=0)&&(iLevelRef<hsLevels.lenght())){
+			var nodeAux=hsLevels.getFirst();
+			var iAux=0;
+			while (iAux<iLevelRef){
+				nodeAux=nodeAux.next;
+				iAux++;
+			}
+			iAct=nodeAux.value();
+		} else if ((iLevelRef<0)&&(Math.abs(iLevelRef)<hsLevels.lenght())){
+			var nodeAux=hsLevels.getLast();
+			var iAux=Math.abs(iLevelRef); 
+			while (iAux>0){
+				nodeAux=nodeAux.previous;
+				iAux--;
+			}
+			iAct=nodeAux.value();
+		} else {
+			iAct=hsLevels.top();
+			log("The closure level "+iLevelRef+ " is out of bounds ["+(-1*(hsLevels.lenght()-1))+","+(hsLevels.lenght()-1)+"]. Using top level "+iAct);
+		}
+		return iAct;
+	}
+	
 	pushHtmlBuffer(){return this.model.pushHtmlBuffer();};
 	popHtmlBuffer(index){return this.model.popHtmlBuffer(index);};
 	topHtmlBuffer(index){return this.model.topHtmlBuffer(index);};
@@ -126,6 +168,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		}
 
 		self.addStep("Pre-Encode part...",function(){
+			self.pushClosureLevel();
 			self.variables.pushVarEnv();
 			self.indPreviosContentHtmlBuffer=self.pushHtmlBuffer();
 			if (self.model.report.config.htmlDebug) self.addHtml("<!-- START PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
@@ -151,6 +194,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		});
 		self.addStep("PostProcess all token and return...",function(){
 			self.variables.popVarEnv();
+			self.popClosureLevel();
 			self.continueTask();
 		});
 		self.continueTask();
@@ -166,6 +210,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			var vAux=self.replaceVars(self.initVarsLevel).saToString().trim();
 			if ($.isNumeric(vAux)){
 				nVarsLevel=Math.floor(parseFloat(vAux));
+				nVarsLevel=self.getClosureLevel(nVarsLevel);
 			}
 		}
 		

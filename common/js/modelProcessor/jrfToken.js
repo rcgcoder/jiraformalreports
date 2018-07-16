@@ -48,7 +48,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	pushClosureLevel(){
 		var self=this;
 		var hsLevels=self.variables.getVars("ClosureLevel");
-		hsLevels.push(self.variables.localVars.length()-1);
+		self.variables.pushVar("ClosureLevel",self.variables.localVars.length()-1 );
 	}
 	popClosureLevel(){
 		var self=this;

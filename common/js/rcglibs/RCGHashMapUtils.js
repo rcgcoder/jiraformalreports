@@ -558,11 +558,12 @@ class RCGHashMapFactory{
 		walk(callNode,iProf){
 			var nodAux=this.getFirst();
 			var bContinue=true;
+			var iLoopItem=0;
 			while ((nodAux!="")&&bContinue){
-				bContinue=(callNode(nodAux.value,iProf,nodAux.key)==false?false:true);
+				bContinue=(callNode(nodAux.value,iProf,nodAux.key,iLoopItem++)==false?false:true);
 				
 				for (var i=0;(i<nodAux.brothers.length)&&bContinue;i++){
-					bContinue=(callNode(nodAux.brothers[i].value,iProf,nodAux.key)==false?false:true);
+					bContinue=(callNode(nodAux.brothers[i].value,iProf,nodAux.key,iLoopItem++)==false?false:true);
 				}
 				nodAux=nodAux.next;
 			}

@@ -2,6 +2,10 @@
 	<div class="aui-group">
 	    <div class="aui-item">
 			<div class="flatpack-box">
+				<aui-toggle id="toggle_AlertErrors" 
+			                        label="Alert on Error"
+			                        ></aui-toggle>Alert On Error
+			    <br>
 				<aui-toggle id="toggle_DebugLogs" 
 			                        label="Enable logging (reduce the speed)"
 			                        ></aui-toggle>Enable Debug Log
@@ -61,10 +65,6 @@
 							(onApply)="onChangeDefaultVariables($event)"
 							>
 						</dlgEditableList>
-					</div>
-				</div>
-				<div class="aui-group">
-				    <div class="aui-item">
 						<button (click)="executeReport()" class="aui-button">Execute the Report</button>
 						<button (click)="freeMemory()" class="aui-button">Free Memory</button>
 						<button (click)="killTasks()" class="aui-button">Kill Tasks</button>

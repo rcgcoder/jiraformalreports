@@ -105,6 +105,9 @@ export class TabConfig {
         auxObj=$('#toggle_RootsByJQL');
         dfReport["rootsByJQL"]=(auxObj.attr("checked")=="checked");
 
+        auxObj=$('#toggle_AlertErrors');
+        dfReport["AlertErrors"]=(auxObj.attr("checked")=="checked");
+
         auxObj=$('#toggle_EnsureDependentIssues');
         dfReport["getIssuesNotInScope"]=(auxObj.attr("checked")=="checked");
 
@@ -252,6 +255,9 @@ export class TabConfig {
         auxObj=$('#toggle_ShowCheckingElements');
         if(isDefined(config.withComprobations)&&config.withComprobations)auxObj.attr("checked","checked");
 
+        auxObj=$('#toggle_AlertErrors');
+        if(isDefined(config.AlertErrors)&&config.AlertErrors)auxObj.attr("checked","checked");
+        
         
         auxObj=System.getAngularObject('linkTypesConfiguration',true);
         if (isDefined(config.allIssueLinkTypes)){

@@ -231,6 +231,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			for (var i=0;i<arrVars.length;i++){
 				var arrVarParts=arrVars[i].split("=");
 				var varName=arrVarParts[0].trim();
+				varName=self.replaceVars(varName).saToString().trim();
 				if (self.variables.getVars(varName)==""){ // the variable does not exists
 					self.variables.initVar(varName,nVarsLevel);
 					var vValue=vDefValue;

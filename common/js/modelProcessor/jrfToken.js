@@ -160,8 +160,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var vDefValue="empty";
 		if (isDefined(defaultValue)) vDefValue=defaultValue;
 		var nVarsLevel;
-		if ((self.initVarsLevel!="")||(sVarsReuse!="")){
-			debugger;
+		var bDefinedLevel=false;
+		if (isDefined(self.initVarsLevel)&&(self.initVarsLevel!="")){
 			var vAux=self.replaceVars(self.initVarsLevel).saToString().trim();
 			if ($.isNumeric(vAux)){
 				nVarsLevel=Math.floor(parseFloat(vAux));

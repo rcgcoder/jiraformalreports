@@ -1,6 +1,6 @@
 var jrfSum=class jrfSum extends jrfToken{//this kind of definition allows to hot-reload
 	loadOwnProperties(){
-		this.varName=this.getAttrVal("var",reportElem,false);
+		this.varName=this.getAttrVal("var",self.reportElem,false);
 	}
 	
 	apply(){

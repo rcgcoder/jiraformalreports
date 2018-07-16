@@ -25,7 +25,7 @@ var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition al
 		var iLoopIndex=0;
 		var iLoopElemsCount=self.loopElements.length();
 		var bCancelLoop=false;
-		self.loopElements.walk(function(loopElem){
+		self.loopElements.walk(function(loopElem,iDeep,iLoopIndex){
 			self.addStep("Processing the Loop item:"+iLoopIndex + " of " +iLoopElemsCount,function(){
 				self.variables.pushVar("LoopIndex",iLoopIndex );
 				if (!bCancelLoop) {
@@ -40,7 +40,6 @@ var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition al
 				self.variables.popVar("LoopIndex");
 				self.continueTask();
 			});
-			iLoopIndex++;
 		});
 		self.addStep("Ending processing the Loop",function(){
 			self.loopEnd();

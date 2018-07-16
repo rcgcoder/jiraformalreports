@@ -1,12 +1,13 @@
 var jrfSum=class jrfSum extends jrfToken{//this kind of definition allows to hot-reload
 	loadOwnProperties(){
-		this.varName=this.getAttrVal("var").trim();
+		this.varName=this.getAttrVal("var",reportElem,false);
 	}
 	
 	apply(){
 		var self=this;
 		//debugger;
-		var hsValues=self.variables.getVars(self.varName);
+		var varName=self.replaceVars(self.varName);
+		var hsValues=self.variables.getVars(varName);
 		var sValue=0;
 		if (hsValues==""){
 			alert("The variable "+self.varName+" does not exists. My be a model error");

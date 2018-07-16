@@ -318,7 +318,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				log("Looking for Value ["+varName+"] pushed:["+varValue+"]");
 				var vVar=self.variables.getVars(varName);
 				if (vVar==""){
-					log("The var ["+varName+"] does not exists");
+					alert("The var ["+varName+"] ("+arrVarParts[0].trim()+") does not exists check the model");
 					// repeat the search();
 					vVar=self.variables.getVars(varName);
 				}

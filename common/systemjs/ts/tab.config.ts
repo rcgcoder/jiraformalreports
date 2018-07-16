@@ -113,6 +113,9 @@ export class TabConfig {
 
         auxObj=$('#toggle_FullView');
         dfReport["fullView"]=(auxObj.attr("checked")=="checked");
+
+        auxObj=$('#toggle_ShowCheckingElements');
+        dfReport["withComprobations"]=(auxObj.attr("checked")=="checked");
         
 
         auxObj=$('#toggle_RootsByProject');
@@ -245,6 +248,9 @@ export class TabConfig {
         
         auxObj=$('#toggle_SaveResult');
         if(isDefined(config.SaveResult)&&config.SaveResult)auxObj.attr("checked","checked");
+
+        auxObj=$('#toggle_ShowCheckingElements');
+        if(isDefined(config.withComprobations)&&config.withComprobations)auxObj.attr("checked","checked");
 
         
         auxObj=System.getAngularObject('linkTypesConfiguration',true);

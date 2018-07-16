@@ -61,7 +61,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var iAct;
 		if (isUndefined(iLevelRef)){
 			iAct=hsLevels.top();
-		} else if ((iLevelRef>=0)&&(iLevelRef<hsLevels.lenght())){
+		} else if ((iLevelRef>=0)&&(iLevelRef<hsLevels.length())){
 			var nodeAux=hsLevels.getFirst();
 			var iAux=0;
 			while (iAux<iLevelRef){
@@ -69,7 +69,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				iAux++;
 			}
 			iAct=nodeAux.value();
-		} else if ((iLevelRef<0)&&(Math.abs(iLevelRef)<hsLevels.lenght())){
+		} else if ((iLevelRef<0)&&(Math.abs(iLevelRef)<hsLevels.length())){
 			var nodeAux=hsLevels.getLast();
 			var iAux=Math.abs(iLevelRef); 
 			while (iAux>0){
@@ -79,7 +79,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			iAct=nodeAux.value();
 		} else {
 			iAct=hsLevels.top();
-			log("The closure level "+iLevelRef+ " is out of bounds ["+(-1*(hsLevels.lenght()-1))+","+(hsLevels.lenght()-1)+"]. Using top level "+iAct);
+			log("The closure level "+iLevelRef+ " is out of bounds ["+(-1*(hsLevels.length()-1))+","+(hsLevels.length()-1)+"]. Using top level "+iAct);
 		}
 		return iAct;
 	}

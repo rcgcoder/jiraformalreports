@@ -91,7 +91,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 			
 			if ((self.subType=="row")||(self.subType=="subrow")){
 			/*	if (isDefined(self.reportElem.getKey)&&(self.reportElem.getKey()=="NOTIFLOPD-124")){
-					debugger;
+					//debugger;
 				} */
 				var treeParentId=self.variables.getVar("recursiveNodeId");
 				var treeNode=newHashMap();

@@ -10,7 +10,7 @@ var jrfSum=class jrfSum extends jrfToken{//this kind of definition allows to hot
 		var hsValues=self.variables.getVars(varName);
 		var sValue=0;
 		if (hsValues==""){
-			alert("The variable "+self.varName+" does not exists. My be a model error");
+			alert("The variable "+self.varName+" used in tag "+ self.tag.getTagText() + " does not exists. My be a model error");
 		}
 		hsValues.walk(function(elem){
 			if (isArray(elem)) elem=elem.saToString();

@@ -86,6 +86,12 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		}
 		
 		self.addStep("Start processing Element in For Each",function(){
+			var iPosTR=self.model.htmlStack.saFindPos("<tr",true);
+			if (index==0){
+				debugger;
+				self.rowPrePendHtml=self.model.htmlStack.saSubstring(iPosTR);
+			}
+			
 			self.addHtml("<!-- START INNER LOOP OF ITEM "+ (self.processedItemNumber) + " IN FOREACH JRF TOKEN -->");
 			if (self.bAllRoots) self.model.processingRoot=newParent;
 			self.variables.pushVarEnv();
@@ -103,14 +109,9 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				}
 				self.variables.pushVar("recursiveNodeId",treeNodeId);
 				
-				var iPosTR=self.model.htmlStack.saFindPos("<tr",true);
 				self.variables.pushVar("InitTR_Pos",iPosTR);
 				if (iPosTR>=0){
 					self.model.htmlStack.saReplace(iPosTR,3,'<tr id="'+treeNodeId+'" ');
-				}
-				if (index==0){
-					debugger;
-					self.rowPrePendHtml=self.model.htmlStack.saSubstring(iPosTR);
 				}
 			}
 			self.continueTask();
@@ -182,7 +183,8 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					if (index<(loopLength-1)){
 						// intermediate row
 						self.addHtml('<!-- ADDED BY FOREACH ROW ==>>  --></td></tr>');
-						self.addHtml(self.rowPrePendHtml+'<!-- <== ADDED BY FOREACH ROW -->');
+						self.addHtml(self.rowPrePendHtml);
+						self.addHtml('<!-- <== ADDED BY FOREACH ROW -->');
 						//<tr><td></td><td><!-- <== ADDED BY FOREACH ROW -->');
 					}
 				} else if ((self.subType=="subrow")

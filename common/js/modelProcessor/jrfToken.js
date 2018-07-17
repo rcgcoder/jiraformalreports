@@ -194,7 +194,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var nVarsLevel;
 		var bDefinedLevel=false;
 		if (isDefined(self.initVarsLevel)&&(self.initVarsLevel!="")){
-			debugger;
+			//debugger;
 			var vAux=self.replaceVars(self.initVarsLevel).saToString().trim();
 			if ($.isNumeric(vAux)){
 				nVarsLevel=Math.floor(parseFloat(vAux));
@@ -371,6 +371,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			}
 			self.applyInitVars();
 			if (self.activateVar!=""){
+				debugger;
 				self.activeVar=self.variables.getVar(self.activateVar.saToString().trim());
 			}
 		}
@@ -748,7 +749,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		if (!findComma.bLocated){
 			sVarName=findComma.arrPrevious.saTrim();
 		} else {
-//			debugger;
+//			//debugger;
 			sVarName=findComma.arrPrevious.saTrim();
 			atDatetime=findComma.arrPosterior.saTrim();
 			atDatetime=self.variables.getVar(atDatetime);

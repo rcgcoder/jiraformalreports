@@ -88,7 +88,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		self.addStep("Start processing Element in For Each",function(){
 			var iPosTR=self.model.htmlStack.saFindPos("<tr",true);
 			if (index==0){
-				debugger;
+				//debugger;
 				self.rowPrePendHtml=self.model.htmlStack.saSubstring(iPosTR);
 			}
 			

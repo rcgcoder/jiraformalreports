@@ -169,6 +169,10 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		self.addStep("Encode part...",function(){
 			if (self.ifConditionResult){
 				//log(self.topHtmlBuffer(self.indHtmlBuffer-2));
+				if (self.activateVar!=""){
+					debugger;
+					self.activeVar=self.variables.getVar(self.activateVar.saToString().trim());
+				}
 				self.apply(); // the apply function not returns anything... only writes text to buffer
 				//log(self.topHtmlBuffer(self.indHtmlBuffer-2));
 			}
@@ -370,10 +374,6 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				});
 			}
 			self.applyInitVars();
-			if (self.activateVar!=""){
-				debugger;
-				self.activeVar=self.variables.getVar(self.activateVar.saToString().trim());
-			}
 		}
 	}
 	endApplyToken(){

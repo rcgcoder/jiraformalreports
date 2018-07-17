@@ -316,7 +316,7 @@ Array.prototype.saFindPos=function(sTargetText,bFromEnd,initPos){
 	iPos+=nLetters;
 	return iPos;
 }
-Array.prototype.saSubstr=function(iPosStart,iPosEnd){
+Array.prototype.saSubstring=function(iPosStart,iPosEnd){
 	var self=this;
 	var iPos=0;
 	var nLetters=-1;

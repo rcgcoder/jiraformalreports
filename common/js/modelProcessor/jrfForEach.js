@@ -13,6 +13,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		}
 */		
 		//debugger;
+		self.rowPrePendHtml="";
 		self.counter=0;
 		self.parentId="";
 		self.childId="";
@@ -107,6 +108,9 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				if (iPosTR>=0){
 					self.model.htmlStack.saReplace(iPosTR,3,'<tr id="'+treeNodeId+'" ');
 				}
+				if (index==0){
+					self.rowPrePendHtml=self.model.topHtmlBuffer(iPosTR,false);
+				}
 			}
 			self.continueTask();
 		});
@@ -176,7 +180,9 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					 ){
 					if (index<(loopLength-1)){
 						// intermediate row
-//						self.addHtml('<!-- ADDED BY FOREACH ROW ==>>  --></td></tr><tr id="palacio"><td><!-- <== ADDED BY FOREACH ROW -->');
+						self.addHtml('<!-- ADDED BY FOREACH ROW ==>>  --></td></tr>');
+						self.addHtml(self.rowPrePendHtml+'<!-- <== ADDED BY FOREACH ROW -->');
+						//<tr><td></td><td><!-- <== ADDED BY FOREACH ROW -->');
 					}
 				} else if ((self.subType=="subrow")
 //							&&(bLastShowed)

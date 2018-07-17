@@ -130,7 +130,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 //		log("PUSH HTMLBuffer new length:"+indStack);
 		return indStack;
 	}
-	topHtmlBuffer(fromIndex){
+	topHtmlBuffer(fromIndex,bWithLineCount){
 		var self=this;
 //		var sResult="";
 		var sResult=[];
@@ -147,7 +147,11 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		}
 		var i=newInd;
 		for (var i=newInd;i<self.htmlStack.length;i++){
-			sResult.push("\n" + i +" - " + self.htmlStack[i]);
+			if (isUndefined(bWithLineCount)|| (isDefined(bWithLineCount)&&bWithLineCount)){
+				sResult.push("\n" + i +" - " + self.htmlStack[i]);
+			} else {
+				sResult.push(self.htmlStack[i]);
+			}
 		}
 		return sResult;
 	}

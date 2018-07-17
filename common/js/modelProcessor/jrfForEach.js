@@ -118,7 +118,11 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		});
 		self.addStep("Processing Element in For Each",function(){
 			self.addStep("Processing all Childs elements",function(){
-				self.processAllChilds(self.tag.getChilds(),newParent);
+				if (isDefined(self.activeVar)){
+					self.processAllChilds(self.tag.getChilds(),self.activeVar);
+				} else {
+					self.processAllChilds(self.tag.getChilds(),newParent);
+				}
 			});
 			//self.updateTrId(0,"inLoop");
 			if ((self.recursive!="")&&((self.replaceVarsAndExecute(self.recursive)+"").trim().toLowerCase()=="true")){

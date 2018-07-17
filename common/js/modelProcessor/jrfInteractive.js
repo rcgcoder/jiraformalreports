@@ -134,9 +134,13 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			} else {
 				jqElem.css('display', 'none');
 			}
-			jqElem[0].jrfExpanded=true;
+			if (jqElem.length>0){
+				jqElem[0].jrfExpanded=true;
+			}
 			var jqButton=$(theWindow.document.body).find('#btn'+childId);
-			jqButton.click();
+			if (jqButton.length>0){
+				jqButton.click();
+			}
 		});
 	}
 

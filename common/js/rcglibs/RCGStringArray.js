@@ -328,17 +328,32 @@ Array.prototype.saSubstring=function(iPosStart,iPosEnd){
 	var accumLetters=0;
 	var selfLength=self.length;
 	var iPosAux=iPosStart;
-	var sResult="";
+	var sResult=[];
+	var iResultLenght=0;
 	while (iBlock<selfLength){
 		sAux=self[iBlock];
 		if (iPosAux-sAux.length>0){
 			iPosAux-=sAux.length;
 		} else {
-			sResult=sAux.substring(iPosAux,sAux.length);
-			if (nLetters>0);{
-				if (sResult.length>nLetters){
-					return sResult.substring(0,nLetters);
-				}
+			sAux=sAux.substring(iPosAux,sAux.length);
+			sResult.push(sAux);
+			iResultLength+=sAux.length;
+			iBlock++;
+			while ((iBlock<selfLength) &&((iResultLength<nLetters)||(nLetters<=0))){
+				sAux=self[iBlock];
+				sResult.push(sAux);
+				iResultLength+=sAux.length;
+				iBlock++;
+			}
+			if (nLetters<=0){
+				return sResult;
+			} else if (iResultLength>nLetters){
+				sAux=sResult.pop();
+				var nTotalAct=iResultLength-sAux.lenght;
+				var iDiff=nLetters-nTotalAct;
+				sAux=sAux.substring(0,iDiff);
+				sResult.push(sAux);
+				return sResult;
 			}
 		}
 		iBlock++;

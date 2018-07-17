@@ -316,6 +316,35 @@ Array.prototype.saFindPos=function(sTargetText,bFromEnd,initPos){
 	iPos+=nLetters;
 	return iPos;
 }
+Array.prototype.saSubstr=function(iPosStart,iPosEnd){
+	var self=this;
+	var iPos=0;
+	var nLetters=-1;
+	if (isDefined(iPosEnd)){
+		nLetters=iPosEnd-iPosStart;
+	}
+	var iBlock=0;
+	var sAux="";
+	var accumLetters=0;
+	var selfLength=self.length;
+	var iPosAux=iPosStart;
+	var sResult="";
+	while (iBlock<selfLength){
+		sAux=self[iBlock];
+		if (iPosAux-sAux.length>0){
+			iPosAux-=sAux.length;
+		} else {
+			sResult=sAux.substring(iPosAux,sAux.length);
+			if (nLetters>0);{
+				if (sResult.length>nLetters){
+					return sResult.substring(0,nLetters);
+				}
+			}
+		}
+		iBlock++;
+	}
+	return sResult;
+}
 Array.prototype.saReplace=function(iPosStart,nLetters,sTextToSet){
 	// first goto to the block....
 	var self=this;
@@ -363,6 +392,9 @@ String.prototype.saRemoveInnerHtmlTags= function (sReplaceText){
 	return [this].saRemoveInnerHtmlTags(sReplaceText);
 };
 
+String.prototype.saSubstring= function (iPosStart,iPosEnd){
+	return [this].saSubstring(iPosStart,iPosEnd);
+};
 String.prototype.saToString= function (){
 	return this;
 };

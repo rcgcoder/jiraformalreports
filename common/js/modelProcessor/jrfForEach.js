@@ -89,7 +89,6 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 			self.addHtml("<!-- START INNER LOOP OF ITEM "+ (self.processedItemNumber) + " IN FOREACH JRF TOKEN -->");
 			if (self.bAllRoots) self.model.processingRoot=newParent;
 			self.variables.pushVarEnv();
-			debugger;
 			
 			if ((self.subType=="row")||(self.subType=="subrow")){
 			/*	if (isDefined(self.reportElem.getKey)&&(self.reportElem.getKey()=="NOTIFLOPD-124")){
@@ -110,7 +109,8 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					self.model.htmlStack.saReplace(iPosTR,3,'<tr id="'+treeNodeId+'" ');
 				}
 				if (index==0){
-					self.rowPrePendHtml=self.model.topHtmlBuffer(iPosTR,false);
+					debugger;
+					self.rowPrePendHtml=self.model.htmlStack.saSubstring(iPosTR);
 				}
 			}
 			self.continueTask();

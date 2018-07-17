@@ -329,7 +329,7 @@ Array.prototype.saSubstring=function(iPosStart,iPosEnd){
 	var selfLength=self.length;
 	var iPosAux=iPosStart;
 	var sResult=[];
-	var iResultLenght=0;
+	var iResultLength=0;
 	while (iBlock<selfLength){
 		sAux=self[iBlock];
 		if (iPosAux-sAux.length>0){

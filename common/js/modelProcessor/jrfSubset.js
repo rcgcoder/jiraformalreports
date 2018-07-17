@@ -173,8 +173,8 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 	}
 	bounds(elemsInForEach){
 		var self=this;
-		var startAt=self.replaceVars(self.boundStartAt);
-		var limit=self.replaceVars(self.boundLimit);
+		var startAt=self.replaceVars(self.boundStartAt).replaceInnerHtmlTags().saToString().trim();
+		var limit=self.replaceVars(self.boundLimit).replaceInnerHtmlTags().saToString().trim();
 		if ((startAt=="")&&(limit=="")) return elemsInForEach;
 		var hsResult=newHashMap();
 		if (startAt==""){

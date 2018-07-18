@@ -403,11 +403,13 @@ class RCGJira{
 				if (blkIssues.length==0){
 					debugger;
 					log("There is not issues to process.");
+					fncEndBlock();
+				} else {
+					self.processArrayIssues(blkIssues
+											,auxCbProcessIssue
+											,fncEndBlock
+											,auxCbProcessBlock);
 				}
-				self.processArrayIssues(blkIssues
-										,auxCbProcessIssue
-										,fncEndBlock
-										,auxCbProcessBlock);
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 	//		}
 			);

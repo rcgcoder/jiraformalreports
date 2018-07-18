@@ -260,12 +260,19 @@ var jrfReport=class jrfReport {
 			var arrKeyGroups=[];
 			var keyGroup=[];
 			arrKeyGroups.push(keyGroup);
-			var maxItemsInGroup=10;
+			var maxItemsInGroup=100;
+			var maxLettersInGroup=2000;
+			var grpLength=0;
 			var fncAddToGroup=function(issueKey){
-				if (keyGroup.length>maxItemsInGroup){
+				if ((keyGroup.length>maxItemsInGroup)
+					||
+					(((grpLength+issueKey.length))>maxLettersInGroup)
+					)
+						{
 					keyGroup=[];
 					arrKeyGroups.push(keyGroup);
 				}
+				grpLength+=issueKey.length;
 				keyGroup.push(issueKey);
 				nPending++;
 			}
@@ -367,6 +374,10 @@ var jrfReport=class jrfReport {
 			if (self.isReusingIssueList()){
 				return self.continueTask();
 			}
+			var tm=self.getTaskManager();
+			tm.asyncTimeWasted=0;
+			tm.asyncTaskCallsBlock=3000;
+			tm.asyncTaskCallsMaxDeep=15;
 			self.rootIssues.walk(function(jsonIssue,iProf,key){
 				log("Root Issue: "+key);
 				var issue=self.allIssues.getById(key);
@@ -466,6 +477,10 @@ var jrfReport=class jrfReport {
 		// load report model and submodels
 		// Process Model with The Report
 		self.addStep("Parsing Model",function(){
+			var tm=self.getTaskManager();
+			tm.asyncTimeWasted=0;
+			tm.asyncTaskCallsBlock=0;
+			tm.asyncTaskCallsMaxDeep=0;
 			var theModel=new jrfModel(self);
 			self.objModel=theModel;
 			if (isDefined(self.config.listDefaultVariables)){

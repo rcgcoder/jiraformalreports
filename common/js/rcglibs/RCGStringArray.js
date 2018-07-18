@@ -21,6 +21,14 @@ Array.prototype.saAppend= function (sText){
 	var self=this;
 	self.push(sText);
 }
+Array.prototype.saLength= function (){
+	var self=this;
+	var iCounter=0;
+	self.forEach(function(sText){
+		iCounter+=sText.length;
+	});
+	return iCounter;
+}
 Array.prototype.saExists= function (sTag){
 	var self=this;
 	if (isString(self))return (self.indexOf(sTag)>=0);
@@ -416,6 +424,10 @@ String.prototype.saToString= function (){
 String.prototype.saTrim= function (){
 	return this.trim();
 };
+String.prototype.saLength= function (){
+	return this.length;
+};
+
 String.prototype.saAppend= function (sText){
 	return this+sText;
 };

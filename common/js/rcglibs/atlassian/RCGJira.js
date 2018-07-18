@@ -399,7 +399,11 @@ class RCGJira{
 					log("End block of JQL ["+jqlAux+"]");
 					self.continueTask();
 				};
-				log("Process Array Issues of block of JQL ["+jqlAux+"]");
+				log("Process Array Issues of block of JQL ["+jqlAux+"] ..."+blkIssues.length);
+				if (blkIssues.length==0){
+					debugger;
+					log("There is not issues to process.");
+				}
 				self.processArrayIssues(blkIssues
 										,auxCbProcessIssue
 										,fncEndBlock

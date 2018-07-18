@@ -263,7 +263,10 @@ var jrfReport=class jrfReport {
 			var maxItemsInGroup=100;
 			var maxLettersInGroup=2000;
 			var grpLength=0;
+			var hsKeyWaiting=newHashMap();
 			var fncAddToGroup=function(issueKey){
+				if (hsKeyWaiting.exists(issueKey)) return;
+				hsKeyWaiting.add(issueKey,issueKey);
 				if ((keyGroup.length>maxItemsInGroup)
 					||
 					(((grpLength+issueKey.length))>maxLettersInGroup)
@@ -278,6 +281,25 @@ var jrfReport=class jrfReport {
 				nPending++;
 			}
 			var hsEpics=newHashMap();
+			var grpEpicsLength=0;
+			var arrEpicGroups=[];
+			var epicGroup=[];
+			arrEpicGroups.push(epicGroup);
+			var fncAddEpicToGroup=function(issueKey){
+				if ((epicGroup.length>maxItemsInGroup)
+					||
+					(((grpEpicsLength+issueKey.length))>maxLettersInGroup)
+					)
+						{
+					epicGroup=[];
+					arrEpicGroups.push(epicGroup);
+					grpEpicsLength=0;
+				}
+				grpEpicsLength+=issueKey.length;
+				epicGroup.push(issueKey);
+			}
+			
+			
 			var nPending=0;
 			var nRetrieved=0;
 			self.addStep("Getting root base issues",function(){
@@ -302,6 +324,22 @@ var jrfReport=class jrfReport {
 						}
 					}
 				});
+				var fncRetrieveEpicGroup=self.createManagedCallback(function(group){
+					if (group.length>0){
+						var sIssues="";
+						group.forEach(function (key){
+							sIssues+=((sIssues!=""?",":"")+key);
+						});
+						if (sIssues!="") {
+							var theJQL='"Epic Link" in ('+sIssues+')';
+							self.addStep("Retrieving issues of Epic Group ["+sIssues+"]",function(){
+								self.jira.processJQLIssues(
+										theJQL,
+										fncProcessEpicChilds);
+							});
+						}
+					}
+				});
 				var fncExtractPendingKeys=self.createManagedCallback(function(jsonIssue){
 					nRetrieved++;
 					var key=jsonIssue.key;
@@ -318,13 +356,7 @@ var jrfReport=class jrfReport {
 					if (iType=="Hito"){
 						if (!hsEpics.exists(key)){
 							hsEpics.add(key,key);
-							var theJQL='"Epic Link" = '+key;
-							self.addStep("Retrieving issues of epic ["+key+"]",function(){
-								self.jira.processJQLIssues(
-										theJQL,
-										fncProcessEpicChilds
-										);
-							});
+							fncAddEpicToGroup(key);
 						}
 					} else {
 						var eLink=issue.fieldValue("Epic Link");
@@ -339,17 +371,34 @@ var jrfReport=class jrfReport {
 							}
 						}
 					}
+					var bRetrievingGroups=((arrKeyGroups.length>1)||(arrEpicGroups.length>1));
 					while(arrKeyGroups.length>1){
 						var group=arrKeyGroups.shift();
 						fncRetrieveGroup(group);
 					} 
-					if (arrKeyGroups.length==1){
-						var group=arrKeyGroups[0];
-						if (((nRetrieved+group.length)==nPending)&&(group.length>0)){
-								arrKeyGroups=[];
-								keyGroup=[];
-								arrKeyGroups.push(keyGroup);
+					while(arrEpicGroups.length>1){
+						var group=arrEpicGroups.shift();
+						fncRetrieveEpicGroup(group);
+					} 
+					if (!bRetrievingGroups){
+						if (arrKeyGroups.length==1){
+							var group=arrKeyGroups[0];
+							if (((nRetrieved+group.length)==nPending)&&(group.length>0)){
+									arrKeyGroups=[];
+									keyGroup=[];
+									arrKeyGroups.push(keyGroup);
+									grpLength=0;
+									fncRetrieveGroup(group);
+							}
+						} else if (arrEpicGroups.length==1){ // there is not issue groups pending..... check last group of epics.
+							var group=arrEpicGroups[0];
+							if (group.length>0){
+								arrEpicGroups=[];
+								epicGroup=[];
+								arrEpicGroups.push(epicGroup);
+								grpEpicsLength=0;
 								fncRetrieveGroup(group);
+							}
 						}
 					}
 				});
@@ -404,9 +453,9 @@ var jrfReport=class jrfReport {
 						bIsChild=fncIsChild(issueChild,issueParent);
 					} catch(err){
 						//debugger;
-						log ("somthing is not good in child formula:"+sFncFormulaChild);
-						log ("using child: "+issueChild.getKey());
-						log ("using parent: "+issueParent.getKey());
+						logError("something is not good in child formula:"+sFncFormulaChild
+								 +"\nusing child: "+issueChild.getKey()
+								 +"\nusing parent: "+issueParent.getKey());
 						bIsChild=false;
 					}
 					if (bIsChild){
@@ -423,9 +472,9 @@ var jrfReport=class jrfReport {
 						bIsAdvPart=fncIsAdvPart(issueChild,issueParent);
 					} catch(err){
 						//debugger;
-						log ("somthing es not good in advance formula:"+sFncFormulaAdv);
-						log ("using child: "+issueChild.getKey());
-						log ("using parent: "+issueParent.getKey());
+						logError("something es not good in advance formula:"+sFncFormulaAdv
+								+"\nusing child: "+issueChild.getKey()
+								+"\nusing parent: "+issueParent.getKey());
 						bIsAdvPart=false;
 					}
 					if (bIsAdvPart){
@@ -617,12 +666,19 @@ var jrfReport=class jrfReport {
 			var arrKeyGroups=[];
 			var keyGroup=[];
 			arrKeyGroups.push(keyGroup);
+			var maxItemsInGroup=100;
+			var maxLettersInGroup=2000;
+			var grpLength=0;
+			var sKeyAux;
 			issuesAdded.walk(function (element){
-				if (keyGroup.length>10){
+				if ((keyGroup.length>maxItemsInGroup)||(grpLength>maxLettersInGroup)){
 					keyGroup=[];
+					grpLength=0;
 					arrKeyGroups.push(keyGroup);
 				}
-				keyGroup.push(element.getKey());
+				sKeyAux=element.getKey();
+				grpLength+=sKeyAux.length;
+				keyGroup.push(sKeyAux);
 			});
 			var fncAddComments=self.createManagedCallback(function(jsonIssues){
 				var oIssues=JSON.parse(jsonIssues);

@@ -86,8 +86,8 @@ class RCGJira{
 		var self=this;
 		var auxCbProcessIssue=function(issueIndex){
 			if ((issueIndex<0)||(issueIndex>=arrIssues.length)) return true;
-			var issue=blkIssues[issueIndex];
-			fncProcessIssue(issue);
+			var issue=arrIssues[issueIndex];
+			fncProcessIssue(issue,issueIndex);
 		}
 
 		var fncItem=self.createManagedCallback(auxCbProcessIssue);

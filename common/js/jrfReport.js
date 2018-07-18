@@ -390,14 +390,16 @@ var jrfReport=class jrfReport {
 									grpLength=0;
 									fncRetrieveGroup(group);
 							}
-						} else if (arrEpicGroups.length==1){ // there is not issue groups pending..... check last group of epics.
-							var group=arrEpicGroups[0];
-							if (group.length>0){
-								arrEpicGroups=[];
-								epicGroup=[];
-								arrEpicGroups.push(epicGroup);
-								grpEpicsLength=0;
-								fncRetrieveEpicGroup(group);
+						} else {
+							if (arrEpicGroups.length==1){ // there is not issue groups pending..... check last group of epics.
+								var group=arrEpicGroups[0];
+								if (group.length>0){
+									arrEpicGroups=[];
+									epicGroup=[];
+									arrEpicGroups.push(epicGroup);
+									grpEpicsLength=0;
+									fncRetrieveEpicGroup(group);
+								}
 							}
 						}
 					}

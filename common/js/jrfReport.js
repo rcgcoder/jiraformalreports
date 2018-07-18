@@ -270,6 +270,7 @@ var jrfReport=class jrfReport {
 					)
 						{
 					keyGroup=[];
+					grpLength=0;
 					arrKeyGroups.push(keyGroup);
 				}
 				grpLength+=issueKey.length;

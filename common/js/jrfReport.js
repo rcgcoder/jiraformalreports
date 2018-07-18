@@ -453,9 +453,21 @@ var jrfReport=class jrfReport {
 						bIsChild=fncIsChild(issueChild,issueParent);
 					} catch(err){
 						//debugger;
+						var chKey="";
+						if (isDefined(issueChild.getKey)){
+							chKey=issueChild.getKey();
+						} else {
+							chKey=issueChild.constructor.name;
+						}
+						var prKey="";
+						if (isDefined(issueParent.getKey)){
+							prKey=issueParent.getKey();
+						} else {
+							prKey=issueParent.constructor.name;
+						}
 						logError("something is not good in child formula:"+sFncFormulaChild
-								 +"\nusing child: "+issueChild.getKey()
-								 +"\nusing parent: "+issueParent.getKey());
+								 +"\nusing child: "+chKey
+								 +"\nusing parent: "+prKey);
 						bIsChild=false;
 					}
 					if (bIsChild){
@@ -472,9 +484,21 @@ var jrfReport=class jrfReport {
 						bIsAdvPart=fncIsAdvPart(issueChild,issueParent);
 					} catch(err){
 						//debugger;
+						var chKey="";
+						if (isDefined(issueChild.getKey)){
+							chKey=issueChild.getKey();
+						} else {
+							chKey=issueChild.constructor.name;
+						}
+						var prKey="";
+						if (isDefined(issueParent.getKey)){
+							prKey=issueParent.getKey();
+						} else {
+							prKey=issueParent.constructor.name;
+						}
 						logError("something es not good in advance formula:"+sFncFormulaAdv
-								+"\nusing child: "+issueChild.getKey()
-								+"\nusing parent: "+issueParent.getKey());
+								 +"\nusing child: "+chKey
+								 +"\nusing parent: "+prKey);
 						bIsAdvPart=false;
 					}
 					if (bIsAdvPart){

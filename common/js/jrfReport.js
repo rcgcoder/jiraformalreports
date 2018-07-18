@@ -297,6 +297,7 @@ var jrfReport=class jrfReport {
 				}
 				grpEpicsLength+=issueKey.length;
 				epicGroup.push(issueKey);
+				nPending++; // its a epic.... but it´s need to know that is a epic issues call is running
 			}
 			
 			
@@ -304,7 +305,10 @@ var jrfReport=class jrfReport {
 			var nRetrieved=0;
 			self.addStep("Getting root base issues",function(){
 				var fncProcessEpicChilds=self.createManagedCallback(function(jsonIssue,index,resultLength){
-					if (index==0) nPending+=resultLength;
+					if (index==0) {
+						nRetrieved++; // the epic issues call is finished... 
+						nPending+=resultLength; // now all the issues are pending....
+					}
 					fncExtractPendingKeys(jsonIssue);
 				});
 				
@@ -383,17 +387,16 @@ var jrfReport=class jrfReport {
 					if (!bRetrievingGroups){
 						if (arrKeyGroups.length==1){
 							var group=arrKeyGroups[0];
+							log(arrEpicGroups.length);
 							if (((nRetrieved+group.length)==nPending)&&(group.length>0)){
 									arrKeyGroups=[];
 									keyGroup=[];
 									arrKeyGroups.push(keyGroup);
 									grpLength=0;
 									fncRetrieveGroup(group);
-							}
-						} else {
-							if (arrEpicGroups.length==1){ // there is not issue groups pending..... check last group of epics.
+							} else if (arrEpicGroups.length==1){ // there is not issue groups pending..... check last group of epics.
 								var group=arrEpicGroups[0];
-								if (group.length>0){
+								if (((nRetrieved+group.length)==nPending)&&(group.length>0)){
 									arrEpicGroups=[];
 									epicGroup=[];
 									arrEpicGroups.push(epicGroup);

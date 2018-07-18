@@ -84,7 +84,13 @@ class RCGJira{
 	}
 	processArrayIssues(arrIssues,fncProcessIssue,fncEndCallback,fncCustomBlockCallback){
 		var self=this;
-		var fncItem=self.createManagedCallback(fncProcessIssue);
+		var auxCbProcessIssue=function(issueIndex){
+			if ((issueIndex<0)||(issueIndex>=arrIssues.length)) return true;
+			var issue=blkIssues[issueIndex];
+			fncProcessIssue(issue);
+		}
+
+		var fncItem=self.createManagedCallback(auxCbProcessIssue);
 		var fncEnd=self.createManagedCallback(fncEndCallback);
 		var fncBlock;
 		if (isDefined(fncCustomBlockCallback)){
@@ -382,34 +388,16 @@ class RCGJira{
 			var innerFork=self.addStep("Processing Issues block: "+blkIssues.length +" of JQL ["+jqlAux+"]",function(){
 				var cbManaged=self.createManagedCallback(auxCbDownBlock);
 				cbManaged(blkIssues);
-				var auxCbProcessIssue=function(issueIndex){
-//					log("Process Issue "+issueIndex+" of JQL ["+jqlAux+"]");
-					var issue=blkIssues[issueIndex];
-					fncProcessIssue(issue);
-/*						var tNow=new Date();
-					while(((new Date())-tNow)<2000){
-						log("Waiting.... its a long process");
-						var tNowAux=new Date()
-						while(((new Date())-tNowAux)<1000){
-							//do nothing
-						}
-					}*/
-				}
 				var fncEndBlock=function(){
 					log("End block of JQL ["+jqlAux+"]");
 					self.continueTask();
 				};
 				log("Process Array Issues of block of JQL ["+jqlAux+"] ..."+blkIssues.length);
-				if (blkIssues.length==0){
-					debugger;
-					log("There is not issues to process.");
-					fncEndBlock();
-				} else {
-					self.processArrayIssues(blkIssues
-											,auxCbProcessIssue
-											,fncEndBlock
-											,auxCbProcessBlock);
-				}
+				self.processArrayIssues(blkIssues
+										,fncProcessIssue
+										,fncEndBlock
+										,auxCbProcessBlock);
+				
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 	//		}
 			);

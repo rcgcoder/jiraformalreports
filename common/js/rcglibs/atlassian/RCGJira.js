@@ -87,7 +87,7 @@ class RCGJira{
 		var auxCbProcessIssue=function(issueIndex){
 			if ((issueIndex<0)||(issueIndex>=arrIssues.length)) return true;
 			var issue=arrIssues[issueIndex];
-			fncProcessIssue(issue,issueIndex);
+			return fncProcessIssue(issue,issueIndex);
 		}
 
 		var fncItem=self.createManagedCallback(auxCbProcessIssue);
@@ -100,7 +100,8 @@ class RCGJira{
 				log("A block");
 			});
 		}
-		processOffline(0,arrIssues.length,fncItem,"issues",fncEnd,fncBlock);
+		//from 0 to end.....
+		processOffline(0,undefined,fncItem,"issues",fncEnd,fncBlock);
 	}
 	getIssueLinkFullList(scopeJQL){
 		var self=this;

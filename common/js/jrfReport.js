@@ -397,7 +397,7 @@ var jrfReport=class jrfReport {
 								epicGroup=[];
 								arrEpicGroups.push(epicGroup);
 								grpEpicsLength=0;
-								fncRetrieveGroup(group);
+								fncRetrieveEpicGroup(group);
 							}
 						}
 					}

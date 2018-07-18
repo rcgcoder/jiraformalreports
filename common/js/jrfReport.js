@@ -303,8 +303,8 @@ var jrfReport=class jrfReport {
 			var nPending=0;
 			var nRetrieved=0;
 			self.addStep("Getting root base issues",function(){
-				var fncProcessEpicChilds=self.createManagedCallback(function(jsonIssue){
-					nPending++;
+				var fncProcessEpicChilds=self.createManagedCallback(function(jsonIssue,index,resultLength){
+					if (index==0) nPending+=resultLength;
 					fncExtractPendingKeys(jsonIssue);
 				});
 				

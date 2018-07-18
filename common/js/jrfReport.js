@@ -320,13 +320,6 @@ var jrfReport=class jrfReport {
 						}
 					}
 				});
-				var fncProcessEpicChilds=self.createManagedCallback(function(jsonIssue,index,resultLength,epicGroupLength){
-					if (index==0) {
-						nRetrieved+=epicGroupLength; // the get epics issues call is finished... increase retrieved each epic called in group
-						nPending+=resultLength; // now all the issues are pending....
-					}
-					fncExtractPendingKeys(jsonIssue);
-				});
 				
 				var fncRetrieveEpicGroup=self.createManagedCallback(function(group){
 					if (group.length>0){
@@ -337,10 +330,14 @@ var jrfReport=class jrfReport {
 						if (sIssues!="") {
 							var theJQL='"Epic Link" in ('+sIssues+')';
 							self.addStep("Retrieving issues of Epic Group ["+sIssues+"]",function(){
-								self.jira.processJQLIssues(
-										theJQL,function(jsonIssue,index,resultLength){
-											fncProcessEpicChilds(jsonIssue,index,resultLength,group.length);
-										});
+								self.jira.processJQLIssues(theJQL);
+							});
+							self.addStep("Procesing all issues Epic Group ["+sIssues+"]",function(response){
+								var arrIssues=response;
+								nRetrieved+=group.length; // the get epics issues call is finished... increase retrieved each epic called in group
+								nPending+=arrIssues.length; // now all the issues are pending....
+								arrIssues.forEach(fncExtractPendingKeys);
+								self.continueTask();
 							});
 						}
 					}

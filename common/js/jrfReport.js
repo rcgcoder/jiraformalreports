@@ -320,6 +320,10 @@ var jrfReport=class jrfReport {
 						}
 					}
 				});
+				var fncProcessEpicChilds=self.createManagedCallback(function(jsonIssue,index,resultLength){
+					if (index==0) nPending+=resultLength; // now all the issues are pending....
+					fncExtractPendingKeys(jsonIssue);
+				});
 				
 				var fncRetrieveEpicGroup=self.createManagedCallback(function(group){
 					if (group.length>0){
@@ -330,13 +334,10 @@ var jrfReport=class jrfReport {
 						if (sIssues!="") {
 							var theJQL='"Epic Link" in ('+sIssues+')';
 							self.addStep("Retrieving issues of Epic Group ["+sIssues+"]",function(){
-								self.jira.processJQLIssues(theJQL);
+								self.jira.processJQLIssues(theJQL,fncProcessEpicChilds);
 							});
-							self.addStep("Procesing all issues Epic Group ["+sIssues+"]",function(response){
-								var arrIssues=response;
+							self.addStep("Finish Retrieving issues of Epic Group ["+sIssues+"]",function(){
 								nRetrieved+=group.length; // the get epics issues call is finished... increase retrieved each epic called in group
-								nPending+=arrIssues.length; // now all the issues are pending....
-								arrIssues.forEach(fncExtractPendingKeys);
 								self.continueTask();
 							});
 						}
@@ -385,7 +386,7 @@ var jrfReport=class jrfReport {
 					if (!bRetrievingGroups){
 						if (arrKeyGroups.length==1){
 							var group=arrKeyGroups[0];
-							log(arrEpicGroups.length);
+							log("Epics Groups:"+arrEpicGroups.length + " First Group Epics:" + arrEpicGroups[0].length);
 							if (((nRetrieved+group.length)==nPending)&&(group.length>0)){
 									arrKeyGroups=[];
 									keyGroup=[];

@@ -452,19 +452,24 @@ var jrfReport=class jrfReport {
 					try{
 						bIsChild=fncIsChild(issueChild,issueParent);
 					} catch(err){
+						var fncGetKey=function(issueAux){
+							var issKey="";
+							if (isDefined(issueAux.getKey)){
+								issKey=issueAux.getKey();
+							} else {
+								if (isString(issueAux)){
+									issKey="String ->" + issueAux;
+								} else if (isArray(issueParent)){
+									issKey="Array ->" + issueAux;
+								} else {
+									issKey=issueAux.constructor.name;
+								}
+							}
+							return issKey;
+						}
 						//debugger;
-						var chKey="";
-						if (isDefined(issueChild.getKey)){
-							chKey=issueChild.getKey();
-						} else {
-							chKey=issueChild.constructor.name;
-						}
-						var prKey="";
-						if (isDefined(issueParent.getKey)){
-							prKey=issueParent.getKey();
-						} else {
-							prKey=issueParent.constructor.name;
-						}
+						var chKey=fncGetKey(issueChild);
+						var prKey=fncGetKey(issueParent);
 						logError("something is not good in child formula:"+sFncFormulaChild
 								 +"\nusing child: "+chKey
 								 +"\nusing parent: "+prKey);

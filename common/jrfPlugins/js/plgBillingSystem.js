@@ -393,6 +393,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     }
     getBillingSnapShot(atDatetime,hourCost,minFacturableFase){
     	var self=this;
+    	debugger;
     	var objImportes=self.initializeBilling(atDatetime,hourCost,minFacturableFase);
 		var tReal=objImportes.source.timespent;
 		var tEstimado=objImportes.source.timeoriginalestimate;

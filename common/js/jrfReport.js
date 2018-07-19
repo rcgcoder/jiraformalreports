@@ -334,6 +334,7 @@ var jrfReport=class jrfReport {
 						if (sIssues!="") {
 							var theJQL='"Epic Link" in ('+sIssues+')';
 							self.addStep("Retrieving issues of Epic Group ["+sIssues+"]",function(){
+								
 								self.jira.processJQLIssues(theJQL,fncProcessEpicChilds);
 							});
 							self.addStep("Finish Retrieving issues of Epic Group ["+sIssues+"]",function(){

@@ -449,7 +449,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 				if (tipo=="Despliegue") {	// si es un despliegue se pone en la fase 4
 					objImportes.importesReales[self.getFieldFaseBillingName(4)]=1;
 				}
-			} 
+			}
 			for (var nFase=1;nFase<5;nFase++){
 				fieldFaseName=self.getFieldFaseBillingName(nFase);
 				vPorc=objImportes.importesReales[fieldFaseName];

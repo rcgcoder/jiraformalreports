@@ -86,6 +86,9 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		}
 		
 		self.addStep("Start processing Element in For Each",function(){
+			self.variables.pushVar("LoopElemsCount",loopLength);
+			self.variables.pushVar("LoopIndex",index);
+			
 			var iPosTR=self.model.htmlStack.saFindPos("<tr",true);
 			if (index==0){
 				//debugger;
@@ -205,6 +208,8 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				} else {
 					self.addPostHtml();
 				}
+				self.variables.popVar("LoopIndex");
+				self.variables.popVar("LoopElemsCount");
 				self.continueTask();
 			});
 			self.continueTask();

@@ -3,6 +3,8 @@ var jrfDebug=class jrfDebug extends jrfNoop{//this kind of definition allows to 
 		super.loadOwnProperties();
 		var self=this;
 		self.postProcess="false";
+		debugger;
+		self.logText=self.getAttrVal("text");
 		self.logAfterBreak=self.getAttrVal("continueLog");
 		self.antLogStatus=loggerFactory.getLogger().enabled;
 	}
@@ -10,8 +12,12 @@ var jrfDebug=class jrfDebug extends jrfNoop{//this kind of definition allows to 
 		var self=this;
 		self.antLogStatus=loggerFactory.getLogger().enabled;
 		loggerFactory.getLogger().enabled=true;
-		log("Hardcoded breakPoint!!");
-		debugger;
+		//log("Hardcoded breakPoint!!");
+		if (self.logText.saToString().trim()!=""){
+			console.log(self.logText);
+		} else {
+			debugger;
+		}
 		super.apply();
 	}
 	endApplyToken(){

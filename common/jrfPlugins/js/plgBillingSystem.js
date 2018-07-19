@@ -447,7 +447,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 			objImportes.importesReales.Total=totalReal;
 			if (acumFasesReal.toFixed(1)==0) {
 				if (tipo=="Despliegue") {	// si es un despliegue se pone en la fase 4
-					objImportes.importesReales[fncGetFieldFase(4)]=1;
+					objImportes.importesReales[self.getFieldFaseBillingName(4)]=1;
 				}
 			} 
 			for (var nFase=1;nFase<5;nFase++){

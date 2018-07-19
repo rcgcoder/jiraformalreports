@@ -11,11 +11,11 @@ var jrfDebug=class jrfDebug extends jrfNoop{//this kind of definition allows to 
 	apply(){
 		var self=this;
 		self.antLogStatus=loggerFactory.getLogger().enabled;
-		loggerFactory.getLogger().enabled=true;
-		//log("Hardcoded breakPoint!!");
 		if (self.logText.saToString().trim()!=""){
 			console.log(self.logText);
 		} else {
+			loggerFactory.getLogger().enabled=true;
+			log("Hardcoded breakPoint!!");
 			debugger;
 		}
 		super.apply();

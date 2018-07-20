@@ -99,7 +99,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				self.rowPrePendHtml=self.model.htmlStack.saSubstring(iPosTR);
 			}
 			
-			self.addHtml("<!-- START INNER LOOP OF ITEM "+ (self.processedItemNumber) + " IN FOREACH JRF TOKEN -->");
+//			self.addHtml("<!-- START INNER LOOP OF ITEM "+ (self.processedItemNumber) + " IN FOREACH JRF TOKEN -->");
 			if (self.bAllRoots) self.model.processingRoot=newParent;
 			self.variables.pushVarEnv();
 			
@@ -135,7 +135,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 			if ((self.recursive!="")&&((self.replaceVarsAndExecute(self.recursive)+"").trim().toLowerCase()=="true")){
 				log("Recursive!");
 				self.addStep("Encoding recursive childs...",function(){
-					self.addHtml("<!-- Start Recursive -->");
+//					self.addHtml("<!-- Start Recursive -->");
 					self.variables.pushVarEnv();
 					var iDeep=self.variables.getVar("RecursiveDeep");
 					if (iDeep==""){
@@ -149,7 +149,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					self.encode();
 				});
 				self.addStep("Encoding recursive childs...",function(){
-					self.addHtml("<!-- End Recursive -->");
+//					self.addHtml("<!-- End Recursive -->");
 					self.variables.popVar("RecursiveDeep");
 					self.reportElem=self.variables.popVar("parentRecursiveElement");
 					self.variables.popVarEnv();
@@ -185,7 +185,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				
 				
 				
-				self.addHtml("<!-- END INNER LOOP OF ITEM "+ (self.processedItemNumber) + " IN FOREACH JRF TOKEN -->");
+//				self.addHtml("<!-- END INNER LOOP OF ITEM "+ (self.processedItemNumber) + " IN FOREACH JRF TOKEN -->");
 //				self.addPostHtml();
 				if ((self.subType=="row")
 						//&&(bLastShowed)
@@ -193,9 +193,9 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					 ){
 					if (index<(loopLength-1)){
 						// intermediate row
-						self.addHtml('<!-- ADDED BY FOREACH ROW ==>>  --></td></tr>');
+//						self.addHtml('<!-- ADDED BY FOREACH ROW ==>>  --></td></tr>');
 						self.addHtml(self.rowPrePendHtml);
-						self.addHtml('<!-- <== ADDED BY FOREACH ROW -->');
+//						self.addHtml('<!-- <== ADDED BY FOREACH ROW -->');
 						//<tr><td></td><td><!-- <== ADDED BY FOREACH ROW -->');
 					}
 				} else if ((self.subType=="subrow")

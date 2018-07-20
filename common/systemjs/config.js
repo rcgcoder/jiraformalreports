@@ -32,8 +32,8 @@ System.config({
     '@angular/router/testing': 'npm:@angular/router@5.2.10/bundles/router-testing.umd.js',
     'rxjs': 'npm:rxjs@5.5',
     'odt': 'npm:odt@1.1.0',
-    'typescript': 'npm:typescript@2.0.2/lib/typescript.js',
-    'tidy-html5': 'npm:tidy-html5@0.1.1/tidy.js'
+    'tidy-html5': 'npm:tidy-html5@0.1.1',
+    'typescript': 'npm:typescript@2.0.2/lib/typescript.js'
     
 //    'typescript': 'npm:typescript@2.8.3/lib/typescript.js'
   },

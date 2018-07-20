@@ -34,6 +34,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.datetimeSource=obj.getAttrVal("atDateTime",reportElem,true,true);
 		obj.postProcess=obj.getAttrVal("postprocess");
 		obj.activateVar=obj.getAttrVal("activate");
+		debugger;
 		obj.consolidateHtml=obj.getAttrVal("consolidateResult");
 		if (obj.consolidateHtml=="") {
 			obj.consolidateHtml=false

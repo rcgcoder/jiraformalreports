@@ -335,13 +335,11 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			indOpenTag=sTagText.indexOf("<");
 			indCloseTag=sTagText.indexOf(">");
 			indWithCloseTag=sTagText.indexOf("</JRF>");
-			if (indWithCloseTag<0) indWithCloseTag=sTagText.indexOf("</jrf>");
 			while ((indOpenTag>=0)&&(indOpenTag<indCloseTag)&&(indWithCloseTag>indOpenTag)){
 				sTagText=self.removeInnerTags(sTagText,false,openedHtmlTags,1);
 				indOpenTag=sTagText.indexOf("<");
 				indCloseTag=sTagText.indexOf(">");
 				indWithCloseTag=sTagText.indexOf("</JRF>");
-				if (indWithCloseTag<0) indWithCloseTag=sTagText.indexOf("</jrf>");
 			} 
 			indEmptyTag=sTagText.indexOf("/>");
 			
@@ -486,6 +484,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 	}
 	parse(html,parentTag){
 		var self=this;
+		debugger;
 		var sModel=replaceAll(html,"<jRf","<JRF",true);
 		sModel=replaceAll(sModel,"jrF>","JRF>",true);
 		var arrJRFs=sModel.split("<JRF");

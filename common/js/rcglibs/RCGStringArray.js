@@ -456,7 +456,7 @@ Array.prototype.saToString= function (){
 		return sAux;
 	};
 	
-Array.prototype.saReplaceInnerText=function(openTag,closeTag,replaceBy,bReplaceAll,otherParams){
+Array.prototype.saReplaceInnerText=function(openTag,closeTag,replaceBy,bReplaceAll,otherParams,fromStart){
 		var saInput=this;
 		var saAux=saInput;
 		var bRetry=true;
@@ -473,9 +473,11 @@ Array.prototype.saReplaceInnerText=function(openTag,closeTag,replaceBy,bReplaceA
 		}
 		var findStartPos=saAux.length-1;
 		var replaceCount=0;
+		var bFromLast=true;
+		if (isDefined(fromStart)&&fromStart)bFromLast=false;
 		while (bRetry){
 			bLocated=false;
-			openInd=saAux.saIndexOf(openTag,true,true,findStartPos);
+			openInd=saAux.saIndexOf(openTag,bFromLast,true,findStartPos);
 			if (openInd.bLocated){
 				closeInd=openInd.arrPosterior.saIndexOf(closeTag,false,true);
 				if (closeInd.bLocated){

@@ -89,6 +89,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 			self.variables.pushVar("LoopElemsCount",loopLength);
 			self.variables.pushVar("LoopIndex",index);
 			if (self.consolidateHtml){
+				debugger;
 				var indLoopContentHtmlBuffer=self.pushHtmlBuffer();
 				self.variables.pushVar("LoopHtmlIndex",indLoopContentHtmlBuffer);
 			}
@@ -214,6 +215,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				self.variables.popVar("LoopIndex");
 				self.variables.popVar("LoopElemsCount");
 				if (self.consolidateHtml){
+					debugger;
 					var indLoopContentHtmlBuffer=self.variables.popVar("LoopHtmlIndex");
 					var sHtml=self.popHtmlBuffer(indLoopContentHtmlBuffer);
 					sHtml=sHtml.saToString();

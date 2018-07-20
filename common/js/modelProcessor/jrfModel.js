@@ -290,34 +290,36 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			var arrInitTagAux=sTagRest.split("<");
 			var openCounter=0;
 			var srcPosition=1;
-			arrInitTagAux.forEach(function(sTagStartText){
-				if (sTagStartText=="") return;
-				var indClose=sTagStartText.indexOf(">");
-				var sTagAux=sTagStartText.substring(0,indClose);
-				if (sTagAux[sTagAux.length-1]=="/"){ // its a autoclosed tag...
-					// do nothing
-				} else if (sTagAux[0]!="/") { // its an open tag
-					openCounter++;
-				} else { //its a close tag
-					if (openCounter>0) {
-						openCounter--;
-					} else {
-						sTagRest=sTagRest.saReplace(srcPosition-1,sTagAux.length+2,"");
-						   /*
-						    * 0123456</span>45678 
-						    *         ^ position = 8
-						    * 012345645678
-						    *        ^ position = 7
-						    */
-						srcPosition-=(1+sTagAux.length+2);
-						if (openedHtmlTags.length>0){
-							openedHtmlTags.pop();
+			for (var i=0;(i<arrInitTagAux.length)&&(openedHtmlTags.length>0);i++){
+				var sTagStartText=arrInitTagAux[i];
+				if (sTagStartText!="") {
+					var indClose=sTagStartText.indexOf(">");
+					var sTagAux=sTagStartText.substring(0,indClose);
+					if (sTagAux[sTagAux.length-1]=="/"){ // its a autoclosed tag...
+						// do nothing
+					} else if (sTagAux[0]!="/") { // its an open tag
+						openCounter++;
+					} else { //its a close tag
+						if (openCounter>0) {
+							openCounter--;
 						} else {
-							logError("Error in Model... one close tag without previous open in ...\n"+sTagRest);
+							sTagRest=sTagRest.saReplace(srcPosition-1,sTagAux.length+2,"");
+							   /*
+							    * 0123456</span>45678 
+							    *         ^ position = 8
+							    * 012345645678
+							    *        ^ position = 7
+							    */
+							srcPosition-=(1+sTagAux.length+2);
+							if (openedHtmlTags.length>0){
+								openedHtmlTags.pop();
+							} else {
+								logError("Error in Model... one close tag without previous open in ...\n"+sTagRest);
+							}
 						}
 					}
+					srcPosition+=sTagStartText.length+1;
 				}
-				srcPosition+=sTagStartText.length+1;
 			});
 		}
 		// first it needs to remove all close tags derived of previously removed open tags from tagRest

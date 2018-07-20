@@ -88,7 +88,10 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		self.addStep("Start processing Element in For Each",function(){
 			self.variables.pushVar("LoopElemsCount",loopLength);
 			self.variables.pushVar("LoopIndex",index);
-			
+			if (self.consolidateHtml){
+				var indLoopContentHtmlBuffer=self.pushHtmlBuffer();
+				self.variables.pushVar("LoopHtmlIndex",indLoopContentHtmlBuffer);
+			}
 			var iPosTR=self.model.htmlStack.saFindPos("<tr",true);
 			if (index==0){
 				//debugger;
@@ -210,6 +213,12 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				}
 				self.variables.popVar("LoopIndex");
 				self.variables.popVar("LoopElemsCount");
+				if (self.consolidateHtml){
+					var indLoopContentHtmlBuffer=self.variables.popVar("LoopHtmlIndex");
+					var sHtml=self.popHtmlBuffer(indLoopContentHtmlBuffer);
+					sHtml=sHtml.saToString();
+					if (sHtml!="") self.addHtml(sHtml);
+				}
 				self.continueTask();
 			});
 			self.continueTask();

@@ -34,6 +34,12 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.datetimeSource=obj.getAttrVal("atDateTime",reportElem,true,true);
 		obj.postProcess=obj.getAttrVal("postprocess");
 		obj.activateVar=obj.getAttrVal("activate");
+		obj.consolidateHtml=obj.getAttrVal("consolidateResult");
+		if (obj.consolidateHtml=="") {
+			obj.consolidateHtml=false
+		} else {
+			obj.consolidateHtml=(obj.consolidateHtml.saToString().trim().toLowerCase()=="true");
+		}
 		obj.activeVar;
 		obj.datetime=undefined;
 		obj.moreParams=obj.getAttrVal("aditionalparameters",reportElem,false);
@@ -463,7 +469,12 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				}
 			}
 		}
-		
+		if (self.consolidateHtml){
+			var sHtml=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
+			sHtml=sHtml.saToString();
+			if (sHtml!="") self.addHtml(sHtml);
+		}
+
 	}
 	addPostHtml(){
 		var self=this;

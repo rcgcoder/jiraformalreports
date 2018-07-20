@@ -102,9 +102,9 @@ var jrfReport=class jrfReport {
 				var jsonObj=JSON.parse(content);
 				var sContent=jsonObj.body.storage.value;
 				var sHtml=he.decode(sContent);
-				debugger;
+/*				debugger;
 				sHtml=tidy_html5(sHtml, {"indent-spaces": 4});
-				//self.model=sHtml;
+*/				//self.model=sHtml;
 				self.config.model=sHtml;
 				self.continueTask(); 
 //				var theHtml=$(sHtml);

@@ -320,7 +320,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 					}
 					srcPosition+=sTagStartText.length+1;
 				}
-			});
+			};
 		}
 		// first it needs to remove all close tags derived of previously removed open tags from tagRest
 		fncRemoveCloseOfOpenHtmlTags();

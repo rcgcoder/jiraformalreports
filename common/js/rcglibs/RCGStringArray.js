@@ -392,7 +392,7 @@ Array.prototype.saReplace=function(iPosStart,nLetters,sTextToSet){
 			sResult+=sReplace;
 			sResult+=sAux.substring(iPosAux+nLetters,sAux.length);
 			self[iBlock]=sResult;
-			return;
+			return self;
 		}
 	}
 }

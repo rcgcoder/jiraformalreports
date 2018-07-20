@@ -245,11 +245,11 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		}
 		var iCount=-1;
 		if (isUndefined(count)){
-			sResult=auxStringArray.saReplaceInnerText("<",">",fncReplaceByHtmlTag,true);
+			sResult=sResult.saReplaceInnerText("<",">",fncReplaceByHtmlTag,true);
 		} else {
 			iCount=count;
 			for (var i=0;i<iCount;i++){
-				sResult=auxStringArray.saReplaceInnerText("<",">",fncReplaceByHtmlTag,false);
+				sResult=sResult.saReplaceInnerText("<",">",fncReplaceByHtmlTag,false);
 			}
 		}
 		return sResult;

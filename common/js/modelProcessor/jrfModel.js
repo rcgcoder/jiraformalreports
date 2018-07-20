@@ -335,7 +335,8 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			indOpenTag=sTagText.indexOf("<");
 			indCloseTag=sTagText.indexOf(">");
 			indWithCloseTag=sTagText.indexOf("</JRF>");
-			while ((indOpenTag>=0)&&(indOpenTag<indCloseTag)&&(indWithCloseTag>indOpenTag)){
+			while ((indOpenTag>=0)&&(indOpenTag<indCloseTag)
+					&&((indWithCloseTag<0)||(indWithCloseTag>indOpenTag))){
 				sTagText=self.removeInnerTags(sTagText,false,openedHtmlTags,1);
 				indOpenTag=sTagText.indexOf("<");
 				indCloseTag=sTagText.indexOf(">");

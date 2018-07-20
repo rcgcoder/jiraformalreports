@@ -377,7 +377,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			}
 			self.applyInitVars();
 			if (self.activateVar!=""){
-				debugger;
+				//debugger;
 				self.activeVar=self.variables.getVar(self.activateVar.saToString().trim());
 			}
 		}

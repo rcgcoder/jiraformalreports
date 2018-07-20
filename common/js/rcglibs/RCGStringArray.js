@@ -29,6 +29,7 @@ Array.prototype.saLength= function (){
 	});
 	return iCounter;
 }
+
 Array.prototype.saExists= function (sTag){
 	var self=this;
 	if (isString(self))return (self.indexOf(sTag)>=0);

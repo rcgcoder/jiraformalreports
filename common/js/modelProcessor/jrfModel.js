@@ -328,16 +328,28 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			auxTag=self.tagFactory.new();
 			parentTag.addChild(auxTag);
 			
-			auxTag.setPreviousHTML(sTagRest);
+			var previousHtml=sTagRest;
+			auxTag.setPreviousHTML(previousHtml);
 
 			sTagText=arrJRFs[auxIndex];
 			sNewPostText="";
 			indOpenTag=sTagText.indexOf("<");
 			indCloseTag=sTagText.indexOf(">");
 			indWithCloseTag=sTagText.indexOf("</JRF>");
+			var bFirstRemoveHtmlTag=true;
 			while ((indOpenTag>=0)&&(indOpenTag<indCloseTag)
 					&&((indWithCloseTag<0)||(indWithCloseTag>indOpenTag))){
-				sTagText=self.removeInnerTags(sTagText,false,openedHtmlTags,1);
+				var auxOpenTags=[];
+				sTagText=self.removeInnerTags(sTagText,false,auxOpenTags,1);
+				if (auxOpenTags.length==1){
+					if ((bFirstRemoveHtmlTag)&&(auxOpenTags[0][0]=="/")){
+						previousHtml+="<"+auxOpenTags[0]+">";
+						auxTag.setPreviousHTML(previousHtml);
+					} else {
+						bFirstRemoveHtmlTag=false;
+						openedHtmlTags.push(auxOpenTags[0]);
+					}
+				}
 				indOpenTag=sTagText.indexOf("<");
 				indCloseTag=sTagText.indexOf(">");
 				indWithCloseTag=sTagText.indexOf("</JRF>");
@@ -387,7 +399,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 					return {text:sTagRest,actIndex:auxIndex}; // return al text of </jrf>
 				}
 			} else {
-				log("ERROR PARSING MODEL HTML");
+				logError("ERROR PARSING MODEL HTML");
 				return;
 			}
 			auxIndex++;

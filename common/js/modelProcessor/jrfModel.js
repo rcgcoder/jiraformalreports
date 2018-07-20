@@ -341,13 +341,15 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 					&&((indWithCloseTag<0)||(indWithCloseTag>indOpenTag))){
 				var auxOpenTags=[];
 				sTagText=self.removeInnerTags(sTagText,false,auxOpenTags,1);
+				sTagText=sTagText.arrPrevious.saToString()+sTagText.arrPosterior.saToString();
 				if (auxOpenTags.length==1){
-					if ((bFirstRemoveHtmlTag)&&(auxOpenTags[0][0]=="/")){
-						previousHtml+="<"+auxOpenTags[0]+">";
+					var openTag=auxOpenTags[0].saToString();
+					if ((bFirstRemoveHtmlTag)&&(openTag[0]=="/")){
+						previousHtml+="<"+openTag+">";
 						auxTag.setPreviousHTML(previousHtml);
 					} else {
 						bFirstRemoveHtmlTag=false;
-						openedHtmlTags.push(auxOpenTags[0]);
+						openedHtmlTags.push(openTag);
 					}
 				}
 				indOpenTag=sTagText.indexOf("<");

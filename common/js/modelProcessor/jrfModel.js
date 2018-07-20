@@ -293,7 +293,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			if (sTagRest[0]=="<") srcPosition=1;
 			arrInitTagAux.forEach(function(sTagStartText){
 				var indClose=sTagStartText.indexOf(">");
-				var sTagAux=sTagStartText.subString(0,indClose);
+				var sTagAux=sTagStartText.substring(0,indClose);
 				if (sTagAux[sTagAux.length-1]=="/"){ // its a autoclosed tag...
 					// do nothing
 				} else if (sTagAux[0]!="/") { // its an open tag

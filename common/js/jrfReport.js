@@ -58,6 +58,13 @@ var jrfReport=class jrfReport {
 		oIssue.setKey(jsonIssue.key);
 		return oIssue;
 	}
+	cleanModel(sModelHtml){
+		var sContent="<html>"+sModelHtml+"</html>";
+		var jqContent=$(sContent);
+		// needs to clean the content.
+		var sContent=jqContent.html();
+		return sContent;
+	}
 
 	execute(bDontReloadFiles){
 		var self=this;
@@ -102,9 +109,8 @@ var jrfReport=class jrfReport {
 				var jsonObj=JSON.parse(content);
 				var sContent=jsonObj.body.storage.value;
 				debugger;
-				var jqContent=$(sContent);
 				// needs to clean the content.
-				sContent=jqContent.html();
+				sContent=self.cleanModel(sContent);
 				var sHtml=he.decode(sContent);
 /*				debugger;
 				sHtml=tidy_html5(sHtml, {"indent-spaces": 4});

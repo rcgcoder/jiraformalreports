@@ -94,31 +94,6 @@ var jrfReport=class jrfReport {
 		var bAlerted=false;
 //		self.rootIssues.clear();
 		
-		self.addStep("Getting Confluence Report Model.... ",function(){
-	        var cfc=System.webapp.getConfluence();
-			//cfc.getAllPages();
-			self.addStep("Manipulating Content",function(content){
-				log(content);
-				var jsonObj=JSON.parse(content);
-				var sContent=jsonObj.body.storage.value;
-				debugger;
-				// needs to clean the content.
-				sContent=replaceAll(sContent,"<jRf","<JRF",true);
-				sContent=replaceAll(sContent,"jrF>","JRF>",true);
-				var jrfCleaner=new jrfHtmlCleaner(sContent,[["{{{","}}}"],["{{","}}"],["<JRF","</JRF>"],["<JRF","/>"]]);
-				sContent=jrfCleaner.clean();
-				var sHtml=he.decode(sContent);
-/*				debugger;
-				sHtml=tidy_html5(sHtml, {"indent-spaces": 4});
-*/				//self.model=sHtml;
-				self.config.model=sHtml;
-				self.continueTask(); 
-//				var theHtml=$(sHtml);
-			});
-	        var arrValues=self.config.selReportModel.selected;
-			var contentId=arrValues[0].key;
-			cfc.getContent(contentId);
-		});
 		
 		
 		self.addStep("Loading report model engine.... ",function(){
@@ -158,6 +133,31 @@ var jrfReport=class jrfReport {
 			} else {
 				System.webapp.continueTask();
 			}
+		});
+		self.addStep("Getting Confluence Report Model.... ",function(){
+	        var cfc=System.webapp.getConfluence();
+			//cfc.getAllPages();
+			self.addStep("Manipulating Content",function(content){
+				log(content);
+				var jsonObj=JSON.parse(content);
+				var sContent=jsonObj.body.storage.value;
+				debugger;
+				// needs to clean the content.
+				sContent=replaceAll(sContent,"<jRf","<JRF",true);
+				sContent=replaceAll(sContent,"jrF>","JRF>",true);
+				var jrfCleaner=new jrfHtmlCleaner(sContent,[["{{{","}}}"],["{{","}}"],["<JRF","</JRF>"],["<JRF","/>"]]);
+				sContent=jrfCleaner.clean();
+				var sHtml=he.decode(sContent);
+/*				debugger;
+				sHtml=tidy_html5(sHtml, {"indent-spaces": 4});
+*/				//self.model=sHtml;
+				self.config.model=sHtml;
+				self.continueTask(); 
+//				var theHtml=$(sHtml);
+			});
+	        var arrValues=self.config.selReportModel.selected;
+			var contentId=arrValues[0].key;
+			cfc.getContent(contentId);
 		});
 
 		self.addStep("Construct Issue Dynamic Object.... ",function(){

@@ -101,6 +101,9 @@ var jrfReport=class jrfReport {
 				log(content);
 				var jsonObj=JSON.parse(content);
 				var sContent=jsonObj.body.storage.value;
+				debugger;
+				var htmlP=html_parse_stringify;
+				var astContent=htmlP.parse(sContent);
 				var sHtml=he.decode(sContent);
 /*				debugger;
 				sHtml=tidy_html5(sHtml, {"indent-spaces": 4});

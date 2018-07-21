@@ -102,7 +102,7 @@ var jrfReport=class jrfReport {
 				var jsonObj=JSON.parse(content);
 				var sContent=jsonObj.body.storage.value;
 				debugger;
-				var htmlP=html_parse_stringify;
+				var htmlP=html-parse-stringify;
 				var astContent=htmlP.parse(sContent);
 				var sHtml=he.decode(sContent);
 /*				debugger;

@@ -58,13 +58,6 @@ var jrfReport=class jrfReport {
 		oIssue.setKey(jsonIssue.key);
 		return oIssue;
 	}
-	cleanModel(sModelHtml){
-		var sContent=sModelHtml;
-		var jqContent=$(sContent);
-		// needs to clean the content.
-		var sContent=jqContent[0].outerHTML;
-		return sContent;
-	}
 
 	execute(bDontReloadFiles){
 		var self=this;
@@ -110,7 +103,10 @@ var jrfReport=class jrfReport {
 				var sContent=jsonObj.body.storage.value;
 				debugger;
 				// needs to clean the content.
-				sContent=self.cleanModel(sContent);
+				sContent=replaceAll(sContent,"<jRf","<JRF",true);
+				sContent=replaceAll(sContent,"jrF>","JRF>",true);
+				var jrfCleaner=new jrfHtmlCleaner(sContent,[["{{{","}}}"],["{{","}}"],["<JRF","</JRF>"],["<JRF","/>"]]);
+				sContent=jrfCleaner.clean();
 				var sHtml=he.decode(sContent);
 /*				debugger;
 				sHtml=tidy_html5(sHtml, {"indent-spaces": 4});
@@ -137,6 +133,7 @@ var jrfReport=class jrfReport {
 								"js/rcglibs/RCGVarEngine.js",
 								"js/rcglibs/RCGFilterManager.js",
 								"js/rcglibs/RCGFileUtils.js",
+								"js/modelProcessor/jrfHtmlCleaner.js",
 								"js/modelProcessor/jrfInteractive.js",
 								"js/modelProcessor/jrfModel.js",
 								"js/modelProcessor/jrfToken.js",

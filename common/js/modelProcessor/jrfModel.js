@@ -285,9 +285,9 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 				if (i<0) i=0;
 			}
 		}
-		fncCleanHtmlTags();
 		var fncRemoveCloseOfOpenHtmlTags=function(){
 			if (sTagRest.length==0) return;
+			fncCleanHtmlTags();
 			var arrInitTagAux=sTagRest.split("<");
 			var openCounter=0;
 			var srcPosition=1;
@@ -362,7 +362,6 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			indEmptyTag=sTagText.indexOf("/>");
 			
 			if (indCloseTag>=0){ // the tag closes
-				fncCleanHtmlTags();
 				if ((indEmptyTag<indCloseTag)&&(indEmptyTag>=0)){ // the tag closes with "/>"
 					// the tag does not have inner html it closes with />
 					sTagAttribs=sTagText.substring(0,indEmptyTag);
@@ -385,7 +384,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 										
 					if (indWithCloseTag<0) { // there is not a close tag...... there is more jrf tags inside actual
 						var oAdvance=self.processRecursive(arrJRFs,auxIndex+1,auxTag,sTagRest,openedHtmlTags); // the rest text without </jrf> if where in 
-						sTagRest=oAdvance.text;
+						sTagRest=oAdvance.text.saToString();
 						fncRemoveCloseOfOpenHtmlTags();
 						auxIndex=oAdvance.actIndex;			
 					}

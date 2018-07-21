@@ -282,6 +282,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			    } else { // is open.... continue
 			    	i++;
 				}
+				if (i<0) i=0;
 			}
 		}
 		fncCleanHtmlTags();

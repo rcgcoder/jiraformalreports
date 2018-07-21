@@ -360,7 +360,15 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 						auxTag.setPreviousHTML(previousHtml);
 					} else {
 						bFirstRemoveHtmlTag=false;
-						openedHtmlTags.push(openTag);
+						if (openTag[openTag.length-1]=="/"){
+							// autoClosed... do not push
+						} else if (openTag[0]=="/"){ // close...
+							if (openedHtmlTags.length>0){
+								openedHtmlTags.pop();
+							}
+						} else {
+							openedHtmlTags.push(openTag);
+						}
 					}
 				}
 				indOpenTag=sTagText.indexOf("<");

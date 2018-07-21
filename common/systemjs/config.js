@@ -32,7 +32,8 @@ System.config({
     '@angular/router/testing': 'npm:@angular/router@5.2.10/bundles/router-testing.umd.js',
     'rxjs': 'npm:rxjs@5.5',
     'odt': 'npm:odt@1.1.0',
-    'tidy-html5': 'npm:tidy-html5@0.1.1/tidy.min.js',
+    'html-parse-stringify': 'npm:html-parse-stringify@1.0.2',
+    'tidy-html5': 'npm:tidy-html5@0.1.1',
     'typescript': 'npm:typescript@2.0.2/lib/typescript.js'
     
 //    'typescript': 'npm:typescript@2.8.3/lib/typescript.js'
@@ -44,6 +45,12 @@ System.config({
       defaultExtension: 'ts'
     },
     rxjs: {
+      defaultExtension: 'js'
+    },
+    html-parse-stringify: {
+      defaultExtension: 'js'
+    },
+    tidy-html5: {
       defaultExtension: 'js'
     }
   }

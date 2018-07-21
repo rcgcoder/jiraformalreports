@@ -335,6 +335,8 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			auxTag.setPreviousHTML(previousHtml);
 
 			sTagText=arrJRFs[auxIndex];
+			log("JRF tag index:"+auxIndex);
+			log("Row text:"+sTagText);
 			sNewPostText="";
 			indOpenTag=sTagText.indexOf("<");
 			indCloseTag=sTagText.indexOf(">");

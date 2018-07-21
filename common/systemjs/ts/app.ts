@@ -1,6 +1,7 @@
 //our root app component
 import {Component, NgModule, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
+import {htmlParser} from 'html-parse-stringify';
 
 import {Tabs} from './tabs';
 import {Tab} from './tab';

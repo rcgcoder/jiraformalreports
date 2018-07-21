@@ -314,6 +314,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 							    * 012345645678
 							    *        ^ position = 7
 							    */
+							sTagRest=sTagRest.saToString();
 							srcPosition-=(1+sTagAux.length+2);
 							if (openedHtmlTags.length>0){
 								openedHtmlTags.pop();

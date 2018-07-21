@@ -59,10 +59,10 @@ var jrfReport=class jrfReport {
 		return oIssue;
 	}
 	cleanModel(sModelHtml){
-		var sContent="<html>"+sModelHtml+"</html>";
+		var sContent=sModelHtml;
 		var jqContent=$(sContent);
 		// needs to clean the content.
-		var sContent=jqContent.html();
+		var sContent=jqContent[0].outerHTML;
 		return sContent;
 	}
 

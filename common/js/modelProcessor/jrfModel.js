@@ -287,6 +287,9 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		}
 		var fncRemoveCloseOfOpenHtmlTags=function(){
 			if (sTagRest.length==0) return;
+			if (isUndefined(sTagRest.split)){
+				debugger;
+			}
 			fncCleanHtmlTags();
 			var arrInitTagAux=sTagRest.split("<");
 			var openCounter=0;

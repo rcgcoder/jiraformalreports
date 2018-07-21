@@ -340,7 +340,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			sTagText=arrJRFs[auxIndex];
 			log("JRF tag index:"+auxIndex);
 			log("Row text:"+sTagText);
-			if (auxIndex==23){
+			if (auxIndex==6){
 				debugger;
 			}
 			sNewPostText="";

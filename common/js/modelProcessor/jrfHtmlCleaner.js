@@ -43,10 +43,12 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 			nLocated:0,
 			isOpen:false,
 			log:function(){
-				log("status ("+status.nTags+")"+(status.isOpen?" Open":"Closed")
+				var sLog=("status ("+status.nTags+")"+(status.isOpen?" Open":"Closed")
 						+": Opens:"+status.nOpens+" Closes:"+status.nCloses
 						+" Marked:"+status.nMarkedToRemove+" Located:"+status.nLocated
 						);
+				log(sLog);
+				return sLog;
 			}
 		}
 		return status;

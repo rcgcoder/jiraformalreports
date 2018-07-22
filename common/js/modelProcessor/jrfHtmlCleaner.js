@@ -91,6 +91,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 		}
 //		status.log();
 	}
+
 	isMustRemove(jqElem){
 		var mustRemove=jqElem[0]["markedToRemove"];
 		if (isUndefined(mustRemove)){
@@ -167,6 +168,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 			self.removeMarked(jqContent,status);
 			status.log();
 		});
+		
 		// needs to clean the content.
 		var sContent=jqContent[0].outerHTML;
 		log("original content length:"+sOrigLength+" cleaned content length:"+sContent.length);

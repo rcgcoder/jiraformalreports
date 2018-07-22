@@ -112,13 +112,13 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 		}
 		var afterContents=jqElem.contents().length;
 		if (afterContents!=childs.length){
-			log("removed: "+(childs.length-afterContents)+" child contents");
+			//log("removed: "+(childs.length-afterContents)+" child contents");
 			bRemovedItems=true;
 		}
 		if (afterContents==0){
 			var mustRemove=self.isMustRemove(jqElem);
 			if (mustRemove||bRemovedItems){
-				log ("Marked to remove");
+				//log ("Marked to remove");
 				status.nRemoved++;
 				jqElem.remove();
 				status.log();

@@ -136,7 +136,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 				}
 				actElem=parent;
 				actualNodeName=actElem.prop("nodeName");
-				parent=jqElem.parent();
+				parent=actElem.parent();
 				if (parent.length==1){
 					parentNodeName=parent.prop("nodeName");
 					parentChilds=parent.contents().length;

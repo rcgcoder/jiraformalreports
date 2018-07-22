@@ -40,12 +40,15 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 			nCloses:0,
 			nTags:0,
 			nMarkedToRemove:0,
+			nRemoved:0,
 			nLocated:0,
 			isOpen:false,
 			log:function(){
 				var sLog=("status ("+status.nTags+")"+(status.isOpen?" Open":"Closed")
 						+": Opens:"+status.nOpens+" Closes:"+status.nCloses
-						+" Marked:"+status.nMarkedToRemove+" Located:"+status.nLocated
+						+" Located:"+status.nLocated
+						+" Marked:"+status.nMarkedToRemove
+						+" Removed:"+status.nRemoved
 						);
 				log(sLog);
 				return sLog;
@@ -88,42 +91,37 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 //		status.log();
 	}
 	isMustRemove(jqElem){
-		/*if (isDefined(jqElem.attr("markedToRemove"))
-			||isDefined(jqElem.prop("markedToRemove"))
-			||isDefined(jqElem[0]["markedToRemove"])
-			||(jqElem.text()=="markedToRemove")
-			||isDefined(jqElem["markedToRemove"])){
-			debugger;
-		}*/
 		var mustRemove=jqElem[0]["markedToRemove"];
 		if (isUndefined(mustRemove)){
 			mustRemove=false;
 		} else {
 			log(mustRemove);
-			debugger;
 			mustRemove=(mustRemove.toLowerCase()=="true");
 		}
 		return mustRemove;
 	}
-	removeMarked(jqElem){
+	removeMarked(jqElem,status){
 		var self=this;
 		var childs=jqElem.contents();
 		var i=childs.length-1;
 		var bRemovedItems=false;
 		while (i>=0){
 			var jqChild=$(childs[i]);
-			self.removeMarked(jqChild);
+			self.removeMarked(jqChild,status);
 			i--;
 		}
 		var afterContents=jqElem.contents().length;
 		if (afterContents!=childs.length){
 			log("removed: "+(childs.length-afterContents)+" child contents");
+			bRemovedItems=true;
 		}
 		if (afterContents==0){
 			var mustRemove=self.isMustRemove(jqElem);
 			if (mustRemove||bRemovedItems){
 				log ("Marked to remove");
+				status.nRemoved++;
 				jqElem.remove();
+				status.log();
 			} 
 		}
 	}
@@ -131,13 +129,17 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 		var self=this;
 		debugger;
 		var sContent=self.inputHtml;
+		var sOrigLength=sContent.length;
+		log("original content length:"+sOrigLength);
 		var jqContent=$(sContent);
 		var status=self.newCleanProcessStatus();
 		self.groupBlocks(jqContent,"{{","}}",status);
 		status.log();
-		self.removeMarked(jqContent);
+		self.removeMarked(jqContent,status);
+		status.log();
 		// needs to clean the content.
 		var sContent=jqContent[0].outerHTML;
+		log("original content length:"+sOrigLength+" cleaned content length:"+sContent.length);
 		return sContent;
 	}
 

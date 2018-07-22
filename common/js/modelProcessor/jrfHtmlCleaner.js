@@ -54,7 +54,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 	groupBlocks(jqElem,keyStart,keyStop,status){
 		var self=this;
 		status.nTags++;
-		var childs=jqElem.children();
+		var childs=jqElem.contents();
 		if (childs.length==0){
 			var sContent=jqElem.text();
 			status.nOpens+=self.occurrences(sContent,keyStart,false);
@@ -88,7 +88,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 	}
 	removeMarked(jqElem){
 		var self=this;
-		var childs=jqElem.children();
+		var childs=jqElem.contents();
 		var i=childs.length-1;
 		var bRemovedItems=false;
 		while (i>0){

@@ -112,7 +112,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 		var childs=jqElem.contents();
 		var i=childs.length-1;
 		var bRemovedItems=false;
-		while (i>0){
+		while (i>=0){
 			var jqChild=$(childs[i]);
 			self.removeMarked(jqChild);
 			var mustRemove=self.isMustRemove(jqChild);

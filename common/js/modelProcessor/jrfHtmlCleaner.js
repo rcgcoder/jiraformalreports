@@ -136,7 +136,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 				} else {
 					var arrActStyles=actElem[0].style.cssText.split(":");
 					var arrParentStyles=parent[0].style.cssText.split(":");
-					if ((arrActStyles.length==1)&&(arrActStyles.length==arrParentStyles.length)){
+					if ((arrActStyles.length==2)&&(arrActStyles.length==arrParentStyles.length)){
 						if ((arrActStyles[0]=="color")&&(arrParentStyles[0]=="color")){
 							parent.html(actElem.html());
 						}

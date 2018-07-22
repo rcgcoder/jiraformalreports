@@ -145,7 +145,7 @@ var jrfReport=class jrfReport {
 				// needs to clean the content.
 				sContent=replaceAll(sContent,"&lt;jRf","&lt;JRF",true);
 				sContent=replaceAll(sContent,"jrF&gt;","JRF&gt;",true);
-				var jrfCleaner=new jrfHtmlCleaner(sContent,[["{{{","}}}"],["{{","}}"],["<JRF","</JRF>"],["<JRF","/>"]]);
+				var jrfCleaner=new jrfHtmlCleaner(sContent,[["{{{","}}}"],["{{","}}"],["<",">"]]);
 				sContent=jrfCleaner.clean();
 				var sHtml=he.decode(sContent);
 /*				debugger;

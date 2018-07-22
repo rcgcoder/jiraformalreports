@@ -77,7 +77,6 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 			} else if (openCount>0) {
 				status.isOpen=true;
 				status.initialTag=jqElem;
-				status.nOpens=openCount;
 				status.nLocated++;
 				// starts
 			}

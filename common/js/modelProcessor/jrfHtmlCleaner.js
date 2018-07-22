@@ -37,8 +37,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 		var status={
 			initialTag:"",
 			nOpens:0,
-			isOpen:false,
-			endTag:""
+			isOpen:false
 		}
 		return status;
 	}
@@ -60,7 +59,6 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 				if (status.nOpens==0){
 					// finish
 					status.isOpen=false;
-					status.endTag=rootTag;
 					status.initialTag="";
 				} 
 			} else if (openCount>0) {

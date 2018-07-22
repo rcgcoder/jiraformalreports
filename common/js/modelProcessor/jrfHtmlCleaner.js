@@ -100,10 +100,10 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 			debugger;
 		}
 		var mustRemove=jqElem.attr("markedToRemove");
-		log(mustRemove);
 		if (isUndefined(mustRemove)){
 			mustRemove=false;
 		} else {
+			log(mustRemove);
 			debugger;
 			mustRemove=(mustRemove.toLowerCase()=="true");
 		}

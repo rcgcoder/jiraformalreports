@@ -133,11 +133,11 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 		log("original content length:"+sOrigLength);
 		var jqContent=$(sContent);
 		var status=self.newCleanProcessStatus();
-		self.groupBlocks(jqContent,"{{","}}",status);
+		self.groupBlocks(jqContent,"<JRF",">",status);
 		status.log();
 		self.removeMarked(jqContent,status);
 		status.log();
-		self.groupBlocks(jqContent,"<JRF",">",status);
+		self.groupBlocks(jqContent,"{{","}}",status);
 		status.log();
 		self.removeMarked(jqContent,status);
 		status.log();

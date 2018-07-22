@@ -87,6 +87,16 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 		}
 		status.log();
 	}
+	isMustRemove(jqElem){
+		var mustRemove=jqElem.attr("markedToRemove");
+		log(mustRemove);
+		if (isUndefined(mustRemove)){
+			mustRemove=false;
+		} else {
+			mustRemove=(mustRemove.toLowerCase()=="true");
+		}
+		return mustRemove;
+	}
 	removeMarked(jqElem){
 		var self=this;
 		var childs=jqElem.contents();
@@ -95,15 +105,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 		while (i>0){
 			var jqChild=$(childs[i]);
 			self.removeMarked(jqChild);
-			var mustRemove=jqChild.attr("markedToRemove");
-			log(mustRemove);
-			if (isUndefined(mustRemove)){
-				mustRemove=false;
-			} else {
-				debugger;
-				mustRemove=(mustRemove.toLowerCase()=="true");
-			}
-
+			var mustRemove=self.isMustRemove(jqChild);
 			if (mustRemove){
 				log ("Marked to remove");
 				jqChild.remove();
@@ -111,8 +113,12 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 			} 
 			i--;
 		}
-		if (bRemovedItems &&(jqElem.children().length==0)){
-			jqElem.attr("markedToRemove","true");
+		if (jqElem.children().length==0){
+			var mustRemove=self.isMustRemove(jqElem);
+			if (mustRemove||bRemovedItems){
+				log ("Marked to remove");
+				jqElem.remove();
+			} 
 		}
 	}
 	clean(){

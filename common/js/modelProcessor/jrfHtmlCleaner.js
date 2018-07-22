@@ -81,6 +81,9 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 		while (i>0){
 			var subNode=rootTag.childNodes[i];
 			self.removeMarked(subNode);
+			if (subNode.markedToRemove){
+				log ("Marked to remove");
+			}
 			if (isDefined(subNode.markedToRemove)&&subNode.markedToRemove){
 				rootTag.childNodes.splice(i,1);
 				bRemovedItems=true;

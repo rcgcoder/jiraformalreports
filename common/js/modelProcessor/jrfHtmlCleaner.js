@@ -71,7 +71,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 		} else {
 			var childs=jqElem.children();
 			for (var i=0;i<childs.length;i++){
-				self.groupBlocks(childs[i],keyStart,keyStop,status);
+				self.groupBlocks($(childs[i]),keyStart,keyStop,status);
 			}
 		}
 	}
@@ -81,7 +81,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 		var i=childs.length-1;
 		var bRemovedItems=false;
 		while (i>0){
-			var jqChild=childs[i];
+			var jqChild=$(childs[i]);
 			self.removeMarked(jqChild);
 			var mustRemove=jqChild.attr("markedToRemove");
 			if (isUndefined(mustRemove)){

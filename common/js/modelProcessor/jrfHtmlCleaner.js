@@ -65,7 +65,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 			if (status.isOpen){
 				var newTextToDebug=status.initialTag.text();
 				newTextToDebug+=" "+sContent;
-				log(newTextToDebug);
+				//log(newTextToDebug);
 				status.initialTag.text(newTextToDebug);
 				jqElem.attr("markedToRemove","true");
 				jqElem.prop("markedToRemove","true");
@@ -88,7 +88,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 				self.groupBlocks($(childs[i]),keyStart,keyStop,status);
 			}
 		}
-		status.log();
+//		status.log();
 	}
 	isMustRemove(jqElem){
 		if (isDefined(jqElem.attr("markedToRemove"))
@@ -123,7 +123,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 			} 
 			i--;
 		}
-		if (jqElem.children().length==0){
+		if (jqElem.contents().length==0){
 			var mustRemove=self.isMustRemove(jqElem);
 			if (mustRemove||bRemovedItems){
 				log ("Marked to remove");

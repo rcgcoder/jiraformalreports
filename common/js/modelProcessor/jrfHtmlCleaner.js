@@ -133,6 +133,14 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 			while ((actElem.parent().length==1)&&(parentChilds==1)&&(parentNodeName==actualNodeName)){
 				if (actElem[0].style.cssText==parent[0].style.cssText){
 					parent.html(actElem.html());
+				} else {
+					var arrActStyles=actElem[0].style.cssText.split(":");
+					var arrParentStyles=parent[0].style.cssText.split(":");
+					if ((arrActStyles.length==1)&&(arrActStyles.length==arrParentStyles.length)){
+						if ((arrActStyles[0]=="color")&&(arrParentStyles[0]=="color")){
+							parent.html(actElem.html());
+						}
+					}
 				}
 				actElem=parent;
 				actualNodeName=actElem.prop("nodeName");

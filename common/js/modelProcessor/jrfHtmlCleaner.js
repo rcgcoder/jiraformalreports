@@ -64,14 +64,10 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 			var openCount=(status.nOpens-status.nCloses);
 			if (status.isOpen){
 				var newTextToDebug=status.initialTag.text();
-				newTextToDebug+=" "+sContent;
+				newTextToDebug+=sContent;
 				//log(newTextToDebug);
 				status.initialTag.text(newTextToDebug);
-				jqElem.attr("markedToRemove","true");
-				jqElem.prop("markedToRemove","true");
 				jqElem[0]["markedToRemove"]="true";
-				jqElem["markedToRemove"]="true";
-				jqElem.text("markedToRemove");
 				status.nMarkedToRemove++;
 				if (openCount<=0){
 					// finish
@@ -92,14 +88,14 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 //		status.log();
 	}
 	isMustRemove(jqElem){
-		if (isDefined(jqElem.attr("markedToRemove"))
+		/*if (isDefined(jqElem.attr("markedToRemove"))
 			||isDefined(jqElem.prop("markedToRemove"))
 			||isDefined(jqElem[0]["markedToRemove"])
 			||(jqElem.text()=="markedToRemove")
 			||isDefined(jqElem["markedToRemove"])){
 			debugger;
-		}
-		var mustRemove=jqElem.attr("markedToRemove");
+		}*/
+		var mustRemove=jqElem[0]["markedToRemove"];
 		if (isUndefined(mustRemove)){
 			mustRemove=false;
 		} else {

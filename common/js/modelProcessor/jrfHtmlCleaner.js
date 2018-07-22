@@ -97,7 +97,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 		if (isUndefined(mustRemove)){
 			mustRemove=false;
 		} else {
-			log(mustRemove);
+//			log(mustRemove);
 			mustRemove=(mustRemove.toLowerCase()=="true");
 		}
 		return mustRemove;

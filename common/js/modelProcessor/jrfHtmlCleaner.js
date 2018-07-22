@@ -37,26 +37,28 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 		var status={
 			initialTag:"",
 			nOpens:0,
+			nCloses:0,
+			nTags:0,
 			isOpen:false
 		}
 		return status;
 	}
 	groupBlocks(jqElem,keyStart,keyStop,status){
 		var self=this;
+		status.nTags++;
 		var childs=jqElem.children();
 		if (childs.length==0){
 			var sContent=jqElem.text();
-			var iOpens=self.occurrences(sContent,keyStart,false);
-			var iEnds=self.occurrences(sContent,keyStop,false);
-			var openCount=(iOpens-iEnds);
+			status.nOpens+=self.occurrences(sContent,keyStart,false);
+			status.nCloses+=self.occurrences(sContent,keyStop,false);
+			var openCount=(status.nOpens-status.nCloses);
 			if (status.isOpen){
-				status.nOpens+=openCount;
 				var newTextToDebug=status.initialTag.text();
 				newTextToDebug+=" "+sContent;
 				log(newTextToDebug);
 				status.initialTag.text(newTextToDebug);
 				jqElem.attr("markedToRemove","true");
-				if (status.nOpens==0){
+				if (openCount<=0){
 					// finish
 					status.isOpen=false;
 					status.initialTag="";
@@ -72,6 +74,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 				self.groupBlocks($(childs[i]),keyStart,keyStop,status);
 			}
 		}
+		log("status ("+status.nTags+")"+(status.isOpen?" Open":"Closed")+": Opens:"+status.nOpens+" Closes:"+status.nCloses);
 	}
 	removeMarked(jqElem){
 		var self=this;

@@ -42,7 +42,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 		}
 		return status;
 	}
-	cleanBlock(rootTag,keyStart,keyStop,status){
+	groupBlocks(rootTag,keyStart,keyStop,status){
 		var self=this;
 		if (rootTag.nodeType==3){
 			var sContent=rootTag.nodeValue;
@@ -51,7 +51,8 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 			var openCount=(iOpens-iEnds);
 			if (status.isOpen){
 				status.nOpens+=openCount;
-				status.initialTag.nodeValue+=rootTag.nodeValue;
+				status.initialTag.nodeValue+=(" "+rootTag.nodeValue);
+				rootTag.nodeValue="";
 				var newTextToDebug=status.initialTag.nodeValue;
 				log(newTextToDebug);
 				rootTag.markedToRemove=true;
@@ -69,8 +70,29 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 			}
 		} else {
 			rootTag.childNodes.forEach(function(subNode){
-				self.cleanBlock(subNode,keyStart,keyStop,status);
+				self.groupBlocks(subNode,keyStart,keyStop,status);
 			});
+		}
+	}
+	removeMarked(rootTag){
+		var self=this;
+		var i=rootTag.childNodes.length-1;
+		var bRemovedItems=false;
+		while (i>0){
+			var subNode=rootTag.childNodes[i];
+			self.removeMarked(subNode);
+			if (isDefined(subNode.markedToRemove)&&subNode.markedToRemove){
+				rootTag.childNodes.splice(i,1);
+				bRemovedItems=true;
+			} 
+			i--;
+		}
+		if (
+				((rootTag.childNodes.length==0)&&(rootTag.nodeType!=3))
+				||
+				((rootTag.nodeType==3)&&(rootTag.nodeValue==""))
+			){
+			rootTag.markedToRemove=true;
 		}
 	}
 	clean(){
@@ -79,7 +101,8 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 		var sContent=self.inputHtml;
 		var jqContent=$(sContent);
 		var status=self.newCleanProcessStatus();
-		self.cleanBlock(jqContent[0],"{{","}}",status);
+		self.groupBlocks(jqContent[0],"{{","}}",status);
+		self.removeMarked(jqContent[0]);
 		// needs to clean the content.
 		var sContent=jqContent[0].outerHTML;
 		return sContent;

@@ -137,6 +137,10 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 		status.log();
 		self.removeMarked(jqContent,status);
 		status.log();
+		self.groupBlocks(jqContent,"<JRF",">",status);
+		status.log();
+		self.removeMarked(jqContent,status);
+		status.log();
 		// needs to clean the content.
 		var sContent=jqContent[0].outerHTML;
 		log("original content length:"+sOrigLength+" cleaned content length:"+sContent.length);

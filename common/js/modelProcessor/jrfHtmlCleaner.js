@@ -38,8 +38,9 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 			initialTag:"",
 			nOpens:0,
 			isOpen:false,
-			endTag:"",
+			endTag:""
 		}
+		return status;
 	}
 	cleanBlock(rootTag,keyStart,keyStop,status){
 		var self=this;
@@ -52,6 +53,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 				status.nOpens+=openCount;
 				if (status.nOpens==0){
 					status.isOpen=false;
+					status.endTag=rootTag;
 					// finish
 					
 				}

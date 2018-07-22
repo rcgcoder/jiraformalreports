@@ -143,9 +143,9 @@ var jrfReport=class jrfReport {
 				var sContent=jsonObj.body.storage.value;
 				debugger;
 				// needs to clean the content.
-				sContent=replaceAll(sContent,"&lt;jRf","&lt;JRF",true);
-				sContent=replaceAll(sContent,"jrF&gt;","JRF&gt;",true);
-				var jrfCleaner=new jrfHtmlCleaner(sContent,[["{{{","}}}"],["{{","}}"],["<",">"]]);
+//				sContent=replaceAll(sContent,"&lt;jRf","&lt;JRF",true);
+//				sContent=replaceAll(sContent,"jrF&gt;","JRF&gt;",true);
+				var jrfCleaner=new jrfHtmlCleaner(sContent,[["<",">"],["&lt;","&gt;"],["{{{","}}}"],["{{","}}"]]);
 				sContent=jrfCleaner.clean();
 				var sHtml=he.decode(sContent);
 /*				debugger;

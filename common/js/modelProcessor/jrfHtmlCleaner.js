@@ -66,10 +66,10 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 			status.nCloses+=self.occurrences(sContent,keyStop,false);
 			var openCount=(status.nOpens-status.nCloses);
 			if (status.isOpen){
-				var newTextToDebug=status.initialTag.text();
-				newTextToDebug+=sContent;
+//				var newTextToDebug=status.initialTag.text();
+//				newTextToDebug+=sContent;
 				//log(newTextToDebug);
-				status.initialTag.text(newTextToDebug);
+				status.initialTag[0].appendData(sContent);
 				jqElem[0]["markedToRemove"]="true";
 				status.nMarkedToRemove++;
 				if (openCount<=0){

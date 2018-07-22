@@ -44,7 +44,8 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 	}
 	groupBlocks(jqElem,keyStart,keyStop,status){
 		var self=this;
-		if (jqElem.prop("nodeType")==3){
+		var childs=jqElem.children();
+		if (childs.length==0){
 			var sContent=jqElem.text();
 			var iOpens=self.occurrences(sContent,keyStart,false);
 			var iEnds=self.occurrences(sContent,keyStop,false);
@@ -69,7 +70,6 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 				// starts
 			}
 		} else {
-			var childs=jqElem.children();
 			for (var i=0;i<childs.length;i++){
 				self.groupBlocks($(childs[i]),keyStart,keyStop,status);
 			}
@@ -95,11 +95,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 			} 
 			i--;
 		}
-		var nodeType=jqElem.prop("nodeType");
-		if ((bRemovedItems &&(jqElem.children().length==0)&&(nodeType!=3))
-			 ||
-			 ((nodeType==3)&&(jqElem.text()==""))
-			){
+		if (bRemovedItems &&(jqElem.children().length==0)){
 			jqElem.attr("markedToRemove",true);
 		}
 	}

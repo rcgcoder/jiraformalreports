@@ -42,20 +42,20 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 		}
 		return status;
 	}
-	groupBlocks(rootTag,keyStart,keyStop,status){
+	groupBlocks(jqElem,keyStart,keyStop,status){
 		var self=this;
-		if (rootTag.nodeType==3){
-			var sContent=rootTag.nodeValue;
+		if (jqElem.prop("nodeType")==3){
+			var sContent=jqElem.text();
 			var iOpens=self.occurrences(sContent,keyStart,false);
 			var iEnds=self.occurrences(sContent,keyStop,false);
 			var openCount=(iOpens-iEnds);
 			if (status.isOpen){
 				status.nOpens+=openCount;
-				status.initialTag.nodeValue+=(" "+rootTag.nodeValue);
-				rootTag.nodeValue="";
-				var newTextToDebug=status.initialTag.nodeValue;
+				var newTextToDebug=status.initialTag.text();
+				newTextToDebug+=" "+sContent;
 				log(newTextToDebug);
-				$(rootTag).attr("markedToRemove",true);
+				status.initialTag.text(newTextToDebug);
+				jqElem.attr("markedToRemove",true);
 				if (status.nOpens==0){
 					// finish
 					status.isOpen=false;
@@ -64,41 +64,43 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 				} 
 			} else if (openCount>0) {
 				status.isOpen=true;
-				status.initialTag=rootTag;
+				status.initialTag=jqElem;
 				status.nOpens=openCount;
 				// starts
 			}
 		} else {
-			rootTag.childNodes.forEach(function(subNode){
-				self.groupBlocks(subNode,keyStart,keyStop,status);
+			var childs=jqElem.children();
+			childs.forEach(function(jqChild){
+				self.groupBlocks(jqChild,keyStart,keyStop,status);
 			});
 		}
 	}
-	removeMarked(rootTag){
+	removeMarked(jqElem){
 		var self=this;
-		var i=rootTag.childNodes.length-1;
+		var childs=jqElem.children();
+		var i=childs.length-1;
 		var bRemovedItems=false;
 		while (i>0){
-			var subNode=rootTag.childNodes[i];
-			self.removeMarked(subNode);
-			subNode=$(subNode);
-			var mustRemove=subNode.attr("markedToRemove");
+			var jqChild=childs[i];
+			self.removeMarked(jqChild);
+			var mustRemove=jqChild.attr("markedToRemove");
 			if (isUndefined(mustRemove)){
 				mustRemove=false;
 			}
 
 			if (mustRemove){
 				log ("Marked to remove");
-				subNode.remove();
+				jqChild.remove();
 				bRemovedItems=true;
 			} 
 			i--;
 		}
-		if ((bRemovedItems &&(rootTag.childNodes.length==0)&&(rootTag.nodeType!=3))
+		var nodeType=jqElem.prop("nodeType");
+		if ((bRemovedItems &&(jqElem.children().length==0)&&(nodeType!=3))
 			 ||
-			 ((rootTag.nodeType==3)&&(rootTag.nodeValue==""))
+			 ((nodeType==3)&&(jqElem.text()==""))
 			){
-			$(rootTag).attr("markedToRemove",true);
+			jqElem.attr("markedToRemove",true);
 		}
 	}
 	clean(){
@@ -107,8 +109,8 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 		var sContent=self.inputHtml;
 		var jqContent=$(sContent);
 		var status=self.newCleanProcessStatus();
-		self.groupBlocks(jqContent[0],"{{","}}",status);
-		self.removeMarked(jqContent[0]);
+		self.groupBlocks(jqContent,"{{","}}",status);
+		self.removeMarked(jqContent);
 		// needs to clean the content.
 		var sContent=jqContent[0].outerHTML;
 		return sContent;

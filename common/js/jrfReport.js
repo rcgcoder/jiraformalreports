@@ -143,8 +143,8 @@ var jrfReport=class jrfReport {
 				var sContent=jsonObj.body.storage.value;
 				debugger;
 				// needs to clean the content.
-				sContent=replaceAll(sContent,"<jRf","<JRF",true);
-				sContent=replaceAll(sContent,"jrF>","JRF>",true);
+				sContent=replaceAll(sContent,"&lt;jRf","&lt;JRF",true);
+				sContent=replaceAll(sContent,"jrF&gt;","JRF&gt;",true);
 				var jrfCleaner=new jrfHtmlCleaner(sContent,[["{{{","}}}"],["{{","}}"],["<JRF","</JRF>"],["<JRF","/>"]]);
 				sContent=jrfCleaner.clean();
 				var sHtml=he.decode(sContent);

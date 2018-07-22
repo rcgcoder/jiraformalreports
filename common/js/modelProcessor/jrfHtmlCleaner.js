@@ -87,10 +87,9 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 			} 
 			i--;
 		}
-		if (
-				((rootTag.childNodes.length==0)&&(rootTag.nodeType!=3))
-				||
-				((rootTag.nodeType==3)&&(rootTag.nodeValue==""))
+		if ((bRemovedItems &&(rootTag.childNodes.length==0)&&(rootTag.nodeType!=3))
+			 ||
+			 ((rootTag.nodeType==3)&&(rootTag.nodeValue==""))
 			){
 			rootTag.markedToRemove=true;
 		}

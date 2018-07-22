@@ -70,9 +70,9 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 			}
 		} else {
 			var childs=jqElem.children();
-			childs.forEach(function(jqChild){
-				self.groupBlocks(jqChild,keyStart,keyStop,status);
-			});
+			for (var i=0;i<childs.length;i++){
+				self.groupBlocks(childs[i],keyStart,keyStop,status);
+			}
 		}
 	}
 	removeMarked(jqElem){

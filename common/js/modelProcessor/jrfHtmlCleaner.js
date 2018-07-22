@@ -51,12 +51,16 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 			var openCount=(iOpens-iEnds);
 			if (status.isOpen){
 				status.nOpens+=openCount;
+				status.initialTag.nodeValue+=rootTag.nodeValue;
+				var newTextToDebug=status.initialTag.nodeValue;
+				log(newTextToDebug);
+				rootTag.markedToRemove=true;
 				if (status.nOpens==0){
+					// finish
 					status.isOpen=false;
 					status.endTag=rootTag;
-					// finish
-					
-				}
+					status.initialTag="";
+				} 
 			} else if (openCount>0) {
 				status.isOpen=true;
 				status.initialTag=rootTag;

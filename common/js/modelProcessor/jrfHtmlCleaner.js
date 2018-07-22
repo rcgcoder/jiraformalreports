@@ -55,7 +55,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 				rootTag.nodeValue="";
 				var newTextToDebug=status.initialTag.nodeValue;
 				log(newTextToDebug);
-				rootTag.markedToRemove=true;
+				$(rootTag).attr("markedToRemove",true);
 				if (status.nOpens==0){
 					// finish
 					status.isOpen=false;
@@ -81,11 +81,15 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 		while (i>0){
 			var subNode=rootTag.childNodes[i];
 			self.removeMarked(subNode);
-			if (subNode.markedToRemove){
-				log ("Marked to remove");
+			subNode=$(subNode);
+			var mustRemove=subNode.attr("markedToRemove");
+			if (isUndefined(mustRemove)){
+				mustRemove=false;
 			}
-			if (isDefined(subNode.markedToRemove)&&subNode.markedToRemove){
-				rootTag.childNodes.splice(i,1);
+
+			if (mustRemove){
+				log ("Marked to remove");
+				subNode.remove();
 				bRemovedItems=true;
 			} 
 			i--;
@@ -94,7 +98,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 			 ||
 			 ((rootTag.nodeType==3)&&(rootTag.nodeValue==""))
 			){
-			rootTag.markedToRemove=true;
+			$(rootTag).attr("markedToRemove",true);
 		}
 	}
 	clean(){

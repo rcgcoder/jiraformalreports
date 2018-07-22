@@ -55,7 +55,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 				newTextToDebug+=" "+sContent;
 				log(newTextToDebug);
 				status.initialTag.text(newTextToDebug);
-				jqElem.attr("markedToRemove",true);
+				jqElem.attr("markedToRemove","true");
 				if (status.nOpens==0){
 					// finish
 					status.isOpen=false;
@@ -96,7 +96,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 			i--;
 		}
 		if (bRemovedItems &&(jqElem.children().length==0)){
-			jqElem.attr("markedToRemove",true);
+			jqElem.attr("markedToRemove","true");
 		}
 	}
 	clean(){

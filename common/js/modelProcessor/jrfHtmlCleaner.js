@@ -95,7 +95,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 		if (isDefined(jqElem.attr("markedToRemove"))
 			||isDefined(jqElem.prop("markedToRemove"))
 			||isDefined(jqElem[0]["markedToRemove"])
-			||(jqElem.text="markedToRemove")
+			||(jqElem.text()=="markedToRemove")
 			||isDefined(jqElem["markedToRemove"])){
 			debugger;
 		}

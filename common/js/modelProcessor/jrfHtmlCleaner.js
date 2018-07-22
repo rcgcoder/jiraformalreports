@@ -69,6 +69,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 //				var newTextToDebug=status.initialTag.text();
 //				newTextToDebug+=sContent;
 				//log(newTextToDebug);
+				if (jqElem.prop("nodeName")=="P") status.initialTag[0].appendData(" ");
 				status.initialTag[0].appendData(sContent);
 				jqElem[0]["markedToRemove"]="true";
 				status.nMarkedToRemove++;
@@ -123,6 +124,25 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 				jqElem.remove();
 				status.log();
 			} 
+		} else if ((afterContents==1)&&(jqElem.parent().length==1)){
+			var actElem=jqElem;
+			var actualNodeName=actElem.prop("nodeName");
+			var parent=jqElem.parent();
+			var parentNodeName=parent.prop("nodeName");
+			var parentChilds=parent.contents().length;
+			while ((actElem.parent().length==1)&&(parentChilds==1)&&(parentNodeName==actualNodeName)){
+				if (actElem[0].style.cssText==parent[0].style.cssText){
+					parent.html(actElem.html());
+				}
+				actElem=parent;
+				actualNodeName=actElem.prop("nodeName");
+				parent=jqElem.parent();
+				if (parent.length==1){
+					parentNodeName=parent.prop("nodeName");
+					parentChilds=parent.contents().length;
+				}
+			}
+			var actualContentsNumber=0;
 		}
 	}
 	clean(){

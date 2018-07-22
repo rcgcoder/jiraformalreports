@@ -117,15 +117,13 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 		while (i>=0){
 			var jqChild=$(childs[i]);
 			self.removeMarked(jqChild);
-			var mustRemove=self.isMustRemove(jqChild);
-			if (mustRemove){
-				log ("Marked to remove");
-				jqChild.remove();
-				bRemovedItems=true;
-			} 
 			i--;
 		}
-		if (jqElem.contents().length==0){
+		var afterContents=jqElem.contents().length;
+		if (afterContents!=childs.length){
+			log("removed: "+(childs.length-afterContents)+" child contents");
+		}
+		if (afterContents==0){
 			var mustRemove=self.isMustRemove(jqElem);
 			if (mustRemove||bRemovedItems){
 				log ("Marked to remove");

@@ -39,7 +39,15 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 			nOpens:0,
 			nCloses:0,
 			nTags:0,
-			isOpen:false
+			nMarkedToRemove:0,
+			nLocated:0,
+			isOpen:false,
+			log:function(){
+				log("status ("+status.nTags+")"+(status.isOpen?" Open":"Closed")
+						+": Opens:"+status.nOpens+" Closes:"+status.nCloses
+						+" Marked:"+status.nMarkedToRemove+" Located:"+status.nLocated
+						);
+			}
 		}
 		return status;
 	}
@@ -58,6 +66,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 				log(newTextToDebug);
 				status.initialTag.text(newTextToDebug);
 				jqElem.attr("markedToRemove","true");
+				status.nMarkedToRemove++;
 				if (openCount<=0){
 					// finish
 					status.isOpen=false;
@@ -67,6 +76,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 				status.isOpen=true;
 				status.initialTag=jqElem;
 				status.nOpens=openCount;
+				status.nLocated++;
 				// starts
 			}
 		} else {
@@ -74,7 +84,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 				self.groupBlocks($(childs[i]),keyStart,keyStop,status);
 			}
 		}
-		log("status ("+status.nTags+")"+(status.isOpen?" Open":"Closed")+": Opens:"+status.nOpens+" Closes:"+status.nCloses);
+		status.log();
 	}
 	removeMarked(jqElem){
 		var self=this;
@@ -111,6 +121,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 		var jqContent=$(sContent);
 		var status=self.newCleanProcessStatus();
 		self.groupBlocks(jqContent,"{{","}}",status);
+		status.log();
 		self.removeMarked(jqContent);
 		// needs to clean the content.
 		var sContent=jqContent[0].outerHTML;

@@ -122,7 +122,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 				//log ("Marked to remove");
 				status.nRemoved++;
 				jqElem.remove();
-				status.log();
+//				status.log();
 			} 
 		} else if ((afterContents==1)&&(jqElem.parent().length==1)){
 			var actElem=jqElem;

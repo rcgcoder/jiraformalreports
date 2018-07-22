@@ -68,6 +68,9 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 				log(newTextToDebug);
 				status.initialTag.text(newTextToDebug);
 				jqElem.attr("markedToRemove","true");
+				jqElem.prop("markedToRemove","true");
+				jqElem[0]["markedToRemove"]="true";
+				jqElem["markedToRemove"]="true";
 				status.nMarkedToRemove++;
 				if (openCount<=0){
 					// finish
@@ -88,11 +91,18 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 		status.log();
 	}
 	isMustRemove(jqElem){
+		if (isDefined(jqElem.attr("markedToRemove"))
+			||isDefined(jqElem.prop("markedToRemove"))
+			||isDefined(jqElem[0]["markedToRemove"])
+			||isDefined(jqElem["markedToRemove"])){
+			debugger;
+		}
 		var mustRemove=jqElem.attr("markedToRemove");
 		log(mustRemove);
 		if (isUndefined(mustRemove)){
 			mustRemove=false;
 		} else {
+			debugger;
 			mustRemove=(mustRemove.toLowerCase()=="true");
 		}
 		return mustRemove;

@@ -82,9 +82,11 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 			var jqChild=$(childs[i]);
 			self.removeMarked(jqChild);
 			var mustRemove=jqChild.attr("markedToRemove");
+			log(mustRemove);
 			if (isUndefined(mustRemove)){
 				mustRemove=false;
 			} else {
+				debugger;
 				mustRemove=(mustRemove.toLowerCase()=="true");
 			}
 

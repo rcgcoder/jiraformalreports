@@ -50,6 +50,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
    					"http://www.w3.org/TR/html4/strict.dtd">
 					<HTML>
  					<HEAD> 
+					<meta http-equiv='Content-Type' content='Type=text/html; charset=utf-8'>
 					`);		
 		var arrFiles=[	//"ts/demo.ts",
 			"css/RCGTaskManager.css",

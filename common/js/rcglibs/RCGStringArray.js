@@ -347,6 +347,7 @@ Array.prototype.saSubstring=function(iPosStart,iPosEnd){
 			sAux=sAux.substring(iPosAux,sAux.length);
 			sResult.push(sAux);
 			iResultLength+=sAux.length;
+			nLetters-=sAux.length;
 			iBlock++;
 			while ((iBlock<selfLength) &&((iResultLength<nLetters)||(nLetters>0))){
 				sAux=self[iBlock];

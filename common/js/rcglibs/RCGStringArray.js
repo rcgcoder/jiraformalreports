@@ -412,7 +412,7 @@ Array.prototype.saReplace=function(iPosStart,nLetters,sTextToSet){
 			if (accumLetters>nLetters){
 				iBlock--;
 				var iDiff=accumLetters-nLetters;
-				sAux=sAux.subString(iDiff,sAux.length);
+				sAux=sAux.substring(iDiff,sAux.length);
 				self[iBlock]=sAux;
 			}
 			return self;

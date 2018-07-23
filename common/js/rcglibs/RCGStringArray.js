@@ -411,7 +411,8 @@ Array.prototype.saReplace=function(iPosStart,nLetters,sTextToSet){
 			}
 			if (accumLetters>nLetters){
 				iBlock--;
-				var iDiff=accumLetters-nLetters;
+				accumLetters-=sAux.length;
+				var iDiff=nLetters-accumLetters;
 				sAux=sAux.substring(iDiff,sAux.length);
 				self[iBlock]=sAux;
 			}

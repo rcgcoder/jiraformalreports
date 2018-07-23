@@ -182,7 +182,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 						treeNode.loaded=false;
 						treeNode.expanded=false;
 						self.model.htmlStack.saReplace(initTR,3,'<tr style="display:none" ');
-						var iPosEndTR=self.model.htmlStack.saFindPos("</tr>",false,initTR);
+						var iPosEndTR=5+self.model.htmlStack.saFindPos("</tr>",false,initTR);
 						var sTrContent=self.model.htmlStack.saSubstring(initTR,iPosEndTR);
 						self.model.htmlStack.saReplace(initTR,iPosEndTR-initTR,'');
 						treeNode.html=sTrContent;

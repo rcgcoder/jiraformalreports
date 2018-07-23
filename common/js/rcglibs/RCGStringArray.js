@@ -348,19 +348,19 @@ Array.prototype.saSubstring=function(iPosStart,iPosEnd){
 			sResult.push(sAux);
 			iResultLength+=sAux.length;
 			iBlock++;
-			while ((iBlock<selfLength) &&((iResultLength<nLetters)||(nLetters<=0))){
+			while ((iBlock<selfLength) &&((iResultLength<nLetters)||(nLetters>0))){
 				sAux=self[iBlock];
 				sResult.push(sAux);
 				iResultLength+=sAux.length;
+				nLetters-=sAux.length;
 				iBlock++;
 			}
-			if (nLetters<=0){
+			if (nLetters==0){
 				return sResult;
-			} else if (iResultLength>nLetters){
+			} else { // nletters is < 0
 				sAux=sResult.pop();
-				var nTotalAct=iResultLength-sAux.lenght;
-				var iDiff=nLetters-nTotalAct;
-				sAux=sAux.substring(0,iDiff);
+				var nTotalAct=iResultLength-sAux.length;
+				sAux=sAux.substring(0,nLetters);
 				sResult.push(sAux);
 				return sResult;
 			}

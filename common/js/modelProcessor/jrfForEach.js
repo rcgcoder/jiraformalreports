@@ -89,7 +89,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 			self.variables.pushVar("LoopElemsCount",loopLength);
 			self.variables.pushVar("LoopIndex",index);
 			if (self.consolidateHtml){
-				debugger;
+				//debugger;
 				var indLoopContentHtmlBuffer=self.pushHtmlBuffer();
 				self.variables.pushVar("LoopHtmlIndex",indLoopContentHtmlBuffer);
 			}
@@ -162,6 +162,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 			self.addStep("Continue...",function(){
 				if (self.bAllRoots) self.model.processingRoot=self.rootBackUp;
 				if ((self.subType=="row")||(self.subType=="subrow")){
+					debugger;
 					var treeNodeId=self.variables.popVar("recursiveNodeId");
 					var treeNode=modelInteractiveFunctions.getInteractiveContent(treeNodeId);
 					var iPosTR=self.variables.popVar("InitTR_Pos");
@@ -223,7 +224,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				self.variables.popVar("LoopIndex");
 				self.variables.popVar("LoopElemsCount");
 				if (self.consolidateHtml){
-					debugger;
+					//debugger;
 					var indLoopContentHtmlBuffer=self.variables.popVar("LoopHtmlIndex");
 					var sHtml=self.popHtmlBuffer(indLoopContentHtmlBuffer);
 					sHtml=sHtml.saToString();

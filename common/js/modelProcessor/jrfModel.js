@@ -418,7 +418,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 	}
 	parse(html,parentTag){
 		var self=this;
-		debugger;
+		//debugger;
 		var sModel=html;
 		var arrJRFs=sModel.split("<JRF");
 		if (sModel.indexOf("<JRF")==0){

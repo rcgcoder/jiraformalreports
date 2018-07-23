@@ -158,7 +158,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 	}
 	clean(){
 		var self=this;
-		debugger;
+		//debugger;
 		var sContent=self.inputHtml;
 		var sOrigLength=sContent.length;
 		log("original content length:"+sOrigLength);

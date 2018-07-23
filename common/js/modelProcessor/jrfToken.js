@@ -731,6 +731,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			arrInnerText=sText;
 		}
 //		var sInnerText=arrInnerText.saRemoveInnerHtmlTags(""); // remove inner tags
+		var sInnerText=arrInnerText;
 		if ((sInnerText.saExists("{{"))){ // its valid for {{ and for  {{{
 			sInnerText=otherParams.self.replaceVars(sInnerText,otherParams);
 		}

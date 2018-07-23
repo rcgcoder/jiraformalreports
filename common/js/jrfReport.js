@@ -845,8 +845,13 @@ var jrfReport=class jrfReport {
 			tm.asyncTaskCallsBlock=0;
 			tm.asyncTaskCallsMaxDeep=0;
 	        var jqResult=$("#ReportResult");
-	        sModelProcessedResult=sModelProcessedResult.saToString();
-	        jqResult.html(sModelProcessedResult);
+//	        sModelProcessedResult=sModelProcessedResult.saToString();
+//	        jqResult.html(sModelProcessedResult);
+	        debugger;
+	        var blobResult = new Blob(sModelProcessedResult, {type : "text/html"});
+	        var blobUrl = window.URL.createObjectURL(blobResult);
+	        jqResult.attr("src",blobUrl);
+	        
 			loggerFactory.getLogger().enabled=true;
 			self.result=sModelProcessedResult;
 			if (self.config.NewWindow){

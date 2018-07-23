@@ -46,7 +46,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		var otherWindow; 
 		var saContent=self.getInteractiveContent(elemId);
 		var saPrependContent=[];
-		saPrependContent.push(`<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+		saPrependContent.push(`<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//ES"
    					"http://www.w3.org/TR/html4/strict.dtd">
 					<HTML>
  					<HEAD> 

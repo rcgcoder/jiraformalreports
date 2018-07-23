@@ -64,10 +64,10 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			}
 		});
 		
-		self.addStep("Waiting for "+sContentBlobUrl+" load", function(){
+		System.webapp.addStep("Waiting for "+sContentBlobUrl+" load", function(){
 			setTimeout(cbStepCheckLoader,1000);
 		});
-		self.addStep("Waiting for "+sContentBlobUrl+" load", function(){
+		System.webapp.addStep("Waiting for "+sContentBlobUrl+" load", function(){
 				var jqBody=$(otherWindow.document.body);
 				jqBody.html(sContent.saToString());
 				var arrFiles=[	//"ts/demo.ts",

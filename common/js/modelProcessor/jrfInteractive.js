@@ -65,7 +65,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			saContent.unshift(saPrependContent.pop());
 		}
 		saContent.push("</BODY></HTML>");
-		var blobResult = new Blob(sModelProcessedResult, {type : "text/html"});
+		var blobResult = new Blob(saContent, {type : "text/html"});
 	    var blobUrl = window.URL.createObjectURL(blobResult);
 		otherWindow= window.open(blobUrl , '_blank');
 		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;

@@ -46,17 +46,18 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		var otherWindow; 
 		var sContentBlobUrl=self.getInteractiveContent(elemId);
 		
-		var checkLoaded=function(){
-		  if (isUndefined(otherWindow)) return false;
-		  if (isUndefined(otherWindow.document)) return false;
-		  return (otherWindow.document.readyState === "complete");
-		};
 		
 		otherWindow= window.open(sContentBlobUrl, '_blank');
-
-		var cbStepCheckLoader=System.webapp.createManagedCallback(function(){
-			var isLoaded=checkLoaded();
+		otherWindow.log=log;
+		otherWindow.checkLoaded=function(){
+			  if (isUndefined(otherWindow)) return false;
+			  if (isUndefined(otherWindow.document)) return false;
+			  return (otherWindow.document.readyState === "complete");
+		};
+		otherWindow.cbStepCheckLoader=function(){
+			var isLoaded=otherWindow.checkLoaded();
 			if (isLoaded) {
+				log("The window is loaded");
 				debugger;
 				var jqBody=$(otherWindow.document.body);
 				//jqBody.html(sContent.saToString());
@@ -72,10 +73,10 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 				});
 			} else {
 				log("wait until window is loaded!");
-				otherWindow.setTimeout(cbStepCheckLoader,1000);
+				otherWindow.setTimeout(otherWindow.cbStepCheckLoader,1000);
 			}
-		});
-		otherWindow.setTimeout(cbStepCheckLoader,1000);
+		};
+		otherWindow.setTimeout(otherWindow.cbStepCheckLoader,1000);
 		
 		
 //		var winPath=System.webapp.composeUrl("html/empty.html");

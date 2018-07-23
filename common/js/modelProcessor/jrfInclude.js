@@ -71,7 +71,8 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
     				oContent=JSON.parse(jsonContent);
 				}
 				var sContentBody=oContent.body.storage.value;
-				sContentBody=decodeEntities(sContentBody);
+				sContentBody=self.model.report.cleanModel(sContentBody);
+//				sContentBody=decodeEntities(sContentBody);
 				self.continueTask([sContentBody]);
 			});
 

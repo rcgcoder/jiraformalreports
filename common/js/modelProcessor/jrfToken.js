@@ -278,7 +278,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				} else {
 					varValue=sValAux;
 				}
-				if (isString(varValue)||isArray(varValue)) varValue=varValue.saRemoveInnerHtmlTags();
+				//if (isString(varValue)||isArray(varValue)) varValue=varValue.saRemoveInnerHtmlTags();
 
 				log("Looking for Value ["+varName+"] to set:["+varValue+"]");
 				var vVar=self.variables.getVars(varName);
@@ -320,7 +320,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					varValue=sValAux;
 				}
 				if (isString(varValue)||isArray(varValue)) {
-					varValue=varValue.saRemoveInnerHtmlTags();
+					//varValue=varValue.saRemoveInnerHtmlTags();
 					varValue=varValue.saToString();
 				}
 				log("Looking for Value ["+varName+"] pushed:["+varValue+"]");
@@ -565,7 +565,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 */				if (sFormatId=="fixed"){
 					//debugger;
 					sValue=self.replaceVars(sValAux);
-					sValue=sValue.saRemoveInnerHtmlTags();
+					//sValue=sValue.saRemoveInnerHtmlTags();
 					sValue=replaceAll(sValue,"\n"," ");
 					sValue=sValue.saToString();
 					if (sValue=="") return;
@@ -621,7 +621,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 					sValAux=formatDate(dtAux,4); 
 				} else if (sFormat.toLowerCase().indexOf("fixed")>=0) {
 					var sValue=self.replaceVars(sValAux);
-					sValue=sValue.saRemoveInnerHtmlTags();
+					//sValue=sValue.saRemoveInnerHtmlTags();
 					sValue=sValue.saToString();
 					sValue=sValue.trim();
 					if (!isDate(sValue)){
@@ -730,7 +730,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		} else {
 			arrInnerText=sText;
 		}
-		var sInnerText=arrInnerText.saRemoveInnerHtmlTags(""); // remove inner tags
+//		var sInnerText=arrInnerText.saRemoveInnerHtmlTags(""); // remove inner tags
 		if ((sInnerText.saExists("{{"))){ // its valid for {{ and for  {{{
 			sInnerText=otherParams.self.replaceVars(sInnerText,otherParams);
 		}
@@ -776,7 +776,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		} else {
 			arrInnerText=sText;
 		}
-		var sInnerText=arrInnerText.saRemoveInnerHtmlTags("").saToString().trim();
+//		var sInnerText=arrInnerText.saRemoveInnerHtmlTags("").saToString().trim();
+		var sInnerText=arrInnerText.saToString().trim();
 		var sVarRef;
 		var iVar;
 		if (!otherParams.bReplaceVars){

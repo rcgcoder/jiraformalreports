@@ -58,6 +58,18 @@ var jrfReport=class jrfReport {
 		oIssue.setKey(jsonIssue.key);
 		return oIssue;
 	}
+	cleanModel(sContent){
+		sContent=replaceAll(sContent,"&lt;jRf","&lt;JRF",true);
+		sContent=replaceAll(sContent,"jrF&gt;","JRF&gt;",true);
+		sContent=replaceAll(sContent,"&lt;jRf_formula","&lt;JRF_FORMULA",true);
+		sContent=replaceAll(sContent,"jrF_FORMULA&gt;","JRF_FORMULA&gt;",true);
+		var jrfCleaner=new jrfHtmlCleaner(sContent,[["<JRF_FORMULA","JRF_FORMULA>"],["<",">"],["&lt;","&gt;"],["{{{","}}}"],["{{","}}"]]);
+		sContent=jrfCleaner.clean();
+		sContent=replaceAll(sContent,"&lt;JRF_FORMULA","&lt;JRF FORMULA");
+		sContent=replaceAll(sContent,"JRF_FORMULA&gt;","JRF&gt;");
+		var sHtml=he.decode(sContent);
+		return sHtml;
+	}
 
 	execute(bDontReloadFiles){
 		var self=this;
@@ -141,19 +153,7 @@ var jrfReport=class jrfReport {
 				log(content);
 				var jsonObj=JSON.parse(content);
 				var sContent=jsonObj.body.storage.value;
-				debugger;
-				// needs to clean the content.
-				sContent=replaceAll(sContent,"&lt;jRf","&lt;JRF",true);
-				sContent=replaceAll(sContent,"jrF&gt;","JRF&gt;",true);
-				sContent=replaceAll(sContent,"&lt;jRf_formula","&lt;JRF_FORMULA",true);
-				sContent=replaceAll(sContent,"jrF_FORMULA&gt;","JRF_FORMULA&gt;",true);
-				var jrfCleaner=new jrfHtmlCleaner(sContent,[["<JRF_FORMULA","JRF_FORMULA>"],["<",">"],["&lt;","&gt;"],["{{{","}}}"],["{{","}}"]]);
-				sContent=jrfCleaner.clean();
-				var sHtml=he.decode(sContent);
-				sHtml=replaceAll(sHtml,"JRF_FORMULA","JRF FORMULA");
-/*				debugger;
-				sHtml=tidy_html5(sHtml, {"indent-spaces": 4});
-*/				//self.model=sHtml;
+				var sHtml=self.cleanModel(sContent);
 				self.config.model=sHtml;
 				self.continueTask(); 
 //				var theHtml=$(sHtml);

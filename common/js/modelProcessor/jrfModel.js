@@ -78,7 +78,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 				}
 			}
 			if (bLocated){ // if bLocated... sToken stores the type of call.
-				sPart=self.removeInnerTags(sPart,true); // remove all html tags that confluence can be inserted
+				//sPart=self.removeInnerTags(sPart,true); // remove all html tags that confluence can be inserted
 				sPart=sPart.split(")")[0]; // sParts only have the params of the function Childs(.....) or ();
 				sPart=sPart.substring(sPart.indexOf("(")+1,sPart.length);// now only the inner part
 				arrParams=sPart.split(","); // , separated
@@ -254,7 +254,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		}
 		return sResult;
 	}
-	processRecursive(arrJRFs,indexAct,parentTag,sInitialPrependText,arrOpenedHtmlTags){
+	processRecursive(arrJRFs,indexAct,parentTag,sInitialPrependText){
 		var self=this;
 		var auxIndex=indexAct;
 		var sTagRest=sInitialPrependText;
@@ -267,68 +267,6 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		var auxTag;
 		var sTagText;
 		var sNewPostText;
-		var openedHtmlTags=arrOpenedHtmlTags;
-		if (isUndefined(openedHtmlTags)) openedHtmlTags=[];
-		var fncCleanHtmlTags=function(){
-			var i=0;
-			var sTag;
-			while (i<openedHtmlTags.length){
-				sTag=openedHtmlTags[i];
-				if (sTag[0]=="/") { // is a close tag /p /span.... 
-					openedHtmlTags.splice(i-1, 2); // remove the two elements
-					i--;
-				} else if  (sTag[sTag.length-1]=="/") { // is a auto close tag <input />.... 
-					openedHtmlTags.splice(i, 1); // remove the element
-			    } else { // is open.... continue
-			    	i++;
-				}
-				if (i<0) i=0;
-			}
-		}
-		var fncRemoveCloseOfOpenHtmlTags=function(){
-			if (sTagRest.length==0) return;
-			if (isUndefined(sTagRest.split)){
-				debugger;
-			}
-			fncCleanHtmlTags();
-			var arrInitTagAux=sTagRest.split("<");
-			var openCounter=0;
-			var srcPosition=1;
-			for (var i=0;(i<arrInitTagAux.length)&&(openedHtmlTags.length>0);i++){
-				var sTagStartText=arrInitTagAux[i];
-				if (sTagStartText!="") {
-					var indClose=sTagStartText.indexOf(">");
-					var sTagAux=sTagStartText.substring(0,indClose);
-					if (sTagAux[sTagAux.length-1]=="/"){ // its a autoclosed tag...
-						// do nothing
-					} else if (sTagAux[0]!="/") { // its an open tag
-						openCounter++;
-					} else { //its a close tag
-						if (openCounter>0) {
-							openCounter--;
-						} else {
-							sTagRest=sTagRest.saReplace(srcPosition-1,sTagAux.length+2,"");
-							   /*
-							    * 0123456</span>45678 
-							    *         ^ position = 8
-							    * 012345645678
-							    *        ^ position = 7
-							    */
-							sTagRest=sTagRest.saToString();
-							srcPosition-=(1+sTagAux.length+2);
-							if (openedHtmlTags.length>0){
-								openedHtmlTags.pop();
-							} else {
-								logError("Error in Model... one close tag without previous open in ...\n"+sTagRest);
-							}
-						}
-					}
-					srcPosition+=sTagStartText.length+1;
-				}
-			};
-		}
-		// first it needs to remove all close tags derived of previously removed open tags from tagRest
-		fncRemoveCloseOfOpenHtmlTags();
 		
 		while(auxIndex<arrJRFs.length){
 
@@ -341,43 +279,11 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			sTagText=arrJRFs[auxIndex];
 			log("JRF tag index:"+auxIndex);
 			log("Row text:"+sTagText);
-			if (auxIndex==6){
-				debugger;
-			}
 			sNewPostText="";
 			indOpenTag=sTagText.indexOf("<");
 			indCloseTag=sTagText.indexOf(">");
 			indWithCloseTag=sTagText.indexOf("</JRF>");
-			var bFirstRemoveHtmlTag=true;
-			while ((indOpenTag>=0)&&(indOpenTag<indCloseTag)
-					&&((indWithCloseTag<0)||(indWithCloseTag>indOpenTag))){
-				var auxOpenTags=[];
-				sTagText=self.removeInnerTags(sTagText,false,auxOpenTags,1);
-				sTagText=sTagText.arrPrevious.saToString()+sTagText.arrPosterior.saToString();
-				if (auxOpenTags.length==1){
-					var openTag=auxOpenTags[0].saToString();
-					if ((bFirstRemoveHtmlTag)&&(openTag[0]=="/")){
-						previousHtml+="<"+openTag+">";
-						auxTag.setPreviousHTML(previousHtml);
-					} else {
-						bFirstRemoveHtmlTag=false;
-						if (openTag[openTag.length-1]=="/"){
-							// autoClosed... do not push
-						} else if (openTag[0]=="/"){ // close...
-							if (openedHtmlTags.length>0){
-								openedHtmlTags.pop();
-							}
-						} else {
-							openedHtmlTags.push(openTag);
-						}
-					}
-				}
-				indOpenTag=sTagText.indexOf("<");
-				indCloseTag=sTagText.indexOf(">");
-				indWithCloseTag=sTagText.indexOf("</JRF>");
-			} 
 			indEmptyTag=sTagText.indexOf("/>");
-			
 			if (indCloseTag>=0){ // the tag closes
 				if ((indEmptyTag<indCloseTag)&&(indEmptyTag>=0)){ // the tag closes with "/>"
 					// the tag does not have inner html it closes with />
@@ -387,9 +293,6 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 					self.updateAttributes(auxTag);		
 					auxTag.setPostHTML("");
 					sTagRest=sTagText.substring(indEmptyTag+2,sTagText.length);
-					fncRemoveCloseOfOpenHtmlTags();
-					
-					
 				} else {
 					sTagAttribs=sTagText.substring(0,indCloseTag);
 					sTagAttribs="<JRF "+ sTagAttribs +" />";
@@ -397,12 +300,10 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 					self.updateAttributes(auxTag);
 					
 					sTagRest=sTagText.substring(indCloseTag+1,sTagText.length);
-					fncRemoveCloseOfOpenHtmlTags();
-										
+
 					if (indWithCloseTag<0) { // there is not a close tag...... there is more jrf tags inside actual
-						var oAdvance=self.processRecursive(arrJRFs,auxIndex+1,auxTag,sTagRest,openedHtmlTags); // the rest text without </jrf> if where in 
+						var oAdvance=self.processRecursive(arrJRFs,auxIndex+1,auxTag,sTagRest); // the rest text without </jrf> if where in 
 						sTagRest=oAdvance.text.saToString();
-						fncRemoveCloseOfOpenHtmlTags();
 						auxIndex=oAdvance.actIndex;			
 					}
 
@@ -412,7 +313,6 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 						sNewPostText=sTagRest.substring(0,indWithCloseTag);
 						auxTag.setPostHTML(sNewPostText);
 						sTagRest=sTagRest.substring(indWithCloseTag+6,sTagRest.length); // extract text before </jrf>
-						fncRemoveCloseOfOpenHtmlTags();
 					}
 				}
 				indWithCloseTag=sTagRest.indexOf("</JRF>");
@@ -519,8 +419,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 	parse(html,parentTag){
 		var self=this;
 		debugger;
-		var sModel=replaceAll(html,"<jRf","<JRF",true);
-		sModel=replaceAll(sModel,"jrF>","JRF>",true);
+		var sModel=html;
 		var arrJRFs=sModel.split("<JRF");
 		if (sModel.indexOf("<JRF")==0){
 			arrJRFs.unshift(""); // added a first element.....

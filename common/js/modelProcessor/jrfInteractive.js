@@ -44,22 +44,45 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	openNewWindow(elemId){
 		var self=this;
 		var otherWindow; 
-		var sContent=self.getInteractiveContent(elemId);
-		otherWindow= window.open("", '_blank');
+		var sContentBlobUrl=self.getInteractiveContent(elemId);
+		
+		var checkLoaded=function(){
+		  if (isUndefined(otherWindow)) return false;
+		  if (isUndefined(otherWindow.document)) return false;
+		  return (otherWindow.document.readyState === "complete");
+		};
+		
+		otherWindow= window.open(sContentBlobUrl, '_blank');
+
+		var cbStepCheckLoader=System.webapp.createManagedCallback(function(){
+			var isLoaded=checkLoaded();
+			if (isLoaded) {
+				System.webapp.continueTask();
+			} else {
+				log("wait until window is loaded!");
+				setTimeout(cbStepCheckLoader,1000);
+			}
+		});
+		
+		self.addStep("Waiting for "+sContentBlobUrl+" load", function(){
+			setTimeout(cbStepCheckLoader,1000);
+		});
+		self.addStep("Waiting for "+sContentBlobUrl+" load", function(){
+				var jqBody=$(otherWindow.document.body);
+				jqBody.html(sContent.saToString());
+				var arrFiles=[	//"ts/demo.ts",
+					"css/RCGTaskManager.css",
+					"aui/css/aui.css",
+		            "aui/css/aui-experimental.css",
+		            ]; //test
+				arrFiles.forEach(function (sRelativePath){
+					var sAbsPath=System.webapp.composeUrl(sRelativePath);
+					jqBody.append('<link rel="stylesheet" type="text/css" href="'+sAbsPath+'">');
+	
+				});
+		});
 //		var winPath=System.webapp.composeUrl("html/empty.html");
 //		otherWindow= window.open(winPath, '_blank');
-		var jqBody=$(otherWindow.document.body);
-		jqBody.html(sContent.saToString());
-		var arrFiles=[	//"ts/demo.ts",
-			"css/RCGTaskManager.css",
-			"aui/css/aui.css",
-            "aui/css/aui-experimental.css",
-            ]; //test
-		arrFiles.forEach(function (sRelativePath){
-			var sAbsPath=System.webapp.composeUrl(sRelativePath);
-			jqBody.append('<link rel="stylesheet" type="text/css" href="'+sAbsPath+'">');
-
-		});
 		/*
 		var arrFiles=[	//"ts/demo.ts",
 			"aui/js/aui.min.js",

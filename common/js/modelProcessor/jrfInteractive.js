@@ -44,76 +44,30 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	openNewWindow(elemId){
 		var self=this;
 		var otherWindow; 
-		var sContentBlobUrl=self.getInteractiveContent(elemId);
-		
-		
-		otherWindow= window.open(sContentBlobUrl, '_blank');
-		otherWindow.log=log;
-		otherWindow.checkLoaded=function(){
-			  if (isUndefined(otherWindow)) return false;
-			  if (isUndefined(otherWindow.document)) return false;
-			  return (otherWindow.document.readyState === "complete");
-		};
-		otherWindow.cbStepCheckLoader=function(){
-			var isLoaded=otherWindow.checkLoaded();
-			if (isLoaded) {
-				log("The window is loaded");
-				debugger;
-				var jqBody=$(otherWindow.document.body);
-				//jqBody.html(sContent.saToString());
-				var arrFiles=[	//"ts/demo.ts",
-					"css/RCGTaskManager.css",
-					"aui/css/aui.css",
-		            "aui/css/aui-experimental.css",
-		            ]; //test
-				arrFiles.forEach(function (sRelativePath){
-					var sAbsPath=System.webapp.composeUrl(sRelativePath);
-					jqBody.append('<link rel="stylesheet" type="text/css" href="'+sAbsPath+'">');
-	
-				});
-			} else {
-				log("wait until window is loaded!");
-				otherWindow.setTimeout(otherWindow.cbStepCheckLoader,1000);
-			}
-		};
-		otherWindow.setTimeout(otherWindow.cbStepCheckLoader,1000);
-		
-		
-//		var winPath=System.webapp.composeUrl("html/empty.html");
-//		otherWindow= window.open(winPath, '_blank');
-		/*
+		var saContent=self.getInteractiveContent(elemId);
+		var saPrependContent=[];
+		saPrependContent.push(`<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   					"http://www.w3.org/TR/html4/strict.dtd">
+					<HTML>
+ 					<HEAD> 
+					`);		
 		var arrFiles=[	//"ts/demo.ts",
-			"aui/js/aui.min.js",
-            "aui/js/aui-experimental.min.js",
-			"aui/js/aui-soy.min.js"
+			"css/RCGTaskManager.css",
+			"aui/css/aui.css",
+            "aui/css/aui-experimental.css",
             ]; //test
-		
-		var sHtmlJSFunction= "";
 		arrFiles.forEach(function (sRelativePath){
 			var sAbsPath=System.webapp.composeUrl(sRelativePath);
-			sHtmlJSFunction+="\n fncLoadJS('"+sAbsPath+"');";
+			saPrependContent.push('<link rel="stylesheet" type="text/css" href="'+sAbsPath+'">');
 		});
-		var sHtmlJSFunction= `var fncLoadJS=function(sAbsPath){
-								var oHead=(document.head || document.getElementsByTagName("head")[0]);
-								var oScript = document.createElement('script');
-								oScript.type = "text\/javascript";
-								oScript.onerror = function(){console.log("Error applying javascrip");};
-								oHead.appendChild(oScript);
-								oScript.src=sAbsPath;
-							}
-							setTimeout(function(){
-							    `+sHtmlJSFunction+`
-							},1000);
-							`;
-		var oHead=(otherWindow.document.head || otherWindow.document.getElementsByTagName("head")[0]);
-		var oScript = otherWindow.document.createElement("script");
-		oScript.type = "text\/javascript";
-		oScript.onerror = function(){console.log("Error applying javascrip");};
-		oHead.appendChild(oScript);
-		//oScript.src= sAbsPath;
-		oScript.innerHTML =sHtmlJSFunction;
-		*/
-		
+		saPrependContent.push("</HEAD><BODY>");
+		while (saPrependContent.length>0){
+			saContent.unshift(saPrependContent.pop());
+		}
+		saContent.push("</BODY></HTML>");
+		var blobResult = new Blob(sModelProcessedResult, {type : "text/html"});
+	    var blobUrl = window.URL.createObjectURL(blobResult);
+		otherWindow= window.open(blobUrl , '_blank');
 		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;
     	otherWindow.System=System;
 	}

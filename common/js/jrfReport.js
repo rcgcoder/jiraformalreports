@@ -853,7 +853,7 @@ var jrfReport=class jrfReport {
 	        jqResult.attr("src",blobUrl);
 	        
 			loggerFactory.getLogger().enabled=true;
-			self.result=blobUrl;
+			self.result=sModelProcessedResult;
 			if (self.config.NewWindow){
 				self.openResultInNewTab();
 			}

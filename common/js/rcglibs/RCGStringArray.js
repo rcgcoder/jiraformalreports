@@ -395,8 +395,26 @@ Array.prototype.saReplace=function(iPosStart,nLetters,sTextToSet){
 		} else {
 			var sResult=sAux.substring(0,iPosAux);
 			sResult+=sReplace;
-			sResult+=sAux.substring(iPosAux+nLetters,sAux.length);
+			if ((iPosAux+nLetters)<sAux.length){
+				sResult+=sAux.substring(iPosAux+nLetters,sAux.length);
+				self[iBlock]=sResult;
+				return self;
+			}
 			self[iBlock]=sResult;
+			accumLetters=(sAux.length-iPosAux);
+			iBlock++;
+			while ((iBlock<selfLength)&&(accumLetters<nLetters)){
+				sAux=self[iBlock];
+				accumLetters+=sAux.length;
+				self[iBlock]="";
+				iBlock++;
+			}
+			if (accumLetters>nLetters){
+				iBlock--;
+				var iDiff=accumLetters-nLetters;
+				sAux=sAux.subString(iDiff,sAux.length);
+				self[iBlock]=sAux;
+			}
 			return self;
 		}
 	}

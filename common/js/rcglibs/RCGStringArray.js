@@ -363,8 +363,9 @@ Array.prototype.saSubstring=function(iPosStart,iPosEnd){
 			} else { // nletters is < 0
 				sAux=sResult.pop();
 				var nTotalAct=iResultLength-sAux.length;
+				nLetters+=sAux.length;
 				sAux=sAux.substring(0,nLetters);
-				iResultLength+=sAux;
+				iResultLength+=sAux.length;
 				sResult.push(sAux);
 				return sResult;
 			}

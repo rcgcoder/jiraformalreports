@@ -349,7 +349,9 @@ Array.prototype.saSubstring=function(iPosStart,iPosEnd){
 			iResultLength+=sAux.length;
 			nLetters-=sAux.length;
 			iBlock++;
-			while ((iBlock<selfLength) &&((iResultLength<nLetters)||(nLetters>0))){
+			while ((iBlock<selfLength) &&(
+					//(iResultLength<nLetters)||
+					(nLetters>0))){
 				sAux=self[iBlock];
 				sResult.push(sAux);
 				iResultLength+=sAux.length;
@@ -362,6 +364,7 @@ Array.prototype.saSubstring=function(iPosStart,iPosEnd){
 				sAux=sResult.pop();
 				var nTotalAct=iResultLength-sAux.length;
 				sAux=sAux.substring(0,nLetters);
+				iResultLength+=sAux;
 				sResult.push(sAux);
 				return sResult;
 			}

@@ -57,19 +57,9 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		var cbStepCheckLoader=System.webapp.createManagedCallback(function(){
 			var isLoaded=checkLoaded();
 			if (isLoaded) {
-				System.webapp.continueTask();
-			} else {
-				log("wait until window is loaded!");
-				setTimeout(cbStepCheckLoader,1000);
-			}
-		});
-		
-		System.webapp.addStep("Waiting for "+sContentBlobUrl+" load", function(){
-			setTimeout(cbStepCheckLoader,1000);
-		});
-		System.webapp.addStep("Waiting for "+sContentBlobUrl+" load", function(){
+				debugger;
 				var jqBody=$(otherWindow.document.body);
-				jqBody.html(sContent.saToString());
+				//jqBody.html(sContent.saToString());
 				var arrFiles=[	//"ts/demo.ts",
 					"css/RCGTaskManager.css",
 					"aui/css/aui.css",
@@ -80,7 +70,14 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 					jqBody.append('<link rel="stylesheet" type="text/css" href="'+sAbsPath+'">');
 	
 				});
+			} else {
+				log("wait until window is loaded!");
+				otherWindow.setTimeout(cbStepCheckLoader,1000);
+			}
 		});
+		otherWindow.setTimeout(cbStepCheckLoader,1000);
+		
+		
 //		var winPath=System.webapp.composeUrl("html/empty.html");
 //		otherWindow= window.open(winPath, '_blank');
 		/*

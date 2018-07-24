@@ -451,12 +451,13 @@ var jrfReport=class jrfReport {
 							nRetrievedIssues+"/"+nPendingIssues +" Epics:"+ nRetrievedEpics + "/"+nPendingEpics+" Issues left:"+ arrKeyGroups[0].length+" Epics left:" + arrEpicGroups[0].length );
 					self.continueTask();
 				});				
-				
+
 				debugger;
 				nPendingIssues=self.rootIssues.length();
 				self.rootIssues.walk(fncExtractPendingKeys);
 				fncProcessRestOfPending();
 				self.continueTask();
+
 			});
 			self.addStep("Finish loading Root Issues",function(){
 				self.rootProjects.walk(function(value,iProf,key){

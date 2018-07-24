@@ -410,6 +410,9 @@ var jrfReport=class jrfReport {
 						}
 					}
 				});
+				nPendingIssues=self.rootIssues.length();
+				self.rootIssues.walk(fncExtractPendingKeys);
+				self.continueTask();
 				var fncProcessRestOfPending=self.createManagedCallback(function(jsonIssue){
 					var bSomethingRetrieving=((arrKeyGroups.length>1)||(arrEpicGroups.length>1));
 					while(arrKeyGroups.length>1){
@@ -451,9 +454,6 @@ var jrfReport=class jrfReport {
 							nRetrievedIssues+"/"+nPendingIssues +" Epics:"+ nRetrievedEpics + "/"+nPendingEpics+" Issues left:"+ arrKeyGroups[0].length+" Epics left:" + arrEpicGroups[0].length );
 					self.continueTask();
 				});				
-				nPendingIssues=self.rootIssues.length();
-				self.rootIssues.walk(fncExtractPendingKeys);
-				self.continueTask();
 			});
 			self.addStep("Finish loading Root Issues",function(){
 				self.rootProjects.walk(function(value,iProf,key){

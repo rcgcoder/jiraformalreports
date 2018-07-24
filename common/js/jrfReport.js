@@ -922,25 +922,25 @@ var jrfReport=class jrfReport {
         	   if (  iframeDoc.readyState  == 'complete' ) {
         	       // The loading is complete, call the function we want executed once the iframe is loaded
         		   debugger;
-        		   setTimeout(function(){
-        			   jqResult.contents().find("head")[0].modelInteractiveFunctions=modelInteractiveFunctions;
-        			   jqResult.contents().find("head")[0].System=System;
-            		   iframeWindow.modelInteractiveFunctions=modelInteractiveFunctions;
-            		   iframeWindow.System=System;
-            		   iframeDoc.modelInteractiveFunctions=modelInteractiveFunctions;
-            		   iframeDoc.System=System;
-        		   });
 	       	       var fncAdjustHeight=self.createManagedCallback(function(){
+	        		   debugger;
 	       	    	   var innerDiv=iframeDoc.getElementById('ResultInnerDiv');
 	       	    	   jqResult.height(innerDiv.parentElement.scrollHeight+20);
 	       	    	   jqResult.width(innerDiv.parentElement.scrollWidth+20);
 	       	    	   var btn=iframeDoc.getElementById('someButton');
 	       	    	   var jqButton=$(btn).click(function(){alert("Clicked")});
 	       	    	   var jqButton=$(btn).text("new Text");
+        			   jqResult.contents().find("head")[0].modelInteractiveFunctions=modelInteractiveFunctions;
+        			   jqResult.contents().find("head")[0].System=System;
+            		   iframeWindow.modelInteractiveFunctions=modelInteractiveFunctions;
+            		   iframeWindow.System=System;
+            		   iframeDoc.modelInteractiveFunctions=modelInteractiveFunctions;
+            		   iframeDoc.System=System;
 	    	    	   self.continueTask();
 	       	       });
-	    	       fncAdjustHeight(); 	
-        		   return;
+	       	       setTimeout(function(){
+		    	       fncAdjustHeight(); 	
+	       	       });
         	    } 
         	    // If we are here, it is not loaded. Set things up so we check   the status again in 100 milliseconds
         	    window.setTimeout(fncIsIframeLoaded, 300);

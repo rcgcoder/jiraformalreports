@@ -395,18 +395,22 @@ function newIssueFactory(report){
 				var hsLinks=self.getLinkTypeById(linkType.key);
 				if (hsLinks!=""){
 					hsLinks.issues.walk(function(auxIssue,iDeep,linkedIssueKey){
-						if (!self.getLinkedIssueKeys().exists(linkedIssueKey)){
-							self.addLinkedIssueKey(linkedIssueKey,linkedIssueKey);
-						}
-						linkedIssue=issuesCache.getById(linkedIssueKey);
-						if (linkedIssue==""){
-							arrResult.push(linkedIssueKey);
-							/*if (keyGroup.length>10){
-								keyGroup=[];
-								arrKeyGroups.push(keyGroup);
+						if (linkedIssueKey!=""){
+							if (!self.getLinkedIssueKeys().exists(linkedIssueKey)){
+								self.addLinkedIssueKey(linkedIssueKey,linkedIssueKey);
 							}
-							keyGroup.push(linkedIssueKey);
-							nPending++;*/
+							linkedIssue=issuesCache.getById(linkedIssueKey);
+							if (linkedIssue==""){
+								arrResult.push(linkedIssueKey);
+								/*if (keyGroup.length>10){
+									keyGroup=[];
+									arrKeyGroups.push(keyGroup);
+								}
+								keyGroup.push(linkedIssueKey);
+								nPending++;*/
+							}
+						} else {
+							logError("There is a '' in linked issues of "+self.getKey());
 						}
 					});
 				}

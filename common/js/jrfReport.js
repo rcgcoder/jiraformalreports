@@ -844,20 +844,42 @@ var jrfReport=class jrfReport {
 			var tm=self.getTaskManager();
 			tm.asyncTaskCallsBlock=0;
 			tm.asyncTaskCallsMaxDeep=0;
-	        var jqResult=$("#ReportResult");
 //	        sModelProcessedResult=sModelProcessedResult.saToString();
 //	        jqResult.html(sModelProcessedResult);
 	        debugger;
 	        var blobResult = new Blob(sModelProcessedResult, {type : "text/html"});
 	        var blobUrl = window.URL.createObjectURL(blobResult);
+	        var jqDiv=$("#reportResultDiv");
+	        var viewWidth=jqDiv.width();
+	        var jqResult=$("#ReportResult");
+	        jqResult.width(viewWidth);
 	        jqResult.attr("src",blobUrl);
+	        var fncIsIframeLoaded=self.createManagedCallback(function(){
+        	   var iframe = document.getElementById('ReportResult');
+        	   var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        	    // Check if loading is complete
+        	   if (  iframeDoc.readyState  == 'complete' ) {
+        	       // The loading is complete, call the function we want executed once the iframe is loaded
+	       	       var fncAdjustHeight=self.createManagedCallback(function(){
+	    	        	if (iframe.scrollHeight > iframe.clientHeight){
+	    	        		jqResult.height(jqResult.height()+40);
+	    	        	    window.setTimeout(fncAdjustHeight, 100);
+	    	        	} else {
+	    	    			self.continueTask();
+	    	        	}
+	       	       });
+	    	       fncAdjustHeight(); 	
+        		   return;
+        	    } 
+        	    // If we are here, it is not loaded. Set things up so we check   the status again in 100 milliseconds
+        	    window.setTimeout(fncIsIframeLoaded, 300);
+	        });
 	        
 			loggerFactory.getLogger().enabled=true;
 			self.result=sModelProcessedResult;
 			if (self.config.NewWindow){
 				self.openResultInNewTab();
 			}
-			self.continueTask();
 		});
 		
 		self.addStep("Storing issue info or Removing all Issues in the scope.... ",function(){

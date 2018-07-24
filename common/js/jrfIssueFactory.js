@@ -77,7 +77,7 @@ function newIssueFactory(report){
 				logError("The issue:"+ dynAux.getKey()+" has more ("+dynAux.countParentsChild()+") than one parent");
 				hsParents=dynAux.getListParentsChild();
 				while (hsParents.length()>1){
-					hsParents.remove(hsParents.getLast().key));
+					hsParents.remove(hsParents.getLast().key);
 				}
 				bReturn=true;
 			}

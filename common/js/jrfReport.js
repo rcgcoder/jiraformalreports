@@ -430,7 +430,7 @@ var jrfReport=class jrfReport {
 						}
 					}
 							
-					console.log("Issues:"+ nRetrievedIssues+"/"+nPendingIssues +" Epics:"+nRetrievedEpics+"/"+nPendingEpics+ " Issues left:"+ arrKeyGroups[0].length+" Epics left:" + arrEpicGroups[0].length );
+					console.log("Issues:"+ nRetrievedIssues+"/"+nPendingIssues +" Epics:"+ nRetrievedEpics + "/"+nPendingEpics+" Issues left:"+ arrKeyGroups[0].length+" Epics left:" + arrEpicGroups[0].length );
 				});
 				nPendingIssues=self.rootIssues.length();
 				self.rootIssues.walk(fncExtractPendingKeys);

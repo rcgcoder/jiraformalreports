@@ -277,7 +277,6 @@ var jrfReport=class jrfReport {
 			var grpLength=0;
 			var hsKeyWaiting=newHashMap();
 			var fncAddToGroup=function(issueKey){
-				if (hsKeyWaiting.exists(issueKey)) return;
 				hsKeyWaiting.add(issueKey,issueKey);
 				if ((keyGroup.length>maxItemsInGroup)
 					||
@@ -322,13 +321,20 @@ var jrfReport=class jrfReport {
 				}
 				var arrPendingKeys=issue.getPendingLinkedIssueKeys(arrLinkTypes,self.allIssues);
 				arrPendingKeys.forEach(function(issueKey){
-					fncAddToGroup(issueKey);
+					if (!self.allIssues.exists(issueKey)){
+						if (!hsKeyWaiting.exists(issueKey)){
+							hsKeyWaiting.add(issueKey,issueKey)
+							fncAddToGroup(issueKey);
+						}
+					}
 				});
 				var iType=issue.fieldValue("issuetype");
 				if (iType=="Hito"){
-					if (!hsEpics.exists(key)){
-						hsEpics.add(key,key);
-						fncAddEpicToGroup(key);
+					if (!self.allIssues.exists(key)){
+						if (!hsEpics.exists(key)){
+							hsEpics.add(key,key);
+							fncAddEpicToGroup(key);
+						}
 					}
 				} else {
 					var eLink=issue.fieldValue("Epic Link");

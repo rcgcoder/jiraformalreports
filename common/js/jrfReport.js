@@ -922,10 +922,12 @@ var jrfReport=class jrfReport {
         	   if (  iframeDoc.readyState  == 'complete' ) {
         	       // The loading is complete, call the function we want executed once the iframe is loaded
         		   debugger;
-        		   iframeWindow.modelInteractiveFunctions=modelInteractiveFunctions;
-        		   iframeWindow.System=System;
-        		   iframeDoc.modelInteractiveFunctions=modelInteractiveFunctions;
-        		   iframeDoc.System=System;
+        		   setTimeout(function(){
+            		   iframeWindow.modelInteractiveFunctions=modelInteractiveFunctions;
+            		   iframeWindow.System=System;
+            		   iframeDoc.modelInteractiveFunctions=modelInteractiveFunctions;
+            		   iframeDoc.System=System;
+        		   });
 	       	       var fncAdjustHeight=self.createManagedCallback(function(){
 	       	    	   var innerDiv=iframeDoc.getElementById('ResultInnerDiv');
 	       	    	   jqResult.height(innerDiv.parentElement.scrollHeight+20);

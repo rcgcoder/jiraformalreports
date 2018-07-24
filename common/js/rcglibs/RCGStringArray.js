@@ -474,7 +474,9 @@ String.prototype.saExists= function (sTag){
 Array.prototype.saToString= function (){
 		var saInput=this;
 		var sAux="";
+		var sString;
 		for (var i=0;i<saInput.length;i++){
+			sString=saInput[i];
 			if (sString!="") sAux+=sString;
 		}
 		return sAux;

@@ -290,7 +290,7 @@ var jrfReport=class jrfReport {
 				}
 				grpLength+=issueKey.length;
 				keyGroup.push(issueKey);
-				nPending++;
+				nPendingIssues++;
 			}
 			var hsEpics=newHashMap();
 			var grpEpicsLength=0;
@@ -309,12 +309,14 @@ var jrfReport=class jrfReport {
 				}
 				grpEpicsLength+=issueKey.length;
 				epicGroup.push(issueKey);
-				nPending++; // its a epic.... but it´s need to know that is a epic issues call is running
+				nPendingEpics++; // its a epic.... but it´s need to know that is a epic issues call is running
 			}
 			
 			
-			var nPending=0;
-			var nRetrieved=0;
+			var nPendingIssues=0;
+			var nRetrievedIssues=0;
+			var nPendingEpics=0;
+			var nRetrievedEpics=0;
 			self.addStep("Getting root base issues",function(){
 				var fncRetrieveGroup=self.createManagedCallback(function(group){
 					if (group.length>0){
@@ -333,7 +335,7 @@ var jrfReport=class jrfReport {
 					}
 				});
 				var fncProcessEpicChilds=self.createManagedCallback(function(jsonIssue,index,resultLength){
-					if (index==0) nPending+=resultLength; // now all the issues are pending....
+					if (index==0) nPendingIssues+=resultLength; // now all the issues are pending....
 					fncExtractPendingKeys(jsonIssue);
 				});
 				
@@ -350,16 +352,16 @@ var jrfReport=class jrfReport {
 								self.jira.processJQLIssues(theJQL,fncProcessEpicChilds);
 							});
 							self.addStep("Finish Retrieving issues of Epic Group ["+sIssues+"]",function(){
-								nRetrieved+=group.length; // the get epics issues call is finished... increase retrieved each epic called in group
+								nRetrievedEpics+=group.length; // the get epics issues call is finished... increase retrieved each epic called in group
 								self.continueTask();
 							});
 						}
 					}
 				});
 				var fncExtractPendingKeys=self.createManagedCallback(function(jsonIssue){
-					nRetrieved++;
+					nRetrievedIssue++;
 					var key=jsonIssue.key;
-					log("Issue ("+nRetrieved+"): "+key+" Pending:"+nPending);
+					log("Issue ("+nRetrievedIssues+"): "+key+" Pending:"+nPendingIssues + " Epics :"+nPendingEpics+"/"+nRetrievedEpics);
 					var issue=self.allIssues.getById(key);
 					if (issue==""){
 						issue=self.loadJSONIssue(jsonIssue);
@@ -391,7 +393,7 @@ var jrfReport=class jrfReport {
 							}
 						}
 					}
-					var bRetrievingGroups=((arrKeyGroups.length>1)||(arrEpicGroups.length>1));
+					var bSomethingRetrieving=((arrKeyGroups.length>1)||(arrEpicGroups.length>1));
 					while(arrKeyGroups.length>1){
 						var group=arrKeyGroups.shift();
 						fncRetrieveGroup(group);
@@ -400,31 +402,37 @@ var jrfReport=class jrfReport {
 						var group=arrEpicGroups.shift();
 						fncRetrieveEpicGroup(group);
 					} 
-					if (!bRetrievingGroups){
-						if (arrKeyGroups.length==1){
-							var group=arrKeyGroups[0];
-							log("Epics Groups:"+arrEpicGroups.length + " First Group Epics:" + arrEpicGroups[0].length);
-							if (((nRetrieved+group.length)==(nPending-arrEpicGroups[0].length))&&(group.length>0)){
-									arrKeyGroups=[];
-									keyGroup=[];
-									arrKeyGroups.push(keyGroup);
-									grpLength=0;
-									fncRetrieveGroup(group);
-							} else if (arrEpicGroups.length==1){ // there is not issue groups pending..... check last group of epics.
-								var group=arrEpicGroups[0];
-								if (((nRetrieved+group.length)==nPending)&&(group.length>0)){
-									arrEpicGroups=[];
-									epicGroup=[];
-									arrEpicGroups.push(epicGroup);
-									grpEpicsLength=0;
-									fncRetrieveEpicGroup(group);
-								}
-							}
+					if ((!bSomethingRetrieving)&&(arrKeyGroups.length==1)&&(arrKeyGroups[0].length>0)){
+						log("Testing to retrieve last issue group")
+						log("Issue Groups:"+arrKeyGroups.length + " First Issue Group:" + arrKeyGroups[0].length);
+						log("Epics Groups:"+arrEpicGroups.length + " First Group Epics:" + arrEpicGroups[0].length);
+						var group=arrKeyGroups[0];
+						if ((nRetrievedIssues+group.length)==nPendingIssues){
+								arrKeyGroups=[];
+								keyGroup=[];
+								arrKeyGroups.push(keyGroup);
+								grpLength=0;
+								fncRetrieveGroup(group);
+								bSomethingRetrieving=true;
 						}
 					}
-					console.log("Pending:"+ nPending+" Retrieved:" + nRetrieved+" Normal issues left:"+ arrKeyGroups[0].length+" Epics left:" + arrEpicGroups[0].length );
+					if ((!bSomethingRetrieving)&&(arrEpicGroups.length==1)&&(arrEpicGroups[0].length>0)){
+						log("Testing to retrieve last epic group")
+						log("Issue Groups:"+arrKeyGroups.length + " First Issue Group:" + arrKeyGroups[0].length);
+						log("Epics Groups:"+arrEpicGroups.length + " First Group Epics:" + arrEpicGroups[0].length);
+						var group=arrEpicGroups[0];
+						if ((nRetrievedEpics+group.length)==nPendingEpics){
+							arrEpicGroups=[];
+							epicGroup=[];
+							arrEpicGroups.push(epicGroup);
+							grpEpicsLength=0;
+							fncRetrieveEpicGroup(group);
+						}
+					}
+							
+					console.log("Issues:"+ nRetrievedIssues+"/"+nPendingIssues +" Epics:"+nRetrievedEpics+"/"+nPendingEpics+ " Issues left:"+ arrKeyGroups[0].length+" Epics left:" + arrEpicGroups[0].length );
 				});
-				nPending=self.rootIssues.length();
+				nPendingIssues=self.rootIssues.length();
 				self.rootIssues.walk(fncExtractPendingKeys);
 				self.continueTask();
 			});

@@ -438,14 +438,12 @@ var jrfReport=class jrfReport {
 						log("Issue Groups:"+arrKeyGroups.length + " First Issue Group:" + arrKeyGroups[0].length);
 						log("Epics Groups:"+arrEpicGroups.length + " First Group Epics:" + arrEpicGroups[0].length);
 						var group=arrKeyGroups[0];
-						if ((nRetrievedIssues+group.length)==nPendingIssues){
-								arrKeyGroups=[];
-								keyGroup=[];
-								arrKeyGroups.push(keyGroup);
-								grpLength=0;
-								fncRetrieveGroup(group);
-								bSomethingRetrieving=true;
-						}
+						arrKeyGroups=[];
+						keyGroup=[];
+						arrKeyGroups.push(keyGroup);
+						grpLength=0;
+						fncRetrieveGroup(group);
+						bSomethingRetrieving=true;
 					}
 					console.log("Procesed "+ nProcessedIssues +" issues in " +nStepsPlaned +"/"+ nTotalStepsPlaned +" steps. Issues: "+
 							nRetrievedIssues+"/"+nPendingIssues +" Epics:"+ nRetrievedEpics + "/"+nPendingEpics+" Issues left:"+ arrKeyGroups[0].length+" Epics left:" + arrEpicGroups[0].length );

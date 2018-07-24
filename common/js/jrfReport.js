@@ -311,6 +311,48 @@ var jrfReport=class jrfReport {
 				epicGroup.push(issueKey);
 				nPendingEpics++; // its a epic.... but it´s need to know that is a epic issues call is running
 			}
+			
+			var fncExtractPendingKeys=function(jsonIssue){
+				nProcessedIssues++;
+				var key=jsonIssue.key;
+				log("Issue "+key+"("+nProcessedIssues+") issues:"+nRetrievedIssues+"/" +nPendingIssues+ " Epics :"+nRetrievedEpics+"/"+nPendingEpics);
+				var issue=self.allIssues.getById(key);
+				if (issue==""){
+					issue=self.loadJSONIssue(jsonIssue);
+				}
+				var arrPendingKeys=issue.getPendingLinkedIssueKeys(arrLinkTypes,self.allIssues);
+				arrPendingKeys.forEach(function(issueKey){
+					fncAddToGroup(issueKey);
+				});
+				var iType=issue.fieldValue("issuetype");
+				if (iType=="Hito"){
+					if (!hsEpics.exists(key)){
+						hsEpics.add(key,key);
+						fncAddEpicToGroup(key);
+					}
+				} else {
+					var eLink=issue.fieldValue("Epic Link");
+					if (isDefined(eLink)&&(eLink!="")){
+						var issueParent=self.allIssues.getById(eLink);
+						if (key!=""){
+							if (issueParent!=""){
+								if (!issueParent.getLinkedIssueKeys().exists(key)){
+									issueParent.addLinkedIssueKey(key,key);
+								}
+							} else {
+								fncAddToGroup(eLink);
+							}
+						} else {
+							logError("The key link is '' in issue "+ issueParent.getKey());
+						}
+					}
+				}
+			};
+			var fncProcessEpicChilds=function(jsonIssue,index,resultLength){
+				if (index==0) nPendingIssues+=resultLength; // now all the issues are pending....
+				fncExtractPendingKeys(jsonIssue);
+			};
+			
 			var nProcessedIssues=0;
 			var nPendingIssues=0;
 			var nRetrievedIssues=0;
@@ -320,6 +362,7 @@ var jrfReport=class jrfReport {
 			var nStepsPlaned=0;
 			self.addStep("Getting root base issues",function(){
 				var fncRetrieveGroup=self.createManagedCallback(function(group){
+					debugger;
 					if (group.length>0){
 						var sIssues="";
 						group.forEach(function (key){
@@ -343,12 +386,9 @@ var jrfReport=class jrfReport {
 						}
 					}
 				});
-				var fncProcessEpicChilds=self.createManagedCallback(function(jsonIssue,index,resultLength){
-					if (index==0) nPendingIssues+=resultLength; // now all the issues are pending....
-					fncExtractPendingKeys(jsonIssue);
-				});
 				
 				var fncRetrieveEpicGroup=self.createManagedCallback(function(group){
+					debugger;
 					if (group.length>0){
 						var sIssues="";
 						group.forEach(function (key){
@@ -367,42 +407,6 @@ var jrfReport=class jrfReport {
 								fncProcessRestOfPending();
 								//self.continueTask(); // not needed.... processrestofpending do one
 							});
-						}
-					}
-				});
-				var fncExtractPendingKeys=self.createManagedCallback(function(jsonIssue){
-					nProcessedIssues++;
-					var key=jsonIssue.key;
-					log("Issue "+key+"("+nProcessedIssues+") issues:"+nRetrievedIssues+"/" +nPendingIssues+ " Epics :"+nRetrievedEpics+"/"+nPendingEpics);
-					var issue=self.allIssues.getById(key);
-					if (issue==""){
-						issue=self.loadJSONIssue(jsonIssue);
-					}
-					var arrPendingKeys=issue.getPendingLinkedIssueKeys(arrLinkTypes,self.allIssues);
-					arrPendingKeys.forEach(function(issueKey){
-						fncAddToGroup(issueKey);
-					});
-					var iType=issue.fieldValue("issuetype");
-					if (iType=="Hito"){
-						if (!hsEpics.exists(key)){
-							hsEpics.add(key,key);
-							fncAddEpicToGroup(key);
-						}
-					} else {
-						var eLink=issue.fieldValue("Epic Link");
-						if (isDefined(eLink)&&(eLink!="")){
-							var issueParent=self.allIssues.getById(eLink);
-							if (key!=""){
-								if (issueParent!=""){
-									if (!issueParent.getLinkedIssueKeys().exists(key)){
-										issueParent.addLinkedIssueKey(key,key);
-									}
-								} else {
-									fncAddToGroup(eLink);
-								}
-							} else {
-								logError("The key link is '' in issue "+ issueParent.getKey());
-							}
 						}
 					}
 				});

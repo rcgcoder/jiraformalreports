@@ -93,6 +93,7 @@ class RCGLogUtils{
 		log(sText);
 		if (self.bAlertOnError){
 			alert(sText);
+			debugger;
 		}
 		self.enabled=antEnabled;
 	}

@@ -868,6 +868,7 @@ var jrfReport=class jrfReport {
 	       	    	   debugger;
 	       	    	   var innerDiv=iframeDoc.getElementById('ResultInnerDiv');
 	       	    	   jqResult.height(innerDiv.parentElement.scrollHeight+20);
+	       	    	   jqResult.width(innerDiv.parentElement.scrollWidth+20);
 	    	    	   self.continueTask();
 	       	       });
 	    	       fncAdjustHeight(); 	

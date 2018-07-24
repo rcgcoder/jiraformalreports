@@ -580,7 +580,6 @@ var jrfReport=class jrfReport {
 			
 		});
 		
-		hasChildCycle
 		// load report model and submodels
 		// Process Model with The Report
 		self.addStep("Parsing Model",function(){

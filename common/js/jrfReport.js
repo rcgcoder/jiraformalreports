@@ -903,7 +903,7 @@ var jrfReport=class jrfReport {
 //	        sModelProcessedResult=sModelProcessedResult.saToString();
 //	        jqResult.html(sModelProcessedResult);
 	        debugger;
-	        sModelProcessedResult.unshift('<div id="ResultInnerDiv">');
+	        sModelProcessedResult.unshift('<div id="ResultInnerDiv"><button id="someButton"> push me </button>');
 	        sModelProcessedResult.push('</div>'); 
 	        
 	        var blobResult = new Blob(sModelProcessedResult, {type : "text/html"});
@@ -934,6 +934,9 @@ var jrfReport=class jrfReport {
 	       	    	   var innerDiv=iframeDoc.getElementById('ResultInnerDiv');
 	       	    	   jqResult.height(innerDiv.parentElement.scrollHeight+20);
 	       	    	   jqResult.width(innerDiv.parentElement.scrollWidth+20);
+	       	    	   var btn=iframeDoc.getElementById('someButton');
+	       	    	   var jqButton=$(btn).click(function(){alert("Clicked")});
+	       	    	   var jqButton=$(btn).text("new Text");
 	    	    	   self.continueTask();
 	       	       });
 	    	       fncAdjustHeight(); 	

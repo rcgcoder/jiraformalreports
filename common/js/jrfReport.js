@@ -404,7 +404,7 @@ var jrfReport=class jrfReport {
 						if (arrKeyGroups.length==1){
 							var group=arrKeyGroups[0];
 							log("Epics Groups:"+arrEpicGroups.length + " First Group Epics:" + arrEpicGroups[0].length);
-							if (((nRetrieved+group.length)==(nPending-arrEpicGroups.length))&&(group.length>0)){
+							if (((nRetrieved+group.length)==(nPending-arrEpicGroups[0].length))&&(group.length>0)){
 									arrKeyGroups=[];
 									keyGroup=[];
 									arrKeyGroups.push(keyGroup);

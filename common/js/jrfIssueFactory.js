@@ -66,6 +66,27 @@ function newIssueFactory(report){
 //		log("Error getting correct id of Field:"+sFieldName);
 		return sFieldName;
 	});
+	dynObj.functions.add("hasChildCycle",function(){
+		var self=this;
+		var hsParents=newHashMap();
+		hsParents.add(self.getKey(),self.getKey());
+		var dynAux=self;
+		while (dynAux.countParentsChild()>0){
+			if (dynAux.countParentsChild()==1) {
+				dynAux=dynAux.getListParentsChild().getFirst().value;
+			} else {
+				logError("The issue:"+ dynAux.getKey()+" has more ("+dynAux.getListParentsChild()+") than one parent");
+				return true;
+			}
+			
+			if (hsParents.exists(dynAux.getKey())){
+				logError("The Issue:"+self.getKey()+" has a cycle child/parent relation");
+				return true;
+			}
+		}
+		return false;
+	});
+	
 	dynObj.functions.add("fieldValue",function(theFieldName,bRendered,dateTime,inOtherParams){
 		var self=this;
 		var auxFieldName=theFieldName.trim();

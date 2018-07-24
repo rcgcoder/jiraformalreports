@@ -226,8 +226,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					//debugger;
 					var indLoopContentHtmlBuffer=self.variables.popVar("LoopHtmlIndex");
 					var sHtml=self.popHtmlBuffer(indLoopContentHtmlBuffer);
-					sHtml=sHtml.saToString();
-					if (sHtml!="") self.addHtml(sHtml);
+					if (sHtml.saLength()>0) self.addHtml(sHtml);
 				}
 				self.continueTask();
 			});

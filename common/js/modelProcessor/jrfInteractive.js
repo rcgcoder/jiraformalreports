@@ -75,7 +75,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	}
 	saveToFile(elemId){
 		var self=this;
-		var sContent=self.getInteractiveContent(elemId).saToString();
+		var sContent=self.getInteractiveContent(elemId);
 		saveDataToFile(sContent, "savedFile.html", "text/html");
 	}
 	changeDisplayChildRow(elemId,forceHide,actWindow,sShowText,sHideText){

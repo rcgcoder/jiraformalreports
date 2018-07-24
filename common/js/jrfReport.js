@@ -570,6 +570,17 @@ var jrfReport=class jrfReport {
 			}
 			self.continueTask();
 		});
+		self.addStep("Analizing child/parent billing cycles",function(){
+			issuesAdded.walk(function(issue){
+				if (issue.hasChildCycle()){
+					logError("Its necessary to correct child/parent billing errors");
+				}
+			});
+			self.continueTask();
+			
+		});
+		
+		hasChildCycle
 		// load report model and submodels
 		// Process Model with The Report
 		self.addStep("Parsing Model",function(){

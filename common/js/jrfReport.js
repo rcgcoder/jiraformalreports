@@ -930,17 +930,17 @@ var jrfReport=class jrfReport {
 	       	    	   var btn=iframeDoc.getElementById('someButton');
 	       	    	   var jqButton=$(btn).click(function(){alert("Clicked")});
 	       	    	   var jqButton=$(btn).text("new Text");
-  //      			   jqResult.contents().find("head")[0].modelInteractiveFunctions=modelInteractiveFunctions;
-  //      			   jqResult.contents().find("head")[0].System=System;
+        			   jqResult.contents().find("head")[0].modelInteractiveFunctions=modelInteractiveFunctions;
+        			   jqResult.contents().find("head")[0].System=System;
             		   iframeWindow.modelInteractiveFunctions=modelInteractiveFunctions;
             		   iframeWindow.System=System;
-//            		   iframeDoc.modelInteractiveFunctions=modelInteractiveFunctions;
-//            		   iframeDoc.System=System;
+            		   iframeDoc.modelInteractiveFunctions=modelInteractiveFunctions;
+            		   iframeDoc.System=System;
 	    	    	   self.continueTask();
 	       	       });
 	       	       setTimeout(function(){
 		    	       fncAdjustHeight(); 	
-	       	       });
+	       	       },500);
         	    } else {
             	    // If we are here, it is not loaded. Set things up so we check   the status again in 100 milliseconds
             	    window.setTimeout(fncIsIframeLoaded, 300);

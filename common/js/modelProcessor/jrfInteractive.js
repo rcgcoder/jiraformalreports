@@ -51,6 +51,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 					<HTML>
  					<HEAD> 
 					<meta http-equiv='Content-Type' content='Type=text/html; charset=utf-8'>
+					<title>`+formatDate(new Date(),4)+` Jira Formal Report </title>					
 					`);		
 		var arrFiles=[	//"ts/demo.ts",
 			"css/RCGTaskManager.css",

@@ -359,7 +359,7 @@ var jrfReport=class jrfReport {
 					}
 				});
 				var fncExtractPendingKeys=self.createManagedCallback(function(jsonIssue){
-					nRetrievedIssue++;
+					nRetrievedIssues++;
 					var key=jsonIssue.key;
 					log("Issue ("+nRetrievedIssues+"): "+key+" Pending:"+nPendingIssues + " Epics :"+nPendingEpics+"/"+nRetrievedEpics);
 					var issue=self.allIssues.getById(key);

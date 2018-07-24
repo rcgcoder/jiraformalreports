@@ -460,10 +460,10 @@ var jrfReport=class jrfReport {
 				fncProcessRestOfPending();
 			});
 			self.addStep("Finish loading Root Issues",function(){
-				self.rootProjects.walk(function(value,iProf,key){
+/*				self.rootProjects.walk(function(value,iProf,key){
 					log("Root Project: "+key);
-				})
-				log("Resume Root issues:"+self.rootIssues.length() +
+				});
+*/				log("Resume Root issues:"+self.rootIssues.length() +
 				    "		Root project:"+self.rootProjects.length()+
 				    "		Issues in scope:"+ self.allIssues.list.length());
 				self.continueTask();

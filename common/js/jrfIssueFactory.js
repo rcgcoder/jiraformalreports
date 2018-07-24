@@ -70,19 +70,23 @@ function newIssueFactory(report){
 		var self=this;
 		var hsParents=newHashMap();
 		hsParents.add(self.getKey(),self.getKey());
+		var bReturn=false;
 		var dynAux=self;
 		while (dynAux.countParentsChild()>0){
-			if (dynAux.countParentsChild()==1) {
-				dynAux=dynAux.getListParentsChild().getFirst().value;
-			} else {
-				logError("The issue:"+ dynAux.getKey()+" has more ("+dynAux.getListParentsChild()+") than one parent");
-				return true;
+			if (dynAux.countParentsChild()>1) {
+				logError("The issue:"+ dynAux.getKey()+" has more ("+dynAux.countParentsChild()+") than one parent");
+				hsParents=dynAux.getListParentsChild();
+				while (hsParents.length()>1){
+					hsParents.pop();
+				}
+				bReturn=true;
 			}
-			
+			dynAux=dynAux.getListParentsChild().getFirst().value;
 			if (hsParents.exists(dynAux.getKey())){
 				logError("The Issue:"+self.getKey()+" has a cycle child/parent relation");
-				return true;
+				bReturn=true;
 			}
+			if (bReturn) return bReturn;
 		}
 		return false;
 	});

@@ -387,7 +387,7 @@ var jrfReport=class jrfReport {
 									fncAddToGroup(eLink);
 								}
 							} else {
-								logError("The key fol link is '' in issue "+ issueParent.getKey());
+								logError("The key link is '' in issue "+ issueParent.getKey());
 							}
 						}
 					}

@@ -875,6 +875,7 @@ var jrfReport=class jrfReport {
         	    // If we are here, it is not loaded. Set things up so we check   the status again in 100 milliseconds
         	    window.setTimeout(fncIsIframeLoaded, 300);
 	        });
+	        fncIsIframeLoaded();
 	        
 			loggerFactory.getLogger().enabled=true;
 			self.result=sModelProcessedResult;

@@ -456,8 +456,6 @@ var jrfReport=class jrfReport {
 				nPendingIssues=self.rootIssues.length();
 				self.rootIssues.walk(fncExtractPendingKeys);
 				fncProcessRestOfPending();
-				self.continueTask();
-
 			});
 			self.addStep("Finish loading Root Issues",function(){
 				self.rootProjects.walk(function(value,iProf,key){

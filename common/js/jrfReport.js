@@ -422,7 +422,7 @@ var jrfReport=class jrfReport {
 							}
 						}
 					}
-					log("Pending:"+ nPending+" Retrieved:" + nRetrieved+" Normal issues left:"+ arrKeyGroups[0].length+" Epics left:" + arrEpicGroups[0].length );
+					console.log("Pending:"+ nPending+" Retrieved:" + nRetrieved+" Normal issues left:"+ arrKeyGroups[0].length+" Epics left:" + arrEpicGroups[0].length );
 				});
 				nPending=self.rootIssues.length();
 				self.rootIssues.walk(fncExtractPendingKeys);

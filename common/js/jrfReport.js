@@ -910,9 +910,10 @@ var jrfReport=class jrfReport {
 	        var blobUrl = window.URL.createObjectURL(blobResult);
 	        var jqDiv=$("#reportResultDiv");
 	        var viewWidth=jqDiv.width();
+	        var viewHeight=jqDiv.height();
 	        var jqResult=$("#ReportResult");
 //	        jqResult.width(viewWidth);
-	        jqResult.height(150);
+	        jqResult.height(viewHeight));
 	        jqResult.attr("src",blobUrl);
 	        var fncIsIframeLoaded=self.createManagedCallback(function(){
         	   var iframe = document.getElementById('ReportResult');
@@ -925,8 +926,9 @@ var jrfReport=class jrfReport {
 	       	       var fncAdjustHeight=self.createManagedCallback(function(){
 	        		   debugger;
 	       	    	   var innerDiv=iframeDoc.getElementById('ResultInnerDiv');
-	       	    	   jqResult.height(innerDiv.parentElement.scrollHeight+20);
-	       	    	   jqResult.width(innerDiv.parentElement.scrollWidth+20);
+	       	    	   //if (innerDiv.parentElement.scrollHeight)
+	       	    	   jqResult.height(viewHeight+20);
+	       	    	   //jqResult.width(innerDiv.parentElement.scrollWidth+20);
 	       	    	   var btn=iframeDoc.getElementById('someButton');
 	       	    	   var jqButton=$(btn).click(function(){alert("Clicked")});
 	       	    	   var jqButton=$(btn).text("new Text");

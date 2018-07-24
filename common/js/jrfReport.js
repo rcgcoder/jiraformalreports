@@ -913,7 +913,7 @@ var jrfReport=class jrfReport {
 	        var viewHeight=jqDiv.height();
 	        var jqResult=$("#ReportResult");
 //	        jqResult.width(viewWidth);
-	        jqResult.height(viewHeight));
+	        jqResult.height(viewHeight);
 	        jqResult.attr("src",blobUrl);
 	        var fncIsIframeLoaded=self.createManagedCallback(function(){
         	   var iframe = document.getElementById('ReportResult');

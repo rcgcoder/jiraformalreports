@@ -847,6 +847,9 @@ var jrfReport=class jrfReport {
 //	        sModelProcessedResult=sModelProcessedResult.saToString();
 //	        jqResult.html(sModelProcessedResult);
 	        debugger;
+	        sModelProcessedResult.unshift('<div id="ResultInnerDiv">');
+	        sModelProcessedResult.push('</div>');
+	        
 	        var blobResult = new Blob(sModelProcessedResult, {type : "text/html"});
 	        var blobUrl = window.URL.createObjectURL(blobResult);
 	        var jqDiv=$("#reportResultDiv");
@@ -862,12 +865,11 @@ var jrfReport=class jrfReport {
         	   if (  iframeDoc.readyState  == 'complete' ) {
         	       // The loading is complete, call the function we want executed once the iframe is loaded
 	       	       var fncAdjustHeight=self.createManagedCallback(function(){
-	    	        	if (iframe.scrollHeight > iframe.clientHeight){
-	    	        		jqResult.height(jqResult.height()+40);
-	    	        	    window.setTimeout(fncAdjustHeight, 100);
-	    	        	} else {
-	    	    			self.continueTask();
-	    	        	}
+	       	    	   debugger;
+	       	    	   var innerDiv=iframeDoc.getElementById('ResultInnerDiv');
+	       	    	   var jqInnerDiv=$(innerDiv);
+	       	    	   jqResult.height(jqInnerDiv.height()+20);
+	    	    	   self.continueTask();
 	       	       });
 	    	       fncAdjustHeight(); 	
         		   return;

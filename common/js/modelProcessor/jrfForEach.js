@@ -179,7 +179,6 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					}
 					var parentNodeId=self.variables.getVar("recursiveNodeId");
 					if (parentNodeId!=""){
-						debugger;
 						treeNode.loaded=false;
 						treeNode.expanded=false;
 						self.model.htmlStack.saReplace(initTR,3,'<tr style="display:none" ');

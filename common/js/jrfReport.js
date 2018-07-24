@@ -605,12 +605,23 @@ var jrfReport=class jrfReport {
 			}
 			self.continueTask();
 		});
-		self.addStep("Analizing child/parent billing cycles",function(){
+		self.addStep("Analizing child/parent billing cycles and asign parents to root list",function(){
+			var hsRootParent=newHashMap();
 			issuesAdded.walk(function(issue){
 				if (issue.hasChildCycle()){
 					logError("Its necessary to correct child/parent billing errors");
 				}
+				var rootIssue=issue.getChildRoot();
+				if (!issuesAdded.exists(issue.getKey())){
+					if (!hsRootParent.exists(issue.getKey())){
+						hsRootParent.add(issue.getKey(),issue);
+					}
+				}
 			});
+			hsRootParent.walk(function(newRoot){
+				issuesAdded.add(newRoot.getKey(),newRoot);
+			});
+			
 			self.continueTask();
 			
 		});

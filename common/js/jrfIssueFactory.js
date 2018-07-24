@@ -66,6 +66,14 @@ function newIssueFactory(report){
 //		log("Error getting correct id of Field:"+sFieldName);
 		return sFieldName;
 	});
+	dynObj.functions.add("getChildRoot",function(){
+		var self=this;
+		var dynAux=self;
+		while (dynAux.countParentsChild()>0){
+			dynAux=dynAux.getListParentsChild().getFirst().value;
+		}
+		return dynAux;
+	});
 	dynObj.functions.add("hasChildCycle",function(){
 		var self=this;
 		var hsParents=newHashMap();

@@ -378,12 +378,16 @@ var jrfReport=class jrfReport {
 						var eLink=issue.fieldValue("Epic Link");
 						if (isDefined(eLink)&&(eLink!="")){
 							var issueParent=self.allIssues.getById(eLink);
-							if (issueParent!=""){
-								if (!issueParent.getLinkedIssueKeys().exists(key)){
-									issueParent.addLinkedIssueKey(key,key);
+							if (key!=""){
+								if (issueParent!=""){
+									if (!issueParent.getLinkedIssueKeys().exists(key)){
+										issueParent.addLinkedIssueKey(key,key);
+									}
+								} else {
+									fncAddToGroup(eLink);
 								}
 							} else {
-								fncAddToGroup(eLink);
+								logError("The key fol link is '' in issue "+ issueParent.getKey());
 							}
 						}
 					}

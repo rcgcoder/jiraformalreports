@@ -277,7 +277,6 @@ var jrfReport=class jrfReport {
 			var grpLength=0;
 			var hsKeyWaiting=newHashMap();
 			var fncAddToGroup=function(issueKey){
-				hsKeyWaiting.add(issueKey,issueKey);
 				if ((keyGroup.length>maxItemsInGroup)
 					||
 					(((grpLength+issueKey.length))>maxLettersInGroup)

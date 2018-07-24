@@ -318,23 +318,22 @@ var jrfReport=class jrfReport {
 				var issue=self.allIssues.getById(key);
 				if (issue==""){
 					issue=self.loadJSONIssue(jsonIssue);
+					if (!hsKeyWaiting.exists(key)){
+						hsKeyWaiting.add(key,key);
+					}
 				}
 				var arrPendingKeys=issue.getPendingLinkedIssueKeys(arrLinkTypes,self.allIssues);
 				arrPendingKeys.forEach(function(issueKey){
-					if (!self.allIssues.exists(issueKey)){
-						if (!hsKeyWaiting.exists(issueKey)){
-							hsKeyWaiting.add(issueKey,issueKey)
-							fncAddToGroup(issueKey);
-						}
+					if (!hsKeyWaiting.exists(issueKey)){
+						hsKeyWaiting.add(issueKey,issueKey)
+						fncAddToGroup(issueKey);
 					}
 				});
 				var iType=issue.fieldValue("issuetype");
 				if (iType=="Hito"){
-					if (!self.allIssues.exists(key)){
-						if (!hsEpics.exists(key)){
-							hsEpics.add(key,key);
-							fncAddEpicToGroup(key);
-						}
+					if (!hsEpics.exists(key)){
+						hsEpics.add(key,key);
+						fncAddEpicToGroup(key);
 					}
 				} else {
 					var eLink=issue.fieldValue("Epic Link");

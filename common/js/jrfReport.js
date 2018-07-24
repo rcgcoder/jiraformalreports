@@ -923,6 +923,8 @@ var jrfReport=class jrfReport {
         	       // The loading is complete, call the function we want executed once the iframe is loaded
         		   debugger;
         		   setTimeout(function(){
+        			   jqResult.contents().find("head")[0].modelInteractiveFunctions=modelInteractiveFunctions;
+        			   jqResult.contents().find("head")[0].System=System;
             		   iframeWindow.modelInteractiveFunctions=modelInteractiveFunctions;
             		   iframeWindow.System=System;
             		   iframeDoc.modelInteractiveFunctions=modelInteractiveFunctions;

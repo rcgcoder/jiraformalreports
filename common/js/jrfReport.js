@@ -860,12 +860,13 @@ var jrfReport=class jrfReport {
 	        jqResult.attr("src",blobUrl);
 	        var fncIsIframeLoaded=self.createManagedCallback(function(){
         	   var iframe = document.getElementById('ReportResult');
+        	   var iframeWindow= iframe || iframe.contentWindow;
         	   var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
         	    // Check if loading is complete
         	   if (  iframeDoc.readyState  == 'complete' ) {
         	       // The loading is complete, call the function we want executed once the iframe is loaded
-        		   iframe.modelInteractiveFunctions=modelInteractiveFunctions;
-        		   iframe.System=System;
+        		   iframeWindow.modelInteractiveFunctions=modelInteractiveFunctions;
+        		   iframeWindow.System=System;
 	       	       var fncAdjustHeight=self.createManagedCallback(function(){
 	       	    	   debugger;
 	       	    	   var innerDiv=iframeDoc.getElementById('ResultInnerDiv');

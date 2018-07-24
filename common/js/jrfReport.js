@@ -848,7 +848,7 @@ var jrfReport=class jrfReport {
 //	        jqResult.html(sModelProcessedResult);
 	        debugger;
 	        sModelProcessedResult.unshift('<div id="ResultInnerDiv">');
-	        sModelProcessedResult.push('</div>');
+	        sModelProcessedResult.push('</div>'); 
 	        
 	        var blobResult = new Blob(sModelProcessedResult, {type : "text/html"});
 	        var blobUrl = window.URL.createObjectURL(blobResult);

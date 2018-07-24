@@ -864,6 +864,8 @@ var jrfReport=class jrfReport {
         	    // Check if loading is complete
         	   if (  iframeDoc.readyState  == 'complete' ) {
         	       // The loading is complete, call the function we want executed once the iframe is loaded
+        		   iframe.modelInteractiveFunctions=modelInteractiveFunctions;
+        		   iframe.System=System;
 	       	       var fncAdjustHeight=self.createManagedCallback(function(){
 	       	    	   debugger;
 	       	    	   var innerDiv=iframeDoc.getElementById('ResultInnerDiv');

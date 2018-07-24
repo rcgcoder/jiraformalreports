@@ -410,7 +410,7 @@ var jrfReport=class jrfReport {
 						}
 					}
 				});
-				var fncProcessRestOfPending=self.createManagedCallback(function(jsonIssue){
+				var fncProcessRestOfPending=self.createManagedCallback(function(){
 					var bSomethingRetrieving=((arrKeyGroups.length>1)||(arrEpicGroups.length>1));
 					while(arrKeyGroups.length>1){
 						var group=arrKeyGroups.shift();
@@ -455,6 +455,7 @@ var jrfReport=class jrfReport {
 				debugger;
 				nPendingIssues=self.rootIssues.length();
 				self.rootIssues.walk(fncExtractPendingKeys);
+				fncProcessRestOfPending();
 				self.continueTask();
 			});
 			self.addStep("Finish loading Root Issues",function(){

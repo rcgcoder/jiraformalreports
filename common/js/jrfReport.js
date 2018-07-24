@@ -903,8 +903,19 @@ var jrfReport=class jrfReport {
 //	        sModelProcessedResult=sModelProcessedResult.saToString();
 //	        jqResult.html(sModelProcessedResult);
 	        debugger;
-	        sModelProcessedResult.unshift('<div id="ResultInnerDiv"><button id="someButton"> push me </button>');
-	        sModelProcessedResult.push('</div>'); 
+	        var saPrependContent=[];
+			saPrependContent.push(`<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//ES"
+   					"http://www.w3.org/TR/html4/strict.dtd">
+					<HTML>
+ 					<HEAD> 
+					<meta http-equiv='Content-Type' content='Type=text/html; charset=utf-8'>
+					`);		
+			saPrependContent.push(`</HEAD> <BODY onload="function(){alert('type');}()">`);
+
+			while (saPrependContent.length>0){
+				sModelProcessedResult.unshift(saPrependContent.pop());
+			}
+			sModelProcessedResult.push("</BODY></HTML>");
 	        
 	        var blobResult = new Blob(sModelProcessedResult, {type : "text/html"});
 	        var blobUrl = window.URL.createObjectURL(blobResult);

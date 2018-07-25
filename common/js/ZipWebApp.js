@@ -41,7 +41,8 @@ class ZipWebApp{
 							"js/rcglibs/atlassian/RCGAtlassian.js",
 							"js/rcglibs/atlassian/RCGConfluence.js",
 							"js/rcglibs/atlassian/RCGJira.js",
-							"js/libs/he.js"
+							"js/libs/he.js",
+							"https://rawgit.com/SheetJS/js-xlsx/master/dist/xlsx.full.min.js"
 /*							"js/rcglibs/RCGLogUtils.js",
 							"js/rcglibs/RCGChronoUtils.js",
 							"js/rcglibs/RCGHashMapUtils.js"

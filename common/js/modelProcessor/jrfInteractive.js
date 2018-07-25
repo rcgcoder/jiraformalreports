@@ -98,7 +98,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			intContent.expanded=false;			
 			action="hide";
 		}
-		if (!intChild.loaded){
+		if (!intContent.loaded){
 			if (action=="hide") return;
 			logError("Cannot Show unloaded row");
 			return;

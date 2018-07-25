@@ -914,7 +914,7 @@ var jrfReport=class jrfReport {
 						alert("Is Full Loaded");
 					}
 					</script>
-					</HEAD> <BODY onload="onBodyLoadEvent">
+					</HEAD> <BODY>
 					`);		
 			while (saPrependContent.length>0){
 				sModelProcessedResult.unshift(saPrependContent.pop());
@@ -926,11 +926,18 @@ var jrfReport=class jrfReport {
 	        var jqDiv=$("#reportResultDiv");
 	        var viewWidth=jqDiv.width();
 	        var viewHeight=jqDiv.height();
-	        var jqResult=$("#ReportResult");
-//	        jqResult.width(viewWidth);
-	        jqResult.height(viewHeight);
-	        jqResult.attr("src",blobUrl);
-	        var fncIsIframeLoaded=self.createManagedCallback(function(){
+	        var jqIframe=$("#ReportResult");
+			loggerFactory.getLogger().enabled=true;
+	        
+	        jqIframe.load(function(){
+	            $(this).show();
+	            console.log('laod the iframe')
+	        });
+	            
+//	        jqIframe.width(viewWidth);
+        	jqIframe.height(viewHeight);
+        	jqIframe.attr("src",blobUrl);
+/*	        var fncIsIframeLoaded=self.createManagedCallback(function(){
         	   var iframe = document.getElementById('ReportResult');
         	   var iframeWindow= iframe || iframe.contentWindow;
         	   var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
@@ -964,7 +971,7 @@ var jrfReport=class jrfReport {
         	    }
 	        });
 	        fncIsIframeLoaded();
-	        
+*/	        
 			loggerFactory.getLogger().enabled=true;
 			self.result=sModelProcessedResult;
 			if (self.config.NewWindow){

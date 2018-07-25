@@ -933,6 +933,8 @@ var jrfReport=class jrfReport {
 	        ifr.onload=function(){
 //	            this.style.display='block';
 	            console.log('laod the iframe')
+     		   ifr.modelInteractiveFunctions=modelInteractiveFunctions;
+     		   ifr.System=System;
 	        };
 	        ifr.src=blobUrl;
 	        

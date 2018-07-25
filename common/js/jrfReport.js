@@ -914,10 +914,8 @@ var jrfReport=class jrfReport {
 						alert("Is Full Loaded");
 					}
 					</script>
-
+					</HEAD> <BODY onload="onBodyLoadEvent">
 					`);		
-			saPrependContent.push(`</HEAD> <BODY onload="onBodyLoadEvent">`);
-
 			while (saPrependContent.length>0){
 				sModelProcessedResult.unshift(saPrependContent.pop());
 			}

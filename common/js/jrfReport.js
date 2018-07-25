@@ -909,8 +909,14 @@ var jrfReport=class jrfReport {
 					<HTML>
  					<HEAD> 
 					<meta http-equiv='Content-Type' content='Type=text/html; charset=utf-8'>
+					<script type="text/javascript" >
+					function onBodyLoadEvent(){
+						alert("Is Full Loaded");
+					}
+					</script>
+
 					`);		
-			saPrependContent.push(`</HEAD> <BODY onload="function(){alert('type');}()">`);
+			saPrependContent.push(`</HEAD> <BODY onload="onBodyLoadEvent">`);
 
 			while (saPrependContent.length>0){
 				sModelProcessedResult.unshift(saPrependContent.pop());

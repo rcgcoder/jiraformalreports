@@ -939,6 +939,7 @@ var jrfReport=class jrfReport {
    	    	   var innerDiv=iframeDoc.getElementById('ResultInnerDiv');
    	    	   if (isDefined(innerDiv)){
    	   	    	   log("inner Scroll Height:"+innerDiv.scrollHeight);
+       	    	   #(ifr).height(innerDiv.scrollHeight+100);
    	   	    	   if (isDefined(innerDiv.parentElement)){
    	   	    		   log("inner Scroll Height:"+innerDiv.parentElement.scrollHeight);
    	   	    	   } else {

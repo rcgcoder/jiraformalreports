@@ -175,13 +175,16 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	        	  theWindow.XLSX.utils.encode_cell({r: rowNum, c: colNum})
 	          ];
 	          if( isDefined(nextCell)){
-	        	  cellValue=nextCell.v.trim();
-	        	  cellLength=cellValue.length;
-	        	  cellEnd=cellValue.substring(cellLength-2,cellLength);
-	        	  if ((cellEnd==" €")||(cellEnd.toLowerCase()==" h")){
-	        		  cellValue=cellValue.substring(0,cellLength-2);
-	        		  nextCell.v=cellValue;
-	        	  } 
+	        	  cellValue=nextCell.v;
+	        	  if (isString(cellValue)){
+	        		  cellValue=cellValue.trim();
+		        	  cellLength=cellValue.length;
+		        	  cellEnd=cellValue.substring(cellLength-2,cellLength);
+		        	  if ((cellEnd==" €")||(cellEnd.toLowerCase()==" h")){
+		        		  cellValue=cellValue.substring(0,cellLength-2);
+		        		  nextCell.v=cellValue;
+		        	  } 
+	        	  }
 	          }
 	       }
 	    }

@@ -929,10 +929,17 @@ var jrfReport=class jrfReport {
 	        
 	        
 			loggerFactory.getLogger().enabled=true;
-	        var ifr=document.getElementById('ReportResult');
-	        var iframeDoc;
-	        var hasHScroll=function(){
+	        var hasHScroll=function(theIframe){
 	   	    	//scrol 1px to the left
+	        	if (isUndefined(theIframe)){
+	        		log("the Iframe is undefined");
+	        		return true;
+	        	}
+	        	var iframeDoc = theIframe.contentDocument || theIframe.contentWindow.document;
+	        	if (isUndefined(iframeDoc)){
+	        		log("Iframe Doc is undefined");
+	        		return true;
+	        	}
 	   	    	$(iframeDoc).scrollLeft(1);
 
 	   	    	if($(iframeDoc).scrollLeft() != 0){
@@ -945,19 +952,22 @@ var jrfReport=class jrfReport {
 	   	    	//scroll back to original location
 	   	    	$(iframeDoc).scrollLeft(0);
 	        }
-	        var adjustIframeWidth=self.createManagedCallback(function(){
-	        	if (hasHScroll()){
-	        		var actWidth=$(ifr).width();
+	        var adjustIframeWidth=self.createManagedCallback(function(theIframe){
+	        	if (hasHScroll(theIframe)){
+	        		var actWidth=$(theIframe).width();
 	        		log("Horizontal Scroll is viewing. Adjusting iframe width from "+actWidth+" to "+ (actWidth+50));
-	        		$(ifr).width(actWidth+50);
-	        		setTimeout(adjustIframeWidth,300);
-	        	} 
-        		log("Horizontal Scroll is not viewing. end of width adjust");
+	        		$(theIframe).width(actWidth+50);
+	        		setTimeout(function(){
+	        			adjustIframeWidth(theIframe)},300);
+	        	} else {
+	        		log("Horizontal Scroll is not viewing. end of width adjust");
+	        	}
 	        });
 	        
 	        
 	        
 	        
+	        var ifr=document.getElementById('ReportResult');
 	        ifr.onload=self.createManagedCallback(function(){
 //	            this.style.display='block';
 	           log('laod the iframe')

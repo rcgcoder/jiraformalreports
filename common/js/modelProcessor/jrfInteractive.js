@@ -80,6 +80,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	}
 	changeDisplayChildRow(elemId,forceHide,actWindow,sShowText,sHideText){
 		var self=this;
+		debugger;
 		log("Show childs rows of element:"+elemId);
 		var theWindow=window;
 		if (isDefined(actWindow)){
@@ -113,7 +114,6 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		jqButton.html(btnCaption);
 		var actRow=jqParent;
 		hsParentRow.walk(function(intChild,iDeep,childId){
-			debugger;
 			log("Showing or Hide element"+childId);
 			if (!intChild.loaded) {
 				log("Element is not loaded");

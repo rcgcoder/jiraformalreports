@@ -73,6 +73,9 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		otherWindow.modelInteractiveFunctions=modelInteractiveFunctions;
     	otherWindow.System=System;
 	}
+	alert(alertText){
+		alert(alertText);
+	}
 	saveToFile(elemId){
 		var self=this;
 		var sContent=self.getInteractiveContent(elemId);

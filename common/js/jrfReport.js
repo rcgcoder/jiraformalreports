@@ -962,11 +962,7 @@ var jrfReport=class jrfReport {
 	        	} else {
 	        		log("Horizontal Scroll is not viewing. end of width adjust");
 	        	}
-	        });
-	        
-	        
-	        
-	        
+	        });        
 	        var ifr=document.getElementById('ReportResult');
 	        ifr.onload=self.createManagedCallback(function(){
 	        	$(ifr).width('100%');

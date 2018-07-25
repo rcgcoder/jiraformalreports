@@ -113,6 +113,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		jqButton.html(btnCaption);
 		var actRow=jqParent;
 		hsParentRow.walk(function(intChild,iDeep,childId){
+			debugger;
 			log("Showing or Hide element"+childId);
 			if (!intChild.loaded) {
 				log("Element is not loaded");
@@ -128,7 +129,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			} else {
 				jqElem.css('display', 'none');
 				intChild.expanded=false;
-				modelInteractiveFunctions.changeDisplayChildRow(childId,true,actWindow,sShowText,sHideText);
+				modelInteractiveFunctions.changeDisplayChildRow(childId,true,theWindow,sShowText,sHideText);
 			}
 		});
 	}

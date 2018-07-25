@@ -934,6 +934,7 @@ var jrfReport=class jrfReport {
 //	            this.style.display='block';
 	            console.log('laod the iframe')
 	        };
+	        ifr.src=blobUrl;
 	        
 /*	        var jqIframe=$("#ReportResult");
 	        jqIframe.load(function(){

@@ -3,9 +3,13 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		var self=this;
 		self.interactiveContents=newHashMap();
 	}
+	newInteractiveId(){
+		var newId=(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
+		return newId;
+	}
 	addInteractiveContent(content){
 		var self=this;
-		var newId=(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
+		var newId=self.newInteractiveId();
 		self.interactiveContents.add(newId,content);
 		return newId;
 	}
@@ -81,13 +85,17 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		var sContent=self.getInteractiveContent(elemId);
 		saveDataToFile(sContent, "savedFile.html", "text/html");
 	}
-	changeDisplayChildRow(elemId,forceHide,actWindow,sShowText,sHideText){
-		var self=this;
-		log("Show childs rows of element:"+elemId);
+	getActiveWindow(actWindow){
 		var theWindow=window;
 		if (isDefined(actWindow)){
 			theWindow=actWindow;
 		}
+		return theWindow;
+	}
+	changeDisplayChildRow(elemId,forceHide,actWindow,sShowText,sHideText){
+		var self=this;
+		log("Show childs rows of element:"+elemId);
+		var theWindow=self.getActiveWindow(actWindow);
 		var intContent=self.getInteractiveContent(elemId);
 		var action="show";
 		log(elemId+": is actually expanded:"+intContent.expanded);
@@ -134,11 +142,25 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			} else {
 				jqElem.css('display', 'none');
 				intChild.expanded=false;
-				modelInteractiveFunctions.changeDisplayChildRow(childId,true,theWindow,sShowText,sHideText);
+				self.changeDisplayChildRow(childId,true,theWindow,sShowText,sHideText);
 			}
 		});
 	}
-
+	exportTableToXlsx(btnId,actWindow){
+		var self=this;
+		var theWindow=self.getActiveWindow(actWindow);
+		var jqButton=$(theWindow.document.body).find('#'+btnId);
+		var parentTable=jqButton.parent();
+		while (isDefined(parentTable)&&(parentTable.prop("nodeName")!="TABLE")){
+			parentTable=parentTable.parent();
+		}
+		if (isUndefined(parentTable)){
+			logError("Cannot export table because the jrf tag is outside of any table.");
+			return;
+		}
+		log("Table Located!");
+		
+	}
 }
 
 var modelInteractiveFunctions=new jrfInteractive();

@@ -6,7 +6,10 @@ var jrfExport=class jrfExport extends jrfToken{//this kind of definition allows 
 	}
 	apply(){
 		var self=this;
-		self.addHtml(`<button onclick="modelInteractiveFunctions.alert('test of alert')">Export to `+self.exportFormat+"</button>");
+		var btnId="btn_"+modelInteractiveFunctions.newInteractiveId();
+		if (self.objType.toLowerCase()=="table"){
+			self.addHtml(`<button id="`+btnId+`" onclick="modelInteractiveFunctions.exportTableToXlsx('`+btnId+`',window)">Export to `+self.exportFormat+"</button>");
+		}
 	}
 
 }

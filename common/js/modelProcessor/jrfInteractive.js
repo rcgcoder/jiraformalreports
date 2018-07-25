@@ -184,12 +184,14 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		        			  ||(cellEnd.toLowerCase()==" h")
 		        			  ||(cellEnd.toLowerCase()==" %")){
 		        		  cellValue=cellValue.substring(0,cellLength-2);
-		        		  cellValue=cellValue.replace(".","");
-		        		  cellValue=cellValue.replace(",",".");
-		        		  if ($.isNumeric(cellValue)){
-			        		  nextCell.v=parseFloat(cellValue);
-		        		  }
-		        	  } 
+		        	  }
+	        		  cellValue=cellValue.replace(".","");
+	        		  cellValue=cellValue.replace(",",".");
+		        	
+	        		  if ($.isNumeric(cellValue)){
+	        			  nextCell.t="n";
+	        			  nextCell.v=parseFloat(cellValue);
+	        		  }
 	        	  }
 	          }
 	       }

@@ -930,12 +930,13 @@ var jrfReport=class jrfReport {
 	        
 			loggerFactory.getLogger().enabled=true;
 	        var ifr=document.getElementById('ReportResult');
-	        ifr.onload=function(){
+	        ifr.onload=self.createManagedCallback(function(){
 //	            this.style.display='block';
 	            console.log('laod the iframe')
      		   ifr.modelInteractiveFunctions=modelInteractiveFunctions;
      		   ifr.System=System;
-	        };
+     		   self.continueTask();
+	        });
 	        ifr.src=blobUrl;
 	        
 /*	        var jqIframe=$("#ReportResult");

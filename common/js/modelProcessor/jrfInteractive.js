@@ -80,7 +80,6 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	}
 	changeDisplayChildRow(elemId,forceHide,actWindow,sShowText,sHideText){
 		var self=this;
-		debugger;
 		log("Show childs rows of element:"+elemId);
 		var theWindow=window;
 		if (isDefined(actWindow)){
@@ -88,6 +87,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		}
 		var intContent=self.getInteractiveContent(elemId);
 		var action="show";
+		log(elemId+": is actually expanded:"+intContent.expanded);
 		if (isDefined(intContent.expanded)&&(!intContent.expanded)){
 			intContent.expanded=true;
 			action="show";
@@ -96,9 +96,12 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			action="hide";
 		}
 		if (isDefined(forceHide)&&forceHide){
+			log("Force hide of element");
 			intContent.expanded=false;			
 			action="hide";
 		}
+		log(elemId+": action to do:"+action+" new expanded situation:"+intContent.expanded+" is loaded:"+intContent.loaded);
+		
 		if (!intContent.loaded){
 			if (action=="hide") return;
 			logError("Cannot Show unloaded row");

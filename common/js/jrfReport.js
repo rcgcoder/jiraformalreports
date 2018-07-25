@@ -969,7 +969,8 @@ var jrfReport=class jrfReport {
 	        
 	        var ifr=document.getElementById('ReportResult');
 	        ifr.onload=self.createManagedCallback(function(){
-//	            this.style.display='block';
+	        	$(ifr).width('100%');
+	        	//	            this.style.display='block';
 	           log('laod the iframe')
         	   var iframeDoc = ifr.contentDocument || ifr.contentWindow.document;
     		   iframeDoc.modelInteractiveFunctions=modelInteractiveFunctions;

@@ -986,7 +986,7 @@ var jrfReport=class jrfReport {
    	    	   } else {
    	    		   log("Inner Div does not exists");
    	    	   }
-   	    	   adjustIframeWidth();
+   	    	   adjustIframeWidth(ifr);
      		   self.continueTask();
 	        });
 	        ifr.src=blobUrl;

@@ -926,9 +926,16 @@ var jrfReport=class jrfReport {
 	        var jqDiv=$("#reportResultDiv");
 	        var viewWidth=jqDiv.width();
 	        var viewHeight=jqDiv.height();
-	        var jqIframe=$("#ReportResult");
-			loggerFactory.getLogger().enabled=true;
 	        
+	        
+			loggerFactory.getLogger().enabled=true;
+	        var ifr=document.getElementById('ReportResult');
+	        ifr.onload=function(){
+//	            this.style.display='block';
+	            console.log('laod the iframe')
+	        };
+	        
+/*	        var jqIframe=$("#ReportResult");
 	        jqIframe.load(function(){
 	            $(this).show();
 	            console.log('laod the iframe')
@@ -937,6 +944,7 @@ var jrfReport=class jrfReport {
 //	        jqIframe.width(viewWidth);
         	jqIframe.height(viewHeight);
         	jqIframe.attr("src",blobUrl);
+*/
 /*	        var fncIsIframeLoaded=self.createManagedCallback(function(){
         	   var iframe = document.getElementById('ReportResult');
         	   var iframeWindow= iframe || iframe.contentWindow;

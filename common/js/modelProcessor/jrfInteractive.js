@@ -87,12 +87,12 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		}
 		var intContent=self.getInteractiveContent(elemId);
 		var action="show";
-		if (isDefined(intContent.expanded)&&intContent.expanded){
-			intContent.expanded=false;
-			action="hide";
-		} else {
+		if (isDefined(intContent.expanded)&&(!intContent.expanded)){
 			intContent.expanded=true;
 			action="show";
+		} else {
+			intContent.expanded=false;
+			action="hide";
 		}
 		if (isDefined(forceHide)&&forceHide){
 			intContent.expanded=false;			

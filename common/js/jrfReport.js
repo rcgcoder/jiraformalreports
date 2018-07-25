@@ -914,12 +914,12 @@ var jrfReport=class jrfReport {
 						alert("Is Full Loaded");
 					}
 					</script>
-					</HEAD> <BODY>
+					</HEAD> <BODY><DIV id="ResultInnerDiv">
 					`);		
 			while (saPrependContent.length>0){
 				sModelProcessedResult.unshift(saPrependContent.pop());
 			}
-			sModelProcessedResult.push("</BODY></HTML>");
+			sModelProcessedResult.push("<DIV></BODY></HTML>");
 	        
 	        var blobResult = new Blob(sModelProcessedResult, {type : "text/html"});
 	        var blobUrl = window.URL.createObjectURL(blobResult);
@@ -932,12 +932,21 @@ var jrfReport=class jrfReport {
 	        var ifr=document.getElementById('ReportResult');
 	        ifr.onload=self.createManagedCallback(function(){
 //	            this.style.display='block';
-	            console.log('laod the iframe')
-     		   ifr.modelInteractiveFunctions=modelInteractiveFunctions;
-     		   ifr.System=System;
+	           log('laod the iframe')
         	   var iframeDoc = ifr.contentDocument || ifr.contentWindow.document;
     		   iframeDoc.modelInteractiveFunctions=modelInteractiveFunctions;
     		   iframeDoc.System=System;
+   	    	   var innerDiv=iframeDoc.getElementById('ResultInnerDiv');
+   	    	   if (isDefined(innerDiv)){
+   	   	    	   log("inner Scroll Height:"+innerDiv.scrollHeight);
+   	   	    	   if (isDefined(innerDiv.parentElement)){
+   	   	    		   log("inner Scroll Height:"+innerDiv.parentElement.scrollHeight);
+   	   	    	   } else {
+   	   	    		   log("Inner Div Parent does not exists");
+   	   	    	   }
+   	    	   } else {
+   	    		   log("Inner Div does not exists");
+   	    	   }
      		   self.continueTask();
 	        });
 	        ifr.src=blobUrl;

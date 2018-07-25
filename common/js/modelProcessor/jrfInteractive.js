@@ -110,7 +110,6 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		var hsParentRow=intContent.childs;
 		var jqParent=$(theWindow.document.body).find('#'+elemId);
 		
-		intContent.expanded=jqParent[0].jrfExpanded;
 		var jqButton=$(theWindow.document.body).find('#btn'+elemId);
 		var btnCaption=sShowText;
 		if (action=="show") btnCaption=sHideText

@@ -930,6 +930,32 @@ var jrfReport=class jrfReport {
 	        
 			loggerFactory.getLogger().enabled=true;
 	        var ifr=document.getElementById('ReportResult');
+	        var iframeDoc;
+	        var hasHScroll=function(){
+	   	    	//scrol 1px to the left
+	   	    	$(iframeDoc).scrollLeft(1);
+
+	   	    	if($(iframeDoc).scrollLeft() != 0){
+	   	    	   //there's a scroll bar
+	   	    		return true;
+	   	    	}else{
+	   	    	   //there's no scrollbar
+	   	    		return false;
+	   	    	}
+	   	    	//scroll back to original location
+	   	    	$(iframeDoc).scrollLeft(0);
+	        }
+	        var adjustIframeWidth=self.createManagedCallback(function(){
+	        	if (hasHScroll()){
+	        		var actWidth=$(ifr).width();
+	        		$(ifr).width(actWidth+50);
+	        		setTimeout(adjustIframeWidth,300);
+	        	} 
+	        });
+	        
+	        
+	        
+	        
 	        ifr.onload=self.createManagedCallback(function(){
 //	            this.style.display='block';
 	           log('laod the iframe')
@@ -948,6 +974,7 @@ var jrfReport=class jrfReport {
    	    	   } else {
    	    		   log("Inner Div does not exists");
    	    	   }
+   	    	   adjustIframeWidth();
      		   self.continueTask();
 	        });
 	        ifr.src=blobUrl;

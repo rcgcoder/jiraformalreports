@@ -180,7 +180,9 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	        		  cellValue=cellValue.trim();
 		        	  cellLength=cellValue.length;
 		        	  cellEnd=cellValue.substring(cellLength-2,cellLength);
-		        	  if ((cellEnd==" €")||(cellEnd.toLowerCase()==" h")){
+		        	  if ((cellEnd==" €")
+		        			  ||(cellEnd.toLowerCase()==" h")
+		        			  ||(cellEnd.toLowerCase()==" %")){
 		        		  cellValue=cellValue.substring(0,cellLength-2);
 		        		  cellValue=replaceAll(cellValue,".","");
 		        		  cellValue=replaceAll(cellValue,",",".");

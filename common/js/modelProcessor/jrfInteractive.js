@@ -161,6 +161,31 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		log("Table Located!");
 		var elt = parentTable[0]; //document.getElementById('data-table');
 		var wb = theWindow.XLSX.utils.table_to_book(elt, {sheet:"ExportJRFTable"});
+		var sheet=wb.Sheets["ExportJRFTable"];
+	    var row;
+	    var rowNum;
+	    var colNum;
+	    var cellValue;
+	    var cellLength;
+	    var cellEnd;
+	    for(rowNum = sheet['!range'].s.r; rowNum <= sheet['!range'].e.r; rowNum++){
+	       row = [];
+	       for(colNum=sheet['!range'].s.c; colNum<=sheet['!range'].e.c; colNum++){
+	          var nextCell = sheet[
+	             xlsx.utils.encode_cell({r: rowNum, c: colNum})
+	          ];
+	          if( isDefined(nextCell)){
+	        	  cellValue=nextCell.v.trim();
+	        	  cellLength=cellValue.length;
+	        	  cellEnd=cellValue.substring(cellLength-2,cellLength);
+	        	  if ((cellEnd==" €")||(cellEnd.toLowerCase()==" h")){
+	        		  cellValue=cellValue.substring(0,cellLength-2);
+	        		  nextCell.v=cellValue;
+	        	  } 
+	          }
+	       }
+	       result.push(row);
+	    }
 //		return dl ? XLSX.write(wb, {bookType:type, bookSST:true, type: 'base64'}) :
 		theWindow.XLSX.writeFile(wb, "jrfExportTable.xlsx"); 
 	}

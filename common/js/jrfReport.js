@@ -948,9 +948,11 @@ var jrfReport=class jrfReport {
 	        var adjustIframeWidth=self.createManagedCallback(function(){
 	        	if (hasHScroll()){
 	        		var actWidth=$(ifr).width();
+	        		log("Horizontal Scroll is viewing. Adjusting iframe width from "+actWidth+" to "+ (actWidth+50));
 	        		$(ifr).width(actWidth+50);
 	        		setTimeout(adjustIframeWidth,300);
 	        	} 
+        		log("Horizontal Scroll is not viewing. end of width adjust");
 	        });
 	        
 	        

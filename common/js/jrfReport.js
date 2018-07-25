@@ -958,7 +958,7 @@ var jrfReport=class jrfReport {
 	        		log("Horizontal Scroll is viewing. Adjusting iframe width from "+actWidth+" to "+ (actWidth+50));
 	        		$(theIframe).width(actWidth+50);
 	        		setTimeout(function(){
-	        			adjustIframeWidth(theIframe)},300);
+	        			adjustIframeWidth(theIframe)},500);
 	        	} else {
 	        		log("Horizontal Scroll is not viewing. end of width adjust");
 	        	}

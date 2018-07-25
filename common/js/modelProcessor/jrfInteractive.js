@@ -79,8 +79,8 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		saveDataToFile(sContent, "savedFile.html", "text/html");
 	}
 	changeDisplayChildRow(elemId,forceHide,actWindow,sShowText,sHideText){
-		debugger;
 		var self=this;
+		log("Show childs rows of element:"+elemId);
 		var theWindow=window;
 		if (isDefined(actWindow)){
 			theWindow=actWindow;
@@ -108,8 +108,11 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		jqButton.html(btnCaption);
 		var actRow=jqParent;
 		hsParentRow.walk(function(intChild,iDeep,childId){
+			log("Showing or Hide element"+childId);
 			if (!intChild.loaded) {
+				log("Element is not loaded");
 				var newRow=$(intChild.html.saToString());
+				log("inserting after row"+actRow.attr('id'))
 				newRow.insertAfter(actRow);
 				actRow=newRow;
 				intChild.loaded=true;

@@ -86,21 +86,26 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			theWindow=actWindow;
 		}
 		var intContent=self.getInteractiveContent(elemId);
-		var hsParentRow=intContent.childs;
-		var jqParent=$(theWindow.document.body).find('#'+elemId);
 		var action="show";
-		if (isDefined(jqParent[0].jrfExpanded)){
-			if (jqParent[0].jrfExpanded){
-				action="hide";
-			}
-			jqParent[0].jrfExpanded=(!jqParent[0].jrfExpanded);
+		if (intContent.expanded){
+			intContent.expanded=false;
+			action="hide";
 		} else {
-			jqParent[0].jrfExpanded=true;
+			intContent.expanded=true;
+			action="show";
 		}
 		if (isDefined(forceHide)&&forceHide){
-			jqParent[0].jrfExpanded=false;			
+			intContent.expanded=false;			
 			action="hide";
 		}
+		if (!intChild.loaded){
+			if (action=="hide") return;
+			logError("Cannot Show unloaded row");
+			return;
+		}
+		var hsParentRow=intContent.childs;
+		var jqParent=$(theWindow.document.body).find('#'+elemId);
+		
 		intContent.expanded=jqParent[0].jrfExpanded;
 		var jqButton=$(theWindow.document.body).find('#btn'+elemId);
 		var btnCaption=sShowText;
@@ -122,12 +127,8 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 				jqElem.css('display', '');
 			} else {
 				jqElem.css('display', 'none');
-			}
-			jqElem[0].jrfExpanded=(jqElem.length>0);
-			intChild.expanded=jqElem[0].jrfExpanded;
-			var jqButton=$(theWindow.document.body).find('#btn'+childId);
-			if (jqButton.length>0){
-				jqButton.click();
+				intChild.expanded=false;
+				changeDisplayChildRow(childId,true,actWindow,sShowText,sHideText);
 			}
 		});
 	}

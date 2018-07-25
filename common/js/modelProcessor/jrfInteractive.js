@@ -182,7 +182,11 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		        	  cellEnd=cellValue.substring(cellLength-2,cellLength);
 		        	  if ((cellEnd==" €")||(cellEnd.toLowerCase()==" h")){
 		        		  cellValue=cellValue.substring(0,cellLength-2);
-		        		  nextCell.v=cellValue;
+		        		  cellValue=replaceAll(cellValue,".","");
+		        		  cellValue=replaceAll(cellValue,",",".");
+		        		  if ($.isNumeric(cellValue)){
+			        		  nextCell.v=parseFloat(cellValue);
+		        		  }
 		        	  } 
 	        	  }
 	          }

@@ -114,8 +114,6 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				if (treeParentId!=""){ // its the first
 					var treeParentNode=modelInteractiveFunctions.getInteractiveContent(treeParentId);
 					treeParentNode.childs.add(treeNodeId,treeNode);
-				} else {
-					treeNode.expanded=true;
 				}
 				self.variables.pushVar("recursiveNodeId",treeNodeId);
 				

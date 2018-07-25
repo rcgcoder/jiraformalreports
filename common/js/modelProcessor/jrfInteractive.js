@@ -168,10 +168,11 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	    var cellValue;
 	    var cellLength;
 	    var cellEnd;
-	    for(rowNum = sheet['!range'].s.r; rowNum <= sheet['!range'].e.r; rowNum++){
-	       for(colNum=sheet['!range'].s.c; colNum<=sheet['!range'].e.c; colNum++){
+	    var fullRange=theWindow.XLSX.utils.decode_range(sheet['!ref']);
+	    for(rowNum = fullRange.s.r; rowNum <= fullRange.e.r; rowNum++){
+	       for(colNum=fullRange.s.c; colNum<=fullRange.e.c; colNum++){
 	          var nextCell = sheet[
-	             xlsx.utils.encode_cell({r: rowNum, c: colNum})
+	        	  theWindow.XLSX.utils.encode_cell({r: rowNum, c: colNum})
 	          ];
 	          if( isDefined(nextCell)){
 	        	  cellValue=nextCell.v.trim();

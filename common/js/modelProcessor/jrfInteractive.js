@@ -128,7 +128,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			} else {
 				jqElem.css('display', 'none');
 				intChild.expanded=false;
-				changeDisplayChildRow(childId,true,actWindow,sShowText,sHideText);
+				modelInteractiveFunctions.changeDisplayChildRow(childId,true,actWindow,sShowText,sHideText);
 			}
 		});
 	}

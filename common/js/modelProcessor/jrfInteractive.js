@@ -169,7 +169,6 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	    var cellLength;
 	    var cellEnd;
 	    for(rowNum = sheet['!range'].s.r; rowNum <= sheet['!range'].e.r; rowNum++){
-	       row = [];
 	       for(colNum=sheet['!range'].s.c; colNum<=sheet['!range'].e.c; colNum++){
 	          var nextCell = sheet[
 	             xlsx.utils.encode_cell({r: rowNum, c: colNum})
@@ -184,7 +183,6 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	        	  } 
 	          }
 	       }
-	       result.push(row);
 	    }
 //		return dl ? XLSX.write(wb, {bookType:type, bookSST:true, type: 'base64'}) :
 		theWindow.XLSX.writeFile(wb, "jrfExportTable.xlsx"); 

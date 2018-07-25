@@ -162,7 +162,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		var elt = parentTable[0]; //document.getElementById('data-table');
 		var wb = XLSX.utils.table_to_book(elt, {sheet:"ExportJRFTable"});
 //		return dl ? XLSX.write(wb, {bookType:type, bookSST:true, type: 'base64'}) :
-		XLSX.writeFile(wb, "jrfExportTable.xlsx");
+		XLSX.writeFile(wb, "jrfExportTable.xlsx"); 
 	}
 }
 

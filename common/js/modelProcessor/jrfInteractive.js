@@ -84,7 +84,8 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		if (isDefined(actWindow)){
 			theWindow=actWindow;
 		}
-		var hsParentRow=self.getInteractiveContent(elemId);
+		var intContent=self.getInteractiveContent(elemId);
+		var hsParentRow=intContent.childs;
 		var jqParent=$(theWindow.document.body).find('#'+elemId);
 		var action="show";
 		if (isDefined(jqParent[0].jrfExpanded)){
@@ -99,21 +100,28 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			jqParent[0].jrfExpanded=false;			
 			action="hide";
 		}
+		intContent.expanded=jqParent[0].jrfExpanded;
 		var jqButton=$(theWindow.document.body).find('#btn'+elemId);
 		var btnCaption=sShowText;
 		if (action=="show") btnCaption=sHideText
 		jqButton.html(btnCaption);
-		
-		hsParentRow.walk(function(hsChild,iDeep,childId){
+		var actRow=jqParent;
+		debugger;
+		hsParentRow.walk(function(intChild,iDeep,childId){
+			if (!intChild.loaded) {
+				var newRow=$(intChild.html.saToString());
+				newRow.insertAfter(actRow);
+				actRow=newRow;
+				intChild.loaded=true;
+			}
 			var jqElem=$(theWindow.document.body).find('#'+childId);
 			if (action=="show"){
 				jqElem.css('display', '');
 			} else {
 				jqElem.css('display', 'none');
 			}
-			if (jqElem.length>0){
-				jqElem[0].jrfExpanded=true;
-			}
+			jqElem[0].jrfExpanded=(jqElem.length>0);
+			intChild.expanded=jqElem[0].jrfExpanded;
 			var jqButton=$(theWindow.document.body).find('#btn'+childId);
 			if (jqButton.length>0){
 				jqButton.click();

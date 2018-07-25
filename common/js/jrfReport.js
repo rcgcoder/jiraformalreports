@@ -115,9 +115,6 @@ var jrfReport=class jrfReport {
 								"js/libs/sha256.js",
 								"js/libs/showdown.js",
 								"js/libs/wiki2html.js",
-								"js/libs/xlsx/FileSaver.js",
-								"js/libs/xlsx/shim.min.js",
-								"js/libs/xlsx/xlsx.full.min.js",
 								"js/rcglibs/RCGStringArray.js",
 								"js/rcglibs/RCGVarEngine.js",
 								"js/rcglibs/RCGFilterManager.js",
@@ -912,6 +909,13 @@ var jrfReport=class jrfReport {
 					<HTML>
  					<HEAD> 
 					<meta http-equiv='Content-Type' content='Type=text/html; charset=utf-8'>
+													"js/libs/xlsx/FileSaver.js",
+					<script type="text/javascript" src="https://unpkg.com/xlsx/dist/shim.min.js"></script>
+					<script type="text/javascript" src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+					
+					<script type="text/javascript" src="https://unpkg.com/blob.js@1.0.1/Blob.js"></script>
+					<script type="text/javascript" src="https://unpkg.com/file-saver@1.3.3/FileSaver.js"></script>
+
 					<script type="text/javascript" >
 					function onBodyLoadEvent(){
 						alert("Is Full Loaded");

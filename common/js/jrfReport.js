@@ -935,6 +935,9 @@ var jrfReport=class jrfReport {
 	            console.log('laod the iframe')
      		   ifr.modelInteractiveFunctions=modelInteractiveFunctions;
      		   ifr.System=System;
+        	   var iframeDoc = ifr.contentDocument || ifr.contentWindow.document;
+    		   iframeDoc.modelInteractiveFunctions=modelInteractiveFunctions;
+    		   iframeDoc.System=System;
      		   self.continueTask();
 	        });
 	        ifr.src=blobUrl;

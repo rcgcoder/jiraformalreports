@@ -39,7 +39,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		if ((visiType=="dynamic")&&(self.subType=="subrow")||(self.subType=="row")){
 			//debugger;
 			//..... first add an id to previous <tr> 
-			var iDeep=self.variables.getVar("RecursiveDeep");
+			var iDeep=self.variables.getVar("recursiveDeep");
 			var parentElem=self.variables.getVar("parentRecursiveElement");
 			var sParentKey="noKey";
 			if (parentElem!=""){
@@ -119,15 +119,15 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				if (treeParentId!=""){ // its the first
 					var treeParentNode=modelInteractiveFunctions.getInteractiveContent(treeParentId);
 					treeParentNode.childs.add(treeNodeId,treeNode);
-					var iDeep=self.variables.getVar("RecursiveDeep");
+					var iDeep=self.variables.getVar("recursiveDeep");
 					if (iDeep==""){
 						iDeep=1;
 					} else {
 						iDeep++;
 					}
-					self.variables.pushVar("RecursiveDeep",iDeep);
+					self.variables.pushVar("recursiveDeep",iDeep);
 				} else {
-					self.variables.pushVar("RecursiveDeep",0);
+					self.variables.pushVar("recursiveDeep",0);
 				}
 				self.variables.pushVar("recursiveNodeId",treeNodeId);
 				
@@ -202,7 +202,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 							treeNode.expanded=true;
 						}
 					}
-					self.variables.popVar("RecursiveDeep");
+					self.variables.popVar("recursiveDeep");
 					//self.model.htmlStack.saReplace(iPosTR,5,sInsertInTd+'</td>');
 				}
 				self.variables.popVarEnv();

@@ -42,13 +42,20 @@ var jrfFormula=class jrfFormula extends jrfToken{//this kind of definition allow
 			log("Formula Content previous of replace returns and Vars:"+sContent);
 			sContent=replaceAll(sContent,"\n"," ");
 			var otherParams=self.newReplaceParams();
-			otherParams.hsValues.add("elem",0);
+/*			otherParams.hsValues.add("elem",0);
 			otherParams.hsValues.add("root",1);
 			otherParams.hsValues.add("model",2);
 			otherParams.vValues.push(self.reportElem);
 			otherParams.vValues.push(self.model.processingRoot);
 			otherParams.vValues.push(self.model);
+*/			
+			self.variables.pushVar("elem",self.reportElem);
+			self.variables.pushVar("root",self.model.processingRoot);
+			self.variables.pushVar("model",self.model);
 			var sValue=self.getStringReplacedScript(sContent,otherParams);
+			self.variables.popVar("elem");
+			self.variables.popVar("root");
+			self.variables.popVar("model");
 /*
 			sContent=self.replaceVarsAndExecute(sContent,otherParams);
 			if (isArray(sContent)) sContent=sContent.saToString();

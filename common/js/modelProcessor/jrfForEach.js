@@ -109,7 +109,9 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				} */
 				debugger;
 				var treeParentId=self.variables.getVar("recursiveNodeId");
-				var treeNode={expanded:false,childs:newHashMap(),html:"",loaded:true};
+				var bExpandAllRows=self.variables.getVar("expandAllRows");
+				if (bExpandAllRows=="")bExpandAllRows=false;
+				var treeNode={expanded:bExpandAllRows,childs:newHashMap(),html:"",loaded:bExpandAllRows};
 				var treeNodeId=modelInteractiveFunctions.addInteractiveContent(treeNode);
 				if (treeParentId!=""){ // its the first
 					var treeParentNode=modelInteractiveFunctions.getInteractiveContent(treeParentId);
@@ -161,6 +163,8 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				if (self.bAllRoots) self.model.processingRoot=self.rootBackUp;
 				if ((self.subType=="row")||(self.subType=="subrow")){
 					debugger;
+					var bExpandAllRows=self.variables.getVar("expandAllRows");
+					if (bExpandAllRows=="")bExpandAllRows=false;
 					var treeNodeId=self.variables.popVar("recursiveNodeId");
 					var treeNode=modelInteractiveFunctions.getInteractiveContent(treeNodeId);
 					var iPosTR=self.variables.popVar("InitTR_Pos");
@@ -170,15 +174,17 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					if (treeNode.childs.length()>0){
 						var sShowCaption="Show ("+ treeNode.childs.length() +") rows"; 
 						var sHideCaption="Hide ("+ treeNode.childs.length() +") rows";
-						sInsertInTd+='<button id="btn'+treeNodeId+'" onclick="modelInteractiveFunctions.changeDisplayChildRow(\''+treeNodeId+'\',false,window,\''+sShowCaption+'\',\''+sHideCaption+'\')">'+sShowCaption+'</button>';
+						var sActualCaption=sShowCaption;
+						if (bExpandAllRows){
+							sActualCaption=sHideCaption;
+						}
+						sInsertInTd+='<button id="btn'+treeNodeId+'" onclick="modelInteractiveFunctions.changeDisplayChildRow(\''+treeNodeId+'\',false,window,\''+sShowCaption+'\',\''+sHideCaption+'\')">'+sActualCaption+'</button>';
 					}
 					if (self.model.report.config.interactiveResult){
 						self.model.htmlStack.saReplace(iPosTR,5,sInsertInTd+'</td>');
 					}
 					var parentNodeId=self.variables.getVar("recursiveNodeId");
 					if (parentNodeId!=""){
-						var bExpandAllRows=self.variables.getVar("expandAllRows");
-						if (bExpandAllRows=="")bExpandAllRows=false;
 						if (!bExpandAllRows){
 							treeNode.loaded=false;
 							treeNode.expanded=false;

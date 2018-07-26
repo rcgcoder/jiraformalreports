@@ -199,6 +199,79 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 //		return dl ? XLSX.write(wb, {bookType:type, bookSST:true, type: 'base64'}) :
 		theWindow.XLSX.writeFile(wb, "jrfExportTable.xlsx"); 
 	}
+	
+	openInWindow(idContent,iFrameId){
+  
+	    var jqDiv=$("#"+iFrameId);
+	    var viewWidth=jqDiv.width();
+	    var viewHeight=jqDiv.height();
+	    
+		loggerFactory.getLogger().enabled=true;
+	    var hasHScroll=function(theIframe){
+		    	//scrol 1px to the left
+	    	if (isUndefined(theIframe)){
+	    		log("the Iframe is undefined");
+	    		return true;
+	    	}
+	    	var iframeDoc = theIframe.contentDocument || theIframe.contentWindow.document;
+	    	if (isUndefined(iframeDoc)){
+	    		log("Iframe Doc is undefined");
+	    		return true;
+	    	}
+	    	$(iframeDoc).scrollLeft(1);
+
+	    	if($(iframeDoc).scrollLeft() != 0){
+	    	   //there's a scroll bar
+	    		return true;
+	    	}else{
+	    	   //there's no scrollbar
+	    		return false;
+	    	}
+	    	//scroll back to original location
+	    	$(iframeDoc).scrollLeft(0);
+	    }
+	    var adjustIframeWidth=function(theIframe){
+	    	if (hasHScroll(theIframe)){
+	    		var actWidth=$(theIframe).width();
+	    		log("Horizontal Scroll is viewing. Adjusting iframe width from "+actWidth+" to "+ (actWidth+50));
+	    		$(theIframe).width(actWidth+50);
+	    		setTimeout(function(){
+	    			adjustIframeWidth(theIframe)});
+	    	} else {
+	    		log("Horizontal Scroll is not viewing. end of width adjust");
+	    	}
+	    };        
+	    var ifr=document.getElementById('iFrameId');
+	    ifr.onload=function(){
+	    	$(ifr).width('100%');
+	    	//	            this.style.display='block';
+	       log('laod the iframe')
+		   var iframeDoc = ifr.contentDocument || ifr.contentWindow.document;
+		   iframeDoc.modelInteractiveFunctions=modelInteractiveFunctions;
+		   iframeDoc.System=System;
+	   	   var innerDiv=iframeDoc.getElementById('ResultInnerDiv');
+	   	   if (isDefined(innerDiv)){
+	  	    	   log("inner Scroll Height:"+innerDiv.scrollHeight);
+		    	   $(ifr).height(innerDiv.scrollHeight+100);
+	  	    	   if (isDefined(innerDiv.parentElement)){
+	  	    		   log("inner Scroll Height:"+innerDiv.parentElement.scrollHeight);
+	  	    	   } else {
+	  	    		   log("Inner Div Parent does not exists");
+	  	    	   }
+	   	   } else {
+	   		   log("Inner Div does not exists");
+	   	   }
+	   	   adjustIframeWidth(ifr);
+	    };
+	    
+	    var pageContent=self.getInteractiveContent(idContent);
+	    ifr.src=pageContent.blobUrl;
+		loggerFactory.getLogger().enabled=true;
+/*		self.result=sModelProcessedResult;
+		if (self.config.NewWindow){
+			self.openResultInNewTab();
+		}*/
+	}
 }
 
 var modelInteractiveFunctions=new jrfInteractive();

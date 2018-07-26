@@ -932,121 +932,10 @@ var jrfReport=class jrfReport {
 	        
 	        var blobResult = new Blob(sModelProcessedResult, {type : "text/html"});
 	        var blobUrl = window.URL.createObjectURL(blobResult);
-	        var jqDiv=$("#reportResultDiv");
-	        var viewWidth=jqDiv.width();
-	        var viewHeight=jqDiv.height();
 	        
-	        
-			loggerFactory.getLogger().enabled=true;
-	        var hasHScroll=function(theIframe){
-	   	    	//scrol 1px to the left
-	        	if (isUndefined(theIframe)){
-	        		log("the Iframe is undefined");
-	        		return true;
-	        	}
-	        	var iframeDoc = theIframe.contentDocument || theIframe.contentWindow.document;
-	        	if (isUndefined(iframeDoc)){
-	        		log("Iframe Doc is undefined");
-	        		return true;
-	        	}
-	   	    	$(iframeDoc).scrollLeft(1);
-
-	   	    	if($(iframeDoc).scrollLeft() != 0){
-	   	    	   //there's a scroll bar
-	   	    		return true;
-	   	    	}else{
-	   	    	   //there's no scrollbar
-	   	    		return false;
-	   	    	}
-	   	    	//scroll back to original location
-	   	    	$(iframeDoc).scrollLeft(0);
-	        }
-	        var adjustIframeWidth=self.createManagedCallback(function(theIframe){
-	        	if (hasHScroll(theIframe)){
-	        		var actWidth=$(theIframe).width();
-	        		log("Horizontal Scroll is viewing. Adjusting iframe width from "+actWidth+" to "+ (actWidth+50));
-	        		$(theIframe).width(actWidth+50);
-	        		setTimeout(function(){
-	        			adjustIframeWidth(theIframe)});
-	        	} else {
-	        		log("Horizontal Scroll is not viewing. end of width adjust");
-	        	}
-	        });        
-	        var ifr=document.getElementById('ReportResult');
-	        ifr.onload=self.createManagedCallback(function(){
-	        	$(ifr).width('100%');
-	        	//	            this.style.display='block';
-	           log('laod the iframe')
-        	   var iframeDoc = ifr.contentDocument || ifr.contentWindow.document;
-    		   iframeDoc.modelInteractiveFunctions=modelInteractiveFunctions;
-    		   iframeDoc.System=System;
-   	    	   var innerDiv=iframeDoc.getElementById('ResultInnerDiv');
-   	    	   if (isDefined(innerDiv)){
-   	   	    	   log("inner Scroll Height:"+innerDiv.scrollHeight);
-       	    	   $(ifr).height(innerDiv.scrollHeight+100);
-   	   	    	   if (isDefined(innerDiv.parentElement)){
-   	   	    		   log("inner Scroll Height:"+innerDiv.parentElement.scrollHeight);
-   	   	    	   } else {
-   	   	    		   log("Inner Div Parent does not exists");
-   	   	    	   }
-   	    	   } else {
-   	    		   log("Inner Div does not exists");
-   	    	   }
-   	    	   adjustIframeWidth(ifr);
-     		   self.continueTask();
-	        });
-	        ifr.src=blobUrl;
-	        
-/*	        var jqIframe=$("#ReportResult");
-	        jqIframe.load(function(){
-	            $(this).show();
-	            console.log('laod the iframe')
-	        });
-	            
-//	        jqIframe.width(viewWidth);
-        	jqIframe.height(viewHeight);
-        	jqIframe.attr("src",blobUrl);
-*/
-/*	        var fncIsIframeLoaded=self.createManagedCallback(function(){
-        	   var iframe = document.getElementById('ReportResult');
-        	   var iframeWindow= iframe || iframe.contentWindow;
-        	   var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-        	    // Check if loading is complete
-        	   if (  iframeDoc.readyState  == 'complete' ) {
-        	       // The loading is complete, call the function we want executed once the iframe is loaded
-        		   debugger;
-	       	       var fncAdjustHeight=self.createManagedCallback(function(){
-	        		   debugger;
-	       	    	   var innerDiv=iframeDoc.getElementById('ResultInnerDiv');
-	       	    	   //if (innerDiv.parentElement.scrollHeight)
-	       	    	   jqResult.height(viewHeight+20);
-	       	    	   //jqResult.width(innerDiv.parentElement.scrollWidth+20);
-	       	    	   var btn=iframeDoc.getElementById('someButton');
-	       	    	   var jqButton=$(btn).click(function(){alert("Clicked")});
-	       	    	   var jqButton=$(btn).text("new Text");
-        			   jqResult.contents().find("head")[0].modelInteractiveFunctions=modelInteractiveFunctions;
-        			   jqResult.contents().find("head")[0].System=System;
-            		   iframeWindow.modelInteractiveFunctions=modelInteractiveFunctions;
-            		   iframeWindow.System=System;
-            		   iframeDoc.modelInteractiveFunctions=modelInteractiveFunctions;
-            		   iframeDoc.System=System;
-	    	    	   self.continueTask();
-	       	       });
-	       	       setTimeout(function(){
-		    	       fncAdjustHeight(); 	
-	       	       },500);
-        	    } else {
-            	    // If we are here, it is not loaded. Set things up so we check   the status again in 100 milliseconds
-            	    window.setTimeout(fncIsIframeLoaded, 300);
-        	    }
-	        });
-	        fncIsIframeLoaded();
-*/	        
-			loggerFactory.getLogger().enabled=true;
-			self.result=sModelProcessedResult;
-			if (self.config.NewWindow){
-				self.openResultInNewTab();
-			}
+			var newId=modelInteractiveFunctions.addInteractiveContent({html:sModelProcessedResult,blobUrl:blobUrl,blob:blobResult});
+			self.pageResultId=newId;
+			self.continueTask();
 		});
 		
 		self.addStep("Storing issue info or Removing all Issues in the scope.... ",function(){
@@ -1071,7 +960,19 @@ var jrfReport=class jrfReport {
 				System.webapp.IssueCache=issueCache;
 			}
 			self.continueTask();
-		});	
+		});
+		
+		self.addStep("Finally... launches the page results html.... ",function(){
+			var fncLaunchPages=function(idPage){
+				var thePageId=idPage;
+				setTimeout(function(){
+					modelInteractiveFunctions.openInBrowserPage(thePageId);
+				},3000);
+			}
+			fncLaunchPages(self.pageResultId,"reportResultDiv");
+			self.continueTask();
+		})
+
 
 		self.continueTask();
 	}

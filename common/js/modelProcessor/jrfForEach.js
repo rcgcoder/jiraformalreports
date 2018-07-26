@@ -112,7 +112,9 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				var bExpandAllRows=self.variables.getVar("expandAllRows");
 				if (bExpandAllRows=="")bExpandAllRows=false;
 				var treeNode={expanded:bExpandAllRows,childs:newHashMap(),html:"",
-							  loaded:(treeParentId==""?true:bExpandAllRows)};
+							  loaded:(treeParentId==""?true:bExpandAllRows),
+							  showCaption:"show",
+							  hideCaption:"hide"};
 				var treeNodeId=modelInteractiveFunctions.addInteractiveContent(treeNode);
 				if (treeParentId!=""){ // its the first
 					var treeParentNode=modelInteractiveFunctions.getInteractiveContent(treeParentId);
@@ -172,14 +174,14 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					var initTR=iPosTR;
 					iPosTR=self.model.htmlStack.saFindPos("</td>",false,iPosTR);
 					var sInsertInTd=""; //treeNodeId;
+					treeNode.showCaption="Show ("+ treeNode.childs.length() +") rows"; 
+					treeNode.hideCaption="Hide ("+ treeNode.childs.length() +") rows";
 					if (treeNode.childs.length()>0){
-						var sShowCaption="Show ("+ treeNode.childs.length() +") rows"; 
-						var sHideCaption="Hide ("+ treeNode.childs.length() +") rows";
-						var sActualCaption=sShowCaption;
+						var sActualCaption=treeNode.showCaption;
 						if (bExpandAllRows){
-							sActualCaption=sHideCaption;
+							sActualCaption=treeNode.hideCaption;
 						}
-						sInsertInTd+='<button id="btn'+treeNodeId+'" onclick="modelInteractiveFunctions.changeDisplayChildRow(\''+treeNodeId+'\',false,window,\''+sShowCaption+'\',\''+sHideCaption+'\')">'+sActualCaption+'</button>';
+						sInsertInTd+='<button id="btn'+treeNodeId+'" onclick="modelInteractiveFunctions.changeDisplayChildRow(\''+treeNodeId+'\',false,window)">'+sActualCaption+'</button>';
 					}
 					if (self.model.report.config.interactiveResult){
 						self.model.htmlStack.saReplace(iPosTR,5,sInsertInTd+'</td>');

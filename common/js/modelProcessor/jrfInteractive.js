@@ -92,7 +92,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		}
 		return theWindow;
 	}
-	changeDisplayChildRow(elemId,forceHide,actWindow,sShowText,sHideText){
+	changeDisplayChildRow(elemId,forceHide,actWindow){
 		var self=this;
 		log("Show childs rows of element:"+elemId);
 		var theWindow=self.getActiveWindow(actWindow);
@@ -122,8 +122,8 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		var jqParent=$(theWindow.document.body).find('#'+elemId);
 		
 		var jqButton=$(theWindow.document.body).find('#btn'+elemId);
-		var btnCaption=sShowText;
-		if (action=="show") btnCaption=sHideText
+		var btnCaption=intContent.showCaption;
+		if (action=="show") btnCaption=intContent.hideCaption;
 		jqButton.html(btnCaption);
 		var actRow=jqParent;
 		hsParentRow.walk(function(intChild,iDeep,childId){
@@ -142,7 +142,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			} else {
 				jqElem.css('display', 'none');
 				intChild.expanded=false;
-				self.changeDisplayChildRow(childId,true,theWindow,sShowText,sHideText);
+				self.changeDisplayChildRow(childId,true,theWindow);
 			}
 		});
 	}

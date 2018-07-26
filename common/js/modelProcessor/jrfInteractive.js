@@ -241,7 +241,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	    		log("Horizontal Scroll is not viewing. end of width adjust");
 	    	}
 	    };        
-	    var ifr=document.getElementById('iFrameId');
+	    var ifr=document.getElementById(iFrameId);
 	    ifr.onload=function(){
 	    	$(ifr).width('100%');
 	    	//	            this.style.display='block';

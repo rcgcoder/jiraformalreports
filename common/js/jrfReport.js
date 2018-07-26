@@ -973,15 +973,15 @@ var jrfReport=class jrfReport {
 		});
 		
 		self.addStep("Finally... launches the page results html.... ",function(){
-			var fncCallback=function(){
-				setTimeout(function(){
-					modelInteractiveFunctions.openInWindow(thePageId,function(){
-						alert("Page Loaded");
-					});
-				});
-			}
 			var fncLaunchPages=function(idPage){
 				var thePageId=idPage;
+				var fncCallback=function(){
+					setTimeout(function(){
+						modelInteractiveFunctions.openInWindow(thePageId,function(){
+							alert("Page Loaded");
+						});
+					});
+				}
 				setTimeout(function(){
 					modelInteractiveFunctions.openInWindow(thePageId,fncCallback,"ReportResult","reportResultDiv");
 				},3000);

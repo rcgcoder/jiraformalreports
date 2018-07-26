@@ -751,21 +751,21 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			theHash=hash.hex();
 			functionCache=otherParams.self.model.functionCache.getValue(theHash);
 		}
-
+		var auxValues=otherParams.vValues.slice(); // copy the array
 		if (functionCache=="") {
 			if ((sInnerText.saExists("{{"))){ // its valid for {{ and for  {{{
 				sInnerText=otherParams.self.replaceVars(sInnerText,otherParams);
 			}
-			functionCache={body:sInnerText,vValues:otherParams.vValues,method:""};
+			functionCache={body:sInnerText,vValues:auxValues,method:""};
 			if (theHash!=""){
 				otherParams.self.model.functionCache.add(theHash,functionCache);
 			}
 		} else {
-			otherParams.vValues=functionCache.vValues;
+			auxValues=functionCache.vValues;
 		}
 		var vValuesProcessed=[];
 		var vValueAux;
-		otherParams.vValues.forEach(function(vValue){
+		auxValues.forEach(function(vValue){
 			if (isString(vValue)||isArray(vValue)){
 				var varDetail=otherParams.self.extractNameAndDate(vValue);
 				vValue=otherParams.self.variables.getVar(varDetail.name,varDetail.date);

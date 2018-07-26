@@ -966,7 +966,7 @@ var jrfReport=class jrfReport {
 			var fncLaunchPages=function(idPage){
 				var thePageId=idPage;
 				setTimeout(function(){
-					modelInteractiveFunctions.openInWindow(thePageId,"reportResultDiv");
+					modelInteractiveFunctions.openInWindow(thePageId,"ReportResult","reportResultDiv");
 				},3000);
 			}
 			fncLaunchPages(self.pageResultId);

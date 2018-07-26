@@ -200,10 +200,10 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		theWindow.XLSX.writeFile(wb, "jrfExportTable.xlsx"); 
 	}
 	
-	openInWindow(idContent,iFrameId){
+	openInWindow(idContent,iFrameId,divShellId){
 		debugger;
 		var self=this;
-	    var jqDiv=$("#"+iFrameId);
+	    var jqDiv=$("#"+divShellId);
 	    var viewWidth=jqDiv.width();
 	    var viewHeight=jqDiv.height();
 	    

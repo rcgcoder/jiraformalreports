@@ -966,10 +966,10 @@ var jrfReport=class jrfReport {
 			var fncLaunchPages=function(idPage){
 				var thePageId=idPage;
 				setTimeout(function(){
-					modelInteractiveFunctions.openInBrowserPage(thePageId);
+					modelInteractiveFunctions.openInWindow(thePageId,"reportResultDiv");
 				},3000);
 			}
-			fncLaunchPages(self.pageResultId,"reportResultDiv");
+			fncLaunchPages(self.pageResultId);
 			self.continueTask();
 		})
 

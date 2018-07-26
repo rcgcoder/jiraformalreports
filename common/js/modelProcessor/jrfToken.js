@@ -770,7 +770,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			TokenFunctionCallsCached++;
 		}
 		if ((TokenFunctionCalls >0) && (TokenFunctionCalls % 100 ==0)){
-			logError("Calls:"+TokenFunctionCalls+" cached:"+TokenFunctionCallsCached+" percent:"+(TokenFunctionCallsCached/TokenFunctionCalls)*100+"%");
+			logError("Calls:"+TokenFunctionCalls+" cached:"+TokenFunctionCallsCached+" percent:"+((TokenFunctionCallsCached/TokenFunctionCalls)*100).toFixed(2)+"%");
 		}
 		var vValuesProcessed=[];
 		var vValueAux;

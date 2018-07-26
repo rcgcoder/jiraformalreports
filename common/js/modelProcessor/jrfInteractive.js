@@ -47,30 +47,9 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	}
 	openNewWindow(elemId){
 		var self=this;
-		var otherWindow; 
-		var saContent=self.getInteractiveContent(elemId);
-		var saPrependContent=[];
-		saPrependContent.push(`<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//ES"
-   					"http://www.w3.org/TR/html4/strict.dtd">
-					<HTML>
- 					<HEAD> 
-					<meta http-equiv='Content-Type' content='Type=text/html; charset=utf-8'>
-					<title>`+formatDate(new Date(),4)+` Jira Formal Report </title>					
-					`);		
-		var arrFiles=[	//"ts/demo.ts",
-			"css/RCGTaskManager.css",
-			"aui/css/aui.css",
-            "aui/css/aui-experimental.css",
-            ]; //test
-		arrFiles.forEach(function (sRelativePath){
-			var sAbsPath=System.webapp.composeUrl(sRelativePath);
-			saPrependContent.push('<link rel="stylesheet" type="text/css" href="'+sAbsPath+'">');
-		});
-		saPrependContent.push("</HEAD><BODY>");
-		while (saPrependContent.length>0){
-			saContent.unshift(saPrependContent.pop());
-		}
-		saContent.push("</BODY></HTML>");
+		var otherWindow;
+		var saItem=self.getInteractiveContent(elemId);
+		var saContent=saItem.html;
 		var blobResult = new Blob(saContent, {type : "text/html"});
 	    var blobUrl = window.URL.createObjectURL(blobResult);
 		otherWindow= window.open(blobUrl , '_blank');
@@ -200,9 +179,14 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		theWindow.XLSX.writeFile(wb, "jrfExportTable.xlsx"); 
 	}
 	
-	openInWindow(idContent,iFrameId,divShellId){
+	openInWindow(idContent,callback,iFrameId,divShellId){
 		debugger;
 		var self=this;
+		if (isUndefined(iFrameId)||iFrameId==""){
+			self.openNewWindow(idContent);
+			if (isDefined(callback))callback();
+			return;
+		}
 	    var jqDiv=$("#"+divShellId);
 	    var viewWidth=jqDiv.width();
 	    var viewHeight=jqDiv.height();
@@ -240,6 +224,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	    			adjustIframeWidth(theIframe)});
 	    	} else {
 	    		log("Horizontal Scroll is not viewing. end of width adjust");
+				if (isDefined(callback))callback();
 	    	}
 	    };        
 	    var ifr=document.getElementById(iFrameId);

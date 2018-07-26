@@ -916,8 +916,18 @@ var jrfReport=class jrfReport {
 					<script type="text/javascript" src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
 					
 					<script type="text/javascript" src="https://unpkg.com/blob.js@1.0.1/Blob.js"></script>
-					<script type="text/javascript" src="https://unpkg.com/file-saver@1.3.3/FileSaver.js"></script>
-
+					<script type="text/javascript" src="https://unpkg.com/file-saver@1.3.3/FileSaver.js"></script>`
+					);
+			var arrFiles=[	//"ts/demo.ts",
+				"css/RCGTaskManager.css",
+				"aui/css/aui.css",
+	            "aui/css/aui-experimental.css",
+	            ]; //test
+			arrFiles.forEach(function (sRelativePath){
+				var sAbsPath=System.webapp.composeUrl(sRelativePath);
+				saPrependContent.push('<link rel="stylesheet" type="text/css" href="'+sAbsPath+'">');
+			});
+			saPrependContent.push(`
 					<script type="text/javascript" >
 					function onBodyLoadEvent(){
 						alert("Is Full Loaded");
@@ -963,10 +973,17 @@ var jrfReport=class jrfReport {
 		});
 		
 		self.addStep("Finally... launches the page results html.... ",function(){
+			var fncCallback=function(){
+				setTimeout(function(){
+					modelInteractiveFunctions.openInWindow(thePageId,function(){
+						alert("Page Loaded");
+					});
+				});
+			}
 			var fncLaunchPages=function(idPage){
 				var thePageId=idPage;
 				setTimeout(function(){
-					modelInteractiveFunctions.openInWindow(thePageId,"ReportResult","reportResultDiv");
+					modelInteractiveFunctions.openInWindow(thePageId,fncCallback,"ReportResult","reportResultDiv");
 				},3000);
 			}
 			fncLaunchPages(self.pageResultId);

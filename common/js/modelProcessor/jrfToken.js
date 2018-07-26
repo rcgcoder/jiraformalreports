@@ -749,8 +749,10 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		}
 
 		if (functionCache=="") {
+			otherParams.vValues=[];
+			otherParams.hsValues=newHashMap();
 			if ((sInnerText.saExists("{{"))){ // its valid for {{ and for  {{{
-				sInnerText=otherParams.self.replaceVars(sInnerText,otherParams);
+				sInnerText=otherParams.self.replaceVars(sInnerText);
 			}
 			functionCache={body:sInnerText,vValues:otherParams.vValues,method:""};
 			if (theHash!=""){

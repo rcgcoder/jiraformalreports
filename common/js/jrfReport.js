@@ -976,11 +976,11 @@ var jrfReport=class jrfReport {
 			var fncLaunchPages=function(idPage){
 				var thePageId=idPage;
 				var fncCallback=function(){
-					setTimeout(function(){
+/*					setTimeout(function(){
 						modelInteractiveFunctions.openInWindow(thePageId,function(){
 							alert("Page Loaded");
 						});
-					});
+					});*/
 				}
 				setTimeout(function(){
 					modelInteractiveFunctions.openInWindow(thePageId,fncCallback,"ReportResult","reportResultDiv");

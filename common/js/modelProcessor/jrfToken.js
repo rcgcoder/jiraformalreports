@@ -731,6 +731,10 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	}
 	getStringReplacedScript(sText,otherParams){ //sText is {{{ sText }}} may have {{ }} items
 		var arrInnerText;
+		if (otherParams.vValues.length>8){
+			debugger;
+			logError("Too much variables in formula... something is wrong");
+		}
 		if (isString(sText)){
 			arrInnerText=[sText];
 		} else {

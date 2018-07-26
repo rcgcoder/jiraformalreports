@@ -751,11 +751,12 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			theHash=hash.hex();
 			functionCache=otherParams.self.model.functionCache.getValue(theHash);
 		}
-		var auxValues=otherParams.vValues.slice(); // copy the array
+		var auxValues=[];
 		if (functionCache=="") {
 			if ((sInnerText.saExists("{{"))){ // its valid for {{ and for  {{{
 				sInnerText=otherParams.self.replaceVars(sInnerText,otherParams);
 			}
+			auxValues=otherParams.vValues.slice(); // copy the array
 			functionCache={body:sInnerText,vValues:auxValues,method:""};
 			if (theHash!=""){
 				otherParams.self.model.functionCache.add(theHash,functionCache);

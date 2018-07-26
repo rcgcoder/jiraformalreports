@@ -47,13 +47,9 @@
 					                        label="Full View"
 					                        ></aui-toggle>Contract Provider View <i>"fullView"</i>
 						<br>
-						<aui-toggle id="toggle_SaveResult" 
-					                        label="Save Result to Local Disk"
-					                        ></aui-toggle>Save Result to Local Disk
-						<br>
-						<aui-toggle id="toggle_NewWindow" 
-					                        label="Open Result In New Window"
-					                        ></aui-toggle>Open Result In New Window
+						<aui-toggle id="toggle_ExpandAllRows" 
+					                        label="Expand All Rows"
+					                        ></aui-toggle>Sub Rows Expanded by Default <i>"expandSubRows"</i>
 				    </div>
 				    <div class="aui-item">
 						<dlgEditableList id="listDefaultVariables" name="listDefaultVariables" 
@@ -68,6 +64,14 @@
 						<button (click)="executeReport()" class="aui-button">Execute the Report</button>
 						<button (click)="freeMemory()" class="aui-button">Free Memory</button>
 						<button (click)="killTasks()" class="aui-button">Kill Tasks</button>
+						<br>
+						<aui-toggle id="toggle_SaveResult" 
+					                        label="Save Result to Local Disk"
+					                        ></aui-toggle>Save Result to Local Disk
+						<br>
+						<aui-toggle id="toggle_NewWindow" 
+					                        label="Open Result In New Window"
+					                        ></aui-toggle>Open Result In New Window
 					</div>
 				</div>
 			</div>

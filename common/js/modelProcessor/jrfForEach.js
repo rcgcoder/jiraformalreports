@@ -177,13 +177,20 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					}
 					var parentNodeId=self.variables.getVar("recursiveNodeId");
 					if (parentNodeId!=""){
-						treeNode.loaded=false;
-						treeNode.expanded=false;
-						self.model.htmlStack.saReplace(initTR,3,'<tr style="display:none" ');
-						var iPosEndTR=5+self.model.htmlStack.saFindPos("</tr>",false,initTR);
-						var sTrContent=self.model.htmlStack.saSubstring(initTR,iPosEndTR);
-						self.model.htmlStack.saReplace(initTR,iPosEndTR-initTR,'');
-						treeNode.html=sTrContent;
+						var bExpandAllRows=self.variables.getVar("expandAllRows");
+						if (bExpandAllRows=="")bExpandAllRows=false;
+						if (!bExpandAllRows){
+							treeNode.loaded=false;
+							treeNode.expanded=false;
+							self.model.htmlStack.saReplace(initTR,3,'<tr style="display:none" ');
+							var iPosEndTR=5+self.model.htmlStack.saFindPos("</tr>",false,initTR);
+							var sTrContent=self.model.htmlStack.saSubstring(initTR,iPosEndTR);
+							self.model.htmlStack.saReplace(initTR,iPosEndTR-initTR,'');
+							treeNode.html=sTrContent;
+						} else {
+							treeNode.loaded=true;
+							treeNode.expanded=true;
+						}
 					}
 					//self.model.htmlStack.saReplace(iPosTR,5,sInsertInTd+'</td>');
 				}

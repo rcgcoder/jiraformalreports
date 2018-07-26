@@ -111,6 +111,9 @@ export class TabConfig {
         auxObj=$('#toggle_EnsureDependentIssues');
         dfReport["getIssuesNotInScope"]=(auxObj.attr("checked")=="checked");
 
+        auxObj=$('#toggle_ExpandAllRows');
+        dfReport["expandAllRows"]=(auxObj.attr("checked")=="checked");
+
         auxObj=$('#toggle_ResultInteractive');
         dfReport["interactiveResult"]=(auxObj.attr("checked")=="checked");
 
@@ -245,6 +248,10 @@ export class TabConfig {
         
         auxObj=$('#toggle_ResultInteractive');
         if(isDefined(config.interactiveResult)&&config.interactiveResult)auxObj.attr("checked","checked");
+
+        auxObj=$('#toggle_ExpandAllRows');
+        if(isDefined(config.expandAllRows)&&config.expandAllRows)auxObj.attr("checked","checked");
+        
         
         auxObj=$('#toggle_FullView');
         if(isDefined(config.fullView)&&config.fullView)auxObj.attr("checked","checked");

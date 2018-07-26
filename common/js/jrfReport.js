@@ -963,17 +963,15 @@ var jrfReport=class jrfReport {
 		});
 		
 		self.addStep("Finally... launches the page results html.... ",function(){
-			var fncLaunchPages=function(idPage){
+/*			var fncLaunchPages=function(idPage){
 				var thePageId=idPage;
 				setTimeout(function(){
 					modelInteractiveFunctions.openInWindow(thePageId,"reportResultDiv");
 				},3000);
 			}
 			fncLaunchPages(self.pageResultId);
-			self.continueTask();
-		})
-
-
+*/			self.continueTask();
+		});
 		self.continueTask();
 	}
 	openResultInNewTab(){

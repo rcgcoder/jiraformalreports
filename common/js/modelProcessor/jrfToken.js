@@ -489,6 +489,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		vAux=replaceAll(vAux,"lessThan","<");
 		vAux=replaceAll(vAux,"greaterOrEqualThan",">=");
 		vAux=replaceAll(vAux,"lessOrEqualThan","<=");
+		vAux=replaceAll(vAux,"equalThan","==");
 		return vAux;
 	}
 	getAttrVal(attrName,objSrc,bReplaceVars,bExecuteIfExists){

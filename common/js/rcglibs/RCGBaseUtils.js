@@ -237,16 +237,15 @@ function executeFunction(arrValues,itemFunction,functionCache){
 	var sFncBody
 	if ((!(isString(itemFunction)||isArray(itemFunction)))&&(itemFunction.method!="")){
 		fncFormula=itemFunction.method;
-	} else if (isString(itemFunction)||isArray(itemFunction)){
-		sFncBody=itemFunction.body;
-		if (isArray(sFunctionBody)){
-			sFncBody=sFunctionBody.saToString();
-		} 
 	} else {
-		sFncBody=itemFunction.body;
-		if (isArray(sFunctionBody)){
-			sFncBody=sFunctionBody.saToString();
+		if (isString(itemFunction)||isArray(itemFunction)){
+			sFncBody=itemFunction.body;
+		} else {
+			sFncBody=itemFunction.body;
 		}
+		if (isArray(sFncBody)){
+			sFncBody=sFncBody.saToString();
+		} 
 	}
 	if (fncFormula==""){
 		fncFormula=createFunction(arrValues,sFncBody,functionCache);

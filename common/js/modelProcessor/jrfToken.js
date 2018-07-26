@@ -771,7 +771,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		}
 		if ((TokenFunctionCalls >0) && (TokenFunctionCalls % 100 ==0)){
 			logError("Calls:"+TokenFunctionCalls+" cached:"+TokenFunctionCallsCached+" percent:"+((TokenFunctionCallsCached/TokenFunctionCalls)*100).toFixed(2)+"%"
-					 +"Stack status"+(self.model.htmlStack.saLength()/self.model.htmlStack.length)+"chars per row "+self.model.htmlStack.length);
+					 +"Stack status"+(otherParams.self.model.htmlStack.saLength()/otherParams.self.model.htmlStack.length)+"chars per row "+otherParams.self.model.htmlStack.length);
 		}
 		var vValuesProcessed=[];
 		var vValueAux;

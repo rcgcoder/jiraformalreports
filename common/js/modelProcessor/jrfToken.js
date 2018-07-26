@@ -1,3 +1,5 @@
+var TokenFunctionCalls=0;
+var TokenFunctionCallsCached=0;
 var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	loadOwnProperties(){
   		
@@ -36,7 +38,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.activateVar=obj.getAttrVal("activate");
 		obj.consolidateHtml=obj.getAttrVal("consolidateResult");
 		if (obj.consolidateHtml=="") {
-			obj.consolidateHtml=false
+			obj.consolidateHtml=false;
 		} else {
 			obj.consolidateHtml=(obj.consolidateHtml.saToString().trim().toLowerCase()=="true");
 		}
@@ -731,6 +733,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	}
 	getStringReplacedScript(sText,otherParams){ //sText is {{{ sText }}} may have {{ }} items
 		var arrInnerText;
+		TokenFunctionCalls++;
+
 		if (otherParams.vValues.length>8){
 			debugger;
 			logError("Too much variables in formula... something is wrong");
@@ -763,6 +767,10 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			}
 		} else {
 			auxValues=functionCache.vValues;
+			TokenFunctionCallsCached++;
+		}
+		if ((TokenFunctionCalls >0) && (TokenFunctionCalls % 100 ==0)){
+			logError("Calls:"+TokenFunctionCalls+" cached:"+TokenFunctionCallsCached+" percent:"+(TokenFunctionCallsCached/TokenFunctionCalls)*100+"%");
 		}
 		var vValuesProcessed=[];
 		var vValueAux;

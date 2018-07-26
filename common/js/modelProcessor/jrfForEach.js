@@ -239,7 +239,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				self.variables.popVar("LoopIndex");
 				self.variables.popVar("LoopElemsCount");
 				if (self.consolidateHtml){
-					//debugger;
+					debugger;
 					var indLoopContentHtmlBuffer=self.variables.popVar("LoopHtmlIndex");
 					var sHtml=self.popHtmlBuffer(indLoopContentHtmlBuffer);
 					if (sHtml.saLength()>0) self.addHtml(sHtml);

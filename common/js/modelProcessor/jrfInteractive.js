@@ -201,6 +201,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	}
 	
 	openInWindow(idContent,iFrameId){
+		debugger;
 		var self=this;
 	    var jqDiv=$("#"+iFrameId);
 	    var viewWidth=jqDiv.width();

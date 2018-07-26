@@ -233,15 +233,24 @@ function createFunction(arrValues,sFunctionBody,functionCache){
 }
 
 function executeFunction(arrValues,itemFunction,functionCache){
-	if (itemFunction.method==""){
-		var sFncBody=itemFunction.body;
+	var fncFormula="";
+	var sFncBody
+	if ((!(isString(itemFunction)||isArray(itemFunction)))&&(itemFunction.method!="")){
+		fncFormula=itemFunction.method;
+	} else if (isString(itemFunction)||isArray(itemFunction)){
+		sFncBody=itemFunction.body;
 		if (isArray(sFunctionBody)){
 			sFncBody=sFunctionBody.saToString();
 		} 
-		var fncFormula=createFunction(arrValues,sFncBody,functionCache);
-		itemFunction.method=fncFormula;
 	} else {
-		fncFormula=itemFunction.method;
+		sFncBody=itemFunction.body;
+		if (isArray(sFunctionBody)){
+			sFncBody=sFunctionBody.saToString();
+		}
+	}
+	if (fncFormula==""){
+		fncFormula=createFunction(arrValues,sFncBody,functionCache);
+		itemFunction.method=fncFormula;
 	}
 	var vValue=fncFormula(arrValues);
 	return vValue;

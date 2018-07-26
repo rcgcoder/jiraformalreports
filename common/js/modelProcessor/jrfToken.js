@@ -750,7 +750,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 
 		if (functionCache=="") {
 			if ((sInnerText.saExists("{{"))){ // its valid for {{ and for  {{{
-				sInnerText=otherParams.self.replaceVars(sInnerText);
+				sInnerText=otherParams.self.replaceVars(sInnerText,otherParams);
 			}
 			functionCache={body:sInnerText,vValues:otherParams.vValues,method:""};
 			if (theHash!=""){

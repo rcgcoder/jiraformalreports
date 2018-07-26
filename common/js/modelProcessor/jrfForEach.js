@@ -119,6 +119,15 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				if (treeParentId!=""){ // its the first
 					var treeParentNode=modelInteractiveFunctions.getInteractiveContent(treeParentId);
 					treeParentNode.childs.add(treeNodeId,treeNode);
+					var iDeep=self.variables.getVar("RecursiveDeep");
+					if (iDeep==""){
+						iDeep=1;
+					} else {
+						iDeep++;
+					}
+					self.variables.pushVar("RecursiveDeep",iDeep);
+				} else {
+					self.variables.pushVar("RecursiveDeep",0);
 				}
 				self.variables.pushVar("recursiveNodeId",treeNodeId);
 				
@@ -143,20 +152,12 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				self.addStep("Encoding recursive childs...",function(){
 //					self.addHtml("<!-- Start Recursive -->");
 					self.variables.pushVarEnv();
-					var iDeep=self.variables.getVar("RecursiveDeep");
-					if (iDeep==""){
-						iDeep=1;
-					} else {
-						iDeep++;
-					}
-					self.variables.pushVar("RecursiveDeep",iDeep);
 					self.variables.pushVar("parentRecursiveElement",self.reportElem);
 					self.reportElem=eachElem;
 					self.encode();
 				});
 				self.addStep("Encoding recursive childs...",function(){
 //					self.addHtml("<!-- End Recursive -->");
-					self.variables.popVar("RecursiveDeep");
 					self.reportElem=self.variables.popVar("parentRecursiveElement");
 					self.variables.popVarEnv();
 					self.continueTask();
@@ -201,6 +202,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 							treeNode.expanded=true;
 						}
 					}
+					self.variables.popVar("RecursiveDeep");
 					//self.model.htmlStack.saReplace(iPosTR,5,sInsertInTd+'</td>');
 				}
 				self.variables.popVarEnv();

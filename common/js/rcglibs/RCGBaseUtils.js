@@ -239,7 +239,7 @@ function executeFunction(arrValues,itemFunction,functionCache){
 		fncFormula=itemFunction.method;
 	} else {
 		if (isString(itemFunction)||isArray(itemFunction)){
-			sFncBody=itemFunction.body;
+			sFncBody=itemFunction;
 		} else {
 			sFncBody=itemFunction.body;
 		}

@@ -232,12 +232,17 @@ function createFunction(arrValues,sFunctionBody,functionCache){
 	return fncFormula;
 }
 
-function executeFunction(arrValues,sFunctionBody,functionCache){
-	var sFncBody=sFunctionBody;
-	if (isArray(sFunctionBody)){
-		sFncBody=sFunctionBody.saToString();
-	} 
-	var fncFormula=createFunction(arrValues,sFncBody,functionCache);
+function executeFunction(arrValues,itemFunction,functionCache){
+	if (itemFunction.method==""){
+		var sFncBody=itemFunction.body;
+		if (isArray(sFunctionBody)){
+			sFncBody=sFunctionBody.saToString();
+		} 
+		var fncFormula=createFunction(arrValues,sFncBody,functionCache);
+		itemFunction.method=fncFormula;
+	} else {
+		fncFormula=itemFunction.method;
+	}
 	var vValue=fncFormula(arrValues);
 	return vValue;
 }

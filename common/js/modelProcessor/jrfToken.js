@@ -738,10 +738,27 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		}
 //		var sInnerText=arrInnerText.saRemoveInnerHtmlTags(""); // remove inner tags
 		var sInnerText=arrInnerText;
-		if ((sInnerText.saExists("{{"))){ // its valid for {{ and for  {{{
-			sInnerText=otherParams.self.replaceVars(sInnerText,otherParams);
+		var functionCache="";
+		var theHash="";
+		if (!sInnerText.saExists("{{{")){
+			var sCacheText=sInnerText.saToString();
+			var hash = sha256.create();
+			hash.update(sCacheText);
+			theHash=hash.hex();
+			functionCache=otherParams.self.model.functionCache.getValue(theHash);
 		}
 
+		if (functionCache=="") {
+			if ((sInnerText.saExists("{{"))){ // its valid for {{ and for  {{{
+				sInnerText=otherParams.self.replaceVars(sInnerText,otherParams);
+			}
+			functionCache={body:sInnerText,vValues:otherParams.vValues,method:""};
+			if (theHash!=""){
+				otherParams.self.model.functionCache.add(theHash,functionCache);
+			}
+		} else {
+			otherParams.vValues=functionCache.vValues;
+		}
 		var vValuesProcessed=[];
 		var vValueAux;
 		otherParams.vValues.forEach(function(vValue){
@@ -755,7 +772,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			}
 			vValuesProcessed.push(vValue);
 		});
-		var vValue=executeFunction(vValuesProcessed,sInnerText,otherParams.self.model.functionCache);
+		var vValue=executeFunction(vValuesProcessed,functionCache,otherParams.self.model.functionCache);
 		return vValue;
 	}
 	extractNameAndDate(sText){

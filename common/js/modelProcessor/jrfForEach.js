@@ -166,7 +166,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 			self.addStep("Continue...",function(){
 				if (self.bAllRoots) self.model.processingRoot=self.rootBackUp;
 				if ((self.subType=="row")||(self.subType=="subrow")){
-					debugger;
+					//debugger;
 					var bExpandAllRows=self.variables.getVar("expandAllRows");
 					if (bExpandAllRows=="")bExpandAllRows=false;
 					var treeNodeId=self.variables.popVar("recursiveNodeId");

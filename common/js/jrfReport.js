@@ -366,7 +366,7 @@ var jrfReport=class jrfReport {
 			var nStepsPlaned=0;
 			self.addStep("Getting root base issues",function(){
 				var fncRetrieveGroup=self.createManagedCallback(function(group){
-					debugger;
+					//debugger;
 					if (group.length>0){
 						var sIssues="";
 						group.forEach(function (key){
@@ -392,7 +392,7 @@ var jrfReport=class jrfReport {
 				});
 				
 				var fncRetrieveEpicGroup=self.createManagedCallback(function(group){
-					debugger;
+					//debugger;
 					if (group.length>0){
 						var sIssues="";
 						group.forEach(function (key){
@@ -454,7 +454,7 @@ var jrfReport=class jrfReport {
 					self.continueTask();
 				});				
 
-				debugger;
+				//debugger;
 				nPendingIssues=self.rootIssues.length();
 				self.rootIssues.walk(fncExtractPendingKeys);
 				fncProcessRestOfPending();
@@ -905,7 +905,7 @@ var jrfReport=class jrfReport {
 			tm.asyncTaskCallsMaxDeep=0;
 //	        sModelProcessedResult=sModelProcessedResult.saToString();
 //	        jqResult.html(sModelProcessedResult);
-	        debugger;
+	        //debugger;
 	        var saPrependContent=[];
 			saPrependContent.push(`<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//ES"
    					"http://www.w3.org/TR/html4/strict.dtd">

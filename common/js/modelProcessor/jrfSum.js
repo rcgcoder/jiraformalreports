@@ -6,7 +6,6 @@ var jrfSum=class jrfSum extends jrfToken{//this kind of definition allows to hot
 	apply(){
 		var self=this;
 		//debugger;
-		debugger;
 		var varName=self.replaceVars(self.varName).saToString().trim();
 		var hsValues=self.variables.getVars(varName);
 		var sValue=0;

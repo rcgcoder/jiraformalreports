@@ -912,7 +912,6 @@ var jrfReport=class jrfReport {
 					<HTML>
  					<HEAD> 
 					<meta http-equiv='Content-Type' content='Type=text/html; charset=utf-8'>
-													"js/libs/xlsx/FileSaver.js",
 					<script type="text/javascript" src="https://unpkg.com/xlsx/dist/shim.min.js"></script>
 					<script type="text/javascript" src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
 					

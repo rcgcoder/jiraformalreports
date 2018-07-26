@@ -111,7 +111,8 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				var treeParentId=self.variables.getVar("recursiveNodeId");
 				var bExpandAllRows=self.variables.getVar("expandAllRows");
 				if (bExpandAllRows=="")bExpandAllRows=false;
-				var treeNode={expanded:bExpandAllRows,childs:newHashMap(),html:"",loaded:bExpandAllRows};
+				var treeNode={expanded:bExpandAllRows,childs:newHashMap(),html:"",
+							  loaded:(treeParentId==""?true:bExpandAllRows)};
 				var treeNodeId=modelInteractiveFunctions.addInteractiveContent(treeNode);
 				if (treeParentId!=""){ // its the first
 					var treeParentNode=modelInteractiveFunctions.getInteractiveContent(treeParentId);

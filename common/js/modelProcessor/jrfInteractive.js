@@ -266,7 +266,9 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	    };
 	    
 	    var pageContent=self.getInteractiveContent(idContent);
-	    ifr.src=pageContent.blobUrl;
+	    var blobResult = new Blob(pageContent.html, {type : "text/html"});
+        var blobUrl = window.URL.createObjectURL(blobResult);
+	    ifr.src=blobUrl ;
 		loggerFactory.getLogger().enabled=true;
 /*		self.result=sModelProcessedResult;
 		if (self.config.NewWindow){

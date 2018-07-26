@@ -930,10 +930,10 @@ var jrfReport=class jrfReport {
 			}
 			sModelProcessedResult.push("<DIV></BODY></HTML>");
 	        
-	        var blobResult = new Blob(sModelProcessedResult, {type : "text/html"});
+/*	        var blobResult = new Blob(sModelProcessedResult, {type : "text/html"});
 	        var blobUrl = window.URL.createObjectURL(blobResult);
-	        
-			var newId=modelInteractiveFunctions.addInteractiveContent({html:sModelProcessedResult,blobUrl:blobUrl,blob:blobResult});
+*/	        
+			var newId=modelInteractiveFunctions.addInteractiveContent({html:sModelProcessedResult});
 			self.pageResultId=newId;
 			self.continueTask();
 		});

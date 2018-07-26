@@ -211,7 +211,12 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		if (isDefined(sVarsInit)&&(sVarsInit!="")){
 			var arrVars=sVarsInit.split(",");
 			for (var i=0;i<arrVars.length;i++){
-				var arrVarParts=arrVars[i].split("=");
+				var vActualVar=arrVars[i];
+				vActualVar=replaceAll(vActualVar,"==","equalThan");
+				var arrVarParts=vActualVar.split("=");
+				arrVarParts.forEach(function(sValue,index){
+					arrVarParts[index]=replaceAll(sValue,"equalThan","==");
+				});
 				var varName=arrVarParts[0].trim();
 				varName=self.replaceVars(varName).saToString().trim();
 				self.variables.initVar(varName,nVarsLevel);

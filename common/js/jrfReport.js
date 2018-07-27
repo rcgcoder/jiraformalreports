@@ -79,7 +79,7 @@ var jrfReport=class jrfReport {
 		arrStringsToRemove.push('color: rgb(51,51,51);');
 		arrStringsToRemove.push('color: rgb(23,43,77);');
 		arrStringsToRemove.push('style=""');
-/*		arrStringsToRemove.forEach(function(strTgt){
+		arrStringsToRemove.forEach(function(strTgt){
 			var iPos=0;
 			iPos=sHtml.saFindPos(strTgt,false,iPos);
 			while (iPos>=0){
@@ -87,7 +87,7 @@ var jrfReport=class jrfReport {
 				iPos=sHtml.saFindPos(strTgt,false,iPos);
 			}
 		});
-*/		return sHtml.saToString();
+		return sHtml.saToString();
 	}
 
 	execute(bDontReloadFiles){

@@ -481,7 +481,7 @@ var jrfReport=class jrfReport {
 			tm.asyncTaskCallsBlock=3000;
 			tm.asyncTaskCallsMaxDeep=15;
 			
-			var countAdded=0;
+/*			var countAdded=0;
 			hsKeyWaiting.walk(function(issue,iProf,key){
 				if (!self.rootIssues.exists(key)){
 					self.rootIssues.add(key,issue);
@@ -489,7 +489,7 @@ var jrfReport=class jrfReport {
 				}
 			});
 			logError("Added "+countAdded+" "+ ((100*countAdded)/self.rootIssues.length) +"% to the seletion JQL")
-			
+*/			
 			
 			self.rootIssues.walk(function(jsonIssue,iProf,key){
 				log("Root Issue: "+key);
@@ -589,7 +589,7 @@ var jrfReport=class jrfReport {
 						auxKey="Issue:"+issueParent.getKey();
 					} else {
 						debugger;
-						log("The parent has not key... maybe an error?");
+						logError("The parent has not key... maybe an error?");
 					}
 					self.addStep("Getting childs for " + auxKey + "....",function(){
 					//walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
@@ -613,7 +613,7 @@ var jrfReport=class jrfReport {
 	
 				self.childs.walk(function(childIssue){
 					if (childIssue==""){
-						log("ChildIssue is ''");
+						logError("ChildIssue is ''");
 					}
 					fncGetIssueChilds(childIssue);
 				});
@@ -627,15 +627,23 @@ var jrfReport=class jrfReport {
 					logError("Its necessary to correct child/parent billing errors");
 				}
 				var rootIssue=issue.getChildRoot();
-				if (!issuesAdded.exists(issue.getKey())){
-					if (!hsRootParent.exists(issue.getKey())){
-						hsRootParent.add(issue.getKey(),issue);
+				if (!issuesAdded.exists(rootIssue.getKey())){
+					if (!hsRootParent.exists(rootIssue.getKey())){
+						hsRootParent.add(rootIssue.getKey(),rootIssue);
 					}
+					if (!self.childs.exists(rootIssue.getKey())){
+						self.chidls.add(rootIssue.getKey(),rootIssue);
+					}
+				} else {
+					logError("The root issue "+rootIssue.getKey()+" does not exists in the process tree list");
 				}
 			});
 			hsRootParent.walk(function(newRoot){
-				issuesAdded.add(newRoot.getKey(),newRoot);
+				if (!issuesAdded.exists(newRoot.getKey())) {
+					issuesAdded.add(newRoot.getKey(),newRoot);
+				}
 			});
+			
 			
 			self.continueTask();
 			

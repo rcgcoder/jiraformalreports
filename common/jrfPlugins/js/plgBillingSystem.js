@@ -482,6 +482,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		var configName=otherParams.getValue("config");
 		var arrHistory=getBillingLifeDates(otherParams,theDatetime,sErrores);
 		var dtAux;
+		debugger;
 		arrHistory.forEach(function(dtSnapshot){
  			dtAux=new Date(dtSnapshot);
 			hourCost=self.billingParams.getHourCost(configName,dtAux);

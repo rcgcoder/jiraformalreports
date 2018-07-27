@@ -108,6 +108,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 
 			var tagApplier=self.model.prepareTag(childTag,auxRptElem);
 			if (tagApplier.processOrder.toLowerCase()==="last"){
+				debugger;
 				stackLastProcess.push({tagApplier:tagApplier,htmlBufferIndex:htmlBufferIndex});
 			} else {
 				self.addStep("Processing Child..."+sKey,function(){
@@ -119,6 +120,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		});
 		self.addStep("Processing last processOrder tags",function(){
 			while(stackLastProcess.length>0){
+				debugger;
 				var objTag=stackLastProcess.pop();
 				var tagApplier=objTag.tagApplier;
 				var htmlBufferIndex=objTag.htmlBufferIndex;

@@ -108,8 +108,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 
 			var tagApplier=self.model.prepareTag(childTag,auxRptElem);
 			if (tagApplier.processOrder.toLowerCase()==="last"){
-				debugger;
-				stackLastProcess.push({tagApplier:tagApplier,htmlBufferIndex:htmlBufferIndex});
+				self.addStep("Post Processing Child....."+sKey,function(){
+					var postHtmlBufferIndex=self.pushHtmlBuffer();
+					stackLastProcess.push({tagApplier:tagApplier,htmlBufferIndex:postHtmlBufferIndex});
+					self.continueTask();
+				});
 			} else {
 				self.addStep("Processing Child..."+sKey,function(){
 					tagApplier.encode();

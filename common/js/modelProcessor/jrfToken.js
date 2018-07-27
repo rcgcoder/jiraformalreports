@@ -440,7 +440,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 //			self.addHtml(sAux);
 		}
 		if (self.visibility!=""){
-			var visiType=obj.getAttrVal("visibility",self.reportElem,true);
+			var visiType=self.getAttrVal("visibility",self.reportElem,true);
 			visiType=visiType.sasplit("=");
 			var visiParams="";
 			if (visiType.length>1){

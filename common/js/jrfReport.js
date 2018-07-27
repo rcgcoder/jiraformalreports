@@ -261,6 +261,7 @@ var jrfReport=class jrfReport {
 			self.continueTask(); 
 		});
 		
+		var hsKeyWaiting=newHashMap();
 		self.addStep("Processing root elements.... ",function(){
 			if (self.isReusingIssueList()){
 				return self.continueTask();
@@ -275,7 +276,6 @@ var jrfReport=class jrfReport {
 			var maxItemsInGroup=100;
 			var maxLettersInGroup=2000;
 			var grpLength=0;
-			var hsKeyWaiting=newHashMap();
 			var fncAddToGroup=function(issueKey){
 				if ((keyGroup.length>maxItemsInGroup)
 					||
@@ -480,6 +480,17 @@ var jrfReport=class jrfReport {
 			tm.asyncTimeWasted=0;
 			tm.asyncTaskCallsBlock=3000;
 			tm.asyncTaskCallsMaxDeep=15;
+			
+			var countAdded=0;
+			hsKeyWaiting.walk(function(issue,iProf,key){
+				if (self.rootIssues.exists(key)){
+					self.rootIssues.add(key,issue);
+					countAdded++;
+				}
+			});
+			logError("Added "+countAdded+" "+ ((100*countAdded)/self.rootIssues.length) +"% to the seletion JQL")
+			
+			
 			self.rootIssues.walk(function(jsonIssue,iProf,key){
 				log("Root Issue: "+key);
 				var issue=self.allIssues.getById(key);

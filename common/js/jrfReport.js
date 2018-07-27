@@ -494,11 +494,15 @@ var jrfReport=class jrfReport {
 			self.rootIssues.walk(function(jsonIssue,iProf,key){
 				log("Root Issue: "+key);
 				var issue=self.allIssues.getById(key);
-				if (!issuesAdded.exists(key)){
-					issuesAdded.add(key,issue);
-				}
-				if (!self.childs.exists(key)){
-					self.childs.add(key,issue);
+				if (issue!=""){
+					if (!issuesAdded.exists(key)){
+						issuesAdded.add(key,issue);
+					}
+					if (!self.childs.exists(key)){
+						self.childs.add(key,issue);
+					}
+				} else {
+					logError("The issue "+ key + " does not exists in the all Issues retrieved list");
 				}
 			});
 			var formulaChild=self.config.billingHierarchy;

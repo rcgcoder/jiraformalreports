@@ -483,7 +483,7 @@ var jrfReport=class jrfReport {
 			
 			var countAdded=0;
 			hsKeyWaiting.walk(function(issue,iProf,key){
-				if (self.rootIssues.exists(key)){
+				if (!self.rootIssues.exists(key)){
 					self.rootIssues.add(key,issue);
 					countAdded++;
 				}

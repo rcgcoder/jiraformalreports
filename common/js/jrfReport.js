@@ -63,12 +63,24 @@ var jrfReport=class jrfReport {
 		sContent=replaceAll(sContent,"jrF&gt;","JRF&gt;",true);
 		sContent=replaceAll(sContent,"&lt;jRf_formula","&lt;JRF_FORMULA",true);
 		sContent=replaceAll(sContent,"jrF_FORMULA&gt;","JRF_FORMULA&gt;",true);
-		sContent="<div>"+sContent+"</div>";
+//		sContent="<div>"+sContent+"</div>";
 		var jrfCleaner=new jrfHtmlCleaner(sContent,[["<JRF_FORMULA","JRF_FORMULA>"],["<",">"],["&lt;","&gt;"],["{{","}}"]]);
 		sContent=jrfCleaner.clean();
-		sContent=replaceAll(sContent,"&lt;JRF_FORMULA","&lt;JRF FORMULA");
-		sContent=replaceAll(sContent,"JRF_FORMULA&gt;","JRF&gt;");
 		var sHtml=he.decode(sContent);
+		sHtml=replaceAll(sHtml,"<JRF_FORMULA","<JRF FORMULA");
+		sHtml=replaceAll(sHtml,"JRF_FORMULA>;","JRF>");
+		var arrStringsToRemove=[];
+		arrStringsToRemove.push('class="highlight-red" ');
+		arrStringsToRemove.push('data-highlight-colour="red"');
+		arrStringsToRemove.push('class="highlight-yellow" ');
+		arrStringsToRemove.push('data-highlight-colour="yellow"');
+		arrStringsToRemove.push('data-highlight-colour="red"');
+		arrStringsToRemove.push('style="color: rgb(0, 0, 0);"');
+		arrStringsToRemove.push('style="color: rgb(51, 51, 51);"');
+		arrStringsToRemove.push('style="color: rgb(23, 43, 77);"');
+		arrStringsToRemove.forEach(function(strTgt){
+			sHtml=replaceAll(sHtml,strTgt,"");
+		});
 		return sHtml;
 	}
 

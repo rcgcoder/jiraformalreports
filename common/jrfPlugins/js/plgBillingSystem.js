@@ -603,7 +603,14 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 							snapshot.calculos.fases.resto[fieldFaseName]=actFaseImporte;
 							snapshot.calculos.inTimespents.resto+=(actFaseImporte/hourCost)*3600;
 						} else { 
-							importePendiente=actFaseImporte;
+							importePendiente=actFaseImporte-
+											snapshot.calculos.fases.aprobado[fieldFaseName];
+							if (importePendiente<0){
+								importePendiente=0;
+								sErrores.saAppend("\n ¡¡¡ ERROR !!! "+sSnapshotDate+` - El Importe Pendiente en fase `+ fieldFaseName+` es menor que el importe aprobado en comités anteriores.
+										Importe real actual ` + snapshot.importesReales[fieldFaseName] + ` 
+										Se establece a 0 pero debe corregirse`);
+							}
 							snapshot.calculos.pendiente+=importePendiente;
 							snapshot.calculos.fases.pendiente[fieldFaseName]=importePendiente;
 							snapshot.calculos.inTimespents.pendiente=(importePendiente/hourCost)*3600;

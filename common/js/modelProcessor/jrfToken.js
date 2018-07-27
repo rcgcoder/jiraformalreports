@@ -354,7 +354,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				var auxDtSource=self.datetimeSource
 				if (isString(auxDtSource)||(isArray(auxDtSource))){
 					debugger;
-					auxDtSource=self.replaceVars(auxDtSource,undefined,true);
+					auxDtSource=self.replaceVarsAndExecute(auxDtSource);
 				}
 				if ((typeof auxDtSource==="object")&&(auxDtSource.constructor.name=="Date")){
 					auxDateTime=auxDtSource;

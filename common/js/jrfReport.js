@@ -70,7 +70,7 @@ var jrfReport=class jrfReport {
 		sHtml=replaceAll(sHtml,"<JRF_FORMULA","<JRF FORMULA");
 		sHtml=replaceAll(sHtml,"JRF_FORMULA>;","JRF>");
 		var arrStringsToRemove=[];
-		arrStringsToRemove.push('class="highlight-red" ');
+		arrStringsToRemove.push('class="highlight-red"');
 		arrStringsToRemove.push('data-highlight-colour="red"');
 		arrStringsToRemove.push('class="highlight-yellow" ');
 		arrStringsToRemove.push('data-highlight-colour="yellow"');
@@ -79,7 +79,12 @@ var jrfReport=class jrfReport {
 		arrStringsToRemove.push('style="color: rgb(51, 51, 51);"');
 		arrStringsToRemove.push('style="color: rgb(23, 43, 77);"');
 		arrStringsToRemove.forEach(function(strTgt){
-			sHtml=replaceAll(sHtml,strTgt,"");
+			var iPos=0;
+			iPos=sHtml.saFindPos(strTgt,false,iPos);
+			while (iPos>=0){
+				sHtml.saReplace(iPos,strTgt.length,"");
+				iPos=sHtml.saFindPos(strTgt,false,iPos);
+			}
 		});
 		return sHtml;
 	}

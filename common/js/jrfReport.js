@@ -63,6 +63,7 @@ var jrfReport=class jrfReport {
 		sContent=replaceAll(sContent,"jrF&gt;","JRF&gt;",true);
 		sContent=replaceAll(sContent,"&lt;jRf_formula","&lt;JRF_FORMULA",true);
 		sContent=replaceAll(sContent,"jrF_FORMULA&gt;","JRF_FORMULA&gt;",true);
+		sContent="<div>"+sContent+"</div>";
 		var jrfCleaner=new jrfHtmlCleaner(sContent,[["<JRF_FORMULA","JRF_FORMULA>"],["<",">"],["&lt;","&gt;"],["{{","}}"]]);
 		sContent=jrfCleaner.clean();
 		sContent=replaceAll(sContent,"&lt;JRF_FORMULA","&lt;JRF FORMULA");
@@ -115,8 +116,6 @@ var jrfReport=class jrfReport {
 								"js/libs/sha256.js",
 								"js/libs/showdown.js",
 								"js/libs/wiki2html.js",
-								"js/libs/htmlminifier/htmlminifier.min.js",
-								"js/libs/htmlminifier/htmlminifier_shell.js",
 								"js/rcglibs/RCGStringArray.js",
 								"js/rcglibs/RCGVarEngine.js",
 								"js/rcglibs/RCGFilterManager.js",

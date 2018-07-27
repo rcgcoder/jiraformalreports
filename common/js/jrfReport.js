@@ -83,7 +83,7 @@ var jrfReport=class jrfReport {
 			var iPos=0;
 			iPos=sHtml.saFindPos(strTgt,false,iPos);
 			while (iPos>=0){
-				sHtml.saReplace(iPos,strTgt.length,"");
+				sHtml=sHtml.saReplace(iPos,strTgt.length,"");
 				iPos=sHtml.saFindPos(strTgt,false,iPos);
 			}
 		});

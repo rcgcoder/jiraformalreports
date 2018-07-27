@@ -441,7 +441,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		}
 		if (self.visibility!=""){
 			var visiType=self.getAttrVal("visibility",self.reportElem,true);
-			visiType=visiType.sasplit("=");
+			visiType=visiType.saToString().split("=");
 			var visiParams="";
 			if (visiType.length>1){
 				visiParams=visiType[1].split(":");

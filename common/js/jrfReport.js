@@ -87,7 +87,7 @@ var jrfReport=class jrfReport {
 				iPos=sHtml.saFindPos(strTgt,false,iPos);
 			}
 		});
-		return sHtml;
+		return sHtml.saToString();
 	}
 
 	execute(bDontReloadFiles){

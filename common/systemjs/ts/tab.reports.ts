@@ -1,4 +1,5 @@
 import { Component, Input, Output, OnInit } from '@angular/core';
+import {minifyhtml} from 'minifyhtml';
 
 
 @Component({

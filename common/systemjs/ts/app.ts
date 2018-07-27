@@ -21,6 +21,7 @@ import {jiraCorrelator} from "./atlassianComponents/jiraCorrelator";
 import {jrf} from "./modelProcessor/jrf";
 
 
+
 @Component({
   selector: 'my-app',
   templateUrl: System.composeUrl('systemjs/html/app.html')

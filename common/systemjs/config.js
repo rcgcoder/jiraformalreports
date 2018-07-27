@@ -32,6 +32,7 @@ System.config({
     '@angular/router/testing': 'npm:@angular/router@5.2.10/bundles/router-testing.umd.js',
     'rxjs': 'npm:rxjs@5.5',
     'odt': 'npm:odt@1.1.0',
+    'minifyhtml':'npm:minify-html-stream@0.3.1/lib/minify.min.js',
     'typescript': 'npm:typescript@2.0.2/lib/typescript.js'
     
 //    'typescript': 'npm:typescript@2.8.3/lib/typescript.js'

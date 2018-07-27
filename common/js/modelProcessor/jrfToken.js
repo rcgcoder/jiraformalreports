@@ -351,15 +351,16 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		if (self.ifConditionResult){
 			var auxDateTime;
 			if (self.datetimeSource!=""){
-				if (isString(self.datetimeSource)||(isArray(self.datetimeSource))){
+				var auxDtSource=self.datetimeSource
+				if (isString(auxDtSource)||(isArray(auxDtSource))){
 					debugger;
-					self.datetimeSource=self.replaceVars(self.datetimeSource);
+					auxDtSource=self.replaceVars(auxDtSource);
 				}
-				if ((typeof self.datetimeSource==="object")&&(self.datetimeSource.constructor.name=="Date")){
-					auxDateTime=self.datetimeSource;
+				if ((typeof auxDtSource==="object")&&(auxDtSource.constructor.name=="Date")){
+					auxDateTime=auxDtSource;
 				} else {
-					auxDateTime=toDateNormalDDMMYYYYHHMMSS(self.datetimeSource);
-					self.dateTimeSource=auxDateTime;
+					auxDateTime=toDateNormalDDMMYYYYHHMMSS(auxDtSource);
+					//self.dateTimeSource=auxDateTime;
 				}
 				self.datetime=auxDateTime;
 			}

@@ -75,9 +75,9 @@ var jrfReport=class jrfReport {
 		arrStringsToRemove.push('class="highlight-yellow" ');
 		arrStringsToRemove.push('data-highlight-colour="yellow"');
 		arrStringsToRemove.push('data-highlight-colour="red"');
-		arrStringsToRemove.push('style="color: rgb(0, 0, 0);"');
-		arrStringsToRemove.push('style="color: rgb(51, 51, 51);"');
-		arrStringsToRemove.push('style="color: rgb(23, 43, 77);"');
+		arrStringsToRemove.push('color: rgb(0, 0, 0);');
+		arrStringsToRemove.push('color: rgb(51, 51, 51);');
+		arrStringsToRemove.push('color: rgb(23, 43, 77);');
 		arrStringsToRemove.forEach(function(strTgt){
 			var iPos=0;
 			iPos=sHtml.saFindPos(strTgt,false,iPos);

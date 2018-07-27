@@ -32,7 +32,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.outFormat=obj.getAttrVal("format");
 		obj.ifCondition=obj.getAttrVal("if",reportElem,false);
 		obj.processOrder=obj.getAttrVal("processOrder");
-		obj.visibility=obj.getAttrVal("visibility");
+		obj.visibility=obj.getAttrVal("visibility",reportElem,false);
 		obj.datetimeSource=obj.getAttrVal("atDateTime",reportElem,false);
 		obj.postProcess=obj.getAttrVal("postprocess");
 		obj.activateVar=obj.getAttrVal("activate");
@@ -440,7 +440,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 //			self.addHtml(sAux);
 		}
 		if (self.visibility!=""){
-			var visiType=self.visibility.split("=");
+			var visiType=self.replaceVarsAndExecute(self.visibility);
+			visiType=visiType.split("=");
 			var visiParams="";
 			if (visiType.length>1){
 				visiParams=visiType[1].split(":");

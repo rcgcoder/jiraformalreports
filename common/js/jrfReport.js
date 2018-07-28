@@ -611,7 +611,7 @@ var jrfReport=class jrfReport {
 					self.addStep("Getting childs for " + auxKey + "....",function(){
 					//walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
 						log("Task Manager Status:"+self.getRunningTask().parent.actStep + " " + self.getRunningTask().parent.steps.length);
-						issueParent.getLinkedIssueKeys().walkAsync("Getting childs for "+auxKey
+						issueParent.getPendingLinkedIssueKeys().walkAsync("Getting childs for "+auxKey
 													,function(issueChildStep){
 														var issueChild=self.allIssues.getById(issueChildStep.actualNode.key);
 														

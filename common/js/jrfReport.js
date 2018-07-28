@@ -379,6 +379,8 @@ var jrfReport=class jrfReport {
 				fncExtractPendingKeys(jsonIssue);
 			};
 			
+			var nCallsStarted=0;
+			var nCallsEnded=0;
 			var nProcessedIssues=0;
 			var nPendingIssues=0;
 			var nRetrievedIssues=0;
@@ -399,7 +401,8 @@ var jrfReport=class jrfReport {
 							nStepsPlaned++;
 							nTotalStepsPlaned++;
 							self.addStep("Retrieving issues of Group ["+sIssues+"]",function(){
-								logError("JQL:"+theJQL);
+								nCallsStarted++;
+								logError(nCallsStarted+" - JQL:"+theJQL);
 								self.jira.processJQLIssues(
 										theJQL,
 										fncExtractPendingKeys);
@@ -408,6 +411,7 @@ var jrfReport=class jrfReport {
 								nRetrievedIssues+=group.length; // the get epics issues call is finished... increase retrieved each epic called in group
 								nStepsPlaned--;
 								fncProcessRestOfPending();
+								nCallsEnded++;
 								//self.continueTask(); // not needed.... processrestofpending do one
 							});
 						}
@@ -426,13 +430,15 @@ var jrfReport=class jrfReport {
 							nTotalStepsPlaned++;
 							nStepsPlaned++;
 							self.addStep("Retrieving issues of Epic Group ["+sIssues+"]",function(){
-								logError("JQL:"+theJQL);
+								nCallsStarted++;
+								logError(nCallsStarted+" - JQL:"+theJQL);
 								self.jira.processJQLIssues(theJQL,fncProcessEpicChilds);
 							});
 							self.addStep("Finish Retrieving issues of Epic Group ["+sIssues+"]",function(){
 								nRetrievedEpics+=group.length; // the get epics issues call is finished... increase retrieved each epic called in group
 								nStepsPlaned--;
 								fncProcessRestOfPending();
+								nCallsEnded++;
 								//self.continueTask(); // not needed.... processrestofpending do one
 							});
 						}
@@ -473,7 +479,7 @@ var jrfReport=class jrfReport {
 						fncRetrieveGroup(group);
 						bSomethingRetrieving=true;
 					}
-					console.log("Procesed "+ nProcessedIssues +" issues in " +nStepsPlaned +"/"+ nTotalStepsPlaned +" steps. Issues: "+
+					console.log("Calls"+nCallsEnded+"/"+nCallsStarted+" Procesed "+ nProcessedIssues +" issues in " +nStepsPlaned +"/"+ nTotalStepsPlaned +" steps. Issues: "+
 							nRetrievedIssues+"/"+nPendingIssues +" Epics:"+ nRetrievedEpics + "/"+nPendingEpics+" Issues left:"+ arrKeyGroups[0].length+" Epics left:" + arrEpicGroups[0].length );
 					self.continueTask();
 				});				

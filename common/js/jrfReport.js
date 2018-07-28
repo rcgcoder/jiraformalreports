@@ -653,7 +653,7 @@ var jrfReport=class jrfReport {
 						hsRootParent.add(rootIssue.getKey(),rootIssue);
 					}
 					if (!self.childs.exists(rootIssue.getKey())){
-						self.chidls.add(rootIssue.getKey(),rootIssue);
+						self.childs.add(rootIssue.getKey(),rootIssue);
 					}
 				}
 			});

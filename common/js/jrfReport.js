@@ -359,8 +359,11 @@ var jrfReport=class jrfReport {
 						var issueParent=self.allIssues.getById(eLink);
 						if (key!=""){
 							if (issueParent!=""){
-								if (!issueParent.getLinkedIssueKeys().exists(key)){
+								if (!issueParent.existsLinkedIssueKey(key)){
 									issueParent.addLinkedIssueKey(key,key);
+								}
+								if (!issueParent.existsEpicChild(key)){
+									issueParent.addEpicChild(issue);
 								}
 							} else {
 								fncAddToGroup(eLink);
@@ -611,7 +614,11 @@ var jrfReport=class jrfReport {
 					self.addStep("Getting childs for " + auxKey + "....",function(){
 					//walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
 						log("Task Manager Status:"+self.getRunningTask().parent.actStep + " " + self.getRunningTask().parent.steps.length);
-						issueParent.getPendingLinkedIssueKeys().walkAsync("Getting childs for "+auxKey
+						var relatedChilds=newHashMap();
+						issueParent.getPendingLinkedIssueKeys().forEach(function(relatedIssueKey){
+							relatedChilds.add(relatedIssueKey);
+						});
+						relatedChilds.walkAsync("Getting childs for "+auxKey
 													,function(issueChildStep){
 														var issueChild=self.allIssues.getById(issueChildStep.actualNode.key);
 														

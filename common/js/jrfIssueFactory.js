@@ -22,7 +22,8 @@ function newIssueFactory(report){
 			 {name:"AccumulatorsCache",description:"Cache the values of accumulator calls",type:"object"},
 			 {name:"PrecomputedProperty",description:"List of properties with values of hidden childs computed by a user with permissions",type:"object"},
 			 {name:"FieldLifeCache",description:"Cache the life of the fields to speed up the reutilization of values",type:"object"},
-			 {name:"FieldLifeAdjust",description:"List of manual adjusts to field values usually saved as comment in the issue",type:"object"}
+			 {name:"FieldLifeAdjust",description:"List of manual adjusts to field values usually saved as comment in the issue",type:"object"},
+			 {name:"EpicChilds",description:"List of issues with epic link equals to this issue key",type:"object"}
 			]
 			,
 			allFieldDefinitions.concat(["JiraObject"])
@@ -432,6 +433,9 @@ function newIssueFactory(report){
 		if (isDefined(eLink)&&(eLink!="")){
 			arrResult.push(eLink);
 		}
+		self.getEpicChilds().walk(function(epicChild){
+			arrResult.push(epicChild.getKey());
+		});
 		return arrResult;
 	});
 	

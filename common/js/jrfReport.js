@@ -562,7 +562,7 @@ var jrfReport=class jrfReport {
 								issKey=issueAux.getKey();
 							} else {
 								if (isString(issueAux)){
-									issKey="String ->" + issueAux;
+									issKey="String -> '" + issueAux+"'";
 								} else if (isArray(issueParent)){
 									issKey="Array ->" + issueAux;
 								} else {
@@ -637,12 +637,15 @@ var jrfReport=class jrfReport {
 						relatedChilds.walkAsync("Getting childs for "+auxKey
 													,function(issueChildStep){
 														var issueChild=self.allIssues.getById(issueChildStep.actualNode.key);
-														
-														var bProcessChild=false;
-														var nChildsPrev=issueParent.countChilds();
-														fncProcessChild(issueChild,issueParent);
-														bProcessChild=(issueParent.countChilds()>nChildsPrev);
-														log("Child/Parent relation "+auxKey+" -> "+ issueChild.getKey()+" added:"+(issueParent.countChilds()>nChildsPrev));
+														if (!isString(issueChild)){
+															var bProcessChild=false;
+															var nChildsPrev=issueParent.countChilds();
+															fncProcessChild(issueChild,issueParent);
+															bProcessChild=(issueParent.countChilds()>nChildsPrev);
+															log("Child/Parent relation "+auxKey+" -> "+ issueChild.getKey()+" added:"+(issueParent.countChilds()>nChildsPrev));
+														} else {
+															logError("Child/Parent relation problem in issue "+auxKey+" -> "+ issueChildStep.actualNode.key +" does not exists in all issues list");
+														}
 														/*
 														nChildsPrev=issueChild.countChilds();
 														fncProcessChild(issueParent,issueChild);

@@ -524,8 +524,12 @@ var jrfReport=class jrfReport {
 			var countAdded=0;
 			hsKeyWaiting.walk(function(issue,iProf,key){
 				if (!self.rootIssues.exists(key)){
-					self.rootIssues.add(key,issue);
-					countAdded++;
+					if ((issue!="")&&(!isString(issue))){
+						self.rootIssues.add(key,issue);
+						countAdded++;
+					} else {
+						logError("The issue "+key+" is '' or String:"+issue);
+					}
 				}
 			});
 			logError("Added "+countAdded+" "+ ((100*countAdded)/self.rootIssues.length()) +"% to the seletion JQL")

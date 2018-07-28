@@ -634,7 +634,10 @@ var jrfReport=class jrfReport {
 														nChildsPrev=issueChild.countChilds();
 														fncProcessChild(issueParent,issueChild);
 														bProcessChild=(issueChild.countChilds()>nChildsPrev);
-														if (bProcessChild) fncGetIssueChilds(issueChild);
+														if (bProcessChild) {
+															log("Adding "+issueChild.getKey() +" to child/parent process");
+															fncGetIssueChilds(issueChild);
+														}
 													 }
 													,self.createManagedCallback(function(){
 														log("Finished "+"Getting childs for "+auxKey);

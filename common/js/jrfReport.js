@@ -339,6 +339,8 @@ var jrfReport=class jrfReport {
 					if (!hsKeyWaiting.exists(key)){
 						hsKeyWaiting.add(key,key);
 					}
+				} else {
+					nDuplicatedIssues++;					
 				}
 				var arrPendingKeys=issue.getPendingLinkedIssueKeys(arrLinkTypes,self.allIssues);
 				arrPendingKeys.forEach(function(issueKey){
@@ -385,6 +387,7 @@ var jrfReport=class jrfReport {
 			var nPendingIssues=0;
 			var nRetrievedIssues=0;
 			var nPendingEpics=0;
+			var nDuplicatedIssues=0;
 			var nRetrievedEpics=0;
 			var nTotalStepsPlaned=0;
 			var nStepsPlaned=0;
@@ -479,8 +482,14 @@ var jrfReport=class jrfReport {
 						fncRetrieveGroup(group);
 						bSomethingRetrieving=true;
 					}
-					console.log("Calls"+nCallsEnded+"/"+nCallsStarted+" Procesed "+ nProcessedIssues +" issues in " +nStepsPlaned +"/"+ nTotalStepsPlaned +" steps. Issues: "+
-							nRetrievedIssues+"/"+nPendingIssues +" Epics:"+ nRetrievedEpics + "/"+nPendingEpics+" Issues left:"+ arrKeyGroups[0].length+" Epics left:" + arrEpicGroups[0].length );
+					console.log("Calls"+nCallsEnded+"/"+nCallsStarted
+							+" Procesed "+ nProcessedIssues +"."
+							+" Tot:"+(nDuplicatedIssues+self.allIssues.list.length() )+"Dups:"+nDuplicatedIssues+" + All Stored:"+self.allIssues.list.length() +")" 
+							+" in " +nStepsPlaned +"/"+ nTotalStepsPlaned +" steps."
+							+" Issues: "+ nRetrievedIssues+"/"+nPendingIssues 
+							+" Epics:"+ nRetrievedEpics + "/"+nPendingEpics
+							+" Issues left:"+ arrKeyGroups[0].length
+							+" Epics left:" + arrEpicGroups[0].length );
 					self.continueTask();
 				});				
 

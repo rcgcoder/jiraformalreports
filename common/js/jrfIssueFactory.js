@@ -428,6 +428,10 @@ function newIssueFactory(report){
 				}
 			});
 		}
+		var eLink=self.fieldValue("Epic Link");
+		if (isDefined(eLink)&&(eLink!="")){
+			arrResult.push(eLink);
+		}
 		return arrResult;
 	});
 	

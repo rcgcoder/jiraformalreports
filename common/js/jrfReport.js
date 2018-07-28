@@ -399,6 +399,7 @@ var jrfReport=class jrfReport {
 							nStepsPlaned++;
 							nTotalStepsPlaned++;
 							self.addStep("Retrieving issues of Group ["+sIssues+"]",function(){
+								logError("JQL:"+theJQL);
 								self.jira.processJQLIssues(
 										theJQL,
 										fncExtractPendingKeys);
@@ -425,6 +426,7 @@ var jrfReport=class jrfReport {
 							nTotalStepsPlaned++;
 							nStepsPlaned++;
 							self.addStep("Retrieving issues of Epic Group ["+sIssues+"]",function(){
+								logError("JQL:"+theJQL);
 								self.jira.processJQLIssues(theJQL,fncProcessEpicChilds);
 							});
 							self.addStep("Finish Retrieving issues of Epic Group ["+sIssues+"]",function(){
@@ -511,7 +513,7 @@ var jrfReport=class jrfReport {
 					countAdded++;
 				}
 			});
-			logError("Added "+countAdded+" "+ ((100*countAdded)/self.rootIssues.length) +"% to the seletion JQL")
+			logError("Added "+countAdded+" "+ ((100*countAdded)/self.rootIssues.length()) +"% to the seletion JQL")
 			
 			self.rootIssues.walk(function(jsonIssue,iProf,key){
 				log("Root Issue: "+key);

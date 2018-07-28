@@ -504,7 +504,7 @@ var jrfReport=class jrfReport {
 			tm.asyncTaskCallsMaxDeep=15;
 			var arrLinkTypes=self.config.useIssueLinkTypes;
 			
-/*			var countAdded=0;
+			var countAdded=0;
 			hsKeyWaiting.walk(function(issue,iProf,key){
 				if (!self.rootIssues.exists(key)){
 					self.rootIssues.add(key,issue);
@@ -512,7 +512,6 @@ var jrfReport=class jrfReport {
 				}
 			});
 			logError("Added "+countAdded+" "+ ((100*countAdded)/self.rootIssues.length) +"% to the seletion JQL")
-*/			
 			
 			self.rootIssues.walk(function(jsonIssue,iProf,key){
 				log("Root Issue: "+key);
@@ -629,7 +628,7 @@ var jrfReport=class jrfReport {
 														fncProcessChild(issueChild,issueParent);
 														bProcessChild=(issueParent.countChilds()>nChildsPrev);
 														log("Child/Parent relation "+auxKey+" -> "+ issueChild.getKey()+" added:"+(issueParent.countChilds()>nChildsPrev));
-
+														/*
 														nChildsPrev=issueChild.countChilds();
 														fncProcessChild(issueParent,issueChild);
 														bProcessChild=(issueChild.countChilds()>nChildsPrev);
@@ -638,6 +637,7 @@ var jrfReport=class jrfReport {
 															log("Adding "+issueChild.getKey() +" to child/parent process");
 															fncGetIssueChilds(issueChild);
 														}
+														*/
 													 }
 													,self.createManagedCallback(function(){
 														log("Finished "+"Getting childs for "+auxKey);

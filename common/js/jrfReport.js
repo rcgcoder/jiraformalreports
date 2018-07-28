@@ -292,7 +292,7 @@ var jrfReport=class jrfReport {
 			var arrKeyGroups=[];
 			var keyGroup=[];
 			arrKeyGroups.push(keyGroup);
-			var maxItemsInGroup=100;
+			var maxItemsInGroup=95;
 			var maxLettersInGroup=2000;
 			var grpLength=0;
 			var fncAddToGroup=function(issueKey){
@@ -332,13 +332,13 @@ var jrfReport=class jrfReport {
 			var fncExtractPendingKeys=function(jsonIssue){
 				nProcessedIssues++;
 				var key=jsonIssue.key;
+				if (!hsKeyWaiting.exists(key)){
+					hsKeyWaiting.add(key,key);
+				}
 				log("Issue "+key+"("+nProcessedIssues+") issues:"+nRetrievedIssues+"/" +nPendingIssues+ " Epics :"+nRetrievedEpics+"/"+nPendingEpics);
 				var issue=self.allIssues.getById(key);
 				if (issue==""){
 					issue=self.loadJSONIssue(jsonIssue);
-					if (!hsKeyWaiting.exists(key)){
-						hsKeyWaiting.add(key,key);
-					}
 				} else {
 					nDuplicatedIssues++;					
 				}

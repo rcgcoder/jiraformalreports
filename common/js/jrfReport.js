@@ -616,7 +616,7 @@ var jrfReport=class jrfReport {
 					//walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
 						log("Task Manager Status:"+self.getRunningTask().parent.actStep + " " + self.getRunningTask().parent.steps.length);
 						var relatedChilds=newHashMap();
-						var arrRelatedChilds=issueParent.getPendingLinkedIssueKeys(arrLinkTypes,self.allIssues);
+						var arrRelatedChilds=issueParent.getPendingLinkedIssueKeys(arrLinkTypes,self.allIssues,true);
 						arrRelatedChilds.forEach(function(relatedIssueKey){
 							relatedChilds.add(relatedIssueKey);
 						});

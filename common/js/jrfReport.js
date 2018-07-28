@@ -502,6 +502,7 @@ var jrfReport=class jrfReport {
 			tm.asyncTimeWasted=0;
 			tm.asyncTaskCallsBlock=3000;
 			tm.asyncTaskCallsMaxDeep=15;
+			var arrLinkTypes=self.config.useIssueLinkTypes;
 			
 /*			var countAdded=0;
 			hsKeyWaiting.walk(function(issue,iProf,key){
@@ -615,7 +616,8 @@ var jrfReport=class jrfReport {
 					//walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
 						log("Task Manager Status:"+self.getRunningTask().parent.actStep + " " + self.getRunningTask().parent.steps.length);
 						var relatedChilds=newHashMap();
-						issueParent.getPendingLinkedIssueKeys().forEach(function(relatedIssueKey){
+						var arrRelatedChilds=issueParent.getPendingLinkedIssueKeys(arrLinkTypes,self.allIssues);
+						arrRelatedChilds.forEach(function(relatedIssueKey){
 							relatedChilds.add(relatedIssueKey);
 						});
 						relatedChilds.walkAsync("Getting childs for "+auxKey

@@ -402,6 +402,7 @@ function newIssueFactory(report){
 	});
 	dynObj.functions.add("getPendingLinkedIssueKeys",function(arrLinkTypes,issuesCache){
 		var self=this;
+		var hsResult=newHashMap();
 		var arrResult=[];
 		if (isDefined(arrLinkTypes)){
 			arrLinkTypes.forEach(function(linkType){
@@ -414,7 +415,10 @@ function newIssueFactory(report){
 							}
 							linkedIssue=issuesCache.getById(linkedIssueKey);
 							if (linkedIssue==""){
-								arrResult.push(linkedIssueKey);
+								if (!hsResult.exists(linkedIssueKey)){
+									hsResult.add(linkedIssueKey,linkedIssueKey);
+									arrResult.push(linkedIssueKey);
+								}
 								/*if (keyGroup.length>10){
 									keyGroup=[];
 									arrKeyGroups.push(keyGroup);
@@ -431,10 +435,17 @@ function newIssueFactory(report){
 		}
 		var eLink=self.fieldValue("Epic Link");
 		if (isDefined(eLink)&&(eLink!="")){
-			arrResult.push(eLink);
+			if (!hsResult.exists(eLink)){
+				hsResult.add(eLink,eLink);
+				arrResult.push(eLink);
+			}
 		}
 		self.getEpicChilds().walk(function(epicChild){
-			arrResult.push(epicChild.getKey());
+			eLink=epicChild.getKey();
+			if (!hsResult.exists(eLink)){
+				hsResult.add(eLink,eLink);
+				arrResult.push(eLink);
+			}
 		});
 		return arrResult;
 	});

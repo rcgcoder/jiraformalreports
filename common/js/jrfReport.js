@@ -296,13 +296,13 @@ var jrfReport=class jrfReport {
 			var arrKeyGroups=[];
 			var keyGroup=[];
 			arrKeyGroups.push(keyGroup);
-			var maxItemsInGroup=95;
+			var maxItemsInGroup=100;
 			var maxLettersInGroup=2000;
 			var grpLength=0;
 			var fncAddToGroup=function(issueKey){
-				if ((keyGroup.length>maxItemsInGroup)
+				if ((keyGroup.length>=maxItemsInGroup)
 					||
-					(((grpLength+issueKey.length))>maxLettersInGroup)
+					(((grpLength+issueKey.length))>=maxLettersInGroup)
 					)
 						{
 					keyGroup=[];
@@ -319,7 +319,7 @@ var jrfReport=class jrfReport {
 			var epicGroup=[];
 			arrEpicGroups.push(epicGroup);
 			var fncAddEpicToGroup=function(issueKey){
-				if ((epicGroup.length>maxItemsInGroup)
+				if ((epicGroup.length>=maxItemsInGroup)
 					||
 					(((grpEpicsLength+issueKey.length))>maxLettersInGroup)
 					)
@@ -860,7 +860,7 @@ var jrfReport=class jrfReport {
 			var grpLength=0;
 			var sKeyAux;
 			issuesAdded.walk(function (element){
-				if ((keyGroup.length>maxItemsInGroup)||(grpLength>maxLettersInGroup)){
+				if ((keyGroup.length>=maxItemsInGroup)||(grpLength>=maxLettersInGroup)){
 					keyGroup=[];
 					grpLength=0;
 					arrKeyGroups.push(keyGroup);

@@ -567,7 +567,6 @@ var jrfReport=class jrfReport {
 						}
 						if (!issuesAdded.exists(issueChild.getKey())){
 							issuesAdded.add(issueChild.getKey(),issueChild);
-							fncGetIssueChilds(issueChild);
 						}
 					}
 					var bIsAdvPart=false;				
@@ -598,7 +597,6 @@ var jrfReport=class jrfReport {
 						}
 						if (!issuesAdded.exists(issueChild.getKey())){
 							issuesAdded.add(issueChild.getKey(),issueChild);
-							fncGetIssueChilds(issueChild);
 						}
 					}
 				});
@@ -616,10 +614,18 @@ var jrfReport=class jrfReport {
 						issueParent.getLinkedIssueKeys().walkAsync("Getting childs for "+auxKey
 													,function(issueChildStep){
 														var issueChild=self.allIssues.getById(issueChildStep.actualNode.key);
+														
 														log("Child/Parent relation "+auxKey+" -> "+ issueChild.getKey());
+														var bProcessChild=false;
+														var nChildsPrev=issueParent.countChilds();
 														fncProcessChild(issueChild,issueParent);
+														bProcessChild=(issueParent.countChilds()>nChildsPrev);
+
 														log("Child/Parent relation "+auxKey+" <- "+ issueChild.getKey());
+														nChildsPrev=issueChild.countChilds();
 														fncProcessChild(issueParent,issueChild);
+														bProcessChild=(issueChild.countChilds()>nChildsPrev);
+														if (bProcessChild) fncGetIssueChilds(issueChild);
 													 }
 													,self.createManagedCallback(function(){
 														log("Finished "+"Getting childs for "+auxKey);

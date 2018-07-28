@@ -92,6 +92,10 @@ var jrfReport=class jrfReport {
 
 	execute(bDontReloadFiles){
 		var self=this;
+		var tm=self.getTaskManager();
+		tm.asyncTimeWasted=0;
+		tm.asyncTaskCallsBlock=0;
+		tm.asyncTaskCallsMaxDeep=0;
 		loggerFactory.getLogger().enabled=self.config.logDebug;
 		loggerFactory.getLogger().setAlertOnError(self.config.AlertErrors);
 		self.config.htmlDebug=self.config.logHtmlDebug;

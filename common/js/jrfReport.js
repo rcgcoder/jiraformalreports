@@ -624,16 +624,16 @@ var jrfReport=class jrfReport {
 													,function(issueChildStep){
 														var issueChild=self.allIssues.getById(issueChildStep.actualNode.key);
 														
-														log("Child/Parent relation "+auxKey+" -> "+ issueChild.getKey());
 														var bProcessChild=false;
 														var nChildsPrev=issueParent.countChilds();
 														fncProcessChild(issueChild,issueParent);
 														bProcessChild=(issueParent.countChilds()>nChildsPrev);
+														log("Child/Parent relation "+auxKey+" -> "+ issueChild.getKey()+" added:"+(issueParent.countChilds()>nChildsPrev));
 
-														log("Child/Parent relation "+auxKey+" <- "+ issueChild.getKey());
 														nChildsPrev=issueChild.countChilds();
 														fncProcessChild(issueParent,issueChild);
 														bProcessChild=(issueChild.countChilds()>nChildsPrev);
+														log("Child/Parent relation "+auxKey+" <- "+ issueChild.getKey()+" added:"+(issueChild.countChilds()>nChildsPrev));
 														if (bProcessChild) {
 															log("Adding "+issueChild.getKey() +" to child/parent process");
 															fncGetIssueChilds(issueChild);

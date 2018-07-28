@@ -409,7 +409,7 @@ var jrfReport=class jrfReport {
 							nTotalStepsPlaned++;
 							self.addStep("Retrieving issues of Group ["+sIssues+"]",function(){
 								nCallsStarted++;
-								logError(nCallsStarted+" - JQL:"+theJQL);
+								//logError(nCallsStarted+" - JQL:"+theJQL);
 								self.jira.processJQLIssues(
 										theJQL,
 										fncExtractPendingKeys);
@@ -438,7 +438,7 @@ var jrfReport=class jrfReport {
 							nStepsPlaned++;
 							self.addStep("Retrieving issues of Epic Group ["+sIssues+"]",function(){
 								nCallsStarted++;
-								logError(nCallsStarted+" - JQL:"+theJQL);
+								//logError(nCallsStarted+" - JQL:"+theJQL);
 								self.jira.processJQLIssues(theJQL,fncProcessEpicChilds);
 							});
 							self.addStep("Finish Retrieving issues of Epic Group ["+sIssues+"]",function(){
@@ -1086,11 +1086,8 @@ var jrfReport=class jrfReport {
 	}
 	saveResultToFile(){
 		var self=this;
-		var newId=self.resultContentId;
-		if (newId==""){
-			newId=modelInteractiveFunctions.addInteractiveContent(self.result);
-			self.resultContentId=newId;
+		if (self.pageResultId==""){
+			modelInteractiveFunctions.saveToFile(self.pageResultId);
 		}
-		modelInteractiveFunctions.saveToFile(newId);
 	}
 }

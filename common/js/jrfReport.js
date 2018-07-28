@@ -410,8 +410,8 @@ var jrfReport=class jrfReport {
 							self.addStep("Finish Retrieving issues of Group ["+sIssues+"]",function(){
 								nRetrievedIssues+=group.length; // the get epics issues call is finished... increase retrieved each epic called in group
 								nStepsPlaned--;
-								fncProcessRestOfPending();
 								nCallsEnded++;
+								fncProcessRestOfPending();
 								//self.continueTask(); // not needed.... processrestofpending do one
 							});
 						}
@@ -437,8 +437,8 @@ var jrfReport=class jrfReport {
 							self.addStep("Finish Retrieving issues of Epic Group ["+sIssues+"]",function(){
 								nRetrievedEpics+=group.length; // the get epics issues call is finished... increase retrieved each epic called in group
 								nStepsPlaned--;
-								fncProcessRestOfPending();
 								nCallsEnded++;
+								fncProcessRestOfPending();
 								//self.continueTask(); // not needed.... processrestofpending do one
 							});
 						}

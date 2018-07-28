@@ -616,7 +616,8 @@ var jrfReport=class jrfReport {
 						issueParent.getLinkedIssueKeys().walkAsync("Getting childs for "+auxKey
 													,function(issueChildStep){
 														var issueChild=self.allIssues.getById(issueChildStep.actualNode.key);
-														fncProcessChild(issueChild,issueParent)
+														fncProcessChild(issueChild,issueParent);
+														fncProcessChild(issueParent,issueChild);
 													 }
 													,self.createManagedCallback(function(){
 														log("Finished "+"Getting childs for "+auxKey);
@@ -647,22 +648,21 @@ var jrfReport=class jrfReport {
 				}
 				var rootIssue=issue.getChildRoot();
 				if (!issuesAdded.exists(rootIssue.getKey())){
+					issuesAdded.add(rootIssue.getKey(),rootIssue);
 					if (!hsRootParent.exists(rootIssue.getKey())){
 						hsRootParent.add(rootIssue.getKey(),rootIssue);
 					}
 					if (!self.childs.exists(rootIssue.getKey())){
 						self.chidls.add(rootIssue.getKey(),rootIssue);
 					}
-				} else {
-					logError("The root issue "+rootIssue.getKey()+" does not exists in the process tree list");
 				}
 			});
-			hsRootParent.walk(function(newRoot){
+/*			hsRootParent.walk(function(newRoot){
 				if (!issuesAdded.exists(newRoot.getKey())) {
 					issuesAdded.add(newRoot.getKey(),newRoot);
 				}
 			});
-			
+*/			
 			
 			self.continueTask();
 			

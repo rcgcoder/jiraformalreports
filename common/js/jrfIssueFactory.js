@@ -23,7 +23,7 @@ function newIssueFactory(report){
 			 {name:"PrecomputedProperty",description:"List of properties with values of hidden childs computed by a user with permissions",type:"object"},
 			 {name:"FieldLifeCache",description:"Cache the life of the fields to speed up the reutilization of values",type:"object"},
 			 {name:"FieldLifeAdjust",description:"List of manual adjusts to field values usually saved as comment in the issue",type:"object"},
-			 {name:"EpicChilds",description:"List of issues with epic link equals to this issue key",type:"object"}
+			 {name:"EpicChild",description:"List of issues with epic link equals to this issue key",type:"object"}
 			]
 			,
 			allFieldDefinitions.concat(["JiraObject"])

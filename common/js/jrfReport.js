@@ -616,7 +616,9 @@ var jrfReport=class jrfReport {
 						issueParent.getLinkedIssueKeys().walkAsync("Getting childs for "+auxKey
 													,function(issueChildStep){
 														var issueChild=self.allIssues.getById(issueChildStep.actualNode.key);
+														log("Child/Parent relation "+auxKey+" -> "+ issueChild.getKey());
 														fncProcessChild(issueChild,issueParent);
+														log("Child/Parent relation "+auxKey+" <- "+ issueChild.getKey());
 														fncProcessChild(issueParent,issueChild);
 													 }
 													,self.createManagedCallback(function(){

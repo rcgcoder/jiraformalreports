@@ -22,7 +22,7 @@ class RCGBarrier{
 		log("Barrier "+self.id+" reached task:["+task.forkId+" - "+task.description+"] - "+self.nItems +" --> "+ (self.nItems-1) );
 		self.tasksReached.push(task); // to debug activity
 		task.running=false;
-		task.done();
+		task.done(false);
 		if (self.nItems<=0) {
 			log("Barrier "+self.id+" You reached to barrier but no items asigned to. It´s a bug in your program... no callback is launched");
 			return;
@@ -160,7 +160,7 @@ class RCGTask{
 		}
 		self.getTaskManager().changeStatus();
 	}
-	done(){
+	done(bFreeMemory){
 		var self=this;
 		self.isDone=true;
 		self.finishTime=(new Date()).getTime();
@@ -168,9 +168,9 @@ class RCGTask{
 		self.method="";
 		var theParent=self.parent;
 		//debugger;
-//		if (self.taskManager.autoFree){
+		if (isUndefined(bFreeMemory)||bFreeMemory){
 			self.freeMemory();
-//		}
+		}
 		return theParent;
 	}
 	
@@ -698,13 +698,12 @@ class RCGTaskManager{
 			if (runningTask.barrier==""){
 				var fncBarrierOpen=function(){
 					debugger;
-					var auxRT=runningTask;
 					self.setRunningTask(runningTask);
 					runningTask.running=false;
+//					var auxParent=runningTask.parent;
+					runningTask.done(false);
+//					runningTask.parent=auxParent;
 					self.next();
-					//var auxRT=runningTask.parent;
-					auxRT.done();
-					//auxRT.parent=auxParent;
 				}
 				innerBarrier=new RCGBarrier(fncBarrierOpen);
 				innerBarrier.add(runningTask); // to reach the barrier at the end of the last step of the task

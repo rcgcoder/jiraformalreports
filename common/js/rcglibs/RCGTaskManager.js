@@ -693,6 +693,7 @@ class RCGTaskManager{
 			var innerBarrier;
 			if (runningTask.barrier==""){
 				var fncBarrierOpen=function(){
+					debugger;
 					self.setRunningTask(runningTask);
 					runningTask.running=false;
 					runningTask.done();

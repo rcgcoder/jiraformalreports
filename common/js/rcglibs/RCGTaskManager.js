@@ -168,9 +168,9 @@ class RCGTask{
 		self.method="";
 		var theParent=self.parent;
 		//debugger;
-		if (self.autoFree){
+//		if (self.taskManager.autoFree){
 			self.freeMemory();
-		}
+//		}
 		return theParent;
 	}
 	

@@ -168,7 +168,7 @@ class RCGTask{
 		self.method="";
 		var theParent=self.parent;
 		//debugger;
-		if (isUndefined(bFreeMemory)||bFreeMemory){
+		if (typeof bFreeMemory==="undefined")||bFreeMemory){
 			self.freeMemory();
 		}
 		return theParent;

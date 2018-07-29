@@ -104,31 +104,42 @@ class RCGTask{
 		self.isDone=true;
 		self.freeMemory();
 	}
-	freeMemory(){
+	canFreeMemory(){
 		var self=this;
 //		log("Free Memory of task:"+self.description);
 		if (self.barrier!=""){
-			if (!self.barrier.isReached) return;
+			if (!self.barrier.isReached) return false;
 		}
-		if (self.isTotalDone()){
-			self.steps.forEach(function(element){
-				element.freeMemory();
-			});
-			self.steps=[];
-			self.actStep=-1;
-			self.innerForks.forEach(function(element){
-				element.freeMemory();
-			});
-			self.innerForks=[];
+		if (!self.isTotalDone()) return false;
+		self.steps.forEach(function(element){
+			if (!element.canFreeMemory()) return false;
+		});
+		self.innerForks.forEach(function(element){
+			if (!element.canFreeMemory()) return false;
+		});
+		return true;
+	}
+	freeMemory(){
+		var self=this;
+//		log("Free Memory of task:"+self.description);
+		if (!self.canFreeMemory()) return;
+		self.steps.forEach(function(element){
+			element.freeMemory();
+		});
+		self.steps=[];
+		self.actStep=-1;
+		self.innerForks.forEach(function(element){
+			element.freeMemory();
+		});
+		self.innerForks=[];
 /*			if (self.parent!=""){
 				self.parent.freeMemory();
 			}*/
-			if (self.barrier!=""){
-				self.barrier="";
-			}
-			self.method=undefined;
-			self.parent="";
+		if (self.barrier!=""){
+			self.barrier="";
 		}
+		self.method=undefined;
+		self.parent="";
 	}
 	setOnChangeStatus(callback){
 		var self=this;

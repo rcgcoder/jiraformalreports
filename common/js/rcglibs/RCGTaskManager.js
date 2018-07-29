@@ -110,6 +110,7 @@ class RCGTask{
 		if (self.barrier!=""){
 			if (!self.barrier.isReached) return false;
 		}
+		if (self.isSomethingRunning()) return false;
 		if (!self.isTotalDone()) return false;
 		self.steps.forEach(function(element){
 			if (!element.canFreeMemory()) return false;
@@ -162,7 +163,7 @@ class RCGTask{
 		self.finishTime=(new Date()).getTime();
 		self.changeStatus();
 		self.method="";
-//		self.freeMemory();
+		self.freeMemory();
 	}
 	
 

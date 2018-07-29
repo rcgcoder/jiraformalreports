@@ -331,6 +331,8 @@ Array.prototype.saSubstring=function(iPosStart,iPosEnd){
 	var nLetters=-1;
 	if (isDefined(iPosEnd)){
 		nLetters=iPosEnd-iPosStart;
+	} else {
+		nLetters=self.saLength();
 	}
 	var iBlock=0;
 	var sAux="";

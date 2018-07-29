@@ -1079,12 +1079,7 @@ var jrfReport=class jrfReport {
 	}
 	openResultInNewTab(){
 		var self=this;
-		var newId=self.resultContentId;
-		if (newId==""){
-			newId=modelInteractiveFunctions.addInteractiveContent(self.result);
-			self.resultContentId=newId;
-		}
-		modelInteractiveFunctions.openNewWindow(newId);
+		modelInteractiveFunctions.openNewWindow(self.pageResultId);
 	}
 	saveResultToFile(){
 		var self=this;

@@ -873,6 +873,7 @@ class RCGTaskManager{
 						//stepRunning=stepRunning.parent; // goto next brother
 					}
 				} else if (stepRunning.parent!=""){ // if there is not method setted and is not the root callmanager
+					debugger;
 					log("Call without method....¿big error?"); // may be an error
 					stepRunning=stepRunning.parent; // try again with parent
 				} else {

@@ -84,8 +84,14 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		} else if (self.type=="array"){
 			newParent=self.reportElem;
 		}
-		
+		var isRecursive=false;
+		if ((self.recursive!="")&&((self.replaceVarsAndExecute(self.recursive)+"").trim().toLowerCase()=="true")){
+			isRecursive=true;
+		}		
 		self.addStep("Start processing Element in For Each",function(){
+			if ((self.subType=="row")||(self.subType=="subrow")){
+				debugger;
+			}
 			self.variables.pushVar("LoopElemsCount",loopLength);
 			self.variables.pushVar("LoopIndex",index);
 			if (self.consolidateHtml){
@@ -147,7 +153,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				}
 			});
 			//self.updateTrId(0,"inLoop");
-			if ((self.recursive!="")&&((self.replaceVarsAndExecute(self.recursive)+"").trim().toLowerCase()=="true")){
+			if (isRecursive){
 				log("Recursive!");
 				self.addStep("Encoding recursive childs...",function(){
 //					self.addHtml("<!-- Start Recursive -->");
@@ -174,7 +180,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					var iPosTR=self.variables.popVar("InitTR_Pos");
 					var initTR=iPosTR;
 					if ((treeNode.childs.length()>0)&&(self.model.report.config.interactiveResult)){
-						iPosTR=self.model.htmlStack.saFindPos("</td>",false,iPosTR);
+						var iPosEndTD=self.model.htmlStack.saFindPos("</td>",false,iPosTR);
 						var sInsertInTd=""; //treeNodeId;
 						treeNode.showCaption="Show ("+ treeNode.childs.length() +") rows"; 
 						treeNode.hideCaption="Hide ("+ treeNode.childs.length() +") rows";
@@ -183,7 +189,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 							sActualCaption=treeNode.hideCaption;
 						}
 						sInsertInTd+='<button id="btn'+treeNodeId+'" onclick="modelInteractiveFunctions.changeDisplayChildRow(\''+treeNodeId+'\',false,window)">'+sActualCaption+'</button>';
-						self.model.htmlStack.saReplace(iPosTR,5,sInsertInTd+'</td>');
+						self.model.htmlStack.saReplace(iPosEndTD,5,sInsertInTd+'</td>');
 					}
 					var parentNodeId=self.variables.getVar("recursiveNodeId");
 					if (parentNodeId!=""){

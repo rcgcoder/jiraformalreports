@@ -122,10 +122,9 @@ class RCGTask{
 	}
 	freeMemory(){
 		var self=this;
-		self.taskManager.countFrees++;
-
 //		log("Free Memory of task:"+self.description);
 		if (!self.canFreeMemory()) return;
+		self.taskManager.countFrees++;
 		self.steps.forEach(function(element){
 			element.freeMemory();
 		});

@@ -979,12 +979,14 @@ var jrfReport=class jrfReport {
 			tm.asyncTimeWasted=0;
 			tm.asyncTaskCallsBlock=3000;
 			tm.asyncTaskCallsMaxDeep=30;
+			tm.autoFree=true;
 			self.objModel.process("encode"); // hash inner task....
 		});
 		
 
 		self.addStep("Setting the HTML",function(sModelProcessedResult){
 			var tm=self.getTaskManager();
+			tm.autoFree=false;
 			tm.asyncTaskCallsBlock=0;
 			tm.asyncTaskCallsMaxDeep=0;
 //	        sModelProcessedResult=sModelProcessedResult.saToString();

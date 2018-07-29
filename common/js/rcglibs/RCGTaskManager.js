@@ -168,7 +168,9 @@ class RCGTask{
 		self.method="";
 		var theParent=self.parent;
 		//debugger;
-		self.freeMemory();
+		if (self.autoFree){
+			self.freeMemory();
+		}
 		return theParent;
 	}
 	
@@ -507,6 +509,7 @@ class RCGTaskManager{
 		self.updateStatusDelay=1000;
 		self.changeStatusNeedsNotify=false;
 		self.changeStatusUpdateScheduled=false;
+		self.autoFree=false;
 		self.countFrees=0;
 		self.countNews=0;
 	}

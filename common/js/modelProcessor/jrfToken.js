@@ -123,7 +123,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		});
 		self.addStep("Processing last processOrder tags",function(){
 			while(stackLastProcess.length>0){
-				debugger;
+				//debugger;
 				var objTag=stackLastProcess.pop();
 				var tagApplier=objTag.tagApplier;
 				var htmlBufferIndex=objTag.htmlBufferIndex;
@@ -358,7 +358,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			if (self.datetimeSource!=""){
 				var auxDtSource=self.datetimeSource
 				if (isString(auxDtSource)||(isArray(auxDtSource))){
-					debugger;
+					//debugger;
 					auxDtSource=self.replaceVarsAndExecute(auxDtSource);
 				}
 				if ((typeof auxDtSource==="object")&&(auxDtSource.constructor.name=="Date")){

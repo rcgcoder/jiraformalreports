@@ -68,7 +68,7 @@ class RCGTask{
 		self.object="";
 		self.running=false;
 		self.isDone=false;
-		self.barrier="";
+		self.barrier=""; 
 		self.taskManager=taskManager;
 		taskManager.countNews++;
 

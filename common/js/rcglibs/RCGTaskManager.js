@@ -141,7 +141,7 @@ class RCGTask{
 		if (self.barrier!=""){
 			self.barrier="";
 		}
-		self.method=undefined;
+		self.method="";
 		self.parent="";
 	}
 	setOnChangeStatus(callback){

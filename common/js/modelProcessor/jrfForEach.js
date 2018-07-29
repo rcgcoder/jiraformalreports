@@ -200,6 +200,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 						} else {
 							treeNode.loaded=true;
 							treeNode.expanded=true;
+							self.variables.pushVar("InitTR_Pos",iPosTR);
 						}
 					}
 					self.variables.popVar("recursiveDeep");

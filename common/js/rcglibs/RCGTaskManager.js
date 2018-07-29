@@ -128,8 +128,8 @@ class RCGTask{
 		var self=this;
 //		log("Free Memory of task:"+self.description);
 		if (!self.canFreeMemory()) return;
-		self.taskManager.countFrees++;
 		self.wasFreed=true;
+		self.taskManager.countFrees++;
 		self.steps.forEach(function(element){
 			element.freeMemory();
 		});
@@ -700,7 +700,7 @@ class RCGTaskManager{
 			var innerBarrier;
 			if (runningTask.barrier==""){
 				var fncBarrierOpen=function(){
-					debugger;
+					//debugger;
 					self.setRunningTask(runningTask);
 					runningTask.running=false;
 //					var auxParent=runningTask.parent;
@@ -876,8 +876,8 @@ class RCGTaskManager{
 						//stepRunning=stepRunning.parent; // goto next brother
 					}
 				} else if (stepRunning.parent!=""){ // if there is not method setted and is not the root callmanager
-					debugger;
-					log("Call without method....¿big error?"); // may be an error
+					//debugger;
+					logError("Call without method....¿big error?"); // may be an error
 					stepRunning=stepRunning.parent; // try again with parent
 				} else {
 					stepRunning=stepRunning.parent; // is root.... 

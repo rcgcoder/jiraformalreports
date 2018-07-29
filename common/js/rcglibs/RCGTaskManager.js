@@ -122,6 +122,8 @@ class RCGTask{
 	}
 	freeMemory(){
 		var self=this;
+		self.taskManager.countFrees++;
+
 //		log("Free Memory of task:"+self.description);
 		if (!self.canFreeMemory()) return;
 		self.steps.forEach(function(element){
@@ -501,6 +503,8 @@ class RCGTaskManager{
 		self.updateStatusDelay=1000;
 		self.changeStatusNeedsNotify=false;
 		self.changeStatusUpdateScheduled=false;
+		self.countFrees=0;
+		self.countNews=0;
 	}
 /*	getActiveWindow(){
 		var self=this;
@@ -718,6 +722,7 @@ class RCGTaskManager{
 	}
 	addStep(method,obj,sForkType,barrier,description,progressMin,progressMax,totalWeight,methodWeight){
 		var self=this;
+		self.countNews++;
 		var task;
 		if ((typeof sForkType!=="undefined")&&(sForkType.toUpperCase()=="GLOBAL_RUN")){
 			var frkGlobalRun=self.addGlobalFork(method,barrier,obj,description,progressMin,progressMax,totalWeight,methodWeight);

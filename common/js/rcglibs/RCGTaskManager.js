@@ -163,7 +163,7 @@ class RCGTask{
 		self.finishTime=(new Date()).getTime();
 		self.changeStatus();
 		self.method="";
-		self.freeMemory();
+//		self.freeMemory();
 	}
 	
 

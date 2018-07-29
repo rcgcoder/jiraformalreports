@@ -71,6 +71,7 @@ class RCGTask{
 		self.barrier=""; 
 		self.taskManager=taskManager;
 		taskManager.countNews++;
+		self.wasFreed=false;
 
 		self.initTime="";
 		self.finishTime="";
@@ -109,6 +110,7 @@ class RCGTask{
 	canFreeMemory(){
 		var self=this;
 //		log("Free Memory of task:"+self.description);
+		if (self.wasFreed) return false;
 		if (self.barrier!=""){
 			if (!self.barrier.isReached) return false;
 		}
@@ -127,6 +129,7 @@ class RCGTask{
 //		log("Free Memory of task:"+self.description);
 		if (!self.canFreeMemory()) return;
 		self.taskManager.countFrees++;
+		self.wasFreed=true;
 		self.steps.forEach(function(element){
 			element.freeMemory();
 		});

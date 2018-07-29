@@ -1056,7 +1056,7 @@ class RCGZippedApp{
 				  '   <progress class="tm-progress" id="sbProgress" value="'+(Math.round(perc100))+'" max="100">Progress Text</progress>'+
 				  '   '+((item.timeSpent/1000).toFixed(2))+' segs '+
 						    (currentDeep==0?
-						    		 " Tasks Created:"+ tm.countNews+" Task Frees:"+tm.countFrees+
+						    		 " Tasks Created:"+ tm.countNews+" Task Frees:"+tm.countFrees
 						    		+" Timeout Wasted: "+(tm.asyncTimeWasted/1000).toFixed(2)+" "+((100*tm.asyncTimeWasted/item.timeSpent).toFixed(2))+"% tOuts:"+tm.timeoutsCalled+" vs "+tm.timeoutsAvoided+" ":"")
 						    		+(tTotal>0?(' (ETA: '+tETA+' segs)')
 						    		:'')+

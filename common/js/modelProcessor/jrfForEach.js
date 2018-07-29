@@ -174,18 +174,18 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					var iPosTR=self.variables.popVar("InitTR_Pos");
 					var initTR=iPosTR;
 					iPosTR=self.model.htmlStack.saFindPos("</td>",false,iPosTR);
-					var sInsertInTd=""; //treeNodeId;
-					treeNode.showCaption="Show ("+ treeNode.childs.length() +") rows"; 
-					treeNode.hideCaption="Hide ("+ treeNode.childs.length() +") rows";
 					if (treeNode.childs.length()>0){
+						var sInsertInTd=""; //treeNodeId;
+						treeNode.showCaption="Show ("+ treeNode.childs.length() +") rows"; 
+						treeNode.hideCaption="Hide ("+ treeNode.childs.length() +") rows";
 						var sActualCaption=treeNode.showCaption;
 						if (bExpandAllRows){
 							sActualCaption=treeNode.hideCaption;
 						}
 						sInsertInTd+='<button id="btn'+treeNodeId+'" onclick="modelInteractiveFunctions.changeDisplayChildRow(\''+treeNodeId+'\',false,window)">'+sActualCaption+'</button>';
-					}
-					if (self.model.report.config.interactiveResult){
-						self.model.htmlStack.saReplace(iPosTR,5,sInsertInTd+'</td>');
+						if (self.model.report.config.interactiveResult){
+							self.model.htmlStack.saReplace(iPosTR,5,sInsertInTd+'</td>');
+						}
 					}
 					var parentNodeId=self.variables.getVar("recursiveNodeId");
 					if (parentNodeId!=""){

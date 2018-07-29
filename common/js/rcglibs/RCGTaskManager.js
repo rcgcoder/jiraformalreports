@@ -698,12 +698,13 @@ class RCGTaskManager{
 			if (runningTask.barrier==""){
 				var fncBarrierOpen=function(){
 					debugger;
+					var auxRT=runningTask;
 					self.setRunningTask(runningTask);
 					runningTask.running=false;
-					var auxParent=runningTask.parent;
-					runningTask.done();
-					runningTask.parent=auxParent;
 					self.next();
+					//var auxRT=runningTask.parent;
+					auxRT.done();
+					//auxRT.parent=auxParent;
 				}
 				innerBarrier=new RCGBarrier(fncBarrierOpen);
 				innerBarrier.add(runningTask); // to reach the barrier at the end of the last step of the task

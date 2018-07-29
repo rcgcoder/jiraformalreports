@@ -21,8 +21,8 @@ class RCGBarrier{
 		var self=this;
 		log("Barrier "+self.id+" reached task:["+task.forkId+" - "+task.description+"] - "+self.nItems +" --> "+ (self.nItems-1) );
 		self.tasksReached.push(task); // to debug activity
-		task.done();
 		task.running=false;
+		task.done();
 		if (self.nItems<=0) {
 			log("Barrier "+self.id+" You reached to barrier but no items asigned to. It´s a bug in your program... no callback is launched");
 			return;
@@ -165,8 +165,10 @@ class RCGTask{
 		self.finishTime=(new Date()).getTime();
 		self.changeStatus();
 		self.method="";
+		var theParent=self.parent;
 		debugger;
 		self.freeMemory();
+		return theParent;
 	}
 	
 
@@ -802,8 +804,8 @@ class RCGTaskManager{
 					return stepRunning.barrier.reach(stepRunning);
 				} else {
 					stepRunning.running=false;
-					stepRunning.done();
-					stepRunning=stepRunning.parent;
+					stepRunning=stepRunning.done();
+					//stepRunning=stepRunning.parent;
 				}
 				
 			} else if ((iSubStep>=0)&&(iSubStep<nSteps)) { // Phase 2..steps.... 
@@ -826,8 +828,8 @@ class RCGTaskManager{
 							return;
 						}else {
 							stepRunning.running=false;  // the step was finished... now is not running (ensure)
-							stepRunning.done();     // the step was finished .. now is done (ensure)
-							stepRunning=stepRunning.parent; // next round have to check a brother step... method probably...
+							stepRunning=stepRunning.done();     // the step was finished .. now is done (ensure)
+							//stepRunning=stepRunning.parent; // next round have to check a brother step... method probably...
 						}
 					}
 				} else { // if act step is not done.... 
@@ -849,8 +851,8 @@ class RCGTaskManager{
 						return;
 					} else {
 						stepRunning.running=false;  // the call was executed
-						stepRunning.done();      // the call is done
-						stepRunning=stepRunning.parent; // goto next brother
+						stepRunning=stepRunning.done();      // the call is done
+						//stepRunning=stepRunning.parent; // goto next brother
 					}
 				} else if (stepRunning.running){ // if is running.... the call is finishing...
 					stepRunning.actStep++;  // act step is 0 (-1 + 1)
@@ -861,8 +863,8 @@ class RCGTaskManager{
 					} else { // if jumps remaining
 						nJumps--; // reduce njumps
 						stepRunning.running=false;  // the call was executed
-						stepRunning.done();      // the call is done
-						stepRunning=stepRunning.parent; // goto next brother
+						stepRunning=stepRunning.done();      // the call is done
+						//stepRunning=stepRunning.parent; // goto next brother
 					}
 				} else if (stepRunning.parent!=""){ // if there is not method setted and is not the root callmanager
 					log("Call without method....¿big error?"); // may be an error

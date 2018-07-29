@@ -166,7 +166,7 @@ class RCGTask{
 		self.changeStatus();
 		self.method="";
 		var theParent=self.parent;
-		debugger;
+		//debugger;
 		self.freeMemory();
 		return theParent;
 	}

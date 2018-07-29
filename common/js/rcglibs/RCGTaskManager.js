@@ -70,6 +70,8 @@ class RCGTask{
 		self.isDone=false;
 		self.barrier="";
 		self.taskManager=taskManager;
+		taskManager.countNews++;
+
 		self.initTime="";
 		self.finishTime="";
 		self.onChangeStatus="";
@@ -727,7 +729,6 @@ class RCGTaskManager{
 	}
 	addStep(method,obj,sForkType,barrier,description,progressMin,progressMax,totalWeight,methodWeight){
 		var self=this;
-		self.countNews++;
 		var task;
 		if ((typeof sForkType!=="undefined")&&(sForkType.toUpperCase()=="GLOBAL_RUN")){
 			var frkGlobalRun=self.addGlobalFork(method,barrier,obj,description,progressMin,progressMax,totalWeight,methodWeight);

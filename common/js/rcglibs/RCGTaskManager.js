@@ -11,6 +11,7 @@ class RCGBarrier{
 		}
 		self.tasksBarried=[]; // to debug barrier activity
 		self.tasksReached=[]; // to debug barrier activity
+		self.isReached=false;
 	}
 	newId(){
 		var newId="bid-"+(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
@@ -29,6 +30,7 @@ class RCGBarrier{
 		self.nItems--;
 		if (self.nItems<=0){
 			log("Barrier "+self.id+" Barrier reached!");
+			self.isReached=true;
 			//debugger;
 			self.tasksBarried=[]; // remove the arrays for free memory
 			self.tasksReached=[]; // remove the arrays for free memory
@@ -105,6 +107,9 @@ class RCGTask{
 	freeMemory(){
 		var self=this;
 //		log("Free Memory of task:"+self.description);
+		if (self.barrier!=""){
+			if (!self.barrier.isReached) return;
+		}
 		if (self.isTotalDone()){
 			self.steps.forEach(function(element){
 				element.freeMemory();

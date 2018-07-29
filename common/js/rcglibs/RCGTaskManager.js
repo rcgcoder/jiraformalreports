@@ -696,7 +696,9 @@ class RCGTaskManager{
 					debugger;
 					self.setRunningTask(runningTask);
 					runningTask.running=false;
+					var auxParent=runningTask.parent;
 					runningTask.done();
+					runningTask.parent=auxParent;
 					self.next();
 				}
 				innerBarrier=new RCGBarrier(fncBarrierOpen);

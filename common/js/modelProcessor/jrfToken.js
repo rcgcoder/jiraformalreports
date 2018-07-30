@@ -782,7 +782,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				sInnerText=otherParams.self.replaceVars(sInnerText,otherParams);
 			}
 			auxValues=otherParams.vValues.slice(); // copy the array
-			functionCache={body:sInnerText,vValues:auxValues,method:""};
+			functionCache={body:sInnerText,lastCall:"",vValues:auxValues,method:""};
 			if (theHash!=""){
 				otherParams.self.model.functionCache.add(theHash,functionCache);
 			}
@@ -809,6 +809,25 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			vValuesProcessed.push(vValue);
 		});
 		var vValue=executeFunction(vValuesProcessed,functionCache,otherParams.self.model.functionCache);
+		hsFunctionCaches=otherParams.self.model.functionCache;
+		var nSecsMax= (60*1000);
+		if (isUndefined(hsFunctionCaches.lastClear)){
+			hsFunctionCaches.lastClear=(new Date).getTime();
+		} else if ((tsNow- hsFunctionCaches.lastClear)>nSecsMax) {
+			debugger;
+			log("Removing Old Function Definitions:" + hsFunctionCaches.length());
+			var tsNow=(new Date).getTime();
+			var hsClearHashes=newHashMap();
+			hsFunctionCaches.walk(function(itmFunction,iDeep,sKey){
+				if ((tsNow-itmFunction.lastCall)>nSecsMax) {
+					hsClearHashes.add(sKey,sKey);
+				}
+			});
+			hsClearHashes.walk(function(sKey){
+				hsFunctionCaches.remove(sKey);
+			});
+			log("Removed " +hsClearHashes.length()+ "  Old Function Definitions. Stay in cache:" + hsFunctionCaches.length());
+		}
 		return vValue;
 	}
 	extractNameAndDate(sText){

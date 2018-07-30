@@ -237,6 +237,7 @@ function executeFunction(arrValues,itemFunction,functionCache){
 	var sFncBody
 	if ((!(isString(itemFunction)||isArray(itemFunction)))&&(itemFunction.method!="")){
 		fncFormula=itemFunction.method;
+		itemFunction.lastCall=(new Date).getTime();
 	} else {
 		if (isString(itemFunction)||isArray(itemFunction)){
 			sFncBody=itemFunction;

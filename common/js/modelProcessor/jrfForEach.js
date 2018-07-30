@@ -239,6 +239,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 *///						self.addHtml('<!-- ADDED BY FOREACH SUBROW ==>>  --></td></tr><tr id="palacete"><td><!-- <== ADDED BY FOREACH SUBROW -->');
 					}
 				} else {
+					self.addHtml("<!-- who writes..."+self.subType +" -->");
 					self.addPostHtml();
 				}
 				self.variables.popVar("LoopIndex");

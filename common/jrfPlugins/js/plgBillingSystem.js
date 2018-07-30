@@ -432,8 +432,6 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 						objImportes.importesEstimados[auxFaseName]=objImportes.importesPorcentajeRef[auxFaseName];
 					}
 				}
-					
-				}
 			}
 			for (var nFase=1;nFase<5;nFase++){
 				fieldFaseName=self.getFieldFaseBillingName(nFase);

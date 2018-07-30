@@ -202,13 +202,18 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 		});
 		return hsResult;
 	}
-	apply(){
-//		debugger;
+	getElementsInSubset(){
 		var self=this;
 		var elemsInForEach=self.getElementsInForEach();
 		elemsInForEach=self.filter(elemsInForEach);
 		elemsInForEach=self.order(elemsInForEach);
 		elemsInForEach=self.bounds(elemsInForEach);
+		return elemsInForEach;
+	}
+	apply(){
+//		debugger;
+		var self=this;
+		var elemsInForEach=self.getElementsInSubset();
 		if (self.name!="") elemsInForEach.name=self.name;
 		var varName=self.resultVarName;
 		if (varName!=""){

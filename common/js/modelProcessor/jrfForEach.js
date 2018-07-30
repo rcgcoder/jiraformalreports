@@ -61,7 +61,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 			self.counter++;
 		}
 	}
-	loopStart(){
+	loopStart(iLoopElemsCount){
 		var self=this;
 //		debugger;
 		if (self.reportElem==self.model.report){
@@ -161,7 +161,12 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					self.variables.pushVarEnv();
 					self.variables.pushVar("parentRecursiveElement",self.reportElem);
 					self.reportElem=eachElem;
-					self.encode();
+					var elementsRecursive=self.getElementsInSubset();
+					if (elementsRecursive.length>0){
+						self.encode();
+					} else {
+						self.continueTask();
+					}
 				});
 				self.addStep("Encoding recursive childs...",function(){
 //					self.addHtml("<!-- End Recursive -->");
@@ -239,9 +244,9 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 *///						self.addHtml('<!-- ADDED BY FOREACH SUBROW ==>>  --></td></tr><tr id="palacete"><td><!-- <== ADDED BY FOREACH SUBROW -->');
 					}
 				} else {
-					self.addHtml("<!-- START who writes..."+self.subType +" -->");
+//					self.addHtml("<!-- START who writes..."+self.subType +" -->");
 					self.addPostHtml();
-					self.addHtml("<!-- END who writes..."+self.subType +" -->");
+//					self.addHtml("<!-- END who writes..."+self.subType +" -->");
 				}
 				self.variables.popVar("LoopIndex");
 				self.variables.popVar("LoopElemsCount");

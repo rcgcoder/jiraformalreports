@@ -17,13 +17,13 @@ var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition al
 		var self=this;
 		//debugger;
 		self.loopElements=super.apply();
+		var iLoopElemsCount=self.loopElements.length();
 		self.addStep("Start processing the Loop",function(){
-			self.loopStart();
+			self.loopStart(iLoopElemsCount);
 			self.continueTask();
 		});
 		// processing total elements
 		var iLoopIndex=0;
-		var iLoopElemsCount=self.loopElements.length();
 		var bCancelLoop=false;
 		self.loopElements.walk(function(loopElem,iDeep,itemKey,iLoopIndex){
 			self.addStep("Processing the Loop item:"+iLoopIndex + " of " +iLoopElemsCount,function(){
@@ -44,7 +44,7 @@ var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition al
 			});
 		});
 		self.addStep("Ending processing the Loop",function(){
-			self.loopEnd();
+			self.loopEnd(iLoopElemsCount);
 			self.continueTask();
 		});
 	}

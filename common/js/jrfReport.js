@@ -1026,7 +1026,7 @@ var jrfReport=class jrfReport {
 				vAux=saPrependContent.pop();
 				sModelProcessedResult.unshift(vAux);
 			}
-			sModelProcessedResult.push("<DIV></BODY></HTML>");
+			sModelProcessedResult.push("</DIV></BODY></HTML>");
 	        
 /*	        var blobResult = new Blob(sModelProcessedResult, {type : "text/html"});
 	        var blobUrl = window.URL.createObjectURL(blobResult);

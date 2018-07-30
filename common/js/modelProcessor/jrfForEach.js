@@ -137,7 +137,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					iPosTR=self.model.htmlStack.saFindPos("<tr",true);
 					self.rowPrePendHtml=self.model.htmlStack.saSubstring(iPosTR);
 				} else {
-					self.addHtml(self.rowPrePendHtml);
+					if (self.subType=="row") self.addHtml(self.rowPrePendHtml);
 					iPosTR=self.model.htmlStack.saFindPos("<tr",true);
 				}
 				self.variables.pushVar("InitTR_Pos",iPosTR);

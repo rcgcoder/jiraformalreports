@@ -811,12 +811,13 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var vValue=executeFunction(vValuesProcessed,functionCache,otherParams.self.model.functionCache);
 		var hsFunctionCaches=otherParams.self.model.functionCache;
 		var nSecsMax= (60*1000);
+		var tsNow=(new Date).getTime();		
 		if (isUndefined(hsFunctionCaches.lastClear)){
 			hsFunctionCaches.lastClear=(new Date).getTime();
 		} else if ((tsNow- hsFunctionCaches.lastClear)>nSecsMax) {
 			debugger;
 			log("Removing Old Function Definitions:" + hsFunctionCaches.length());
-			var tsNow=(new Date).getTime();
+
 			var hsClearHashes=newHashMap();
 			hsFunctionCaches.walk(function(itmFunction,iDeep,sKey){
 				if ((tsNow-itmFunction.lastCall)>nSecsMax) {

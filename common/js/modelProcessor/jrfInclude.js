@@ -79,6 +79,11 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
             if (isUndefined(self.subtype)||(self.subtype=="content")||(self.subtype=="")){
     			self.addStep("Processing HTML Model of Confluence Content:"+contentId+" from "+srcUrl,function(sContentHtmlBody){
 					auxModel=new jrfModel(self.model.report,sContentHtmlBody,self.reportElem);
+					auxModel.functionCache=self.model.functionCache;
+					auxModel.variables=self.model.variables;
+					auxModel.directives=self.model.directives;
+					auxModel.filters=self.model.filters;
+
 					auxModel.parse(sContentHtmlBody,tag);
 				});
 				self.addStep("Updating Accumulators of Parent Model... avoid multiple process ",function(){

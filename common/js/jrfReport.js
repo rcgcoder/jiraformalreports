@@ -1021,8 +1021,10 @@ var jrfReport=class jrfReport {
 					</script>
 					</HEAD> <BODY><DIV id="ResultInnerDiv">
 					`);		
+			var vAux;
 			while (saPrependContent.length>0){
-				sModelProcessedResult.unshift(saPrependContent.pop());
+				vAux=saPrependContent.pop();
+				sModelProcessedResult.unshift(vAux);
 			}
 			sModelProcessedResult.push("<DIV></BODY></HTML>");
 	        

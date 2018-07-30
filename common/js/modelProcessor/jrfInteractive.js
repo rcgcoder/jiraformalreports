@@ -61,7 +61,8 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	}
 	saveToFile(elemId){
 		var self=this;
-		var sContent=self.getInteractiveContent(elemId);
+		var sContentWrapper=self.getInteractiveContent(elemId);
+		var sContent=sContentWrapper.html;
 		saveDataToFile(sContent, "savedFile.html", "text/html");
 	}
 	getActiveWindow(actWindow){

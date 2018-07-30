@@ -1,7 +1,7 @@
 var saveDataToFile = (data, fileName, mimeType) => {
 	  var auxData=data;
 	  if (isString(auxData)) auxData=[auxData];
-	  const blob = new Blob([auxData], { type: mimeType });
+	  const blob = new Blob(auxData, { type: mimeType });
 	  const url = window.URL.createObjectURL(blob);
 	  downloadURL(url, fileName, mimeType);
 	  setTimeout(() => {

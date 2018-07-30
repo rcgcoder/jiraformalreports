@@ -813,7 +813,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var nSecsMax= (60*1000);
 		var tsNow=(new Date).getTime();		
 		if (isUndefined(hsFunctionCaches.lastClear)){
-			hsFunctionCaches.lastClear=(new Date).getTime();
+			hsFunctionCaches.lastClear=tsNow;
 		} else if ((tsNow- hsFunctionCaches.lastClear)>nSecsMax) {
 			debugger;
 			log("Removing Old Function Definitions:" + hsFunctionCaches.length());
@@ -828,6 +828,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				hsFunctionCaches.remove(sKey);
 			});
 			log("Removed " +hsClearHashes.length()+ "  Old Function Definitions. Stay in cache:" + hsFunctionCaches.length());
+			hsFunctionCaches.lastClear=tsNow;
 		}
 		return vValue;
 	}

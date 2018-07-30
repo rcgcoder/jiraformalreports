@@ -423,11 +423,16 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 			objImportes.importesEstimados.Total=totalEstimado;
 			if (acumFasesEstimado.toFixed(1)==0) { //si la suma de las partes es 0 quiere decir que hay que ponerlo todo en alguna fase.. o en ninguna si son issues creados despues del 22 de febrero.
 				if (tipo=="Despliegue") {	// si es un despliegue se pone en la fase 4
-					for (var nFase=1;nFase<5;nFase++){
-						fieldFaseName=self.getFieldFaseBillingName(nFase);
-						objImportes.importesEstimadosPercs[fieldFaseName]=0;
-					}
 					objImportes.importesEstimados[self.getFieldFaseBillingName(4)]=1;
+					objImportes.importesEstimados[self.getFieldFaseBillingName(5)]=1;
+				} else {
+					var auxFaseName;
+					for (var nFase=1;nFase<6;nFase++){
+						auxFaseName=self.getFieldFaseBillingName(nFase);
+						objImportes.importesEstimados[auxFaseName]=objImportes.importesPorcentajeRef[auxFaseName];
+					}
+				}
+					
 				}
 			}
 			for (var nFase=1;nFase<5;nFase++){

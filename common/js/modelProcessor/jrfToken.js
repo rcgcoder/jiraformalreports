@@ -248,17 +248,30 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			//debugger;
 			var arrVars=sVarsReuse.split(",");
 			for (var i=0;i<arrVars.length;i++){
-				var arrVarParts=arrVars[i].split("=");
+				var vActualVar=arrVars[i];
+				vActualVar=replaceAll(vActualVar,"==","equalThan");
+				var arrVarParts=vActualVar.split("=");
+				arrVarParts.forEach(function(sValue,index){
+					arrVarParts[index]=replaceAll(sValue,"equalThan","==");
+				});
 				var varName=arrVarParts[0].trim();
 				varName=self.replaceVars(varName).saToString().trim();
 				if (self.variables.getVars(varName)==""){ // the variable does not exists
 					self.variables.initVar(varName,nVarsLevel);
+		
+					
 					var vValue=vDefValue;
 					if (arrVarParts.length>1){
 						vValue=arrVarParts[1];
 					}
 					if (isString(vValue)||(isArray(vValue))){
-						vValue=self.replaceVars(vValue).saToString().trim();
+						var sFormula=vValue.saToString().trim();
+						if ((sFormula.indexOf("{{{")==0)&&(sFormula.indexOf("}}}")==(sFormula.length-3))){
+							sFormula=sFormula.substring(3,sFormula.length-3);
+							vValue=self.replaceVarsAndExecute(sFormula);
+						} else {
+							vValue=self.replaceVars(sFormula).saToString().trim();
+						}
 					}
 					self.variables.setVar(varName,vValue);
 				};

@@ -99,11 +99,6 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				var indLoopContentHtmlBuffer=self.pushHtmlBuffer();
 				self.variables.pushVar("LoopHtmlIndex",indLoopContentHtmlBuffer);
 			}
-			var iPosTR=self.model.htmlStack.saFindPos("<tr",true);
-			if (index==0){
-				//debugger;
-				self.rowPrePendHtml=self.model.htmlStack.saSubstring(iPosTR);
-			}
 			
 //			self.addHtml("<!-- START INNER LOOP OF ITEM "+ (self.processedItemNumber) + " IN FOREACH JRF TOKEN -->");
 			if (self.bAllRoots) self.model.processingRoot=newParent;
@@ -136,11 +131,17 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					self.variables.pushVar("recursiveDeep",0);
 				}
 				self.variables.pushVar("recursiveNodeId",treeNodeId);
-				
-				self.variables.pushVar("InitTR_Pos",iPosTR);
-				if (iPosTR>=0){
-					self.model.htmlStack.saReplace(iPosTR,3,'<tr id="'+treeNodeId+'" ');
+				var iPosTR;
+				if (index==0){
+					//debugger;
+					iPosTR=self.model.htmlStack.saFindPos("<tr",true);
+					self.rowPrePendHtml=self.model.htmlStack.saSubstring(iPosTR);
+				} else {
+					self.addHtml(self.rowPrePendHtml);
+					iPosTR=self.model.htmlStack.saFindPos("<tr",true);
 				}
+				self.variables.pushVar("InitTR_Pos",iPosTR);
+				self.model.htmlStack.saReplace(iPosTR,3,'<tr id="'+treeNodeId+'" ');
 			}
 			self.continueTask();
 		});
@@ -222,7 +223,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					if (index<(loopLength-1)){
 						// intermediate row
 //						self.addHtml('<!-- ADDED BY FOREACH ROW ==>>  --></td></tr>');
-						self.addHtml(self.rowPrePendHtml);
+//						self.addHtml(self.rowPrePendHtml);
 //						self.addHtml('<!-- <== ADDED BY FOREACH ROW -->');
 						//<tr><td></td><td><!-- <== ADDED BY FOREACH ROW -->');
 					}

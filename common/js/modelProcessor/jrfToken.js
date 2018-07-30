@@ -809,7 +809,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			vValuesProcessed.push(vValue);
 		});
 		var vValue=executeFunction(vValuesProcessed,functionCache,otherParams.self.model.functionCache);
-		hsFunctionCaches=otherParams.self.model.functionCache;
+		var hsFunctionCaches=otherParams.self.model.functionCache;
 		var nSecsMax= (60*1000);
 		if (isUndefined(hsFunctionCaches.lastClear)){
 			hsFunctionCaches.lastClear=(new Date).getTime();

@@ -258,7 +258,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		return true; //allways continue
 	}
 	loopEnd(iLoopElemsCount){
-//		var self=this;
+		var self=this;
 		if (self.subType=="subrow"){
 			var iPosTR=self.model.htmlStack.saFindPos("<tr",true);
 			self.model.htmlStack.saReplace(iPosTR,3,'<tr style="display:none" ');

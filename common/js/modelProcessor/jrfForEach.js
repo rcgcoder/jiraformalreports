@@ -124,7 +124,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					if (iDeep==""){
 						iDeep=1;
 					} else {
-						iDeep++;
+						iDeep++; 
 					}
 					self.variables.pushVar("recursiveDeep",iDeep);
 				} else {

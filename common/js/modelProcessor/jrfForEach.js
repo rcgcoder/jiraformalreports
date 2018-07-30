@@ -161,12 +161,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					self.variables.pushVarEnv();
 					self.variables.pushVar("parentRecursiveElement",self.reportElem);
 					self.reportElem=eachElem;
-					var elementsRecursive=self.getElementsInSubset();
-					if (elementsRecursive.length()>0){
-						self.encode();
-					} else {
-						self.continueTask();
-					}
+					self.encode();
 				});
 				self.addStep("Encoding recursive childs...",function(){
 //					self.addHtml("<!-- End Recursive -->");

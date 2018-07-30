@@ -16,7 +16,7 @@ var jrfStatistics=class jrfStatistics extends jrfLoopBase{//this kind of definit
 		} else if (op=="sum"){
 			self.opType="sum";
 		} else {
-			self.opType="function";
+			self.opType="function"; 
 		}
 		self.counter=0;
 		self.accumulator=0;

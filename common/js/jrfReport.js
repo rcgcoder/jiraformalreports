@@ -1083,7 +1083,7 @@ var jrfReport=class jrfReport {
 	}
 	saveResultToFile(){
 		var self=this;
-		if (self.pageResultId==""){
+		if (isDefined(self.pageResultId)&&(self.pageResultId!="")){
 			modelInteractiveFunctions.saveToFile(self.pageResultId);
 		}
 	}

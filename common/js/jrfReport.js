@@ -59,6 +59,7 @@ var jrfReport=class jrfReport {
 		return oIssue;
 	}
 	cleanModel(sContent){
+		debugger;
 		sContent=replaceAll(sContent,"&lt;jRf","&lt;JRF",true);
 		sContent=replaceAll(sContent,"jrF&gt;","JRF&gt;",true);
 		sContent=replaceAll(sContent,"&lt;jRf_formula","&lt;JRF_FORMULA",true);

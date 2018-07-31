@@ -538,7 +538,7 @@ var jrfReport=class jrfReport {
 			if (self.config.excludeProjects){
 				hsExcludedProjects=newHashMap();
 				self.config.excludedProjectsList.forEach(function(prj){
-					hsExcludedProjects.add(prj.Key,prj.Key);
+					hsExcludedProjects.add(prj.key,prj.key);
 				});
 			}
 			

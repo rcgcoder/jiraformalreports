@@ -81,6 +81,42 @@ class RCGDateUtils {
 		if (diffMillis<0) return -1; //date1 is lower than date2
 		return 0;					// date1 is equal than date2
 	}
+	toMonthStart(date){
+		var dtAux=onlyDate(Date);
+		dtAux.setDate(1);
+		if ((typeof bLastDayPreviousMonth!=="undefined")&&(bLastDayPreviousMonth)){
+			dtAux=dateAdd(dtAux, -1, 'day');
+		}
+		return dtAux;
+	}
+	toMonthEnd(date,bPreviousMonth){
+		var dtAux=toMonthStart(Date);
+		dtAux=dateAdd(dtAux, 1, 'month');
+		dtAux=dateAdd(dtAux, -1, 'day');
+		if ((typeof bPreviousMonth!=="undefined")&&(bPreviousMonth)){
+			dtAux=dateAdd(dtAux, -1, 'month');
+		}
+		return dtAux;
+	}
+	fullMonthsInter(date1,date2){
+		var dtIni=date1;
+		var dtEnd=date2;
+		if (dtIni.getTime()>dtEnd.getTime()){
+			dtIni=date2;
+			dtEnd=date1;
+		}
+		dtIni=toMonthStart(dtIni); 
+		dtEnd=toMonthStart(dtEnd);
+		var nAux=dtEnd.getFullYear()-dtIni.getFullYear();
+		if (nAux==0) {
+			return dtEnd.getMonth()-dtIni.getMonth();
+		}
+		var nMonthsAux=0;
+		if (nAux>1){
+			nMonthAux=(nAux-1)*12;
+		}
+		return nMonthAux+(dtEnd.getMonth()+12)-dtIni.getMonth();
+	}
 	dateDiff(date1,date2,units){
 		var diffMillis=date1.getTime()-date2.getTime();
 		var ret = diffMillis;   

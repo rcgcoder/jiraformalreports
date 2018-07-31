@@ -771,8 +771,31 @@ var jrfReport=class jrfReport {
 				  }
 		      }
 		    });
-			theModel.variables.initVar("ReportDateTime");
-			theModel.variables.setVar("ReportDateTime",self.reportDateTime);
+		    var fncAddVariable=function(varName,varValue,isDate){
+				theModel.variables.initVar(varName);
+				theModel.variables.setVar(varName,varValue);
+				if ((typeof isDate!=="undefined")&&(isDate)){
+					theModel.variables.initVar(varName+"_text");
+					theModel.variables.setVar(varName+"_text",formatDate(varValue,4));
+				}
+		    }
+		    var repIni=theModel.variables.getVar("ReportInitDate");
+		    var repEnd=theModel.variables.getVar("ReportEndDate");
+		    var repContractIni=theModel.variables.getVar("ContractInitDate");
+		    var fullMonthsPeriod=fullMonthsInter(repIni,repEnd);
+		    var fullMonthsBefore=fullMonthsInter(repContractIni,repIni);
+		    fncAddVariable("fullMonthsPeriod",fullMonthsPeriod);
+		    fncAddVariable("fullMonthsBefore",fullMonthsBefore);
+		    
+		    var firstDayMonthPeriodInit=toMonthStart(repIni);
+		    
+		    fncAddVariable("lastDayMonthPeriodInit",toMonthEnd(repIni),true);
+		    fncAddVariable("lastDayMonthPreviosPeriod",toMonthEnd(repIni,true),true);
+		    fncAddVariable("firstDayMonthPeriodEnd",toMonthStart(repEnd),true);
+		    fncAddVariable("lastDayMonthPeriodEnd",toMonthEnd(repEnd)),true;
+		    fncAddVariable("lastDayMonthThisPeriod",toMonthEnd(repEnd,true),true);
+		    
+		    fncAddVariable("ReportDateTime",self.reportDateTime,true);
 		    
 	    	theModel.variables.initVar("withAdvancedWorks");				
 		    if (isDefined(self.config['dates']["withAdvancedWorks"])&&(self.config['dates']["withAdvancedWorks"])){

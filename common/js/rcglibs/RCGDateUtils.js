@@ -52,10 +52,10 @@ class RCGDateUtils {
 		return dResult;
 	}
 
-	onlyDate(Date){
-		var curr_year=Date.getFullYear();
-		var curr_month=Date.getMonth();
-		var curr_date=Date.getDate();
+	onlyDate(date){
+		var curr_year=date.getFullYear();
+		var curr_month=date.getMonth();
+		var curr_date=date.getDate();
 	    var curr_hr= 0;
 	    var curr_min = 0;
 	    var curr_sc= 0;

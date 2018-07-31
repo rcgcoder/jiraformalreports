@@ -236,28 +236,29 @@ class RCGAtlassian{
 					log("=========");
 					log("ERROR: xhr is undefined.... " );
 					log("=========");
+					self.popCallback(["",xhr,sUrl,headers]);
 				} else {
 					log(" --> Bytes:"+response.length);
-				}
-				if (xhr.status == 429){
-					var millis=Math.round(((Math.random()*10)+5)*1000);
-					log("too many request.... have to wait "+(Math.round(millis/10)/100)+" secs");
-					setTimeout(self.createManagedCallback(function(){
-						log("retrying api call");
-						self.apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders);					
-						}),millis);
-				} else if (xhr.status == 400){
-					alert(headers);
-					return self.popCallback([response,xhr,sUrl,headers]);
-				} else if (xhr.status == 403) { // forbidden
-					if (appInfo.tokenAccess==""){
-						self.authenticate(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders);
+					if (xhr.status == 429){
+						var millis=Math.round(((Math.random()*10)+5)*1000);
+						log("too many request.... have to wait "+(Math.round(millis/10)/100)+" secs");
+						setTimeout(self.createManagedCallback(function(){
+							log("retrying api call");
+							self.apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders);					
+							}),millis);
+					} else if (xhr.status == 400){
+						alert(headers);
+						return self.popCallback([response,xhr,sUrl,headers]);
+					} else if (xhr.status == 403) { // forbidden
+						if (appInfo.tokenAccess==""){
+							self.authenticate(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders);
+						} else {
+							log(xhr.responseText);
+							self.popCallback(["",xhr,sUrl,headers]);
+						}
 					} else {
-						log(xhr.responseText);
-						self.popCallback(["",xhr,sUrl,headers]);
+						self.popCallback([response,xhr,sUrl,headers]);
 					}
-				} else {
-					self.popCallback([response,xhr,sUrl,headers]);
 				}
 			});
 			var auxHeaders=arrHeaders;

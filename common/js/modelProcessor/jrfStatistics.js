@@ -26,7 +26,7 @@ var jrfStatistics=class jrfStatistics extends jrfLoopBase{//this kind of definit
 		if (self.opType=="count"){
 			self.counter++;
 		} else if (self.opType=="sum"){
-			var fldValue=eachElem.fieldValue(self.field,false,self.dateTime,self.otherParams);
+			var fldValue=eachElem.fieldValue(self.field,false,self.datetime,self.otherParams);
 			if (fldValue!=""){
 				self.accumulator+=parseFloat(fldValue);
 			}

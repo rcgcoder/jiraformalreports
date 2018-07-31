@@ -19,7 +19,7 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
 
 	}
 	preload(tag){
-		debugger;
+//		debugger;
 		var self=this;
 		var srcUrl=self.url;
 		if (self.type.toLowerCase()=="url"){

@@ -533,16 +533,30 @@ var jrfReport=class jrfReport {
 				countAdded++;
 			});
 			logError("Added "+countAdded+" "+ ((100*countAdded)/self.rootIssues.length()) +"% to the seletion JQL")
+			var hsExcludedProjects;
+			debugger;
+			if (self.config.excludeProjects){
+				hsExcludedProjects=newHashMap();
+				self.config.excludedProjectsList.forEach(function(prjKey){
+					hsExcludedProjects.add(prjKey,prjKey);
+				});
+			}
 			
 			self.rootIssues.walk(function(jsonIssue,iProf,key){
-				log("Root Issue: "+key);
+				//log("Root Issue: "+key);
 				var issue=self.allIssues.getById(key);
 				if (issue!=""){
-					if (!issuesAdded.exists(key)){
-						issuesAdded.add(key,issue);
+					var bExcluded=false;
+					if (self.config.excludeProjects){
+						bExcluded=(hsExcludedProjects.exists(issue.fieldValue("project.key")));
 					}
-					if (!self.childs.exists(key)){
-						self.childs.add(key,issue);
+					if (!bExcluded){
+						if (!issuesAdded.exists(key)){
+							issuesAdded.add(key,issue);
+						}
+						if (!self.childs.exists(key)){
+							self.childs.add(key,issue);
+						}
 					}
 				} else {
 					logError("The issue "+ key + " does not exists in the all Issues retrieved list");

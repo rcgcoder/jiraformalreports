@@ -6,9 +6,11 @@ var jrfExport=class jrfExport extends jrfToken{//this kind of definition allows 
 	}
 	apply(){
 		var self=this;
-		var btnId="btn_"+modelInteractiveFunctions.newInteractiveId();
-		if (self.objType.toLowerCase()=="table"){
-			self.addHtml(`<button id="`+btnId+`" onclick="modelInteractiveFunctions.exportTableToXlsx('`+btnId+`',window)">Export to `+self.exportFormat+"</button>");
+		if (self.model.report.config.interactiveResult){
+			var btnId="btn_"+modelInteractiveFunctions.newInteractiveId();
+			if (self.objType.toLowerCase()=="table"){
+				self.addHtml(`<button id="`+btnId+`" onclick="modelInteractiveFunctions.exportTableToXlsx('`+btnId+`',window)">Export to `+self.exportFormat+"</button>");
+			}
 		}
 	}
 

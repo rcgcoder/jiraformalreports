@@ -99,6 +99,18 @@ function newIssueFactory(report){
 		}
 		return false;
 	});
+	dynObj.functions.add("fieldExists",function(theFieldName){
+		var self=this;
+		var auxFieldName=theFieldName.trim();
+		var sFieldName=self.getExistentFieldId(auxFieldName);
+		var arrFieldNames=sFieldName.split(".");
+		if (arrFieldNames.length>1){
+			bGetAttribute=true;
+			sFieldName=arrFieldNames[0].trim();
+		}
+		var fncAux=self["get"+sFieldName];
+		return (isDefined(fncAux));
+	});
 	
 	dynObj.functions.add("fieldValue",function(theFieldName,bRendered,dateTime,inOtherParams){
 		var self=this;

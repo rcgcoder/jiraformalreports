@@ -59,7 +59,7 @@ var jrfReport=class jrfReport {
 		return oIssue;
 	}
 	cleanModel(sContent){
-		debugger;
+		//debugger;
 		sContent=replaceAll(sContent,"&lt;jRf","&lt;JRF",true);
 		sContent=replaceAll(sContent,"jrF&gt;","JRF&gt;",true);
 		sContent=replaceAll(sContent,"&lt;jRf_formula","&lt;JRF_FORMULA",true);
@@ -106,7 +106,7 @@ var jrfReport=class jrfReport {
         var jqResult=$("#ReportResult");
         jqResult.html("");
 
-        debugger;
+        //debugger;
         if (self.isReusingIssueList()){
 			var issueCache=System.webapp.IssueCache;
 			self.allIssues=issueCache.allIssues; 

@@ -82,7 +82,7 @@ class RCGDateUtils {
 		return 0;					// date1 is equal than date2
 	}
 	toMonthStart(date){
-		var dtAux=onlyDate(Date);
+		var dtAux=onlyDate(date);
 		dtAux.setDate(1);
 		if ((typeof bLastDayPreviousMonth!=="undefined")&&(bLastDayPreviousMonth)){
 			dtAux=dateAdd(dtAux, -1, 'day');
@@ -90,7 +90,7 @@ class RCGDateUtils {
 		return dtAux;
 	}
 	toMonthEnd(date,bPreviousMonth){
-		var dtAux=toMonthStart(Date);
+		var dtAux=toMonthStart(date);
 		dtAux=dateAdd(dtAux, 1, 'month');
 		dtAux=dateAdd(dtAux, -1, 'day');
 		if ((typeof bPreviousMonth!=="undefined")&&(bPreviousMonth)){

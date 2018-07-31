@@ -85,16 +85,16 @@ class RCGDateUtils {
 		var dtAux=onlyDate(date);
 		dtAux.setDate(1);
 		if ((typeof bLastDayPreviousMonth!=="undefined")&&(bLastDayPreviousMonth)){
-			dtAux=dateAdd(dtAux, -1, 'day');
+			dtAux=dateAdd(dtAux, 'day',-1);
 		}
 		return dtAux;
 	}
 	toMonthEnd(date,bPreviousMonth){
 		var dtAux=toMonthStart(date);
-		dtAux=dateAdd(dtAux, 1, 'month');
-		dtAux=dateAdd(dtAux, -1, 'day');
+		dtAux=dateAdd(dtAux, 'month',1);
+		dtAux=dateAdd(dtAux, 'day',-1);
 		if ((typeof bPreviousMonth!=="undefined")&&(bPreviousMonth)){
-			dtAux=dateAdd(dtAux, -1, 'month');
+			dtAux=dateAdd(dtAux, 'month',-1);
 		}
 		return dtAux;
 	}

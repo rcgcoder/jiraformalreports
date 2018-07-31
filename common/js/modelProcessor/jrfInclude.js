@@ -14,7 +14,7 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
 		self.includeId="";
 		self.autoAddPostHtml=false;
 		
-		debugger;
+//		debugger;
 		self.titlePostpend=self.getAttrVal("titlePostpend").trim(); // now only content or javascript
 
 	}

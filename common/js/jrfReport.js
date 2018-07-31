@@ -541,7 +541,7 @@ var jrfReport=class jrfReport {
 					hsExcludedProjects.add(prj.key,prj.key);
 				});
 			}
-			
+			var nExcludedIssues=0;
 			self.rootIssues.walk(function(jsonIssue,iProf,key){
 				//log("Root Issue: "+key);
 				var issue=self.allIssues.getById(key);
@@ -550,6 +550,7 @@ var jrfReport=class jrfReport {
 					if (self.config.excludeProjects){
 						var issPrjKey=issue.fieldValue("project.key");
 						bExcluded=(hsExcludedProjects.exists(issPrjKey));
+						if (bExcluded) nExcludedIssues++;
 					}
 					if (!bExcluded){
 						if (!issuesAdded.exists(key)){
@@ -563,6 +564,9 @@ var jrfReport=class jrfReport {
 					logError("The issue "+ key + " does not exists in the all Issues retrieved list");
 				}
 			});
+			if (self.config.excludeProjects){
+				log("Excluded "+nExcludedIssues+" issues afert apply project exclude list filter");
+			}
 			var formulaChild=self.config.billingHierarchy;
 			var formulaAdvance=self.config.advanceHierarchy;
 			if (formulaChild!=""){

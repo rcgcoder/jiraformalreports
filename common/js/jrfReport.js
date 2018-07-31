@@ -537,8 +537,8 @@ var jrfReport=class jrfReport {
 			debugger;
 			if (self.config.excludeProjects){
 				hsExcludedProjects=newHashMap();
-				self.config.excludedProjectsList.forEach(function(prjKey){
-					hsExcludedProjects.add(prjKey,prjKey);
+				self.config.excludedProjectsList.forEach(function(prj){
+					hsExcludedProjects.add(prj.Key,prj.Key);
 				});
 			}
 			
@@ -548,7 +548,8 @@ var jrfReport=class jrfReport {
 				if (issue!=""){
 					var bExcluded=false;
 					if (self.config.excludeProjects){
-						bExcluded=(hsExcludedProjects.exists(issue.fieldValue("project.key")));
+						var issPrjKey=issue.fieldValue("project.key");
+						bExcluded=(hsExcludedProjects.exists(issPrjKey));
 					}
 					if (!bExcluded){
 						if (!issuesAdded.exists(key)){

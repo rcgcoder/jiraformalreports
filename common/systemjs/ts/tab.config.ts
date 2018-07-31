@@ -111,6 +111,8 @@ export class TabConfig {
         auxObj=$('#toggle_EnsureDependentIssues');
         dfReport["getIssuesNotInScope"]=(auxObj.attr("checked")=="checked");
 
+        
+        
         auxObj=$('#toggle_ExpandAllRows');
         dfReport["expandAllRows"]=(auxObj.attr("checked")=="checked");
 
@@ -136,6 +138,14 @@ export class TabConfig {
 
         auxObj=$('#toggle_ResetLeafPrecomputations');
         dfReport["ResetLeafPrecomputations"]=(auxObj.attr("checked")=="checked");
+
+        auxObj=$('#toggle_ExcludeProjects');
+        dfReport["excludeProjects"]=(auxObj.attr("checked")=="checked");
+        auxObj=System.getAngularObject('selExcludedProjects',true);
+        arrValues=auxObj.getSelectedValues();
+        dfReport["excludedProjectsList"]=arrValues;
+        
+        
         
         auxObj=System.getAngularObject('selProjectsToReport',true);
         arrValues=auxObj.getSelectedValues();
@@ -280,6 +290,15 @@ export class TabConfig {
         
         auxObj=System.getAngularObject('selInterestFields',true);
         if (isDefined(config.useFields)) auxObj.setSelectedValues(config.useFields);
+        
+        auxObj=$('#toggle_ExcludeProjects');
+        if(isDefined(config.excludeProjects)&&config.excludeProjects)auxObj.attr("checked","checked");
+
+        auxObj=System.getAngularObject('selExcludedProjects',true);
+        if (isDefined(config.excludedProjectsList)) auxObj.setSelectedValues(config.excludedProjectsList);
+        
+        
+        
         auxObj=System.getAngularObject('selIssuesToReport',true);
         if (isDefined(config.rootIssues)) {
             var jql=config.rootIssues.jql;

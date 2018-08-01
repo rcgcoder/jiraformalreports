@@ -534,7 +534,7 @@ var jrfReport=class jrfReport {
 			});
 			logError("Added "+countAdded+" "+ ((100*countAdded)/self.rootIssues.length()) +"% to the seletion JQL")
 			var hsExcludedProjects;
-			debugger;
+			//debugger;
 			if (self.config.excludeProjects){
 				hsExcludedProjects=newHashMap();
 				self.config.excludedProjectsList.forEach(function(prj){

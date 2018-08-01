@@ -212,7 +212,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			if ($.isNumeric(vAux)){
 				nVarsLevel=Math.floor(parseFloat(vAux));
 				nVarsLevel=self.getClosureLevel(nVarsLevel);
-			} else if (vAux.toLowerCase=="global") {
+			} else if (vAux.toLowerCase()=="global") {
 				nVarsLevel=-1*(self.variables.getVars("ClosureLevel").length()-1)
 			}
 		}

@@ -2,7 +2,7 @@ var jrfComment=class jrfComment extends jrfNoop{//this kind of definition allows
 	loadOwnProperties(){
 		super.loadOwnProperties();
 		var self=this;
-		self.logComment=self.getAttrVal("logComment");
+		self.logComment=self.getAttrVal("logcomment");
 	}
 	endApplyToken(){
 		var self=this;

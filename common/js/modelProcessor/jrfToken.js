@@ -815,7 +815,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		if (isUndefined(hsFunctionCaches.lastClear)){
 			hsFunctionCaches.lastClear=tsNow;
 		} else if ((tsNow- hsFunctionCaches.lastClear)>nSecsMax) {
-			debugger;
+			//debugger;
 			log("Removing Old Function Definitions:" + hsFunctionCaches.length());
 
 			var hsClearHashes=newHashMap();

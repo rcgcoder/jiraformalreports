@@ -733,7 +733,6 @@ function newIssueFactory(report){
 		var sResult="";
 		var sUrl=
 		arrVersions.forEach(function(version){
-			var arrUrlParts=sUrl.split('rest');
 			sUrl=System.webapp.atlassian.instance+"/issues/?jql=fixVersion="+version.name;
 			var sHtml='<a target="_blank" href='+sUrl+'>'+version.name+'</a>';
 			sResult+=" "+sHtml;

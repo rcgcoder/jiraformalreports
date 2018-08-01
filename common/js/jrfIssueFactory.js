@@ -727,6 +727,18 @@ function newIssueFactory(report){
 		hsFieldLife.add(sDateTime,auxVal);
 		return auxVal;
 	});
-	
+	dynObj.functions.add("getVersionsLinks",function(){
+		var self=this;
+		var arrVersions=self.fieldValue("fixVersions");
+		var sResult="";
+		var sUrl=
+		arrVersions.forEach(function(version){
+			var arrUrlParts=sUrl.split('rest');
+			sUrl=System.webapp.atlassian.instance+"/issues/?jql=fixVersion="+version.name;
+			var sHtml='<a target="_blank" href='+sUrl+'>'+version.name+'</a>';
+			sResult+=" "+sHtml;
+		});
+		return sResult;
+	});
 	return dynObj;
 }

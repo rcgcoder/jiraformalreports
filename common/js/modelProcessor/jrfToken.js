@@ -213,7 +213,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				nVarsLevel=Math.floor(parseFloat(vAux));
 				nVarsLevel=self.getClosureLevel(nVarsLevel);
 			} else if (vAux.toLowerCase()=="global") {
-				nVarsLevel=(self.variables.getVars("ClosureLevel").length()-1);
+				nVarsLevel=1;
 			}
 		}
 		

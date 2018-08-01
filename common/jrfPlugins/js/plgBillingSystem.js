@@ -40,6 +40,8 @@ var newBillingObject=function (){
 									pendiente:fncNewDesgloseImportes(),
 									resto:fncNewDesgloseImportes()
 							  },
+							  faseActual:0,
+							  faseAnterior:0,
 							  inTimespents:{aprobado:0,pendiente:0,resto:0,total:0},
 							  workedPercent:0,
 							  bModificacionAlcance:false,
@@ -528,6 +530,9 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 				sComentarios.saAppend("\n"+sSnapshotDate+" - Retrocedido a la fase:"+self.getFieldFaseBillingName(actFase)+" antes:"+self.getFieldFaseBillingName(antFase)+ " se mantiene la fase anterior");
 				actFase=antFase;
 			}
+			snapshot.calculos.faseActual=actFase;
+			snapshot.calculos.faseAnterior=antFase;
+
 			snapshot.calculos.aprobado=0;
 			snapshot.calculos.pendiente=0;
 			snapshot.calculos.resto=0;

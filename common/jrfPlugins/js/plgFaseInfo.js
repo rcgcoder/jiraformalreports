@@ -1,3 +1,4 @@
+var FaseEquivalences;
 var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
     constructor(tag,report,model){
     	 var self=this;
@@ -5,7 +6,7 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
          self.report=report;
          self.model=model;
      }
-    getFaseOf(sValue){ //devuelve la fase imputable del requisito o soporte
+    refreshFases(){
 		// Requisito:
 		// fase 0: Requisito en fase de identificación.
 		// fase 1: el requisito esta aprobado
@@ -74,7 +75,13 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
 		tEstados["Resuelto"]=3;
 		tEstados["Reabierta"]=0;
 		tEstados[""]=-1;
-		var iResult=tEstados[sValue];
+		FaseEquivalences=tEstados;
+    }
+    getFaseOf(sValue){ //devuelve la fase imputable del requisito o soporte
+    	if (isUndefined(FaseEquivalences)){
+    		refreshFases();
+    	}
+		var iResult=FaseEquivalences[sValue];
 		if (typeof iResult!=="undefined"){
 			return iResult;
 		}

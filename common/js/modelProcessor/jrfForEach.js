@@ -89,9 +89,9 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 			isRecursive=true;
 		}		
 		self.addStep("Start processing Element in For Each",function(){
-			if ((self.subType=="row")||(self.subType=="subrow")){
+			/*if ((self.subType=="row")||(self.subType=="subrow")){
 				debugger;
-			}
+			}*/
 			self.variables.pushVar("LoopElemsCount",loopLength);
 			self.variables.pushVar("LoopIndex",index);
 			if (self.consolidateHtml){
@@ -173,7 +173,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 			self.addStep("Continue...",function(){
 				if (self.bAllRoots) self.model.processingRoot=self.rootBackUp;
 				if ((self.subType=="row")||(self.subType=="subrow")){
-					debugger;
+					//debugger;
 					var bExpandAllRows=self.variables.getVar("expandAllRows");
 					if (bExpandAllRows=="")bExpandAllRows=false;
 					var treeNodeId=self.variables.popVar("recursiveNodeId");
@@ -246,7 +246,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				self.variables.popVar("LoopIndex");
 				self.variables.popVar("LoopElemsCount");
 				if (self.consolidateHtml){
-					debugger;
+					//debugger;
 					var indLoopContentHtmlBuffer=self.variables.popVar("LoopHtmlIndex");
 					var sHtml=self.popHtmlBuffer(indLoopContentHtmlBuffer);
 					if (sHtml.saLength()>0) self.addHtml(sHtml.saToString());

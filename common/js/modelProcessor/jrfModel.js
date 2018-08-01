@@ -351,6 +351,8 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			sTokenName="jrfStatistics";
 		} else if (tagAttrs.exists("formula")){
 			sTokenName="jrfFormula";
+		} else if (tagAttrs.exists("comment")){
+			sTokenName="jrfComment";
 		} else if (tagAttrs.exists("field")){
 			sTokenName="jrfField";
 		} else if (tagAttrs.exists("formula")){

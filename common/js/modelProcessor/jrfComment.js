@@ -8,8 +8,9 @@ var jrfComment=class jrfComment extends jrfNoop{//this kind of definition allows
 		var self=this;
 		super.endApplyToken();
 		var sValAux=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
-		if (self.logComment.saToString().trim().toLowerCase()!="true"){
+		if (self.logComment.saToString().trim().toLowerCase()!="false"){
 			var antLogStatus=loggerFactory.getLogger().enabled;
+			loggerFactory.getLogger().enabled=true;
 			log(sValAux);
 			loggerFactory.getLogger().enabled=antLogStatus;
 		}

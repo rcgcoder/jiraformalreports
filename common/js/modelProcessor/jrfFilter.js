@@ -6,6 +6,7 @@ var jrfFilter=class jrfFilter extends jrfNoop{//this kind of definition allows t
 	}
 	endApplyToken(){
 		var self=this;
+		debugger;
 		super.endApplyToken();
 		var sFilterBody=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
 		sFilterBody="("+sFilterBody.saToString().trim()+")";

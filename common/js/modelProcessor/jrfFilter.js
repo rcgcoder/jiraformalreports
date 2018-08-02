@@ -2,7 +2,7 @@ var jrfFilter=class jrfFilter extends jrfNoop{//this kind of definition allows t
 	loadOwnProperties(){
 		super.loadOwnProperties();
 		var self=this;
-		self.filterName=self.getAttrVal("name",reportElem,false);
+		self.filterName=self.getAttrVal("name",undefined,false);
 	}
 	endApplyToken(){
 		var self=this;

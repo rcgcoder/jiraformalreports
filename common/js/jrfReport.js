@@ -64,12 +64,16 @@ var jrfReport=class jrfReport {
 		sContent=replaceAll(sContent,"jrF&gt;","JRF&gt;",true);
 		sContent=replaceAll(sContent,"&lt;jRf_formula","&lt;JRF_FORMULA",true);
 		sContent=replaceAll(sContent,"jrF_FORMULA&gt;","JRF_FORMULA&gt;",true);
+		sContent=replaceAll(sContent,"&lt;jRf_filter","&lt;JRF_Filter",true);
+		sContent=replaceAll(sContent,"jrF_FILTER&gt;","JRF_FILTER&gt;",true);
 		sContent="<div>"+sContent+"</div>";
 		//["<",">"],
 		var jrfCleaner=new jrfHtmlCleaner(sContent,[["<",">"],["&lt;","&gt;"],["{{","}}"],["<JRF_FORMULA","JRF_FORMULA>"]]);
 		sContent=jrfCleaner.clean();
 		sContent=replaceAll(sContent,"&lt;JRF_FORMULA","&lt;JRF FORMULA");
 		sContent=replaceAll(sContent,"JRF_FORMULA&gt;","JRF&gt;");
+		sContent=replaceAll(sContent,"&lt;JRF_FILTER","&lt;JRF FILTER");
+		sContent=replaceAll(sContent,"JRF_FILTER&gt;","JRF&gt;");
 		var sHtml=he.decode(sContent);
 		var arrStringsToRemove=[];
 		arrStringsToRemove.push('class="highlight-red"');
@@ -156,6 +160,7 @@ var jrfReport=class jrfReport {
 								"js/modelProcessor/jrfSum.js",
 								"js/modelProcessor/jrfFormula.js",
 								"js/modelProcessor/jrfComment.js",
+								"js/modelProcessor/jrfFilter.js",
 								"js/modelProcessor/jrfSubset.js",
 								"js/modelProcessor/jrfExport.js",
 								"js/modelProcessor/jrfLoopBase.js",
@@ -760,6 +765,9 @@ var jrfReport=class jrfReport {
 					var dtAux2=toDateNormalDDMMYYYYHHMMSS(defaultVar[2]);
 					theModel.variables.setVar(defaultVar[0],[dtAux1,dtAux2],dtAux2);
 				})
+			}
+			if (isDefined(self.config.interactiveResult)){
+				theModel.variables.setVar("interactiveResult",self.config.interactiveResult);
 			}
 			if (isDefined(self.config.interactiveResult)){
 				theModel.variables.setVar("interactiveResult",self.config.interactiveResult);

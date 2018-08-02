@@ -353,6 +353,8 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			sTokenName="jrfFormula";
 		} else if (tagAttrs.exists("comment")){
 			sTokenName="jrfComment";
+		} else if (tagAttrs.exists("filter")){
+			sTokenName="jrfFilter";
 		} else if (tagAttrs.exists("field")){
 			sTokenName="jrfField";
 		} else if (tagAttrs.exists("formula")){

@@ -2,13 +2,16 @@ var jrfFilter=class jrfFilter extends jrfNoop{//this kind of definition allows t
 	loadOwnProperties(){
 		super.loadOwnProperties();
 		var self=this;
+		self.autoAddPostHtml=false;
+		self.postProcess="notMe";
 		self.filterName=self.getAttrVal("name",undefined,false);
 	}
-	endApplyToken(){
-		var self=this;
+	apply(){
 		debugger;
-		super.endApplyToken();
-		var sFilterBody=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
+		self.indPostContentHtmlBuffer=self.pushHtmlBuffer();
+		self.addPostHtml();
+		var sFilterBody=self.popHtmlBuffer(self.indInnerContentHtmlBuffer); // getting the formula with possible html tags inside
+		self.pushHtmlBuffer();
 		sFilterBody="("+sFilterBody.saToString().trim()+")";
 //		sFilterBody=sFilterBody.saRemoveInnerHtmlTags(""); // NOT NEEDED THE CLEAN FUNCTION REMOVES
 		var fltName=self.replaceVars(self.filterName);

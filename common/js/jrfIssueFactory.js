@@ -701,7 +701,12 @@ function newIssueFactory(report){
 				dateCreated=firstChange;
 			}
 		} 
-		if (dateCreated>dateTime) return "";
+		if (dateCreated>dateTime) {
+			if (isDefined(otherParams.ifEmpty)){
+				return otherParams.ifEmpty;
+			}
+			return "";
+		}
 		var auxVal=	self.fieldValue(sFieldName,false,undefined,otherParams); // getting actual Value
 		var history;
 		var bLocated=false;

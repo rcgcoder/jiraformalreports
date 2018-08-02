@@ -69,7 +69,7 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
 				var oContent;
 				if (typeof jsonContent==="object") {
 					oContent=jsonContent;
-				} else { 
+				} else {  
     				oContent=JSON.parse(jsonContent);
 				}
 				var sContentBody=oContent.body.storage.value;

@@ -1,4 +1,4 @@
-var FaseEquivalences;
+var FaseEquivalences; 
 var refreshFases=function(){
 	// Requisito:
 	// fase 0: Requisito en fase de identificación.

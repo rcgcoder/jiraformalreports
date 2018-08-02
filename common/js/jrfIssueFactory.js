@@ -736,12 +736,14 @@ function newIssueFactory(report){
 		var self=this;
 		var arrVersions=self.fieldValue("fixVersions");
 		var sResult="";
-		var sUrl=
-		arrVersions.forEach(function(version){
-			sUrl=System.webapp.atlassian.instance+"/issues/?jql=fixVersion="+version.name;
-			var sHtml='<a target="_blank" href='+sUrl+'>'+version.name+'</a>';
-			sResult+=" "+sHtml;
-		});
+		var sUrl;
+		if (isArray(arrVersions)){
+			arrVersions.forEach(function(version){
+				sUrl=System.webapp.atlassian.instance+"/issues/?jql=fixVersion="+version.name;
+				var sHtml='<a target="_blank" href='+sUrl+'>'+version.name+'</a>';
+				sResult+=" "+sHtml;
+			});
+		}
 		return sResult;
 	});
 	return dynObj;

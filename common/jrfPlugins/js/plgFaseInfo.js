@@ -1,6 +1,6 @@
 var FaseEquivalences;    
 var refreshFases=function(){
-	// Requisito:
+	// Requisito: 
 	// fase 0: Requisito en fase de identificación.
 	// fase 1: el requisito esta aprobado
 	// fase 2: el requisito esta diseñado

@@ -68,7 +68,7 @@ var jrfReport=class jrfReport {
 		sContent=replaceAll(sContent,"jrF_FILTER&gt;","JRF_FILTER&gt;",true);
 		sContent="<div>"+sContent+"</div>";
 		//["<",">"],
-		var jrfCleaner=new jrfHtmlCleaner(sContent,[["<",">"],["&lt;","&gt;"],["{{","}}"],["<JRF_FORMULA","JRF_FORMULA>"]]);
+		var jrfCleaner=new jrfHtmlCleaner(sContent,[["<",">"],["&lt;","&gt;"],["{{","}}"],["<JRF_FORMULA","JRF_FORMULA>"],["<JRF_FILTER","JRF_FILTER>"]]);
 		sContent=jrfCleaner.clean();
 		sContent=replaceAll(sContent,"&lt;JRF_FORMULA","&lt;JRF FORMULA");
 		sContent=replaceAll(sContent,"JRF_FORMULA&gt;","JRF&gt;");

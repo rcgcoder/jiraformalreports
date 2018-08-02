@@ -579,10 +579,9 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 	}
 	processIncludeTags(){
 		var self=this;
-		self.tagFactory.list.walk(function(tag){
-			debugger;
-			if (self.getTokenName(tag)=="jrfInclude"){
-				log(self.traceTag(tag));
+		var fncProcessInclude=self.createManagedCallback(function(tag){
+			log(self.traceTag(tag));
+			self.addStep("Process include Tag top Step",function(){
 				if ((tag.getPreprocessed()=="")||(tag.getPreprocessed()==false)){
 					log("needs preprocess");
 					var auxTagApplier=self.prepareTag(tag);
@@ -595,6 +594,11 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 				} else {
 					log("do nothing");
 				}
+			});
+		});
+		self.tagFactory.list.walk(function(tag){
+			if (self.getTokenName(tag)=="jrfInclude"){
+				fncProcessInclude(tag);
 			}
 		});
 		self.continueTask();

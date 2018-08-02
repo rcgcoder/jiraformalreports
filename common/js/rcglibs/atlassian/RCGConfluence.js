@@ -30,13 +30,10 @@ class RCGConfluence{
 	}
 	getContent(contentId){
 		var self=this;
-		self.addStep("Stepping Get Content Call",function(){
-			self.pushCallback(function(response,xhr,sUrl,headers){
-				self.popCallback([response]);
-			});
-			self.apiCall("/rest/api/content/"+contentId+"?expand=body.storage");
+		self.pushCallback(function(response,xhr,sUrl,headers){
+			self.popCallback([response]);
 		});
-		self.continueTask();
+		self.apiCall("/rest/api/content/"+contentId+"?expand=body.storage");
 	}
 	getContentByTitle(contentTitle){
 		var self=this;

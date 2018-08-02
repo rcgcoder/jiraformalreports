@@ -30,16 +30,22 @@ class RCGConfluence{
 	}
 	getContent(contentId){
 		var self=this;
-		self.pushCallback(function(response,xhr,sUrl,headers){
-			self.popCallback([response]);
+		self.addStep("Stepping Get Content Call",function(){
+			self.pushCallback(function(response,xhr,sUrl,headers){
+				self.popCallback([response]);
+			});
+			self.apiCall("/rest/api/content/"+contentId+"?expand=body.storage");
 		});
-		self.apiCall("/rest/api/content/"+contentId+"?expand=body.storage");
+		self.continueTask();
 	}
 	getContentByTitle(contentTitle){
 		var self=this;
-		self.pushCallback(function(response,xhr,sUrl,headers){
-			self.popCallback([response]);
+		self.addStep("Stepping Get Content By Title call",function(){
+			self.pushCallback(function(response,xhr,sUrl,headers){
+				self.popCallback([response]);
+			});
+			self.apiCall("/rest/api/content?title="+contentTitle+"&expand=body.storage");
 		});
-		self.apiCall("/rest/api/content?title="+contentTitle+"&expand=body.storage");
+		self.continueTask();
 	}
 }

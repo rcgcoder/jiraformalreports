@@ -15,7 +15,7 @@ var newRCGFilterManagerFactory=function(){
 	});
 	dynObj.functions.add("useFilter",function(filterString,iDeep){
 		var self=this;
-		debugger;
+//		debugger;
 		var sLeftChars="";
 		var iDeepAux=0;
 		if (isDefined(iDeep)){

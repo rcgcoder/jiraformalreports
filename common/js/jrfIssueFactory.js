@@ -702,7 +702,7 @@ function newIssueFactory(report){
 			}
 		} 
 		if (dateCreated>dateTime) {
-			if (isDefined(otherParams.ifEmpty)){
+			if (isDefined(otherParams) && isDefined(otherParams.ifEmpty)){
 				return otherParams.ifEmpty;
 			}
 			return "";

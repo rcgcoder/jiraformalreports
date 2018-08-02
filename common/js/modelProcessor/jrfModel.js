@@ -594,6 +594,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 				} else {
 					log("do nothing");
 				}
+				self.continueTask();
 			});
 		});
 		self.tagFactory.list.walk(function(tag){

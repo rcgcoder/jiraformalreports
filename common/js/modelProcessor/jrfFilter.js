@@ -8,7 +8,7 @@ var jrfFilter=class jrfFilter extends jrfNoop{//this kind of definition allows t
 	}
 	apply(){
 		var self=this;
-		debugger;
+	//	debugger;
 		self.indPostContentHtmlBuffer=self.pushHtmlBuffer();
 		self.addPostHtml();
 		var sFilterBody=self.popHtmlBuffer(self.indInnerContentHtmlBuffer); // getting the formula with possible html tags inside

@@ -7,6 +7,7 @@ var jrfFilter=class jrfFilter extends jrfNoop{//this kind of definition allows t
 		self.filterName=self.getAttrVal("name",undefined,false);
 	}
 	apply(){
+		var self=this;
 		debugger;
 		self.indPostContentHtmlBuffer=self.pushHtmlBuffer();
 		self.addPostHtml();

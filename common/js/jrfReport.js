@@ -1038,22 +1038,24 @@ var jrfReport=class jrfReport {
 		
 		self.addStep("Saving the precomputed values",function(){
 			var tm=self.getTaskManager();
-			tm.asyncTimeWasted=0;
-			tm.asyncTaskCallsBlock=3000;
-			tm.asyncTaskCallsMaxDeep=30;
-			tm.autoFree=true;
+			tm.autoFree=false;
+			tm.asyncTaskCallsBlock=0;
+			tm.asyncTaskCallsMaxDeep=0;
 			if (self.config.ResetLeafPrecomputations){
-				var jira=System.webapp.getJira();
+				var hsUpdateProps=newHashMap();
 				self.allIssues.list.walk(function(issue){
 					if (issue.countSavePrecomputedPropertys()>0){
 						var hsPrecomps=issue.getSavePrecomputedPropertys();
 						hsPrecomps.walk(function(precompObj,iDeep,cacheKey){
-							System.webapp.addStep("Saving life of :"+cacheKey+" of issue "+ issue.getKey() +" value:"+JSON.stringify(precompObj) ,function(){
-								jira.setProperty(issue.getKey(),cacheKey,precompObj);
-							},0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
+							hsUpdateProps.push({issueKey:issue.getKey(),cacheKey:cacheKey,precompObj:precompObj});
 						});
 					}
 				});
+				var jira=System.webapp.getJira();
+				var fncCall=function(issueUpdate){
+					jira.setProperty(issueUpdate.issueKey,issueUpdate.cacheKey,issueUpdate.precompObj);
+				};
+				jira.parallelizeCalls(self.allIssues.list,fncCall);
 			}
 		});
 		

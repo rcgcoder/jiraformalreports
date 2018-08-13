@@ -1089,10 +1089,14 @@ class RCGTaskManager{
 						var propKey=callInfo.key;
 						*/
 						self.addStep("Petition:"+iPet+" of parallel process ",function(){
-							fncCall(item);
+							var fncManagedCall=self.createManagedCallback(fncCall);
+							fncManagedCall(item);
 						});
 						self.addStep("Petition:"+iPet+" Processing result and Trying Next Call...",function(objResult){
-							if (isDefined(fncProcess)) fncProcess(item,objResult);
+							if (isDefined(fncProcess)){
+								var fncManagedProcessCall=self.createManagedCallback(fncProcess);
+								fncManagedProcessCall(item,objResult);
+							}
 							if (hsListItems.length()>0){
 								log("There are "+hsListItems.length()+" petitions pending... let´s go next petition");
 								fncParallelCall();

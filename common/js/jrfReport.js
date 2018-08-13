@@ -1026,7 +1026,13 @@ var jrfReport=class jrfReport {
 			});
 			self.addStep("Getting commnets parallelized.", function(){
 				var fncCall=function(group){
-					self.jira.getComments(group,fncAddComments);
+//					self.addStep("Retrieve Comments of Group",function(){
+						self.jira.getComments(group,fncAddComments);
+//					});
+//					self.addStep("Do nothing to absorve the continueTask of getcomments",function(){
+						/* do nothing */
+//					});
+//					self.continueTask();
 				};
 				self.parallelizeCalls(hsListComments,fncCall);
 			});

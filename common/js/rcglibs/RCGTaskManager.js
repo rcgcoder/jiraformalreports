@@ -1080,10 +1080,26 @@ class RCGTaskManager{
 	}
 	extended_parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads){
 		var self=this;
-//		log("Adding Step:["+description+"]");
 		var tm=self.getTaskManager();
-		var runningTask=tm.getRunningTask();
-		return tm.parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads);
+		var bckAutoFree=tm.autoFree;
+		var bckTaskCallsBlock=tm.asyncTaskCallsBlock;
+		var bckTaskCallsMaxDeep=tm.asyncTaskCallsMaxDeep;
+		self.addStep("Change autofree and taskCallsblock", function(){
+			tm.autoFree=false;
+			tm.asyncTaskCallsBlock=0;
+			tm.asyncTaskCallsMaxDeep=0;
+			self.continueTask();
+		});
+		self.addStep("Call parallelized pseudoThreaded",function(){
+			tm.parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads);
+		});
+		self.addStep("Restore AutoFree and CallsBlock params",function(){
+			tm.autoFree=bckAutoFree;
+			tm.asyncTaskCallsBlock=bckTaskCallsBlock;
+			tm.asyncTaskCallsMaxDeep=bckTaskCallsMaxDeep;
+		});
+		
+		self.continueTask();
 	}
 
 	extended_pushCallBack(method,newObj,sForkType,barrier,description,progressMin,progressMax,totalWeight,methodWeight){

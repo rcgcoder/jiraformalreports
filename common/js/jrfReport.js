@@ -1037,10 +1037,6 @@ var jrfReport=class jrfReport {
 		});
 		
 		self.addStep("Saving the precomputed values",function(){
-			var tm=self.getTaskManager();
-			tm.autoFree=false;
-			tm.asyncTaskCallsBlock=0;
-			tm.asyncTaskCallsMaxDeep=0;
 			if (self.config.ResetLeafPrecomputations){
 				var hsUpdateProps=newHashMap();
 				self.allIssues.list.walk(function(issue){
@@ -1061,11 +1057,10 @@ var jrfReport=class jrfReport {
 		
 
 		self.addStep("Setting the HTML",function(sModelProcessedResult){
-/*			var tm=self.getTaskManager();
+			var tm=self.getTaskManager();
 			tm.autoFree=false;
 			tm.asyncTaskCallsBlock=0;
 			tm.asyncTaskCallsMaxDeep=0;
-*/
 //	        sModelProcessedResult=sModelProcessedResult.saToString();
 //	        jqResult.html(sModelProcessedResult);
 	        //debugger;

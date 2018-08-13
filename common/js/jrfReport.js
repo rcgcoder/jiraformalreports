@@ -922,7 +922,7 @@ var jrfReport=class jrfReport {
 				grpLength+=sKeyAux.length;
 				keyGroup.push(sKeyAux);
 			});
-			var fncAddComments=self.createManagedCallback(function(jsonIssues){
+			var fncAddComments=function(jsonIssues){
 				var oIssues=JSON.parse(jsonIssues);
 				var arrIssues=oIssues.issues;
 				var key;
@@ -1006,22 +1006,30 @@ var jrfReport=class jrfReport {
 							});
 						});
 					} else {
-						log("The issue ["+key+"] does not exists... Error");
+						logError("The issue ["+key+"] does not exists... Error");
 					}
 				});
-			});
+			}
+			var hsListComments=newHashMap();
 			arrKeyGroups.forEach(function(group){
 				if (group.length>0){
-					var sIssues="";
+/*					var sIssues="";
 					group.forEach(function (key){
 						sIssues+=((sIssues!=""?",":"")+key);
 					});
 					self.addStep("Retrieving Comments of Group ["+sIssues+"]",function(){
 						self.jira.getComments(group,fncAddComments);
 					});
+*/
+					hsListComments.push(group);
 				}
 			});
-			
+			self.addStep("Getting commnets parallelized.", function(){
+				var fncCall=function(group){
+					self.jira.getComments(group,fncAddComments);
+				};
+				self.parallelizeCalls(hsListComments,fncCall);
+			});
 			self.continueTask();
 		});
 		

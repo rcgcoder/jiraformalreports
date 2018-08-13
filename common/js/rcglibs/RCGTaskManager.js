@@ -1099,20 +1099,20 @@ class RCGTaskManager{
 							} else {
 								log("There is not more petitions");
 							}
-							self.next();
+							self.continueTask();
 						});
 					});
 					fncParallelCall();
-					self.next();
+					self.continueTask();
 				},0,1,undefined,undefined,undefined,"INNER",undefined
 				);
 			}
 			for (var i=0;(i<maxThreads)&&(i<hsListItems.length());i++){
 				fncAddThread(i);
 			}
-			self.next();
+			self.continueTask();
 		});
-		self.next();
+		self.continueTask();
 	}
 	
 	extended_parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads){

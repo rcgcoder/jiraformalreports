@@ -1055,7 +1055,7 @@ var jrfReport=class jrfReport {
 				var fncCall=function(issueUpdate){
 					jira.setProperty(issueUpdate.issueKey,issueUpdate.cacheKey,issueUpdate.precompObj);
 				};
-				jira.parallelizeCalls(self.allIssues.list,fncCall);
+				jira.parallelizeCalls(hsUpdateProps,fncCall);
 			}
 		});
 		

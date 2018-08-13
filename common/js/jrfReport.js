@@ -1036,12 +1036,34 @@ var jrfReport=class jrfReport {
 			self.objModel.process("encode"); // hash inner task....
 		});
 		
+		self.addStep("Saving the precomputed values",function(){
+			var tm=self.getTaskManager();
+			tm.asyncTimeWasted=0;
+			tm.asyncTaskCallsBlock=3000;
+			tm.asyncTaskCallsMaxDeep=30;
+			tm.autoFree=true;
+			if (self.config.ResetLeafPrecomputations){
+				var jira=System.webapp.getJira();
+				self.allIssues.list.walk(function(issue){
+					if (issue.countSavePrecomputedPropertys()>0){
+						var hsPrecomps=issue.getSavePrecomputedPropertys();
+						hsPrecomps.walk(function(precompObj,iDeep,cacheKey){
+							System.webapp.addStep("Saving life of :"+cacheKey+" of issue "+ issue.getKey() +" value:"+JSON.stringify(precompObj) ,function(){
+								jira.setProperty(self.getKey(),cacheKey,precompObj);
+							},0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
+						});
+					}
+				});
+			}
+		});
+		
 
 		self.addStep("Setting the HTML",function(sModelProcessedResult){
-			var tm=self.getTaskManager();
+/*			var tm=self.getTaskManager();
 			tm.autoFree=false;
 			tm.asyncTaskCallsBlock=0;
 			tm.asyncTaskCallsMaxDeep=0;
+*/
 //	        sModelProcessedResult=sModelProcessedResult.saToString();
 //	        jqResult.html(sModelProcessedResult);
 	        //debugger;

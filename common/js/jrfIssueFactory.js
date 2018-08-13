@@ -21,6 +21,7 @@ function newIssueFactory(report){
 			 {name:"Comment", description:"Comments in Issue",type:"object"},
 			 {name:"AccumulatorsCache",description:"Cache the values of accumulator calls",type:"object"},
 			 {name:"PrecomputedProperty",description:"List of properties with values of hidden childs computed by a user with permissions",type:"object"},
+			 {name:"SavePrecomputedProperty",description:"List of precomputed properties that needs to be saved",type:"object"},
 			 {name:"FieldLifeCache",description:"Cache the life of the fields to speed up the reutilization of values",type:"object"},
 			 {name:"FieldLifeAdjust",description:"List of manual adjusts to field values usually saved as comment in the issue",type:"object"},
 			 {name:"EpicChild",description:"List of issues with epic link equals to this issue key",type:"object"}
@@ -388,11 +389,15 @@ function newIssueFactory(report){
 			}
 			if (!bEqualsPrecomps){
 				self.setPrecomputedPropertyLife(cacheKey,precompObj);
-				System.webapp.addStep("Saving life of :"+cacheKey+" of issue "+ self.getKey() +" value:"+JSON.stringify(precompObj) ,function(){
+				self.setSavePrecomputedProperty(cacheKey,precompObj); //store the need of update the precomputed property
+/*
+ * The global threads crash when taskmanager does not breaks (settimeout) in each step 
+ * 					
+  					System.webapp.addStep("Saving life of :"+cacheKey+" of issue "+ self.getKey() +" value:"+JSON.stringify(precompObj) ,function(){
 					var jira=System.webapp.getJira();
 					jira.setProperty(self.getKey(),cacheKey,precompObj);
 		        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
-			}
+*/			}
 		}
 		return accumValue;
 	});

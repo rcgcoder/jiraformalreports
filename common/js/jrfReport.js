@@ -1053,6 +1053,7 @@ var jrfReport=class jrfReport {
 				};
 				self.parallelizeCalls(hsUpdateProps,fncCall);
 			}
+			self.continueTask();
 		});
 		
 

@@ -1088,7 +1088,7 @@ class RCGTaskManager{
 			tm.autoFree=false;
 			tm.asyncTaskCallsBlock=0;
 			tm.asyncTaskCallsMaxDeep=0;
-			self.next();
+			tm.next();
 		});
 		self.addStep("Call parallelized pseudoThreaded",function(){
 			tm.parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads);
@@ -1097,8 +1097,9 @@ class RCGTaskManager{
 			tm.autoFree=bckAutoFree;
 			tm.asyncTaskCallsBlock=bckTaskCallsBlock;
 			tm.asyncTaskCallsMaxDeep=bckTaskCallsMaxDeep;
+			tm.next();
 		});
-		self.next();
+		tm.next();
 	}
 
 	extended_pushCallBack(method,newObj,sForkType,barrier,description,progressMin,progressMax,totalWeight,methodWeight){

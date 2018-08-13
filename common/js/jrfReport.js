@@ -1049,7 +1049,7 @@ var jrfReport=class jrfReport {
 						var hsPrecomps=issue.getSavePrecomputedPropertys();
 						hsPrecomps.walk(function(precompObj,iDeep,cacheKey){
 							System.webapp.addStep("Saving life of :"+cacheKey+" of issue "+ issue.getKey() +" value:"+JSON.stringify(precompObj) ,function(){
-								jira.setProperty(self.getKey(),cacheKey,precompObj);
+								jira.setProperty(issue.getKey(),cacheKey,precompObj);
 							},0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
 						});
 					}

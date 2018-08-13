@@ -1136,6 +1136,7 @@ class RCGTaskManager{
 		obj.getRunningTask=self.extended_getRunningTask;
 		obj.getTaskManagerStatus=self.extended_getTaskManagerStatus;
 		obj.getTaskManager=self.extended_getTaskManager;
+		obj.parallelizeCalls=self.extended_parallelizeCalls;
 		obj.continueTask=self.extended_continueTask;
 	}
 	killTasks(){

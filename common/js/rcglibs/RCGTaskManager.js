@@ -764,10 +764,10 @@ class RCGTaskManager{
 		hsListItemsToProcess.walk(function(item){
 			hsListItems.push(item);
 		});
-		self.addStep("Doing " + hsListItems.length()+" parallels calls grouped by "+maxThreads, function(){
+		self.extended_addStep("Doing " + hsListItems.length()+" parallels calls grouped by "+maxThreads, function(){
 			var nextAccumulator=0;
 			var fncAddThread=function(iThread){
-				self.addStep("Parallel call Thread "+iThread,function(){
+				self.extended_addStep("Parallel call Thread "+iThread,function(){
 					var fncParallelCall=self.createManagedCallback(function(){
 						if (hsListItems.length()==0)return;
 						var iPet=hsListItems.length()-1;
@@ -776,10 +776,10 @@ class RCGTaskManager{
 						var issue=callInfo.issue;
 						var propKey=callInfo.key;
 						*/
-						self.addStep("Petition:"+iPet+" of parallel process ",function(){
+						self.extended_addStep("Petition:"+iPet+" of parallel process ",function(){
 							fncCall(item);
 						});
-						self.addStep("Petition:"+iPet+" Processing result and Trying Next Call...",function(objResult){
+						self.extended_addStep("Petition:"+iPet+" Processing result and Trying Next Call...",function(objResult){
 							if (isDefined(fncProcess)) fncProcess(item,objResult);
 							if (hsListItems.length()>0){
 								log("There are "+hsListItems.length()+" petitions pending... let´s go next petition");

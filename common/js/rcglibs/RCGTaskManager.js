@@ -787,20 +787,20 @@ class RCGTaskManager{
 							} else {
 								log("There is not more petitions");
 							}
-							self.continueTask();
+							self.next();
 						});
 					});
 					fncParallelCall();
-					self.continueTask();
+					self.next();
 				},0,1,undefined,undefined,undefined,"INNER",undefined
 				);
 			}
 			for (var i=0;(i<maxThreads)&&(i<hsListItems.length());i++){
 				fncAddThread(i);
 			}
-			self.continueTask();
+			self.next();
 		});
-		self.continueTask();
+		self.next();
 	}
 	
 	

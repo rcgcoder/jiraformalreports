@@ -756,52 +756,6 @@ class RCGTaskManager{
 		return task;
 	}
 	
-	parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads){
-		var self=this;
-		var maxThreads=25;
-		if (isDefined(maxParallelThreads)) maxThreads=maxParallelThreads; 
-		var hsListItems=newHashMap();
-		hsListItemsToProcess.walk(function(item){
-			hsListItems.push(item);
-		});
-		self.extended_addStep("Doing " + hsListItems.length()+" parallels calls grouped by "+maxThreads, function(){
-			var nextAccumulator=0;
-			var fncAddThread=function(iThread){
-				self.extended_addStep("Parallel call Thread "+iThread,function(){
-					var fncParallelCall=self.createManagedCallback(function(){
-						if (hsListItems.length()==0)return;
-						var iPet=hsListItems.length()-1;
-						var item=hsListItems.pop();
-						/*var callInfo=hsIssueGetProperties.pop();//push({issue:issue,key:propertyKey});
-						var issue=callInfo.issue;
-						var propKey=callInfo.key;
-						*/
-						self.extended_addStep("Petition:"+iPet+" of parallel process ",function(){
-							fncCall(item);
-						});
-						self.extended_addStep("Petition:"+iPet+" Processing result and Trying Next Call...",function(objResult){
-							if (isDefined(fncProcess)) fncProcess(item,objResult);
-							if (hsListItems.length()>0){
-								log("There are "+hsListItems.length()+" petitions pending... let´s go next petition");
-								fncParallelCall();
-							} else {
-								log("There is not more petitions");
-							}
-							self.next();
-						});
-					});
-					fncParallelCall();
-					self.next();
-				},0,1,undefined,undefined,undefined,"INNER",undefined
-				);
-			}
-			for (var i=0;(i<maxThreads)&&(i<hsListItems.length());i++){
-				fncAddThread(i);
-			}
-			self.next();
-		});
-		self.next();
-	}
 	
 	
 	pushCallback(method,obj,sForkType,barrier,description,progressMin,progressMax,totalWeight,methodWeight){
@@ -1015,6 +969,7 @@ class RCGTaskManager{
 		} 
 		return tm;
 	}
+		
 	extended_getTaskManagerStatus(){
 		var self=this;
 		var tm=self.RCGTaskManager;
@@ -1078,29 +1033,6 @@ class RCGTaskManager{
 		}
 		return tm.addStep(method,theObj,sForkType,barrier,description,progressMin,progressMax,totalWeight,methodWeight);
 	}
-	extended_parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads){
-		var self=this;
-		var tm=self.getTaskManager();
-		var bckAutoFree=tm.autoFree;
-		var bckTaskCallsBlock=tm.asyncTaskCallsBlock;
-		var bckTaskCallsMaxDeep=tm.asyncTaskCallsMaxDeep;
-		self.addStep("Change autofree and taskCallsblock", function(){
-			tm.autoFree=false;
-			tm.asyncTaskCallsBlock=0;
-			tm.asyncTaskCallsMaxDeep=0;
-			tm.next();
-		});
-		self.addStep("Call parallelized pseudoThreaded",function(){
-			tm.parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads);
-		});
-		self.addStep("Restore AutoFree and CallsBlock params",function(){
-			tm.autoFree=bckAutoFree;
-			tm.asyncTaskCallsBlock=bckTaskCallsBlock;
-			tm.asyncTaskCallsMaxDeep=bckTaskCallsMaxDeep;
-			tm.next();
-		});
-		tm.next();
-	}
 
 	extended_pushCallBack(method,newObj,sForkType,barrier,description,progressMin,progressMax,totalWeight,methodWeight){
 		var self=this;
@@ -1136,6 +1068,76 @@ class RCGTaskManager{
 		var runningTask=tm.getRunningTask();
 		tm.next(aArgs,iJumps);
 	}
+	internal_parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads){
+		var self=this;
+		var maxThreads=25;
+		if (isDefined(maxParallelThreads)) maxThreads=maxParallelThreads; 
+		var hsListItems=newHashMap();
+		hsListItemsToProcess.walk(function(item){
+			hsListItems.push(item);
+		});
+		self.addStep("Doing " + hsListItems.length()+" parallels calls grouped by "+maxThreads, function(){
+			var nextAccumulator=0;
+			var fncAddThread=function(iThread){
+				self.addStep("Parallel call Thread "+iThread,function(){
+					var fncParallelCall=self.createManagedCallback(function(){
+						if (hsListItems.length()==0)return;
+						var iPet=hsListItems.length()-1;
+						var item=hsListItems.pop();
+						/*var callInfo=hsIssueGetProperties.pop();//push({issue:issue,key:propertyKey});
+						var issue=callInfo.issue;
+						var propKey=callInfo.key;
+						*/
+						self.addStep("Petition:"+iPet+" of parallel process ",function(){
+							fncCall(item);
+						});
+						self.addStep("Petition:"+iPet+" Processing result and Trying Next Call...",function(objResult){
+							if (isDefined(fncProcess)) fncProcess(item,objResult);
+							if (hsListItems.length()>0){
+								log("There are "+hsListItems.length()+" petitions pending... let´s go next petition");
+								fncParallelCall();
+							} else {
+								log("There is not more petitions");
+							}
+							self.next();
+						});
+					});
+					fncParallelCall();
+					self.next();
+				},0,1,undefined,undefined,undefined,"INNER",undefined
+				);
+			}
+			for (var i=0;(i<maxThreads)&&(i<hsListItems.length());i++){
+				fncAddThread(i);
+			}
+			self.next();
+		});
+		self.next();
+	}
+	
+	extended_parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads){
+		var self=this;
+		var tm=self.getTaskManager();
+		var bckAutoFree=tm.autoFree;
+		var bckTaskCallsBlock=tm.asyncTaskCallsBlock;
+		var bckTaskCallsMaxDeep=tm.asyncTaskCallsMaxDeep;
+		self.addStep("Change autofree and taskCallsblock", function(){
+			tm.autoFree=false;
+			tm.asyncTaskCallsBlock=0;
+			tm.asyncTaskCallsMaxDeep=0;
+			tm.next();
+		});
+		self.addStep("Call parallelized pseudoThreaded",function(){
+			self.internal_parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads);
+		});
+		self.addStep("Restore AutoFree and CallsBlock params",function(){
+			tm.autoFree=bckAutoFree;
+			tm.asyncTaskCallsBlock=bckTaskCallsBlock;
+			tm.asyncTaskCallsMaxDeep=bckTaskCallsMaxDeep;
+			tm.next();
+		});
+		tm.next();
+	}
 	
 	extendObject(obj){
 		var self=this;
@@ -1152,8 +1154,9 @@ class RCGTaskManager{
 		obj.getRunningTask=self.extended_getRunningTask;
 		obj.getTaskManagerStatus=self.extended_getTaskManagerStatus;
 		obj.getTaskManager=self.extended_getTaskManager;
-		obj.parallelizeCalls=self.extended_parallelizeCalls;
 		obj.continueTask=self.extended_continueTask;
+		obj.internal_parallelizeCalls=self.internal_parallelizeCalls;
+		obj.parallelizeCalls=self.extended_parallelizeCalls;
 	}
 	killTasks(){
 		var self=this;

@@ -1036,25 +1036,29 @@ var jrfReport=class jrfReport {
 			self.objModel.process("encode"); // hash inner task....
 		});
 		
-		self.addStep("Saving the precomputed values",function(){
+		self.addStep("¿Saving the precomputed values?",function(sModelProcessedResult){
 			if (self.config.ResetLeafPrecomputations){
-				var hsUpdateProps=newHashMap();
-				self.allIssues.list.walk(function(issue){
-					if (issue.countSavePrecomputedPropertys()>0){
-						var hsPrecomps=issue.getSavePrecomputedPropertys();
-						hsPrecomps.walk(function(precompObj,iDeep,cacheKey){
-							hsUpdateProps.push({issueKey:issue.getKey(),cacheKey:cacheKey,precompObj:precompObj});
-						});
-					}
+				self.addStep("Saving the precomputed values", function(){
+					var hsUpdateProps=newHashMap();
+					self.allIssues.list.walk(function(issue){
+						if (issue.countSavePrecomputedPropertys()>0){
+							var hsPrecomps=issue.getSavePrecomputedPropertys();
+							hsPrecomps.walk(function(precompObj,iDeep,cacheKey){
+								hsUpdateProps.push({issueKey:issue.getKey(),cacheKey:cacheKey,precompObj:precompObj});
+							});
+						}
+					});
+					var jira=System.webapp.getJira();
+					var fncCall=function(issueUpdate){
+						jira.setProperty(issueUpdate.issueKey,issueUpdate.cacheKey,issueUpdate.precompObj);
+					};
+					self.parallelizeCalls(hsUpdateProps,fncCall);
 				});
-				var jira=System.webapp.getJira();
-				var fncCall=function(issueUpdate){
-					jira.setProperty(issueUpdate.issueKey,issueUpdate.cacheKey,issueUpdate.precompObj);
-				};
-				self.parallelizeCalls(hsUpdateProps,fncCall);
-			} else {
-				self.continueTask();
 			}
+			self.addStep("Returning the model processed result",function(){
+				self.continueTask(sModelProcessedResult);
+			});
+			self.continueTask();
 		});
 		
 

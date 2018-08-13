@@ -1056,7 +1056,7 @@ var jrfReport=class jrfReport {
 				});
 			}
 			self.addStep("Returning the model processed result",function(){
-				self.continueTask(sModelProcessedResult);
+				self.continueTask([sModelProcessedResult]);
 			});
 			self.continueTask();
 		});

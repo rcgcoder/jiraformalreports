@@ -6,6 +6,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		self.actualElement=actualElement;
 		self.variables=new RCGVarEngine();
 		self.directives=newHashMap();
+		self.includeCache=newHashMap();
 		self.filters=newRCGFilterManager();
 		//self.tokenBase=new jrfToken(self);
 		if (isDefined(inputHtml)){

@@ -43,29 +43,45 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
             self.includeId=theHash;
             var cflc=System.webapp.getConfluence();
             self.addStep("Downloading content:"+contentId+" from "+srcUrl,function(){
-            	cflc.getContent(contentId);
+            	if (!self.model.includeCache.exists(theHash)){
+                	cflc.getContent(contentId);
+            	} else {
+            		self.continueTask([self.model.includeCache.getValue(theHash)]);
+            	}
             });
+        	if (!self.model.includeCache.exists(theHash)){
+                self.addStep("Adding content " + contentId + " to contents cache",function(jsonContent){
+    				var oContent=JSON.parse(jsonContent);
+                	self.model.includeCache.add(contentId,oContent);
+                	self.continueTask([oContent]);
+                });
+        	}
+			var sTitle="";
             if (self.titlePostpend!=""){
-            	var antJsonObject;
-    			self.addStep("Getting title and prepend:"+self.titlePostpend+" to downlad the especific content of "+srcUrl,function(jsonContent){
-    				var oContent=JSON.parse(jsonContent);
-    				antJsonObject=oContent;
-    				var sTitle=oContent.title;
+            	var antContent;
+    			self.addStep("Getting title and prepend:"+self.titlePostpend+" to downlad the especific content of "+srcUrl,function(oContent){
+    				antContent=oContent;
+    				sTitle=oContent.title;
     				sTitle+=" - "+self.replaceVars(self.titlePostpend).saToString().trim();
-                	cflc.getContentByTitle(sTitle);
+                	if (!self.model.includeCache.exists(sTitle)){
+                		cflc.getContentByTitle(sTitle);
+                	} else {
+                		self.continueTask([self.model.includeCache.getValue(theHash)]);
+                	}
     			});            
-    			self.addStep("Processing Confluence search Content:"+contentId+" from "+srcUrl,function(jsonContent){
-    				var oContent=JSON.parse(jsonContent);
-    				if (oContent.size==0){
-    					self.continueTask([antJsonObject]);
-    				} else {
-    					oContent=oContent.results[0];
-    					self.continueTask([oContent]);
+    			self.addStep("Processing Confluence search Content:"+contentId+" from "+srcUrl,function(oContent){
+    				var oResult=antContent;
+    				if (oContent.size>0){
+    					oResult=oContent.results[0];
     				}
+                	if (!self.model.includeCache.exists(sTitle)){
+                    	self.model.includeCache.add(sTitle,oResult);
+                	}
+					self.continueTask([oResult]);
     			});
             }
 			var auxModel;
-			self.addStep("Processing Confluence Content:"+contentId+" from "+srcUrl,function(jsonContent){
+			self.addStep("Processing Confluence Content:"+contentId+(sTitle!=""?" ("+sTitle+")":"")+" from "+srcUrl,function(jsonContent){
 				var oContent;
 				if (typeof jsonContent==="object") {
 					oContent=jsonContent;
@@ -86,6 +102,7 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
 					auxModel.variables=self.model.variables;
 					auxModel.directives=self.model.directives;
 					auxModel.filters=self.model.filters;
+					auxModel.includeCache=self.model.includeCache;
 
 					auxModel.parse(sContentHtmlBody,tag);
 				});

@@ -52,7 +52,7 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
         	if (!self.model.includeCache.exists(theHash)){
                 self.addStep("Adding content " + contentId + " to contents cache",function(jsonContent){
     				var oContent=JSON.parse(jsonContent);
-                	self.model.includeCache.add(contentId,oContent);
+                	self.model.includeCache.add(theHash,oContent);
                 	self.continueTask([oContent]);
                 });
         	}

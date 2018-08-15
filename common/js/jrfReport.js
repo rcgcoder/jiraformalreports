@@ -872,7 +872,7 @@ var jrfReport=class jrfReport {
 					var fncCall=function(callInfo){
 						var issue=callInfo.issue;
 						var propKey=callInfo.key;
-						jira.getProperty(issue.getKey(),propKey);
+						self.jira.getProperty(issue.getKey(),propKey);
 					};
 					var fncProcess=function(callInfo,objResult){
 						var issue=callInfo.issue;

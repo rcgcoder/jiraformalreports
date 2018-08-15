@@ -853,7 +853,8 @@ var jrfReport=class jrfReport {
 								};
 							});
 						});
-					} else if ((sDirectiveKey=="accumulators")&&(!self.config.DontLoadLeafPrecomputations)){
+					} else if ((sDirectiveKey=="accumulators")
+								&&(!self.config.DontLoadLeafPrecomputations)){
 						// the directive accumulators is processed by the model 
 						var accumList=self.objModel.accumulatorList;
 						var hmKey;

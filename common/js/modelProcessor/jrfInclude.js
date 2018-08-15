@@ -103,7 +103,6 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
 					auxModel.directives=self.model.directives;
 					auxModel.filters=self.model.filters;
 					auxModel.includeCache=self.model.includeCache;
-
 					auxModel.parse(sContentHtmlBody,tag);
 				});
 				self.addStep("Updating Accumulators of Parent Model... avoid multiple process ",function(){

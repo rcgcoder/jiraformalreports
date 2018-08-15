@@ -835,8 +835,10 @@ var jrfReport=class jrfReport {
 			theModel.process("parse"); // parse....
 		});
 		self.addStep("Processing Directives",function(){
-			//debugger;
+			debugger;
 			var hsVersions=newHashMap();
+			var hsAccumulators=newHashMap();
+			log("Analizing directives");
 			self.objModel.directives.walk(function(hsDirectives,iProof,sDirectiveKey){
 				hsDirectives.walk(function(sValue){
 					log(sDirectiveKey + " directive setted:"+sValue);
@@ -853,49 +855,80 @@ var jrfReport=class jrfReport {
 						});
 					} else if (sDirectiveKey=="accumulators"){
 						// the directive accumulators is processed by the model 
+						var accumList=self.objModel.accumulatorList;
+						accumList.walk(function(hsAccum,iProf,accumKey){
+							log("Type of accumulators:"+accumKey);		
+							hsAccum.walk(function(theFieldAccum){
+								self.treeIssues.walk(function (issue){
+									hsAccumulators.push({issue:issue,key:theFieldAccum.key});
+								});
+							});
+						});
 					}
 				});
 			});
-			log("Versions in report:"+hsVersions.length());
-			if (hsVersions.length()>0){
-				var verCounter=0;
-				var sVersions="";
-				var fncGetVersionsIssues=function(sVersions){
-					self.addStep("Getting versions ("+sVersions+") issues",function(){
-						var fncProcessIssue=function(issue){
-							//debugger;
-							var oIssue;
-							if (!self.allIssues.list.exists(issue.key)){
-								oIssue=self.allIssues.new(issue.fields.summary,issue.key);
-								oIssue.setJiraObject(issue);
-								oIssue.updateInfo();
-								oIssue.setKey(issue.key);
-							} else {
-								oIssue=self.allIssues.list.getValue(issue.key);
-							}
-							if (!self.treeIssues.exists(issue.key)){
-								self.treeIssues.add(issue.key,oIssue);
-							}
+			if (hsAccumulators.length()>0){
+				self.addStep("Getting the accumulators",function(){
+					var fncCall=function(callInfo){
+						var issue=callInfo.issue;
+						var propKey=callInfo.key;
+						jira.getProperty(issue.getKey(),propKey);
+					};
+					var fncProcess=function(callInfo,objResult){
+						var issue=callInfo.issue;
+						var propKey=callInfo.key;
+						if (objProperty!=""){
+							log("Start adding properties "+objProperty.key +" to issue:"+issue.getKey() );
+							issue.setPrecomputedPropertyLife(objProperty.key,objProperty.value);
+							log("End of adding properties "+objProperty.key +" to issue:"+issue.getKey() );
 						}
-						self.jira.processJQLIssues("fixVersion in ("+sVersions+")",
-												  fncProcessIssue);
-					});
-				}
-				hsVersions.walk(function(versionName){
-					if (verCounter>=10){
-						fncGetVersionsIssues(sVersions);
-						verCounter=0;
-						sVersions="";
-					}
-					if (verCounter>0){
-						sVersions+=",";
-					}
-					sVersions+=versionName;
-					verCounter++;
+						jira.getProperty(issue.getKey(),propKey);
+					};
+					self.parallelizeCalls(hsAccumulators,fncCall,fncProcess);
 				});
-				if ((verCounter>0)&&(verCounter<10)){
-					fncGetVersionsIssues(sVersions);
-				}
+			}
+			if (hsVersions.length()>0){
+				log("Versions in report:"+hsVersions.length());
+				self.addStep("Version Directive Active. Getting "+hsVersions.length()+" Versions ....",function(){
+					var verCounter=0;
+					var sVersions="";
+					var fncGetVersionsIssues=function(sVersions){
+						self.addStep("Getting versions ("+sVersions+") issues",function(){
+							var fncProcessIssue=function(issue){
+								//debugger;
+								var oIssue;
+								if (!self.allIssues.list.exists(issue.key)){
+									oIssue=self.allIssues.new(issue.fields.summary,issue.key);
+									oIssue.setJiraObject(issue);
+									oIssue.updateInfo();
+									oIssue.setKey(issue.key);
+								} else {
+									oIssue=self.allIssues.list.getValue(issue.key);
+								}
+								if (!self.treeIssues.exists(issue.key)){
+									self.treeIssues.add(issue.key,oIssue);
+								}
+							}
+							self.jira.processJQLIssues("fixVersion in ("+sVersions+")",
+													  fncProcessIssue);
+						});
+					}
+					hsVersions.walk(function(versionName){
+						if (verCounter>=10){
+							fncGetVersionsIssues(sVersions);
+							verCounter=0;
+							sVersions="";
+						}
+						if (verCounter>0){
+							sVersions+=",";
+						}
+						sVersions+=versionName;
+						verCounter++;
+					});
+					if ((verCounter>0)&&(verCounter<10)){
+						fncGetVersionsIssues(sVersions);
+					}
+				});
 			}
 			self.continueTask();
 		});

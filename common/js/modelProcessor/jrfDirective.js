@@ -19,17 +19,20 @@ var jrfDirective=class jrfDirective extends jrfToken{//this kind of definition a
 			arrAccums.forEach(function(accum){
 				var arrTypeField=accum.split("=");
 				var accumTypeRelation=arrTypeField[0];
-				var accumRelationField=arrTypeField[1];
-				var sKey=accumTypeRelation+"."+accumRelationField;
-				//.....add(sKey,{key:sKey,type:typeRelation,field:fieldName});
-				var hsAux;
-				if (!self.accumulators.exists(accumTypeRelation)){
-					hsAux=newHashMap();
-					self.accumulators.add(accumTypeRelation,hsAux);
-				} else {
-					hsAux=self.accumulators.getValue(accumTypeRelation);
-				}
-				hsAux.add(sKey,{key:sKey,type:accumTypeRelation,field:accumRelationField});
+				var accumRelationFields=arrTypeField[1];
+				var arrFields=accumRelationFields.split(";");
+				arrFields.forEach(function(accumRelationField){
+					var sKey=accumTypeRelation+"."+accumRelationField;
+					//.....add(sKey,{key:sKey,type:typeRelation,field:fieldName});
+					var hsAux;
+					if (!self.accumulators.exists(accumTypeRelation)){
+						hsAux=newHashMap();
+						self.accumulators.add(accumTypeRelation,hsAux);
+					} else {
+						hsAux=self.accumulators.getValue(accumTypeRelation);
+					}
+					hsAux.add(sKey,{key:sKey,type:accumTypeRelation,field:accumRelationField});
+				});
 			});
 		}
 	}

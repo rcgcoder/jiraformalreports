@@ -16,12 +16,12 @@ export class jiraCorrelator {
             System.bindObj(self);
             self.changeVisibilityAndOr();
             if (!self.withCaption){
-                var auxObj=System.getAngularObject(self.name+"-caption",true);
-                auxObj.hide();
+                var auxObj=System.getAngularDomObject(self.name+"-caption");
+                $(auxObj).hide();
             }
             if (!self.withToggle){
-                var auxObj=System.getAngularObject(self.name+"-toggleVisible",true);
-                auxObj.hide();
+                var auxObj=System.getAngularDomObject(self.name+"-toggleVisible");
+                $(auxObj).hide();
             }
         });
     }

@@ -138,7 +138,13 @@ export class TabConfig {
 
         auxObj=$('#toggle_ResetLeafPrecomputations');
         dfReport["ResetLeafPrecomputations"]=(auxObj.attr("checked")=="checked");
+        
+        auxObj=$('#toggle_DontLoadLeafPrecomputations');
+        dfReport["DontLoadLeafPrecomputations"]=(auxObj.attr("checked")=="checked");
 
+        auxObj=$('#toggle_ForceSaveLeafPrecomputations');
+        dfReport["ForceSaveLeafPrecomputations"]=(auxObj.attr("checked")=="checked");
+        
         auxObj=$('#toggle_ExcludeProjects');
         dfReport["excludeProjects"]=(auxObj.attr("checked")=="checked");
         auxObj=System.getAngularObject('selExcludedProjects',true);
@@ -255,6 +261,13 @@ export class TabConfig {
         
         auxObj=$('#toggle_ResetLeafPrecomputations');
         if(isDefined(config.ResetLeafPrecomputations)&&config.ResetLeafPrecomputations)auxObj.attr("checked","checked");
+
+        auxObj=$('#toggle_DontLoadLeafPrecomputations');
+        if(isDefined(config.DontLoadLeafPrecomputations)&&config.DontLoadLeafPrecomputations)auxObj.attr("checked","checked");
+        
+        
+        auxObj=$('#toggle_ForceSaveLeafPrecomputations');
+        if(isDefined(config.ForceSaveLeafPrecomputations)&&config.ForceSaveLeafPrecomputations)auxObj.attr("checked","checked");
         
         auxObj=$('#toggle_ResultInteractive');
         if(isDefined(config.interactiveResult)&&config.interactiveResult)auxObj.attr("checked","checked");

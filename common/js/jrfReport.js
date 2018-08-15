@@ -853,7 +853,7 @@ var jrfReport=class jrfReport {
 								};
 							});
 						});
-					} else if (sDirectiveKey=="accumulators"){
+					} else if ((sDirectiveKey=="accumulators")&&(!self.config.DontLoadLeafPrecomputations)){
 						// the directive accumulators is processed by the model 
 						var accumList=self.objModel.accumulatorList;
 						var hmKey;
@@ -1095,7 +1095,8 @@ var jrfReport=class jrfReport {
 				self.addStep("Saving the precomputed values", function(){
 					var hsUpdateProps=newHashMap();
 					self.allIssues.list.walk(function(issue){
-						if (issue.countSavePrecomputedPropertys()>0){
+						if ((issue.countSavePrecomputedPropertys()>0)
+							||(self.config.ForceSaveLeafPrecomputations)){
 							var hsPrecomps=issue.getSavePrecomputedPropertys();
 							hsPrecomps.walk(function(precompObj,iDeep,cacheKey){
 								hsUpdateProps.push({issueKey:issue.getKey(),cacheKey:cacheKey,precompObj:precompObj});

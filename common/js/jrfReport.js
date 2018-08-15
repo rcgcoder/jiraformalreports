@@ -863,7 +863,7 @@ var jrfReport=class jrfReport {
 								issuesAdded.walk(function (issue){
 									if (issue.countParentsChild()==0){
 										hmKey=issue.getKey()+"."+theFieldAccum.key;
-										if (hsAccumulators.exists(hmKey)){
+										if (!hsAccumulators.exists(hmKey)){
 											hsAccumulators.add(hmKey,{issue:issue,key:theFieldAccum.key});
 										} else {
 											log("Key:"+hmKey+" is already added");

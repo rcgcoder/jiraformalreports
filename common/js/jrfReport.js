@@ -856,12 +856,18 @@ var jrfReport=class jrfReport {
 					} else if (sDirectiveKey=="accumulators"){
 						// the directive accumulators is processed by the model 
 						var accumList=self.objModel.accumulatorList;
+						var hmKey;
 						accumList.walk(function(hsAccum,iProf,accumKey){
 							log("Type of accumulators:"+accumKey);		
 							hsAccum.walk(function(theFieldAccum){
 								issuesAdded.walk(function (issue){
 									if (issue.countParentsChild()==0){
-										hsAccumulators.push({issue:issue,key:theFieldAccum.key});
+										hmKey=issue.getKey()+"."+theFieldAccum.key;
+										if (hsAccumulators.exists(hmKey)){
+											hsAccumulators.add(hmKey,{issue:issue,key:theFieldAccum.key});
+										} else {
+											log("Key:"+hmKey+" is already added");
+										}
 									}
 								});
 							});

@@ -860,7 +860,9 @@ var jrfReport=class jrfReport {
 							log("Type of accumulators:"+accumKey);		
 							hsAccum.walk(function(theFieldAccum){
 								self.treeIssues.walk(function (issue){
-									hsAccumulators.push({issue:issue,key:theFieldAccum.key});
+									if (issue.countParentsChild()==0){
+										hsAccumulators.push({issue:issue,key:theFieldAccum.key});
+									}
 								});
 							});
 						});

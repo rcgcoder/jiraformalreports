@@ -882,7 +882,6 @@ var jrfReport=class jrfReport {
 							issue.setPrecomputedPropertyLife(objProperty.key,objProperty.value);
 							log("End of adding properties "+objProperty.key +" to issue:"+issue.getKey() );
 						}
-						jira.getProperty(issue.getKey(),propKey);
 					};
 					self.parallelizeCalls(hsAccumulators,fncCall,fncProcess);
 				});

@@ -1,12 +1,9 @@
 <div class="flatpack-box">
 <span id="{{name}}-caption"><strong>{{caption}}</strong></span>
-<div class="aui-group" id="{{name}}-toggleVisible">
-    <div class="aui-item">
-		  <aui-toggle id="{{name}}-toggle" 
-	                        label="{{toggleLabel}}"
-	                        ></aui-toggle><strong>{{toggleLabel}}</strong>
-	</div>
-</div>
+<span id="{{name}}-toggleVisible">
+	<aui-toggle id="{{name}}-toggle" label="{{toggleLabel}}"></aui-toggle>
+	<strong>{{toggleLabel}}</strong>
+</span>
 <div class="aui-group">
     <div class="aui-item">
 		<textarea (change)="textAreaChanged($event)" name="{{name}}-text" rows=6 style="width:100%;"></textarea>

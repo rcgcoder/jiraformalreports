@@ -148,7 +148,10 @@
 					    			 
 					    			 >
 					      </jqlSelector>
-					      <br>
+					</div>
+				</div>
+				<div class="aui-group">
+				    <div class="aui-item">
 						  <aui-toggle id="toggle_ExcludeProjects" 
 					                        label="Exclude Projects"
 					                        ></aui-toggle><strong>Exclude Projects</strong>
@@ -159,7 +162,17 @@
 					    				    atlassianObjectFunction="getListProjects"
 					    				>
 					    </atlassianSelector >
+					</div>
+					<div class="aui-item">
+						  <aui-toggle id="toggle_ExcludeJavascript" 
+					                        label="Exclude by function"
+					                        ></aui-toggle><strong>Exclude by function</strong>
+							<jiraCorrelator name="excludeFunction" caption="Exclude Function">
+							</jiraCorrelator>
+					    </div>
 				    </div>
+				</div>
+				<div class="aui-group" style="display: none">
 				    <div class="aui-item" style="display: none">
 						  <aui-toggle id="toggle_RootsByProject" 
 					                        label="Select Report Roots by Projects"

@@ -1097,7 +1097,6 @@ var jrfReport=class jrfReport {
 					self.allIssues.list.walk(function(issue){
 						if ((issue.countSavePrecomputedPropertys()>0)
 							||(self.config.ForceSaveLeafPrecomputations)){
-							debugger;
 							var hsPrecomps=issue.getSavePrecomputedPropertys();
 							hsPrecomps.walk(function(precompObj,iDeep,cacheKey){
 								hsUpdateProps.push({issueKey:issue.getKey(),cacheKey:cacheKey,precompObj:precompObj});

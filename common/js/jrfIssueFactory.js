@@ -344,13 +344,13 @@ function newIssueFactory(report){
 			var arrChanges=[];
 			var precompObj={lastSave:new Date(),
 							numChilds:allChilds.length(),
-							childsKeys:newHashMap(),
+							childsKeys:[],
 							changes:arrChanges};
 			hsMixedLife.walk(function(value,iDeep,dateKey){
 				arrChanges.push([dateKey,"",value]);
 			});
 			allChilds.walk(function(theChild){
-				precompObj.childsKeys.add(theChild.getKey(),theChild.getKey());
+				precompObj.childsKeys.push(theChild.getKey());
 			});
 			arrChanges.sort(function(a,b){
 				if (a[0]>b[0]) return -1;

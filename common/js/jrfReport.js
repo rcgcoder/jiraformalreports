@@ -496,7 +496,7 @@ var jrfReport=class jrfReport {
 					}
 					console.log("Calls"+nCallsEnded+"/"+nCallsStarted
 							+" Procesed "+ nProcessedIssues +"."
-							+" Tot:"+(nDuplicatedIssues+self.allIssues.list.length() )+"Dups:"+nDuplicatedIssues+" + All Stored:"+self.allIssues.list.length() +")" 
+							+" Tot:"+(nDuplicatedIssues+self.allIssues.list.length() )+" Dups:"+nDuplicatedIssues+" + All Stored:"+self.allIssues.list.length() +")" 
 							+" in " +nStepsPlaned +"/"+ nTotalStepsPlaned +" steps."
 							+" Issues: "+ nRetrievedIssues+"/"+nPendingIssues 
 							+" Epics:"+ nRetrievedEpics + "/"+nPendingEpics
@@ -859,7 +859,7 @@ var jrfReport=class jrfReport {
 						accumList.walk(function(hsAccum,iProf,accumKey){
 							log("Type of accumulators:"+accumKey);		
 							hsAccum.walk(function(theFieldAccum){
-								self.treeIssues.walk(function (issue){
+								issuesAdded.walk(function (issue){
 									if (issue.countParentsChild()==0){
 										hsAccumulators.push({issue:issue,key:theFieldAccum.key});
 									}

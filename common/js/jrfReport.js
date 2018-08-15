@@ -874,7 +874,7 @@ var jrfReport=class jrfReport {
 						var propKey=callInfo.key;
 						self.jira.getProperty(issue.getKey(),propKey);
 					};
-					var fncProcess=function(callInfo,objResult){
+					var fncProcess=function(callInfo,objProperty){
 						var issue=callInfo.issue;
 						var propKey=callInfo.key;
 						if (objProperty!=""){

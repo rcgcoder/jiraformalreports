@@ -24,15 +24,22 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
 		var srcUrl=self.url;
 		if (self.type.toLowerCase()=="url"){
 			self.addStep("Getting Include Url",function(){
-				System.webapp.loadRemoteFile(srcUrl);
+            	if (!self.model.includeCache.exists(srcUrl)){
+            		System.webapp.loadRemoteFile(srcUrl);
+            	} else {
+            		self.continueTask();
+            	}
 			});			
-			if (self.jsClass!=""){
-				self.addStep("Executing class...."+self.jsClass,function(){
-    				var jrfPluginClass=new window[self.jsClass](tag,self.model.report,self.model);
-    				jrfPluginClass.execute();
-    				self.continueTask();
-				});			
-			}
+			self.addStep("Executing class...."+self.jsClass,function(){
+            	if (!self.model.includeCache.exists(srcUrl)){
+            		self.model.includeCache.add(srcUrl,srcUrl);
+            		if (self.jsClass!=""){
+						var jrfPluginClass=new window[self.jsClass](tag,self.model.report,self.model);
+						jrfPluginClass.execute();
+            		}
+            	} 
+				self.continueTask();
+			});			
 		} else if (self.type.toLowerCase()=="confluence"){
             var urlParts=srcUrl.split("pages/");
             urlParts=urlParts[1].split("/");

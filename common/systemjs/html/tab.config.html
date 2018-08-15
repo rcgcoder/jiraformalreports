@@ -72,22 +72,24 @@
 		<strong> Update leaf precomputation users</strong><br>
 		<div class="aui-group">
 		    <div class="aui-item">
-		    <atlassianSelector name="selUsersCanResetLeafs" 
-		    				   typeDescriptor="Users allowed to reset leaf computed accumulators"
-		    				    atlassianAplication="jira"
-		    				    atlassianObjectFunction="getUsers"
-		    				    multiple="true"
-		    		>
-		    </atlassianSelector >
-			<aui-toggle id="toggle_ResetLeafPrecomputations" 
-		                        label="Allowed Users resets the leaf acummulators (Use with empty jql scope)"
-		                        ></aui-toggle>Allowed Users resets the leaf acummulators (Use with empty jql scope)
-			<aui-toggle id="toggle_DontLoadLeafPrecomputations" 
-		                        label="Don't load previous acummulators computations"
-		                        ></aui-toggle>Don't load previous acummulators computations
-			<aui-toggle id="toggle_ForceSaveLeafPrecomputations" 
-		                        label="Force the save of all acummulators computations"
-		                        ></aui-toggle>Force the save of all acummulators computations
+			    <atlassianSelector name="selUsersCanResetLeafs" 
+			    				   typeDescriptor="Users allowed to reset leaf computed accumulators"
+			    				    atlassianAplication="jira"
+			    				    atlassianObjectFunction="getUsers"
+			    				    multiple="true"
+			    		>
+			    </atlassianSelector >
+			</div>
+		    <div class="aui-item">
+				<aui-toggle id="toggle_ResetLeafPrecomputations" 
+			                        label="Allowed Users resets the leaf acummulators (Use with empty jql scope)"
+			                        ></aui-toggle>Allowed Users resets the leaf acummulators (Use with empty jql scope)
+				<aui-toggle id="toggle_DontLoadLeafPrecomputations" 
+			                        label="Don't load previous acummulators computations"
+			                        ></aui-toggle>Don't load previous acummulators computations
+				<aui-toggle id="toggle_ForceSaveLeafPrecomputations" 
+			                        label="Force the save of all acummulators computations"
+			                        ></aui-toggle>Force the save of all acummulators computations
 	    	</div>
 		</div>
 	</div>

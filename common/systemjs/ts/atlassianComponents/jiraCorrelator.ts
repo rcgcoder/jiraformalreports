@@ -6,12 +6,23 @@ import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 export class jiraCorrelator {
     @Input() name: string = 'jiraCorrelator';
     @Input() caption: string = 'Child Relations';
+    @Input() withToggle: boolean = false;
+    @Input() toggleLabel: string = "Enable function";
+    @Input() withCaption: boolean = true;
     ngOnInit() {
         var self=this;
         System.addPostProcess(function(){
             log("PostProcessing:"+self.name);
             System.bindObj(self);
             self.changeVisibilityAndOr();
+            if (!self.withCaption){
+                var auxObj=System.getAngularObject(self.name+"-caption",true);
+                auxObj.hide();
+            }
+            if (!self.withToggle){
+                var auxObj=System.getAngularObject(self.name+"-toggleVisible",true);
+                auxObj.hide();
+            }
         });
     }
     fillLinks(arrLinks){
@@ -31,8 +42,6 @@ export class jiraCorrelator {
         var selParent=System.getAngularObject(self.name+"-parentField",true);
         selChild.fillOptions(arrFields);
         selParent.fillOptions(arrFields);
-        
-        
     }
     getChildLinkSelectedValues(){
         var self=this;

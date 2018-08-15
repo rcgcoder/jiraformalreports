@@ -24,7 +24,7 @@ var jrfDirective=class jrfDirective extends jrfToken{//this kind of definition a
 				arrFields.forEach(function(accumRelationField){
 					var sKey=accumTypeRelation+"."+accumRelationField;
 					//.....add(sKey,{key:sKey,type:typeRelation,field:fieldName});
-					var hsAux;
+					var hsAux; 
 					if (!self.accumulators.exists(accumTypeRelation)){
 						hsAux=newHashMap();
 						self.accumulators.add(accumTypeRelation,hsAux);

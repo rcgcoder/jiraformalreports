@@ -1064,7 +1064,7 @@ var jrfReport=class jrfReport {
 					hsListComments.push(group);
 				}
 			});
-			self.addStep("Getting commnets parallelized.", function(){
+			self.addStep("Getting comments parallelized.", function(){
 				var fncCall=function(group){
 //					self.addStep("Retrieve Comments of Group",function(){
 						self.jira.getComments(group,fncAddComments);

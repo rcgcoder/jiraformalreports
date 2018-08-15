@@ -329,8 +329,6 @@ function newIssueFactory(report){
 		} else {
 			log("Isssue"+self.getKey()+ " returns value:"+accumValue);
 		}
-		
-		
 		var auxNotAdjust=(isDefined(notAdjust)&&notAdjust); // not adjust uses only if TRUE is received
 		if ((!bPrecomputed)&&(!auxNotAdjust)) {
 			accumValue=self.getReport().adjustAccumItem(childType,accumValue,self,theFieldName,auxNotAdjust);
@@ -346,9 +344,13 @@ function newIssueFactory(report){
 			var arrChanges=[];
 			var precompObj={lastSave:new Date(),
 							numChilds:allChilds.length(),
+							childsKeys:newHashMap(),
 							changes:arrChanges};
 			hsMixedLife.walk(function(value,iDeep,dateKey){
 				arrChanges.push([dateKey,"",value]);
+			});
+			allChilds.walk(function(theChild){
+				precompObj.childsKeys.add(theChild.getKey(),theChild.getKey());
 			});
 			arrChanges.sort(function(a,b){
 				if (a[0]>b[0]) return -1;

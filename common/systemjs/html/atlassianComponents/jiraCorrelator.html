@@ -23,6 +23,7 @@
 					<textarea (change)="textAreaChanged($event)" name="{{name}}-text" rows=6 style="width:100%;"></textarea>
 			    </div>
 		    </div>
+		    
 			<div id="{{name}}-ChildParentHelpers" class="aui-group">
 			    <div class="aui-item">
 				    <button (click)="addField()" class="aui-button">+</button>
@@ -35,14 +36,14 @@
 				    				   multiple="false"
 				    				   maxCharsInSelect=50
 				    		>
-				    </advSelector >
+				    </advSelector>
 				    =
 				    <advSelector name="{{name}}-parentField" 
 				    				   typeDescriptor="Parent Field"
 				    				   multiple="false"
 				    				   maxCharsInSelect=50
 				    		>
-				    </advSelector >
+				    </advSelector>
 				    <br>
 				    <button (click)="addLink()" class="aui-button">+</button>
 				    <select id="{{name}}-addOrLink">
@@ -54,7 +55,7 @@
 				    				   multiple="false"
 				    				   maxCharsInSelect=50
 				    		>
-				    </advSelector >
+				    </advSelector>
 				    = ID Parent
 			    </div>
 			</div>

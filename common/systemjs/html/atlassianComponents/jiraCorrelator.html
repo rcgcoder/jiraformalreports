@@ -3,12 +3,12 @@
 		<aui-toggle id="{{name}}-toggle" label="{{toggleLabel}}"></aui-toggle>
 	</span>
 	<aui-label for="{{name}}-toggle" id="{{name}}-caption"><strong>{{caption}}</strong></aui-label>
+	<button id="show_{{name}}" (click)="doShowDialog()" class="aui-button">...</button>	
 	<br>
 	<textarea rows=6 style="width:100%;" id="{{name}}-scriptText" readonly>
 		Push "..." to write the script
 	</textarea> 
 
-	<button id="show_{{name}}" (click)="doShowDialog()" class="aui-button">...</button>	
 	<section id="dlg_{{name}}" class="aui-dialog2 aui-dialog2-large aui-layer" role="dialog" aria-hidden="true">
 	    <header class="aui-dialog2-header">
 	        <h2 class="aui-dialog2-header-main">Write Javascript function</h2>

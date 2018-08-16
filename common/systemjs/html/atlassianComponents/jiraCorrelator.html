@@ -1,44 +1,62 @@
 <div class="flatpack-box">
-<span id="{{name}}-toggleVisible">
-	<aui-toggle id="{{name}}-toggle" label="{{toggleLabel}}"></aui-toggle>
-</span>
-<aui-label for="{{name}}-toggle" id="{{name}}-caption"><strong>{{caption}}</strong></aui-label>
-<div class="aui-group">
-    <div class="aui-item">
-		<textarea (change)="textAreaChanged($event)" name="{{name}}-text" rows=6 style="width:100%;"></textarea>
-    </div>
-    <div class="aui-item">
-	    <button (click)="addField()" class="aui-button">+</button>
-	    <select id="{{name}}-addOrField">
-	    	<option value="and">and</option>
-	    	<option value="or">or</option>
-	   	</select>
-	    <advSelector name="{{name}}-childField" 
-	    				   typeDescriptor="Child Field"
-	    				   multiple="false"
-	    				   maxCharsInSelect=50
-	    		>
-	    </advSelector >
-	    <br>=
-	    <advSelector name="{{name}}-parentField" 
-	    				   typeDescriptor="Parent Field"
-	    				   multiple="false"
-	    				   maxCharsInSelect=50
-	    		>
-	    </advSelector >
-	    <br><hr>
-	    <button (click)="addLink()" class="aui-button">+</button>
-	    <select id="{{name}}-addOrLink">
-	    	<option value="and" selected>and</option>
-	    	<option value="or">or</option>
-	   	</select>
-	    <advSelector name="{{name}}-childLink" 
-	    				   typeDescriptor="Child Link"
-	    				   multiple="false"
-	    				   maxCharsInSelect=50
-	    		>
-	    </advSelector >
-	    <br>= ID Parent
-    </div>
-</div>
-</div>
+	<span id="{{name}}-toggleVisible">
+		<aui-toggle id="{{name}}-toggle" label="{{toggleLabel}}"></aui-toggle>
+	</span>
+	<aui-label for="{{name}}-toggle" id="{{name}}-caption"><strong>{{caption}}</strong></aui-label>
+
+	<button id="show_{{name}}" (click)="doShowDialog()" class="aui-button">...</button>	
+	<section id="dlg_{{name}}" class="aui-dialog2 aui-dialog2-large aui-layer" role="dialog" aria-hidden="true">
+	    <header class="aui-dialog2-header">
+	        <h2 class="aui-dialog2-header-main">Write Javascript function</h2>
+	        <a class="aui-dialog2-header-close">
+	            <span (click)="doCancel()" class="aui-icon aui-icon-small aui-iconfont-close-dialog">Close</span>
+	        </a>
+	    </header>
+	    <div class="aui-dialog2-content">
+			<div class="aui-group">
+			    <div class="aui-item">
+					<textarea (change)="textAreaChanged($event)" name="{{name}}-text" rows=6 style="width:100%;"></textarea>
+			    </div>
+			<div class="aui-group">
+			    <div class="aui-item">
+				    <button (click)="addField()" class="aui-button">+</button>
+				    <select id="{{name}}-addOrField">
+				    	<option value="and">and</option>
+				    	<option value="or">or</option>
+				   	</select>
+				    <advSelector name="{{name}}-childField" 
+				    				   typeDescriptor="Child Field"
+				    				   multiple="false"
+				    				   maxCharsInSelect=50
+				    		>
+				    </advSelector >
+				    <br>=
+				    <advSelector name="{{name}}-parentField" 
+				    				   typeDescriptor="Parent Field"
+				    				   multiple="false"
+				    				   maxCharsInSelect=50
+				    		>
+				    </advSelector >
+				    <br><hr>
+				    <button (click)="addLink()" class="aui-button">+</button>
+				    <select id="{{name}}-addOrLink">
+				    	<option value="and" selected>and</option>
+				    	<option value="or">or</option>
+				   	</select>
+				    <advSelector name="{{name}}-childLink" 
+				    				   typeDescriptor="Child Link"
+				    				   multiple="false"
+				    				   maxCharsInSelect=50
+				    		>
+				    </advSelector >
+				    <br>= ID Parent
+			    </div>
+			</div>
+	    </div>
+	    <footer class="aui-dialog2-footer">
+	        <div id="dlg_{{name}}_actionBar" class="aui-dialog2-footer-actions">
+	            <button (click)="doAction()" class="aui-button aui-button-primary">Apply</button>
+	        </div>
+	    </footer>
+	</section>
+</div>	

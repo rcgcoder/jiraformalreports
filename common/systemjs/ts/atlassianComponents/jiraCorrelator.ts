@@ -130,6 +130,16 @@ export class jiraCorrelator {
         }
         
     }
+    getDialog(){
+        var dlgObj=AJS.dialog2('#dlg_'+this.name);
+        return dlgObj;
+    }
+    doShowDialog(){
+        var self=this;
+        log("it´s clicked show button");
+        log("Showind the dialog");
+        self.getDialog().show();
+    }
     textAreaChanged(event){
         log("TextArea Changed")
         this.changeVisibilityAndOr();

@@ -98,12 +98,12 @@ export class jiraCorrelator {
     setValue(sVal){
         this.theScript=sVal;
         this.getScriptLabel().val(this.theScript);
-        if (sVal==""){
+/*        if (sVal==""){
             this.getScriptLabel().hide();
         } else {
             this.getScriptLabel().show();
         }
-    }
+ */   }
     addField(){
         var self=this;
         log("adding Field hierarchy");
@@ -150,7 +150,7 @@ export class jiraCorrelator {
         return dlgObj;
     }
     doShowScript(){
-        var objAux=$(this.name+"-scriptText");
+        var objAux=this.getScriptLabel();
         var btnAux=$("showScript_"+this.name);
         if (this.bScriptVisible){
             btnAux.html("Show");

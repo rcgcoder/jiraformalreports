@@ -67,7 +67,6 @@ export class TabConfig {
         System.getAngularObject('AdvanceHierarchy',true).fillLinks(arrLinks);
     }
     saveDefaultReport(){
-        debugger;
         var self=this;
         var actualConfig=self.getActualReportConfig();
         var fileName="defaultReportConfig.json";
@@ -180,6 +179,7 @@ export class TabConfig {
         arrValues=auxObj.getSelectedValues();
         dfReport["rootIssues"]={jql:jql,values:arrValues};
         
+        debugger;
         auxObj=System.getAngularObject('excludeFunction',true);
         value=auxObj.getValue();
         dfReport["excludeFunction"]=value;

@@ -10,6 +10,7 @@ export class jiraCorrelator {
     @Input() toggleLabel: string = "Enable function";
     @Input() withCaption: boolean = true;
     theScript:string="";
+    bScriptVisible:boolean=false;
     ngOnInit() {
         var self=this;
         System.addPostProcess(function(){
@@ -147,6 +148,19 @@ export class jiraCorrelator {
     getDialog(){
         var dlgObj=AJS.dialog2('#dlg_'+this.name);
         return dlgObj;
+    }
+    doShowScript(){
+        var objAux=$(this.name+"-scriptText");
+        var btnAux=$("showScript_"+this.name);
+        if (this.bScriptVisible){
+            btnAux.html("Show");
+            objAux.hide();
+            this.bScriptVisible=false;
+        } else {
+            btnAux.html("Hide");
+            objAux.Show();
+            this.bScriptVisible=true;
+        }
     }
     doShowDialog(){
         var self=this;

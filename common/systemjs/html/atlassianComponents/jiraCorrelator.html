@@ -3,9 +3,10 @@
 		<aui-toggle id="{{name}}-toggle" label="{{toggleLabel}}"></aui-toggle>
 	</span>
 	<aui-label for="{{name}}-toggle" id="{{name}}-caption"><strong>{{caption}}</strong></aui-label>
-	<button id="show_{{name}}" (click)="doShowDialog()" class="aui-button">...</button>	
+	<button id="showScript_{{name}}" (click)="doShowScript()" class="aui-button">Show</button>	
+	<button id="show_{{name}}" (click)="doShowDialog()" class="aui-button">Edit</button>	
 	<br>
-	<textarea rows=6 style="width:100%;" id="{{name}}-scriptText" readonly>
+	<textarea rows=6 style="width:100%;display:none" id="{{name}}-scriptText" readonly>
 		Push "..." to write the script
 	</textarea> 
 

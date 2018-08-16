@@ -27,7 +27,7 @@ export class advSelector {
     ngOnInit() {
         var self=this;
         System.addPostProcess(function(){
-            log("PostProcessing:"+self.name);
+            log("PostProcessing (advSelector):"+self.name);
             System.bindObj(self);
             var objSel=System.getAngularDomObject(self.name+"-tooMuch");
             objSel.hide();

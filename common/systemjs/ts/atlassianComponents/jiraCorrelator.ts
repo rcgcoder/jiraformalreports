@@ -173,6 +173,10 @@ export class jiraCorrelator {
             $(auxObj).hide();
         }
         this.getTextArea().val(this.theScript);
+        var editor = ace.edit(self.name+"-ace");
+        editor.setTheme("ace/theme/monokai");
+        editor.session.setMode("ace/mode/javascript");
+        
         self.getDialog().show();
     }
     doAction(){

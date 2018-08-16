@@ -15,6 +15,8 @@ export class jiraCorrelator {
             log("PostProcessing:"+self.name);
             System.bindObj(self);
             self.changeVisibilityAndOr();
+            var tglEnabler=System.getAngularObject(self.name+"-toggle",true);
+            tglEnabler.setLabel(self.toggleLabel);
             if (!self.withCaption){
                 var auxObj=System.getAngularDomObject(self.name+"-caption");
                 $(auxObj).hide();

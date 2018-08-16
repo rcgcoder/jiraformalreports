@@ -158,7 +158,7 @@ export class jiraCorrelator {
             this.bScriptVisible=false;
         } else {
             btnAux.html("Hide");
-            objAux.Show();
+            objAux.show();
             this.bScriptVisible=true;
         }
     }

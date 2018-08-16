@@ -67,6 +67,7 @@ export class TabConfig {
         System.getAngularObject('AdvanceHierarchy',true).fillLinks(arrLinks);
     }
     saveDefaultReport(){
+        debugger;
         var self=this;
         var actualConfig=self.getActualReportConfig();
         var fileName="defaultReportConfig.json";

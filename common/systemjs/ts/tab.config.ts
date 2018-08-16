@@ -226,12 +226,10 @@ export class TabConfig {
         arrValues=auxObj.getSelectedValues();
         dfReport["UsersCanResetLeafs"]=arrValues;
         
-        
-        var arrFunctions=["BillingElementAdjustFunction","AdvanceElementAdjustFunction"];
-        arrFunctions.forEach(function(textareaName){
-            auxObj=System.getAngularDomObject(textareaName)[0];
-            dfReport[textareaName]=auxObj.value;
-        });
+        auxObj=System.getAngularObject("ChildAdjustment",true);
+        dfReport["BillingElementAdjustFunction"]=auxObj.getValue();
+        auxObj=System.getAngularObject("AdvanceAdjustment",true);
+        dfReport["AdvanceElementAdjustFunction"]=auxObj.getValue();
         
         var arrDates=["ReportInitDate","ReportEndDate","ContractInitDate",
                           "ContractEndDate", "ContractAdvancedDate"];
@@ -390,13 +388,14 @@ export class TabConfig {
             auxObj.setSelectedValues(config.UsersCanResetLeafs);
         }
                 
-        var arrFunctions=["BillingElementAdjustFunction","AdvanceElementAdjustFunction"];
-        arrFunctions.forEach(function(textareaName){
-            auxObj=System.getAngularDomObject(textareaName)[0];
-            if (isDefined(config[textareaName])){
-                auxObj.value=config[textareaName];
-            }
-        });
+        auxObj=System.getAngularObject("ChildAdjustment",true);
+        if (isDefined(config["BillingElementAdjustFunction"])){
+            auxObj.setValue(config["BillingElementAdjustFunction"]);
+        }
+        auxObj=System.getAngularObject("AdvanceAdjustment",true);
+        if (isDefined(config["AdvanceElementAdjustFunction"])){
+            auxObj.setValue(config["AdvanceElementAdjustFunction"]);
+        }
 
         if (isDefined(config['dates'])){
             var arrDates=["ReportInitDate","ReportEndDate","ContractInitDate",

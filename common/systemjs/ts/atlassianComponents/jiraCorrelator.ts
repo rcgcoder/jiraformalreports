@@ -140,7 +140,12 @@ export class jiraCorrelator {
         log("Showind the dialog");
         self.getDialog().show();
     }
-    textAreaChanged(event){
+    doAction(){
+        var self=this;
+        log("It´s Clicked do action");
+        this.getDialog().hide();
+    }
+   textAreaChanged(event){
         log("TextArea Changed")
         this.changeVisibilityAndOr();
     }

@@ -159,8 +159,7 @@ export class jiraCorrelator {
         var self=this;
         log("It´s Clicked do action");
         this.getDialog().hide();
-        this.theScript=this.getTextArea().val();
-        this.getScriptLabel().val(this.theScript);
+        this.setValue(this.getTextArea().val().trim());
     }
    textAreaChanged(event){
         log("TextArea Changed")

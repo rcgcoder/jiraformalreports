@@ -9,6 +9,7 @@ export class jiraCorrelator {
     @Input() withToggle: boolean = false;
     @Input() toggleLabel: string = "Enable function";
     @Input() withCaption: boolean = true;
+    @Input() withChildParentHelpers: boolean = true;
     theScript:string="";
     bScriptVisible:boolean=false;
     ngOnInit() {
@@ -23,6 +24,10 @@ export class jiraCorrelator {
             }
             if (!self.withToggle){
                 var auxObj=System.getAngularDomObject(self.name+"-toggleVisible");
+                $(auxObj).hide();
+            }
+            if (!self.withChildParentHelpers){
+                var auxObj=System.getAngularDomObject(self.name+"-ChildParentHelpers");
                 $(auxObj).hide();
             }
         });

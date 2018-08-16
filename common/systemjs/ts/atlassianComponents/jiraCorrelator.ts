@@ -67,6 +67,18 @@ export class jiraCorrelator {
         txtArea=$(txtArea);
         return txtArea;
     }
+    isEnabled(){
+        var auxObj=$(self.name+"-toggle");
+        return (auxObj.attr("checked")=="checked");
+    }
+    setEnabled(valEnabled){
+        var auxObj=$(self.name+"-toggle");
+        if (valEnabled){
+            auxObj.attr("checked","checked");
+        } else {
+            auxObj.attr("checked","");
+        }
+    }
     getValue(){
         return this.getTextArea().val();
     }

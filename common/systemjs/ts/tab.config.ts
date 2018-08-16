@@ -178,9 +178,16 @@ export class TabConfig {
         jql=auxObj.getJQLValue();
         arrValues=auxObj.getSelectedValues();
         dfReport["rootIssues"]={jql:jql,values:arrValues};
+        
+        auxObj=System.getAngularObject('excludeFunction',true);
+        value=auxObj.getValue();
+        dfReport["excludeFunction"]=value;
+        dfReport["excludeFunctionEnabled"]=auxObj.isEnabled();
+ 
         auxObj=System.getAngularObject('BillingHierarchy',true);
         value=auxObj.getValue();
         dfReport["billingHierarchy"]=value;
+        
         auxObj=System.getAngularObject('AdvanceHierarchy',true);
         value=auxObj.getValue();
         dfReport["advanceHierarchy"]=value;
@@ -326,6 +333,11 @@ export class TabConfig {
             auxObj.setSelectedValues(config.jqlScope.values);
         }
 
+        auxObj=System.getAngularObject('excludeFunction',true);
+        if (isDefined(config.excludeFunction)) auxObj.setValue(config.excludeFunction);
+        if (isDefined(config.excludeFunctionEnabled)) auxObj.setEnabled(config.excludeFunctionEnabled);
+        
+        
         auxObj=System.getAngularObject('BillingHierarchy',true);
         if (isDefined(config.billingHierarchy)) auxObj.setValue(config.billingHierarchy);
         auxObj=System.getAngularObject('AdvanceHierarchy',true);

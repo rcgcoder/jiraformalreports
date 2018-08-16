@@ -151,6 +151,7 @@ export class jiraCorrelator {
     }
     doShowScript(){
         var objAux=this.getScriptLabel();
+        var btnAux=System.getAngularDomObject("showScript_"+this.name);
         var btnAux=$("showScript_"+this.name);
         if (this.bScriptVisible){
             btnAux.html("Show");

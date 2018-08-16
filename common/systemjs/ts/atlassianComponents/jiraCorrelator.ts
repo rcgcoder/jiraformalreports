@@ -8,7 +8,6 @@ export class jiraCorrelator {
     @Input() caption: string = 'Child Relations';
     @Input() withToggle: boolean = false;
     @Input() toggleLabel: string = "Enable function";
-    @Input() withCaption: boolean = true;
     @Input() withChildParentHelpers: boolean = false;
     theScript:string="";
     bScriptVisible:boolean=false;

@@ -152,16 +152,18 @@
 				</div>
 				<div class="aui-group">
 				    <div class="aui-item">
-						  <aui-toggle id="toggle_ExcludeProjects" 
-					                        label="Exclude Projects"
-					                        ></aui-toggle><strong>Exclude Projects</strong>
-					    <atlassianSelector name="selExcludedProjects" 
-					    				   typeDescriptor="Projects"
-					    				    atlassianAplication="webapp"
-					    				    multiple="true"
-					    				    atlassianObjectFunction="getListProjects"
-					    				>
-					    </atlassianSelector>
+						<div class="flatpack-box">
+							  <aui-toggle id="toggle_ExcludeProjects" 
+						                        label="Exclude Projects"
+						                        ></aui-toggle><strong>Exclude Projects</strong>
+						    <atlassianSelector name="selExcludedProjects" 
+						    				   typeDescriptor="Projects"
+						    				    atlassianAplication="webapp"
+						    				    multiple="true"
+						    				    atlassianObjectFunction="getListProjects"
+						    				>
+						    </atlassianSelector>
+						</div>
 					</div>
 					<div class="aui-item">
 							<jiraCorrelator 

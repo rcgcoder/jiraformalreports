@@ -190,4 +190,7 @@ export class jiraCorrelator {
         var selIssueLinkTypes=System.getAngularObject(self.name+"-childLink",true);
         selIssueLinkTypes.reloadItems();
     }
+    doCancel(){
+        
+    }
 }

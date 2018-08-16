@@ -2,7 +2,7 @@
 <span id="{{name}}-toggleVisible">
 	<aui-toggle id="{{name}}-toggle" label="{{toggleLabel}}"></aui-toggle>
 </span>
-<span id="{{name}}-caption" for="{{name}}-toggle"><strong>{{caption}}</strong></span>
+<aui-label for="{{name}}-toggle" id="{{name}}-caption"><strong>{{caption}}</strong></aui-label>
 <div class="aui-group">
     <div class="aui-item">
 		<textarea (change)="textAreaChanged($event)" name="{{name}}-text" rows=6 style="width:100%;"></textarea>

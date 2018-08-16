@@ -9,7 +9,7 @@ export class jiraCorrelator {
     @Input() withToggle: boolean = false;
     @Input() toggleLabel: string = "Enable function";
     @Input() withCaption: boolean = true;
-    @Input() withChildParentHelpers: boolean = true;
+    @Input() withChildParentHelpers: boolean = false;
     theScript:string="";
     bScriptVisible:boolean=false;
     ngOnInit() {
@@ -24,10 +24,6 @@ export class jiraCorrelator {
             }
             if (!self.withToggle){
                 var auxObj=System.getAngularDomObject(self.name+"-toggleVisible");
-                $(auxObj).hide();
-            }
-            if (!self.withChildParentHelpers){
-                var auxObj=System.getAngularDomObject(self.name+"-ChildParentHelpers");
                 $(auxObj).hide();
             }
         });
@@ -171,6 +167,11 @@ export class jiraCorrelator {
         var self=this;
         log("it´s clicked show button");
         log("Showind the dialog");
+        debugger;
+        if (!self.withChildParentHelpers){
+            var auxObj=System.getAngularDomObject(self.name+"-ChildParentHelpers");
+            $(auxObj).hide();
+        }
         this.getTextArea().val(this.theScript);
         self.getDialog().show();
     }

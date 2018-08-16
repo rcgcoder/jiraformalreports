@@ -169,7 +169,6 @@
 							<jiraCorrelator 
 								withToggle=true 
 								withCaption=false
-								withChildParentHelpers=false
 								toggleLabel=""
 								name="excludeFunction" 
 								caption="Exclude Function">
@@ -197,11 +196,17 @@
 	</div>
 	<div class="aui-group">
 	    <div class="aui-item">
-			<jiraCorrelator name="BillingHierarchy" caption="Billing hierarchy rules">
+			<jiraCorrelator name="BillingHierarchy" 
+					withChildParentHelpers=true
+					caption="Billing hierarchy rules"
+					>
 			</jiraCorrelator>
 	    </div>
 	    <div class="aui-item">
-			<jiraCorrelator name="AdvanceHierarchy" caption="Advance hierarchy rules">
+			<jiraCorrelator name="AdvanceHierarchy" 
+						withChildParentHelpers=true
+				  	    caption="Advance hierarchy rules"
+				  	    >
 			</jiraCorrelator>
 		</div>
 	</div>

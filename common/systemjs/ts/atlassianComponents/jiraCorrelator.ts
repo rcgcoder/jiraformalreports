@@ -68,11 +68,15 @@ export class jiraCorrelator {
         return txtArea;
     }
     isEnabled(){
-        var auxObj=$(System.getAngularDomObject(self.name+"-toggle"));
+        var self=this;
+        var auxObj=System.getAngularDomObject(self.name+"-toggle");
+        auxObj=$(auxObj);
         return (auxObj.attr("checked")=="checked");
     }
     setEnabled(valEnabled){
-        var auxObj=$(System.getAngularDomObject(self.name+"-toggle"));
+        var self=this;
+        var auxObj=System.getAngularDomObject(self.name+"-toggle");
+        auxObj=$(auxObj);
         if (valEnabled){
             auxObj.attr("checked","checked");
         } else {

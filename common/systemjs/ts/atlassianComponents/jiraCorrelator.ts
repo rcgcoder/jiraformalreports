@@ -9,6 +9,7 @@ export class jiraCorrelator {
     @Input() withToggle: boolean = false;
     @Input() toggleLabel: string = "Enable function";
     @Input() withCaption: boolean = true;
+    theScript:string="Write javascript here...";
     ngOnInit() {
         var self=this;
         System.addPostProcess(function(){
@@ -60,6 +61,12 @@ export class jiraCorrelator {
         var selParent=System.getAngularObject(self.name+"-parentField",true);
         var result=selParent.getSelectedValues();
         return result;
+    }
+    getScriptLabel(){
+        var self=this;
+        var txtArea=System.getAngularDomObject(self.name+"-scriptText");
+        txtArea=$(txtArea);
+        return txtArea;
     }
     getTextArea(){
         var self=this;
@@ -138,12 +145,15 @@ export class jiraCorrelator {
         var self=this;
         log("it´s clicked show button");
         log("Showind the dialog");
+        this.getTextArea().val(this.theScript);
         self.getDialog().show();
     }
     doAction(){
         var self=this;
         log("It´s Clicked do action");
         this.getDialog().hide();
+        this.theScript=this.getTextArea().val();
+        this.getScriptLabel().val(this.theScript);
     }
    textAreaChanged(event){
         log("TextArea Changed")

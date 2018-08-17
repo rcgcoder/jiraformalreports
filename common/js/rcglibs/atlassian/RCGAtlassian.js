@@ -142,7 +142,12 @@ class RCGAtlassian{
 				var objResp;
 				if (typeof response==="string"){
 					if (response=="") return self.popCallback([[]]);
-					objResp=JSON.parse(response);
+					try {
+						objResp=JSON.parse(response);
+					} catch (e) {
+						debugger;
+						alert("Error Parsing response");
+					}
 				} else {
 					objResp=response;
 				}

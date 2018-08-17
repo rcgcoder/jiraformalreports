@@ -168,6 +168,7 @@ export class jiraCorrelator {
         var self=this;
         log("it´s clicked show button");
         log("Showind the dialog");
+        self.getDialog().show();
         debugger;
         var auxObj=System.getAngularDomObject(self.name+"-ChildParentHelpers");
         var helpersHeight=$(auxObj).height();
@@ -187,7 +188,6 @@ export class jiraCorrelator {
             this.editor.session.setMode("ace/mode/javascript");
             this.editor.setValue(this.theScript);
         }
-        self.getDialog().show();
     }
     doAction(){
         var self=this;

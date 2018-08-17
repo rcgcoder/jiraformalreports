@@ -10,6 +10,8 @@ export class jiraCorrelator {
     @Input() toggleLabel: string = "Enable function";
     @Input() withCaption: boolean = true;
     @Input() withChildParentHelpers: boolean = false;
+    @Input() functionHeader: String = '';
+    @Input() functionFooter: String = '';
     theScript:string="";
     bScriptVisible:boolean=false;
     editor:object;

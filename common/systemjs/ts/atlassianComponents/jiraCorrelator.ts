@@ -100,6 +100,9 @@ export class jiraCorrelator {
     setValue(sVal){
         this.theScript=sVal;
         this.getScriptLabel().val(this.theScript);
+        if (isDefined(this.editor)){
+            this.editor.setValue(this.theScript);
+        }
 /*        if (sVal==""){
             this.getScriptLabel().hide();
         } else {

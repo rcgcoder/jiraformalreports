@@ -173,7 +173,7 @@ export class jiraCorrelator {
             var auxObj=System.getAngularDomObject(self.name+"-ChildParentHelpers");
             $(auxObj).hide();
         }
-        this.getTextArea().val(this.theScript);
+//        this.getTextArea().val(this.theScript);
         if (isUndefined(this.editor)){
             ace.config.set('basePath', System.webapp.composeUrl("js/libs/ace/src-noconflict")); 
             this.editor = ace.edit(self.name+"-ace");
@@ -186,7 +186,6 @@ export class jiraCorrelator {
     doAction(){
         var self=this;
         log("It´s Clicked do action");
-        alert()
         this.getDialog().hide();
 //        this.setValue(this.getTextArea().val().trim());
         this.setValue(this.editor.getValue());

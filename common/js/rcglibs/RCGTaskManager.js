@@ -1126,7 +1126,7 @@ class RCGTaskManager{
 		var bckTaskCallsBlock=tm.asyncTaskCallsBlock;
 		var bckTaskCallsMaxDeep=tm.asyncTaskCallsMaxDeep;
 		self.addStep("Change autofree and taskCallsblock", function(){
-			tm.autoFree=false;
+//			tm.autoFree=false;
 			tm.asyncTaskCallsBlock=0;
 			tm.asyncTaskCallsMaxDeep=0;
 			tm.next();
@@ -1135,7 +1135,7 @@ class RCGTaskManager{
 			self.internal_parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads);
 		});
 		self.addStep("Restore AutoFree and CallsBlock params",function(){
-			tm.autoFree=bckAutoFree;
+//			tm.autoFree=bckAutoFree;
 			tm.asyncTaskCallsBlock=bckTaskCallsBlock;
 			tm.asyncTaskCallsMaxDeep=bckTaskCallsMaxDeep;
 			tm.next();

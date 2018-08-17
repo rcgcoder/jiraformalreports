@@ -203,7 +203,7 @@ export class jiraCorrelator {
             auxObj.height((bodyHeight-adjustHeight));
             ace.config.set('basePath', System.webapp.composeUrl("js/libs/ace/src-noconflict")); 
             this.editor = ace.edit(self.name+"-ace");
-            this.editor.setTheme("ace/theme/Vibrant Ink");
+            this.editor.setTheme("ace/theme/Cobalt");
             this.editor.session.setMode("ace/mode/javascript");
         }
         this.editor.setValue(this.theScript);

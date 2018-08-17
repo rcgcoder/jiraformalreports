@@ -169,16 +169,18 @@ export class jiraCorrelator {
         log("it´s clicked show button");
         log("Showind the dialog");
         debugger;
+        var helpersHeight=0;
         if (!self.withChildParentHelpers){
             var auxObj=System.getAngularDomObject(self.name+"-ChildParentHelpers");
             $(auxObj).hide();
+            helpersHeight=$(auxObj).height();
         }
 //        this.getTextArea().val(this.theScript);
         if (isUndefined(this.editor)){
             var auxObj=System.getAngularDomObject(self.name+"-DialogBody");
             var bodyHeight=$(auxObj).height();
             var auxObj=System.getAngularDomObject(self.name+"-ace");
-            auxObj.height(bodyHeight+ "px");
+            auxObj.height((bodyHeight-helpersHeight));
             ace.config.set('basePath', System.webapp.composeUrl("js/libs/ace/src-noconflict")); 
             this.editor = ace.edit(self.name+"-ace");
             this.editor.setTheme("ace/theme/IPlastic");

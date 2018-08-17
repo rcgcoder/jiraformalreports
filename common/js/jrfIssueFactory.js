@@ -32,6 +32,23 @@ function newIssueFactory(report){
 			[]
 			,
 			undefined);
+	dynObj.hsExcludedProjects=newHashMap();
+	dynObj.addExcludedProject=function(prjKey){
+		var self=this;
+		if (!self.hsExcludedProjects.exists(prjKey)) {
+			self.hsExcludedProjects.add(prjKey,prjKey);
+		}
+	}
+	dynObj.isExcludedProject=function(prjKey){
+		var self=this;
+		return (self.hsExcludedProjects.exists(prjKey));
+	}
+	dynObj.functions.add("isProjectExcluded",function(){
+		var self=this;
+		var issPrjKey=self.fieldValue("project.key");
+		bExcluded=self.factory.isExcludedProject(issPrjKey);
+		return bExcluded;
+	});
 	dynObj.functions.add("getReport",function(){
 		return theReport;
 	});

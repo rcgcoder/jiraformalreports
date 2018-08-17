@@ -221,6 +221,14 @@ var jrfReport=class jrfReport {
 	    		var fncFormula=Function("actualValue","issue",sAdvanceAdjustFunction);
 	    		self.adjustAccumItemFunctions.add("AdvanceChilds",fncFormula);
 	        }
+	        
+			//debugger;
+			if (isDefined(self.config.excludeProjects)&&self.config.excludeProjects){
+				self.config.excludedProjectsList.forEach(function(prj){
+					self.allIssues.addExcludedProject(prj.key);
+				});
+			}
+
         // change de "fieldValue" method
 			self.continueTask();
 		});
@@ -354,36 +362,38 @@ var jrfReport=class jrfReport {
 				} else {
 					nDuplicatedIssues++;					
 				}
-				var arrPendingKeys=issue.getPendingLinkedIssueKeys(arrLinkTypes,self.allIssues);
-				arrPendingKeys.forEach(function(issueKey){
-					if (!hsKeyWaiting.exists(issueKey)){
-						hsKeyWaiting.add(issueKey,issueKey)
-						fncAddToGroup(issueKey);
-					}
-				});
-				var iType=issue.fieldValue("issuetype");
-				if (iType=="Hito"){
-					if (!hsEpics.exists(key)){
-						hsEpics.add(key,key);
-						fncAddEpicToGroup(key);
-					}
-				} else {
-					var eLink=issue.fieldValue("Epic Link");
-					if (isDefined(eLink)&&(eLink!="")){
-						var issueParent=self.allIssues.getById(eLink);
-						if (key!=""){
-							if (issueParent!=""){
-								if (!issueParent.existsLinkedIssueKey(key)){
-									issueParent.addLinkedIssueKey(key,key);
-								}
-								if (!issueParent.existsEpicChild(key)){
-									issueParent.addEpicChild(issue);
+				if (!issue.isProjectExcluded()){
+					var arrPendingKeys=issue.getPendingLinkedIssueKeys(arrLinkTypes,self.allIssues);
+					arrPendingKeys.forEach(function(issueKey){
+						if (!hsKeyWaiting.exists(issueKey)){
+							hsKeyWaiting.add(issueKey,issueKey)
+							fncAddToGroup(issueKey);
+						}
+					});
+					var iType=issue.fieldValue("issuetype");
+					if (iType=="Hito"){
+						if (!hsEpics.exists(key)){
+							hsEpics.add(key,key);
+							fncAddEpicToGroup(key);
+						}
+					} else {
+						var eLink=issue.fieldValue("Epic Link");
+						if (isDefined(eLink)&&(eLink!="")){
+							var issueParent=self.allIssues.getById(eLink);
+							if (key!=""){
+								if (issueParent!=""){
+									if (!issueParent.existsLinkedIssueKey(key)){
+										issueParent.addLinkedIssueKey(key,key);
+									}
+									if (!issueParent.existsEpicChild(key)){
+										issueParent.addEpicChild(issue);
+									}
+								} else {
+									fncAddToGroup(eLink);
 								}
 							} else {
-								fncAddToGroup(eLink);
+								logError("The key link is '' in issue "+ issueParent.getKey());
 							}
-						} else {
-							logError("The key link is '' in issue "+ issueParent.getKey());
 						}
 					}
 				}

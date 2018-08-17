@@ -549,26 +549,15 @@ var jrfReport=class jrfReport {
 				countAdded++;
 			});
 			logError("Added "+countAdded+" "+ ((100*countAdded)/self.rootIssues.length()) +"% to the seletion JQL")
-			var hsExcludedProjects;
-			//debugger;
-			if (self.config.excludeProjects){
-				hsExcludedProjects=newHashMap();
-				self.config.excludedProjectsList.forEach(function(prj){
-					hsExcludedProjects.add(prj.key,prj.key);
-				});
-			}
 			var nExcludedIssues=0;
 			self.rootIssues.walk(function(jsonIssue,iProf,key){
 				//log("Root Issue: "+key);
 				var issue=self.allIssues.getById(key);
 				if (issue!=""){
 					var bExcluded=false;
-					if (self.config.excludeProjects){
-						var issPrjKey=issue.fieldValue("project.key");
-						bExcluded=(hsExcludedProjects.exists(issPrjKey));
-						if (bExcluded) nExcludedIssues++;
-					}
-					if (!bExcluded){
+					if (issue.isProjectExcluded()){
+						nExcludedIssues++;
+					}else {
 						if (!issuesAdded.exists(key)){
 							issuesAdded.add(key,issue);
 						}
@@ -580,8 +569,8 @@ var jrfReport=class jrfReport {
 					logError("The issue "+ key + " does not exists in the all Issues retrieved list");
 				}
 			});
-			if (self.config.excludeProjects){
-				log("Excluded "+nExcludedIssues+" issues afert apply project exclude list filter");
+			if (nExcludedIssues>0){
+				log("Excluded "+nExcludedIssues+" root issues after apply project exclude list filter");
 			}
 			var formulaChild=self.config.billingHierarchy;
 			var formulaAdvance=self.config.advanceHierarchy;

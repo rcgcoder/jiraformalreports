@@ -12,6 +12,7 @@ export class jiraCorrelator {
     @Input() withChildParentHelpers: boolean = false;
     theScript:string="";
     bScriptVisible:boolean=false;
+    editor:object;
     ngOnInit() {
         var self=this;
         System.addPostProcess(function(){
@@ -173,18 +174,22 @@ export class jiraCorrelator {
             $(auxObj).hide();
         }
         this.getTextArea().val(this.theScript);
-        ace.config.set('basePath', System.webapp.composeUrl("js/libs/ace/src-noconflict")); 
-        var editor = ace.edit(self.name+"-ace");
-        editor.setTheme("ace/theme/monokai");
-        editor.session.setMode("ace/mode/javascript");
-        
+        if (isUndefined(this.editor)){
+            ace.config.set('basePath', System.webapp.composeUrl("js/libs/ace/src-noconflict")); 
+            this.editor = ace.edit(self.name+"-ace");
+            this.editor.setTheme("ace/theme/monokai");
+            this.editor.session.setMode("ace/mode/javascript");
+            this.editor.setValue(this.theScript);
+        }
         self.getDialog().show();
     }
     doAction(){
         var self=this;
         log("It´s Clicked do action");
+        alert()
         this.getDialog().hide();
-        this.setValue(this.getTextArea().val().trim());
+//        this.setValue(this.getTextArea().val().trim());
+        this.setValue(this.editor.getValue());
     }
    textAreaChanged(event){
         log("TextArea Changed")

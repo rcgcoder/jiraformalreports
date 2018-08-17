@@ -21,21 +21,26 @@ export class jiraCorrelator {
             log("PostProcessing:"+self.name);
             System.bindObj(self);
             self.changeVisibilityAndOr();
+            var auxObj
             if (!self.withCaption){
-                var auxObj=System.getAngularDomObject(self.name+"-caption");
-                $(auxObj).hide();
+                auxObj=System.getAngularDomObject(self.name+"-caption");
+                auxObj.hide();
             }
             if (!self.withToggle){
-                var auxObj=System.getAngularDomObject(self.name+"-toggleVisible");
-                $(auxObj).hide();
+                auxObj=System.getAngularDomObject(self.name+"-toggleVisible");
+                auxObj.hide();
             }
+            auxObj=System.getAngularDomObject(self.name+"-fncHeader");
             if (self.functionHeader==''){
-                var auxObj=System.getAngularDomObject(self.name+"-fncHeader");
-                $(auxObj).hide();
+                auxObj.hide();
+            } else {
+                auxObj.html("<strong><i>"+self.functionHeader+"</i></strong>");
             }
+            auxObj=System.getAngularDomObject(self.name+"-fncFooter");
             if (self.functionFooter==''){
-                var auxObj=System.getAngularDomObject(self.name+"-fncFooter");
-                $(auxObj).hide();
+                auxObj.hide();
+            } else {
+                auxObj.html("<strong><i>"+self.functionFooter+"</i></strong>");
             }
             
 

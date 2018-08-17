@@ -197,6 +197,8 @@
 			<jiraCorrelator name="BillingHierarchy" 
 					withChildParentHelpers=true
 					caption="Billing hierarchy rules"
+					functionHeader="function isChild(parent,child){<br>return "
+					functionFooter="}"
 					>
 			</jiraCorrelator>
 	    </div>
@@ -204,6 +206,8 @@
 			<jiraCorrelator name="AdvanceHierarchy" 
 						withChildParentHelpers=true
 				  	    caption="Advance hierarchy rules"
+						functionHeader="function isChildAdvance(parent,child){<br>return "
+						functionFooter="}"
 				  	    >
 			</jiraCorrelator>
 		</div>
@@ -212,16 +216,16 @@
 	    <div class="aui-item">
    			<jiraCorrelator name="ChildAdjustment" 
 					caption="Billing Element adjust function "
-					functionHeader="function adjustChild(actualValue,issue,fieldName,notAdjust){
-										return"
-					functionFooter="		;
-									}"
+					functionHeader="function adjustChild(actualValue,issue,fieldName,notAdjust)"
+					functionFooter="}"
 					>
 			</jiraCorrelator>
 		</div>
 	    <div class="aui-item">
    			<jiraCorrelator name="AdvanceAdjustment" 
-					caption="Advance Element adjust function - body of adjustAdvanceChild(actualValue,issue,fieldName,notAdjust)"
+					caption="Advance Element adjust function"
+					functionHeader="function adjustAdvanceChild(actualValue,issue,fieldName,notAdjust)"
+					functionFooter="}"
 					>
 			</jiraCorrelator>
 		</div>

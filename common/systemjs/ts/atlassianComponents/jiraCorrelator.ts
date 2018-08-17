@@ -186,8 +186,8 @@ export class jiraCorrelator {
             this.editor = ace.edit(self.name+"-ace");
             this.editor.setTheme("ace/theme/Vibrant Ink");
             this.editor.session.setMode("ace/mode/javascript");
-            this.editor.setValue(this.theScript);
         }
+        this.editor.setValue(this.theScript);
     }
     doAction(){
         var self=this;

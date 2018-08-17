@@ -175,8 +175,11 @@ export class jiraCorrelator {
         }
 //        this.getTextArea().val(this.theScript);
         if (isUndefined(this.editor)){
+            var auxObj=System.getAngularDomObject(self.name+"-DialogBody");
+            var bodyHeight=$(auxObj).height();
             ace.config.set('basePath', System.webapp.composeUrl("js/libs/ace/src-noconflict")); 
             this.editor = ace.edit(self.name+"-ace");
+            this.editor.height(bodyHeight+ "px");
             this.editor.setTheme("ace/theme/monokai");
             this.editor.session.setMode("ace/mode/javascript");
             this.editor.setValue(this.theScript);

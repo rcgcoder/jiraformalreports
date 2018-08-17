@@ -29,11 +29,11 @@ export class jiraCorrelator {
                 var auxObj=System.getAngularDomObject(self.name+"-toggleVisible");
                 $(auxObj).hide();
             }
-            if (self.functionHeader!=''){
+            if (self.functionHeader==''){
                 var auxObj=System.getAngularDomObject(self.name+"-fncHeader");
                 $(auxObj).hide();
             }
-            if (self.functionFooter!=''){
+            if (self.functionFooter==''){
                 var auxObj=System.getAngularDomObject(self.name+"-fncFooter");
                 $(auxObj).hide();
             }

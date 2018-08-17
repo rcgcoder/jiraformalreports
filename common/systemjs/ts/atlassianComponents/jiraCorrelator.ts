@@ -29,6 +29,16 @@ export class jiraCorrelator {
                 var auxObj=System.getAngularDomObject(self.name+"-toggleVisible");
                 $(auxObj).hide();
             }
+            if (self.functionHeader!=''){
+                var auxObj=System.getAngularDomObject(self.name+"-fncHeader");
+                $(auxObj).hide();
+            }
+            if (self.functionFooter!=''){
+                var auxObj=System.getAngularDomObject(self.name+"-fncFooter");
+                $(auxObj).hide();
+            }
+            
+
         });
     }
     fillLinks(arrLinks){
@@ -176,17 +186,21 @@ export class jiraCorrelator {
         self.getDialog().show();
         debugger;
         var auxObj=System.getAngularDomObject(self.name+"-ChildParentHelpers");
-        var helpersHeight=$(auxObj).height();
+        var adjustHeight=auxObj.height();
         if (!self.withChildParentHelpers){
-            $(auxObj).hide();
-            helpersHeight=0;
+            auxObj.hide();
+            adjustHeight=0;
         }
+        var auxObj=System.getAngularDomObject(self.name+"-fncHeader");
+        adjustHeight+=auxObj.height();
+        var auxObj=System.getAngularDomObject(self.name+"-fncFooter");
+        adjustHeight+=auxObj.height();
 //        this.getTextArea().val(this.theScript);
         if (isUndefined(this.editor)){
             var auxObj=System.getAngularDomObject(self.name+"-DialogBody");
             var bodyHeight=$(auxObj).height();
             var auxObj=System.getAngularDomObject(self.name+"-ace");
-            auxObj.height((bodyHeight-helpersHeight));
+            auxObj.height((bodyHeight-adjustHeight));
             ace.config.set('basePath', System.webapp.composeUrl("js/libs/ace/src-noconflict")); 
             this.editor = ace.edit(self.name+"-ace");
             this.editor.setTheme("ace/theme/Vibrant Ink");

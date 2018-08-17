@@ -169,11 +169,11 @@ export class jiraCorrelator {
         log("it´s clicked show button");
         log("Showind the dialog");
         debugger;
-        var helpersHeight=0;
+        var auxObj=System.getAngularDomObject(self.name+"-ChildParentHelpers");
+        var helpersHeight=$(auxObj).height();
         if (!self.withChildParentHelpers){
-            var auxObj=System.getAngularDomObject(self.name+"-ChildParentHelpers");
             $(auxObj).hide();
-            helpersHeight=$(auxObj).height();
+            helpersHeight=0;
         }
 //        this.getTextArea().val(this.theScript);
         if (isUndefined(this.editor)){

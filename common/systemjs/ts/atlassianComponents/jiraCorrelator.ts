@@ -107,7 +107,7 @@ export class jiraCorrelator {
         if (valEnabled){
             auxObj.attr("checked","checked");
         } else {
-            auxObj.attr("checked","");
+            auxObj.attr("checked",false);
         }
     }
     getValue(){

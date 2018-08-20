@@ -645,15 +645,15 @@ var jrfReport=class jrfReport {
 			var maxLettersInGroup=2000;
 			var grpLength=0;
 			var sKeyAux;
-			issuesAdded.walk(function (element){
+			self.rootIssues.walk(function (jsonIssue,iDeep,issueKey){
 				if ((keyGroup.length>=maxItemsInGroup)||(grpLength>=maxLettersInGroup)){
 					keyGroup=[];
 					grpLength=0;
 					arrKeyGroups.push(keyGroup);
 				}
-				sKeyAux=element.getKey();
-				grpLength+=sKeyAux.length;
-				keyGroup.push(sKeyAux);
+				//sKeyAux=element.getKey();
+				grpLength+=issueKey.length;
+				keyGroup.push(issueKey);
 			});
 			var fncAddComments=function(jsonIssues){
 				var oIssues=JSON.parse(jsonIssues);
@@ -667,8 +667,8 @@ var jrfReport=class jrfReport {
 				var objComment;
 				arrIssues.forEach(function (jsonIssue){
 					key=jsonIssue.key;
-					if (issuesAdded.exists(key)){
-						issue=issuesAdded.getValue(key);
+					if (self.allIssues.exists(key)){
+						issue=self.allIssues.getById(key);
 						comments=jsonIssue.fields.comment.comments;
 						htmlComments=jsonIssue.renderedFields.comment.comments;
 						var bFind=false;

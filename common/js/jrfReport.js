@@ -632,6 +632,7 @@ var jrfReport=class jrfReport {
 			});
 			self.continueTask();
 		});
+		
 		// load comments of issues
 		self.addStep("Loading comments of "+ issuesAdded.length()+"issues",function(){
 			if (self.isReusingIssueList()){
@@ -770,6 +771,7 @@ var jrfReport=class jrfReport {
 			});
 			self.continueTask();
 		});
+		
 			
 		// assing childs and advance childs to root elements
 		self.addStep("Assign Childs and Advance",function(){
@@ -948,6 +950,9 @@ var jrfReport=class jrfReport {
 			}
 			self.continueTask();
 		});
+		
+		
+		
 		self.addStep("Analizing child/parent billing cycles and asign parents to root list",function(){
 			var hsRootParent=newHashMap();
 			issuesAdded.walk(function(issue){

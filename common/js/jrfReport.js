@@ -193,9 +193,8 @@ var jrfReport=class jrfReport {
 			var contentId=arrValues[0].key;
 			cfc.getContent(contentId);
 		});
-		// load report model and submodels
-		// Process Model with The Report
-		self.addStep("Parsing Model",function(){
+		//Initialize Report Model.... with variables, etc
+		self.addStep("Initializing Model",function(){
 			var tm=self.getTaskManager();
 			tm.asyncTimeWasted=0;
 			tm.asyncTaskCallsBlock=0;
@@ -287,8 +286,7 @@ var jrfReport=class jrfReport {
 		    } else {
 				theModel.variables.pushVar("withAdvancedWorks",false);				
 		    }
-			
-			theModel.process("parse"); // parse....
+		    self.continueTask();
 		});
 
 		self.addStep("Construct Issue Dynamic Object.... ",function(){
@@ -980,6 +978,12 @@ var jrfReport=class jrfReport {
 			self.continueTask();
 			
 		});
+		// load report model and submodels
+		// Process Model with The Report
+		self.addStep("Parsing Model",function(){
+			self.objModel.process("parse"); // parse....
+		});
+		
 		
 		self.addStep("Processing Directives",function(){
 			debugger;

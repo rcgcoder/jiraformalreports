@@ -228,6 +228,10 @@ var jrfReport=class jrfReport {
 					self.allIssues.addExcludedProject(prj.key);
 				});
 			}
+			if ((isDefined(self.config.excludeFunctionEnabled)&&self.config.excludeFunctionEnabled)&&
+			   (isDefined(self.config.excludeFunction)&&(self.config.excludeFunction.trim()!=""))){
+				self.allIssues.setExcludeFunction(self.config.excludeFunction);
+			}
 
         // change de "fieldValue" method
 			self.continueTask();
@@ -555,7 +559,8 @@ var jrfReport=class jrfReport {
 				var issue=self.allIssues.getById(key);
 				if (issue!=""){
 					var bExcluded=false;
-					if (issue.isProjectExcluded()){
+					if (issue.isProjectExcluded()||(issue.isExcludedByFunction())){
+						debugger;
 						nExcludedIssues++;
 					}else {
 						if (!issuesAdded.exists(key)){

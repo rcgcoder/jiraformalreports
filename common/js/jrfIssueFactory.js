@@ -32,7 +32,7 @@ function newIssueFactory(report){
 			[]
 			,
 			undefined);
-	dynObj.hsExcludedProjects=newHashMap();
+	dynObj.hsExcludedProjects=newHashMap();	
 	dynObj.addExcludedProject=function(prjKey){
 		var self=this;
 		if (!self.hsExcludedProjects.exists(prjKey)) {
@@ -43,11 +43,34 @@ function newIssueFactory(report){
 		var self=this;
 		return (self.hsExcludedProjects.exists(prjKey));
 	}
+	dynObj.isExcludedByFunction;
+	dynObj.setExcludeFunction=function(fncExclusion){
+		var fncFormula;
+		if (isMethod(fncExclusion)){
+			fncFormula=fncExclusion;
+		} else if (isString(fncExclusion)||(isArray(fncExclusion))){
+			var sSource=fncExclusion;
+			if (isArray(fncExclusion)){
+				sSource=fncExclusion.saToString();
+			}
+			fncFormula=createFunction(fncExclusion);
+		}
+		this.isExcludedByFunction=fncFormula;
+	}
 	dynObj.functions.add("isProjectExcluded",function(){
 		var self=this;
 		var issPrjKey=self.fieldValue("project.key");
 		bExcluded=self.factory.isExcludedProject(issPrjKey);
 		return bExcluded;
+	});
+	dynObj.functions.add("isExcludedByFunction",function(){
+		var self=this;
+		if (isDefined(self.factory.isExcludedByFunction)){
+			var theReport=self.getReport();
+			var theModel=theReport.objModel;
+			return self.factory.isExcludedByFunction(self,theReport,theModel);
+		}
+		return false;
 	});
 	dynObj.functions.add("getReport",function(){
 		return theReport;

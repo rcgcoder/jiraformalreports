@@ -53,7 +53,12 @@ function newIssueFactory(report){
 			if (isArray(fncExclusion)){
 				sSource=fncExclusion.saToString();
 			}
-			fncFormula=createFunction(fncExclusion);
+			sSource=`'';
+					var issue=_arrRefs_[0];
+					var report=_arrRefs_[1];
+					var model=_arrRefs_[2];
+					result=` +sSource;
+			fncFormula=createFunction(sSource);
 		}
 		this.isExcludedByFunction=fncFormula;
 	}
@@ -68,7 +73,7 @@ function newIssueFactory(report){
 		if (isDefined(self.factory.isExcludedByFunction)){
 			var theReport=self.getReport();
 			var theModel=theReport.objModel;
-			return self.factory.isExcludedByFunction(self,theReport,theModel);
+			return self.factory.isExcludedByFunction([self,theReport,theModel]);
 		}
 		return false;
 	});

@@ -632,6 +632,144 @@ var jrfReport=class jrfReport {
 			});
 			self.continueTask();
 		});
+		// load comments of issues
+		self.addStep("Loading comments of "+ issuesAdded.length()+"issues",function(){
+			if (self.isReusingIssueList()){
+				return self.continueTask();
+			}
+			var arrKeyGroups=[];
+			var keyGroup=[];
+			arrKeyGroups.push(keyGroup);
+			var maxItemsInGroup=100;
+			var maxLettersInGroup=2000;
+			var grpLength=0;
+			var sKeyAux;
+			issuesAdded.walk(function (element){
+				if ((keyGroup.length>=maxItemsInGroup)||(grpLength>=maxLettersInGroup)){
+					keyGroup=[];
+					grpLength=0;
+					arrKeyGroups.push(keyGroup);
+				}
+				sKeyAux=element.getKey();
+				grpLength+=sKeyAux.length;
+				keyGroup.push(sKeyAux);
+			});
+			var fncAddComments=function(jsonIssues){
+				var oIssues=JSON.parse(jsonIssues);
+				var arrIssues=oIssues.issues;
+				var key;
+				var issue;
+				var comments;
+				var htmlComments;
+				var comment;
+				var htmlComment;
+				var objComment;
+				arrIssues.forEach(function (jsonIssue){
+					key=jsonIssue.key;
+					if (issuesAdded.exists(key)){
+						issue=issuesAdded.getValue(key);
+						comments=jsonIssue.fields.comment.comments;
+						htmlComments=jsonIssue.renderedFields.comment.comments;
+						var bFind=false;
+						for (var i=0;i<comments.length;i++){
+							comment=comments[i];
+							htmlComment=htmlComments[i];
+							objComment={id:comment.created.trim(),body:comment.body.trim(),htmlBody:htmlComment.body.trim()};
+							issue.addComment(objComment);
+							bFind=true;
+						}
+//						if (bFind){
+//							var vResult=issue.getHtmlLastCommentStartsWith("Descripción Formal",true,"<br/>",true);
+//							log (vResult);
+//						}
+						// applying "Jira Formal Report Adjusts"
+						var sTokenAdjustComment="Jira Formal Report Adjusts";
+						var hsReportAdjusts=issue.getCommentsStartsWith(sTokenAdjustComment);
+						hsReportAdjusts.walk(function(oAdjustComment){
+							//debugger;
+							var sCommentBody=oAdjustComment.body;
+							var sAux=sCommentBody.substring(sTokenAdjustComment.length+1,sCommentBody.length);
+							var oAdjusts=JSON.parse(sAux); // may be a object (single change) or an array (multiple changes)
+							if (!Array.isArray(oAdjusts)){ // if only one change
+								oAdjusts=[oAdjusts]; // create as array
+							}
+							oAdjusts.forEach(function (oAdjust){
+								var fieldName="";
+								var fieldValue="";
+								var changeDate="";
+								var isLifeChange=false;
+								if (isDefined(oAdjust.changeDate)){
+									isLifeChange=true;
+									changeDate=toDateNormalDDMMYYYYHHMMSS(oAdjust.changeDate);
+								}
+								fieldName=oAdjust.field; // may be simple name (timespent) or complex (status.name)
+								fieldValue=oAdjust.newValue; // may be a simple value (16000) or complex ( {name:"the new name",id:14,...})
+								var arrFieldPath=fieldName.split(".");
+								var sField=arrFieldPath[0];
+								var sField=issue.getExistentFieldId(sField);
+								if (!isLifeChange){
+									if (!isDefined(issue["set"+sField])){//the field is in the "field interest list"
+										log("Only can adjust interested fields... the field:"+sField + " is not in the list");
+									} else if (arrFieldPath.length==1){ // simple field
+										issue["set"+sField](fieldValue);
+									} else {
+										var actValue=issue["get"+sField]();
+										for (var i=1;i<arrFieldPath.length-1;i++){
+											var sSubPath=arrFieldPath[i];
+											if (isUndefined(actValue[sSubPath])){
+												actValue[sSubPath]={};
+											}
+											actValue=actValue[sSubPath];
+										}
+										actValue[arrFieldPath[arrFieldPath.length-1]]=fieldValue;
+									}
+								} else {
+									var hsLifeAdjusts=issue.getFieldLifeAdjustById(sField);
+									if (hsLifeAdjusts==""){
+										hsLifeAdjusts=newHashMap();
+										issue.getFieldLifeAdjusts().add(sField,hsLifeAdjusts);
+									}
+									var oLifeChange={};
+									oLifeChange.effectDate=changeDate;
+									oLifeChange.newValue=fieldValue;
+									oLifeChange.fieldPath=arrFieldPath;
+									hsLifeAdjusts.add(changeDate.getTime()+"",oLifeChange);
+								}
+							});
+						});
+					} else {
+						logError("The issue ["+key+"] does not exists... Error");
+					}
+				});
+			}
+			var hsListComments=newHashMap();
+			arrKeyGroups.forEach(function(group){
+				if (group.length>0){
+/*					var sIssues="";
+					group.forEach(function (key){
+						sIssues+=((sIssues!=""?",":"")+key);
+					});
+					self.addStep("Retrieving Comments of Group ["+sIssues+"]",function(){
+						self.jira.getComments(group,fncAddComments);
+					});
+*/
+					hsListComments.push(group);
+				}
+			});
+			self.addStep("Getting comments parallelized.", function(){
+				var fncCall=function(group){
+//					self.addStep("Retrieve Comments of Group",function(){
+						self.jira.getComments(group,fncAddComments);
+//					});
+//					self.addStep("Do nothing to absorve the continueTask of getcomments",function(){
+						/* do nothing */
+//					});
+//					self.continueTask();
+				};
+				self.parallelizeCalls(hsListComments,fncCall);
+			});
+			self.continueTask();
+		});
 			
 		// assing childs and advance childs to root elements
 		self.addStep("Assign Childs and Advance",function(){
@@ -945,144 +1083,6 @@ var jrfReport=class jrfReport {
 			self.continueTask();
 		});
 
-		// load comments of issues
-		self.addStep("Loading comments of "+ issuesAdded.length()+"issues",function(){
-			if (self.isReusingIssueList()){
-				return self.continueTask();
-			}
-			var arrKeyGroups=[];
-			var keyGroup=[];
-			arrKeyGroups.push(keyGroup);
-			var maxItemsInGroup=100;
-			var maxLettersInGroup=2000;
-			var grpLength=0;
-			var sKeyAux;
-			issuesAdded.walk(function (element){
-				if ((keyGroup.length>=maxItemsInGroup)||(grpLength>=maxLettersInGroup)){
-					keyGroup=[];
-					grpLength=0;
-					arrKeyGroups.push(keyGroup);
-				}
-				sKeyAux=element.getKey();
-				grpLength+=sKeyAux.length;
-				keyGroup.push(sKeyAux);
-			});
-			var fncAddComments=function(jsonIssues){
-				var oIssues=JSON.parse(jsonIssues);
-				var arrIssues=oIssues.issues;
-				var key;
-				var issue;
-				var comments;
-				var htmlComments;
-				var comment;
-				var htmlComment;
-				var objComment;
-				arrIssues.forEach(function (jsonIssue){
-					key=jsonIssue.key;
-					if (issuesAdded.exists(key)){
-						issue=issuesAdded.getValue(key);
-						comments=jsonIssue.fields.comment.comments;
-						htmlComments=jsonIssue.renderedFields.comment.comments;
-						var bFind=false;
-						for (var i=0;i<comments.length;i++){
-							comment=comments[i];
-							htmlComment=htmlComments[i];
-							objComment={id:comment.created.trim(),body:comment.body.trim(),htmlBody:htmlComment.body.trim()};
-							issue.addComment(objComment);
-							bFind=true;
-						}
-//						if (bFind){
-//							var vResult=issue.getHtmlLastCommentStartsWith("Descripción Formal",true,"<br/>",true);
-//							log (vResult);
-//						}
-						// applying "Jira Formal Report Adjusts"
-						var sTokenAdjustComment="Jira Formal Report Adjusts";
-						var hsReportAdjusts=issue.getCommentsStartsWith(sTokenAdjustComment);
-						hsReportAdjusts.walk(function(oAdjustComment){
-							//debugger;
-							var sCommentBody=oAdjustComment.body;
-							var sAux=sCommentBody.substring(sTokenAdjustComment.length+1,sCommentBody.length);
-							var oAdjusts=JSON.parse(sAux); // may be a object (single change) or an array (multiple changes)
-							if (!Array.isArray(oAdjusts)){ // if only one change
-								oAdjusts=[oAdjusts]; // create as array
-							}
-							oAdjusts.forEach(function (oAdjust){
-								var fieldName="";
-								var fieldValue="";
-								var changeDate="";
-								var isLifeChange=false;
-								if (isDefined(oAdjust.changeDate)){
-									isLifeChange=true;
-									changeDate=toDateNormalDDMMYYYYHHMMSS(oAdjust.changeDate);
-								}
-								fieldName=oAdjust.field; // may be simple name (timespent) or complex (status.name)
-								fieldValue=oAdjust.newValue; // may be a simple value (16000) or complex ( {name:"the new name",id:14,...})
-								var arrFieldPath=fieldName.split(".");
-								var sField=arrFieldPath[0];
-								var sField=issue.getExistentFieldId(sField);
-								if (!isLifeChange){
-									if (!isDefined(issue["set"+sField])){//the field is in the "field interest list"
-										log("Only can adjust interested fields... the field:"+sField + " is not in the list");
-									} else if (arrFieldPath.length==1){ // simple field
-										issue["set"+sField](fieldValue);
-									} else {
-										var actValue=issue["get"+sField]();
-										for (var i=1;i<arrFieldPath.length-1;i++){
-											var sSubPath=arrFieldPath[i];
-											if (isUndefined(actValue[sSubPath])){
-												actValue[sSubPath]={};
-											}
-											actValue=actValue[sSubPath];
-										}
-										actValue[arrFieldPath[arrFieldPath.length-1]]=fieldValue;
-									}
-								} else {
-									var hsLifeAdjusts=issue.getFieldLifeAdjustById(sField);
-									if (hsLifeAdjusts==""){
-										hsLifeAdjusts=newHashMap();
-										issue.getFieldLifeAdjusts().add(sField,hsLifeAdjusts);
-									}
-									var oLifeChange={};
-									oLifeChange.effectDate=changeDate;
-									oLifeChange.newValue=fieldValue;
-									oLifeChange.fieldPath=arrFieldPath;
-									hsLifeAdjusts.add(changeDate.getTime()+"",oLifeChange);
-								}
-							});
-						});
-					} else {
-						logError("The issue ["+key+"] does not exists... Error");
-					}
-				});
-			}
-			var hsListComments=newHashMap();
-			arrKeyGroups.forEach(function(group){
-				if (group.length>0){
-/*					var sIssues="";
-					group.forEach(function (key){
-						sIssues+=((sIssues!=""?",":"")+key);
-					});
-					self.addStep("Retrieving Comments of Group ["+sIssues+"]",function(){
-						self.jira.getComments(group,fncAddComments);
-					});
-*/
-					hsListComments.push(group);
-				}
-			});
-			self.addStep("Getting comments parallelized.", function(){
-				var fncCall=function(group){
-//					self.addStep("Retrieve Comments of Group",function(){
-						self.jira.getComments(group,fncAddComments);
-//					});
-//					self.addStep("Do nothing to absorve the continueTask of getcomments",function(){
-						/* do nothing */
-//					});
-//					self.continueTask();
-				};
-				self.parallelizeCalls(hsListComments,fncCall);
-			});
-			self.continueTask();
-		});
 		
 		// load report model and submodels
 		// Process Model with The Report

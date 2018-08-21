@@ -990,13 +990,17 @@ var jrfReport=class jrfReport {
 				}
 			});
 			var nRemoves=0;
+			var nRootsPrevious=issuesAdded.length();
 			hsRemoveKeys.walk(function(issueKey){
 				if (issuesAdded.exists(issueKey)){
 					issuesAdded.remove(issueKey);
 					nRemoves++;
 				}
 			});
-			if (hsRemoveKeys.length()!=nRemoves){
+			var nRootsFinal=issuesAdded.length();
+			if ((hsRemoveKeys.length()!=nRemoves)
+				||((nRootsPrevious-nRemoves)==nRootsFinal)
+				){
 				log("The number of keys to remove is different of the effective removed issue count");
 			}
 /*			hsRootParent.walk(function(newRoot){

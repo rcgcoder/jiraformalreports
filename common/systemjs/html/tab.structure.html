@@ -155,8 +155,11 @@
 								withToggle=true 
 								withChildParentHelpers=true
 								caption="Related Issues Finder Function"
-								functionHeader="function getRelatedIssues(issue,hsIssueCache){<br><small></strong><i>// New related issues have to be added to array <ins>arrIssueKeys</ins></i></small><strong>"
-								functionFooter="}"
+								functionHeader="function getRelatedIssues(issue,hsIssueCache){
+													<br><small></strong><i>// New related issues have to be added to array <ins>arrIssueKeys</ins></i></small><strong>
+													<br>var arrIssueKeys=[];"
+								functionFooter="<br>return arrIssueKeys;
+												<br>}"
 								>
 						</jiraCorrelator>
 					</div>

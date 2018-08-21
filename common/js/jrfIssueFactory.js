@@ -65,12 +65,12 @@ function newIssueFactory(report){
 	dynObj.extractRelatedIssues;
 	dynObj.setRelatedIssueFindFunction=function(fncRelatedIssuesFunction){
 		var fncFormula;
-		if (isMethod(fncExclusion)){
-			fncFormula=fncExclusion;
-		} else if (isString(fncExclusion)||(isArray(fncExclusion))){
-			var sSource=fncExclusion;
-			if (isArray(fncExclusion)){
-				sSource=fncExclusion.saToString();
+		if (isMethod(fncRelatedIssuesFunction)){
+			fncFormula=fncRelatedIssuesFunction;
+		} else if (isString(fncRelatedIssuesFunction)||(isArray(fncRelatedIssuesFunction))){
+			var sSource=fncRelatedIssuesFunction;
+			if (isArray(fncRelatedIssuesFunction)){
+				sSource=fncRelatedIssuesFunction.saToString();
 			}
 			sSource=`'';
 					var issue=_arrRefs_[0];

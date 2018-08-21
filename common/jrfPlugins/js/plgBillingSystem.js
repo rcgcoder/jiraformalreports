@@ -786,7 +786,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
          var selfPlg=this;
          
          
-         selfPlg.report.treeIssues.walk(function(issue){
+         selfPlg.report.allIssues.walk(function(issue){
         	 	 issue.billingParams=billingParams;
                  issue.getFieldFaseBillingName=selfPlg.getFieldFaseBillingName;
                  issue.getBillingFieldUsed=selfPlg.getBillingFieldUsed;

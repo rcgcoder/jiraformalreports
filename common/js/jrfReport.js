@@ -770,6 +770,11 @@ var jrfReport=class jrfReport {
 			self.continueTask();
 		});
 		
+		// load report model and submodels
+		// Process Model with The Report
+		self.addStep("Parsing Model",function(){
+			self.objModel.process("parse"); // parse....
+		});
 			
 		// assing childs and advance childs to root elements
 		self.addStep("Assign Childs and Advance",function(){
@@ -977,11 +982,6 @@ var jrfReport=class jrfReport {
 			
 			self.continueTask();
 			
-		});
-		// load report model and submodels
-		// Process Model with The Report
-		self.addStep("Parsing Model",function(){
-			self.objModel.process("parse"); // parse....
 		});
 		
 		

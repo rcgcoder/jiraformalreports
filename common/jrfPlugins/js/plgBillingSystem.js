@@ -43,7 +43,7 @@ var newBillingObject=function (){
 							  faseActual:0,
 							  faseAnterior:0,
 							  inTimespents:{aprobado:0,pendiente:0,resto:0,total:0},
-							  noFacturable:{importe:0,timespent:0},
+							  noFacturable:{importe:0,timespent:0,avance:{importe:0,timespent:0}},
 							  workedPercent:0,
 							  bModificacionAlcance:false,
 							  comentarios:"",
@@ -759,28 +759,42 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 	   		}
 	   	});
 	   	if (isDefined(baseSnapshot)){
-	   		var impNoFacturable=baseSnapshot.calculos.aprobado+baseSnapshot.calculos.pendiente;
-	   		var tsNoFacturable=baseSnapshot.calculos.inTimespents.aprobado+baseSnapshot.calculos.inTimespents.pendiente;
+	   		var fncAdjustNoFacturable=function(auxSnapShot){
+		   		var auxImporteNoFacturable=auxSnapshot.calculos.aprobado+auxSnapshot.calculos.pendiente;
+		   		var auxTsNoFacturable=auxSnapshot.calculos.inTimespents.aprobado+auxSnapshot.calculos.inTimespents.pendiente;
+		   		var avanceImporte=0;
+		   		var avanceTimespent=auxSnapshot.source.timespent;
+		   		if (avanceTimespent>auxTsNoFacturable){
+		   			avanceTimespent-=auxTsNoFacturable;
+		   			avanceImporte=(avanceTimespent/3600)*auxSnapshot.source.hourCost;
+		   		} else {
+		   			avanceTimespent=0;
+		   		}
+		   		auxImporteNoFacturable+=avanceImporte;
+		   		auxTsNoFacturable+=avanceTimespent;
+	   			return {importe:auxImporteNoFacturable
+	   					,timespent:auxTsNoFacturable
+	   					,avance:{importe:avanceImporte,timespent:avanceTimespent}
+	   					};	
+	   		}
+	   		var noFacturableBase=fncAdjustNoFacturable(baseSnapshot);
 	   		baseSnapshot.calculos.aprobado=0;
 	   		baseSnapshot.calculos.pendiente=0;
 	   		baseSnapshot.calculos.inTimespents.aprobado=0;
 	   		baseSnapshot.calculos.inTimespents.pendiente=0;
-	   		baseSnapshot.calculos.noFacturable.importe=impNoFacturable;
-	   		baseSnapshot.calculos.noFacturable.timespent=tsNoFacturable;
+	   		baseSnapshot.calculos.noFacturable=noFacturableBase;
 	   		
 		   	arrSnapshots.forEach(function(snapshot){
 		   		if (snapshot.source.atDatetime.getTime()<contractInitDate.getTime()){
-			   		var auxImporteNoFacturable=snapshot.calculos.aprobado+snapshot.calculos.pendiente;
-			   		var auxTsNoFacturable=snapshot.calculos.inTimespents.aprobado+snapshot.calculos.inTimespents.pendiente;
+		   			var noFacturable=fncAdjustNoFacturable(snapshot);
 			   		snapshot.calculos.aprobado=0;
 			   		snapshot.calculos.pendiente=0;
 			   		snapshot.calculos.inTimespents.aprobado=0;
 			   		snapshot.calculos.inTimespents.pendiente=0;
-			   		snapshot.calculos.noFacturable.importe=auxImporteNoFacturable;
-			   		snapshot.calculos.noFacturable.timespent=auxTsNoFacturable;
+			   		snapshot.calculos.noFacturable=noFacturable;
 		   		} else if (snapshot.source.atDatetime.getTime()>contractInitDate.getTime()){
-			   		var auxImporteNoFacturable=impNoFacturable;
-			   		var auxTsNoFacturable=tsNoFacturable;
+			   		var auxImporteNoFacturable=noFacturableBase.importe;
+			   		var auxTsNoFacturable=noFacturableBase.timespent;
 			   		if (snapshot.calculos.aprobado<auxImporteNoFacturable){
 			   			auxImporteNoFacturable-=snapshot.calculos.aprobado;
 			   			snapshot.calculos.aprobado=0;
@@ -810,8 +824,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 			   			snapshot.calculos.inTimespents.pendiente-=auxTsNoFacturable;
 			   			auxTsNoFacturable=0;
 			   		}
-			   		snapshot.calculos.noFacturable.importe=impNoFacturable;
-			   		snapshot.calculos.noFacturable.timespent=tsNoFacturable;
+			   		snapshot.calculos.noFacturable=noFacturableBase;
 		   		}
 		   	});
 	   	}

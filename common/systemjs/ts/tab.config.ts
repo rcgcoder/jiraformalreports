@@ -183,12 +183,11 @@ export class TabConfig {
         
         debugger;
         auxObj=System.getAngularObject('excludeFunction',true);
-        value=auxObj.getValue();
-        dfReport["excludeFunction"]=value;
+        dfReport["excludeFunction"]=auxObj.getValue();
         dfReport["excludeFunctionEnabled"]=auxObj.isEnabled();
 
         auxObj=System.getAngularObject('relatedIssuesFind',true);
-        dfReport["relatedIssuesFindFunction"]=value;
+        dfReport["relatedIssuesFindFunction"]=auxObj.getValue();
         dfReport["relatedIssuesFindFunctionEnabled"]=auxObj.isEnabled();
  
         auxObj=System.getAngularObject('BillingHierarchy',true);

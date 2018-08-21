@@ -135,7 +135,7 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
              return arrResults;
          };
 
-         self.report.allIssues.walk(function(issue){
+         self.report.allIssues.list.walk(function(issue){
                  issue.getFase=fncGetFase;
                  issue.getFaseLife=fncGetFaseLife;
                  issue.getFaseName=fncGetFaseName;

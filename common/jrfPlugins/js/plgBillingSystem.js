@@ -746,8 +746,8 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		var objModel=otherParams.getValue("model");
 		var objReport=objModel.report;
 		var contractInitDate=(new Date());
-		if (isDefined(objReport.config.withAdvancedWorks)&&objReport.config.withAdvancedWorks){
-			contractInitDate=objModel.variables.getVar("ContractAdvancedDate");
+		if (objModel.variables.getVar("withAdvancedWorks")){
+			contractInitDate=objModel.variables.getVar("contractAdvancedWorks");
 		} else {
 			contractInitDate=objModel.variables.getVar("ContractInitDate");			
 		}

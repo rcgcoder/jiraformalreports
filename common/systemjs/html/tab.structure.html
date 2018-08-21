@@ -145,9 +145,15 @@
 					      			 name="selIssuesToReport" 
 					    			 typeDescriptor="Report Root Issues" 
 					    			 multiple="true"
-					    			 
 					    			 >
 					      </jqlSelector>
+						<jiraCorrelator name="relatedIssuesFinderFunction" 
+								withChildParentHelpers=true
+								caption="Related Issues Finder Function"
+								functionHeader="function getRelatedIssues(issue,hsRelatedIssues){<br>return "
+								functionFooter="}"
+								>
+						</jiraCorrelator>
 					</div>
 				    <div class="aui-item">
 						<div class="flatpack-box">

@@ -809,7 +809,7 @@ var jrfReport=class jrfReport {
 				var issue=self.allIssues.getById(key);
 				if (issue!=""){
 					var bExcluded=false;
-					if (issue.isProjectExcluded()||(issue.isExcludedByFunction())){
+					if (issue.isProjectExcluded()/*||(issue.isExcludedByFunction())*/){
 						//debugger;
 						nExcludedIssues++;
 					}else {
@@ -983,6 +983,22 @@ var jrfReport=class jrfReport {
 					}
 				}
 			});
+			var hsRemoveKeys=newHashMap();
+			issuesAdded.walk(function(issue){
+				if (issue.isExcludedByFunction()){
+					hsRemoveKeys.add(issue.getKey(),issue.getKey());
+				}
+			});
+			var nRemoves=0;
+			hsRemoveKeys.walk(function(issueKey){
+				if (issuesAdded.exists(issueKey)){
+					issuesAdded.remove(issueKey);
+					nRemoves++;
+				}
+			});
+			if (hsRemoveKeys.length()!=nRemoves){
+				log("The number of keys to remove is different of the effective removed issue count");
+			}
 /*			hsRootParent.walk(function(newRoot){
 				if (!issuesAdded.exists(newRoot.getKey())) {
 					issuesAdded.add(newRoot.getKey(),newRoot);

@@ -62,6 +62,28 @@ function newIssueFactory(report){
 		}
 		this.isExcludedByFunction=fncFormula;
 	}
+	dynObj.extractRelatedIssues;
+	dynObj.setRelatedIssueFindFunction=function(fncRelatedIssuesFunction){
+		var fncFormula;
+		if (isMethod(fncExclusion)){
+			fncFormula=fncExclusion;
+		} else if (isString(fncExclusion)||(isArray(fncExclusion))){
+			var sSource=fncExclusion;
+			if (isArray(fncExclusion)){
+				sSource=fncExclusion.saToString();
+			}
+			sSource=`'';
+					var issue=_arrRefs_[0];
+					var issuesCache=_arrRefs_[1];
+					var arrIssueKeys=[];
+					` +sSource+`
+					return arrIssueKeys;
+					`;
+			fncFormula=createFunction(sSource);
+		}
+		this.extractRelatedIssues=fncFormula;
+	}
+	
 	dynObj.functions.add("isProjectExcluded",function(){
 		var self=this;
 		var issPrjKey=self.fieldValue("project.key");
@@ -77,6 +99,14 @@ function newIssueFactory(report){
 		}
 		return false;
 	});
+	dynObj.functions.add("getRelatedIssuesByFunction",function(issuesCache){
+		var self=this;
+		if (isDefined(self.factory.extractRelatedIssues)){
+			return self.factory.extractRelatedIssues([self,issuesCache]);
+		}
+		return [];
+	});
+
 	dynObj.functions.add("getReport",function(){
 		return theReport;
 	});
@@ -464,13 +494,39 @@ function newIssueFactory(report){
 		var sHtml='<a target="_blank" href='+sUrl+'>'+sKey+'</a>';
 		return sHtml;
 	});
-	dynObj.functions.add("getPendingLinkedIssueKeys",function(arrLinkTypes,issuesCache,bGetAllRelations){
+	
+	dynObj.functions.add("getEpicChildsRelations",function(issuesCache){
 		var self=this;
 		var hsResult=newHashMap();
 		var arrResult=[];
-		var bIncludeAllRelations=false;
+		var eLink=self.fieldValue("Epic Link");
+		if (isDefined(eLink)&&(eLink!="")){
+			linkedIssue=issuesCache.getById(eLink);
+			if (linkedIssue==""){
+				if (!hsResult.exists(eLink)){
+					hsResult.add(eLink,eLink);
+					arrResult.push(eLink);
+				}
+			}
+		}
+		self.getEpicChilds().walk(function(epicChild){
+			eLink=epicChild.getKey();
+			linkedIssue=issuesCache.getById(eLink);
+			if (linkedIssue==""){
+				if (!hsResult.exists(eLink)){
+					hsResult.add(eLink,eLink);
+					arrResult.push(eLink);
+				}
+			}
+		});
+		return arrResult;
+	});
+	
+	dynObj.functions.add("getPendingLinkedIssueKeys",function(arrLinkTypes,issuesCache){
+		var self=this;
+		var hsResult=newHashMap();
+		var arrResult=[];
 		var linkedIssue;
-		if (isDefined(bGetAllRelations))bIncludeAllRelations=bGetAllRelations;
 		if (isDefined(arrLinkTypes)){
 			arrLinkTypes.forEach(function(linkType){
 				var hsLinks=self.getLinkTypeById(linkType.key);
@@ -481,17 +537,11 @@ function newIssueFactory(report){
 								self.addLinkedIssueKey(linkedIssueKey,linkedIssueKey);
 							}
 							linkedIssue=issuesCache.getById(linkedIssueKey);
-							if ((linkedIssue=="")||(bIncludeAllRelations)){
+							if (linkedIssue==""){
 								if (!hsResult.exists(linkedIssueKey)){
 									hsResult.add(linkedIssueKey,linkedIssueKey);
 									arrResult.push(linkedIssueKey);
 								}
-								/*if (keyGroup.length>10){
-									keyGroup=[];
-									arrKeyGroups.push(keyGroup);
-								}
-								keyGroup.push(linkedIssueKey);
-								nPending++;*/
 							}
 						} else {
 							logError("There is a '' in linked issues of "+self.getKey());
@@ -500,26 +550,6 @@ function newIssueFactory(report){
 				}
 			});
 		}
-		var eLink=self.fieldValue("Epic Link");
-		if (isDefined(eLink)&&(eLink!="")){
-			linkedIssue=issuesCache.getById(eLink);
-			if ((linkedIssue=="")||(bIncludeAllRelations)){
-				if (!hsResult.exists(eLink)){
-					hsResult.add(eLink,eLink);
-					arrResult.push(eLink);
-				}
-			}
-		}
-		self.getEpicChilds().walk(function(epicChild){
-			eLink=epicChild.getKey();
-			linkedIssue=issuesCache.getById(eLink);
-			if ((linkedIssue=="")||(bIncludeAllRelations)){
-				if (!hsResult.exists(eLink)){
-					hsResult.add(eLink,eLink);
-					arrResult.push(eLink);
-				}
-			}
-		});
 		return arrResult;
 	});
 	

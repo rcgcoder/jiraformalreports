@@ -327,6 +327,10 @@ var jrfReport=class jrfReport {
 			   (isDefined(self.config.excludeFunction)&&(self.config.excludeFunction.trim()!=""))){
 				self.allIssues.setExcludeFunction(self.config.excludeFunction);
 			}
+			if ((isDefined(self.config.relatedIssuesFindFunctionEnabled)&&self.config.relatedIssuesFindFunctionEnabled)&&
+					   (isDefined(self.config.relatedIssuesFindFunction)&&(self.config.relatedIssuesFindFunction.trim()!=""))){
+						self.allIssues.setRelatedIssueFindFunction(self.config.relatedIssuesFindFunction);
+					}
 
         // change de "fieldValue" method
 			self.continueTask();
@@ -463,9 +467,15 @@ var jrfReport=class jrfReport {
 				}
 				if (!issue.isProjectExcluded()){
 					var arrPendingKeys=issue.getPendingLinkedIssueKeys(arrLinkTypes,self.allIssues);
+					if (self.config.withEpicLinkRelations){
+						arrPendingKeys=arrPendingKeys.concat(issue.getEpicChildsRelations(self.allIssues));
+					}
+					if (self.config.relatedIssuesFindFunctionEnabled){
+						arrPendingKeys=arrPendingKeys.concat(issue.getRelatedIssuesByFunction(self.allIssues));
+					}
 					arrPendingKeys.forEach(function(issueKey){
 						if (!hsKeyWaiting.exists(issueKey)){
-							hsKeyWaiting.add(issueKey,issueKey)
+							hsKeyWaiting.add(issueKey,issueKey);
 							fncAddToGroup(issueKey);
 						}
 					});

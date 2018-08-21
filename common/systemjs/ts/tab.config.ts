@@ -111,6 +111,8 @@ export class TabConfig {
         auxObj=$('#toggle_EnsureDependentIssues');
         dfReport["getIssuesNotInScope"]=(auxObj.attr("checked")=="checked");
 
+        auxObj=$('#toggle_EpicLinkRelations');
+        dfReport["withEpicLinkRelations"]=(auxObj.attr("checked")=="checked");
         
         
         auxObj=$('#toggle_ExpandAllRows');
@@ -184,6 +186,10 @@ export class TabConfig {
         value=auxObj.getValue();
         dfReport["excludeFunction"]=value;
         dfReport["excludeFunctionEnabled"]=auxObj.isEnabled();
+
+        auxObj=System.getAngularObject('relatedIssuesFind',true);
+        dfReport["relatedIssuesFindFunction"]=value;
+        dfReport["relatedIssuesFindFunctionEnabled"]=auxObj.isEnabled();
  
         auxObj=System.getAngularObject('BillingHierarchy',true);
         value=auxObj.getValue();
@@ -270,7 +276,9 @@ export class TabConfig {
 
         auxObj=$('#toggle_DontLoadLeafPrecomputations');
         if(isDefined(config.DontLoadLeafPrecomputations)&&config.DontLoadLeafPrecomputations)auxObj.attr("checked","checked");
-        
+
+        auxObj=$('#toggle_EpicLinkRelations');
+        if(isDefined(config.withEpicLinkRelations)&&config.withEpicLinkRelations)auxObj.attr("checked","checked");
         
         auxObj=$('#toggle_ForceSaveLeafPrecomputations');
         if(isDefined(config.ForceSaveLeafPrecomputations)&&config.ForceSaveLeafPrecomputations)auxObj.attr("checked","checked");
@@ -335,6 +343,10 @@ export class TabConfig {
         auxObj=System.getAngularObject('excludeFunction',true);
         if (isDefined(config.excludeFunction)) auxObj.setValue(config.excludeFunction);
         if (isDefined(config.excludeFunctionEnabled)) auxObj.setEnabled(config.excludeFunctionEnabled);
+
+        auxObj=System.getAngularObject('relatedIssuesFind',true);
+        if (isDefined(config.relatedIssuesFindFunction)) auxObj.setValue(config.relatedIssuesFindFunction);
+        if (isDefined(config.relatedIssuesFindFunctionEnabled)) auxObj.setEnabled(config.relatedIssuesFindFunctionEnabled);
         
         
         auxObj=System.getAngularObject('BillingHierarchy',true);

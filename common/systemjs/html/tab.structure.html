@@ -140,6 +140,9 @@
 						  <aui-toggle id="toggle_EnsureDependentIssues" 
 					                        label="Ensure Dependet Issues"
 					                        ></aui-toggle><strong>Get Dependent Issues not in Scope</strong>
+						  <aui-toggle id="toggle_EpicLinkRelations" 
+					                        label="Include Epic Childs Relations"
+					                        ></aui-toggle><strong>Include Epic Childs Relations</strong>
 					      <jqlSelector 
 					      			 id="selIssuesToReport" 
 					      			 name="selIssuesToReport" 
@@ -149,9 +152,10 @@
 					      </jqlSelector>
 					      <br>
 						<jiraCorrelator name="relatedIssuesFind" 
+								withToggle=true 
 								withChildParentHelpers=true
 								caption="Related Issues Finder Function"
-								functionHeader="function getRelatedIssues(issue,hsRelatedIssues){<br><small></strong><i>//the list of issues keys <ins>hsRelatedIssues</ins> already have all linked by 'needed links'. <br> // New related issues have to be added by <ins>hsRelatedIssues.add(key,key)</ins></i></small><strong>"
+								functionHeader="function getRelatedIssues(issue,hsIssueCache){<br><small></strong><i>// New related issues have to be added to array <ins>arrIssueKeys</ins></i></small><strong>"
 								functionFooter="}"
 								>
 						</jiraCorrelator>

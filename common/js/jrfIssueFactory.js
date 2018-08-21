@@ -74,7 +74,7 @@ function newIssueFactory(report){
 			}
 			sSource=`'';
 					var issue=_arrRefs_[0];
-					var issuesCache=_arrRefs_[1];
+					var hsIssuesCache=_arrRefs_[1];
 					var arrIssueKeys=[];
 					` +sSource+`
 					return arrIssueKeys;

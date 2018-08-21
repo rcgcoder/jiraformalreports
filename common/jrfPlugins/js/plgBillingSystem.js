@@ -43,6 +43,7 @@ var newBillingObject=function (){
 							  faseActual:0,
 							  faseAnterior:0,
 							  inTimespents:{aprobado:0,pendiente:0,resto:0,total:0},
+							  noFacturable:{importe:0,timespent:0},
 							  workedPercent:0,
 							  bModificacionAlcance:false,
 							  comentarios:"",
@@ -741,19 +742,94 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		});
 	   	 
 		var arrResults=[];
+
+		var objModel=otherParams.getValue("model");
+		var objReport=objModel.report;
+		var contractInitDate=(new Date());
+		if (isDefined(objReport.config.withAdvancedWorks)&&objReport.config.withAdvancedWorks){
+			contractInitDate=objModel.variables.getVar("withAdvancedWorks");
+		} else {
+			contractInitDate=objModel.variables.getVar("ContractInitDate");			
+		}
+		// getting base snapshot
+		var baseSnapshot;
+	   	arrSnapshots.forEach(function(snapshot){
+	   		if (snapshot.source.atDatetime.getTime()==contractInitDate.getTime()){
+	   			baseSnapshot=snapshot;
+	   		}
+	   	});
+	   	if (isDefined(baseSnapshot)){
+	   		var impNoFacturable=baseSnapshot.calculos.aprobado+baseSnapshot.calculos.pendiente;
+	   		var tsNoFacturable=baseSnapshot.calculos.inTimespents.aprobado+baseSnapshot.calculos.inTimespents.pendiente;
+	   		baseSnapshot.calculos.aprobado=0;
+	   		baseSnapshot.calculos.pendiente=0;
+	   		baseSnapshot.calculos.inTimespents.aprobado=0;
+	   		baseSnapshot.calculos.inTimespents.pendiente=0;
+	   		baseSnapshot.calculos.noFacturable.importe=impNoFacturable;
+	   		baseSnapshot.calculos.noFacturable.timespent=tsNoFacturable;
+	   		
+		   	arrSnapshots.forEach(function(snapshot){
+		   		if (snapshot.source.atDatetime.getTime()<contractInitDate.getTime()){
+			   		var auxImporteNoFacturable=snapshot.calculos.aprobado+snapshot.calculos.pendiente;
+			   		var auxTsNoFacturable=snapshot.calculos.inTimespents.aprobado+snapshot.calculos.inTimespents.pendiente;
+			   		snapshot.calculos.aprobado=0;
+			   		snapshot.calculos.pendiente=0;
+			   		snapshot.calculos.inTimespents.aprobado=0;
+			   		snapshot.calculos.inTimespents.pendiente=0;
+			   		snapshot.calculos.noFacturable.importe=auxImporteNoFacturable;
+			   		snapshot.calculos.noFacturable.timespent=auxTsNoFacturable;
+		   		} else if (snapshot.source.atDatetime.getTime()>contractInitDate.getTime()){
+			   		var auxImporteNoFacturable=impNoFacturable;
+			   		var auxTsNoFacturable=tsNoFacturable;
+			   		if (snapshot.calculos.aprobado<auxImporteNoFacturable){
+			   			auxImporteNoFacturable-=snapshot.calculos.aprobado;
+			   			snapshot.calculos.aprobado=0;
+			   		} else {
+			   			snapshot.calculos.aprobado-=auxImporteNoFacturable;
+			   			auxImporteNoFacturable=0;
+			   		}
+			   		if (snapshot.calculos.pendiente<auxImporteNoFacturable){
+			   			auxImporteNoFacturable-=snapshot.calculos.pendiente;
+			   			snapshot.calculos.pendiente=0;
+			   		} else {
+			   			snapshot.calculos.pendiente-=auxImporteNoFacturable;
+			   			auxImporteNoFacturable=0;
+			   		}
+
+			   		if (snapshot.calculos.inTimespents.aprobado<auxTsNoFacturable){
+			   			auxTsNoFacturable-=snapshot.calculos.inTimespents.aprobado;
+			   			snapshot.calculos.inTimespents.aprobado=0;
+			   		} else {
+			   			snapshot.calculos.inTimespents.aprobado-=auxTsNoFacturable;
+			   			auxTsNoFacturable=0;
+			   		}
+			   		if (snapshot.calculos.inTimespents.pendiente<auxTsNoFacturable){
+			   			auxTsNoFacturable-=snapshot.calculos.inTimespents.pendiente;
+			   			snapshot.calculos.inTimespents.pendiente=0;
+			   		} else {
+			   			snapshot.calculos.inTimespents.pendiente-=auxTsNoFacturable;
+			   			auxTsNoFacturable=0;
+			   		}
+			   		snapshot.calculos.noFacturable.importe=impNoFacturable;
+			   		snapshot.calculos.noFacturable.timespent=tsNoFacturable;
+		   		}
+		   	});
+	   	}
 		
 	   	arrSnapshots.forEach(function(snapshot){
+	   		//calculo de los importes no facturables.
+	   		
 	      	arrResults.push([snapshot.source.atDatetime,"",snapshot]);
-	   	 });
-	   	 arrResults.sort(function(a,b){
+	   	});
+	   	arrResults.sort(function(a,b){
 	   		if (a[0]<b[0]) return 1;
 	   		if (a[0]>b[0]) return -1;
 	   		return 0;
-	   	 });
-	   	 for (var i=0;i<(arrResults.length-1);i++){
+	   	});
+	   	for (var i=0;i<(arrResults.length-1);i++){
 	   		 arrResults[i][1]=arrResults[i+1][2];
-	   	 }
-	     return arrResults;
+	   	}
+	    return arrResults;
     }
     getBillingCacheKeyPostText(atDatetime,otherParams){
 		var configName=otherParams.getValue("config");

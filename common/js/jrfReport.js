@@ -800,7 +800,7 @@ var jrfReport=class jrfReport {
 				if (issue!=""){
 					var bExcluded=false;
 					if (issue.isProjectExcluded()||(issue.isExcludedByFunction())){
-						debugger;
+						//debugger;
 						nExcludedIssues++;
 					}else {
 						if (!issuesAdded.exists(key)){

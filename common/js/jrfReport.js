@@ -931,11 +931,17 @@ var jrfReport=class jrfReport {
 													,function(issueChildStep){
 														var issueChild=self.allIssues.getById(issueChildStep.actualNode.key);
 														if (!isString(issueChild)){
-															var bProcessChild=false;
-															var nChildsPrev=issueParent.countChilds();
-															fncProcessChild(issueChild,issueParent);
-															bProcessChild=(issueParent.countChilds()>nChildsPrev);
-															log("Child/Parent relation "+auxKey+" -> "+ issueChild.getKey()+" added:"+(issueParent.countChilds()>nChildsPrev));
+															if (issueParent.getKey()==issueChild.getKey()){
+																debugger;
+																logError("Child and Parent are the same"+auxKey+" -> "+ issueParent.getKey());
+																log(issueParent.getRelatedIssuesByFunction());
+															} else {
+																var bProcessChild=false;
+																var nChildsPrev=issueParent.countChilds();
+																fncProcessChild(issueChild,issueParent);
+																bProcessChild=(issueParent.countChilds()>nChildsPrev);
+																log("Child/Parent relation "+auxKey+" -> "+ issueChild.getKey()+" added:"+(issueParent.countChilds()>nChildsPrev));
+															}
 														} else {
 															logError("Child/Parent relation problem in issue "+auxKey+" -> "+ issueChildStep.actualNode.key +" does not exists in all issues list");
 														}

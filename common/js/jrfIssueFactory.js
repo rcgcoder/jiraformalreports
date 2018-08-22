@@ -174,18 +174,18 @@ function newIssueFactory(report){
 				}
 			});
 			if (hsCycleParents.length()>0){
-				logError("The Issue:"+self.getKey()+" has a cycle child/parent relation. Removing from relation.");
 				bReturn=true;
 				hsCycleParents.walk(function(dynParent,iDeep,parentKey){
+					logError("The Issue:"+dynAux.getKey()+" has a cycle child/parent relation with "+parentKey+". Removing from relation.");
 					dynParent.getChilds().remove(dynAux.getKey());
 					hsParentsList.remove(parentKey);
 				});
 			}
 			if (hsParentsList.length()>1){
-				logError("The issue:"+ dynAux.getKey()+" has more ("+dynAux.countParentsChild()+") than one parent.");
 				bReturn=true;
 				while (hsParentsList.length()>1){
 					var dynParent=hsParentsList.getLast().value;
+					logError("The issue:"+ dynAux.getKey()+" has more than one parent.Removing relation with "+dynParent.getKey()+" to continue process.");
 					dynParent.getChilds().remove(dynAux.getKey());
 					hsParentsList.remove(dynParent.getKey());
 				}

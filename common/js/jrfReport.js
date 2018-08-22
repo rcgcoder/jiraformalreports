@@ -1026,7 +1026,6 @@ var jrfReport=class jrfReport {
 							}
 						});
 					}
-					issue.addRelationFilter(typeRelation,fncFormula);
 				});
 				self.continueTask();
 			});

@@ -1013,19 +1013,21 @@ var jrfReport=class jrfReport {
 			});
 			
 			self.addStep("Creating child relations by issue custom formulas",function(){
-				issuesAdded.walk(function(parentIssue){
+				issuesAdded.walk(function(issueParent){
 					if (parentIssue.existsRelationFilter("Child")){
 						debugger;
-						var childRelationFilter=parentIssue.getRelationFilterById("Child");
-						issuesAdded.walk(function(issueChild){
-							if (issueChild.getKey()!=parentIssue.getKey()){
-								var bResult=childRelationFilter([issueChild]);
-								if (bResult){
-									if (!issueParent.getChilds().exists(issueChild.getKey())){ // when reusing dynobj the childs are setted
-										issueParent.addChild(issueChild);
+						var childRelationFilter=issueParent.getRelationFilterById("Child");
+						self.addStep("Custom Relations for issue "+issueParent.getKey(),function(){
+							issuesAdded.walk(function(issueChild){
+								if (issueChild.getKey()!=issueParent.getKey()){
+									var bResult=childRelationFilter([issueChild]);
+									if (bResult){
+										if (!issueParent.getChilds().exists(issueChild.getKey())){ // when reusing dynobj the childs are setted
+											issueParent.addChild(issueChild);
+										}
 									}
 								}
-							}
+							});
 						});
 					}
 				});

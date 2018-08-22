@@ -926,7 +926,7 @@ var jrfReport=class jrfReport {
 							if (!relatedChilds.exists(relatedIssueKey)){
 								relatedChilds.add(relatedIssueKey);
 							}
-						});
+						}); 
 						relatedChilds.walkAsync("Getting childs for "+auxKey
 													,function(issueChildStep){
 														var issueChild=self.allIssues.getById(issueChildStep.actualNode.key);

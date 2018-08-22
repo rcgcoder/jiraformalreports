@@ -1004,16 +1004,16 @@ var jrfReport=class jrfReport {
 				}
 			});
 			var nRemoves=0;
-			var nRootsPrevious=issuesAdded.length();
+			var nRootsPrevious=self.childs.length();
 			hsRemoveKeys.walk(function(issueKey){
-				if (issuesAdded.exists(issueKey)){
-					issuesAdded.remove(issueKey);
+				if (self.childs.exists(issueKey)){
+					self.childs.remove(issueKey);
 					nRemoves++;
 				}
 			});
-			var nRootsFinal=issuesAdded.length();
+			var nRootsFinal=self.childs.length();
 			if ((hsRemoveKeys.length()!=nRemoves)
-				||((nRootsPrevious-nRemoves)==nRootsFinal)
+				||((nRootsPrevious-nRemoves)!=nRootsFinal)
 				){
 				log("The number of keys to remove is different of the effective removed issue count");
 			}

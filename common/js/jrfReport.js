@@ -1028,6 +1028,7 @@ var jrfReport=class jrfReport {
 									}
 								}
 							});
+							self.continueTask();
 						});
 					}
 				});

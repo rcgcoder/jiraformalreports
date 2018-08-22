@@ -1018,10 +1018,12 @@ var jrfReport=class jrfReport {
 						debugger;
 						var childRelationFilter=parentIssue.getRelationFilterById("Child");
 						issuesAdded.walk(function(issueChild){
-							var bResult=(issueChild.getKey()!=parentIssue.getKey())&& childRelationFilter(issueChild);
-							if (bResult){
-								if (!issueParent.getChilds().exists(issueChild.getKey())){ // when reusing dynobj the childs are setted
-									issueParent.addChild(issueChild);
+							if (issueChild.getKey()!=parentIssue.getKey()){
+								var bResult=childRelationFilter([issueChild]);
+								if (bResult){
+									if (!issueParent.getChilds().exists(issueChild.getKey())){ // when reusing dynobj the childs are setted
+										issueParent.addChild(issueChild);
+									}
 								}
 							}
 						});

@@ -758,7 +758,7 @@ var jrfReport=class jrfReport {
 												var model=report.objModel;
 												result=` +sSource;
 										var fncFormula=createFunction(sSource);
-										issue.addRelationFilter(typeRelation,fncFormula);
+										issue.addRelationFilter(fncFormula,typeRelation);
 									}
 								}
 							});

@@ -929,7 +929,7 @@ var jrfReport=class jrfReport {
 						}); 
 						relatedChilds.walkAsync("Getting childs for "+auxKey
 													,function(issueChildStep){
-														var issueChild=self.allIssues.getById(issueChildStep.actualNode.key);
+														var issueChild=issuesAdded.getValue(issueChildStep.actualNode.key);
 														if (!isString(issueChild)){
 															if (issueParent.getKey()==issueChild.getKey()){
 																debugger;
@@ -944,7 +944,7 @@ var jrfReport=class jrfReport {
 																if (issueChild.countChilds()>nChildsPrevChild) log("Child/Parent relation "+issueChild.getKey()+" -> "+ auxKey +" added.");
 															}
 														} else {
-															logError("Child/Parent relation problem in issue "+auxKey+" -> "+ issueChildStep.actualNode.key +" does not exists in all issues list");
+															logError("Related issue "+auxKey+" -> "+ issueChildStep.actualNode.key +" have not been downloaded or is excluded");
 														}
 														/*
 														nChildsPrev=issueChild.countChilds();

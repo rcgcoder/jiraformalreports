@@ -160,7 +160,7 @@ function newIssueFactory(report){
 		var hsParents=newHashMap();
 		var bReturn=false;
 		var dynAux=self;
-		while (isDefined(dynAux)){// to the top
+		while (isDefined(dynAux)&&(dynAux.countParentsChild()>0)){// to the top
 			hsParents.add(dynAux.getKey(),dynAux.getKey());
 			if (dynAux.countParentsChild()>1) {
 				logError("The issue:"+ dynAux.getKey()+" has more ("+dynAux.countParentsChild()+") than one parent.");

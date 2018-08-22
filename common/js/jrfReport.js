@@ -986,16 +986,17 @@ var jrfReport=class jrfReport {
 				if (issue.hasChildCycle()){
 					logError("Its necessary to correct child/parent billing errors");
 				}
-				var rootIssue=issue.getChildRoot();
+/*				var rootIssue=issue.getChildRoot();
+				if (!self.childs.exists(rootIssue.getKey())){
+					self.childs.add(rootIssue.getKey(),rootIssue);
+				}
 				if (!issuesAdded.exists(rootIssue.getKey())){
 					issuesAdded.add(rootIssue.getKey(),rootIssue);
 					if (!hsRootParent.exists(rootIssue.getKey())){
 						hsRootParent.add(rootIssue.getKey(),rootIssue);
 					}
-					if (!self.childs.exists(rootIssue.getKey())){
-						self.childs.add(rootIssue.getKey(),rootIssue);
-					}
 				}
+*/
 			});
 			var hsRemoveKeys=newHashMap();
 			issuesAdded.walk(function(issue){

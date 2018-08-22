@@ -146,8 +146,12 @@ function newIssueFactory(report){
 	dynObj.functions.add("getChildRoot",function(){
 		var self=this;
 		var dynAux=self;
-		while (dynAux.countParentsChild()>0){
-			dynAux=dynAux.getListParentsChild().getFirst().value;
+		var nChildParents=dynAux.countParentsChild();
+		while (nChildParents>0){
+			var hsListParents=dynAux.getListParentsChild();
+			var firstNode=hsListParents.getFirst();
+			dynAux=firstNode.value;
+			nChildParents=dynAux.countParentsChild();
 		}
 		return dynAux;
 	});

@@ -915,9 +915,17 @@ var jrfReport=class jrfReport {
 					//walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
 						log("Task Manager Status:"+self.getRunningTask().parent.actStep + " " + self.getRunningTask().parent.steps.length);
 						var relatedChilds=newHashMap();
-						var arrRelatedChilds=issueParent.getPendingLinkedIssueKeys(arrLinkTypes,self.allIssues,true);
+						var arrRelatedChilds=issueParent.getPendingLinkedIssueKeys(arrLinkTypes,self.allIssues);
+						if (self.config.withEpicLinkRelations){
+							arrRelatedChilds=arrRelatedChilds.concat(issueParent.getEpicChildsRelations(self.allIssues));
+						}
+						if (self.config.relatedIssuesFindFunctionEnabled){
+							arrRelatedChilds=arrRelatedChilds.concat(issueParent.getRelatedIssuesByFunction(self.allIssues));
+						}
 						arrRelatedChilds.forEach(function(relatedIssueKey){
-							relatedChilds.add(relatedIssueKey);
+							if (!relatedChilds.exists(relatedIssueKey)){
+								relatedChilds.add(relatedIssueKey);
+							}
 						});
 						relatedChilds.walkAsync("Getting childs for "+auxKey
 													,function(issueChildStep){

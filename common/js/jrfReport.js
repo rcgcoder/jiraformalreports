@@ -936,11 +936,12 @@ var jrfReport=class jrfReport {
 																logError("Child and Parent are the same"+auxKey+" -> "+ issueParent.getKey());
 																log(issueParent.getRelatedIssuesByFunction());
 															} else {
-																var bProcessChild=false;
-																var nChildsPrev=issueParent.countChilds();
+																var nChildsPrevParent=issueParent.countChilds();
+																var nChildsPrevChild=issueChild.countChilds();
 																fncProcessChild(issueChild,issueParent);
-																bProcessChild=(issueParent.countChilds()>nChildsPrev);
-																log("Child/Parent relation "+auxKey+" -> "+ issueChild.getKey()+" added:"+(issueParent.countChilds()>nChildsPrev));
+																fncProcessChild(issueParent,issueChild);
+																if (issueParent.countChilds()>nChildsPrevParent) log("Child/Parent relation "+auxKey+" -> "+ issueChild.getKey()+" added.");
+																if (issueChild.countChilds()>nChildsPrevChild) log("Child/Parent relation "+issueChild.getKey()+" -> "+ auxKey +" added.");
 															}
 														} else {
 															logError("Child/Parent relation problem in issue "+auxKey+" -> "+ issueChildStep.actualNode.key +" does not exists in all issues list");

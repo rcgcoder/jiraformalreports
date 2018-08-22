@@ -915,12 +915,12 @@ var jrfReport=class jrfReport {
 					//walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
 						log("Task Manager Status:"+self.getRunningTask().parent.actStep + " " + self.getRunningTask().parent.steps.length);
 						var relatedChilds=newHashMap();
-						var arrRelatedChilds=issueParent.getPendingLinkedIssueKeys(arrLinkTypes,self.allIssues);
+						var arrRelatedChilds=issueParent.getPendingLinkedIssueKeys(arrLinkTypes);
 						if (self.config.withEpicLinkRelations){
-							arrRelatedChilds=arrRelatedChilds.concat(issueParent.getEpicChildsRelations(self.allIssues));
+							arrRelatedChilds=arrRelatedChilds.concat(issueParent.getEpicChildsRelations());
 						}
 						if (self.config.relatedIssuesFindFunctionEnabled){
-							arrRelatedChilds=arrRelatedChilds.concat(issueParent.getRelatedIssuesByFunction(self.allIssues));
+							arrRelatedChilds=arrRelatedChilds.concat(issueParent.getRelatedIssuesByFunction());
 						}
 						arrRelatedChilds.forEach(function(relatedIssueKey){
 							if (!relatedChilds.exists(relatedIssueKey)){

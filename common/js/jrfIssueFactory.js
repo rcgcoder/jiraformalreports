@@ -501,7 +501,8 @@ function newIssueFactory(report){
 		var arrResult=[];
 		var eLink=self.fieldValue("Epic Link");
 		if (isDefined(eLink)&&(eLink!="")){
-			linkedIssue=issuesCache.getById(eLink);
+			linkedIssue="";
+			if (isDefined(issuesCache)) linkedIssue=issuesCache.getById(eLink);
 			if (linkedIssue==""){
 				if (!hsResult.exists(eLink)){
 					hsResult.add(eLink,eLink);
@@ -511,7 +512,8 @@ function newIssueFactory(report){
 		}
 		self.getEpicChilds().walk(function(epicChild){
 			eLink=epicChild.getKey();
-			linkedIssue=issuesCache.getById(eLink);
+			linkedIssue="";
+			if (isDefined(issuesCache)) linkedIssue=issuesCache.getById(eLink);
 			if (linkedIssue==""){
 				if (!hsResult.exists(eLink)){
 					hsResult.add(eLink,eLink);
@@ -536,7 +538,8 @@ function newIssueFactory(report){
 							if (!self.getLinkedIssueKeys().exists(linkedIssueKey)){
 								self.addLinkedIssueKey(linkedIssueKey,linkedIssueKey);
 							}
-							linkedIssue=issuesCache.getById(linkedIssueKey);
+							linkedIssue="";
+							if (isDefined(issuesCache)) linkedIssue=issuesCache.getById(linkedIssueKey);
 							if (linkedIssue==""){
 								if (!hsResult.exists(linkedIssueKey)){
 									hsResult.add(linkedIssueKey,linkedIssueKey);

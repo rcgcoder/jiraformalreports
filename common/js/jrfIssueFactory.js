@@ -203,11 +203,6 @@ function newIssueFactory(report){
 		} else {
 			otherParams=inOtherParams;
 		}
-		if (!otherParams.exists("model")){
-			var theReport=self.getReport();
-			var theModel=theReport.objModel;
-			otherParams.add("model",theModel);
-		}
 		var arrFieldNames=sFieldName.split(".");
 		if (arrFieldNames.length>1){
 			bGetAttribute=true;

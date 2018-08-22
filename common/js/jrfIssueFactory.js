@@ -158,26 +158,45 @@ function newIssueFactory(report){
 	dynObj.functions.add("hasChildCycle",function(){
 		var self=this;
 		var hsParents=newHashMap();
-		hsParents.add(self.getKey(),self.getKey());
 		var bReturn=false;
 		var dynAux=self;
-		while (dynAux.countParentsChild()>0){
+		while (isDefined(dynAux)){// to the top
+			hsParents.add(dynAux.getKey(),dynAux.getKey());
 			if (dynAux.countParentsChild()>1) {
-				logError("The issue:"+ dynAux.getKey()+" has more ("+dynAux.countParentsChild()+") than one parent");
-				hsParents=dynAux.getListParentsChild();
-				while (hsParents.length()>1){
-					hsParents.remove(hsParents.getLast().key);
+				logError("The issue:"+ dynAux.getKey()+" has more ("+dynAux.countParentsChild()+") than one parent.");
+				bReturn=true;
+			}
+			var hsParentsList=dynAux.getListParentsChild();
+			var hsCycleParents=newHashMap();
+			hsParentsList.walk(function(dynParent){
+				if (hsParents.exists(dynParent.getKey())){
+					hsCycleParents.add(dynParent.getKey(),dynParent);
 				}
+			});
+			if (hsCycleParents.length()>0){
+				logError("The Issue:"+self.getKey()+" has a cycle child/parent relation. Removing from relation.");
 				bReturn=true;
+				hsCycleParents.walk(function(dynParent,iDeep,parentKey){
+					dynParent.getChilds().remove(self.getKey());
+					hsParentsList.remove(parentKey);
+				});
 			}
-			dynAux=dynAux.getListParentsChild().getFirst().value;
-			if (hsParents.exists(dynAux.getKey())){
-				logError("The Issue:"+self.getKey()+" has a cycle child/parent relation");
+			if (hsParentsList.length()>1){
+				logError("The issue:"+ dynAux.getKey()+" has more ("+dynAux.countParentsChild()+") than one parent.");
 				bReturn=true;
+				while (hsParentsList.length()>1){
+					var dynParent=hsParentsList.getLast().value;
+					dynParent.getChilds().remove(self.getKey());
+					hsParentsList.remove(dynParent.getKey());
+				}
 			}
-			if (bReturn) return bReturn;
+			if (dynAux.countParentsChild()>0){
+				dynAux=dynAux.getListParentsChild().getFirst().value;
+			} else {
+				dynAux=undefined;
+			}
 		}
-		return false;
+		return bReturn;
 	});
 	dynObj.functions.add("fieldExists",function(theFieldName){
 		var self=this;

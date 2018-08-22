@@ -703,6 +703,7 @@ var jrfReport=class jrfReport {
 								oAdjusts=[oAdjusts]; // create as array
 							}
 							oAdjusts.forEach(function (oAdjust){
+								var adjustType="";
 								var fieldName="";
 								var fieldValue="";
 								var changeDate="";
@@ -711,38 +712,54 @@ var jrfReport=class jrfReport {
 									isLifeChange=true;
 									changeDate=toDateNormalDDMMYYYYHHMMSS(oAdjust.changeDate);
 								}
-								fieldName=oAdjust.field; // may be simple name (timespent) or complex (status.name)
-								fieldValue=oAdjust.newValue; // may be a simple value (16000) or complex ( {name:"the new name",id:14,...})
-								var arrFieldPath=fieldName.split(".");
-								var sField=arrFieldPath[0];
-								var sField=issue.getExistentFieldId(sField);
-								if (!isLifeChange){
-									if (!isDefined(issue["set"+sField])){//the field is in the "field interest list"
-										log("Only can adjust interested fields... the field:"+sField + " is not in the list");
-									} else if (arrFieldPath.length==1){ // simple field
-										issue["set"+sField](fieldValue);
-									} else {
-										var actValue=issue["get"+sField]();
-										for (var i=1;i<arrFieldPath.length-1;i++){
-											var sSubPath=arrFieldPath[i];
-											if (isUndefined(actValue[sSubPath])){
-												actValue[sSubPath]={};
+								adjustType=oAdjust.type;
+								if (isUndefined(adjustType)||(adjustType=="FieldValue")){
+									fieldName=oAdjust.field; // may be simple name (timespent) or complex (status.name)
+									fieldValue=oAdjust.newValue; // may be a simple value (16000) or complex ( {name:"the new name",id:14,...})
+									var arrFieldPath=fieldName.split(".");
+									var sField=arrFieldPath[0];
+									var sField=issue.getExistentFieldId(sField);
+									if (!isLifeChange){
+										if (!isDefined(issue["set"+sField])){//the field is in the "field interest list"
+											log("Only can adjust interested fields... the field:"+sField + " is not in the list");
+										} else if (arrFieldPath.length==1){ // simple field
+											issue["set"+sField](fieldValue);
+										} else {
+											var actValue=issue["get"+sField]();
+											for (var i=1;i<arrFieldPath.length-1;i++){
+												var sSubPath=arrFieldPath[i];
+												if (isUndefined(actValue[sSubPath])){
+													actValue[sSubPath]={};
+												}
+												actValue=actValue[sSubPath];
 											}
-											actValue=actValue[sSubPath];
+											actValue[arrFieldPath[arrFieldPath.length-1]]=fieldValue;
 										}
-										actValue[arrFieldPath[arrFieldPath.length-1]]=fieldValue;
+									} else {
+										var hsLifeAdjusts=issue.getFieldLifeAdjustById(sField);
+										if (hsLifeAdjusts==""){
+											hsLifeAdjusts=newHashMap();
+											issue.getFieldLifeAdjusts().add(sField,hsLifeAdjusts);
+										}
+										var oLifeChange={};
+										oLifeChange.effectDate=changeDate;
+										oLifeChange.newValue=fieldValue;
+										oLifeChange.fieldPath=arrFieldPath;
+										hsLifeAdjusts.add(changeDate.getTime()+"",oLifeChange);
 									}
-								} else {
-									var hsLifeAdjusts=issue.getFieldLifeAdjustById(sField);
-									if (hsLifeAdjusts==""){
-										hsLifeAdjusts=newHashMap();
-										issue.getFieldLifeAdjusts().add(sField,hsLifeAdjusts);
+								} else if (adjustType=="RelationFilter") {
+									var fncFilter=oAdjust.filter;
+									var typeRelation=oAdjust.relation;
+									if (isDefined(fncFilter)&&isString(fncFilter)){
+										var sSource=fncFilter;
+										sSource=`'';
+												var issue=_arrRefs_[0];
+												var report=issue.getReport();
+												var model=report.objModel;
+												result=` +sSource;
+										fncFormula=createFunction(sSource);
+										issue.addRelationFilter(typeRelation,fncFormula);
 									}
-									var oLifeChange={};
-									oLifeChange.effectDate=changeDate;
-									oLifeChange.newValue=fieldValue;
-									oLifeChange.fieldPath=arrFieldPath;
-									hsLifeAdjusts.add(changeDate.getTime()+"",oLifeChange);
 								}
 							});
 						});
@@ -981,52 +998,62 @@ var jrfReport=class jrfReport {
 		
 		
 		
-		self.addStep("Analizing child/parent billing cycles and asign parents to root list",function(){
-			var hsRootParent=newHashMap();
-			issuesAdded.walk(function(issue){
-				if (issue.hasChildCycle()){
-					logError("It's necessary to correct child/parent billing errors");
-				}
-				var rootIssue=issue.getChildRoot();
-/*				if (!self.childs.exists(rootIssue.getKey())){
-					self.childs.add(rootIssue.getKey(),rootIssue);
-				}
-*/				if (!issuesAdded.exists(rootIssue.getKey())){
-					logError("The root issue: "+ rootIssue.getKey()+" does not exists in process issues list. Maybe an error");
-	
-/*					issuesAdded.add(rootIssue.getKey(),rootIssue);
-					if (!hsRootParent.exists(rootIssue.getKey())){
-						hsRootParent.add(rootIssue.getKey(),rootIssue);
+		self.addStep("Final Adjusts to retrieved list of issues",function(){
+			self.addStep("Analizing child/parent billing cycles and multiple parents",function(){
+				issuesAdded.walk(function(issue){
+					if (issue.hasChildCycle()){
+						logError("It's necessary to correct child/parent billing errors");
 					}
-*/				}
+					var rootIssue=issue.getChildRoot();
+					if (!issuesAdded.exists(rootIssue.getKey())){
+						logError("The root issue: "+ rootIssue.getKey()+" does not exists in process issues list. Maybe an error");
+					}
+				});
+				self.continueTask();
+			});
+			
+			self.addStep("Creating child relations by issue custom formulas",function(){
+				issuesAdded.walk(function(parentIssue){
+					if (parentIssue.existsRelationFilter("Child")){
+						debugger;
+						var childRelationFilter=parentIssue.getRelationFilterById("Child");
+						issuesAdded.walk(function(issueChild){
+							var bResult=(issueChild.getKey()!=parentIssue.getKey())&& childRelationFilter(issueChild);
+							if (bResult){
+								if (!issueParent.getChilds().exists(issueChild.getKey())){ // when reusing dynobj the childs are setted
+									issueParent.addChild(issueChild);
+								}
+							}
+						});
+					}
+					issue.addRelationFilter(typeRelation,fncFormula);
+				});
+				self.continueTask();
+			});
 
-			});
-			var hsRemoveKeys=newHashMap();
-			issuesAdded.walk(function(issue){
-				if (issue.isExcludedByFunction()){
-					hsRemoveKeys.add(issue.getKey(),issue.getKey());
+			self.addStep("Removing issues by Exclude function",function(){
+				var hsRemoveKeys=newHashMap();
+				issuesAdded.walk(function(issue){
+					if (issue.isExcludedByFunction()){
+						hsRemoveKeys.add(issue.getKey(),issue.getKey());
+					}
+				});
+				var nRemoves=0;
+				var nRootsPrevious=self.childs.length();
+				hsRemoveKeys.walk(function(issueKey){
+					if (self.childs.exists(issueKey)){
+						self.childs.remove(issueKey);
+						nRemoves++;
+					}
+				});
+				var nRootsFinal=self.childs.length();
+				if ((hsRemoveKeys.length()!=nRemoves)
+					||((nRootsPrevious-nRemoves)!=nRootsFinal)
+					){
+					log("The number of keys to remove is different of the effective removed issue count");
 				}
+				self.continueTask();
 			});
-			var nRemoves=0;
-			var nRootsPrevious=self.childs.length();
-			hsRemoveKeys.walk(function(issueKey){
-				if (self.childs.exists(issueKey)){
-					self.childs.remove(issueKey);
-					nRemoves++;
-				}
-			});
-			var nRootsFinal=self.childs.length();
-			if ((hsRemoveKeys.length()!=nRemoves)
-				||((nRootsPrevious-nRemoves)!=nRootsFinal)
-				){
-				log("The number of keys to remove is different of the effective removed issue count");
-			}
-/*			hsRootParent.walk(function(newRoot){
-				if (!issuesAdded.exists(newRoot.getKey())) {
-					issuesAdded.add(newRoot.getKey(),newRoot);
-				}
-			});
-*/			
 			
 			self.continueTask();
 			

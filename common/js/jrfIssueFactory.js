@@ -24,7 +24,8 @@ function newIssueFactory(report){
 			 {name:"SavePrecomputedProperty",description:"List of precomputed properties that needs to be saved",type:"object"},
 			 {name:"FieldLifeCache",description:"Cache the life of the fields to speed up the reutilization of values",type:"object"},
 			 {name:"FieldLifeAdjust",description:"List of manual adjusts to field values usually saved as comment in the issue",type:"object"},
-			 {name:"EpicChild",description:"List of issues with epic link equals to this issue key",type:"object"}
+			 {name:"EpicChild",description:"List of issues with epic link equals to this issue key",type:"object"},
+			 {name:"RelationFilter",description:"List of custom functions to set relations to this issue key",type:"object"}
 			]
 			,
 			allFieldDefinitions.concat(["JiraObject"])

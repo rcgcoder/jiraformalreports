@@ -177,7 +177,7 @@ function newIssueFactory(report){
 				logError("The Issue:"+self.getKey()+" has a cycle child/parent relation. Removing from relation.");
 				bReturn=true;
 				hsCycleParents.walk(function(dynParent,iDeep,parentKey){
-					dynParent.getChilds().remove(self.getKey());
+					dynParent.getChilds().remove(dynAux.getKey());
 					hsParentsList.remove(parentKey);
 				});
 			}
@@ -186,7 +186,7 @@ function newIssueFactory(report){
 				bReturn=true;
 				while (hsParentsList.length()>1){
 					var dynParent=hsParentsList.getLast().value;
-					dynParent.getChilds().remove(self.getKey());
+					dynParent.getChilds().remove(dynAux.getKey());
 					hsParentsList.remove(dynParent.getKey());
 				}
 			}

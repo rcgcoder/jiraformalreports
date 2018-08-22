@@ -984,19 +984,21 @@ var jrfReport=class jrfReport {
 			var hsRootParent=newHashMap();
 			issuesAdded.walk(function(issue){
 				if (issue.hasChildCycle()){
-					logError("Its necessary to correct child/parent billing errors");
+					logError("It's necessary to correct child/parent billing errors");
 				}
-/*				var rootIssue=issue.getChildRoot();
-				if (!self.childs.exists(rootIssue.getKey())){
+				var rootIssue=issue.getChildRoot();
+/*				if (!self.childs.exists(rootIssue.getKey())){
 					self.childs.add(rootIssue.getKey(),rootIssue);
 				}
-				if (!issuesAdded.exists(rootIssue.getKey())){
-					issuesAdded.add(rootIssue.getKey(),rootIssue);
+*/				if (!issuesAdded.exists(rootIssue.getKey())){
+					logError("The root issue: "+ rootIssue.getKey()+" does not exists in process issues list. Maybe an error");
+	
+/*					issuesAdded.add(rootIssue.getKey(),rootIssue);
 					if (!hsRootParent.exists(rootIssue.getKey())){
 						hsRootParent.add(rootIssue.getKey(),rootIssue);
 					}
-				}
-*/
+*/				}
+
 			});
 			var hsRemoveKeys=newHashMap();
 			issuesAdded.walk(function(issue){

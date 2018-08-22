@@ -181,7 +181,6 @@ export class TabConfig {
         arrValues=auxObj.getSelectedValues();
         dfReport["rootIssues"]={jql:jql,values:arrValues};
         
-        debugger;
         auxObj=System.getAngularObject('excludeFunction',true);
         dfReport["excludeFunction"]=auxObj.getValue();
         dfReport["excludeFunctionEnabled"]=auxObj.isEnabled();

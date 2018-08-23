@@ -104,6 +104,68 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
 				return "No creado";
 			}
      }
+ 	getChildsCounter(otherParams){
+    	var self=this;
+    	//debugger;
+    	var hslifeCaches=self.getFieldLife("IssueCounter",self.getReport().reportDateTime,otherParams);
+    	var life=hslifeCaches.getValue("life");
+    	var last=life[0][2]; // último valor
+    	return last; 
+    };
+	getChildsCounterLife(){
+    	var self=this;
+    	var hsChilds=self.getChilds();
+    	var hsDates=newHashMap();
+    	var fncNewHistory=function(theDate){
+    		var objResult={date:theDate
+    						,previous:{total:0}
+    						,actual:{total:0}
+    						};
+    		for (var i=0;i<5;i++){
+    			var faseName=self.getFaseName(i);
+    			objResult.previous[faseName]=0;
+    			objResult.actual[faseName]=0;
+    		}
+    		return objResult;
+    	}
+    	hsChilds.walk(function(issue){
+    		var tsCreate;
+    		var tsChangeStatus;
+    		var arrHistory=self.getFieldLife("Fase");
+    		arrHistory.forEach(function(status){// 0: datetime of change, 1:previous value, 2:new value
+    			var dtIssueChange=onlyDate(status[0]);
+    			var iFaseAnt=status[1];
+    			var iFaseAct=status[2];
+    			var tsIssueChange=dtIssueChange.getTime()+"";
+    			if (!hsDates.exists(tsIssueChange)){
+    				hsDates.add(tsIssueChange,fncNewHistory(dtIssueChange));
+    			}
+    		});
+    	});
+    	var arrHistory=[];
+    	hsDates.walk(function(status,iDeep,tsChange){
+        	hsChilds.walk(function(issue){
+        		var issFase=issue.fieldValue("Fase",false,status.date);
+        		if (isDefined(issFase)&&(issFase>=0)){
+        			var faseName=self.getFaseName(i);
+        			status.actual[faseName]++;
+        			status.actual.total++;
+        		}
+        	});
+        	arrHistory.push([status.date,status.previous,status.actual]);
+    	});
+    	arrHistory.sort(function(a,b){
+    		var aTime=a.date.getTime();
+    		var bTime=b.date.getTime();
+    		if (aTime<bTime) return 1;
+    		if (aTime>bTime) return -1;
+    		return 0;
+    	});
+	   	for (var i=0;i<(arrHistory.length-1);i++){
+	   		arrHistory[i][1]=arrHistory[i+1][2];
+	   	}
+	   	return arrHistory;
+    };
     
     execute(){
          var self=this;
@@ -114,7 +176,7 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
          var fncGetFaseName=function(){
              var status=this.fieldValue("Fase");
              return self.getFaseName(status);
-      };
+         };
          var fncGetFaseLife=function(){
         	 var arrResults=[];
         	 //debugger;
@@ -140,6 +202,8 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
                  issue.getFaseLife=fncGetFaseLife;
                  issue.getFaseName=fncGetFaseName;
                  issue.getFaseNameLife=fncGetFaseNameLife;
+              	 issue.getChildsCounter=self.getChildsCounter;
+              	 issue.getChildsCounterLife=self.getChildsCounterLife;
          });
     }
 }

@@ -855,5 +855,7 @@ function newIssueFactory(report){
 		}
 		return sResult;
 	});
+
+	
 	return dynObj;
 }

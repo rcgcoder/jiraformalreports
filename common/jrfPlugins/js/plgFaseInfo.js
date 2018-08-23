@@ -108,7 +108,7 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
     	var self=this;
     	debugger;
     	//debugger;
-    	var hslifeCaches=self.getFieldLife("IssueCounter",self.getReport().reportDateTime,otherParams);
+    	var hslifeCaches=self.getFieldLife("ChildsCounter",self.getReport().reportDateTime,otherParams);
     	var life=hslifeCaches.getValue("life");
     	var last=life[0][2]; // último valor
     	return last; 

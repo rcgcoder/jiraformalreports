@@ -158,8 +158,8 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
         	arrHistory.push([status.date,status.previous,status.actual]);
     	});
     	arrHistory.sort(function(a,b){
-    		var aTime=a.date.getTime();
-    		var bTime=b.date.getTime();
+    		var aTime=a[0].getTime();
+    		var bTime=b[0].getTime();
     		if (aTime<bTime) return 1;
     		if (aTime>bTime) return -1;
     		return 0;

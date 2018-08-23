@@ -176,8 +176,9 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
                 var status=this.fieldValue("status.name");
                 return self.getFaseOf(status);
          };
-         var fncGetFaseName=function(){
-             var status=this.fieldValue("Fase");
+         var fncGetFaseName=function(faseIndex){
+             var status=faseIndex;
+             if (isUndefined(status)) status=this.fieldValue("Fase");
              return self.getFaseName(status);
          };
          var fncGetFaseLife=function(){

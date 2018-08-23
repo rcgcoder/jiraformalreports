@@ -114,8 +114,7 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
     		var objResult={total:0};
     		for (var i=0;i<5;i++){
     			var faseName=self.getFaseName(i);
-    			objResult.previous[faseName]=0;
-    			objResult.actual[faseName]=0;
+    			objResult[faseName]=0;
     		}
     		return objResult;
     	}

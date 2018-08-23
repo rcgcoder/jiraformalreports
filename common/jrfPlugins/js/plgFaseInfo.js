@@ -149,8 +149,8 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
     	hsDates.walk(function(status,iDeep,tsChange){
         	hsChilds.walk(function(issue){
         		var issFase=issue.fieldValue("Fase",false,status.date);
-        		if (isDefined(issFase)&&(issFase>=0)){
-        			var faseName=self.getFaseName(i);
+        		if (isDefined(issFase)&&(issFase!=="")&&(issFase>=0)){
+        			var faseName=self.getFaseName(issFase);
         			status.actual[faseName]++;
         			status.actual.total++;
         		}

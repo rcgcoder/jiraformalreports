@@ -155,7 +155,9 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
         			status.actual.total++;
         		}
         	});
-        	arrHistory.push([status.date,status.previous,status.actual]);
+        	if (status.actual.total>0){
+        		arrHistory.push([status.date,status.previous,status.actual]);
+        	}
     	});
     	arrHistory.sort(function(a,b){
     		var aTime=a[0].getTime();

@@ -133,7 +133,7 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
     	hsChilds.walk(function(issue){
     		var tsCreate;
     		var tsChangeStatus;
-    		var hsFieldLife=self.getFieldLife("Fase");
+    		var hsFieldLife=issue.getFieldLife("Fase");
     		var arrHistory=hsFieldLife.getValue("life");
     		arrHistory.forEach(function(status){// 0: datetime of change, 1:previous value, 2:new value
     			var dtIssueChange=onlyDate(status[0]);

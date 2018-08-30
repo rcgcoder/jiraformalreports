@@ -29,6 +29,7 @@ var refreshFases=function(){
 	tEstados["NO OK DES AST"]=3;
 	tEstados["NO OK INTEGRA"]=3;
 	tEstados["Verificado DES AST"]=3;
+	tEstados["In Progress"]=2;
 	tEstados["En progreso PRE AST"]=3;
 	tEstados["En progreso DES AST"]=3;
 	tEstados["Verificado Integra"]=3;

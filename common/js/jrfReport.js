@@ -1067,6 +1067,7 @@ var jrfReport=class jrfReport {
 						hsRemoveKeys.add(issue.getKey(),{issue:issue});
 					}
 				});
+				self.continueTask();
 			});
 			
 			self.addStep("Removing identified issues ",function(){

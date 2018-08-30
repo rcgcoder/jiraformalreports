@@ -1055,7 +1055,7 @@ var jrfReport=class jrfReport {
 					            ,rptEndDate
 					            ,optGetFieldValues
 					            );
-						if (faseAtEndReport<=0){
+						if ((faseAtEndReport<=0)||(faseAtEndReport=="")){
 							hsRemoveKeys.add(issue.getKey(),{issue:issue,removeFromParent:true});
 						}
 					});

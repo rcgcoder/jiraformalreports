@@ -1062,6 +1062,31 @@ var jrfReport=class jrfReport {
 					self.continueTask();
 				});
 			}
+			if (self.config.removeNotCreatedIssues){
+				var bAdvancedWorks=self.objModel.variables.getVar("withAdvancedWorks");
+				var txtIniDate;
+				var dtIniDate;
+				if (bAdvancedWorks){
+		            txtIniDate=self.objModel.variables.getVar("ContractAdvancedDate"+"_text");
+		            dtIniDate=self.objModel.variables.getVar("ContractAdvancedDate");
+				} else {
+		            txtIniDate=self.objModel.variables.getVar("ContractInitDate"+"_text");
+		            dtIniDate=self.objModel.variables.getVar("ContractInitDate");
+				}
+				self.addStep("Identifying issues was closed at:"+txtIniDate,function(){
+					var optGetFieldValues=[{key:"ifEmpty",value:0}];
+					issuesAdded.walk(function(issue){
+						var faseAtEndReport=issue.fieldValue('Fase', false
+					            ,dtEndDate
+					            ,optGetFieldValues
+					            );
+						if ((faseAtEndReport>=4)){
+							hsRemoveKeys.add(issue.getKey(),{issue:issue,removeFromParent:true});
+						}
+					});
+					self.continueTask();
+				});
+			}
 			self.addStep("Identifying issues by Exclude function",function(){
 				issuesAdded.walk(function(issue){
 					if ((!hsRemoveKeys.exists(issue.getKey()))&&issue.isExcludedByFunction()){

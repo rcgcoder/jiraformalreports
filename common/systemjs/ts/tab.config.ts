@@ -140,7 +140,9 @@ export class TabConfig {
         dfReport["removeNotCreatedIssues"]=(auxObj.attr("checked")=="checked");
         auxObj=$('#toggle_ExcludeRootsIfHasParent');
         dfReport["removeChildIssuesFromRootList"]=(auxObj.attr("checked")=="checked");
-        
+
+        auxObj=$('#toggle_RemoveClosedBefore');
+        dfReport["removeClosedBefore"]=(auxObj.attr("checked")=="checked");
 
         auxObj=$('#toggle_ResetLeafPrecomputations');
         dfReport["ResetLeafPrecomputations"]=(auxObj.attr("checked")=="checked");
@@ -327,6 +329,9 @@ export class TabConfig {
 
         auxObj=$('#toggle_ExcludeRootsIfHasParent');
         if(isDefined(config.removeChildIssuesFromRootList)&&config.removeChildIssuesFromRootList)auxObj.attr("checked","checked");
+        
+        auxObj=$('#toggle_RemoveClosedBefore');
+        if(isDefined(config.removeClosedBefore)&&config.removeClosedBefore)auxObj.attr("checked","checked");
         
         
         auxObj=System.getAngularObject('selExcludedProjects',true);

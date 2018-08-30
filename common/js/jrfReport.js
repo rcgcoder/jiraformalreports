@@ -1076,7 +1076,7 @@ var jrfReport=class jrfReport {
 				var nRootsPrevious=self.childs.length();
 				hsRemoveKeys.walk(function(issRemove){
 					var issue=issRemove.issue;
-					var issueKey=issue.getKey;
+					var issueKey=issue.getKey();
 					if (self.childs.exists(issueKey)){
 						self.childs.remove(issueKey);
 						nRemoves++;

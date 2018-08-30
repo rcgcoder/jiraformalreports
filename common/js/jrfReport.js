@@ -1077,7 +1077,7 @@ var jrfReport=class jrfReport {
 					var optGetFieldValues=[{key:"ifEmpty",value:0}];
 					issuesAdded.walk(function(issue){
 						var faseAtEndReport=issue.fieldValue('Fase', false
-					            ,dtEndDate
+					            ,dtIniDate
 					            ,optGetFieldValues
 					            );
 						if ((faseAtEndReport>=4)){

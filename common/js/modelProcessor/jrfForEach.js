@@ -72,6 +72,8 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 	}
 	loopItemProcess(eachElem,index,loopLength){
 		var self=this;
+		var bExpandAllRows=self.variables.getVar("expandAllRows");
+		if (bExpandAllRows=="")bExpandAllRows=false;
 //		debugger;
 		var newParent;
 		var bLastShowed=true;
@@ -110,8 +112,6 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				} */
 				//debugger;
 				var treeParentId=self.variables.getVar("recursiveNodeId");
-				var bExpandAllRows=self.variables.getVar("expandAllRows");
-				if (bExpandAllRows=="")bExpandAllRows=false;
 				var treeNode={expanded:bExpandAllRows,childs:newHashMap(),html:"",
 							  loaded:(treeParentId==""?true:bExpandAllRows),
 							  showCaption:"show",
@@ -174,8 +174,6 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				if (self.bAllRoots) self.model.processingRoot=self.rootBackUp;
 				if ((self.subType=="row")||(self.subType=="subrow")){
 					//debugger;
-					var bExpandAllRows=self.variables.getVar("expandAllRows");
-					if (bExpandAllRows=="")bExpandAllRows=false;
 					var treeNodeId=self.variables.popVar("recursiveNodeId");
 					var treeNode=modelInteractiveFunctions.getInteractiveContent(treeNodeId);
 					var iPosTR=self.variables.popVar("InitTR_Pos");
@@ -259,7 +257,9 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 	}
 	loopEnd(iLoopElemsCount){
 		var self=this;
-		if (self.subType=="subrow"){
+		var bExpandAllRows=self.variables.getVar("expandAllRows");
+		if (bExpandAllRows=="")bExpandAllRows=false;
+		if ((self.subType=="subrow")&&(!bExpandAllRows)){
 			var iPosTR=self.model.htmlStack.saFindPos("<tr",true);
 			self.model.htmlStack.saReplace(iPosTR,3,'<tr style="display:none" ');
 		}

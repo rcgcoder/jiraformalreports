@@ -176,12 +176,20 @@
 						    				>
 						    </atlassianSelector>
 						</div>
+						<div class="flatpack-box">
+							<aui-toggle id="toggle_RemoveInexistentIssues" 
+					                        label="Remove the Issues was not created at report end date"
+					                        ></aui-toggle> Remove the Issues was not created at report end date
+							<aui-toggle id="toggle_ExcludeRootsIfHasParent" 
+					                        label="Remove root Issues that has parent"
+					                        ></aui-toggle> Remove root Issues that has parent
+					    </div>
 						<jiraCorrelator 
 							withToggle=true 
 							name="excludeFunction" 
 							functionHeader="function isExcluded(issue,report,model){<br>return "
 							functionFooter="}"
-							caption="Exclude Issues by Function">
+							caption="Exclude root Issues by Function">
 						</jiraCorrelator>
 				    </div>
 				</div>

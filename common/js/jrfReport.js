@@ -1034,20 +1034,56 @@ var jrfReport=class jrfReport {
 				});
 				self.continueTask();
 			});
-
-			self.addStep("Removing issues by Exclude function",function(){
-				var hsRemoveKeys=newHashMap();
+			var hsRemoveKeys=newHashMap();
+			if (self.config.removeChildIssuesFromRootList){
+				self.addStep("Identifying child issues in root list",function(){
+					issuesAdded.walk(function(issue){
+						if (issue.countParentsChild()>0){
+							hsRemoveKeys.add(issue.getKey(),{issue:issue});
+						}
+					});
+					self.continueTask();
+				});
+			}
+			if (self.config.RemoveNotCreatedIssues){
+	            var txtEndDate=theModel.variables.getVar("ReportEndDate"+"_text");
+	            var rptEndDate=theModel.variables.getVar("ReportEndDate");
+				self.addStep("Identifying issues was not created at:"+txtEndDate,function(){
+					var optGetFieldValues=[{key:"ifEmpty",value:0}];
+					issuesAdded.walk(function(issue){
+						if ((!hsRemoveKeys.exists(issue.getKey()))&&(issue.fieldValue('Fase', false
+					            ,rptEndDate
+					            ,optGetFieldValues
+					            ) === 0)){
+							hsRemoveKeys.add(issue.getKey(),{issue:issue,removeFromParent:true});
+						}
+					});
+					self.continueTask();
+				});
+			}
+			self.addStep("Identifying issues by Exclude function",function(){
 				issuesAdded.walk(function(issue){
-					if (issue.isExcludedByFunction()){
-						hsRemoveKeys.add(issue.getKey(),issue.getKey());
+					if ((!hsRemoveKeys.exists(issue.getKey()))&&issue.isExcludedByFunction()){
+						hsRemoveKeys.add(issue.getKey(),{issue:issue});
 					}
 				});
+			});
+			
+			self.addStep("Removing identified issues ",function(){
 				var nRemoves=0;
 				var nRootsPrevious=self.childs.length();
-				hsRemoveKeys.walk(function(issueKey){
+				hsRemoveKeys.walk(function(issRemove){
+					var issue=issRemove.issue;
+					var issueKey=issue.getKey;
 					if (self.childs.exists(issueKey)){
 						self.childs.remove(issueKey);
 						nRemoves++;
+					}
+					if (isDefined(issRemove.removeFromParent)
+							&&issRemove.removeFromParent
+							&&(issue.countParentsChild()>0)){
+						var theParent=issue.getListParentChild().pop();
+						theParent.getChilds().remove(issue.getKey);
 					}
 				});
 				var nRootsFinal=self.childs.length();

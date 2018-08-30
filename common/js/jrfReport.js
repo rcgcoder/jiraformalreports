@@ -1046,8 +1046,8 @@ var jrfReport=class jrfReport {
 				});
 			}
 			if (self.config.removeNotCreatedIssues){
-	            var txtEndDate=theModel.variables.getVar("ReportEndDate"+"_text");
-	            var rptEndDate=theModel.variables.getVar("ReportEndDate");
+	            var txtEndDate=self.objModel.variables.getVar("ReportEndDate"+"_text");
+	            var rptEndDate=self.objModel.variables.getVar("ReportEndDate");
 				self.addStep("Identifying issues was not created at:"+txtEndDate,function(){
 					var optGetFieldValues=[{key:"ifEmpty",value:0}];
 					issuesAdded.walk(function(issue){

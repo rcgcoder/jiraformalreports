@@ -1045,7 +1045,7 @@ var jrfReport=class jrfReport {
 					self.continueTask();
 				});
 			}
-			if (self.config.RemoveNotCreatedIssues){
+			if (self.config.removeNotCreatedIssues){
 	            var txtEndDate=theModel.variables.getVar("ReportEndDate"+"_text");
 	            var rptEndDate=theModel.variables.getVar("ReportEndDate");
 				self.addStep("Identifying issues was not created at:"+txtEndDate,function(){

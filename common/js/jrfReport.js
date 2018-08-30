@@ -1084,8 +1084,8 @@ var jrfReport=class jrfReport {
 					if (isDefined(issRemove.removeFromParent)
 							&&issRemove.removeFromParent
 							&&(issue.countParentsChild()>0)){
-						var theParent=issue.getListParentsChild().pop();
-						theParent.getChilds().remove(issue.getKey);
+						var theParent=issue.getListParentsChild().getLast().value;
+						theParent.getChilds().remove(issueKey);
 					}
 				});
 				var nRootsFinal=self.childs.length();

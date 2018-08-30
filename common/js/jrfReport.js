@@ -1051,10 +1051,11 @@ var jrfReport=class jrfReport {
 				self.addStep("Identifying issues was not created at:"+txtEndDate,function(){
 					var optGetFieldValues=[{key:"ifEmpty",value:0}];
 					issuesAdded.walk(function(issue){
-						if ((!hsRemoveKeys.exists(issue.getKey()))&&(issue.fieldValue('Fase', false
+						var faseAtEndReport=issue.fieldValue('Fase', false
 					            ,rptEndDate
 					            ,optGetFieldValues
-					            ) === 0)){
+					            );
+						if (faseAtEndReport<=0){
 							hsRemoveKeys.add(issue.getKey(),{issue:issue,removeFromParent:true});
 						}
 					});

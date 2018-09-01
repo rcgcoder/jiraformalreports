@@ -538,10 +538,12 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 			snapshot.calculos.aprobado=0;
 			snapshot.calculos.pendiente=0;
 			snapshot.calculos.resto=0;
+			snapshot.calculos.avance=0;			
 			snapshot.calculos.total=0;
 			snapshot.calculos.inTimespents.aprobado=0;
 			snapshot.calculos.inTimespents.pendiente=0;
 			snapshot.calculos.inTimespents.resto=0;
+			snapshot.calculos.inTimespents.avance=0;
 			snapshot.calculos.inTimespents.total=0;
 			snapshot.calculos.comentarios="";
 			if (bNoExiste){

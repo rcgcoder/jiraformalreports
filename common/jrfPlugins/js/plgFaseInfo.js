@@ -188,6 +188,9 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
                 return self.getFaseOf(status);
          };
          var fncGetFaseName=function(faseIndex){
+        	 if (this.getKey()=="CDM-14"){
+        		 debugger;
+        	 }
              var status=faseIndex;
              if (isUndefined(status)) status=this.fieldValue("Fase");
              return self.getFaseName(status);

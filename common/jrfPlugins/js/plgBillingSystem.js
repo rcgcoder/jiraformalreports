@@ -56,7 +56,7 @@ var getBillingFieldListRecursive=function (sPropertyPath,obj){
 	var arrProps=getAllProperties(obj);
 	for (var i=0;i<arrProps.length;i++){
 		var propName=arrProps[i];
-		var propPath=sPropertyPath+(sPropertyPath==""?"":".")+propName;
+		var propPath=sPropertyPath+(sPropertyPath===""?"":".")+propName;
 		var propValue=obj[propName];
 		if (isDefined(propValue)&&(typeof propValue==="object")){
 			arrAux=self.getBillingFieldListRecursive(propPath,propValue);
@@ -114,7 +114,7 @@ var getBillingLifeDates=function(otherParams,theDatetime,errorsInfo){
 	}
 	// initialize and load the importes structure
 	var atDatetime=theDatetime;
-	if (isUndefined(theDatetime)||(theDatetime=="")){
+	if (isUndefined(theDatetime)||(theDatetime==="")){
 		var objModel=otherParams.getValue("model");
 		var objReport=objModel.report;
 		atDatetime=objReport.reportDateTime;
@@ -136,7 +136,7 @@ var getBillingLifeDates=function(otherParams,theDatetime,errorsInfo){
 		tsAux1=hstAux.value[0].getTime();
 		tsAux2=hstAux.value[1].getTime();
 		if ((tsAux2<atTimestamp) &&
-		   ((dtWorksInit=="")?true:tsWorksInit<tsAux2)){
+		   ((dtWorksInit==="")?true:tsWorksInit<tsAux2)){
 			arrHistory.push([tsAux1,tsAux2]);
 		}
 	});
@@ -164,7 +164,7 @@ var getBillingLifeDates=function(otherParams,theDatetime,errorsInfo){
 		dtIni=interval[0];
 		dtEnd=interval[1];
 		if (dtIni!=""){
-			if (dtAnt==""){
+			if (dtAnt===""){
 				arrHistory.push(dtIni);
 			}else if ((dtAnt!="")&&(dtAnt==dtIni)){
 				// the date is already added (dtEnd....)
@@ -243,7 +243,7 @@ var plgBillingParams=class plgBillingParams{
     	var self=this;
 		var config=self.getParams(config);
 		var hsHistory=self.variables.getVars(config.history);
-		if (isUndefined(hsHistory)||(hsHistory=="")){
+		if (isUndefined(hsHistory)||(hsHistory==="")){
 			//debugger;
 			return "";
 		}
@@ -330,9 +330,9 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		//dynObj.functions.add("fieldAccumChilds",function(theFieldName,datetime,inOtherParams,notAdjust,bSetProperty,fncItemCustomCalc){
 		var timeestimate=self.fieldAccumChilds("timeestimate",atDatetime);
 		var timespent=self.fieldAccumChilds("timespent",atDatetime);
-		if (timeoriginalestimate=="") timeoriginalestimate=0; else timeoriginalestimate=parseFloat(timeoriginalestimate);
-		if (timeestimate=="") timeestimate=0; else timeestimate=parseFloat(timeestimate);
-		if (timespent=="") timespent=0; else timespent=parseFloat(timespent);
+		if (timeoriginalestimate==="") timeoriginalestimate=0; else timeoriginalestimate=parseFloat(timeoriginalestimate);
+		if (timeestimate==="") timeestimate=0; else timeestimate=parseFloat(timeestimate);
+		if (timespent==="") timespent=0; else timespent=parseFloat(timespent);
     	var objImportes=newBillingObject();
     	objImportes.source.timeoriginalestimate=timeoriginalestimate;
     	objImportes.source.timeestimate=timeestimate;
@@ -352,7 +352,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     		bWithValue=false;
     		//debugger;
     		vValue=self.fieldValue(fieldImporte[0],false,atDatetime);
-    		if ((vValue=="") || (isUndefined(vValue)) || (isNaN(vValue))) {
+    		if ((vValue==="") || (isUndefined(vValue)) || (isNaN(vValue))) {
     			vValue=0;
     		} else {
     			vValue=parseFloat(vValue);
@@ -524,7 +524,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 			actFase=snapshot.source.faseActual;
 			sSnapshotDate=formatDate(snapshot.source.atDatetime,4);
 			bNoExiste=false;
-			if (actFase=="") {
+			if (actFase==="") {
 				actFase=0;
 				bNoExiste=true;
 			}
@@ -546,7 +546,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 			snapshot.calculos.comentarios="";
 			if (bNoExiste){
 				// no existia
-			} else if ((previousDate=="")||(antFase<minFacturableFase)){// is the first or the first facturable
+			} else if ((previousDate==="")||(antFase<minFacturableFase)){// is the first or the first facturable
 				for (var nFase=0;nFase<5;nFase++){
 					fieldFaseName=self.getFieldFaseBillingName(nFase);
 					actFaseImporte=snapshot.importesReales[fieldFaseName];

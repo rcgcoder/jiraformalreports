@@ -107,7 +107,6 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
      }
  	getChildsCounter(otherParams){
     	var self=this;
-//    	debugger;
     	//debugger;
     	var hslifeCaches=self.getFieldLife("ChildsCounter",self.getReport().reportDateTime,otherParams);
     	var life=hslifeCaches.getValue("life");
@@ -124,7 +123,7 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
     };
 	getChildsCounterLife(){
     	var self=this;
-    	debugger;
+//    	debugger;
     	var hsChilds=self.getChilds();
     	var hsDates=newHashMap();
     	var fncNewHistory=function(theDate){

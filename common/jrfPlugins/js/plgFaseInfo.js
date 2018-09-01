@@ -192,7 +192,7 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
         		 debugger;
         	 }
              var status=faseIndex;
-             if (isUndefined(status)) status=this.fieldValue("Fase",false,otherParams);
+             if (isUndefined(status)) status=this.fieldValue("Fase",false,undefined,otherParams);
              return self.getFaseName(status);
          };
          var fncGetFaseLife=function(){

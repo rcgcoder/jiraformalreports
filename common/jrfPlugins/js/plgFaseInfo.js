@@ -114,7 +114,7 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
     	if (life.length==0) {
     		var objResult={total:0};
     		for (var i=0;i<5;i++){
-    			var faseName=self.getFaseName(i);
+    			var faseName=self.getFaseName(undefined,i);
     			objResult[faseName]=0;
     		}
     		return objResult;
@@ -133,7 +133,7 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
     						,actual:{total:0}
     						};
     		for (var i=0;i<5;i++){
-    			var faseName=self.getFaseName(i);
+    			var faseName=self.getFaseName(undefined,i);
     			objResult.previous[faseName]=0;
     			objResult.actual[faseName]=0;
     		}
@@ -159,7 +159,7 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
         	hsChilds.walk(function(issue){
         		var issFase=issue.fieldValue("Fase",false,status.date);
         		if (isDefined(issFase)&&(issFase!=="")&&(issFase>=0)){
-        			var faseName=self.getFaseName(issFase);
+        			var faseName=self.getFaseName(undefined,issFase);
         			status.actual[faseName]++;
         			status.actual.total++;
         		}
@@ -187,12 +187,12 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
                 var status=this.fieldValue("status.name");
                 return self.getFaseOf(status);
          };
-         var fncGetFaseName=function(faseIndex){
+         var fncGetFaseName=function(otherParams,faseIndex){
         	 if (this.getKey()=="CDM-14"){
         		 debugger;
         	 }
              var status=faseIndex;
-             if (isUndefined(status)) status=this.fieldValue("Fase");
+             if (isUndefined(status)) status=this.fieldValue("Fase",false,otherParams);
              return self.getFaseName(status);
          };
          var fncGetFaseLife=function(){

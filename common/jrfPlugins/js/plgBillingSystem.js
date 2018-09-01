@@ -483,6 +483,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     }
     getBillingLife(otherParams,theDatetime){
     	var self=this;
+    	if (self.getKey()=="CDM-14") debugger;
 		var sComentarios=[];
 		var sErrores=[];
 

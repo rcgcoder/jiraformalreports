@@ -774,7 +774,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		} else {
 			arrInnerText=sText;
 		}
-		arrInnerText=arrInnerText.saRemoveInnerHtmlTags("");
+//		arrInnerText=arrInnerText.saRemoveInnerHtmlTags("");
 //		var sInnerText=arrInnerText.saRemoveInnerHtmlTags(""); // remove inner tags
 		var sInnerText=arrInnerText;
 		var functionCache="";

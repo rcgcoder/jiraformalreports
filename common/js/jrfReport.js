@@ -1090,7 +1090,7 @@ var jrfReport=class jrfReport {
 			self.addStep("Identifying issues by Exclude function",function(){
 				issuesAdded.walk(function(issue){
 					if ((!hsRemoveKeys.exists(issue.getKey()))&&issue.isExcludedByFunction()){
-						hsRemoveKeys.add(issue.getKey(),{issue:issue});
+						hsRemoveKeys.add(issue.getKey(),{issue:issue,removeFromParent:true});
 					}
 				});
 				self.continueTask();

@@ -862,7 +862,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 	   		snapshot.calculos.inTimespents.totalEnFacturas=tsFacturacion;
 	   		snapshot.calculos.totalEnFacturas=impFacturacion;
 	   		snapshot.calculos.inTimespents.avance=avance;
-	   		snapshot.calculos.avance=avance;
+	   		snapshot.calculos.avance=avanceImporte;
 	   		snapshot.calculos.inTimespents.estimadoActual=tsEstimadoActual;
 	   		snapshot.calculos.estimadoActual=impEstimadoActual;
 	      	arrResults.push([snapshot.source.atDatetime,"",snapshot]);

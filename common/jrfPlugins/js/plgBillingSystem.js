@@ -35,14 +35,17 @@ var newBillingObject=function (){
 		objImportes.importesReales=fncNewDesgloseImportes();
 		objImportes.importesdefinidos={importesEstimados:fncNewDesgloseImportes(false,false,false,false,false,false),
 							  importesReales:fncNewDesgloseImportes(false,false,false,false,false,false)};
-		objImportes.calculos={aprobado:0,pendiente:0,resto:0,total:0,
+		objImportes.calculos={aprobado:0,pendiente:0,resto:0,total:0
+							  ,totalEnFacturas:0,avance:0,estimadoActual:0,
 							  fases:{aprobado:fncNewDesgloseImportes(),
 									pendiente:fncNewDesgloseImportes(),
 									resto:fncNewDesgloseImportes()
 							  },
 							  faseActual:0,
 							  faseAnterior:0,
-							  inTimespents:{aprobado:0,pendiente:0,resto:0,total:0},
+							  inTimespents:{aprobado:0,pendiente:0,resto:0,total:0
+								  			,totalEnFacturas:0
+								  			,avance:0,estimadoActual:0},
 							  noFacturable:{importe:0,timespent:0,avance:{importe:0,timespent:0}},
 							  workedPercent:0,
 							  bModificacionAlcance:false,
@@ -840,8 +843,28 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 	   	}
 		
 	   	arrSnapshots.forEach(function(snapshot){
-	   		//calculo de los importes no facturables.
+	   		//ajuste final de los calculos y preparación para el ordenamiento
+	   		debugger;
+	   		var tsFacturacion=snapshot.calculos.inTimespents.aprobado
+			   					+snapshot.calculos.inTimespents.pendiente;
+	   		var impFacturacion=snapshot.calculos.aprobado
+			   					+snapshot.calculos.pendiente;
 	   		
+	   		var avance=0;
+	   		var avanceImporte=0;
+	   		avance=snapshot.source.timespent
+	   				- (tsFacturacion +snapshot.calculos.noFacturable.timespent);	
+	   		avanceImporte=(avance*(snapshot.source.hourCost/3600))+impFacturacion;
+	   		avance=snapshot.source.timespent - (snapshot.calculos.noFacturable.timespent);	
+	   		var tsEstimadoActual=snapshot.source.timeestimate-tsFacturacion +snapshot.calculos.noFacturable.timespent;
+	   		var impEstimadoActual=((tsEstimadoActual-tsFacturacion)*(snapshot.source.hourCost/3600))+impFacturacion;
+	   		
+	   		snapshot.calculos.inTimespents.totalEnFacturas=tsFacturacion;
+	   		snapshot.calculos.totalEnFacturas=impFacturacion;
+	   		snapshot.calculos.inTimespents.avance=avance;
+	   		snapshot.calculos.avance=avance;
+	   		snapshot.calculos.inTimespents.estimadoActual=tsEstimadoActual;
+	   		snapshot.calculos.estimadoActual=impEstimadoActual;
 	      	arrResults.push([snapshot.source.atDatetime,"",snapshot]);
 	   	});
 	   	arrResults.sort(function(a,b){

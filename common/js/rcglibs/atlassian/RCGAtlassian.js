@@ -244,7 +244,7 @@ class RCGAtlassian{
 					self.popCallback(["",xhr,sUrl,headers]);
 				} else {
 					log(" --> Bytes:"+response.length);
-					if (xhr.status == 429){
+					if ((xhr.status == 429)||(xhr.status == 429)){
 						var millis=Math.round(((Math.random()*10)+5)*1000);
 						log("too many request.... have to wait "+(Math.round(millis/10)/100)+" secs");
 						setTimeout(self.createManagedCallback(function(){

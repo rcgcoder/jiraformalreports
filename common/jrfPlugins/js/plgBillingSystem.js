@@ -341,7 +341,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		var faseDesarrollo=faseActual;
 		var parentIssue=self;
 		while (parentIssue.countParentsChild()>0){
-			var parentIssue=(parentIssue.getParentsChild().getFirst().value);
+			var parentIssue=(parentIssue.getListParentsChild().getFirst().value);
 			var auxFaseActual=parentIssue.fieldValue("Fase",false,atDatetime);
 			while (faseActual>auxFaseActual){
 				faseActual=auxFaseActual;

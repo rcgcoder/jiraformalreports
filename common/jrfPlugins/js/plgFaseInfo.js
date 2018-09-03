@@ -91,7 +91,9 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
     }
 
     getFaseName(nFaseNum){
-    		if (nFaseNum==4){
+    		if (nFaseNum===""){
+				return "No creado";
+    		} else if (nFaseNum==4){
 				return "Desplegado";
 			} else if (nFaseNum==3){
 				return "Implementado";

@@ -114,7 +114,7 @@ class RCGAtlassian{
 		var self=this;
 		var arrResults=[];
 		var nLast=0;
-		var fncAddIteration=function(nLast,nTotal,nBlockItems){
+/*		var fncAddIteration=function(nLast,nTotal,nBlockItems){
 			//	extended_addStep(description,method,
 			//progressMin,progressMax,newObj,totalWeight,methodWeight,sForkType,barrier){
 
@@ -137,7 +137,7 @@ class RCGAtlassian{
 			},0,nBlockItems,undefined,undefined,undefined,"INNER",undefined
 			);
 		};
-		var fncIteration=self.createManagedCallback(function(){
+*/		var fncIteration=self.createManagedCallback(function(){
 			self.pushCallback(function(response,xhr,sUrl,headers){
 				var objResp;
 				if (typeof response==="string"){
@@ -174,7 +174,16 @@ class RCGAtlassian{
 					var fncCall=function(callInfo){
 						self.apiCallApp(appInfo,sTarget,callType,data,callInfo.first,callInfo.nBlockItems,undefined,callback,arrHeaders);
 					}
-					var fncProcess=function(){
+					var fncProcess=function(item,response){
+						var objResp;
+						if (typeof response=="string"){
+							objResp=JSON.parse(response);
+						} else {
+							objResp=response;
+						}
+						arrResults=arrResults.concat(objResp[resultName]);
+						log("Retrieved "+resultName+":"+arrResults.length);
+						self.continueTask([arrResults]);
 						
 					}
 					self.parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,10);
@@ -199,7 +208,13 @@ class RCGAtlassian{
 			});
 			self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,undefined,callback,arrHeaders);
 		});
-		fncIteration();
+		self.addStep("Calling for "+sTarget,function(){
+			fncIteration();
+		});
+		self.addStep("Returnig results for "+sTarget,function(){
+			self.continueTask([arrResults]);
+		});
+		self.continueTask();
 	}
 	authenticate(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders){
 		var self=this;

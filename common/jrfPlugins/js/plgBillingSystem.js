@@ -358,6 +358,13 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     	objImportes.source.hourCost=hourCost;
     	objImportes.source.minFacturableFase=minFacturableFase;
     	objImportes.source.atDatetime=atDatetime;
+		var contractInitDate=(new Date());
+		if (objModel.variables.getVar("withAdvancedWorks")){
+			contractInitDate=objModel.variables.getVar("ContractAdvancedDate");
+		} else {
+			contractInitDate=objModel.variables.getVar("ContractInitDate");			
+		}
+		var bIsOldIssue=(contractInitDate.getTime()<created.getTime());
     	
 		var arrFields=self.getBillingFieldUsed().arrFieldsForCalc;
     	var vValue;
@@ -388,6 +395,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 			impEst=0;
 			impReal=0;
 			fieldFaseName=self.getFieldFaseBillingName(nFase);
+			
 			bUndefinedEstimado=(!objImportes.importesdefinidos.importesEstimados[fieldFaseName]);
 			bUndefinedReal=(!objImportes.importesdefinidos.importesReales[fieldFaseName]);
 			if (!bUndefinedEstimado) impEst=objImportes.source.importesEstimados[fieldFaseName];
@@ -508,6 +516,10 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		
 		
 		var configName=otherParams.getValue("config");
+
+		
+		
+		
 		var arrHistory=getBillingLifeDates(otherParams,theDatetime,sErrores);
 		var dtAux;
 		//debugger;
@@ -769,12 +781,6 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 			objModel=objReport.objModel;
 		}
 
-		var contractInitDate=(new Date());
-		if (objModel.variables.getVar("withAdvancedWorks")){
-			contractInitDate=objModel.variables.getVar("ContractAdvancedDate");
-		} else {
-			contractInitDate=objModel.variables.getVar("ContractInitDate");			
-		}
 		// getting base snapshot
 		var baseSnapshot;
 	   	arrSnapshots.forEach(function(snapshot){

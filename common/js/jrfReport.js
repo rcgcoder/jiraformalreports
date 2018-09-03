@@ -281,10 +281,13 @@ var jrfReport=class jrfReport {
 		    fncAddVariable("ReportDateTime",self.reportDateTime,true);
 		    
 	    	theModel.variables.initVar("withAdvancedWorks");				
+	    	theModel.variables.initVar("worksStartDate");				
 		    if (isDefined(self.config['dates']["withAdvancedWorks"])&&(self.config['dates']["withAdvancedWorks"])){
 				theModel.variables.pushVar("withAdvancedWorks",self.config['dates']["withAdvancedWorks"]);
+				theModel.variables.pushVar("worksStartDate",self.config['dates']["ContractAdvancedDate"]);
 		    } else {
 				theModel.variables.pushVar("withAdvancedWorks",false);				
+				theModel.variables.pushVar("worksStartDate",self.config['dates']["ContractInitDate"]);
 		    }
 		    self.continueTask();
 		});

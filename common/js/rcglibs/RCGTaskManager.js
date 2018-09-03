@@ -550,7 +550,7 @@ class RCGTaskManager{
 	}
 	setUpdateStatusDelay(newDelay){
 		var self=this;
-		self.updateStatusDelay(newDelay);
+		self.updateStatusDelay=newDelay;
 	}
 	changeStatus(){
 		var self=this;

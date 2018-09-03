@@ -366,6 +366,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		} else {
 			contractInitDate=objModel.variables.getVar("ContractInitDate");			
 		}
+		debugger;
 		var bIsOldIssue=(contractInitDate.getTime()<created.getTime());
     	
 		var arrFields=self.getBillingFieldUsed().arrFieldsForCalc;

@@ -156,7 +156,28 @@ class RCGAtlassian{
 				var nInit=objResp.startAt;
 				nLast=nInit+nResults;
 				arrResults=arrResults.concat(objResp[resultName]);
-				if (nLast<nTotal){
+				if (nLast>=nTotal){
+					return self.popCallback([arrResults]);
+					
+				} else if (nLast<nTotal){
+					var hsListItemsToProcess=newHashMap();
+					while (nLast<nTotal){
+						var nBlockItems=nResults;
+						if (nLast+nBlockItems>nTotal){
+							nBlockItems=nTotal-nLast;
+						}
+						hsListItemsToProcess.push({first:nLast,total:nTotal,nBlockItems:nBlockItems});
+						//fncAddIteration(nLast,nTotal,nBlockItems);
+						nLast+=nResults;
+					}
+					var fncCall=function(callInfo){
+						self.apiCallApp(appInfo,sTarget,callType,data,callInfo.first,callInfo.nBlockItems,undefined,callback,arrHeaders);
+					}
+					var fncProcess=function(){
+						
+					}
+					self.parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,10);
+/*					
 					self.addStep("Adding all blocks of response...",function(){
 						while (nLast<nTotal){
 							var nBlockItems=nResults;
@@ -172,8 +193,7 @@ class RCGAtlassian{
 						self.popCallback([arrResults]);
 					});
 					self.continueTask();
-				} else {
-					self.popCallback([arrResults]);
+*/
 				}
 			});
 			self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,undefined,callback,arrHeaders);
@@ -244,7 +264,7 @@ class RCGAtlassian{
 					self.popCallback(["",xhr,sUrl,headers]);
 				} else {
 					log(" --> Bytes:"+response.length);
-					if ((xhr.status == 429)||(xhr.status == 500)){
+					if ((xhr.status == 429)/*||(xhr.status == 500)*/){
 						var millis=Math.round(((Math.random()*10)+5)*1000);
 						log("too many request.... have to wait "+(Math.round(millis/10)/100)+" secs");
 						setTimeout(self.createManagedCallback(function(){

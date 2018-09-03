@@ -137,7 +137,9 @@ class RCGAtlassian{
 			},0,nBlockItems,undefined,undefined,undefined,"INNER",undefined
 			);
 		};
-*/		var fncIteration=self.createManagedCallback(function(){
+*/
+		
+		self.addStep("Calling for "+sTarget,function(){
 			self.pushCallback(function(response,xhr,sUrl,headers){
 				var objResp;
 				if (typeof response==="string"){
@@ -207,10 +209,6 @@ class RCGAtlassian{
 				}
 			});
 			self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,undefined,callback,arrHeaders);
-		});
-		self.addStep("Calling for "+sTarget,function(){
-			fncIteration();
-			self.continueTask();
 		});
 		self.addStep("Returnig results for "+sTarget,function(){
 			self.continueTask([arrResults]);

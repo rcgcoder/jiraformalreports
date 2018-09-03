@@ -785,7 +785,7 @@ var jrfReport=class jrfReport {
 			self.addStep("Getting comments parallelized.", function(){
 				var fncCall=function(group){
 //					self.addStep("Retrieve Comments of Group",function(){
-						self.jira.getComments(group,fncAddComments /*," and comment ~ formal"*/);
+						self.jira.getComments(group,fncAddComments ," and comment ~ formal");
 //					});
 //					self.addStep("Do nothing to absorve the continueTask of getcomments",function(){
 						/* do nothing */

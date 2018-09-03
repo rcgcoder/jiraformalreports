@@ -16,6 +16,7 @@ var newBillingObject=function (){
 				  timespent:"",
 				  fechaFacturacion:"",
 				  faseActual:"",
+				  faseActualName:"",
 				  faseDesarrollo:"",
 				  faseDesarrolloName:"",
 				  status:"",
@@ -366,6 +367,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     	objImportes.source.timespent=timespent;
     	objImportes.bIncrementadaEstimacion=(timeoriginalestimate<timeestimate);
     	objImportes.source.faseActual=faseActual;
+    	objImportes.source.faseActualName=self.getFieldFaseBillingName(faseActual);
     	objImportes.source.faseDesarrollo=faseDesarrollo;
     	objImportes.source.faseDesarrolloName=self.getFieldFaseBillingName(faseDesarrollo);
     	objImportes.source.status=status;

@@ -321,13 +321,14 @@ class RCGJira{
 			}
 		}
 	}
-	getComments(arrIssues,cbBlock){
+	getComments(arrIssues,cbBlock,postJQL){
 		var self=this;
 		var sJQL="";
 		arrIssues.forEach(function(issueKey){
 			sJQL+=((sJQL!=""?",":"")+issueKey);
 		});
 		sJQL="issue in ("+sJQL+")";
+		if (isDefined(postJQL))sJQL+=" "+postJQL;
 		var sCacheKey="Comments_"+sJQL;
 		var vCache=self.getFromCache(sCacheKey);
 		if (vCache!="") return self.continueTask([vCache]);

@@ -332,8 +332,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     		logError(self.getKey()+" fecha de facturacion:"+fechaFacturacion);
     	}
     	var status=self.fieldValue("status.name",false,atDatetime);
-    	debugger;
-    	var created=self.fieldValue("Creada",false);
+    	var created=new Date(self.fieldValue("Creada",false));
 		var faseActual=self.fieldValue("Fase",false,atDatetime);
 		var timeoriginalestimate=self.fieldValue("timeoriginalestimate",false,atDatetime);
 		//dynObj.functions.add("fieldAccumChilds",function(theFieldName,datetime,inOtherParams,notAdjust,bSetProperty,fncItemCustomCalc){

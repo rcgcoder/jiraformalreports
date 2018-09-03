@@ -772,16 +772,14 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		});
 	   	 
 		var arrResults=[];
-		var objModel;
-		var objReport;
-		if (otherParams.exists("model")){
-			objModel=otherParams.getValue("model");
-			objReport=objModel.report;
-		} else {
-			objReport=self.getReport();
-			objModel=objReport.objModel;
-		}
+		var contractInitDate=(new Date());
+		var objModel=self.getReport().objModel;
 
+		if (objModel.variables.getVar("withAdvancedWorks")){
+			contractInitDate=objModel.variables.getVar("ContractAdvancedDate");
+		} else {
+			contractInitDate=objModel.variables.getVar("ContractInitDate");			
+		}
 		// getting base snapshot
 		var baseSnapshot;
 	   	arrSnapshots.forEach(function(snapshot){

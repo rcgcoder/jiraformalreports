@@ -814,7 +814,7 @@ var jrfReport=class jrfReport {
 			var tm=self.getTaskManager();
 			tm.asyncTimeWasted=0;
 			tm.asyncTaskCallsBlock=5000;
-			tm.asyncTaskCallsMaxDeep=100;
+			tm.asyncTaskCallsMaxDeep=150;
 			var arrLinkTypes=self.config.useIssueLinkTypes;
 			
 			var countAdded=0;
@@ -1244,7 +1244,7 @@ var jrfReport=class jrfReport {
 			var tm=self.getTaskManager();
 			tm.asyncTimeWasted=0;
 			tm.asyncTaskCallsBlock=5000;
-			tm.asyncTaskCallsMaxDeep=100;
+			tm.asyncTaskCallsMaxDeep=150;
 			tm.autoFree=true;
 			self.objModel.process("encode"); // hash inner task....
 		});

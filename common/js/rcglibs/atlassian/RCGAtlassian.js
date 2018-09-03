@@ -185,7 +185,6 @@ class RCGAtlassian{
 						}
 						arrResults=arrResults.concat(objResp[resultName]);
 						log("Retrieved "+resultName+":"+arrResults.length);
-						self.continueTask([arrResults]);
 						
 					}
 					self.parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,10);

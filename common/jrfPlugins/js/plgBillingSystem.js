@@ -18,6 +18,7 @@ var newBillingObject=function (){
 				  faseActual:"",
 				  status:"",
 				  created:"",
+				  isOldIssue:false,
 			      hourCost:0,
 			      minFacturableFase:4,
 			      atDatetime:0,
@@ -367,6 +368,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 			contractInitDate=objModel.variables.getVar("ContractInitDate");			
 		}
 		var bIsOldIssue=(contractInitDate.getTime()<created.getTime());
+		objImportes.isOldIssue=bIsOldIssue;
 		var arrFields=self.getBillingFieldUsed().arrFieldsForCalc;
     	var vValue;
     	var bWithValue;
@@ -428,7 +430,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		var tipo=self.fieldValue("issuetype.name");
 		
 		if (servicio!="OT"){
-			if ((tipo=="Tarea")||(tReal==0)) tReal=tEstimado;
+			if (/*(tipo=="Tarea")||*/(tReal==0)) tReal=tEstimado;
 			if (tEstimado==0) tEstimado=tReal;
 		}
 		

@@ -349,11 +349,15 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 			}
 		}
 		var timeoriginalestimate=self.fieldValue("timeoriginalestimate",false,atDatetime);
+		timeoriginalestimate=self.getReport().adjustAccumItem("Childs",timeoriginalestimate,self,"timeoriginalestimate");
+
 		//dynObj.functions.add("fieldAccumChilds",function(theFieldName,datetime,inOtherParams,notAdjust,bSetProperty,fncItemCustomCalc){
 		if (self.getKey()=="BENT-411"){
 			debugger;
 		}
 		var timeestimate=self.fieldAccumChilds("timeestimate",atDatetime);
+		timeestimate=self.getReport().adjustAccumItem("Childs",timeestimate,self,"timeestimate");
+		
 		if ((faseActual==3)||(faseActual==4)){
 			timeestimate=0;
 		}

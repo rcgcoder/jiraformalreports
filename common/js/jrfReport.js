@@ -813,8 +813,8 @@ var jrfReport=class jrfReport {
 			}
 			var tm=self.getTaskManager();
 			tm.asyncTimeWasted=0;
-			tm.asyncTaskCallsBlock=3000;
-			tm.asyncTaskCallsMaxDeep=15;
+			tm.asyncTaskCallsBlock=5000;
+			tm.asyncTaskCallsMaxDeep=100;
 			var arrLinkTypes=self.config.useIssueLinkTypes;
 			
 			var countAdded=0;
@@ -1243,8 +1243,8 @@ var jrfReport=class jrfReport {
 		self.addStep("Processing Model",function(){
 			var tm=self.getTaskManager();
 			tm.asyncTimeWasted=0;
-			tm.asyncTaskCallsBlock=3000;
-			tm.asyncTaskCallsMaxDeep=30;
+			tm.asyncTaskCallsBlock=5000;
+			tm.asyncTaskCallsMaxDeep=500;
 			tm.autoFree=true;
 			self.objModel.process("encode"); // hash inner task....
 		});

@@ -98,6 +98,7 @@ var jrfReport=class jrfReport {
 
 	execute(bDontReloadFiles){
 		var self=this;
+		var auxAsyncCallsMaxDeep=100;
 		var tm=self.getTaskManager();
 		tm.asyncTimeWasted=0;
 		tm.asyncTaskCallsBlock=0;
@@ -816,7 +817,7 @@ var jrfReport=class jrfReport {
 			var tm=self.getTaskManager();
 			tm.asyncTimeWasted=0;
 			tm.asyncTaskCallsBlock=5000;
-			tm.asyncTaskCallsMaxDeep=25;
+			tm.asyncTaskCallsMaxDeep=auxAsyncCallsMaxDeep;
 			tm.setUpdateStatusDelay(2000);
 			var arrLinkTypes=self.config.useIssueLinkTypes;
 			
@@ -1247,7 +1248,7 @@ var jrfReport=class jrfReport {
 			var tm=self.getTaskManager();
 			tm.asyncTimeWasted=0;
 			tm.asyncTaskCallsBlock=5000;
-			tm.asyncTaskCallsMaxDeep=25;
+			tm.asyncTaskCallsMaxDeep=auxAsyncCallsMaxDeep;
 			tm.setUpdateStatusDelay(5000);
 			tm.autoFree=true;
 			self.objModel.process("encode"); // hash inner task....

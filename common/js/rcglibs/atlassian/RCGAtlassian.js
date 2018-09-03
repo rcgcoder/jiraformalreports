@@ -236,7 +236,7 @@ class RCGAtlassian{
 					self.popCallback(["",xhr,sUrl,headers]);
 				} else {
 					log(" --> Bytes:"+response.length);
-					if ((xhr.status == 429)/*||(xhr.status == 500)*/){
+					if ((xhr.status == 429)){
 						var millis=Math.round(((Math.random()*10)+5)*1000);
 						log("too many request.... have to wait "+(Math.round(millis/10)/100)+" secs");
 						setTimeout(self.createManagedCallback(function(){
@@ -253,6 +253,8 @@ class RCGAtlassian{
 							log(xhr.responseText);
 							self.popCallback(["",xhr,sUrl,headers]);
 						}
+					} else if (xhr.status==500){
+						logError("Error 500 in atlassian server calling to "+sTarget);
 					} else {
 						self.popCallback([response,xhr,sUrl,headers]);
 					}

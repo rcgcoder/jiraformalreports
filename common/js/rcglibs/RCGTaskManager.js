@@ -509,7 +509,7 @@ class RCGTaskManager{
 		self.timeoutsAvoided=0;
 		self.lastTimeout=0;
 		self.asyncTimeWasted=0;
-		self.updateStatusDelay=1000;
+		self.updateStatusDelay=2000;
 		self.changeStatusNeedsNotify=false;
 		self.changeStatusUpdateScheduled=false;
 		self.autoFree=false;
@@ -547,6 +547,10 @@ class RCGTaskManager{
 	setOnChangeStatus(callback){
 		var self=this;
 		self.onChangeStatus=callback;
+	}
+	setUpdateStatusDelay(newDelay){
+		var self=this;
+		self.updateStatusDelay(newDelay);
 	}
 	changeStatus(){
 		var self=this;

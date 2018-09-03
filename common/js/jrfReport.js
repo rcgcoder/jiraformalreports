@@ -102,6 +102,7 @@ var jrfReport=class jrfReport {
 		tm.asyncTimeWasted=0;
 		tm.asyncTaskCallsBlock=0;
 		tm.asyncTaskCallsMaxDeep=0;
+		tm.setUpdateStatusDelay(2000);
 		loggerFactory.getLogger().enabled=self.config.logDebug;
 		loggerFactory.getLogger().setAlertOnError(self.config.AlertErrors);
 		self.config.htmlDebug=self.config.logHtmlDebug;
@@ -199,6 +200,7 @@ var jrfReport=class jrfReport {
 			tm.asyncTimeWasted=0;
 			tm.asyncTaskCallsBlock=0;
 			tm.asyncTaskCallsMaxDeep=0;
+			tm.setUpdateStatusDelay(2000);
 			var theModel=new jrfModel(self);
 			self.objModel=theModel;
 			if (isDefined(self.config.listDefaultVariables)){
@@ -815,6 +817,7 @@ var jrfReport=class jrfReport {
 			tm.asyncTimeWasted=0;
 			tm.asyncTaskCallsBlock=5000;
 			tm.asyncTaskCallsMaxDeep=150;
+			tm.setUpdateStatusDelay(2000);
 			var arrLinkTypes=self.config.useIssueLinkTypes;
 			
 			var countAdded=0;
@@ -1245,6 +1248,7 @@ var jrfReport=class jrfReport {
 			tm.asyncTimeWasted=0;
 			tm.asyncTaskCallsBlock=5000;
 			tm.asyncTaskCallsMaxDeep=150;
+			tm.setUpdateStatusDelay(5000);
 			tm.autoFree=true;
 			self.objModel.process("encode"); // hash inner task....
 		});
@@ -1281,6 +1285,7 @@ var jrfReport=class jrfReport {
 			tm.autoFree=false;
 			tm.asyncTaskCallsBlock=0;
 			tm.asyncTaskCallsMaxDeep=0;
+			tm.setUpdateStatusDelay(2000);
 //	        sModelProcessedResult=sModelProcessedResult.saToString();
 //	        jqResult.html(sModelProcessedResult);
 	        //debugger;

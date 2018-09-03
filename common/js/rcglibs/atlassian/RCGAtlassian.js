@@ -210,6 +210,7 @@ class RCGAtlassian{
 		});
 		self.addStep("Calling for "+sTarget,function(){
 			fncIteration();
+			self.continueTask();
 		});
 		self.addStep("Returnig results for "+sTarget,function(){
 			self.continueTask([arrResults]);

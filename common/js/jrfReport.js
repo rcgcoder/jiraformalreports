@@ -1244,7 +1244,7 @@ var jrfReport=class jrfReport {
 			var tm=self.getTaskManager();
 			tm.asyncTimeWasted=0;
 			tm.asyncTaskCallsBlock=5000;
-			tm.asyncTaskCallsMaxDeep=500;
+			tm.asyncTaskCallsMaxDeep=100;
 			tm.autoFree=true;
 			self.objModel.process("encode"); // hash inner task....
 		});

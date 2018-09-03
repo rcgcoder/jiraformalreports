@@ -336,6 +336,9 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		var faseActual=self.fieldValue("Fase",false,atDatetime);
 		var timeoriginalestimate=self.fieldValue("timeoriginalestimate",false,atDatetime);
 		//dynObj.functions.add("fieldAccumChilds",function(theFieldName,datetime,inOtherParams,notAdjust,bSetProperty,fncItemCustomCalc){
+		if (self.getKey=="BENT-411"){
+			debugger;
+		}
 		var timeestimate=self.fieldAccumChilds("timeestimate",atDatetime);
 		var timespent=self.fieldAccumChilds("timespent",atDatetime);
 		if (timeoriginalestimate==="") timeoriginalestimate=0; else timeoriginalestimate=parseFloat(timeoriginalestimate);

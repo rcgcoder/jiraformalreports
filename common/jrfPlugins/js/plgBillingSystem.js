@@ -359,6 +359,8 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     	objImportes.source.minFacturableFase=minFacturableFase;
     	objImportes.source.atDatetime=atDatetime;
 		var contractInitDate=(new Date());
+		var objModel=self.getReport().objModel;
+
 		if (objModel.variables.getVar("withAdvancedWorks")){
 			contractInitDate=objModel.variables.getVar("ContractAdvancedDate");
 		} else {

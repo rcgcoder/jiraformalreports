@@ -725,7 +725,9 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 						percAcum=1;
 					}
 					var workTotal=0;
-					if (actFase==4){ // si el requisito se cierra el trabajo total es el timespent
+					if (actFase>=3){ // si el requisito se ha terminado de implementar o cerrado
+									// el trabajo total estimado es el timespent (no se pueden planificar mas costes)
+									// cualquier otro coste sera sobrevenido
 						workTotal=auxTimespent;
 					} else {
 						// si el requisito no esta cerrado se utiliza el mayor estimado

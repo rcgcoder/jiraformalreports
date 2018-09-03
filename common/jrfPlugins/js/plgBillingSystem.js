@@ -16,6 +16,8 @@ var newBillingObject=function (){
 				  timespent:"",
 				  fechaFacturacion:"",
 				  faseActual:"",
+				  faseDesarrollo:"",
+				  faseDesarrolloName:"",
 				  status:"",
 				  created:"",
 				  isOldIssue:false,
@@ -334,7 +336,17 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     	}
     	var status=self.fieldValue("status.name",false,atDatetime);
     	var created=new Date(self.fieldValue("Creada",false));
+    	debugger;
 		var faseActual=self.fieldValue("Fase",false,atDatetime);
+		var faseDesarrollo=faseActual;
+		var parentIssue=self;
+		while (parentIssue.countParentsChild()>0){
+			var parentIssue=(parentIssue.getParentsChild().getFirst().value);
+			var auxFaseActual=parentIssue.fieldValue("Fase",false,atDatetime);
+			while (faseActual>auxFaseActual){
+				faseActual=auxFaseActual;
+			}
+		}
 		var timeoriginalestimate=self.fieldValue("timeoriginalestimate",false,atDatetime);
 		//dynObj.functions.add("fieldAccumChilds",function(theFieldName,datetime,inOtherParams,notAdjust,bSetProperty,fncItemCustomCalc){
 		if (self.getKey()=="BENT-411"){
@@ -354,6 +366,8 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     	objImportes.source.timespent=timespent;
     	objImportes.bIncrementadaEstimacion=(timeoriginalestimate<timeestimate);
     	objImportes.source.faseActual=faseActual;
+    	objImportes.source.faseDesarrollo=faseDesarrollo;
+    	objImportes.source.faseDesarrolloName=self.getFieldFaseBillingName(faseDesarrollo);
     	objImportes.source.status=status;
     	objImportes.source.created=created;
     	objImportes.source.hourCost=hourCost;

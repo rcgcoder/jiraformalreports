@@ -461,7 +461,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 					}
 				}
 			}
-			for (var nFase=1;nFase<5;nFase++){
+			for (var nFase=1;nFase<6;nFase++){
 				fieldFaseName=self.getFieldFaseBillingName(nFase);
 				vPorc=objImportes.importesEstimados[fieldFaseName];
 				objImportes.importesEstimados[fieldFaseName]=totalEstimado*vPorc;
@@ -488,7 +488,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 					}
 				}
 			}
-			for (var nFase=1;nFase<5;nFase++){
+			for (var nFase=1;nFase<6;nFase++){
 				fieldFaseName=self.getFieldFaseBillingName(nFase);
 				vPorc=objImportes.importesReales[fieldFaseName];
 				objImportes.importesReales[fieldFaseName]=totalReal*vPorc;

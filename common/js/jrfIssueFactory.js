@@ -25,10 +25,9 @@ function newIssueFactory(report){
 			 {name:"FieldLifeAdjust",description:"List of manual adjusts to field values usually saved as comment in the issue",type:"object"},
 			 {name:"EpicChild",description:"List of issues with epic link equals to this issue key",type:"object"},
 			 {name:"RelationFilter",description:"List of custom functions to set relations to this issue key",type:"object"}
-			 
 			]
 			,
-			allFieldDefinitions.concat(["JiraObject"])
+			allFieldDefinitions.concat(["JiraObject","IssueUrl","Changelog"])
 			,
 			[]
 			,
@@ -252,7 +251,7 @@ function newIssueFactory(report){
 			if (isDefined(fncAux)){
 				bDefined=true;
 				fieldValue=self["get"+sFieldName](otherParams);
-			} else {
+/*			} else {
 				var jiraObj=self.getJiraObject();
 				var jsonFields=jiraObj.fields;
 				var jsonField=jsonFields[sFieldName];
@@ -260,7 +259,7 @@ function newIssueFactory(report){
 					fieldValue=jsonField;
 					bDefined=true;
 				}
-			}
+*/			}
 		}
 		if (bDefined){
 			if (typeof fieldValue==="object"){
@@ -522,7 +521,7 @@ function newIssueFactory(report){
 	dynObj.functions.add("getKeyWithUrl",function(){
 		var self=this;
 		var sKey=self.getKey();
-		var sUrl=self.getJiraObject().self;
+		var sUrl=self.getIssueUrl();
 		var arrUrlParts=sUrl.split('rest');
 		sUrl=arrUrlParts[0]+"browse/"+sKey;
 		var sHtml='<a target="_blank" href='+sUrl+'>'+sKey+'</a>';
@@ -714,6 +713,8 @@ function newIssueFactory(report){
 	dynObj.functions.add("updateInfo",function(){
 		var self=this;
 		var jiraObject=self.getJiraObject();
+		self.setChangelog(jiraObject.changelog);
+		self.setIssueUrl(jiraObject.self);
 		var issueFields=jiraObject.fields;
 		var useFields=theReport.config.useFields;
 		var useOtherFields=theReport.config.useOtherFields;
@@ -764,14 +765,15 @@ function newIssueFactory(report){
 			arrResult=self["get"+theFieldName+"Life"](otherParams,atDatetime);
 		} else {
 			var sChangeDate;
-			var issueBase=self.getJiraObject();
+//			var issueBase=self.getJiraObject();
 			var arrFieldNames=sFieldName.split(".");
 			if (arrFieldNames.length>0){
 				sFieldName=arrFieldNames[0];
 			}
 			var hsItemFieldsCache;
-			if (isDefined(issueBase.changelog)){
-				var arrHistories=issueBase.changelog.histories;
+			var changelog=self.getChangelog();
+			if (isDefined(changelog)){
+				var arrHistories=changelog.histories;
 				var arrItems;
 				arrHistories.forEach(function(change){
 					arrItems=change.items;

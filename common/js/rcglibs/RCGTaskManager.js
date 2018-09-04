@@ -515,6 +515,8 @@ class RCGTaskManager{
 		self.autoFree=false;
 		self.countFrees=0;
 		self.countNews=0;
+		self.nextCalls=[];
+		self.bCallsCycleActive=false;
 	}
 /*	getActiveWindow(){
 		var self=this;
@@ -917,10 +919,10 @@ class RCGTaskManager{
 					}
 				} else {  // the step is a Global Fork.....
 					log("Is Global Fork..... ¿do nothing?");
-					
 				}
 			}
-			taskToRun.callMethod(aArgs);
+			self.nextCalls.push({task:taskToRun,args:aArgs});
+			//taskToRun.callMethod(aArgs);
 		} else {
 			log("-->  FINISHING !!... InnerForks:"+self.innerForks.length+" Global Forks:"+self.globalForks.length);
 			self.changeStatus();
@@ -957,7 +959,14 @@ class RCGTaskManager{
 			}
 			log("-->   FINISHED !! InnerForks:"+self.innerForks.length+" Global Forks:"+self.globalForks.length);
 			self.asyncTimeWasted=0;
-			return "";
+//			return "";
+		}
+		if (!self.bCallsCycleActive){
+			while (self.nextCalls.length>0){
+				var theOp=self.nextCalls.shift();
+				theOp.task.callMethod(theOp.args);
+			}
+			self.bCallsCycleActive=false;
 		}
 	}
 

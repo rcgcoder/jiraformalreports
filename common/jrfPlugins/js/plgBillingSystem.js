@@ -361,6 +361,8 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		if ((faseActual==3)||(faseActual==4)){
 			timeestimate=0;
 		}
+		if (timeoriginalestimate==0)timeoriginalestimate=timeestimate; 
+		
 		var timespent=self.fieldAccumChilds("timespent",atDatetime);
 		if (timeoriginalestimate==="") timeoriginalestimate=0; else timeoriginalestimate=parseFloat(timeoriginalestimate);
 		if (timeestimate==="") timeestimate=0; else timeestimate=parseFloat(timeestimate);

@@ -107,28 +107,9 @@ function registerClass(clsObj){
 	log("Registered class:"+clsObj.name);
 }
 
-var arrayContains = Array.prototype.indexOf ?
-    function(arr, val) {
-        return arr.indexOf(val) > -1;
-    } :
-    function(arr, val) {
-        for (var i = 0, len = arr.length; i < len; ++i) {
-            if (arr[i] === val) {
-                return true;
-            }
-        }
-        return false;
-    };
 
 function getCallStackSize() {
-    var count = 0, fn = arguments.callee, functionsSeen = [fn];
-
-    while ( (fn = fn.caller) && !arrayContains(functionsSeen, fn) ) {
-        functionsSeen.push(fn);
-        count++;
-    }
-
-    return count;
+    return occurrences((new Error()).stack,"\n",false);
 }
 function executeSystemCommand(sCommand,callback){
 	var objResult=shell.exec(sCommand);

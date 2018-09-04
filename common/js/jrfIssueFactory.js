@@ -213,7 +213,6 @@ function newIssueFactory(report){
 		var sFieldName=theFieldName.trim();
 		var arrFieldNames=sFieldName.split(".");
 		if (arrFieldNames.length>1){
-			bGetAttribute=true;
 			sFieldName=arrFieldNames[0].trim();
 		}
 		sFieldName=self.getExistentFieldId(sFieldName);
@@ -223,6 +222,7 @@ function newIssueFactory(report){
 	
 	dynObj.functions.add("fieldValue",function(theFieldName,bRendered,dateTime,inOtherParams){
 		var self=this;
+		var bGetAttribute=false;
 		var sFieldName=theFieldName.trim();
 		var arrFieldNames=sFieldName.split(".");
 		if (arrFieldNames.length>1){
@@ -230,7 +230,6 @@ function newIssueFactory(report){
 			sFieldName=arrFieldNames[0].trim();
 		}
 		sFieldName=self.getExistentFieldId(sFieldName);
-		var bGetAttribute=false;
 		var otherParams;
 		if (Array.isArray(inOtherParams)){
 			otherParams=newHashMap();

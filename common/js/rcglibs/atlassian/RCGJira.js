@@ -18,8 +18,8 @@ class RCGJira{
 		self.apiCall=function(sTarget,callType,data,sPage,sResponseType,callback,arrHeaders,callSecurity,aditionalOptions){
 			atlassian.apiCallApp(self, sTarget, callType, data, sPage,undefined, sResponseType,callback,arrHeaders,callSecurity,aditionalOptions);
 			};
-		self.getFullList=function(sTarget,resultName,callType,data,callback,arrHeaders){
-			atlassian.apiGetFullList(self, sTarget, resultName,callType, data, callback,arrHeaders);
+		self.getFullList=function(sTarget,resultName,callType,data,callback,arrHeaders,bNotReturnAll){
+			atlassian.apiGetFullList(self, sTarget, resultName,callType, data, callback,arrHeaders,bNotReturnAll);
 			};
 
 		self.projects=newDynamicObjectFactory([],["InnerId"],[],"Projects");
@@ -297,11 +297,13 @@ class RCGJira{
 	getAllIssues(cbBlock){
 		var self=this;
 		self.addStep("Getting All Issues", function(){
-			self.getFullList("/rest/api/2/search?expand=changelog","issues",undefined,undefined,cbBlock);
+			self.getFullList("/rest/api/2/search?expand=changelog","issues",undefined,undefined,cbBlock,undefined,true);
 		});
+		/*
 		self.addStep("Processing all Issues", function(response,xhr,sUrl,headers){
 			self.popCallback([response]);
 		});
+		*/
 		self.continueTask();
 //		self.apiCall("/plugins/servlet/applinks/proxy?appId=d1015b5f-d448-3745-a3d3-3dff12863286&path=https://rcgcoder.atlassian.net/rest/api/2/search");
 		//expand=changelog&jql=updateddate>'2018/03/01'
@@ -342,21 +344,25 @@ class RCGJira{
 		});
 		self.continueTask();
 	}
-	getJQLIssues(jql,cbBlock){
+	getJQLIssues(jql,cbBlock,bNotReturnAll){
 		var self=this;
 		var sCacheKey="issues_"+jql;
 		var vCache=self.getFromCache(sCacheKey);
 		if (vCache!="") return self.continueTask([vCache]);
 		self.addStep("Getting All Issues from JQL", function(){
-			self.getFullList("/rest/api/2/search?jql="+jql+"&expand=renderedFields,changelog","issues",undefined,undefined,cbBlock);
+			self.getFullList("/rest/api/2/search?jql="+jql+"&expand=renderedFields,changelog"
+							,"issues",undefined,undefined,cbBlock
+							,undefined,bNotReturnAll);
 		});
-		self.addStep("Returning all Issues from JQL", function(response,xhr,sUrl,headers){
-			self.addToCache(sCacheKey,response);
-			self.continueTask([response]);
-		});
+		if (isUndefined(bNotReturnAll)||(!bNotReturnAll)){
+			self.addStep("Returning all Issues from JQL", function(response,xhr,sUrl,headers){
+				self.addToCache(sCacheKey,response);
+				self.continueTask([response]);
+			});
+		}
 		self.continueTask();
 	}
-	processJQLIssues(jql,fncProcessIssue,returnVariable,cbEndProcess,cbDownloadBlock,cbProcessBlock){
+	processJQLIssues(jql,fncProcessIssue,returnVariable,cbEndProcess,cbDownloadBlock,cbProcessBlock,bNotReturnAll){
 		var self=this;
 		var jqlAux="";
 		if (isDefined(jql)){
@@ -410,7 +416,7 @@ class RCGJira{
 
 		self.addStep("Fetching And Process Issues"+" of JQL ["+jqlAux+"]",function(){
 			self.addStep("Fetching Issues"+" of JQL ["+jqlAux+"]",function(){
-				self.getJQLIssues(jqlAux,self.createManagedCallback(fncProcessDownloadedBlock));
+				self.getJQLIssues(jqlAux,self.createManagedCallback(fncProcessDownloadedBlock),bNotReturnAll);
 			});
 			self.continueTask();
 		});

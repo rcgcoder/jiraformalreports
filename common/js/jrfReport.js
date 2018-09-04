@@ -349,7 +349,11 @@ var jrfReport=class jrfReport {
 				return self.continueTask();
 			}
 			if (self.config.jqlScope.jql!=""){
-				self.jira.processJQLIssues(self.config.jqlScope.jql,function(jsonIssue){self.loadJSONIssue(jsonIssue)});
+				self.jira.processJQLIssues(self.config.jqlScope.jql,
+							function(jsonIssue){
+								self.loadJSONIssue(jsonIssue)
+							},
+							undefined,undefined,undefined,undefined,true);
 			} else {
 				self.continueTask();
 			}

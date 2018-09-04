@@ -109,8 +109,7 @@ class RCGAtlassian{
 		});
 		self.continueTask();
 	}
-	
-	apiGetFullList(appInfo,sTarget,resultName,callType,data,callback,arrHeaders){
+	apiGetFullList(appInfo,sTarget,resultName,callType,data,callback,arrHeaders,bNotReturnAll){
 		var self=this;
 		var arrResults=[];
 		var nLast=0;
@@ -132,10 +131,11 @@ class RCGAtlassian{
 				var nResults=objResp.maxResults;
 				var nInit=objResp.startAt;
 				nLast=nInit+nResults;
-				arrResults=arrResults.concat(objResp[resultName]);
+				if (isUndefined(bNotReturnAll)||(!bNotReturnAll)){
+					arrResults=arrResults.concat(objResp[resultName]);
+				}
 				if (nLast>=nTotal){
-					return self.popCallback([arrResults]);
-					
+					return self.popCallback([arrResults]);					
 				} else if (nLast<nTotal){
 					//debugger;
 					var hsListItemsToProcess=newHashMap();
@@ -152,24 +152,27 @@ class RCGAtlassian{
 						self.apiCallApp(appInfo,sTarget,callType,data,callInfo.first,callInfo.nBlockItems,undefined,callback,arrHeaders);
 					}
 					var fncProcess=function(item,response){
-						var objResp;
-						if (typeof response=="string"){
-							objResp=JSON.parse(response);
-						} else {
-							objResp=response;
+						if (isUndefined(bNotReturnAll)||(!bNotReturnAll)){
+							var objResp;
+							if (typeof response=="string"){
+								objResp=JSON.parse(response);
+							} else {
+								objResp=response;
+							}
+							arrResults=arrResults.concat(objResp[resultName]);
+							log("Retrieved "+resultName+":"+arrResults.length);
 						}
-						arrResults=arrResults.concat(objResp[resultName]);
-						log("Retrieved "+resultName+":"+arrResults.length);
-						
 					}
 					self.parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,10);
 				}
 			});
 			self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,undefined,callback,arrHeaders);
 		});
-		self.addStep("Returnig results for "+sTarget,function(){
-			self.continueTask([arrResults]);
-		});
+		if (isUndefined(bNotReturnAll)||(!bNotReturnAll)){
+			self.addStep("Returnig results for "+sTarget,function(){
+				self.continueTask([arrResults]);
+			});
+		}
 		self.continueTask();
 	}
 	authenticate(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders){

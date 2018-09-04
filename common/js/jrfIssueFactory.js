@@ -7,10 +7,12 @@ function newIssueFactory(report){
 	theReport.config.useFields.forEach(function(element){
 		allFieldDefinitions.push({name:element.key,description:element.name});
 		hsFieldNames.add(element.name,element.key); // to do a reverse search
+		hsFieldNames.add(element.key,element.name); // to do a reverse search
 	});
 	theReport.config.useOtherFields.forEach(function(element){
 		allFieldDefinitions.push({name:element.key,description:element.name});
 		hsFieldNames.add(element.name,element.key); // to do a reverse search
+		hsFieldNames.add(element.key,element.name); // to do a reverse search
 	});
 	var dynObj=newDynamicObjectFactory(
 			[{name:"Child",description:"SubIssues for Billing",type:"object"},
@@ -128,7 +130,7 @@ function newIssueFactory(report){
 					return sFieldKey;
 				}
 			}
-		} else if (allFieldDefinitions.exists(sFieldName)) {
+/*		} else if (allFieldDefinitions.exists(sFieldName)) {
 			sFieldKey=allFieldDefinitions.getValue(sFieldName);
 			if (sFieldKey!=""){
 				fncAux=self["get"+sFieldKey];
@@ -136,7 +138,7 @@ function newIssueFactory(report){
 					return sFieldKey;
 				}
 			}
-		}
+*/		}
 		var jiraObj=self.getJiraObject();
 		if (isDefined(jiraObj)&&(jiraObj!="")){
 			var jsonFields=jiraObj.fields;

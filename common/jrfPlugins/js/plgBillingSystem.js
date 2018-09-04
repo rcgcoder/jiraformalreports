@@ -358,15 +358,15 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		var timeestimate=self.fieldAccumChilds("timeestimate",atDatetime);
 		timeestimate=self.getReport().adjustAccumItem("Childs",timeestimate,self,"timeestimate");
 		
-		if ((faseActual==3)||(faseActual==4)){
-			timeestimate=0;
-			if (timeoriginalestimate==0)timeoriginalestimate=timeestimate; 
-		}
 		
 		var timespent=self.fieldAccumChilds("timespent",atDatetime);
 		if (timeoriginalestimate==="") timeoriginalestimate=0; else timeoriginalestimate=parseFloat(timeoriginalestimate);
 		if (timeestimate==="") timeestimate=0; else timeestimate=parseFloat(timeestimate);
 		if (timespent==="") timespent=0; else timespent=parseFloat(timespent);
+		if ((faseActual==3)||(faseActual==4)){
+			timeestimate=0;
+			if (timeoriginalestimate==0)timeoriginalestimate=timespent; 
+		}
     	var objImportes=newBillingObject();
     	objImportes.source.timeoriginalestimate=timeoriginalestimate;
     	objImportes.source.timeestimate=timeestimate;

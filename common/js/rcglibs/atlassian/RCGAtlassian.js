@@ -137,7 +137,7 @@ class RCGAtlassian{
 					return self.popCallback([arrResults]);
 					
 				} else if (nLast<nTotal){
-					debugger;
+					//debugger;
 					var hsListItemsToProcess=newHashMap();
 					while (nLast<nTotal){
 						var nBlockItems=nResults;

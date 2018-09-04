@@ -55,6 +55,7 @@ var jrfReport=class jrfReport {
 		var oIssue=self.allIssues.new(jsonIssue.fields.summary,jsonIssue.key);
 		oIssue.setJiraObject(jsonIssue);
 		oIssue.updateInfo();
+		oIssue.setJiraObject("");
 		oIssue.setKey(jsonIssue.key);
 		return oIssue;
 	}

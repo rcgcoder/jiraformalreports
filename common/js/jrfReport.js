@@ -420,6 +420,7 @@ var jrfReport=class jrfReport {
 		
 		var hsKeyWaiting=newHashMap();
 		self.addStep("Processing root elements.... ",function(){
+			debugger;
 			if (self.isReusingIssueList()){
 				return self.continueTask();
 			}

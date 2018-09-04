@@ -1,10 +1,9 @@
 function newIssueFactory(report){
 	var theReport=report;
 	var hsFieldNames=newHashMap();
+	var allFieldDefinitions=[];
 	//	self.allFieldNames;
 	//hsFieldNames.clear();
-	
-	var allFieldDefinitions=[];
 	theReport.config.useFields.forEach(function(element){
 		allFieldDefinitions.push({name:element.key,description:element.name});
 		hsFieldNames.add(element.name,element.key); // to do a reverse search
@@ -26,6 +25,7 @@ function newIssueFactory(report){
 			 {name:"FieldLifeAdjust",description:"List of manual adjusts to field values usually saved as comment in the issue",type:"object"},
 			 {name:"EpicChild",description:"List of issues with epic link equals to this issue key",type:"object"},
 			 {name:"RelationFilter",description:"List of custom functions to set relations to this issue key",type:"object"}
+			 
 			]
 			,
 			allFieldDefinitions.concat(["JiraObject"])
@@ -129,16 +129,26 @@ function newIssueFactory(report){
 					return sFieldKey;
 				}
 			}
+		} else if (allFieldDefinitions.exists(sFieldName)) {
+			sFieldKey=allFieldDefinitions.getValue(sFieldName);
+			if (sFieldKey!=""){
+				fncAux=self["get"+sFieldKey];
+				if (isDefined(fncAux)){
+					return sFieldKey;
+				}
+			}
 		}
 		var jiraObj=self.getJiraObject();
-		var jsonFields=jiraObj.fields;
-		var jsonField=jsonFields[sFieldName];
-		if (isDefined(jsonField)){
-			return sFieldName;
-		} else {
-			jsonField=jsonFields[sFieldKey];
+		if (isDefined(jiraObj)&&(jiraObj!="")){
+			var jsonFields=jiraObj.fields;
+			var jsonField=jsonFields[sFieldName];
 			if (isDefined(jsonField)){
-				return sFieldKey;
+				return sFieldName;
+			} else {
+				jsonField=jsonFields[sFieldKey];
+				if (isDefined(jsonField)){
+					return sFieldKey;
+				}
 			}
 		}
 //		log("Error getting correct id of Field:"+sFieldName);
@@ -201,21 +211,26 @@ function newIssueFactory(report){
 	});
 	dynObj.functions.add("fieldExists",function(theFieldName){
 		var self=this;
-		var auxFieldName=theFieldName.trim();
-		var sFieldName=self.getExistentFieldId(auxFieldName);
+		var sFieldName=theFieldName.trim();
 		var arrFieldNames=sFieldName.split(".");
 		if (arrFieldNames.length>1){
 			bGetAttribute=true;
 			sFieldName=arrFieldNames[0].trim();
 		}
+		sFieldName=self.getExistentFieldId(sFieldName);
 		var fncAux=self["get"+sFieldName];
 		return (isDefined(fncAux));
 	});
 	
 	dynObj.functions.add("fieldValue",function(theFieldName,bRendered,dateTime,inOtherParams){
 		var self=this;
-		var auxFieldName=theFieldName.trim();
-		var sFieldName=self.getExistentFieldId(auxFieldName);
+		var sFieldName=theFieldName.trim();
+		var arrFieldNames=sFieldName.split(".");
+		if (arrFieldNames.length>1){
+			bGetAttribute=true;
+			sFieldName=arrFieldNames[0].trim();
+		}
+		sFieldName=self.getExistentFieldId(sFieldName);
 		var bGetAttribute=false;
 		var otherParams;
 		if (Array.isArray(inOtherParams)){
@@ -226,11 +241,6 @@ function newIssueFactory(report){
 			});
 		} else {
 			otherParams=inOtherParams;
-		}
-		var arrFieldNames=sFieldName.split(".");
-		if (arrFieldNames.length>1){
-			bGetAttribute=true;
-			sFieldName=arrFieldNames[0].trim();
 		}
 		var bDefined=false;
 		var fieldValue="";

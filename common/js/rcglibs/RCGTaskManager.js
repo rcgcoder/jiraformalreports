@@ -251,7 +251,7 @@ class RCGTask{
 		if (theTaskManager.asyncTaskCalls) {
 			var contRunningTime=Date.now()-theTaskManager.lastTimeout;
 			var nStackSize=0;
-			if (typeof getCallStackSize!=="undefined"){
+			if ((typeof getCallStackSize!=="undefined")&&(theTaskManager.asyncTaskCallsMaxDeep!=0)){
 				var nStackSize=getCallStackSize();
 			}
 			if (
@@ -259,7 +259,7 @@ class RCGTask{
 					//||(theTaskManager.lastTimeout==0)
 					||
 					(theTaskManager.asyncTaskCallsMaxDeep
-						<nStackSize//theTaskManager.asyncTaskCallActDeep
+						<=nStackSize//theTaskManager.asyncTaskCallActDeep
 						)
 					||(contRunningTime>theTaskManager.asyncTaskCallsBlock)
 				){

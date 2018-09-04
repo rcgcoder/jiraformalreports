@@ -113,9 +113,9 @@ class RCGDateUtils {
 		}
 		var nMonthsAux=0;
 		if (nAux>1){
-			nMonthAux=(nAux-1)*12;
+			nMonthsAux=(nAux-1)*12;
 		}
-		return nMonthAux+(dtEnd.getMonth()+12)-dtIni.getMonth();
+		return nMonthsAux+(dtEnd.getMonth()+12)-dtIni.getMonth();
 	}
 	dateDiff(date1,date2,units){
 		var diffMillis=date1.getTime()-date2.getTime();

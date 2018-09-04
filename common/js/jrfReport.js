@@ -98,7 +98,7 @@ var jrfReport=class jrfReport {
 
 	execute(bDontReloadFiles){
 		var self=this;
-		var auxAsyncCallsMaxDeep=25;
+		var auxAsyncCallsMaxDeep=50;
 		var tm=self.getTaskManager();
 		tm.asyncTimeWasted=0;
 		tm.asyncTaskCallsBlock=0;

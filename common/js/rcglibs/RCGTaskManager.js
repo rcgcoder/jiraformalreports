@@ -515,6 +515,7 @@ class RCGTaskManager{
 		self.autoFree=false;
 		self.countFrees=0;
 		self.countNews=0;
+		self.countDeep=0;
 		self.nextCalls=[];
 		self.bCallsCycleActive=false;
 	}

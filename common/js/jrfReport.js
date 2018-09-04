@@ -99,6 +99,7 @@ var jrfReport=class jrfReport {
 	execute(bDontReloadFiles){
 		var self=this;
 		var auxAsyncCallsMaxDeep=100;
+		var dontReturnAllIssuesRetrieved=true;
 		var tm=self.getTaskManager();
 		tm.asyncTimeWasted=0;
 		tm.asyncTaskCallsBlock=0;
@@ -353,7 +354,7 @@ var jrfReport=class jrfReport {
 							function(jsonIssue){
 								self.loadJSONIssue(jsonIssue)
 							},
-							undefined,undefined,undefined,undefined,true);
+							undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
 			} else {
 				self.continueTask();
 			}
@@ -406,7 +407,8 @@ var jrfReport=class jrfReport {
 					self.addStep("Processing jql to get root issues:"+theJQL,function(){
 						self.jira.processJQLIssues(
 										theJQL,
-										fncProcessRootIssue);
+										fncProcessRootIssue,
+										undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
 					});
 				} else {
 					self.continueTask();
@@ -551,7 +553,8 @@ var jrfReport=class jrfReport {
 								//logError(nCallsStarted+" - JQL:"+theJQL);
 								self.jira.processJQLIssues(
 										theJQL,
-										fncExtractPendingKeys);
+										fncExtractPendingKeys,
+										undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
 							});
 							self.addStep("Finish Retrieving issues of Group ["+sIssues+"]",function(){
 								nRetrievedIssues+=group.length; // the get epics issues call is finished... increase retrieved each epic called in group
@@ -578,7 +581,8 @@ var jrfReport=class jrfReport {
 							self.addStep("Retrieving issues of Epic Group ["+sIssues+"]",function(){
 								nCallsStarted++;
 								//logError(nCallsStarted+" - JQL:"+theJQL);
-								self.jira.processJQLIssues(theJQL,fncProcessEpicChilds);
+								self.jira.processJQLIssues(theJQL,fncProcessEpicChilds
+														    ,undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
 							});
 							self.addStep("Finish Retrieving issues of Epic Group ["+sIssues+"]",function(){
 								nRetrievedEpics+=group.length; // the get epics issues call is finished... increase retrieved each epic called in group
@@ -1224,7 +1228,8 @@ var jrfReport=class jrfReport {
 								}
 							}
 							self.jira.processJQLIssues("fixVersion in ("+sVersions+")",
-													  fncProcessIssue);
+													  fncProcessIssue
+													  ,undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
 						});
 					}
 					hsVersions.walk(function(versionName){

@@ -232,7 +232,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	    ifr.onload=function(){
 	    	$(ifr).width('100%');
 	    	//	            this.style.display='block';
-	       log('laod the iframe')
+	       log('load the iframe')
 		   var iframeDoc = ifr.contentDocument || ifr.contentWindow.document;
 		   iframeDoc.modelInteractiveFunctions=modelInteractiveFunctions;
 		   iframeDoc.System=System;

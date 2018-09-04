@@ -132,7 +132,9 @@ var jrfReport=class jrfReport {
 			self.rootProjects=newHashMap();
 			self.treeIssues=newHashMap();
 		}
-        document.getElementById("ReportResult").src=window.URL.createObjectURL(new Blob(["generating report...."],{type:"text/html"}));
+        var ifr=document.getElementById("ReportResult");
+        ifr.onload=undefined;
+        ifr.src=window.URL.createObjectURL(new Blob(["generating report...."],{type:"text/html"}));
 		var issuesAdded=self.treeIssues;
 		var bAlerted=false;
 //		self.rootIssues.clear();

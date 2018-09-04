@@ -132,7 +132,8 @@ var jrfReport=class jrfReport {
 			self.rootProjects=newHashMap();
 			self.treeIssues=newHashMap();
 		}
-	    var ifr=document.getElementById(ReportResult);
+        debugger;
+	    var ifr=document.getElementById("ReportResult");
 	    $(ifr).html("");
 		var issuesAdded=self.treeIssues;
 		var bAlerted=false;

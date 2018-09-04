@@ -1059,7 +1059,7 @@ class RCGZippedApp{
 						    		 " Tasks Created:"+ tm.countNews+" Task Frees:"+tm.countFrees
 						    		+" Timeout Wasted: "+(tm.asyncTimeWasted/1000).toFixed(2)+" "+((100*tm.asyncTimeWasted/item.timeSpent).toFixed(2))+"% "
 						    		+" tOuts:"+tm.timeoutsCalled+" vs "+tm.timeoutsAvoided+" "
-						    		+" Calls Deep Act: "+tm.asyncTaskCallActDeep:"")
+						    		+" Deep: "+tm.asyncTaskCallActDeep+"/"+tm.asyncTaskCallsMaxDeep:"")
 						    		+(tTotal>0?(' (ETA: '+tETA+' segs)')
 						    		:'')+
 				  '</div>';

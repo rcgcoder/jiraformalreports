@@ -109,7 +109,15 @@ function registerClass(clsObj){
 
 
 function getCallStackSize() {
-    return occurrences((new Error()).stack,"\n",false);
+	try {
+	    forceExcepcionToAnalizeStackSize("run exception!");
+	}
+	catch(err) {
+		var theStack=err.stack;
+		var nOcurs=occurrences(theStack,"\n",false);
+		return nOcurs;
+	}
+    return 0;
 }
 function executeSystemCommand(sCommand,callback){
 	var objResult=shell.exec(sCommand);

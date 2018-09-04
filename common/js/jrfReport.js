@@ -402,8 +402,12 @@ var jrfReport=class jrfReport {
 					theJQL=self.config.rootIssues.jql;
 				}
 				if (!self.bFinishReport){
-					var fncProcessRootIssue=function(issue){
-						self.rootIssues.add(issue.key,issue);
+					var fncProcessRootIssue=function(jsonIssue){
+						var issue=self.allIssues.getById(jsonIssue.key);
+						if (issue==""){
+							issue=self.loadJSONIssue(jsonIssue);
+						}
+						self.rootIssues.add(jsonIssue.key,issue);
 					}
 					self.addStep("Processing jql to get root issues:"+theJQL,function(){
 						self.jira.processJQLIssues(
@@ -468,16 +472,21 @@ var jrfReport=class jrfReport {
 				nPendingEpics++; // its a epic.... but it´s need to know that is a epic issues call is running
 			}
 			
-			var fncExtractPendingKeys=function(jsonIssue){
+			var fncExtractPendingKeys=function(inputIssue){
 				nProcessedIssues++;
-				var key=jsonIssue.key;
+				var key="";
+				if (isDefined(inputIssue.key)){
+					key=inputIssue.key;
+				} else {
+					key=inputIssue.getKey();
+				}
 				if (!hsKeyWaiting.exists(key)){
 					hsKeyWaiting.add(key,key);
 				}
 				log("Issue "+key+"("+nProcessedIssues+") issues:"+nRetrievedIssues+"/" +nPendingIssues+ " Epics :"+nRetrievedEpics+"/"+nPendingEpics);
 				var issue=self.allIssues.getById(key);
 				if (issue==""){
-					issue=self.loadJSONIssue(jsonIssue);
+					issue=self.loadJSONIssue(inputIssue);
 				} else {
 					nDuplicatedIssues++;					
 				}

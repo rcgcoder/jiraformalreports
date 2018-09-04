@@ -122,9 +122,8 @@ var jrfReport=class jrfReport {
 			self.rootIssues=issueCache.rootIssues;
 			self.rootProjects=issueCache.rootProjects;
 			self.treeIssues=issueCache.treeIssues;
-        }
-        
-        if (!self.isReusingIssueList()){
+        } else {
+//        if (!self.isReusingIssueList()){
 			self.allIssues=undefined; // unassing allIssues.... to free memory
 			self.childs=newHashMap();
 			self.advanceChilds=newHashMap();
@@ -133,6 +132,8 @@ var jrfReport=class jrfReport {
 			self.rootProjects=newHashMap();
 			self.treeIssues=newHashMap();
 		}
+	    var ifr=document.getElementById(ReportResult);
+	    $(ifr).html("");
 		var issuesAdded=self.treeIssues;
 		var bAlerted=false;
 //		self.rootIssues.clear();

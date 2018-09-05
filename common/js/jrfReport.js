@@ -659,7 +659,8 @@ var jrfReport=class jrfReport {
 					tm.forceChangeStatus();
 				}
 				self.rootIssues.walkAsync("Extracting Roots Pending Keys"
-											,function(){
+											,function(step){
+												debugger;
 												fncExtractPendingKeys();
 											}
 											,fncProcessRestOfPending

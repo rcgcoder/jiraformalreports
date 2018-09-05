@@ -103,6 +103,12 @@ var jrfReport=class jrfReport {
 			tm.changeStatus();
 			tm.forceChangeStatus();
 		}
+		var fncEnd=endFunction;
+		if (isUndefined(fncEnd)){
+			fncEnd=function(){
+				self.continueTask();
+			}
+		}
 		theHashMap.walkAsync("Walking Asynchronous"
 									,function(step){
 										if (isUndefined(step.value)){
@@ -110,7 +116,7 @@ var jrfReport=class jrfReport {
 										}
 										itemFunction(step.value,step.deep,step.value.getKey());
 									}
-									,endFunction
+									,fncEnd
 									,fncUpdateStatus
 									,fncUpdateStatus
 									,2);
@@ -854,184 +860,192 @@ var jrfReport=class jrfReport {
 			var arrLinkTypes=self.config.useIssueLinkTypes;
 			
 			var countAdded=0;
-			hsKeyWaiting.walk(function(issue,iProf,key){
-				self.rootIssues.add(key,issue);
-				countAdded++;
-			});
-			logError("Added "+countAdded+" "+ ((100*countAdded)/self.rootIssues.length()) +"% to the seletion JQL")
-			var nExcludedIssues=0;
-			self.rootIssues.walk(function(jsonIssue,iProf,key){
-				//log("Root Issue: "+key);
-				var issue=self.allIssues.getById(key);
-				if (issue!=""){
-					var bExcluded=false;
-					if (issue.isProjectExcluded()/*||(issue.isExcludedByFunction())*/){
-						//debugger;
-						nExcludedIssues++;
-					}else {
-						if (!issuesAdded.exists(key)){
-							issuesAdded.add(key,issue);
-						}
-						if (!self.childs.exists(key)){
-							self.childs.add(key,issue);
-						}
-					}
-				} else {
-					logError("The issue "+ key + " does not exists in the all Issues retrieved list");
-				}
-			});
-			if (nExcludedIssues>0){
-				log("Excluded "+nExcludedIssues+" root issues after apply project exclude list filter");
-			}
-			var formulaChild=self.config.billingHierarchy;
-			var formulaAdvance=self.config.advanceHierarchy;
-			if (formulaChild!=""){
-				var sFncFormulaChild="var bResult="+formulaChild+"; return bResult;";
-				var sFncFormulaAdv="var bResult="+formulaAdvance+"; return bResult;";
-				var fncIsChild=Function("child","parent",sFncFormulaChild);
-				var fncIsAdvPart=Function("child","parent",sFncFormulaAdv);
-				
-	//			var treeIssues=issuesAdded.toArray([{doFieldName:"self",resultFieldName:"issue"}]);
-				var fncProcessChild=self.createManagedCallback(function(issueChild,issueParent){
-					var bIsChild=false;
-					try{
-						bIsChild=fncIsChild(issueChild,issueParent);
-					} catch(err){
-						var fncGetKey=function(issueAux){
-							var issKey="";
-							if (isDefined(issueAux.getKey)){
-								issKey=issueAux.getKey();
-							} else {
-								if (isString(issueAux)){
-									issKey="String -> '" + issueAux+"'";
-								} else if (isArray(issueParent)){
-									issKey="Array ->" + issueAux;
-								} else {
-									issKey=issueAux.constructor.name;
-								}
-							}
-							return issKey;
-						}
-						//debugger;
-						var chKey=fncGetKey(issueChild);
-						var prKey=fncGetKey(issueParent);
-						logError("something is not good in child formula:"+sFncFormulaChild
-								 +"\nusing child: "+chKey
-								 +"\nusing parent: "+prKey);
-						bIsChild=false;
-					}
-					if (bIsChild){
-						if (!issueParent.getChilds().exists(issueChild.getKey())){ // when reusing dynobj the childs are setted
-							issueParent.addChild(issueChild);
-						}
-						if (!issuesAdded.exists(issueChild.getKey())){
-							issuesAdded.add(issueChild.getKey(),issueChild);
-						}
-					}
-					var bIsAdvPart=false;				
-					try{
-						bIsAdvPart=fncIsAdvPart(issueChild,issueParent);
-					} catch(err){
-						//debugger;
-						var chKey="";
-						if (isDefined(issueChild.getKey)){
-							chKey=issueChild.getKey();
-						} else {
-							chKey=issueChild.constructor.name;
-						}
-						var prKey="";
-						if (isDefined(issueParent.getKey)){
-							prKey=issueParent.getKey();
-						} else {
-							prKey=issueParent.constructor.name;
-						}
-						logError("something es not good in advance formula:"+sFncFormulaAdv
-								 +"\nusing child: "+chKey
-								 +"\nusing parent: "+prKey);
-						bIsAdvPart=false;
-					}
-					if (bIsAdvPart){
-						if (!issueParent.getAdvanceChilds().exists(issueChild.getKey())){ // when reusing dynobj the childs are setted
-							issueParent.addAdvanceChild(issueChild);
-						}
-						if (!issuesAdded.exists(issueChild.getKey())){
-							issuesAdded.add(issueChild.getKey(),issueChild);
-						}
-					}
+			
+			self.addStep("Adding retrieved issuest to root list", function(){
+				self.walkAsync(hsKeyWaiting,function(issue,iProf,key){
+					self.rootIssues.add(key,issue);
+					countAdded++;
 				});
-				var fncGetIssueChilds=function(issueParent){
-					var auxKey="Report";
-					if (isDefined(issueParent.getKey)){
-						auxKey="Issue:"+issueParent.getKey();
+			});
+			self.addStep("Walking througth the roots to set to issuesAdded...",function(){
+				logError("Added "+countAdded+" "+ ((100*countAdded)/self.rootIssues.length()) +"% to the seletion JQL")
+				var nExcludedIssues=0;
+				self.walkAsync(self.rootIssues,function(jsonIssue,iProf,key){
+					//log("Root Issue: "+key);
+					var issue=self.allIssues.getById(key);
+					if (issue!=""){
+						var bExcluded=false;
+						if (issue.isProjectExcluded()/*||(issue.isExcludedByFunction())*/){
+							//debugger;
+							nExcludedIssues++;
+						}else {
+							if (!issuesAdded.exists(key)){
+								issuesAdded.add(key,issue);
+							}
+							if (!self.childs.exists(key)){
+								self.childs.add(key,issue);
+							}
+						}
 					} else {
-						debugger;
-						logError("The parent has not key... maybe an error?");
+						logError("The issue "+ key + " does not exists in the all Issues retrieved list");
 					}
-					self.addStep("Getting childs for " + auxKey + "....",function(){
-					//walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
-						log("Task Manager Status:"+self.getRunningTask().parent.actStep + " " + self.getRunningTask().parent.steps.length);
-						var relatedChilds=newHashMap();
-						var arrRelatedChilds=issueParent.getPendingLinkedIssueKeys(arrLinkTypes);
-						if (self.config.withEpicLinkRelations){
-							arrRelatedChilds=arrRelatedChilds.concat(issueParent.getEpicChildsRelations());
-						}
-						if (self.config.relatedIssuesFindFunctionEnabled){
-							arrRelatedChilds=arrRelatedChilds.concat(issueParent.getRelatedIssuesByFunction());
-						}
-						arrRelatedChilds.forEach(function(relatedIssueKey){
-							if (!relatedChilds.exists(relatedIssueKey)){
-								relatedChilds.add(relatedIssueKey);
-							}
-						}); 
-						relatedChilds.walkAsync("Getting childs for "+auxKey
-													,function(issueChildStep){
-														var issueChild=issuesAdded.getValue(issueChildStep.actualNode.key);
-														if (!isString(issueChild)){
-															if (issueParent.getKey()==issueChild.getKey()){
-																debugger;
-																logError("Child and Parent are the same"+auxKey+" -> "+ issueParent.getKey());
-																log(issueParent.getRelatedIssuesByFunction());
-															} else {
-																var nChildsPrevParent=issueParent.countChilds();
-																var nChildsPrevChild=issueChild.countChilds();
-																fncProcessChild(issueChild,issueParent);
-																fncProcessChild(issueParent,issueChild);
-																if (issueParent.countChilds()>nChildsPrevParent) log("Child/Parent relation "+auxKey+" -> "+ issueChild.getKey()+" added.");
-																if (issueChild.countChilds()>nChildsPrevChild) log("Child/Parent relation "+issueChild.getKey()+" -> "+ auxKey +" added.");
-															}
-														} else {
-															logError("Related issue "+auxKey+" -> "+ issueChildStep.actualNode.key +" have not been downloaded or is excluded");
-														}
-														/*
-														nChildsPrev=issueChild.countChilds();
-														fncProcessChild(issueParent,issueChild);
-														bProcessChild=(issueChild.countChilds()>nChildsPrev);
-														log("Child/Parent relation "+auxKey+" <- "+ issueChild.getKey()+" added:"+(issueChild.countChilds()>nChildsPrev));
-														if (bProcessChild) {
-															log("Adding "+issueChild.getKey() +" to child/parent process");
-															fncGetIssueChilds(issueChild);
-														}
-														*/
-													 }
-													,self.createManagedCallback(function(){
-														log("Finished "+"Getting childs for "+auxKey);
-														log("Task Manager Status:"+self.getRunningTask().parent.actStep 
-																+ " " + self.getRunningTask().parent.steps.length);
-														self.continueTask();
-														}
-													));
-					//},0,1,undefined,undefined,undefined,"INNER",undefined
-					}
-					);
-				}
-	
-				self.childs.walk(function(childIssue){
-					if (childIssue==""){
-						logError("ChildIssue is ''");
-					}
-					fncGetIssueChilds(childIssue);
 				});
-			}
+			});
+			self.addStep("Finding Childs",function(){
+				if (nExcludedIssues>0){
+					log("Excluded "+nExcludedIssues+" root issues after apply project exclude list filter");
+				}
+				var formulaChild=self.config.billingHierarchy;
+				var formulaAdvance=self.config.advanceHierarchy;
+				if (formulaChild!=""){
+					var sFncFormulaChild="var bResult="+formulaChild+"; return bResult;";
+					var sFncFormulaAdv="var bResult="+formulaAdvance+"; return bResult;";
+					var fncIsChild=Function("child","parent",sFncFormulaChild);
+					var fncIsAdvPart=Function("child","parent",sFncFormulaAdv);
+					
+		//			var treeIssues=issuesAdded.toArray([{doFieldName:"self",resultFieldName:"issue"}]);
+					var fncProcessChild=self.createManagedCallback(function(issueChild,issueParent){
+						var bIsChild=false;
+						try{
+							bIsChild=fncIsChild(issueChild,issueParent);
+						} catch(err){
+							var fncGetKey=function(issueAux){
+								var issKey="";
+								if (isDefined(issueAux.getKey)){
+									issKey=issueAux.getKey();
+								} else {
+									if (isString(issueAux)){
+										issKey="String -> '" + issueAux+"'";
+									} else if (isArray(issueParent)){
+										issKey="Array ->" + issueAux;
+									} else {
+										issKey=issueAux.constructor.name;
+									}
+								}
+								return issKey;
+							}
+							//debugger;
+							var chKey=fncGetKey(issueChild);
+							var prKey=fncGetKey(issueParent);
+							logError("something is not good in child formula:"+sFncFormulaChild
+									 +"\nusing child: "+chKey
+									 +"\nusing parent: "+prKey);
+							bIsChild=false;
+						}
+						if (bIsChild){
+							if (!issueParent.getChilds().exists(issueChild.getKey())){ // when reusing dynobj the childs are setted
+								issueParent.addChild(issueChild);
+							}
+							if (!issuesAdded.exists(issueChild.getKey())){
+								issuesAdded.add(issueChild.getKey(),issueChild);
+							}
+						}
+						var bIsAdvPart=false;				
+						try{
+							bIsAdvPart=fncIsAdvPart(issueChild,issueParent);
+						} catch(err){
+							//debugger;
+							var chKey="";
+							if (isDefined(issueChild.getKey)){
+								chKey=issueChild.getKey();
+							} else {
+								chKey=issueChild.constructor.name;
+							}
+							var prKey="";
+							if (isDefined(issueParent.getKey)){
+								prKey=issueParent.getKey();
+							} else {
+								prKey=issueParent.constructor.name;
+							}
+							logError("something es not good in advance formula:"+sFncFormulaAdv
+									 +"\nusing child: "+chKey
+									 +"\nusing parent: "+prKey);
+							bIsAdvPart=false;
+						}
+						if (bIsAdvPart){
+							if (!issueParent.getAdvanceChilds().exists(issueChild.getKey())){ // when reusing dynobj the childs are setted
+								issueParent.addAdvanceChild(issueChild);
+							}
+							if (!issuesAdded.exists(issueChild.getKey())){
+								issuesAdded.add(issueChild.getKey(),issueChild);
+							}
+						}
+					});
+					var fncGetIssueChilds=function(issueParent){
+						var auxKey="Report";
+						if (isDefined(issueParent.getKey)){
+							auxKey="Issue:"+issueParent.getKey();
+						} else {
+							debugger;
+							logError("The parent has not key... maybe an error?");
+						}
+						self.addStep("Getting childs for " + auxKey + "....",function(){
+						//walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
+							log("Task Manager Status:"+self.getRunningTask().parent.actStep + " " + self.getRunningTask().parent.steps.length);
+							var relatedChilds=newHashMap();
+							var arrRelatedChilds=issueParent.getPendingLinkedIssueKeys(arrLinkTypes);
+							if (self.config.withEpicLinkRelations){
+								arrRelatedChilds=arrRelatedChilds.concat(issueParent.getEpicChildsRelations());
+							}
+							if (self.config.relatedIssuesFindFunctionEnabled){
+								arrRelatedChilds=arrRelatedChilds.concat(issueParent.getRelatedIssuesByFunction());
+							}
+							arrRelatedChilds.forEach(function(relatedIssueKey){
+								if (!relatedChilds.exists(relatedIssueKey)){
+									relatedChilds.add(relatedIssueKey);
+								}
+							}); 
+							relatedChilds.walkAsync("Getting childs for "+auxKey
+														,function(issueChildStep){
+															var issueChild=issuesAdded.getValue(issueChildStep.actualNode.key);
+															if (!isString(issueChild)){
+																if (issueParent.getKey()==issueChild.getKey()){
+																	debugger;
+																	logError("Child and Parent are the same"+auxKey+" -> "+ issueParent.getKey());
+																	log(issueParent.getRelatedIssuesByFunction());
+																} else {
+																	var nChildsPrevParent=issueParent.countChilds();
+																	var nChildsPrevChild=issueChild.countChilds();
+																	fncProcessChild(issueChild,issueParent);
+																	fncProcessChild(issueParent,issueChild);
+																	if (issueParent.countChilds()>nChildsPrevParent) log("Child/Parent relation "+auxKey+" -> "+ issueChild.getKey()+" added.");
+																	if (issueChild.countChilds()>nChildsPrevChild) log("Child/Parent relation "+issueChild.getKey()+" -> "+ auxKey +" added.");
+																}
+															} else {
+																logError("Related issue "+auxKey+" -> "+ issueChildStep.actualNode.key +" have not been downloaded or is excluded");
+															}
+															/*
+															nChildsPrev=issueChild.countChilds();
+															fncProcessChild(issueParent,issueChild);
+															bProcessChild=(issueChild.countChilds()>nChildsPrev);
+															log("Child/Parent relation "+auxKey+" <- "+ issueChild.getKey()+" added:"+(issueChild.countChilds()>nChildsPrev));
+															if (bProcessChild) {
+																log("Adding "+issueChild.getKey() +" to child/parent process");
+																fncGetIssueChilds(issueChild);
+															}
+															*/
+														 }
+														,self.createManagedCallback(function(){
+															log("Finished "+"Getting childs for "+auxKey);
+															log("Task Manager Status:"+self.getRunningTask().parent.actStep 
+																	+ " " + self.getRunningTask().parent.steps.length);
+															self.continueTask();
+															}
+														));
+						//},0,1,undefined,undefined,undefined,"INNER",undefined
+						}
+						);
+					}
+		
+					self.walkAsync(self.childs,function(childIssue){
+						if (childIssue==""){
+							logError("ChildIssue is ''");
+						}
+						fncGetIssueChilds(childIssue);
+					});
+				}
+				self.continueTask();
+			});
 			self.continueTask();
 		});
 		

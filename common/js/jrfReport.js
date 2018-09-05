@@ -105,8 +105,7 @@ var jrfReport=class jrfReport {
 		}
 		theHashMap.walkAsync("Walking Asynchronous"
 									,function(step){
-										debugger;
-										itemFunction(step.value,step.deep,step.name);
+										itemFunction(step.value,step.deep,step.value.getKey());
 									}
 									,endFunction
 									,fncUpdateStatus

@@ -654,18 +654,21 @@ var jrfReport=class jrfReport {
 
 				//debugger;
 				nPendingIssues=self.rootIssues.length();
-/*				self.rootIssues.walkAsync("Extracting Roots Pending Keys"
+				var fncUpdateStatus=function(){
+					tm.changeStatus();
+					tm.forceChangeStatus();
+				}
+				self.rootIssues.walkAsync("Extracting Roots Pending Keys"
 											,function(){
 												fncExtractPendingKeys();
 											}
 											,fncProcessRestOfPending
-											,callBlockPercent
-											,callBlockTime
+											,fncUpdateStatus
+											,fncUpdateStatus
 											,2);
-*/
-				self.rootIssues.walk(fncExtractPendingKeys);
+/*				self.rootIssues.walk(fncExtractPendingKeys);
 				fncProcessRestOfPending();
-			});
+*/			});
 			self.addStep("Finish loading Root Issues",function(){
 /*				self.rootProjects.walk(function(value,iProf,key){
 					log("Root Project: "+key);

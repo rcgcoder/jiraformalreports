@@ -593,13 +593,18 @@ class RCGTaskManager{
 		var self=this;
 		self.onChangeStatus=callback;
 	}
+	forceChangeStatus(){
+		if ((typeof self.onChangeStatus!=="undefined") && (self.onChangeStatus!="")){
+			self.onChangeStatus();
+		}
+	}
 	setUpdateStatusDelay(newDelay){
 		var self=this;
 		self.updateStatusDelay=newDelay;
 	}
 	changeStatus(){
 		var self=this;
-		if (self.onChangeStatus!=""){
+		if ((typeof self.onChangeStatus!=="undefined") && (self.onChangeStatus!="")){
 			if (self.updateStatusDelay<=0){
 				return self.onChangeStatus();
 			} 

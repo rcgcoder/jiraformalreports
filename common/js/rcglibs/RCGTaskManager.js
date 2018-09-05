@@ -252,10 +252,11 @@ class RCGTask{
 			var dtNow=Date.now();
 			var contRunningTime=dtNow-theTaskManager.lastTimeout;
 			var nStackSize=0;
-			if ((typeof getCallStackSize!=="undefined")&&(theTaskManager.asyncTaskCallsMaxDeep!=0)){
+/*			if ((typeof getCallStackSize!=="undefined")&&(theTaskManager.asyncTaskCallsMaxDeep!=0)){
 				var nStackSize=getCallStackSize();
 				theTaskManager.getStackTraceLinesTime+=(Date.now()-dtNow);
 			}
+*/			nStackSize=theTaskManager.asyncTaskCallActDeep;
 			if ((theTaskManager.asyncTaskCallsBlock==0)
 					//||(theTaskManager.lastTimeout==0)
 					||

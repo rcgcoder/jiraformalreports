@@ -698,15 +698,25 @@ var jrfReport=class jrfReport {
 			var maxLettersInGroup=2000;
 			var grpLength=0;
 			var sKeyAux;
-			self.rootIssues.walk(function (jsonIssue,iDeep,issueKey){
-				if ((keyGroup.length>=maxItemsInGroup)||(grpLength>=maxLettersInGroup)){
-					keyGroup=[];
-					grpLength=0;
-					arrKeyGroups.push(keyGroup);
-				}
-				//sKeyAux=element.getKey();
-				grpLength+=issueKey.length;
-				keyGroup.push(issueKey);
+			var hsListComments=newHashMap();
+			self.addStep("Preparing issues groups to get comments", function(){
+				self.walkAsync(self.rootIssues,function (jsonIssue,iDeep,issueKey){
+													if ((keyGroup.length>=maxItemsInGroup)||(grpLength>=maxLettersInGroup)){
+														keyGroup=[];
+														grpLength=0;
+														arrKeyGroups.push(keyGroup);
+													}
+													//sKeyAux=element.getKey();
+													grpLength+=issueKey.length;
+													keyGroup.push(issueKey);
+												},function(){
+													arrKeyGroups.forEach(function(group){
+														if (group.length>0){
+															hsListComments.push(group);
+														}
+													});
+													self.continueTask();
+												});
 			});
 			var fncAddComments=function(jsonIssues){
 				var oIssues=JSON.parse(jsonIssues);
@@ -813,29 +823,9 @@ var jrfReport=class jrfReport {
 					}
 				});
 			}
-			var hsListComments=newHashMap();
-			arrKeyGroups.forEach(function(group){
-				if (group.length>0){
-/*					var sIssues="";
-					group.forEach(function (key){
-						sIssues+=((sIssues!=""?",":"")+key);
-					});
-					self.addStep("Retrieving Comments of Group ["+sIssues+"]",function(){
-						self.jira.getComments(group,fncAddComments);
-					});
-*/
-					hsListComments.push(group);
-				}
-			});
 			self.addStep("Getting comments parallelized.", function(){
 				var fncCall=function(group){
-//					self.addStep("Retrieve Comments of Group",function(){
 						self.jira.getComments(group,fncAddComments," and comment ~ formal");
-//					});
-//					self.addStep("Do nothing to absorve the continueTask of getcomments",function(){
-						/* do nothing */
-//					});
-//					self.continueTask();
 				};
 				self.parallelizeCalls(hsListComments,fncCall);
 			});

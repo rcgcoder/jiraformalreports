@@ -244,7 +244,8 @@ class RCGTask{
 			} else {
 				bIsAsync=true;
 				//actWindow.setTimeout(fncApply);
-				requestAnimationFrame(fncApply);
+				//requestAnimationFrame(fncApply);
+				setZeroTimeout(fncApply); 
 			}
 		}
 		self.changeStatus();

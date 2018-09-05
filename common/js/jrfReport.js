@@ -96,6 +96,21 @@ var jrfReport=class jrfReport {
 		});
 		return sHtml.saToString();
 	}
+	walkAsync(theHashMap,itemFunction,endFunction){
+		var tm=self.getTaskManager();
+		var fncUpdateStatus=function(){
+			tm.changeStatus();
+			tm.forceChangeStatus();
+		}
+		theHashMap.walkAsync("Walking Asynchronous"
+									,function(step){
+										itemFunction(step.value);
+									}
+									,endFunction
+									,fncUpdateStatus
+									,fncUpdateStatus
+									,2);
+	}
 
 	execute(bDontReloadFiles){
 		var self=this;
@@ -654,19 +669,7 @@ var jrfReport=class jrfReport {
 
 				//debugger;
 				nPendingIssues=self.rootIssues.length();
-				var fncUpdateStatus=function(){
-					tm.changeStatus();
-					tm.forceChangeStatus();
-				}
-				self.rootIssues.walkAsync("Extracting Roots Pending Keys"
-											,function(step){
-												debugger;
-												fncExtractPendingKeys(step.value);
-											}
-											,fncProcessRestOfPending
-											,fncUpdateStatus
-											,fncUpdateStatus
-											,2);
+				self.walkAsync(self.rootIssues,fncExtractPendingKeys,fncProcessRestOfPending);
 /*				self.rootIssues.walk(fncExtractPendingKeys);
 				fncProcessRestOfPending();
 */			});

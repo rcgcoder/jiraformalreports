@@ -256,8 +256,7 @@ class RCGTask{
 				var nStackSize=getCallStackSize();
 				theTaskManager.getStackTraceLinesTime+=(Date.now()-dtNow);
 			}
-			if (
-					(theTaskManager.asyncTaskCallsBlock==0)
+			if ((theTaskManager.asyncTaskCallsBlock==0)
 					//||(theTaskManager.lastTimeout==0)
 					||
 					(theTaskManager.asyncTaskCallsMaxDeep

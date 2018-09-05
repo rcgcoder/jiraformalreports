@@ -249,10 +249,12 @@ class RCGTask{
 		}
 		self.changeStatus();
 		if (theTaskManager.asyncTaskCalls) {
-			var contRunningTime=Date.now()-theTaskManager.lastTimeout;
+			var dtNow=Date.now();
+			var contRunningTime=-theTaskManager.lastTimeout;
 			var nStackSize=0;
 			if ((typeof getCallStackSize!=="undefined")&&(theTaskManager.asyncTaskCallsMaxDeep!=0)){
 				var nStackSize=getCallStackSize();
+				theTaskManager.getStackTraceLinesTime+=Date.now()-dtNow();
 			}
 			if (
 					(theTaskManager.asyncTaskCallsBlock==0)
@@ -524,6 +526,7 @@ class RCGTaskManager{
 		self.countDeep=0;
 		self.nextCalls=[];
 		self.bCallsCycleActive=false;
+		self.getStackTraceLinesTime=0;
 	}
 /*	getActiveWindow(){
 		var self=this;

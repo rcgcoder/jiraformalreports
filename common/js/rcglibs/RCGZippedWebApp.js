@@ -1059,7 +1059,8 @@ class RCGZippedApp{
 						    		 " Tasks Created:"+ tm.countNews+" Task Frees:"+tm.countFrees
 						    		+" Timeout Wasted: "+(tm.asyncTimeWasted/1000).toFixed(2)+" "+((100*tm.asyncTimeWasted/item.timeSpent).toFixed(2))+"% "
 						    		+" tOuts:"+tm.timeoutsCalled+" vs "+tm.timeoutsAvoided+" "
-						    		+" Deep: "+tm.asyncTaskCallActDeep+"/"+tm.asyncTaskCallsMaxDeep:"")
+						    		+" Deep: "+tm.asyncTaskCallActDeep+"/"+tm.asyncTaskCallsMaxDeep
+						    		+" stackSize Wasted: "+(tm.getStackTraceLinesTime/1000).toFixed(2):"")
 						    		+(tTotal>0?(' (ETA: '+tETA+' segs)')
 						    		:'')+
 				  '</div>';

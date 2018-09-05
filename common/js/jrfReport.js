@@ -97,6 +97,7 @@ var jrfReport=class jrfReport {
 		return sHtml.saToString();
 	}
 	walkAsync(theHashMap,itemFunction,endFunction){
+		var self=this;
 		var tm=self.getTaskManager();
 		var fncUpdateStatus=function(){
 			tm.changeStatus();

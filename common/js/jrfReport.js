@@ -102,6 +102,7 @@ var jrfReport=class jrfReport {
 		var auxAsyncCallsMaxDeep=2000;
 		var dontReturnAllIssuesRetrieved=true;
 		var tm=self.getTaskManager();
+		tm.getStackTraceLinesTime=0;
 		tm.asyncTimeWasted=0;
 		tm.asyncTaskCallsBlock=0;
 		tm.asyncTaskCallsMaxDeep=0;

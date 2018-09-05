@@ -654,6 +654,15 @@ var jrfReport=class jrfReport {
 
 				//debugger;
 				nPendingIssues=self.rootIssues.length();
+/*				self.rootIssues.walkAsync("Extracting Roots Pending Keys"
+											,function(){
+												fncExtractPendingKeys();
+											}
+											,fncProcessRestOfPending
+											,callBlockPercent
+											,callBlockTime
+											,2);
+*/
 				self.rootIssues.walk(fncExtractPendingKeys);
 				fncProcessRestOfPending();
 			});

@@ -68,7 +68,7 @@ class RCGBarrier{
 			self.tasksReached=[]; // remove the arrays for free memory
 			var theCallback=self.callback;
 			self.callback="";// to free memory at the end
-			setTimeout(theCallback); 
+			setZeroTimeout(theCallback); 
 		} 
 	}
 	add(task){
@@ -622,11 +622,11 @@ class RCGTaskManager{
 					self.changeStatusNeedsNotify=false;
 					self.onChangeStatus();
 //					log("UPDATE STATE PROGRESS: schedule next update");
-					setTimeout(function(){
+//					setZeroTimeout(function(){
 						self.changeStatusUpdateScheduled=true;
 //						log("UPDATE STATE PROGRESS: it will run next second");
 						setTimeout(fncUpdateProgress,self.updateStatusDelay);
-					});
+//					});
 				}
 				fncUpdateProgress();
 			}

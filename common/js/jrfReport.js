@@ -98,6 +98,8 @@ var jrfReport=class jrfReport {
 	}
 	walkAsync(theHashMap,itemFunction,endFunction){
 		var self=this;
+		var stepCounter=0;
+		var nItemsTotal=theHashMap.length();
 		var tm=self.getTaskManager();
 		var fncUpdateStatus=function(){
 			tm.changeStatus();
@@ -106,11 +108,15 @@ var jrfReport=class jrfReport {
 		var fncEnd=endFunction;
 		if (isUndefined(fncEnd)){
 			fncEnd=function(){
+				if (stepCounter!=nItemsTotal){
+					alert("What's happening with walkasync?");
+				}
 				self.continueTask();
 			}
 		}
 		theHashMap.walkAsync("Walking Asynchronous"
 									,function(step){
+										stepCounter++;
 										itemFunction(step.actualNode.value,step.deep,step.actualNode.key);
 									}
 									,fncEnd

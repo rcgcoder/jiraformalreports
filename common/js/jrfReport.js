@@ -1028,9 +1028,9 @@ var jrfReport=class jrfReport {
 														 }
 														,self.createManagedCallback(function(){
 															log("Finished "+"Getting childs for "+auxKey);
-															log("Task Manager Status:"+self.getRunningTask().parent.actStep 
+/*															log("Task Manager Status:"+self.getRunningTask().parent.actStep 
 																	+ " " + self.getRunningTask().parent.steps.length);
-															self.continueTask();
+*/															self.continueTask();
 															}
 														));
 						//},0,1,undefined,undefined,undefined,"INNER",undefined

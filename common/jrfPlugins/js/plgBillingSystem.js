@@ -130,11 +130,10 @@ var getBillingLifeDates=function(otherParams,theDatetime,errorsInfo){
 	var atTimestamp=atDatetime.getTime();
 	var configName=otherParams.getValue("config");
 	var hsHistory=billingParams.getHistory(configName);  
-	var sWorksInitVarName=billingParams.getWorksInitDate(configName);
+	var dtWorksInit=billingParams.getWorksInitDate(configName);
 	var arrHistory=[];
 	var tsWorksInit="";
-	if (sWorksInitVarName!=""){
-		var dtWorksInit=objModel.variables.getVar(sWorksInitVarName);
+	if (dtWorksInit!=""){
 		tsWorksInit=dtWorksInit.getTime();
 		arrHistory.push(["",tsWorksInit]);
 	}
@@ -227,7 +226,15 @@ var plgBillingParams=class plgBillingParams{
 	}
 	addParams(configName,reportsHistoryDatesVarName,hourCostVarName,minFaseFacturableVarName,contractWorksInitDate){
 		var self=this;
-		self.setParams(configName,reportsHistoryDatesVarName,hourCostVarName,minFaseFacturableVarName,contractWorksInitDate)
+		var dtWorksInit;
+		if (isDefined(contractWorksInitDate)){
+			if (isString(contractWorksInitDate)){
+				dtWorksInit=self.variables.getVar(contractWorksInitDate);
+			} else {
+				dtWorksInit=contractWorksInitDate;
+			}
+		}
+		self.setParams(configName,reportsHistoryDatesVarName,hourCostVarName,minFaseFacturableVarName,dtWorksInit);
 	}
 	getHourCost(config,atDatetime){
 		return parseFloat(this.getParamValue(config,"hourCost",atDatetime));
@@ -282,7 +289,6 @@ var plgBillingParams=class plgBillingParams{
 };
 var billingParams=new plgBillingParams();
 var setBillingParams=function(configName,reportsHistoryDatesVarName,hourCostVarName,minFacturableFase,contractWorksInitDate){
-	debugger;
 	billingParams.addParams(configName,reportsHistoryDatesVarName,hourCostVarName,minFacturableFase,contractWorksInitDate);
 }
 

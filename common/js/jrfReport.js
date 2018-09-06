@@ -982,7 +982,7 @@ var jrfReport=class jrfReport {
 						}
 						self.addStep("Getting childs for " + auxKey + "....",function(){
 						//walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
-							log("Task Manager Status:"+self.getRunningTask().parent.actStep + " " + self.getRunningTask().parent.steps.length);
+							//log("Task Manager Status:"+self.getRunningTask().parent.actStep + " " + self.getRunningTask().parent.steps.length);
 							var relatedChilds=newHashMap();
 							var arrRelatedChilds=issueParent.getPendingLinkedIssueKeys(arrLinkTypes);
 							if (self.config.withEpicLinkRelations){

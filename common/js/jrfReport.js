@@ -113,7 +113,6 @@ var jrfReport=class jrfReport {
 									,function(step){
 										itemFunction(step.actualNode.value,step.deep,step.actualNode.key);
 									}
-									
 									,fncEnd
 									,fncUpdateStatus
 									,fncUpdateStatus

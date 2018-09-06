@@ -108,6 +108,7 @@ var jrfReport=class jrfReport {
 		var fncEnd=endFunction;
 		if (isUndefined(fncEnd)){
 			fncEnd=function(){
+				console.log("END "+stepCounter+"/"+nItemsTotal+"  -> "+step.actualNode.key);
 				if (stepCounter!=nItemsTotal){
 					alert("What's happening with walkasync?");
 				}

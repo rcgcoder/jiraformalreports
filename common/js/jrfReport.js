@@ -325,7 +325,7 @@ var jrfReport=class jrfReport {
 		    }
 			dateValue=toDateNormalDDMMYYYYHHMMSS(dateValue);
 			theModel.variables.pushVar("worksStartDate",dateValue);
-			theModel.variables.pushVar("worksInitDate",dateValue);
+			//theModel.variables.pushVar("worksInitDate",dateValue);
 			
 		    self.continueTask();
 		});

@@ -122,18 +122,19 @@ var getBillingLifeDates=function(otherParams,theDatetime,errorsInfo){
 	}
 	// initialize and load the importes structure
 	var atDatetime=theDatetime;
+	var objModel=otherParams.getValue("model");
+	var objReport=objModel.report;
 	if (isUndefined(theDatetime)||(theDatetime==="")){
-		var objModel=otherParams.getValue("model");
-		var objReport=objModel.report;
 		atDatetime=objReport.reportDateTime;
 	}
 	var atTimestamp=atDatetime.getTime();
 	var configName=otherParams.getValue("config");
 	var hsHistory=billingParams.getHistory(configName);  
-	var dtWorksInit=billingParams.getWorksInitDate(configName);
+	var sWorksInitVarName=billingParams.getWorksInitDate(configName);
 	var arrHistory=[];
 	var tsWorksInit="";
-	if (dtWorksInit!=""){
+	if (sWorksInitVarName!=""){
+		var dtWorksInit=objModel.variables.getVar(sWorksInitVarName);
 		tsWorksInit=dtWorksInit.getTime();
 		arrHistory.push(["",tsWorksInit]);
 	}
@@ -144,7 +145,7 @@ var getBillingLifeDates=function(otherParams,theDatetime,errorsInfo){
 		tsAux1=hstAux.value[0].getTime();
 		tsAux2=hstAux.value[1].getTime();
 		if ((tsAux2<atTimestamp) &&
-		   ((dtWorksInit==="")?true:tsWorksInit<tsAux2)){
+		   ((tsWorksInit==="")?true:tsWorksInit<tsAux2)){
 			arrHistory.push([tsAux1,tsAux2]);
 		}
 	});

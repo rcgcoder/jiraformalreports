@@ -862,8 +862,10 @@ var jrfReport=class jrfReport {
 			
 			self.addStep("Adding retrieved issuest to root list", function(){
 				self.walkAsync(hsKeyWaiting,function(issue,iProf,key){
-					self.rootIssues.add(key,issue);
-					countAdded++;
+					if (!self.rootIssues.exists(key)){
+						self.rootIssues.add(key,issue);
+						countAdded++;
+					}
 				});
 			});
 			self.addStep("Walking througth the roots to set to issuesAdded...",function(){

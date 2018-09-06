@@ -570,7 +570,7 @@ var jrfReport=class jrfReport {
 			var nRetrievedEpics=0;
 			var nTotalStepsPlaned=0;
 			var nStepsPlaned=0;
-			self.addStep("Extracting pending keys of root issues",function(){
+			self.addStep("Extracting pending keys of ("+self.rootIssues.length()+") root issues",function(){
 				self.walkAsync(self.rootIssues,fncExtractPendingKeys);
 			});
 			self.addStep("Getting root base issues",function(){

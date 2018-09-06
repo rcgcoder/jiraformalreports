@@ -281,9 +281,9 @@ var plgBillingParams=class plgBillingParams{
 	}
 };
 var billingParams=new plgBillingParams();
-var setBillingParams=function(configName,reportsHistoryDatesVarName,hourCostVarName,contractWorksInitDate){
+var setBillingParams=function(configName,reportsHistoryDatesVarName,hourCostVarName,minFacturableFase,contractWorksInitDate){
 	debugger;
-	billingParams.addParams(configName,reportsHistoryDatesVarName,hourCostVarName,contractWorksInitDate);
+	billingParams.addParams(configName,reportsHistoryDatesVarName,hourCostVarName,minFacturableFase,contractWorksInitDate);
 }
 
 

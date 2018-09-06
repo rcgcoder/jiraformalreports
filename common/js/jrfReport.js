@@ -1149,9 +1149,10 @@ var jrfReport=class jrfReport {
 				});
 			});
 			
+			var nRemoves=0;
+			var nRootsPrevious=0;
 			self.addStep("Removing identified issues ",function(){
-				var nRemoves=0;
-				var nRootsPrevious=self.childs.length();
+				nRootsPrevious=self.childs.length();
 				self.walkAsync(hsRemoveKeys,function(issRemove){
 					var issue=issRemove.issue;
 					var issueKey=issue.getKey();

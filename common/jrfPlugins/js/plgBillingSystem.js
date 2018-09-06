@@ -337,7 +337,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     	}
     	var status=self.fieldValue("status.name",false,atDatetime);
     	var created=new Date(self.fieldValue("Creada",false));
-    	debugger;
+    	//debugger;
 		var faseActual=self.fieldValue("Fase",false,atDatetime);
 		var faseDesarrollo=faseActual;
 		var parentIssue=self;
@@ -544,7 +544,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 
 		
 		
-		
+		debugger;
 		var arrHistory=getBillingLifeDates(otherParams,theDatetime,sErrores);
 		var dtAux;
 		//debugger;

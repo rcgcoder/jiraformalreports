@@ -117,6 +117,7 @@ var jrfReport=class jrfReport {
 		theHashMap.walkAsync("Walking Asynchronous"
 									,function(step){
 										stepCounter++;
+										console.log(stepCounter+"/"+nItemsTotal+"  -> "+step.actualNode.key);
 										itemFunction(step.actualNode.value,step.deep,step.actualNode.key);
 									}
 									,fncEnd

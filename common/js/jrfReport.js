@@ -111,13 +111,7 @@ var jrfReport=class jrfReport {
 		}
 		theHashMap.walkAsync("Walking Asynchronous"
 									,function(step){
-										if (isUndefined(step.value)){
-											debugger;
-										}
-										if (isUndefined(step.value.getKey)){
-											debugger;
-										}
-										itemFunction(step.value,step.deep,step.value.getKey());
+										itemFunction(step.actualNode.value,step.deep,step.actualNode.key);
 									}
 									,fncEnd
 									,fncUpdateStatus

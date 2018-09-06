@@ -114,7 +114,7 @@ var jrfReport=class jrfReport {
 										if (isUndefined(step.value)){
 											debugger;
 										}
-										if (isUndefined(step.value.getKey())){
+										if (isUndefined(step.value.getKey)){
 											debugger;
 										}
 										itemFunction(step.value,step.deep,step.value.getKey());

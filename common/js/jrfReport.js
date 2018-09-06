@@ -108,10 +108,6 @@ var jrfReport=class jrfReport {
 		var fncEnd=endFunction;
 		if (isUndefined(fncEnd)){
 			fncEnd=function(){
-				console.log("END "+stepCounter+"/"+nItemsTotal);
-				if (stepCounter!=nItemsTotal){
-					alert("What's happening with walkasync?");
-				}
 				self.continueTask();
 			};
 		}

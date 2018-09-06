@@ -573,6 +573,9 @@ var jrfReport=class jrfReport {
 			var nRetrievedEpics=0;
 			var nTotalStepsPlaned=0;
 			var nStepsPlaned=0;
+			self.addStep("Extracting pending keys of root issues",function(){
+				self.walkAsync(self.rootIssues,fncExtractPendingKeys);
+			});
 			self.addStep("Getting root base issues",function(){
 				var fncRetrieveGroup=self.createManagedCallback(function(group){
 					//debugger;
@@ -679,10 +682,9 @@ var jrfReport=class jrfReport {
 
 				//debugger;
 				nPendingIssues=self.rootIssues.length();
-				self.walkAsync(self.rootIssues,fncExtractPendingKeys,fncProcessRestOfPending);
-/*				self.rootIssues.walk(fncExtractPendingKeys);
+//				self.rootIssues.walk(fncExtractPendingKeys);
 				fncProcessRestOfPending();
-*/			});
+			});
 			self.addStep("Finish loading Root Issues",function(){
 /*				self.rootProjects.walk(function(value,iProf,key){
 					log("Root Project: "+key);

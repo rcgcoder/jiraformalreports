@@ -114,7 +114,7 @@ var jrfReport=class jrfReport {
 		fncEnd=self.createManagedCallback(fncEnd);
 		var fncItem=self.createManagedCallback(function(step){
 			stepCounter++;
-			console.log(stepCounter+"/"+nItemsTotal+"  -> "+step.actualNode.key);
+//			console.log(stepCounter+"/"+nItemsTotal+"  -> "+step.actualNode.key);
 			itemFunction(step.actualNode.value,step.deep,step.actualNode.key);
 		});
 		theHashMap.walkAsync("Walking Asynchronous"

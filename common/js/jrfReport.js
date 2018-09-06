@@ -113,14 +113,16 @@ var jrfReport=class jrfReport {
 					alert("What's happening with walkasync?");
 				}
 				self.continueTask();
-			}
+			};
 		}
+		fncEnd=self.createManagedCallback(fncEnd);
+		var fncItem=self.createManagedCallback(function(step){
+			stepCounter++;
+			console.log(stepCounter+"/"+nItemsTotal+"  -> "+step.actualNode.key);
+			itemFunction(step.actualNode.value,step.deep,step.actualNode.key);
+		});
 		theHashMap.walkAsync("Walking Asynchronous"
-									,function(step){
-										stepCounter++;
-										console.log(stepCounter+"/"+nItemsTotal+"  -> "+step.actualNode.key);
-										itemFunction(step.actualNode.value,step.deep,step.actualNode.key);
-									}
+									,fncItem
 									,fncEnd
 									,fncUpdateStatus
 									,fncUpdateStatus

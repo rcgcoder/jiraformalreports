@@ -1060,7 +1060,7 @@ var jrfReport=class jrfReport {
 		
 		self.addStep("Final Adjusts to retrieved list of issues",function(){
 			self.addStep("Analizing child/parent billing cycles and multiple parents",function(){
-				issuesAdded.walk(function(issue){
+				self.walkAsync(issuesAdded,function(issue){
 					if (issue.hasChildCycle()){
 						logError("It's necessary to correct child/parent billing errors");
 					}
@@ -1069,16 +1069,15 @@ var jrfReport=class jrfReport {
 						logError("The root issue: "+ rootIssue.getKey()+" does not exists in process issues list. Maybe an error");
 					}
 				});
-				self.continueTask();
 			});
 			
 			self.addStep("Creating child relations by issue custom formulas",function(){
-				issuesAdded.walk(function(issueParent){
+				self.walkAsync(issuesAdded,function(issueParent){
 					if (issueParent.existsRelationFilter("Child")){
 						debugger;
 						var childRelationFilter=issueParent.getRelationFilterById("Child");
 						self.addStep("Custom Relations for issue "+issueParent.getKey(),function(){
-							issuesAdded.walk(function(issueChild){
+							self.walkAsync(issuesAdded,function(issueChild){
 								if (issueChild.getKey()!=issueParent.getKey()){
 									var bResult=childRelationFilter([issueChild]);
 									if (bResult){
@@ -1088,21 +1087,18 @@ var jrfReport=class jrfReport {
 									}
 								}
 							});
-							self.continueTask();
 						});
 					}
 				});
-				self.continueTask();
 			});
 			var hsRemoveKeys=newHashMap();
 			if (self.config.removeChildIssuesFromRootList){
 				self.addStep("Identifying child issues in root list",function(){
-					issuesAdded.walk(function(issue){
+					self.walkAsync(issuesAdded,function(issue){
 						if (issue.countParentsChild()>0){
 							hsRemoveKeys.add(issue.getKey(),{issue:issue});
 						}
 					});
-					self.continueTask();
 				});
 			}
 			if (self.config.removeNotCreatedIssues){
@@ -1110,7 +1106,7 @@ var jrfReport=class jrfReport {
 	            var rptEndDate=self.objModel.variables.getVar("ReportEndDate");
 				self.addStep("Identifying issues was not created at:"+txtEndDate,function(){
 					var optGetFieldValues=[{key:"ifEmpty",value:0}];
-					issuesAdded.walk(function(issue){
+					self.walkAsync(issuesAdded,function(issue){
 						var faseAtEndReport=issue.fieldValue('Fase', false
 					            ,rptEndDate
 					            ,optGetFieldValues
@@ -1119,7 +1115,6 @@ var jrfReport=class jrfReport {
 							hsRemoveKeys.add(issue.getKey(),{issue:issue,removeFromParent:true});
 						}
 					});
-					self.continueTask();
 				});
 			}
 			if (self.config.removeClosedBefore){
@@ -1135,7 +1130,7 @@ var jrfReport=class jrfReport {
 				}
 				self.addStep("Identifying issues was closed at:"+txtIniDate,function(){
 					var optGetFieldValues=[{key:"ifEmpty",value:0}];
-					issuesAdded.walk(function(issue){
+					self.walkAsync(issuesAdded,function(issue){
 						var faseAtEndReport=issue.fieldValue('Fase', false
 					            ,dtIniDate
 					            ,optGetFieldValues
@@ -1144,22 +1139,20 @@ var jrfReport=class jrfReport {
 							hsRemoveKeys.add(issue.getKey(),{issue:issue,removeFromParent:true});
 						}
 					});
-					self.continueTask();
 				});
 			}
 			self.addStep("Identifying issues by Exclude function",function(){
-				issuesAdded.walk(function(issue){
+				self.walkAsync(issuesAdded,function(issue){
 					if ((!hsRemoveKeys.exists(issue.getKey()))&&issue.isExcludedByFunction()){
 						hsRemoveKeys.add(issue.getKey(),{issue:issue,removeFromParent:true});
 					}
 				});
-				self.continueTask();
 			});
 			
 			self.addStep("Removing identified issues ",function(){
 				var nRemoves=0;
 				var nRootsPrevious=self.childs.length();
-				hsRemoveKeys.walk(function(issRemove){
+				self.walkAsync(hsRemoveKeys,function(issRemove){
 					var issue=issRemove.issue;
 					var issueKey=issue.getKey();
 					if (self.childs.exists(issueKey)){
@@ -1173,6 +1166,8 @@ var jrfReport=class jrfReport {
 						theParent.getChilds().remove(issueKey);
 					}
 				});
+			});
+			self.addStep("Removing identified issues Finish",function(){
 				var nRootsFinal=self.childs.length();
 				if ((hsRemoveKeys.length()!=nRemoves)
 					||((nRootsPrevious-nRemoves)!=nRootsFinal)

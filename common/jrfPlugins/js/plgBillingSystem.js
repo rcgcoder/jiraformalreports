@@ -815,6 +815,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 	   	});
 	   	if (isDefined(baseSnapshot)){
 	   		var fncAdjustNoFacturable=function(auxSnapshot){
+	   			debugger;
 		   		var auxImporteNoFacturable=auxSnapshot.calculos.aprobado+auxSnapshot.calculos.pendiente;
 		   		var auxTsNoFacturable=auxSnapshot.calculos.inTimespents.aprobado+auxSnapshot.calculos.inTimespents.pendiente;
 		   		var avanceImporte=0;

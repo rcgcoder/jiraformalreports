@@ -859,6 +859,7 @@ var jrfReport=class jrfReport {
 			var arrLinkTypes=self.config.useIssueLinkTypes;
 			
 			var countAdded=0;
+			var nExcludedIssues=0;
 			
 			self.addStep("Adding retrieved issuest to root list", function(){
 				self.walkAsync(hsKeyWaiting,function(issue,iProf,key){
@@ -870,7 +871,6 @@ var jrfReport=class jrfReport {
 			});
 			self.addStep("Walking througth the roots to set to issuesAdded...",function(){
 				logError("Added "+countAdded+" "+ ((100*countAdded)/self.rootIssues.length()) +"% to the seletion JQL")
-				var nExcludedIssues=0;
 				self.walkAsync(self.rootIssues,function(jsonIssue,iProf,key){
 					//log("Root Issue: "+key);
 					var issue=self.allIssues.getById(key);

@@ -105,19 +105,28 @@ var jrfReport=class jrfReport {
 			tm.changeStatus();
 			tm.forceChangeStatus();
 		}
-		var fncEnd=endFunction;
-		if (isUndefined(fncEnd)){
-			fncEnd=function(){
-				logError("Calling End in walk Async");
+		var auxFncEnd=endFunction;
+		if (isUndefined(endFunction)){
+			auxFncEnd=function(objStep){
 				self.continueTask();
 			};
 		}
-		fncEnd=self.createManagedCallback(fncEnd);
+		var fncEnd=self.createManagedCallback(function(objStep){
+			if (stepCounter<theHashMap.length()){
+				logError("Some items does not finished ("+stepCounter+"/"+theHashMap.length()+") pending Calling End function in walk Async");
+				setTimeout(function(){
+					fncEnd(objStep);
+				},50);
+			} else {
+				logError("Calling custom End function in walk Async");
+				auxFncEnd(objStep);
+			}
+		});
 		var fncItem=self.createManagedCallback(function(step){
 			logError("Calling item in walk Async");
-			stepCounter++;
 //			console.log(stepCounter+"/"+nItemsTotal+"  -> "+step.actualNode.key);
 			itemFunction(step.actualNode.value,step.deep,step.actualNode.key);
+			stepCounter++;
 		});
 		theHashMap.walkAsync("Walking Asynchronous"
 									,fncItem

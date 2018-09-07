@@ -121,7 +121,9 @@ var jrfReport=class jrfReport {
 			itemFunction(step.actualNode.value,step.deep,step.actualNode.key);
 			stepCounter++;
 			if (stepCounter>=theHashMap.length()){
-				fncEnd(step);
+				setTimeout(function(){
+					fncEnd(step);
+				});
 			}
 		});
 		theHashMap.walkAsync("Walking Asynchronous"

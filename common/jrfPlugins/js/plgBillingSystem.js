@@ -826,8 +826,8 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		   		} else {
 		   			avanceTimespent=0;
 		   			avanceImporte=0;
-		   			auxSnapshot.source.timeoriginalestimate=0;
 		   		}
+	   			
 		   		auxImporteNoFacturable+=avanceImporte;
 		   		auxTsNoFacturable+=avanceTimespent;
 	   			return {importe:auxImporteNoFacturable
@@ -905,6 +905,11 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 	   			avance=0;
 	   			avanceImporte=0;
 	   			snapshot.source.timeoriginalestimate=0;
+	   		} else {
+	   			snapshot.source.timeoriginalestimate-=avance;
+	   			if (snapshot.source.timeoriginalestimate<0){
+	   				snapshot.source.timeoriginalestimate=0;
+	   			}
 	   		}
 	   		var tsEstimadoActual=snapshot.source.timeestimate+avance;
 	   		var impEstimadoActual=((tsEstimadoActual-tsFacturacion)*(snapshot.source.hourCost/3600))

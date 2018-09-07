@@ -116,11 +116,11 @@ var jrfReport=class jrfReport {
 			auxFncEnd(objStep);
 		});
 		var fncItem=self.createManagedCallback(function(step){
-			logError("Calling item in walk Async");
+			logError("Calling item in walk Async "+stepCounter+"/"+theHashMap.length());
 //			console.log(stepCounter+"/"+nItemsTotal+"  -> "+step.actualNode.key);
 			itemFunction(step.actualNode.value,step.deep,step.actualNode.key);
 			stepCounter++;
-			if (stepCounter>=theHashMap.length){
+			if (stepCounter>=theHashMap.length()){
 				fncEnd(objStep);
 			}
 		});

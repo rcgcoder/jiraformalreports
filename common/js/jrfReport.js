@@ -112,11 +112,11 @@ var jrfReport=class jrfReport {
 			};
 		}
 		var fncEnd=self.createManagedCallback(function(objStep){
-			logError("Calling custom End function in walk Async");
+//			logError("Calling custom End function in walk Async");
 			auxFncEnd(objStep);
 		});
 		var fncItem=self.createManagedCallback(function(step){
-			logError("Calling item in walk Async "+stepCounter+"/"+theHashMap.length());
+//			logError("Calling item in walk Async "+stepCounter+"/"+theHashMap.length());
 //			console.log(stepCounter+"/"+nItemsTotal+"  -> "+step.actualNode.key);
 			itemFunction(step.actualNode.value,step.deep,step.actualNode.key);
 			stepCounter++;

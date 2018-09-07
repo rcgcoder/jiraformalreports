@@ -906,7 +906,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 	   			avanceImporte=0;
 	   			snapshot.source.timeoriginalestimate=0;
 	   		} else {
-	   			snapshot.source.timeoriginalestimate-=avance;
+	   			snapshot.source.timeoriginalestimate-=snapshot.calculos.noFacturable.timespent;
 	   			if (snapshot.source.timeoriginalestimate<0){
 	   				snapshot.source.timeoriginalestimate=0;
 	   			}

@@ -112,25 +112,21 @@ var jrfReport=class jrfReport {
 			};
 		}
 		var fncEnd=self.createManagedCallback(function(objStep){
-			if (stepCounter<theHashMap.length()){
-				logError("Some items does not finished ("+stepCounter+"/"+theHashMap.length()+") pending Calling End function in walk Async");
-				setTimeout(function(){
-					fncEnd(objStep);
-				},100);
-			} else {
-				logError("Calling custom End function in walk Async");
-				auxFncEnd(objStep);
-			}
+			logError("Calling custom End function in walk Async");
+			auxFncEnd(objStep);
 		});
 		var fncItem=self.createManagedCallback(function(step){
 			logError("Calling item in walk Async");
 //			console.log(stepCounter+"/"+nItemsTotal+"  -> "+step.actualNode.key);
 			itemFunction(step.actualNode.value,step.deep,step.actualNode.key);
 			stepCounter++;
+			if (stepCounter>=theHashMap.length){
+				fncEnd(objStep);
+			}
 		});
 		theHashMap.walkAsync("Walking Asynchronous"
 									,fncItem
-									,fncEnd
+									,undefined
 									,fncUpdateStatus
 									,fncUpdateStatus
 									,2);

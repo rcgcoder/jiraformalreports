@@ -642,7 +642,7 @@ class RCGHashMapFactory{
 //				}
 				if (bFinish) { // final del walk
 					var theParent=this;
-					setZeroTimeout(function(){
+					setTimeout(function(){
 						var objStepAux=hashmapFactory.stackAsyncCalls.top();
 						if (objStepAux==objStep){
 							hashmapFactory.stackAsyncCalls.pop();
@@ -662,7 +662,7 @@ class RCGHashMapFactory{
 					});
 				} else {
 					if (nLevels==hashmapFactory.stackAsyncCalls.length()){ // hay bloques porque el proceso hijo no tiene actividad asincrona
-						setZeroTimeout(function(){ // next bloque
+						setTimeout(function(){ // next bloque
 							hashmapFactory.stepAsync();	
 						});
 					}
@@ -677,7 +677,7 @@ class RCGHashMapFactory{
 			if (lastElem!="WAIT"){
 				log("Error al continuar un proceso asinchrono");
 			} else {
-				setZeroTimeout(function(){
+				setTimeout(function(){
 					hashmapFactory.stepAsync();
 				});
 			}

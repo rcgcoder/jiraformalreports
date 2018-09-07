@@ -582,7 +582,7 @@ class RCGHashMapFactory{
 				var bFirst=true;
 				var bFinish=false;
 				var vResult;
-				var type=0; // por defecto es recorre (0), bucle (1)
+				var type=0; // por defecto se recorre (0), bucle (1)
 				var nodAux; // para tipos recorre
 				var indAct=0,indMin,indMax; // para tipos bucle 
 				while ((!bStop)&&(!bFinish)){
@@ -642,7 +642,7 @@ class RCGHashMapFactory{
 //				}
 				if (bFinish) { // final del walk
 					var theParent=this;
-					setTimeout(function(){
+					setZeroTimeout(function(){
 						var objStepAux=hashmapFactory.stackAsyncCalls.top();
 						if (objStepAux==objStep){
 							hashmapFactory.stackAsyncCalls.pop();
@@ -654,7 +654,9 @@ class RCGHashMapFactory{
 								objStep.barrier.finish(objStep.hashmap);
 							}
 							if (hashmapFactory.stackAsyncCalls.length()>0){
-								hashmapFactory.stepAsync();	
+								setZeroTimeout(function(){
+									hashmapFactory.stepAsync();	
+								});
 							}
 						} else {
 							log("Se salta este paso porque el TOP no coincide con el que se esta procesando");
@@ -662,7 +664,7 @@ class RCGHashMapFactory{
 					});
 				} else {
 					if (nLevels==hashmapFactory.stackAsyncCalls.length()){ // hay bloques porque el proceso hijo no tiene actividad asincrona
-						setTimeout(function(){ // next bloque
+						setZeroTimeout(function(){ // next bloque
 							hashmapFactory.stepAsync();	
 						});
 					}
@@ -677,7 +679,7 @@ class RCGHashMapFactory{
 			if (lastElem!="WAIT"){
 				log("Error al continuar un proceso asinchrono");
 			} else {
-				setTimeout(function(){
+				setZeroTimeout(function(){
 					hashmapFactory.stepAsync();
 				});
 			}

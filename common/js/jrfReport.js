@@ -120,15 +120,10 @@ var jrfReport=class jrfReport {
 //			console.log(stepCounter+"/"+nItemsTotal+"  -> "+step.actualNode.key);
 			itemFunction(step.actualNode.value,step.deep,step.actualNode.key);
 			stepCounter++;
-			if (stepCounter>=theHashMap.length()){
-				setZeroTimeout(function(){
-					fncEnd(step);
-				});
-			}
 		});
 		theHashMap.walkAsync("Walking Asynchronous"
 									,fncItem
-									,undefined
+									,fncEnd
 									,fncUpdateStatus
 									,fncUpdateStatus
 									,2);

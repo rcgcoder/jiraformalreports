@@ -116,7 +116,7 @@ var jrfReport=class jrfReport {
 				logError("Some items does not finished ("+stepCounter+"/"+theHashMap.length()+") pending Calling End function in walk Async");
 				setTimeout(function(){
 					fncEnd(objStep);
-				},50);
+				},100);
 			} else {
 				logError("Calling custom End function in walk Async");
 				auxFncEnd(objStep);

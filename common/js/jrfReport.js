@@ -108,11 +108,13 @@ var jrfReport=class jrfReport {
 		var fncEnd=endFunction;
 		if (isUndefined(fncEnd)){
 			fncEnd=function(){
+				logError("Calling End in walk Async");
 				self.continueTask();
 			};
 		}
 		fncEnd=self.createManagedCallback(fncEnd);
 		var fncItem=self.createManagedCallback(function(step){
+			logError("Calling item in walk Async");
 			stepCounter++;
 //			console.log(stepCounter+"/"+nItemsTotal+"  -> "+step.actualNode.key);
 			itemFunction(step.actualNode.value,step.deep,step.actualNode.key);

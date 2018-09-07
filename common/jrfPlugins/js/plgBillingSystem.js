@@ -826,6 +826,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		   		} else {
 		   			avanceTimespent=0;
 		   			avanceImporte=0;
+		   			auxSnapshot.source.timeoriginalestimate=0;
 		   		}
 		   		auxImporteNoFacturable+=avanceImporte;
 		   		auxTsNoFacturable+=avanceTimespent;
@@ -900,8 +901,11 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 	   				- (tsFacturacion +snapshot.calculos.noFacturable.timespent);	
 	   		avanceImporte=(avance*(snapshot.source.hourCost/3600))+impFacturacion;
 	   		avance=snapshot.source.timespent - (snapshot.calculos.noFacturable.timespent);	
-	   		if (avance<0) avance=0;
-	   		if (avanceImporte<0) avanceImporte=0;
+	   		if ((avance<0)||(avanceImporte<0)){
+	   			avance=0;
+	   			avanceImporte=0;
+	   			snapshot.source.timeoriginalestimate=0;
+	   		}
 	   		var tsEstimadoActual=snapshot.source.timeestimate+avance;
 	   		var impEstimadoActual=((tsEstimadoActual-tsFacturacion)*(snapshot.source.hourCost/3600))
 	   								+(impFacturacion);

@@ -1158,7 +1158,7 @@ class RCGTaskManager{
 								var fncManagedProcessCall=self.createManagedCallback(fncProcess);
 								fncManagedProcessCall(item,objResult);
 							}
-							nItemsProcessed++;
+//							nItemsProcessed++;
 							if (hsListItems.length()>0){
 								log("There are "+hsListItems.length()+" petitions pending... let´s go next petition");
 								fncParallelCall();

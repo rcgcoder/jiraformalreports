@@ -1014,7 +1014,7 @@ var jrfReport=class jrfReport {
 								}
 							}); 
 							relatedChilds.walk(function(issueChildStep){
-													var issueChild=issuesAdded.getValue(issueChildStep.actualNode.key);
+													var issueChild=issuesAdded.getValue(issueChildStep/*.actualNode.key*/);
 													if (!isString(issueChild)){
 														if (issueParent.getKey()==issueChild.getKey()){
 															debugger;

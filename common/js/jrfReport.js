@@ -1149,7 +1149,7 @@ var jrfReport=class jrfReport {
 				loggerFactory.getLogger().enabled=true;
 				debugger;
 				nRootsPrevious=self.childs.length();
-				self.walkAsync(hsRemoveKeys,function(issRemove){
+				hsRemoveKeys.walk(function(issRemove){
 					var issue=issRemove.issue;
 					var issueKey=issue.getKey();
 					if (self.childs.exists(issueKey)){
@@ -1163,6 +1163,7 @@ var jrfReport=class jrfReport {
 						theParent.getChilds().remove(issueKey);
 					}
 				});
+				self.continueTask();
 			});
 			self.addStep("Removing identified issues Finished",function(){
 				var nRootsFinal=self.childs.length();

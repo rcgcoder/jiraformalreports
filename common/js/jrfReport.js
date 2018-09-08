@@ -1013,43 +1013,25 @@ var jrfReport=class jrfReport {
 									relatedChilds.add(relatedIssueKey);
 								}
 							}); 
-							relatedChilds.walkAsync("Getting childs for "+auxKey
-														,function(issueChildStep){
-															var issueChild=issuesAdded.getValue(issueChildStep.actualNode.key);
-															if (!isString(issueChild)){
-																if (issueParent.getKey()==issueChild.getKey()){
-																	debugger;
-																	logError("Child and Parent are the same"+auxKey+" -> "+ issueParent.getKey());
-																	log(issueParent.getRelatedIssuesByFunction());
-																} else {
-																	var nChildsPrevParent=issueParent.countChilds();
-																	var nChildsPrevChild=issueChild.countChilds();
-																	fncProcessChild(issueChild,issueParent);
-																	fncProcessChild(issueParent,issueChild);
-																	if (issueParent.countChilds()>nChildsPrevParent) log("Child/Parent relation "+auxKey+" -> "+ issueChild.getKey()+" added.");
-																	if (issueChild.countChilds()>nChildsPrevChild) log("Child/Parent relation "+issueChild.getKey()+" -> "+ auxKey +" added.");
-																}
-															} else {
-																logError("Related issue "+auxKey+" -> "+ issueChildStep.actualNode.key +" have not been downloaded or is excluded");
-															}
-															/*
-															nChildsPrev=issueChild.countChilds();
+							relatedChilds.walk(function(issueChildStep){
+													var issueChild=issuesAdded.getValue(issueChildStep.actualNode.key);
+													if (!isString(issueChild)){
+														if (issueParent.getKey()==issueChild.getKey()){
+															debugger;
+															logError("Child and Parent are the same"+auxKey+" -> "+ issueParent.getKey());
+															log(issueParent.getRelatedIssuesByFunction());
+														} else {
+															var nChildsPrevParent=issueParent.countChilds();
+															var nChildsPrevChild=issueChild.countChilds();
+															fncProcessChild(issueChild,issueParent);
 															fncProcessChild(issueParent,issueChild);
-															bProcessChild=(issueChild.countChilds()>nChildsPrev);
-															log("Child/Parent relation "+auxKey+" <- "+ issueChild.getKey()+" added:"+(issueChild.countChilds()>nChildsPrev));
-															if (bProcessChild) {
-																log("Adding "+issueChild.getKey() +" to child/parent process");
-																fncGetIssueChilds(issueChild);
-															}
-															*/
-														 }
-														,self.createManagedCallback(function(){
-															log("Finished "+"Getting childs for "+auxKey);
-/*															log("Task Manager Status:"+self.getRunningTask().parent.actStep 
-																	+ " " + self.getRunningTask().parent.steps.length);
-*/															self.continueTask();
-															}
-														));
+															if (issueParent.countChilds()>nChildsPrevParent) log("Child/Parent relation "+auxKey+" -> "+ issueChild.getKey()+" added.");
+															if (issueChild.countChilds()>nChildsPrevChild) log("Child/Parent relation "+issueChild.getKey()+" -> "+ auxKey +" added.");
+														}
+													} else {
+														logError("Related issue "+auxKey+" -> "+ issueChildStep.actualNode.key +" have not been downloaded or is excluded");
+													}
+												});
 						//},0,1,undefined,undefined,undefined,"INNER",undefined
 						}
 						);

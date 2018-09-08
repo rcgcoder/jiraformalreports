@@ -1162,7 +1162,8 @@ var jrfReport=class jrfReport {
 			
 			var nRemoves=0;
 			var nRootsPrevious=0;
-			self.addStep("Removing "+ hsRemoveKeys.length() +" identified issues",function(){
+			self.addStep("Removing identified issues",function(){
+				debugger;
 				nRootsPrevious=self.childs.length();
 				self.walkAsync(hsRemoveKeys,function(issRemove){
 					var issue=issRemove.issue;

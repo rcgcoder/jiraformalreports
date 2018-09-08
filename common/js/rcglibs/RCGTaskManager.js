@@ -1162,15 +1162,10 @@ class RCGTaskManager{
 							if (hsListItems.length()>0){
 								log("There are "+hsListItems.length()+" petitions pending... let´s go next petition");
 								fncParallelCall();
-								self.continueTask();
 							} else {
 								log("There is not more petitions");
-								if (nItemsProcessed==nItemsToCall){ //processed las call...
-									self.continueTask();
-								} else {
-									log("but is still running other calls");
-								}
 							}
+							self.continueTask();
 						});
 					});
 					fncParallelCall();

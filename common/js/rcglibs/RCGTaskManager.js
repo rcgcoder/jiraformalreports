@@ -1173,7 +1173,10 @@ class RCGTaskManager{
 				},0,1,undefined,undefined,undefined,"INNER",undefined
 				);
 			}
-			for (var i=0;(i<maxThreads)&&(i<hsListItems.length());i++){
+			if (maxThreads>hsListItems.length()){
+				maxThreads=hsListItems.length();
+			}
+			for (var i=0;(i<maxThreads);i++){
 				var theWorkerThread=fncAddThread(i);
 				debugger;
 				log(theWorkerThread);

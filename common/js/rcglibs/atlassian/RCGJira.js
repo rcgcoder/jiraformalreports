@@ -409,9 +409,9 @@ class RCGJira{
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 	//		}
 			);
-			log("Step Process downloaded block of JQL ["+jqlAux+"] added to "+self.getRunningTask().forkId);
-			innerFork.callMethod(); 
-			log("Running InnerFork "+innerFork.forkId+ "of JQL ["+jqlAux+"]");
+//			log("Step Process downloaded block of JQL ["+jqlAux+"] added to "+self.getRunningTask().forkId);
+//			innerFork.callMethod(); 
+//			log("Running InnerFork "+innerFork.forkId+ "of JQL ["+jqlAux+"]");
 		};
 
 		self.addStep("Fetching And Process Issues"+" of JQL ["+jqlAux+"]",function(){

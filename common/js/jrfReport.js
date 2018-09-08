@@ -1032,6 +1032,7 @@ var jrfReport=class jrfReport {
 														logError("Related issue "+auxKey+" -> "+ issueChildStep +" have not been downloaded or is excluded");
 													}
 												});
+							self.continueTask();
 						//},0,1,undefined,undefined,undefined,"INNER",undefined
 						}
 						);

@@ -368,21 +368,6 @@ class RCGJira{
 		if (isDefined(jql)){
 			jqlAux=jql;
 		}
-		var auxCbDownBlock=function(blkIssues){
-			var bExists=isDefined(cbDownloadBlock);
-			log("Callback Download Block exists:"+bExists +" number of issues:" +blkIssues.length);
-			if (bExists){
-				cbDownloadBlock(blkIssues);
-			}
-		};
-		var auxCbProcessBlock=function(objStep){
-			var bExists=isDefined(cbProcessBlock);
-			log("Callback process Block exists:"+bExists);
-			log("Block for jql ["+jqlAux+"] ->"+objStep.getTrace());
-			if (bExists){
-				cbProcessBlock(objStep);
-			}
-		};
 		
 		var fncProcessDownloadedBlock=function(jsonBlkIssues){
 			var blkIssues=[];
@@ -393,30 +378,23 @@ class RCGJira{
 				blkIssues=jsonBlkIssues;
 			}
 			log("Process downloaded block of JQL ["+jqlAux+"]");
-			var innerFork=self.addStep("Processing Issues block: "+blkIssues.length +" of JQL ["+jqlAux+"]",function(){
-				var cbManaged=self.createManagedCallback(auxCbDownBlock);
-				cbManaged(blkIssues);
-				var fncEndBlock=function(){
-					log("End block of JQL ["+jqlAux+"]");
+			if (isDefined(cbProcessBlock)){
+				self.addStep("Processing Issues block: "+blkIssues.length +" of JQL ["+jqlAux+"]",function(){
+					cbProcessBlock(blkIssues);
 					self.continueTask();
-				};
-				log("Process Array Issues of block of JQL ["+jqlAux+"] ..."+blkIssues.length);
-				self.processArrayIssues(blkIssues
-										,fncProcessIssue
-										,fncEndBlock
-										,auxCbProcessBlock);
-				
-			},0,1,undefined,undefined,undefined,"INNER",undefined
-	//		}
-			);
-//			log("Step Process downloaded block of JQL ["+jqlAux+"] added to "+self.getRunningTask().forkId);
-//			innerFork.callMethod(); 
-//			log("Running InnerFork "+innerFork.forkId+ "of JQL ["+jqlAux+"]");
+				});
+			}
+			if (isDefined(fncProcessIssue)){
+				var nThreads=10;
+				self.addStep("Processing "+blkIssues.length +" Issues one by one in "+nThreads+" threads of JQL ["+jqlAux+"]",function(){
+					self.parallelizeCalls(blkIssues,undefined,fncProcessIssue,nThreads);
+				});
+			}
 		};
 
 		self.addStep("Fetching And Process Issues"+" of JQL ["+jqlAux+"]",function(){
 			self.addStep("Fetching Issues"+" of JQL ["+jqlAux+"]",function(){
-				self.getJQLIssues(jqlAux,self.createManagedCallback(fncProcessDownloadedBlock),bNotReturnAll);
+				self.getJQLIssues(jqlAux,fncProcessDownloadedBlock,bNotReturnAll);
 			});
 			self.continueTask();
 		});

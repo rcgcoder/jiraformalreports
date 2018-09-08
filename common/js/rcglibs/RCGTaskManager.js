@@ -1134,7 +1134,11 @@ class RCGTaskManager{
 		var maxThreads=25;
 		if (isDefined(maxParallelThreads)) maxThreads=maxParallelThreads; 
 		var hsListItems=newHashMap();
-		hsListItemsToProcess.walk(function(item){
+		var fncName="walk";
+		if (Array.isArray(hsListItemsToProcess)){
+			fncName="forEach";
+		}
+		hsListItemsToProcess[fncName](function(item){
 			hsListItems.push(item);
 		});
 		self.addStep("Doing " + hsListItems.length()+" parallels calls grouped by "+maxThreads, function(){
@@ -1149,15 +1153,20 @@ class RCGTaskManager{
 						var issue=callInfo.issue;
 						var propKey=callInfo.key;
 						*/
-						self.addStep("Petition:"+iPet+" of parallel process ",function(){
-							var fncManagedCall=self.createManagedCallback(fncCall);
-							fncManagedCall(item);
-						});
-						self.addStep("Petition:"+iPet+" Processing result and Trying Next Call...",function(objResult){
-							if (isDefined(fncProcess)){
+						if (isDefined(fncCall)){
+							self.addStep("Petition:"+iPet+" of parallel process ",function(){
+								var fncManagedCall=self.createManagedCallback(fncCall);
+								fncManagedCall(item);
+							});
+						}
+						if (isDefined(fncProcess)){
+							self.addStep("Petition:"+iPet+" Processing result and Trying Next Call...",function(objResult){
 								var fncManagedProcessCall=self.createManagedCallback(fncProcess);
 								fncManagedProcessCall(item,objResult);
-							}
+								self.continueTask();
+							});
+						}
+						self.addStep("trying next petition...",function(){
 //							nItemsProcessed++;
 							if (hsListItems.length()>0){
 								log("There are "+hsListItems.length()+" petitions pending... let´s go next petition");

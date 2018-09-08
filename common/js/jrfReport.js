@@ -588,7 +588,7 @@ var jrfReport=class jrfReport {
 			var nStepsPlaned=0;
 			self.addStep("Extracting pending keys of ("+self.rootIssues.length()+") root issues",function(){
 				debugger;
-				self.walkAsync("Extracting pending keys Async",self.rootIssues,fncExtractPendingKeys);
+				self.walkAsync(self.rootIssues,fncExtractPendingKeys);
 			});
 			self.addStep("Getting root base issues",function(){
 				var fncRetrieveGroup=self.createManagedCallback(function(group){

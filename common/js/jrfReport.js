@@ -113,6 +113,9 @@ var jrfReport=class jrfReport {
 		}
 		var fncEnd=self.createManagedCallback(function(objStep){
 //			logError("Calling custom End function in walk Async");
+			if (stepCounter<theHashMap.length()){
+				alert("Error....calling end of walk before process of all items. Processed:"+stepCounter+" total:"+theHashMap.length());
+			}
 			auxFncEnd(objStep);
 		});
 		var fncItem=self.createManagedCallback(function(step){

@@ -1197,10 +1197,13 @@ class RCGTaskManager{
 	extended_parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads){
 		var self=this;
 		var tm=self.getTaskManager();
-		var bckAutoFree=tm.autoFree;
-		var bckTaskCallsBlock=tm.asyncTaskCallsBlock;
-		var bckTaskCallsMaxDeep=tm.asyncTaskCallsMaxDeep;
+		var bckAutoFree;
+		var bckTaskCallsBlock;
+		var bckTaskCallsMaxDeep;
 		self.addStep("Change autofree and taskCallsblock", function(){
+			bckAutoFree=tm.autoFree;
+			bckTaskCallsBlock=tm.asyncTaskCallsBlock;
+			bckTaskCallsMaxDeep=tm.asyncTaskCallsMaxDeep;
 //			tm.autoFree=false;
 			tm.asyncTaskCallsBlock=0;
 			tm.asyncTaskCallsMaxDeep=0;

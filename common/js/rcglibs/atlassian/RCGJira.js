@@ -371,25 +371,40 @@ class RCGJira{
 		}
 		
 		var fncProcessDownloadedBlock=function(jsonBlkIssues){
-			var blkIssues=[];
-			if (typeof jsonBlkIssues==="string"){
-				var objJson=JSON.parse(jsonBlkIssues);
-				blkIssues=objJson.issues;
-			} else {
-				blkIssues=jsonBlkIssues;
-			}
-			log("Process downloaded block of JQL ["+jqlAux+"]");
-			if (isDefined(cbProcessBlock)){
-				self.addStep("Processing Issues block: "+blkIssues.length +" of JQL ["+jqlAux+"]",function(){
-					cbProcessBlock(blkIssues);
+			if (isDefined(cbDownloadBlock)){
+				self.addStep("Processing Download Issues block as string: "
+								+jsonBlkIssues.length +" of JQL ["+jqlAux+"]",function(){
+					debugger;
+					cbDownloadBlock(jsonBlkIssues);
 					self.continueTask();
 				});
 			}
-			if (isDefined(fncProcessIssue)){
-				var nThreads=10;
-				self.addStep("Processing "+blkIssues.length +" Issues one by one in "+nThreads+" threads of JQL ["+jqlAux+"]",function(){
-					self.parallelizeCalls(blkIssues,undefined,fncProcessIssue,nThreads);
-				});
+			if (isDefined(cbProcessBlock)||isDefined(cbProcessBlock)){
+				var blkIssues=[];
+				if (typeof jsonBlkIssues==="string"){
+					var objJson=JSON.parse(jsonBlkIssues);
+					blkIssues=objJson.issues;
+				} else {
+					blkIssues=jsonBlkIssues;
+				}
+				log("Process downloaded block of JQL ["+jqlAux+"]");
+				if (isDefined(cbProcessBlock)){
+					self.addStep("Processing Issues block: "+blkIssues.length +" of JQL ["+jqlAux+"]",function(){
+						debugger;
+						cbProcessBlock(blkIssues);
+						self.continueTask();
+					});
+				}
+				if (isDefined(fncProcessIssue)){
+					debugger;
+					var auxHashMap=newHashMap();
+					blkIssues.forEach(function(issue){
+						auxHashMap.push(issue);
+					});
+					auxHashMap.walk(function(issue){
+						fncProcessIssue(issue);
+					});
+				}
 			}
 		};
 

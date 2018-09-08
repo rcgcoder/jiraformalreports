@@ -379,7 +379,7 @@ class RCGJira{
 					self.continueTask();
 				});
 			}
-			if (isDefined(cbProcessBlock)||isDefined(cbProcessBlock)){
+			if (isDefined(cbProcessBlock)||isDefined(fncProcessIssue)){
 				var blkIssues=[];
 				if (typeof jsonBlkIssues==="string"){
 					var objJson=JSON.parse(jsonBlkIssues);

@@ -1178,6 +1178,7 @@ class RCGTaskManager{
 				debugger;
 				log(theWorkerThread);
 			}
+			self.barrier.nItems=maxThreads+1;
 			self.continueTask();
 		});
 		self.continueTask();

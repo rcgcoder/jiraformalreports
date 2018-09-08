@@ -1176,12 +1176,11 @@ class RCGTaskManager{
 			if (maxThreads>hsListItems.length()){
 				maxThreads=hsListItems.length();
 			}
+			self.getRunningTask().barrier.nItems=maxThreads+1;
 			for (var i=0;(i<maxThreads);i++){
 				var theWorkerThread=fncAddThread(i);
-				debugger;
-				log(theWorkerThread);
+//				log(theWorkerThread);
 			}
-			self.getRunningTask().barrier.nItems=maxThreads+1;
 			self.continueTask();
 		});
 		self.continueTask();

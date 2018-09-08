@@ -831,6 +831,7 @@ class RCGHashMapFactory{
 							,nBlockTime:0
 							,hsOtherParams:hsOtherParams
 							,barrier:barrier
+							,deepLevel:hashmapFactory.stackAsyncCalls.length()+1
 							};
 			hashmapFactory.stackAsyncCalls.push(objStep);
 //			setTimeout(function(){
@@ -887,6 +888,7 @@ class RCGHashMapFactory{
 							,nBlockTime:0
 							,hsOtherParams:hsOtherParams
 							,barrier:barrier
+							,deepLevel:hashmapFactory.stackAsyncCalls.length()+1
 							};
 			hashmapFactory.stackAsyncCalls.push(objStep);
 //			setTimeout(function(){

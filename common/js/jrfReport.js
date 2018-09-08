@@ -105,6 +105,7 @@ var jrfReport=class jrfReport {
 			tm.changeStatus();
 			tm.forceChangeStatus();
 		}
+		var stepDesc=tm.getRunningTask().description;
 		var auxFncEnd=endFunction;
 		if (isUndefined(endFunction)){
 			auxFncEnd=function(objStep){
@@ -114,7 +115,7 @@ var jrfReport=class jrfReport {
 		var fncEnd=self.createManagedCallback(function(objStep){
 //			logError("Calling custom End function in walk Async");
 			if (stepCounter<theHashMap.length()){
-				alert("Error....calling end of walk before process of all items. Processed:"+stepCounter+" total:"+theHashMap.length());
+				alert(stepDesc+" Error....calling end of walk before process of all items. Processed:"+stepCounter+" total:"+theHashMap.length());
 			}
 			auxFncEnd(objStep);
 		});
@@ -124,7 +125,7 @@ var jrfReport=class jrfReport {
 			itemFunction(step.actualNode.value,step.deep,step.actualNode.key);
 			stepCounter++;
 		});
-		theHashMap.walkAsync("Walking Asynchronous"
+		theHashMap.walkAsync("Walking Asynchronous. "+stepDesc
 									,fncItem
 									,fncEnd
 									,fncUpdateStatus
@@ -587,7 +588,7 @@ var jrfReport=class jrfReport {
 			var nStepsPlaned=0;
 			self.addStep("Extracting pending keys of ("+self.rootIssues.length()+") root issues",function(){
 				debugger;
-				self.walkAsync(self.rootIssues,fncExtractPendingKeys);
+				self.walkAsync("Extracting pending keys Async",self.rootIssues,fncExtractPendingKeys);
 			});
 			self.addStep("Getting root base issues",function(){
 				var fncRetrieveGroup=self.createManagedCallback(function(group){

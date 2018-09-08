@@ -1010,7 +1010,7 @@ var jrfReport=class jrfReport {
 							}
 							arrRelatedChilds.forEach(function(relatedIssueKey){
 								if (!relatedChilds.exists(relatedIssueKey)){
-									relatedChilds.add(relatedIssueKey);
+									relatedChilds.add(relatedIssueKey,relatedIssueKey);
 								}
 							}); 
 							relatedChilds.walk(function(issueChildStep){

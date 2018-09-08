@@ -1162,7 +1162,7 @@ var jrfReport=class jrfReport {
 			
 			var nRemoves=0;
 			var nRootsPrevious=0;
-			self.addStep("Removing identified issues ",function(){
+			self.addStep("Removing "+ hsRemoveKeys.length() +" identified issues",function(){
 				nRootsPrevious=self.childs.length();
 				self.walkAsync(hsRemoveKeys,function(issRemove){
 					var issue=issRemove.issue;
@@ -1179,7 +1179,7 @@ var jrfReport=class jrfReport {
 					}
 				});
 			});
-			self.addStep("Removing identified issues Finish",function(){
+			self.addStep("Removing identified issues Finished",function(){
 				var nRootsFinal=self.childs.length();
 				if ((hsRemoveKeys.length()!=nRemoves)
 					||((nRootsPrevious-nRemoves)!=nRootsFinal)

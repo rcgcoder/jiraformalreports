@@ -363,6 +363,7 @@ class RCGJira{
 		self.continueTask();
 	}
 	processJQLIssues(jql,fncProcessIssue,returnVariable,cbEndProcess,cbDownloadBlock,cbProcessBlock,bNotReturnAll){
+		debugger;
 		var self=this;
 		var jqlAux="";
 		if (isDefined(jql)){

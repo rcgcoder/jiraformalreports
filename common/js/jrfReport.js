@@ -98,6 +98,7 @@ var jrfReport=class jrfReport {
 	}
 	walkAsync(theHashMap,itemFunction,endFunction){
 		var self=this;
+		var initialItemNumber=theHashMap.length();
 		var stepCounter=0;
 		var nItemsTotal=theHashMap.length();
 		var tm=self.getTaskManager();
@@ -115,7 +116,7 @@ var jrfReport=class jrfReport {
 		var fncEnd=self.createManagedCallback(function(objStep){
 //			logError("Calling custom End function in walk Async");
 			if (stepCounter<theHashMap.length()){
-				alert(stepDesc+" Error....calling end of walk before process of all items. Processed:"+stepCounter+" total:"+theHashMap.length());
+				alert(stepDesc+" Error....calling end of walk before process of all items. Processed:"+stepCounter+" total:"+theHashMap.length() +" started with:"+initialItemNumber);
 			}
 			auxFncEnd(objStep);
 		});

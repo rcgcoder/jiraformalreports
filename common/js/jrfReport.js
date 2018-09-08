@@ -1029,7 +1029,7 @@ var jrfReport=class jrfReport {
 															if (issueChild.countChilds()>nChildsPrevChild) log("Child/Parent relation "+issueChild.getKey()+" -> "+ auxKey +" added.");
 														}
 													} else {
-														logError("Related issue "+auxKey+" -> "+ issueChildStep.actualNode.key +" have not been downloaded or is excluded");
+														logError("Related issue "+auxKey+" -> "+ issueChildStep +" have not been downloaded or is excluded");
 													}
 												});
 						//},0,1,undefined,undefined,undefined,"INNER",undefined

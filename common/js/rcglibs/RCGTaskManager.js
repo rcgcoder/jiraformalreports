@@ -1139,10 +1139,8 @@ class RCGTaskManager{
 		});
 		self.addStep("Doing " + hsListItems.length()+" parallels calls grouped by "+maxThreads, function(){
 			var nextAccumulator=0;
-			var nItemsProcessed=0;
-			var nItemsToCall=hsListItems.length();
 			var fncAddThread=function(iThread){
-				self.addStep("Parallel call Thread "+iThread,function(){
+				return self.addStep("Parallel call Thread "+iThread,function(){
 					var fncParallelCall=self.createManagedCallback(function(){
 						if (hsListItems.length()==0)return;
 						var iPet=hsListItems.length()-1;
@@ -1181,7 +1179,9 @@ class RCGTaskManager{
 				);
 			}
 			for (var i=0;(i<maxThreads)&&(i<hsListItems.length());i++){
-				fncAddThread(i);
+				var theWorkerThread=fncAddThread(i);
+				debugger;
+				log(theWorkerThread);
 			}
 			self.continueTask();
 		});

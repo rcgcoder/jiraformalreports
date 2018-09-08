@@ -1163,6 +1163,7 @@ var jrfReport=class jrfReport {
 			var nRemoves=0;
 			var nRootsPrevious=0;
 			self.addStep("Removing identified issues",function(){
+				loggerFactory.getLogger().enabled=true;
 				debugger;
 				nRootsPrevious=self.childs.length();
 				self.walkAsync(hsRemoveKeys,function(issRemove){
@@ -1187,6 +1188,7 @@ var jrfReport=class jrfReport {
 					){
 					log("The number of keys to remove is different of the effective removed issue count");
 				}
+				loggerFactory.getLogger().enabled=false;
 				self.continueTask();
 			});
 			

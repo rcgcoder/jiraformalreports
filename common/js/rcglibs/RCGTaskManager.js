@@ -1139,6 +1139,8 @@ class RCGTaskManager{
 		});
 		self.addStep("Doing " + hsListItems.length()+" parallels calls grouped by "+maxThreads, function(){
 			var nextAccumulator=0;
+			var nItemsProcessed=0;
+			var nItemsToCall=hsListItems.length();
 			var fncAddThread=function(iThread){
 				self.addStep("Parallel call Thread "+iThread,function(){
 					var fncParallelCall=self.createManagedCallback(function(){
@@ -1158,13 +1160,19 @@ class RCGTaskManager{
 								var fncManagedProcessCall=self.createManagedCallback(fncProcess);
 								fncManagedProcessCall(item,objResult);
 							}
+							nItemsProcessed++;
 							if (hsListItems.length()>0){
 								log("There are "+hsListItems.length()+" petitions pending... let´s go next petition");
 								fncParallelCall();
+								self.continueTask();
 							} else {
 								log("There is not more petitions");
+								if (nItemsProcessed==nItemsToCall){ //processed las call...
+									self.continueTask();
+								} else {
+									log("but is still running other calls");
+								}
 							}
-							self.continueTask();
 						});
 					});
 					fncParallelCall();

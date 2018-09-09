@@ -288,6 +288,7 @@ class RCGAtlassian{
 					self.continueTask([response,xhr,sUrl,headers]);
 				});
 			}
+			self.continueTask();
 		});
 		self.continueTask();
 	}

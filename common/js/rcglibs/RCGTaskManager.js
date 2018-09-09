@@ -1176,6 +1176,7 @@ class RCGTaskManager{
 							}
 							self.continueTask();
 						});
+						self.continueTask();
 					});
 					fncParallelCall();
 				},0,1,undefined,undefined,undefined,"INNER",undefined

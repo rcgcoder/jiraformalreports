@@ -101,14 +101,20 @@ var jrfReport=class jrfReport {
 		var initialItemNumber=theHashMap.length();
 		var stepCounter=0;
 		var nItemsTotal=theHashMap.length();
+		var asyncNumber=hashmapFactory.stackAsyncCalls.length();
 		var tm=self.getTaskManager();
 		var fncUpdateStatus=function(){
 			tm.changeStatus();
 			tm.forceChangeStatus();
 		}
 		var stepDesc=tm.getRunningTask().description;
-		logError(stepDesc + "START calling end of walk before process of all items. Processed:"
-				+stepCounter+" total:"+theHashMap.length() +" started with:"+initialItemNumber);
+		logError(stepDesc + "START calling end of walk before process of all items. "
+				+" Processed:" +stepCounter
+				+" total:"+theHashMap.length() 
+				+" started with:"+initialItemNumber
+				+" Async Deep Ini:"+asyncNumber
+				+" Async Deep Act:"+hashmapFactory.stackAsyncCalls.length()
+				);
 		var auxFncEnd=endFunction;
 		if (isUndefined(endFunction)){
 			auxFncEnd=function(objStep){
@@ -120,8 +126,13 @@ var jrfReport=class jrfReport {
 			if (stepCounter<theHashMap.length()){
 				alert(stepDesc+" ERROR....calling end of walk before process of all items. Processed:"+stepCounter+" total:"+theHashMap.length() +" started with:"+initialItemNumber);
 			}
-			logError(stepDesc + " END calling end of walk before process of all items. Processed:"
-						+stepCounter+" total:"+theHashMap.length() +" started with:"+initialItemNumber);
+			logError(stepDesc + " END calling end of walk before process of all items. "
+						+" Processed:" +stepCounter
+						+" total:"+theHashMap.length() 
+						+" started with:"+initialItemNumber
+						+" Async Deep Ini:"+asyncNumber
+						+" Async Deep Act:"+hashmapFactory.stackAsyncCalls.length()
+						);
 			auxFncEnd(objStep);
 		});
 		var fncItem=self.createManagedCallback(function(step){
@@ -1173,6 +1184,7 @@ var jrfReport=class jrfReport {
 				});
 			});
 			self.addStep("Removing identified issues Finished",function(){
+				loggerFactory.getLogger().enabled=false;
 				var nRootsFinal=self.childs.length();
 				if ((hsRemoveKeys.length()!=nRemoves)
 					||((nRootsPrevious-nRemoves)!=nRootsFinal)

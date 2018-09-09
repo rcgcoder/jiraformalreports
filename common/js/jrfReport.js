@@ -1169,6 +1169,7 @@ var jrfReport=class jrfReport {
 				debugger;
 				hsRemoveKeys.walk(function(issRemove,iDeep,issKey){
 					if (isUndefined(issRemove)){
+						alert("Undefined Element");
 						debugger;
 					};
 				});

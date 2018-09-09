@@ -159,7 +159,7 @@ class RCGAtlassian{
 					}
 					var fncCall=function(callInfo){
 						self.addStep("Doing ["+callInfo.first+","+(callInfo.first+callInfo.nBlockItems)+"]",function(){
-							self.apiCallApp(appInfo,sTarget,callType,data,callInfo.first,callInfo.nBlockItems,undefined,callback,arrHeaders);
+							self.apiCallApp(appInfo,sTarget,callType,data,callInfo.first,callInfo.nBlockItems,undefined,undefined,arrHeaders);
 						});
 						if (isDefined(callback)){
 							self.addStep("Calling the user callback",function(response,xhr,sUrl,headers){

@@ -238,6 +238,7 @@ var jrfReport=class jrfReport {
 				self.continueTask(); 
 //				var theHtml=$(sHtml);
 			});
+			self.continueTask();
 		});
 		//Initialize Report Model.... with variables, etc
 		self.addStep("Initializing Model",function(){

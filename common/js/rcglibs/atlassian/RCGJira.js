@@ -173,7 +173,10 @@ class RCGJira{
 	}
 	getFieldsAndSchema(){
 		var self=this;
-		self.pushCallback(function(sResponse,xhr,sUrl,headers){
+		self.addStep("Doing a api call to get fields and schema",function(){
+			self.apiCall("/rest/api/2/search?jql=&expand=names,schema");
+		});
+		self.addStep("Processing results of get fields and schema",function(sResponse,xhr,sUrl,headers){
 			//log("getAllProjects:"+response);
 			if (sResponse!=""){
 				var response=JSON.parse(sResponse);
@@ -196,9 +199,9 @@ class RCGJira{
 					}
 				}
 			}
-			self.popCallback([self.projects]);
+			self.continueTask([self.projects]);
 		});
-		self.apiCall("/rest/api/2/search?jql=&expand=names,schema");
+		self.continueTask();
 	}
 	getIssueLinkTypes(){
 		var self=this;
@@ -241,24 +244,30 @@ class RCGJira{
 	}
 	getAllUsers(){
 		var self=this;
-		self.pushCallback(function(response,xhr,sUrl,headers){
+		self.addStep("Calling to API to get Users", function(){
+			self.apiCall(   "/rest/api/2/user/search?startAt=0&maxResults=1000&username=_");
+		});
+		self.addStep("Procesing users info",function(response,xhr,sUrl,headers){
 			log("getAllUsers:"+response);
 			if (response!=""){
 				self.users=JSON.parse(response);
 			}
-			self.popCallback();
+			self.continueTask();
 		});
-		self.apiCall(   "/rest/api/2/user/search?startAt=0&maxResults=1000&username=_");
+		self.continueTask();
 	}
 
 	
 	getAllProjects(){
 		var self=this;
-		self.pushCallback(function(response,xhr,sUrl,headers){
-			log("getAllProjects:"+response);
-			self.popCallback();
+		self.addStep("Getting all projects",function(){
+			self.apiCall("/rest/api/2/project?expand=issueTypes");
 		});
-		self.apiCall("/rest/api/2/project?expand=issueTypes");
+		self.addStep(function(response,xhr,sUrl,headers){
+			log("getAllProjects:"+response);
+			self.continueTask();
+		});
+		self.continueTask();
 	}
 	getAllLabels(){
 		var self=this;
@@ -287,15 +296,18 @@ class RCGJira{
 	}
 	getAllFilters(){
 		var self=this;
-		self.pushCallback(function(sResponse,xhr,sUrl,headers){
+		self.addStep("Getting all filters",function(){
+			self.apiCall("/rest/api/2/filter");//,"GET",data);
+		});
+		self.addStep("Processing all filters info",function(sResponse,xhr,sUrl,headers){
 			log("getAllFilters:"+response);
 			if (sResponse!=""){
 				var response=JSON.parse(sResponse);
 				self.filters=response;
 			}
-			self.popCallback([self.filters]);
+			self.continueTask([self.filters]);
 		});
-		self.apiCall("/rest/api/2/filter");//,"GET",data);
+		self.continueTask();
 	}
 	getAllIssues(cbBlock){
 		var self=this;
@@ -436,32 +448,45 @@ class RCGJira{
 	}
 	getIssueDetails(issueId){
 		var self=this;
-		self.pushCallback(function(objResponse,xhr, statusText, errorThrown){
+		self.addStep("Getting Issue Details",function(){
+			self.apiCall(   "/rest/api/2/issue/"+issueId,
+					"GET",
+					undefined,
+					undefined,
+					"application/json");
+		});
+		self.addStep("Processing issue Details",function(objResponse,xhr, statusText, errorThrown){
 			log("Issue Detail for issue:"+issueId);
 			self.continueTask([JSON.parse(objResponse)]);
 		});
-		self.apiCall(   "/rest/api/2/issue/"+issueId,
-						"GET",
-						undefined,
-						undefined,
-						"application/json");
+		self.continueTask();
 	}
 	setProperty(issueId,propertyName,propertyValue){
 		var self=this;
-		self.pushCallback(function(objResponse,xhr, statusText, errorThrown){
+		self.addStep("Setting property",function(){
+			self.apiCall(   "/rest/api/2/issue/"+issueId+"/properties/"+propertyName,
+					"PUT",
+					propertyValue,
+					undefined,
+					"application/json");
+		});
+		self.addStep("Processing setting property result",function(objResponse,xhr, statusText, errorThrown){
 			log("Property:"+propertyName+" = "+propertyValue+" setted in issue:"+issueId);
 			self.continueTask();
 		});
-		self.apiCall(   "/rest/api/2/issue/"+issueId+"/properties/"+propertyName,
-						"PUT",
-						propertyValue,
-						undefined,
-						"application/json");
+		self.continueTask();
 	}
 	
 	getProperty(issueId,propertyName){
 		var self=this;
-		self.pushCallback(function(sResponse,xhr, statusText, errorThrown){
+		self.addStep("Getting property of issue",function(){
+			self.apiCall(   "/rest/api/2/issue/"+issueId+"/properties/"+propertyName,
+					"GET",
+					undefined,
+					undefined,
+					"application/json");
+		});
+		self.addStep("Processing property of issue",function(sResponse,xhr, statusText, errorThrown){
 			log("Property:"+propertyName+" = "+sResponse+" getted for issue:"+issueId);
 			if (sResponse!=""){
 				self.continueTask([JSON.parse(sResponse)]);
@@ -469,25 +494,24 @@ class RCGJira{
 				self.continueTask([sResponse,xhr, statusText, errorThrown]);
 			}
 		});
-		self.apiCall(   "/rest/api/2/issue/"+issueId+"/properties/"+propertyName,
-						"GET",
-						undefined,
-						undefined,
-						"application/json");
+		self.continueTask();
 	}
 	
 	addComment(issueId,theComment){
 		var self=this;
-		self.pushCallback(function(objResponse,xhr, statusText, errorThrown){
-			log("Comment:"+theComment+" setted in issue:"+issueId);
-			self.continueTask();
-		});
-		
-		self.apiCall("/rest/api/2/issue/"+issueId+"/comment",
+		self.addStep("Adding comment to issue",function(){
+			self.apiCall("/rest/api/2/issue/"+issueId+"/comment",
 					"POST",
 					{"body":theComment},
 					undefined,
 					"application/json");
+		});
+		self.addStep("Processing result of adding comment",function(objResponse,xhr, statusText, errorThrown){
+			log("Comment:"+theComment+" setted in issue:"+issueId);
+			self.continueTask();
+		});
+		self.continueTask();
+		
 	}
 	addAttachmentObject(issueId,jsObject,sFileName,sComment){
 		var self=this;
@@ -505,16 +529,23 @@ class RCGJira{
         		contentType: 'multipart/form-data'
         }
 //		self.apiCall=function(sTarget,callType,data,sPage,sResponseType,callback,arrHeaders,useProxy,aditionalOptions){
-		self.apiCall("/rest/api/2/issue/"+issueId+"/attachments",
-				"POST",
-				data,
-				undefined,
-				'multipart/form-data',
-				undefined,
-				undefined,
-				undefined,
-				aditionalOptions
-				);
+        self.addStep("Adding attachment to issue",function(){
+    		self.apiCall("/rest/api/2/issue/"+issueId+"/attachments",
+    				"POST",
+    				data,
+    				undefined,
+    				'multipart/form-data',
+    				undefined,
+    				undefined,
+    				undefined,
+    				aditionalOptions
+    				);
+        });
+		self.addStep("Processing result of adding attachment",function(objResponse,xhr, statusText, errorThrown){
+			log("attachement setted in issue:"+issueId);
+			self.continueTask();
+		});
+		self.continueTask();
 	}
 	getAttachments(issueId,fileFilterFunction,contentFilterFunction,contentProcessFunction){
 		var self=this;

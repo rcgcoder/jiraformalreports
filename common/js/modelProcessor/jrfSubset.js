@@ -114,13 +114,13 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 			var iSelectedCounter=0;
 			sWhere=self.whereCondition;
 			if (sWhere.indexOf("{{{")>=0){
-				sWhere=self.replaceVars(sWhere);
+				sWhere=self.replaceVars(sWhere).saToString().trim();
 			}
-			sWhere=self.adjustSyntax(sWhere).saToString().trim();
 			if (sWhere.indexOf("useFilter")>=0){
 				//debugger;
 				sWhere=self.model.filters.useFilter(sWhere);
 			}
+			sWhere=self.adjustSyntax(sWhere).saToString().trim();
 			
 			elemsInForEach.walk(function(eachElem,deep,key){
 				if (self.innerVarName!=""){

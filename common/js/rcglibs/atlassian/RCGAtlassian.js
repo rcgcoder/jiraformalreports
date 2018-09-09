@@ -181,6 +181,7 @@ class RCGAtlassian{
 							log("Retrieved "+resultName+":"+arrResults.length);
 						}
 					}
+					debugger;
 					self.parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,10);
 				}
 			});

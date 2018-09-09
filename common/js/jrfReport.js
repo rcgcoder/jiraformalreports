@@ -126,6 +126,7 @@ var jrfReport=class jrfReport {
 //			logError("Calling custom End function in walk Async");
 			if (stepCounter<theHashMap.length()){
 				alert(stepDesc+" ERROR....calling end of walk before process of all items. Processed:"+stepCounter+" total:"+theHashMap.length() +" started with:"+initialItemNumber);
+				debugger;
 			}
 			logError(stepDesc + " END calling end of walk before process of all items. "
 						+" Processed:" +stepCounter
@@ -140,7 +141,7 @@ var jrfReport=class jrfReport {
 //			logError("Calling item in walk Async "+stepCounter+"/"+theHashMap.length());
 //			console.log(stepCounter+"/"+nItemsTotal+"  -> "+step.actualNode.key);
 			itemFunction(step.actualNode.value,step.deep,step.actualNode.key);
-			stepCounter++;
+			stepCounter+=1+step.actualNode.brothers.length;
 		});
 		theHashMap.walkAsync("Walking Asynchronous. "+stepDesc
 									,fncItem
@@ -1084,7 +1085,6 @@ var jrfReport=class jrfReport {
 					}
 				});
 			});
-			
 			self.addStep("Creating child relations by issue custom formulas",function(){
 				self.walkAsync(issuesAdded,function(issueParent){
 					if (issueParent.existsRelationFilter("Child")){
@@ -1105,12 +1105,16 @@ var jrfReport=class jrfReport {
 					}
 				});
 			});
+			var removeCounter=0;
 			var hsRemoveKeys=newHashMap();
 			if (self.config.removeChildIssuesFromRootList){
 				self.addStep("Identifying child issues in root list",function(){
 					self.walkAsync(issuesAdded,function(issue){
 						if (issue.countParentsChild()>0){
-							hsRemoveKeys.add(issue.getKey(),{issue:issue});
+							if (!hsRemoveKeys.exists(issue.getKey())){
+								removeCounter++;
+								hsRemoveKeys.add(issue.getKey(),{issue:issue});
+							}
 						}
 					});
 				});
@@ -1126,7 +1130,10 @@ var jrfReport=class jrfReport {
 					            ,optGetFieldValues
 					            );
 						if ((faseAtEndReport<0)||(faseAtEndReport==="")){
-							hsRemoveKeys.add(issue.getKey(),{issue:issue,removeFromParent:true});
+							if (!hsRemoveKeys.exists(issue.getKey())){
+								removeCounter++;
+								hsRemoveKeys.add(issue.getKey(),{issue:issue,removeFromParent:true});
+							}
 						}
 					});
 				});
@@ -1150,7 +1157,10 @@ var jrfReport=class jrfReport {
 					            ,optGetFieldValues
 					            );
 						if ((faseAtEndReport>=4)){
-							hsRemoveKeys.add(issue.getKey(),{issue:issue,removeFromParent:true});
+							if (!hsRemoveKeys.exists(issue.getKey())){
+								removeCounter++;
+								hsRemoveKeys.add(issue.getKey(),{issue:issue,removeFromParent:true});
+							}
 						}
 					});
 				});
@@ -1158,6 +1168,7 @@ var jrfReport=class jrfReport {
 			self.addStep("Identifying issues by Exclude function",function(){
 				self.walkAsync(issuesAdded,function(issue){
 					if ((!hsRemoveKeys.exists(issue.getKey()))&&issue.isExcludedByFunction()){
+						removeCounter++;
 						hsRemoveKeys.add(issue.getKey(),{issue:issue,removeFromParent:true});
 					}
 				});
@@ -1167,6 +1178,8 @@ var jrfReport=class jrfReport {
 			var nRootsPrevious=0;
 			self.addStep("Removing identified issues",function(){
 				loggerFactory.getLogger().enabled=true;
+				log("Items to remove:"+removeCounter);
+				log("Items in hsRemoveKeys:"+hsRemoveKeys.length());
 				debugger;
 				hsRemoveKeys.walk(function(issRemove,iDeep,issKey){
 					if (isUndefined(issRemove)||(issRemove=="")){

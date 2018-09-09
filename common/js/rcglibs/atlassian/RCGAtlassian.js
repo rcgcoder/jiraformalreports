@@ -304,7 +304,7 @@ class RCGAtlassian{
 			});
 			if (isDefined(callback)){
 				self.addStep("Calling callback to "+sTargetUrl,function([response,xhr,sUrl,headers]){
-					callback([response,xhr,sUrl,headers]);
+					callback(response,xhr,sUrl,headers);
 					self.continueTask([response,xhr,sUrl,headers]);
 				});
 			}

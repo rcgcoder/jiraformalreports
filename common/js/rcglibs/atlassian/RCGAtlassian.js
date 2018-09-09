@@ -119,7 +119,7 @@ class RCGAtlassian{
 			});	
 			if (isDefined(callback)){
 				self.addStep("Calling the user callback",function(response,xhr,sUrl,headers){
-					callback([response,xhr,sUrl,headers]);
+					callback(response,xhr,sUrl,headers);
 					self.continuetTask([response,xhr,sUrl,headers]);
 				});
 			}
@@ -163,7 +163,7 @@ class RCGAtlassian{
 						});
 						if (isDefined(callback)){
 							self.addStep("Calling the user callback",function(response,xhr,sUrl,headers){
-								callback([response,xhr,sUrl,headers]);
+								callback(response,xhr,sUrl,headers);
 								self.continuetTask([response,xhr,sUrl,headers]);
 							});
 						}

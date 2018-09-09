@@ -273,7 +273,7 @@ class RCGAtlassian{
 								'oauth_version="'+"1.0"+'"';
 				auxHeaders["Authorization"]=oAuthString;
 			}
-			self.apiCallBase(sTargetUrl,auxCallType,data,sResponseType,callback,auxHeaders,appInfo.tokenAccess,oSecurity,aditionalOptions);
+			self.apiCallBase(sTargetUrl,auxCallType,data,sResponseType,undefined /*callback*/,auxHeaders,appInfo.tokenAccess,oSecurity,aditionalOptions);
 		});
 		if ((oSecurity.token)&&(appInfo.tokenAccess=="")){
 			//needs to get a Token

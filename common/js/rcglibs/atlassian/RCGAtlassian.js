@@ -204,20 +204,26 @@ class RCGAtlassian{
 			if (isUndefined(oSecurity.token))oSecurity.token=false;
 			if (isUndefined(oSecurity.proxy))oSecurity.proxy=false;
 		} 
+		if ((oSecurity.token)&&(appInfo.tokenAccess=="")){
+			//needs to get a Token
+			self.pushCallback(function(){
+				self.oauthConnect(appInfo);
+			})
+		}
 		//"Doing de API call..."
-		self.pushCallback(function(){
-			var fncAddParam=function(name,value){
-				if (typeof value!=="undefined"){
-					if (!bHasParams){
-						sTokenParam+="?";
-						bHasParams=true;
-					} else {
-						sTokenParam+="&";
-					}
-					sTokenParam+=name+"="+value;
-					
+		var fncAddParam=function(name,value){
+			if (typeof value!=="undefined"){
+				if (!bHasParams){
+					sTokenParam+="?";
+					bHasParams=true;
+				} else {
+					sTokenParam+="&";
 				}
+				sTokenParam+=name+"="+value;
+				
 			}
+		}
+		self.addStep("Doing the API call..."+sTarget,function(){
 	/*		if (appInfo.tokenNeeded){
 				fncAddParam("access_token",appInfo.tokenAccess);
 			}
@@ -229,14 +235,27 @@ class RCGAtlassian{
 			}
 			var sTargetUrl=newSubPath+sTarget+sTokenParam;
 			log("Calling api of "+(newSubPath==""?"Jira":appInfo.subPath) + " final url:"+sTargetUrl);
-			self.pushCallback(function(response,xhr,sUrl,headers){
+			var auxHeaders=arrHeaders;
+			var auxCallType="GET";
+			if (isDefined(callType)) auxCallType=callType;
+			if (oSecurity.token){
+				auxHeaders={};
+				var oAuthString= ' OAuth oauth_consumer_key="'+"OauthKey"+'",'+
+								'oauth_token="' +appInfo.tokenAccess+'",'+
+								'oauth_version="'+"1.0"+'"';
+				auxHeaders["Authorization"]=oAuthString;
+			}
+			self.addStep("Base API Call "+sTargetUrl,function(){
+				self.apiCallBase(sTargetUrl,auxCallType,data,sResponseType,auxHeaders,appInfo.tokenAccess,oSecurity,aditionalOptions);
+			});
+			self.addStep("Processing result and retry if necesary of "+sTargetUrl,function(response,xhr,sUrl,headers){
 				log("Api Call Response of "+(newSubPath==""?"Jira":appInfo.subPath) 
 						+ " final url:"+sTargetUrl);
 				if (typeof xhr==="undefined"){
 					log("=========");
 					log("ERROR: xhr is undefined.... " );
 					log("=========");
-					self.popCallback(["",xhr,sUrl,headers]);
+					self.continueTask(["",xhr,sUrl,headers]);
 				} else {
 					log(" --> Bytes:"+response.length);
 					if ((xhr.status == 429)){
@@ -248,42 +267,31 @@ class RCGAtlassian{
 							}),millis);
 					} else if (xhr.status == 400){
 						alert(headers);
-						return self.popCallback([response,xhr,sUrl,headers]);
+						return self.continueTask([response,xhr,sUrl,headers]);
 					} else if (xhr.status == 403) { // forbidden
 						if (appInfo.tokenAccess==""){
 							self.authenticate(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders);
 						} else {
 							log(xhr.responseText);
-							self.popCallback(["",xhr,sUrl,headers]);
+							self.continueTask(["",xhr,sUrl,headers]);
 						}
 					} else if (xhr.status==500){
 						logError("Error 500 in atlassian server calling to "+sTarget);
 					} else {
-						self.popCallback([response,xhr,sUrl,headers]);
+						self.continueTask([response,xhr,sUrl,headers]);
 					}
 				}
 			});
-			var auxHeaders=arrHeaders;
-			var auxCallType="GET";
-			if (isDefined(callType)) auxCallType=callType;
-			if (oSecurity.token){
-				auxHeaders={};
-				var oAuthString= ' OAuth oauth_consumer_key="'+"OauthKey"+'",'+
-								'oauth_token="' +appInfo.tokenAccess+'",'+
-								'oauth_version="'+"1.0"+'"';
-				auxHeaders["Authorization"]=oAuthString;
+			if (isDefined(callback)){
+				self.addStep("Calling callback to "+sTargetUrl,function([response,xhr,sUrl,headers]){
+					callback([response,xhr,sUrl,headers]);
+					self.continueTask([response,xhr,sUrl,headers]);
+				});
 			}
-			self.apiCallBase(sTargetUrl,auxCallType,data,sResponseType,undefined /*callback*/,auxHeaders,appInfo.tokenAccess,oSecurity,aditionalOptions);
 		});
-		if ((oSecurity.token)&&(appInfo.tokenAccess=="")){
-			//needs to get a Token
-			self.pushCallback(function(){
-				self.oauthConnect(appInfo);
-			})
-		}
 		self.continueTask();
 	}
-	apiCallBase(sTargetUrl,callType,data,sResponseType,callback,arrHeaders,tokenAccess,oCallSecurity,aditionalOptions){
+	apiCallBase(sTargetUrl,callType,data,sResponseType,arrHeaders,tokenAccess,oCallSecurity,aditionalOptions){
 		var self=this;
 		var newType="GET";
 		if (typeof callType!=="undefined"){
@@ -306,19 +314,12 @@ class RCGAtlassian{
 		}
 		var newCallback;//=callback;
 		var newErrorCallback;//=callback;
-		if (typeof newCallback==="undefined"){
-			newCallback=self.createManagedCallback(function(responseObj){
-				if (isDefined(callback)){
-					setTimeout(function(){
-							callback(responseObj);
-					});
-				}
-			    self.popCallback([responseObj,self.JiraAPConnection]);
-			  });
-			newErrorCallback=self.createManagedCallback(function(xhr, statusText, errorThrown){
-			    self.popCallback(["",xhr, statusText, errorThrown]);
-			  })
-		}
+		newCallback=self.createManagedCallback(function(responseObj){
+		    self.popCallback([responseObj,self.JiraAPConnection]);
+		  });
+		newErrorCallback=self.createManagedCallback(function(xhr, statusText, errorThrown){
+		    self.popCallback(["",xhr, statusText, errorThrown]);
+		  })
 		var fncAddAditionalOptions=function(options){
 			if (isDefined(aditionalOptions)){
 				var arrProps=getAllProperties(aditionalOptions);

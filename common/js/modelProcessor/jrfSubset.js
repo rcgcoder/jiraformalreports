@@ -116,7 +116,7 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 			if (sWhere.indexOf("{{{")>=0){
 				sWhere=self.replaceVars(sWhere);
 			}
-			sWhere=self.adjustSyntax(sWhere);
+			sWhere=self.adjustSyntax(sWhere).saToString().trim();
 			if (sWhere.indexOf("useFilter")>=0){
 				//debugger;
 				sWhere=self.model.filters.useFilter(sWhere);

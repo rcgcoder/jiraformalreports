@@ -252,6 +252,7 @@ class RCGAtlassian{
 				self.apiCallBase(sTargetUrl,auxCallType,data,sResponseType,auxHeaders,appInfo.tokenAccess,oSecurity,aditionalOptions);
 			});
 			self.addStep("Processing result and retry if necesary of "+sTargetUrl,function(response,xhr,sUrl,headers){
+				debugger;
 				log("Api Call Response of "+(newSubPath==""?"Jira":appInfo.subPath) 
 						+ " final url:"+sTargetUrl);
 				if (typeof xhr==="undefined"){

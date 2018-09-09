@@ -1167,6 +1167,11 @@ var jrfReport=class jrfReport {
 			self.addStep("Removing identified issues",function(){
 				loggerFactory.getLogger().enabled=true;
 				debugger;
+				hsRemoveKeys.walk(function(issRemove,iDeep,issKey){
+					if (isUndefined(issRemove)){
+						debugger;
+					};
+				});
 				nRootsPrevious=self.childs.length();
 				self.walkAsync(hsRemoveKeys,function(issRemove){
 					var issue=issRemove.issue;

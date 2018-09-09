@@ -115,12 +115,18 @@ class RCGAtlassian{
 		var nLast=0;
 		self.addStep("Calling for "+sTarget,function(){
 			self.addStep("Calling to api "+sTarget,function(){
-				self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,undefined,callback,arrHeaders);
+				self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,undefined,undefined,arrHeaders);
 			});	
+			if (isDefined(callback)){
+				self.addStep("Calling the user callback",function(response,xhr,sUrl,headers){
+					callback([response,xhr,sUrl,headers]);
+					self.continuetTask();
+				});
+			}
 			self.addStep("Processing result of call "+sTarget,function(response,xhr,sUrl,headers){
 				var objResp;
 				if (typeof response==="string"){
-					if (response=="") return self.popCallback([[]]);
+					if (response=="") return self.continueTask([[]]);
 					try {
 						objResp=JSON.parse(response);
 					} catch (e) {
@@ -138,7 +144,7 @@ class RCGAtlassian{
 					arrResults=arrResults.concat(objResp[resultName]);
 				}
 				if (nLast>=nTotal){
-					return self.popCallback([arrResults]);					
+					return self.continueTask([arrResults]);					
 				} else if (nLast<nTotal){
 					//debugger;
 					var hsListItemsToProcess=newHashMap();
@@ -152,7 +158,16 @@ class RCGAtlassian{
 						nLast+=nResults;
 					}
 					var fncCall=function(callInfo){
-						self.apiCallApp(appInfo,sTarget,callType,data,callInfo.first,callInfo.nBlockItems,undefined,callback,arrHeaders);
+						self.addStep("Doing ["+callInfo.first+","+(callInfo.first+callInfo.nBlockItems)+"]",function(){
+							self.apiCallApp(appInfo,sTarget,callType,data,callInfo.first,callInfo.nBlockItems,undefined,callback,arrHeaders);
+						});
+						if (isDefined(callback)){
+							self.addStep("Calling the user callback",function(response,xhr,sUrl,headers){
+								callback([response,xhr,sUrl,headers]);
+								self.continuetTask();
+							});
+						}
+						self.continueTask();
 					}
 					var fncProcess=function(item,response){
 						if (isUndefined(bNotReturnAll)||(!bNotReturnAll)){

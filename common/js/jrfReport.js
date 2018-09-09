@@ -107,6 +107,8 @@ var jrfReport=class jrfReport {
 			tm.forceChangeStatus();
 		}
 		var stepDesc=tm.getRunningTask().description;
+		logError(stepDesc + "START calling end of walk before process of all items. Processed:"
+				+stepCounter+" total:"+theHashMap.length() +" started with:"+initialItemNumber);
 		var auxFncEnd=endFunction;
 		if (isUndefined(endFunction)){
 			auxFncEnd=function(objStep){
@@ -116,9 +118,9 @@ var jrfReport=class jrfReport {
 		var fncEnd=self.createManagedCallback(function(objStep){
 //			logError("Calling custom End function in walk Async");
 			if (stepCounter<theHashMap.length()){
-				alert(stepDesc+" Error....calling end of walk before process of all items. Processed:"+stepCounter+" total:"+theHashMap.length() +" started with:"+initialItemNumber);
+				alert(stepDesc+" ERROR....calling end of walk before process of all items. Processed:"+stepCounter+" total:"+theHashMap.length() +" started with:"+initialItemNumber);
 			}
-			logError(stepDesc + " calling end of walk before process of all items. Processed:"
+			logError(stepDesc + " END calling end of walk before process of all items. Processed:"
 						+stepCounter+" total:"+theHashMap.length() +" started with:"+initialItemNumber);
 			auxFncEnd(objStep);
 		});

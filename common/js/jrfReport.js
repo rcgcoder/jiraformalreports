@@ -1017,7 +1017,7 @@ var jrfReport=class jrfReport {
 									relatedChilds.add(relatedIssueKey,relatedIssueKey);
 								}
 							}); 
-							relatedChilds.walk(function(issueChildStep){
+							self.walkAsync(relatedChilds,function(issueChildStep){
 													var issueChild=issuesAdded.getValue(issueChildStep/*.actualNode.key*/);
 													if (!isString(issueChild)){
 														if (issueParent.getKey()==issueChild.getKey()){
@@ -1036,7 +1036,6 @@ var jrfReport=class jrfReport {
 														logError("Related issue "+auxKey+" -> "+ issueChildStep +" have not been downloaded or is excluded");
 													}
 												});
-							self.continueTask();
 						//},0,1,undefined,undefined,undefined,"INNER",undefined
 						}
 						);
@@ -1153,7 +1152,7 @@ var jrfReport=class jrfReport {
 				loggerFactory.getLogger().enabled=true;
 				debugger;
 				nRootsPrevious=self.childs.length();
-				hsRemoveKeys.walk(function(issRemove){
+				self.walkAsync(hsRemoveKeys,function(issRemove){
 					var issue=issRemove.issue;
 					var issueKey=issue.getKey();
 					if (self.childs.exists(issueKey)){
@@ -1167,7 +1166,6 @@ var jrfReport=class jrfReport {
 						theParent.getChilds().remove(issueKey);
 					}
 				});
-				self.continueTask();
 			});
 			self.addStep("Removing identified issues Finished",function(){
 				var nRootsFinal=self.childs.length();

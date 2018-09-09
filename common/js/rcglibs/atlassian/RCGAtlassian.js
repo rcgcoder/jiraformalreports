@@ -114,7 +114,10 @@ class RCGAtlassian{
 		var arrResults=[];
 		var nLast=0;
 		self.addStep("Calling for "+sTarget,function(){
-			self.pushCallback(function(response,xhr,sUrl,headers){
+			self.addStep("Calling to api "+sTarget,function(){
+				self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,undefined,callback,arrHeaders);
+			});	
+			self.addStep("Processing result of call "+sTarget,function(response,xhr,sUrl,headers){
 				var objResp;
 				if (typeof response==="string"){
 					if (response=="") return self.popCallback([[]]);
@@ -166,7 +169,7 @@ class RCGAtlassian{
 					self.parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,10);
 				}
 			});
-			self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,undefined,callback,arrHeaders);
+			self.continueTask();
 		});
 		if (isUndefined(bNotReturnAll)||(!bNotReturnAll)){
 			self.addStep("Returnig results for "+sTarget,function(){

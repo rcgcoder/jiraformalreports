@@ -57,13 +57,13 @@ class ZipWebApp{
 		});  
 		self.addStep("launching the engines and get atlassian base information.... "
 					,function(){
-/*
+
 			self.addStep("Launching Systemjs.... ",function(){
 				var sjs=self.getSystemjs();
 				sjs.loadEngine();
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 			);
-*/
+
 /*			self.addStep("Getting All Issues.... ",function(){
 				var jira=self.getJira();
 				jira.getAllIssues();
@@ -74,50 +74,50 @@ class ZipWebApp{
 			self.addStep("Getting All Project and issuetypes .... ",function(){
 				var jira=self.getJira();
 				jira.getProjectsAndMetaInfo();
-//			},0,1,undefined,undefined,undefined,"INNER",undefined
-			}
+			},0,1,undefined,undefined,undefined,"INNER",undefined
+//			}
 			);
 			self.addStep("Getting All field info.... ",function(){
 				var jira=self.getJira();
 				jira.getFieldsAndSchema();
-//			},0,1,undefined,undefined,undefined,"INNER",undefined
-			}
+			},0,1,undefined,undefined,undefined,"INNER",undefined
+//			}
 			);
 	
 			self.addStep("Getting All Epics  to do a list.... ",function(){
 				var jira=self.getJira();
 				jira.getAllEpics();
-//			},0,1,undefined,undefined,undefined,"INNER",undefined
-			}
+			},0,1,undefined,undefined,undefined,"INNER",undefined
+//			}
 			);
 			
 			self.addStep("Getting Current User Info.... ",function(){
 				var atl=self.getJira().manager;
 				atl.getUser();
-//			},0,1,undefined,undefined,undefined,"INNER",undefined
-			}
+			},0,1,undefined,undefined,undefined,"INNER",undefined
+//			}
 			);
 
 			
 			self.addStep("Getting All Users to do a list.... ",function(){
 				var jira=self.getJira();
 				jira.getAllUsers();
-//			},0,1,undefined,undefined,undefined,"INNER",undefined
-			}
+			},0,1,undefined,undefined,undefined,"INNER",undefined
+//			}
 			);
 			
 			self.addStep("Getting All Labels.... ",function(){
 				var jira=self.getJira();
 				jira.getAllLabels()
-//			},0,1,undefined,undefined,undefined,"INNER",undefined
-			}
+			},0,1,undefined,undefined,undefined,"INNER",undefined
+//			}
 			);
 
 			self.addStep("Getting All Filters.... ",function(){
 				var jira=self.getJira();
 				jira.getAllFilters();
-//			},0,1,undefined,undefined,undefined,"INNER",undefined
-			}
+			},0,1,undefined,undefined,undefined,"INNER",undefined
+//			}
 			);
 			/*
 			self.addStep("Getting All Epics.... ",function(){
@@ -170,8 +170,7 @@ class ZipWebApp{
 				"js/libs/grammar/grammar.js"
 			 ]; //test
 			self.loadRemoteFiles(arrFiles);
-		});
-		*/
+		});*/
 		
 		self.continueTask();
 	}

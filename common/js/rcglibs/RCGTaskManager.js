@@ -1173,8 +1173,8 @@ class RCGTaskManager{
 								fncParallelCall();
 							} else {
 								log("There is not more petitions");
+								self.continueTask();
 							}
-							self.continueTask();
 						});
 						self.continueTask();
 					});

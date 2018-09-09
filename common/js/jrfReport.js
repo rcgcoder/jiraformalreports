@@ -224,6 +224,11 @@ var jrfReport=class jrfReport {
 		self.addStep("Getting Confluence Report Model.... ",function(){
 	        var cfc=System.webapp.getConfluence();
 			//cfc.getAllPages();
+	        self.addStep("Getting Content from confluence",function(){
+		        var arrValues=self.config.selReportModel.selected;
+				var contentId=arrValues[0].key;
+				cfc.getContent(contentId);
+	        });
 			self.addStep("Manipulating Content",function(content){
 				log(content);
 				var jsonObj=JSON.parse(content);
@@ -233,9 +238,6 @@ var jrfReport=class jrfReport {
 				self.continueTask(); 
 //				var theHtml=$(sHtml);
 			});
-	        var arrValues=self.config.selReportModel.selected;
-			var contentId=arrValues[0].key;
-			cfc.getContent(contentId);
 		});
 		//Initialize Report Model.... with variables, etc
 		self.addStep("Initializing Model",function(){

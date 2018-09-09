@@ -608,7 +608,7 @@ var jrfReport=class jrfReport {
 			var nTotalStepsPlaned=0;
 			var nStepsPlaned=0;
 			self.addStep("Extracting pending keys of ("+self.rootIssues.length()+") root issues",function(){
-				debugger;
+				//debugger;
 				self.walkAsync(self.rootIssues,fncExtractPendingKeys);
 			});
 			self.addStep("Getting root base issues",function(){
@@ -1088,7 +1088,7 @@ var jrfReport=class jrfReport {
 			self.addStep("Creating child relations by issue custom formulas",function(){
 				self.walkAsync(issuesAdded,function(issueParent){
 					if (issueParent.existsRelationFilter("Child")){
-						debugger;
+						//debugger;
 						var childRelationFilter=issueParent.getRelationFilterById("Child");
 						self.addStep("Custom Relations for issue "+issueParent.getKey(),function(){
 							self.walkAsync(issuesAdded,function(issueChild){
@@ -1180,13 +1180,14 @@ var jrfReport=class jrfReport {
 				loggerFactory.getLogger().enabled=true;
 				log("Items to remove:"+removeCounter);
 				log("Items in hsRemoveKeys:"+hsRemoveKeys.length());
-				debugger;
+				//debugger;
+				/*
 				hsRemoveKeys.walk(function(issRemove,iDeep,issKey){
 					if (isUndefined(issRemove)||(issRemove=="")){
 						alert("Undefined Element");
-						debugger;
+						//debugger;
 					};
-				});
+				});*/
 				nRootsPrevious=self.childs.length();
 				self.walkAsync(hsRemoveKeys,function(issRemove){
 					var issue=issRemove.issue;
@@ -1221,7 +1222,7 @@ var jrfReport=class jrfReport {
 		
 		
 		self.addStep("Processing Directives",function(){
-			debugger;
+			//debugger;
 			var hsVersions=newHashMap();
 			var hsAccumulators=newHashMap();
 			log("Analizing directives");

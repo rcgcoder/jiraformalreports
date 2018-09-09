@@ -365,14 +365,14 @@ class RCGJira{
 		var vCache=self.getFromCache(sCacheKey);
 		if (vCache!="") return self.continueTask([vCache]);
 		self.addStep("Getting All Issues from JQL", function(){
-			debugger;
+			//debugger;
 			self.getFullList("/rest/api/2/search?jql="+jql+"&expand=renderedFields,changelog"
 							,"issues",undefined,undefined,cbBlock
 							,undefined,bNotReturnAll);
 		});
 		if (isUndefined(bNotReturnAll)||(!bNotReturnAll)){
 			self.addStep("Returning all Issues from JQL", function(response,xhr,sUrl,headers){
-				debugger;
+				//debugger;
 				self.addToCache(sCacheKey,response);
 				self.continueTask([response]);
 			});
@@ -380,7 +380,7 @@ class RCGJira{
 		self.continueTask();
 	}
 	processJQLIssues(jql,fncProcessIssue,returnVariable,cbEndProcess,cbDownloadBlock,cbProcessBlock,bNotReturnAll){
-		debugger;
+		//debugger;
 		var self=this;
 		var jqlAux="";
 		if (isDefined(jql)){
@@ -391,7 +391,7 @@ class RCGJira{
 			if (isDefined(cbDownloadBlock)){
 				self.addStep("Processing Download Issues block as string: "
 								+jsonBlkIssues.length +" of JQL ["+jqlAux+"]",function(){
-					debugger;
+					//debugger;
 					cbDownloadBlock(jsonBlkIssues);
 					self.continueTask();
 				});
@@ -407,13 +407,13 @@ class RCGJira{
 				log("Process downloaded block of JQL ["+jqlAux+"]");
 				if (isDefined(cbProcessBlock)){
 					self.addStep("Processing Issues block: "+blkIssues.length +" of JQL ["+jqlAux+"]",function(){
-						debugger;
+						//debugger;
 						cbProcessBlock(blkIssues);
 						self.continueTask();
 					});
 				}
 				if (isDefined(fncProcessIssue)){
-					debugger;
+					//debugger;
 					var auxHashMap=newHashMap();
 					blkIssues.forEach(function(issue){
 						auxHashMap.push(issue);

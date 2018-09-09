@@ -73,7 +73,7 @@ class RCGAtlassian{
 				self.apiCallOauth("/sessionToken");
 			});
 			self.addStep("Checking for session access token",function(response,xhr,sUrl,headers) {
-				debugger;
+				//debugger;
 				if  ((response==null)||
 					(typeof response==="undefined")||
 					(response.isToken==false)){
@@ -185,7 +185,7 @@ class RCGAtlassian{
 							log("Retrieved "+resultName+":"+arrResults.length);
 						}
 					}
-					debugger;
+					//debugger;
 					self.parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,10);
 				}
 			});
@@ -272,7 +272,7 @@ class RCGAtlassian{
 				self.apiCallBase(sTargetUrl,auxCallType,data,sResponseType,auxHeaders,appInfo.tokenAccess,oSecurity,aditionalOptions);
 			});
 			self.addStep("Processing result and retry if necesary of "+sTargetUrl,function(response,xhr,sUrl,headers){
-				debugger;
+				//debugger;
 				log("Api Call Response of "+(newSubPath==""?"Jira":appInfo.subPath) 
 						+ " final url:"+sTargetUrl);
 				if (typeof xhr==="undefined"){

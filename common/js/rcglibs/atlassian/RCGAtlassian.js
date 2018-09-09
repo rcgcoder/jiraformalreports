@@ -73,6 +73,7 @@ class RCGAtlassian{
 				self.apiCallOauth("/sessionToken");
 			});
 			self.addStep("Checking for session access token",function(response,xhr,sUrl,headers) {
+				debugger;
 				if  ((response==null)||
 					(typeof response==="undefined")||
 					(response.isToken==false)){

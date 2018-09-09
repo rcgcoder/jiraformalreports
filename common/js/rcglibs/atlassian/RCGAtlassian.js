@@ -79,9 +79,10 @@ class RCGAtlassian{
 					setTimeout(checkIfToken,1000);
 				} else {
 					log("Oauth Access token:"+response.access);
-					self.popCallback([response.access,response.secret]);
+					self.continueTask([response.access,response.secret]);
 				}
 			});
+			self.continueTask();
 		});
 		win = window.open(response.url, '_blank');
 		log("Tab Opened");

@@ -122,7 +122,8 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 			}
 			sWhere=self.adjustSyntax(sWhere).saToString().trim();
 			sWhere=`'';
-				var issue={{issue}};
+				var `+innerVarName+`={{`+innerVarName+`}};
+				var innerItem={{`+innerVarName+`}};
 				result=` +sWhere;
 			
 			elemsInForEach.walk(function(eachElem,deep,key){

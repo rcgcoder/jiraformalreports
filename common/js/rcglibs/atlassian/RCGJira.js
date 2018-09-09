@@ -151,7 +151,10 @@ class RCGJira{
 	}
 	getProjectsAndMetaInfo(){
 		var self=this;
-		self.pushCallback(function(sResponse,xhr,sUrl,headers){
+		self.addStep("Calling to API to get Project and Meta Info",function(){
+			self.apiCall("/rest/api/latest/issue/createmeta?expand=projects.issuetypes.fields");
+		})
+		self.addStep("Process Project and Meta Info",function(sResponse,xhr,sUrl,headers){
 			//log("getAllProjects:"+response);
 			if (sResponse!=""){
 				var response=JSON.parse(sResponse);
@@ -164,9 +167,9 @@ class RCGJira{
 					}
 				}
 			}
-			self.popCallback([self.projects]);
+			self.continueTask([self.projects]);
 		});
-		self.apiCall("/rest/api/latest/issue/createmeta?expand=projects.issuetypes.fields");
+		self.continueTask();
 	}
 	getFieldsAndSchema(){
 		var self=this;

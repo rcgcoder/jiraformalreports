@@ -101,7 +101,8 @@ var jrfReport=class jrfReport {
 		var initialItemNumber=theHashMap.length();
 		var stepCounter=0;
 		var nItemsTotal=theHashMap.length();
-		var asyncNumber=hashmapFactory.stackAsyncCalls.length();
+		var asyncNumber;
+		if (hashmapFactory.stackAsyncCalls!="") asyncNumber=hashmapFactory.stackAsyncCalls.length();
 		var tm=self.getTaskManager();
 		var fncUpdateStatus=function(){
 			tm.changeStatus();
@@ -113,7 +114,7 @@ var jrfReport=class jrfReport {
 				+" total:"+theHashMap.length() 
 				+" started with:"+initialItemNumber
 				+" Async Deep Ini:"+asyncNumber
-				+" Async Deep Act:"+hashmapFactory.stackAsyncCalls.length()
+				+" Async Deep Act:"+(hashmapFactory.stackAsyncCalls===""?"":hashmapFactory.stackAsyncCalls.length())
 				);
 		var auxFncEnd=endFunction;
 		if (isUndefined(endFunction)){
@@ -131,7 +132,7 @@ var jrfReport=class jrfReport {
 						+" total:"+theHashMap.length() 
 						+" started with:"+initialItemNumber
 						+" Async Deep Ini:"+asyncNumber
-						+" Async Deep Act:"+hashmapFactory.stackAsyncCalls.length()
+						+" Async Deep Act:"+(hashmapFactory.stackAsyncCalls===""?"":hashmapFactory.stackAsyncCalls.length())
 						);
 			auxFncEnd(objStep);
 		});

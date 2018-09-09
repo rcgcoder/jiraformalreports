@@ -118,6 +118,8 @@ var jrfReport=class jrfReport {
 			if (stepCounter<theHashMap.length()){
 				alert(stepDesc+" Error....calling end of walk before process of all items. Processed:"+stepCounter+" total:"+theHashMap.length() +" started with:"+initialItemNumber);
 			}
+			logError(stepDesc + " calling end of walk before process of all items. Processed:"
+						+stepCounter+" total:"+theHashMap.length() +" started with:"+initialItemNumber);
 			auxFncEnd(objStep);
 		});
 		var fncItem=self.createManagedCallback(function(step){

@@ -365,12 +365,14 @@ class RCGJira{
 		var vCache=self.getFromCache(sCacheKey);
 		if (vCache!="") return self.continueTask([vCache]);
 		self.addStep("Getting All Issues from JQL", function(){
+			debugger;
 			self.getFullList("/rest/api/2/search?jql="+jql+"&expand=renderedFields,changelog"
 							,"issues",undefined,undefined,cbBlock
 							,undefined,bNotReturnAll);
 		});
 		if (isUndefined(bNotReturnAll)||(!bNotReturnAll)){
 			self.addStep("Returning all Issues from JQL", function(response,xhr,sUrl,headers){
+				debugger;
 				self.addToCache(sCacheKey,response);
 				self.continueTask([response]);
 			});

@@ -1168,7 +1168,7 @@ var jrfReport=class jrfReport {
 				loggerFactory.getLogger().enabled=true;
 				debugger;
 				hsRemoveKeys.walk(function(issRemove,iDeep,issKey){
-					if (isUndefined(issRemove)){
+					if (isUndefined(issRemove)||(issRemove=="")){
 						alert("Undefined Element");
 						debugger;
 					};

@@ -1017,7 +1017,7 @@ var jrfReport=class jrfReport {
 									relatedChilds.add(relatedIssueKey,relatedIssueKey);
 								}
 							}); 
-							self.walkAsync(relatedChilds,function(issueChildStep){
+							relatedChilds.walk(function(issueChildStep){
 													var issueChild=issuesAdded.getValue(issueChildStep/*.actualNode.key*/);
 													if (!isString(issueChild)){
 														if (issueParent.getKey()==issueChild.getKey()){
@@ -1036,6 +1036,7 @@ var jrfReport=class jrfReport {
 														logError("Related issue "+auxKey+" -> "+ issueChildStep +" have not been downloaded or is excluded");
 													}
 												});
+							self.continueTask();
 						//},0,1,undefined,undefined,undefined,"INNER",undefined
 						}
 						);

@@ -52,7 +52,7 @@ class RCGAtlassian{
 		xhr.onerror=self.loadError;
 		xhr.onload = self.createManagedCallback(function(e) {
 		  if (xhr.status == 200) {
-			  self.popCallback([xhr.response,xhr,sTargetUrl,arrHeaders]);
+			  self.continueTask([xhr.response,xhr,sTargetUrl,arrHeaders]);
 		  } else {
 			  self.loadError({target:{src:sUrl}});			  
 		  }
@@ -69,6 +69,9 @@ class RCGAtlassian{
 		var win;
 		
 		var checkIfToken=self.createManagedCallback(function(){
+			self.addStep("Authorization call",function(){
+				self.apiCallOauth("/sessionToken");
+			});
 			self.addStep("Checking for session access token",function(response,xhr,sUrl,headers) {
 				if  ((response==null)||
 					(typeof response==="undefined")||
@@ -79,7 +82,6 @@ class RCGAtlassian{
 					self.popCallback([response.access,response.secret]);
 				}
 			});
-			self.apiCallOauth("/sessionToken");
 		});
 		win = window.open(response.url, '_blank');
 		log("Tab Opened");
@@ -105,7 +107,7 @@ class RCGAtlassian{
 			appInfo.tokenNeeded=true;
 			appInfo.tokenAccess=accessToken;
 			appInfo.tokenTime=secret;
-			self.popCallback();
+			self.continueTask();
 		});
 		self.continueTask();
 	}

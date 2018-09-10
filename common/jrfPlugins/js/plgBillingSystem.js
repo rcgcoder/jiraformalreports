@@ -89,7 +89,6 @@ var getBillingFieldList=function(){
 	return hsProps;
 }
 var getBillingDatesList=function(config,atDatetime){
-	//debugger;
 	var auxParams=newHashMap();
 	auxParams.add("config",config);
 	var fixedDateTime=atDatetime
@@ -116,6 +115,7 @@ var getBillingDatesList=function(config,atDatetime){
 }
 
 var getBillingLifeDates=function(otherParams,theDatetime,errorsInfo){
+	debugger;
 	var sErrores=errorsInfo;
 	if (isUndefined(sErrores)){
 		sErrores=[];

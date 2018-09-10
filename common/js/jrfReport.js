@@ -308,11 +308,13 @@ var jrfReport=class jrfReport {
 		      if (isDefined(self.config['dates'][dateParam])){
 				  theModel.variables.initVar(dateParam);
 				  theModel.variables.initVar(dateParam+"_text");
+				  theModel.variables.initVar(dateParam+"_timestamp");
 				  var dateValue=self.config['dates'][dateParam];
 				  if (dateValue!=""){
 					  theModel.variables.pushVar(dateParam+"_text",dateValue);				
 					  dateValue=toDateNormalDDMMYYYYHHMMSS(dateValue);
 					  theModel.variables.pushVar(dateParam,dateValue);				
+					  theModel.variables.pushVar(dateParam+"_timestamp",dateValue.getTime());				
 				  } else {
 					  theModel.variables.pushVar(dateParam+"_text","");				
 					  theModel.variables.pushVar(dateParam,"");				

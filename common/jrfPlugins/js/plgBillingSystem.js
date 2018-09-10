@@ -143,10 +143,10 @@ var getBillingLifeDates=function(otherParams,theDatetime,errorsInfo){
 	hsHistory.walk(function(hstAux){
 		tsAux1=hstAux.value[0].getTime();
 		tsAux2=hstAux.value[1].getTime();
-		if ((tsAux2<atTimestamp) &&
-		   ((tsWorksInit==="")?true:tsWorksInit<tsAux2)){
+//		if ((tsAux2<atTimestamp) &&
+//		   ((tsWorksInit==="")?true:tsWorksInit<tsAux2)){
 			arrHistory.push([tsAux1,tsAux2]);
-		}
+//		}
 	});
 
 	arrHistory.sort(function(a,b){
@@ -936,7 +936,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     }
     getBillingCacheKeyPostText(atDatetime,otherParams){
 		var configName=otherParams.getValue("config");
-		var hourCost="";
+/*		var hourCost="";
 		var fromDatetime="";
 		var toDateTime="";
 		var minFacturableFase="";
@@ -948,7 +948,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 			fromDatetime=otherParams.getValue("fromDatetime");
 			minFacturableFase=otherParams.getValue("minFacturableFase");
 		}
-	/*	if (fromDatetime!=""){
+*/	/*	if (fromDatetime!=""){
 			if ((typeof fromDatetime==="object")&&(fromDatetime.constructor.name=="Date")){
 				fromDatetime=fromDatetime.getTime()+"";
 			} else {
@@ -956,8 +956,8 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 			}
 		}
 	*/	//var sKey=hourCost+"-"+minFacturableFase+"-"+fromDatetime+"-"+toDateTime;
-		var sKey=configName+"-"+fromDatetime+"-"+toDateTime+"-"+hourCost+"-"+minFacturableFase;
-//		var sKey=configName;
+//		var sKey=configName+"-"+fromDatetime+"-"+toDateTime+"-"+hourCost+"-"+minFacturableFase;
+		var sKey=configName;
 		return sKey;
     }
     

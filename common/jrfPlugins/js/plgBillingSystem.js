@@ -115,7 +115,7 @@ var getBillingDatesList=function(config,atDatetime){
 }
 
 var getBillingLifeDates=function(otherParams,theDatetime,errorsInfo){
-	debugger;
+	//debugger;
 	var sErrores=errorsInfo;
 	if (isUndefined(sErrores)){
 		sErrores=[];
@@ -530,7 +530,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     }
     getBillingLife(otherParams,theDatetime){
     	var self=this;
-    	debugger;
+    	//debugger;
     	if (self.getKey()=="BENT-411") debugger;
 		var sComentarios=[];
 		var sErrores=[];
@@ -545,7 +545,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 
 		
 		
-		debugger;
+		//debugger;
 		var arrHistory=getBillingLifeDates(otherParams,theDatetime,sErrores);
 		var dtAux;
 		//debugger;

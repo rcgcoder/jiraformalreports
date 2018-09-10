@@ -530,6 +530,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     }
     getBillingLife(otherParams,theDatetime){
     	var self=this;
+    	debugger;
     	if (self.getKey()=="BENT-411") debugger;
 		var sComentarios=[];
 		var sErrores=[];

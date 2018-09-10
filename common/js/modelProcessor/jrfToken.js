@@ -28,7 +28,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.initVarsReuse=obj.getAttrVal("initVarReuse",reportElem,false);
 		obj.pushVars=obj.getAttrVal("pushVar",reportElem,false);
 		obj.setVars=obj.getAttrVal("setVar",reportElem,false);
-		obj.inFormat=obj.getAttrVal("ifEmpty");
+		obj.ifEmpty=obj.getAttrVal("ifEmpty");
 		obj.inFormat=obj.getAttrVal("informat");
 		obj.outFormat=obj.getAttrVal("format");
 		obj.ifCondition=obj.getAttrVal("if",reportElem,false);
@@ -586,7 +586,8 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		var self=this;
 		if (self.ifEmpty!=""){
 			if (isString(sValAux)||isArray(sValAux)){
-				if (sValAux.saToString().trim()==""){
+				var sValAux=sValAux.saToString().trim();
+				if ((sValAux=="")||(sValAux=="empty")){
 					sValAux=self.ifEmpty;
 				}
 			}

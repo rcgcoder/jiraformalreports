@@ -936,7 +936,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     }
     getBillingCacheKeyPostText(atDatetime,otherParams){
 		var configName=otherParams.getValue("config");
-/*		var hourCost="";
+		var hourCost="";
 		var fromDatetime="";
 		var toDateTime="";
 		var minFacturableFase="";
@@ -944,20 +944,20 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 			toDateTime=atDatetime.getTime()+"";
 		}
 		if (isDefined(otherParams)){
-//			hourCost=parseFloat(otherParams.getValue("hourCost"));
+			hourCost=parseFloat(otherParams.getValue("hourCost"));
 			fromDatetime=otherParams.getValue("fromDatetime");
-//			minFacturableFase=otherParams.getValue("minFacturableFase");
+			minFacturableFase=otherParams.getValue("minFacturableFase");
 		}
-		if (fromDatetime!=""){
+	/*	if (fromDatetime!=""){
 			if ((typeof fromDatetime==="object")&&(fromDatetime.constructor.name=="Date")){
 				fromDatetime=fromDatetime.getTime()+"";
 			} else {
 				fromDatetime=toDateNormalDDMMYYYYHHMMSS(fromDatetime).getTime()+"";
 			}
 		}
-		//var sKey=hourCost+"-"+minFacturableFase+"-"+fromDatetime+"-"+toDateTime;
-		var sKey=configName+"-"+fromDatetime+"-"+toDateTime;
-*/		var sKey=configName;
+	*/	//var sKey=hourCost+"-"+minFacturableFase+"-"+fromDatetime+"-"+toDateTime;
+		var sKey=configName+"-"+fromDatetime+"-"+toDateTime+"-"+hourCost+"-"+minFacturableFase;
+//		var sKey=configName;
 		return sKey;
     }
     

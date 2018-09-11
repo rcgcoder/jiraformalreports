@@ -133,65 +133,42 @@ var getBillingLifeDates=function(otherParams,theDatetime,errorsInfo){
 	var dtWorksInit=billingParams.getWorksInitDate(configName);
 	var arrHistory=[];
 	var tsWorksInit="";
+	var hsDateControl=newHashMap();
+	var fncAddDate=function(tsDate){
+		if (!hsDateControl.exists(tsDate)){
+			hsDateControl.add(tsDate+"",tsDate);
+		}
+	} 
 	if (dtWorksInit!=""){
 		tsWorksInit=dtWorksInit.getTime();
-		arrHistory.push(["",tsWorksInit]);
+		fncAddDate(tsWorksInit);
+//		arrHistory.push(["",tsWorksInit]);
 	}
 	var bPush;
 	var tsAux1;
 	var tsAux2;
+	var tsReportInit=objModel.variables.getVar("ReportInitDate_timestamp");
+	var tsReportEnd=objModel.variables.getVar("ReportEndDate_timestamp");
+	fncAddDate(tsReportInit);
+	fncAddDate(tsReportEnd);
 	hsHistory.walk(function(hstAux){
 		tsAux1=hstAux.value[0].getTime();
 		tsAux2=hstAux.value[1].getTime();
-//		if ((tsAux2<atTimestamp) &&
-//		   ((tsWorksInit==="")?true:tsWorksInit<tsAux2)){
-			arrHistory.push([tsAux1,tsAux2]);
-//		}
+		fncAddDate(tsAux1);
+		fncAddDate(tsAux2);
 	});
-
-	arrHistory.sort(function(a,b){
-		if (a[1]>b[1]) return 1;
-		if (a[1]<b[1]) return -1;
+	var arrDatesAux=[];
+	hsDateControl.walk(function(tsDate,iDeep,sKey){
+		arrDatesAux.push(tsDate);
+	});
+	arrDatesAux.sort(function(ts1,ts2){
+		if (ts1<ts2) return -1;
+		if (ts1>ts2) return 1;
 		return 0;
 	});
-	
-	if (arrHistory.length>0){ // pushing the atDateTime last period....
-		tsAux1=arrHistory[arrHistory.length-1][1];
-		arrHistory.push([tsAux1,atTimestamp]);
-	}
-	arrHistory.push([atTimestamp,""]); // adding a open period starts with atDateTime....
-	
-	var arrHistAux=arrHistory;
-	var dtIni=0;
-	var dtEnd=0;
-	var dtAnt="";
-	arrHistory=[];
-	var interval;
-	for (var i=0;i<arrHistAux.length;i++){
-		interval=arrHistAux[i];
-		dtIni=interval[0];
-		dtEnd=interval[1];
-		if (dtIni!=""){
-			if (dtAnt===""){
-				arrHistory.push(dtIni);
-			}else if ((dtAnt!="")&&(dtAnt==dtIni)){
-				// the date is already added (dtEnd....)
-				//arrHistory.push(dtIni);
-			} else {
-				var dateIni=formatDate(new Date(dtIni),4);
-				var dateAnt=formatDate(new Date(dtAnt),4);
-				sErrores.saAppend("\nERROR! La configuración de fechas no es correcta. dtIni:"+dateIni+" debería ser igual a dtAnt:"+dateAnt+" para mantener la coherencia de informes. se añaden ambas fechas");
-				if (dtIni>dtAnt){
-					arrHistory.push(dtIni);
-				} else {
-					sErrores.saAppend("\nERROR! dtIni:"+dateIni+" es menor que dtAnt:"+dateAnt+". No se añade dtIni ("+dateIni+")");
-				}
-			}
-		}
-		if (dtEnd!=""){
-			arrHistory.push(dtEnd);
-			dtAnt=dtEnd;
-		}
+	arrHistory.push(["",arrDatesAux[0]]);
+	for (var i=1;i<arrDatesAux.length;i++){
+		arrHistory.push([arrDatesAux[i-1],arrDatesAux[i]]);
 	}
 	return arrHistory;
 }

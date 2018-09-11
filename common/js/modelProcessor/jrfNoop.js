@@ -5,7 +5,7 @@ var jrfNoop=class jrfNoop extends jrfToken{//this kind of definition allows to h
 		if ((self.tag.getTagText().toUpperCase().indexOf("SUM")>=0)
 			||
 			(self.tag.getTagText().toUpperCase().indexOf("FORMULA")>=0)){
-			logError("The tag "+self.getTagText() +" is incorrectly parsed.... processed as NOOP");
+			logError("The tag "+self.tag.getTagText() +" is incorrectly parsed.... processed as NOOP");
 		}
 			
 //		if (self.postProcess=="") self.processVarsAtEnd=true;

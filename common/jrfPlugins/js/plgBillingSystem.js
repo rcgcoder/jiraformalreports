@@ -89,7 +89,7 @@ var getBillingFieldList=function(){
 	return hsProps;
 }
 var getBillingDatesList=function(config,atDatetime,model){
-	var auxParams=newHashMap();
+	var auxParams=newHashMap(); 
 	auxParams.add("config",config);
 	auxParams.add("model",model);
 	var fixedDateTime=atDatetime

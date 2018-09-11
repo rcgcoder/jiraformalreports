@@ -183,15 +183,15 @@ function isBoolean(obj){
 	return ( (typeof obj === "boolean") && (obj !== null) && isDefined(obj) );
 }
 
-function isInArray(theArray,theKey,theFieldOrFunction){
+function isInArray(theArray,theKey,theFieldOrFunctionName){
 	var bExists=false;
 	for (var k=0;(!bExists)&&(k<theArray.length);k++){
 		var it=theArray[k];
-		if (isDefined(theFieldOrFunction)){
-			if (it[theFieldOrFunction])
-			if (isString(it[theFieldOrFunction]) && (it[theFieldOrFunction]==theKey)){
+		if (isDefined(theFieldOrFunctionName)){
+			if (it[theFieldOrFunctionName])
+			if (isString(it[theFieldOrFunctionName]) && (it[theFieldOrFunctionName]==theKey)){
 				return true;
-			} else if (isMethod(it[theFieldOrFunction]) && (it[theFieldOrFunction]()==theKey)){ 
+			} else if (isMethod(it[theFieldOrFunctionName]) && (it[theFieldOrFunctionName]()==theKey)){ 
 				return true;
 			}
 		} else {

@@ -2,10 +2,10 @@ var jrfNoop=class jrfNoop extends jrfToken{//this kind of definition allows to h
 	loadOwnProperties(){
 //		debugger;
 		var self=this;
-		if ((self.tag.attr_TagText.toUpperCase().indexOf("SUM")>=0)
+		if ((self.tag.getTagText().toUpperCase().indexOf("SUM")>=0)
 			||
-			(self.tag.attr_TagText.toUpperCase().indexOf("FORMULA")>=0)){
-			logError("The tag "+self.tag.attr_TagText() +" is incorrectly parsed.... processed as NOOP");
+			(self.tag.getTagText().toUpperCase().indexOf("FORMULA")>=0)){
+			logError("The tag "+self.getTagText() +" is incorrectly parsed.... processed as NOOP");
 		}
 			
 //		if (self.postProcess=="") self.processVarsAtEnd=true;

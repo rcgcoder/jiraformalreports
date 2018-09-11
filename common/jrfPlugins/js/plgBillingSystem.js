@@ -898,18 +898,20 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 	   		var tsEstimadoActual=snapshot.source.timeestimate+avance;
 	   		var impEstimadoActual=((tsEstimadoActual-tsFacturacion)*(snapshot.source.hourCost/3600))
 	   								+(impFacturacion);
-	   		
-
-	   		if (avance<tsFacturacion){
-	   			avance=tsFacturacion;
-	   			avanceImporte=impFacturacion;
+	   		var bWithComprobations=objModel.variables.getVar("withComprobations");
+	   		if (isUndefined(bWithComprobations)
+	   				||(bWithComprobations==false)
+	   				||(bWithComprobations==="") 
+	   				|| (bWithComprobations=="empty")){
+		   		if (avance<tsFacturacion){
+		   			avance=tsFacturacion;
+		   			avanceImporte=impFacturacion;
+		   		}
+		   		if (tsEstimadoActual<avance){
+		   			tsEstimadoActual=avance;
+		   			impEstimadoActual=avanceImporte;
+		   		}
 	   		}
-	   		if (tsEstimadoActual<avance){
-	   			tsEstimadoActual=avance;
-	   			impEstimadoActual=avanceImporte;
-	   		}
-	   		
-	   		
 	   		snapshot.calculos.inTimespents.totalEnFacturas=tsFacturacion;
 	   		snapshot.calculos.totalEnFacturas=impFacturacion;
 	   		snapshot.calculos.inTimespents.avance=avance;

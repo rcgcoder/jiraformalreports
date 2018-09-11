@@ -167,11 +167,11 @@ var getBillingLifeDates=function(otherParams,theDatetime,errorsInfo){
 		if (ts1>ts2) return 1;
 		return 0;
 	});
-	arrHistory.push(["",arrDatesAux[0]]);
+/*	arrHistory.push(["",arrDatesAux[0]]);
 	for (var i=1;i<arrDatesAux.length;i++){
 		arrHistory.push([arrDatesAux[i-1],arrDatesAux[i]]);
 	}
-	return arrHistory;
+*/	return arrDatesAux;
 }
 
 var plgBillingParams=class plgBillingParams{

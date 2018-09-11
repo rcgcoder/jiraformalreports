@@ -266,6 +266,7 @@ var jrfReport=class jrfReport {
 			tm.setUpdateStatusDelay(2000);
 			var theModel=new jrfModel(self);
 			self.objModel=theModel;
+			theModel.variables.setVar("model",theModel);
 			if (isDefined(self.config.listDefaultVariables)){
 				self.config.listDefaultVariables.forEach(function(defaultVar){
 					if (isUndefined(defaultVar[2])||

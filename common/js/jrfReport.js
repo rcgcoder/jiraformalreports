@@ -60,7 +60,7 @@ var jrfReport=class jrfReport {
 		return oIssue;
 	}
 	cleanModel(sContent){
-		debugger;
+		//debugger;
 		sContent=replaceAll(sContent,"&lt;jRf","&lt;JRF",true);
 		sContent=replaceAll(sContent,"jrF&gt;","JRF&gt;",true);
 		sContent=replaceAll(sContent,"&lt;jRf_formula","&lt;JRF_FORMULA",true);
@@ -109,14 +109,14 @@ var jrfReport=class jrfReport {
 			tm.forceChangeStatus();
 		}
 		var stepDesc=tm.getRunningTask().description;
-		logError(stepDesc + "START calling end of walk before process of all items. "
+/*		logError(stepDesc + "START calling end of walk before process of all items. "
 				+" Processed:" +stepCounter
 				+" total:"+theHashMap.length() 
 				+" started with:"+initialItemNumber
 				+" Async Deep Ini:"+asyncNumber
 				+" Async Deep Act:"+(hashmapFactory.stackAsyncCalls===""?"":hashmapFactory.stackAsyncCalls.length())
 				);
-		var auxFncEnd=endFunction;
+*/		var auxFncEnd=endFunction;
 		if (isUndefined(endFunction)){
 			auxFncEnd=function(objStep){
 				self.continueTask();
@@ -128,14 +128,14 @@ var jrfReport=class jrfReport {
 				alert(stepDesc+" ERROR....calling end of walk before process of all items. Processed:"+stepCounter+" total:"+theHashMap.length() +" started with:"+initialItemNumber);
 				debugger;
 			}
-			logError(stepDesc + " END calling end of walk before process of all items. "
+/*			logError(stepDesc + " END calling end of walk before process of all items. "
 						+" Processed:" +stepCounter
 						+" total:"+theHashMap.length() 
 						+" started with:"+initialItemNumber
 						+" Async Deep Ini:"+asyncNumber
 						+" Async Deep Act:"+(hashmapFactory.stackAsyncCalls===""?"":hashmapFactory.stackAsyncCalls.length())
 						);
-			auxFncEnd(objStep);
+*/			auxFncEnd(objStep);
 		});
 		var fncItem=self.createManagedCallback(function(step){
 //			logError("Calling item in walk Async "+stepCounter+"/"+theHashMap.length());

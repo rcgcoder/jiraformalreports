@@ -521,7 +521,12 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		var configName=otherParams.getValue("config");
 
 		
-		
+		if (!otherParams.exists("model")){
+			otherParams.add("model",self.getReport().objModel);
+		}
+		if (!otherParams.exists("report")){
+			otherParams.add("report",self.getReport().objModel);
+		}
 		//debugger;
 		var arrHistory=getBillingLifeDates(otherParams,theDatetime,sErrores);
 		var dtAux;

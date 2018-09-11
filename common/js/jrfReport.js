@@ -708,7 +708,7 @@ var jrfReport=class jrfReport {
 						fncRetrieveGroup(group);
 						bSomethingRetrieving=true;
 					}
-					console.log("Calls"+nCallsEnded+"/"+nCallsStarted
+					log("Calls"+nCallsEnded+"/"+nCallsStarted
 							+" Procesed "+ nProcessedIssues +"."
 							+" Tot:"+(nDuplicatedIssues+self.allIssues.list.length() )+" Dups:"+nDuplicatedIssues+" + All Stored:"+self.allIssues.list.length() +")" 
 							+" in " +nStepsPlaned +"/"+ nTotalStepsPlaned +" steps."
@@ -716,6 +716,7 @@ var jrfReport=class jrfReport {
 							+" Epics:"+ nRetrievedEpics + "/"+nPendingEpics
 							+" Issues left:"+ arrKeyGroups[0].length
 							+" Epics left:" + arrEpicGroups[0].length );
+					
 					self.continueTask();
 				});				
 

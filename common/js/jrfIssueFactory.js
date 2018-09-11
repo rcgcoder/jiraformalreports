@@ -264,17 +264,23 @@ function newIssueFactory(report){
 		}
 		if (bDefined){
 			if (typeof fieldValue==="object"){
+				var auxValue=fieldValue;
 				if (bGetAttribute){
-					var auxValue=fieldValue;
-					for (var i=1;i<arrFieldNames.length;i++){
-						auxValue=auxValue[arrFieldNames[i].trim()];
+					var bFoundAllPath=true;
+					for (var i=1;(bFoundAllPath && (i<arrFieldNames.length));i++){
+						var fieldName=arrFieldNames[i].trim();
+						if (isDefined(auxValue[fieldName])){
+							auxValue=auxValue[fieldName];
+						} else {
+							bFoundAllPath=false;
+						}
 					}
-					return auxValue;
+					if (bFoundAllPath) return auxValue;
 				}
-				if (isDefined(fieldValue.value)) return fieldValue.value;
-				if (isDefined(fieldValue.name)) return fieldValue.name;
-				if (isDefined(fieldValue.key)) return fieldValue.key;
-				if (isDefined(fieldValue.id)) return fieldValue.id;
+				if (isDefined(auxValue.value)) return auxValue.value;
+				if (isDefined(auxValue.name)) return auxValue.name;
+				if (isDefined(auxValue.key)) return auxValue.key;
+				if (isDefined(auxValue.id)) return auxValue.id;
 			}
 			return fieldValue;
 		}

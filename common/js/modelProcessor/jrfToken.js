@@ -223,7 +223,6 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			for (var i=0;i<arrVars.length;i++){
 				var vActualVar=arrVars[i];
 				
-				vActualVar=replaceAll(vActualVar,",",";");
 				vActualVar=replaceAll(vActualVar,"==","equalThan");
 				vActualVar=replaceAll(vActualVar,">=","greaterOrEqualThan");
 				vActualVar=replaceAll(vActualVar,"<=","lessOrEqualThan");
@@ -261,7 +260,6 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			var arrVars=sVarsReuse.split(",");
 			for (var i=0;i<arrVars.length;i++){
 				var vActualVar=arrVars[i];
-				vActualVar=replaceAll(vActualVar,",",";");
 				vActualVar=replaceAll(vActualVar,">=","greaterOrEqualThan");
 				vActualVar=replaceAll(vActualVar,"<=","lessOrEqualThan");
 				vActualVar=replaceAll(vActualVar,"!=","notEqualThan");

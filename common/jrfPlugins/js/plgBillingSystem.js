@@ -327,17 +327,22 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 			}
 		}
 		var timeoriginalestimate=self.fieldValue("timeoriginalestimate",false,atDatetime);
-		timeoriginalestimate=self.getReport().adjustAccumItem("Childs",timeoriginalestimate,self,"timeoriginalestimate");
 
 		//dynObj.functions.add("fieldAccumChilds",function(theFieldName,datetime,inOtherParams,notAdjust,bSetProperty,fncItemCustomCalc){
 		if (self.getKey()=="BENT-411"){
 			debugger;
 		}
 		var timeestimate=self.fieldAccumChilds("timeestimate",atDatetime);
-		timeestimate=self.getReport().adjustAccumItem("Childs",timeestimate,self,"timeestimate");
+
 		
-		
-		var timespent=self.fieldAccumChilds("timespent",atDatetime);
+		var timespent=0;
+		if (self.fieldValue("project.key")!="OT"){
+			timespent=self.fieldAccumChilds("timespent",atDatetime);
+			timeoriginalestimate=self.getReport().adjustAccumItem("Childs",timeoriginalestimate,self,"timeoriginalestimate");
+			timeestimate=self.getReport().adjustAccumItem("Childs",timeestimate,self,"timeestimate");
+		} else {
+			timespent=self.fieldValue("timespent",atDatetime);
+		}
 		if (timeoriginalestimate==="") timeoriginalestimate=0; else timeoriginalestimate=parseFloat(timeoriginalestimate);
 		if (timeestimate==="") timeestimate=0; else timeestimate=parseFloat(timeestimate);
 		if (timespent==="") timespent=0; else timespent=parseFloat(timespent);

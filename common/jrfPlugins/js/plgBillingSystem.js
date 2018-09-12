@@ -336,7 +336,6 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 
 		
 		var timespent=0;
-		debugger;
 		if (self.fieldValue("project.key")!="OT"){
 			timespent=self.fieldAccumChilds("timespent",atDatetime);
 			timeoriginalestimate=self.getReport().adjustAccumItem("Childs",timeoriginalestimate,self,"timeoriginalestimate");

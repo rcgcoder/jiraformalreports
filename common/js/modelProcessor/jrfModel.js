@@ -270,7 +270,9 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		var sNewPostText;
 		
 		while(auxIndex<arrJRFs.length){
-
+			if (sTagRest.indexOf("apt=7")){
+				debugger;
+			}
 			auxTag=self.tagFactory.new();
 			parentTag.addChild(auxTag);
 			

@@ -222,10 +222,17 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			var arrVars=sVarsInit.split(",");
 			for (var i=0;i<arrVars.length;i++){
 				var vActualVar=arrVars[i];
+				
 				vActualVar=replaceAll(vActualVar,"==","equalThan");
+				vActualVar=replaceAll(vActualVar,">=","greaterOrEqualThan");
+				vActualVar=replaceAll(vActualVar,"<=","lessOrEqualThan");
+				vActualVar=replaceAll(vActualVar,"!=","notEqualThan");
 				var arrVarParts=vActualVar.split("=");
 				arrVarParts.forEach(function(sValue,index){
 					arrVarParts[index]=replaceAll(sValue,"equalThan","==");
+					arrVarParts[index]=replaceAll(sValue,"greaterOrEqualThan",">=");
+					arrVarParts[index]=replaceAll(sValue,"lessOrEqualThan","<=");
+					arrVarParts[index]=replaceAll(sValue,"notEqualThan","!=");
 				});
 				var varName=arrVarParts[0].trim();
 				varName=self.replaceVars(varName).saToString().trim();
@@ -252,10 +259,16 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			var arrVars=sVarsReuse.split(",");
 			for (var i=0;i<arrVars.length;i++){
 				var vActualVar=arrVars[i];
+				vActualVar=replaceAll(vActualVar,">=","greaterOrEqualThan");
+				vActualVar=replaceAll(vActualVar,"<=","lessOrEqualThan");
+				vActualVar=replaceAll(vActualVar,"!=","notEqualThan");
 				vActualVar=replaceAll(vActualVar,"==","equalThan");
 				var arrVarParts=vActualVar.split("=");
 				arrVarParts.forEach(function(sValue,index){
 					arrVarParts[index]=replaceAll(sValue,"equalThan","==");
+					arrVarParts[index]=replaceAll(sValue,"greaterOrEqualThan",">=");
+					arrVarParts[index]=replaceAll(sValue,"lessOrEqualThan","<=");
+					arrVarParts[index]=replaceAll(sValue,"notEqualThan","!=");
 				});
 				var varName=arrVarParts[0].trim();
 				varName=self.replaceVars(varName).saToString().trim();

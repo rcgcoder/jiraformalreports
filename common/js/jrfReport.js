@@ -339,7 +339,7 @@ var jrfReport=class jrfReport {
 		    	repIni=repContractIni;
 		    }
 		    var formalInitDate=formatDate(repIni,3);
-		    var formalInitDate=formatDate(repEnd,3);
+		    var formalEndDate=formatDate(repEnd,3);
 		    fncAddVariable("formalInitDate",formalInitDate);
 		    fncAddVariable("formalEndDate",formalEndDate);
 		    

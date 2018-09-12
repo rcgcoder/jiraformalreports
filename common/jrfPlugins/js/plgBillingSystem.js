@@ -342,7 +342,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 			timeoriginalestimate=self.getReport().adjustAccumItem("Childs",timeoriginalestimate,self,"timeoriginalestimate");
 			timeestimate=self.getReport().adjustAccumItem("Childs",timeestimate,self,"timeestimate");
 		} else {
-			timespent=self.fieldValue("timespent",atDatetime);
+			timespent=self.fieldValue("timespent",false,atDatetime);
 		}
 		if (timeoriginalestimate==="") timeoriginalestimate=0; else timeoriginalestimate=parseFloat(timeoriginalestimate);
 		if (timeestimate==="") timeestimate=0; else timeestimate=parseFloat(timeestimate);

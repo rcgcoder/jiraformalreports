@@ -319,6 +319,7 @@ var jrfReport=class jrfReport {
 					  theModel.variables.pushVar(dateParam+"_timestamp",dateValue.getTime());				
 				  } else {
 					  theModel.variables.pushVar(dateParam+"_text","");				
+					  theModel.variables.pushVar(dateParam+"_timestamp","");				
 					  theModel.variables.pushVar(dateParam,"");				
 				  }
 		      }
@@ -334,6 +335,14 @@ var jrfReport=class jrfReport {
 		    var repIni=theModel.variables.getVar("ReportInitDate");
 		    var repEnd=theModel.variables.getVar("ReportEndDate");
 		    var repContractIni=theModel.variables.getVar("ContractInitDate");
+		    if (repIni<repContractIni){
+		    	repIni=repContractIni;
+		    }
+		    var formalInitDate=formatDate(repIni,3);
+		    var formalInitDate=formatDate(repEnd,3);
+		    fncAddVariable("formalInitDate",formalInitDate);
+		    fncAddVariable("formalEndDate",formalEndDate);
+		    
 		    var fullMonthsPeriod=fullMonthsInter(repIni,repEnd);
 		    var fullMonthsBefore=fullMonthsInter(repContractIni,repIni);
 		    fncAddVariable("fullMonthsPeriod",fullMonthsPeriod);

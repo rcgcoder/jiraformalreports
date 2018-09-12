@@ -229,11 +229,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				vActualVar=replaceAll(vActualVar,"!=","notEqualThan");
 				var arrVarParts=vActualVar.split("=");
 				arrVarParts.forEach(function(sValue,index){
-					arrVarParts[index]=replaceAll(sValue,";",",");
-					arrVarParts[index]=replaceAll(sValue,"equalThan","==");
-					arrVarParts[index]=replaceAll(sValue,"greaterOrEqualThan",">=");
-					arrVarParts[index]=replaceAll(sValue,"lessOrEqualThan","<=");
-					arrVarParts[index]=replaceAll(sValue,"notEqualThan","!=");
+					arrVarParts[index]=replaceAll(arrVarParts[index],";",",");
+					arrVarParts[index]=replaceAll(arrVarParts[index],"equalThan","==");
+					arrVarParts[index]=replaceAll(arrVarParts[index],"greaterOrEqualThan",">=");
+					arrVarParts[index]=replaceAll(arrVarParts[index],"lessOrEqualThan","<=");
+					arrVarParts[index]=replaceAll(arrVarParts[index],"notEqualThan","!=");
 				});
 				var varName=arrVarParts[0].trim();
 				varName=self.replaceVars(varName).saToString().trim();
@@ -266,11 +266,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				vActualVar=replaceAll(vActualVar,"==","equalThan");
 				var arrVarParts=vActualVar.split("=");
 				arrVarParts.forEach(function(sValue,index){
-					arrVarParts[index]=replaceAll(sValue,";",",");
-					arrVarParts[index]=replaceAll(sValue,"equalThan","==");
-					arrVarParts[index]=replaceAll(sValue,"greaterOrEqualThan",">=");
-					arrVarParts[index]=replaceAll(sValue,"lessOrEqualThan","<=");
-					arrVarParts[index]=replaceAll(sValue,"notEqualThan","!=");
+					arrVarParts[index]=replaceAll(arrVarParts[index],";",",");
+					arrVarParts[index]=replaceAll(arrVarParts[index],"equalThan","==");
+					arrVarParts[index]=replaceAll(arrVarParts[index],"greaterOrEqualThan",">=");
+					arrVarParts[index]=replaceAll(arrVarParts[index],"lessOrEqualThan","<=");
+					arrVarParts[index]=replaceAll(arrVarParts[index],"notEqualThan","!=");
 				});
 				var varName=arrVarParts[0].trim();
 				varName=self.replaceVars(varName).saToString().trim();

@@ -309,11 +309,11 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     }
     initializeBilling(atDatetime,hourCost,minFacturableFase){
     	var self=this;
-    	var fechaFacturacion=self.fieldValue("Fecha de facturación",false,atDatetime);
+/*    	var fechaFacturacion=self.fieldValue("Fecha de facturación",false,atDatetime);
     	if (fechaFacturacion!==""){
     		logError(self.getKey()+" fecha de facturacion:"+fechaFacturacion);
     	}
-    	var status=self.fieldValue("status.name",false,atDatetime);
+*/    	var status=self.fieldValue("status.name",false,atDatetime);
     	var created=new Date(self.fieldValue("Creada",false));
     	//debugger;
 		var faseActual=self.fieldValue("Fase",false,atDatetime);

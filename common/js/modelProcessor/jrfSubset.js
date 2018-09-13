@@ -117,13 +117,16 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 			}
 		}
 		if ((self.recursiveField!=="")&&(self.recursiveField!="empty")){
-			var hsAux=newHashMap();
-			hsResults.walk(function(item){
-				hsAux.add(item.getKey(),item);
-				});
-			hsAux.walk(function(item){
-				self.includeRecursiveElements(item,self.recursiveField,"getKey",hsResults);
-				});
+			var sRecurField=self.replaceVars(self.recursiveField).saToString().trim();
+			if (sRecurField!=""){
+				var hsAux=newHashMap();
+				hsResults.walk(function(item){
+					hsAux.add(item.getKey(),item);
+					});
+				hsAux.walk(function(item){
+					self.includeRecursiveElements(item,sRecurField,"getKey",hsResults);
+					});
+			}
 		}
 		return hsResults;
 	}

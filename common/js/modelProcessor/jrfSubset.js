@@ -116,6 +116,7 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 				hsResults = elemsInForEach;
 			}
 		}
+		debugger;
 		if ((self.recursiveField!=="")&&(self.recursiveField!="empty")){
 			var hsAux=newHashMap();
 			hsResults.walk(function(item){

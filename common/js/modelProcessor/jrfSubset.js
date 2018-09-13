@@ -74,11 +74,10 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 		if (isDefined(parent["get"+recursiveField+"s"])){
 			hsResults=parent["get"+recursiveField+"s"]();
 		}
-		hsSubResults=newHashMap();
 		var vKey;
 		hsResults.walk(function(child){
 			vKey=child[childKeyFunctionName]();
-			if (!(hsActualValues.exists(vKey)||hsSubResults.exists(vKey))){
+			if (!hsActualValues.exists(vKey)){
 				hsActualValues.add(vKey,child);
 				self.includeRecursiveElements(child,recursiveField,childKeyFunctionName,hsActualValues);
 			}

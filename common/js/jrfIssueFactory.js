@@ -168,6 +168,19 @@ function newIssueFactory(report){
 		}
 		return dynAux;
 	});
+	dynObj.functions.add("getErrorsAsHtml",function(returnTag){
+		var self=this;
+		var sResult="";
+		var hsErrors=self.getErrors();
+		hsErrors.walk(function(sValue){
+			if (sResult.length>0){
+				sResult+="<"+returnTag+">";
+			}
+			sResult+=sValue;
+		});
+		return sResult;
+	});
+
 	dynObj.functions.add("hasChildCycle",function(){
 		var self=this;
 		var hsParents=newHashMap();

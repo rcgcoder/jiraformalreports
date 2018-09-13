@@ -15,6 +15,8 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 		self.hsResult;
 		self.hsRest;
 		
+		self.recursiveField=self.getAttrVal("recursivefield",undefined,false);
+		
 		self.source=self.getAttrVal("source");
 		self.sourceJson=self.getAttrVal("sourcejson");
 		self.sourceJS=self.getAttrVal("sourcejs",undefined,false);
@@ -66,14 +68,32 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 		}
 		return elemsInForEach;
 	}
+	includeRecursiveElements(parent,recursiveField,childKeyFunctionName,hsActualValues){
+		var self=this;
+		var hsResults=newHashMap();
+		if (isDefined(parent["get"+recursiveField+"s"])){
+			hsResults=parent["get"+recursiveField+"s"]();
+		}
+		hsSubResults=newHashMap();
+		var vKey;
+		hsResults.walk(function(child){
+			vKey=child[childKeyFunctionName]();
+			if (!(hsActualValues.exists(vKey)||hsSubResults.exists(vKey))){
+				hsActualValues.add(vKey,child);
+				self.includeRecursiveElements(child,recursiveField,childKeyFunctionName,hsActualValues);
+			}
+		})
+	}
+	
 	getElementsInForEach(){
 		var self=this;
+		var hsResults=newHashMap();
 		if (self.type=="root"){
-			return self.model.report.childs;
+			hsResults = self.model.report.childs;
 		} else if (self.type=="child"){
-			return self.reportElem.getChilds();
+			hsResults = self.reportElem.getChilds();
 		} else if (self.type=="advchild"){
-			return self.reportElem.getAdvanceChilds();
+			hsResults = self.reportElem.getAdvanceChilds();
 		} else if (self.type=="array"){
 			log("Proccessing array");
 			//debugger;
@@ -82,7 +102,7 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 			for (var i=0;i<elemsInForEach.length;i++){
 				hsAux.push(elemsInForEach[i]);
 			}
-			return hsAux;
+			hsResults = hsAux;
 		} else if (self.type=="list"){
 			log("Proccessing list...HashMap");
 			//debugger;
@@ -92,11 +112,21 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 				for (var i=0;i<elemsInForEach.length;i++){
 					hsAux.push(elemsInForEach[i]);
 				}
-				return hsAux;
-			} 
-			return elemsInForEach;
+				hsResults = hsAux;
+			} else {
+				hsResults = elemsInForEach;
+			}
 		}
-		return newHashMap();
+		if ((self.recursiveField!=="")&&(self.recursiveField!="empty")){
+			var hsAux=newHashMap();
+			hsResults.walk(function(item){
+				hsAux.add(item.getKey(),item);
+				});
+			hsAux.walk(function(item){
+				self.includeRecursiveElements(item,self.recursiveField,"getKey",hsResults);
+				});
+		}
+		return hsResults;
 	}
 	filter(elemsInForEach){
 		var self=this;

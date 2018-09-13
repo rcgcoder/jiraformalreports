@@ -26,7 +26,8 @@ function newIssueFactory(report){
 			 {name:"FieldLifeCache",description:"Cache the life of the fields to speed up the reutilization of values",type:"object"},
 			 {name:"FieldLifeAdjust",description:"List of manual adjusts to field values usually saved as comment in the issue",type:"object"},
 			 {name:"EpicChild",description:"List of issues with epic link equals to this issue key",type:"object"},
-			 {name:"RelationFilter",description:"List of custom functions to set relations to this issue key",type:"object"}
+			 {name:"RelationFilter",description:"List of custom functions to set relations to this issue key",type:"object"},
+			 {name:"Error",description:"List of errors detected in the process of Issue",type:"object"},
 			]
 			,
 			allFieldDefinitions.concat(["JiraObject","IssueUrl","Changelog"])
@@ -175,7 +176,7 @@ function newIssueFactory(report){
 		while (isDefined(dynAux)&&(dynAux.countParentsChild()>0)){// to the top
 			hsParents.add(dynAux.getKey(),dynAux.getKey());
 			if (dynAux.countParentsChild()>1) {
-				logError("The issue:"+ dynAux.getKey()+" has more ("+dynAux.countParentsChild()+") than one parent.");
+				dynAux.addError("The issue:"+ dynAux.getKey()+" has more ("+dynAux.countParentsChild()+") than one parent.");
 				bReturn=true;
 			}
 			var hsParentsList=dynAux.getListParentsChild();
@@ -188,7 +189,7 @@ function newIssueFactory(report){
 			if (hsCycleParents.length()>0){
 				bReturn=true;
 				hsCycleParents.walk(function(dynParent,iDeep,parentKey){
-					logError("The Issue:"+dynAux.getKey()+" has a cycle child/parent relation with "+parentKey+". Removing from relation.");
+					dynAux.addError("The Issue:"+dynAux.getKey()+" has a cycle child/parent relation with "+parentKey+". Removing from relation.");
 					dynParent.getChilds().remove(dynAux.getKey());
 					hsParentsList.remove(parentKey);
 				});
@@ -197,7 +198,7 @@ function newIssueFactory(report){
 				bReturn=true;
 				while (hsParentsList.length()>1){
 					var dynParent=hsParentsList.getLast().value;
-					logError("The issue:"+ dynAux.getKey()+" has more than one parent.Removing relation with "+dynParent.getKey()+" to continue process.");
+					dynAux.addError("The issue:"+ dynAux.getKey()+" has more than one parent.Removing relation with "+dynParent.getKey()+" to continue process.");
 					dynParent.getChilds().remove(dynAux.getKey());
 					hsParentsList.remove(dynParent.getKey());
 				}

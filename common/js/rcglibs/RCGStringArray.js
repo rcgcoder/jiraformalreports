@@ -379,13 +379,23 @@ Array.prototype.saSubstring=function(iPosStart,iPosEnd){
 Array.prototype.saReplaceAll=function(strTgt,sReplace,repeat){
 	var iPos=0;
 	var saAux=this;
-	iPos=saAux.saFindPos(strTgt,false,iPos);
-	while (iPos>=0){
-		saAux=saAux.saReplace(iPos,strTgt.length,sReplace);
-		if (isDefined(repeat)&&repeat){
-			iPos=0;
+	var bAllReplaced=false;
+	var bReplaced=false;
+	while (!bAllReplaced){
+		iPos=saAux.saFindPos(strTgt,false,0);
+		bReplaced=false;
+		while (iPos>=0){
+			saAux=saAux.saReplace(iPos,strTgt.length,sReplace);
+			bReplaced=true;
+			iPos=saAux.saFindPos(strTgt,false,iPos);
 		}
-		iPos=saAux.saFindPos(strTgt,false,iPos);
+		if (!bReplaced){
+			bAllReplaced=true;
+		} else if (isDefined(repeat)&&repeat){
+			bAllReplaced=false;
+		} else {
+			bAllReplaced=true;
+		}
 	}
 	return saAux;
 }

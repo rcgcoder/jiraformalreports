@@ -7,6 +7,13 @@ import { dlgPrjSelector } from './dialogs/dlgPrjSelector';
 export class TabResult {
     @Input() header: string = 'this is header';   
     @Input() footer: string = 'this is footer';
+    ngOnInit() {
+        var self=this;
+        System.addPostProcess(function(){
+            log("TabResults constructor called");
+            System.webapp.getTaskManager().extendObject(self);
+        });
+    }
     doInNewWindow(){
 //        var fork=System.webapp.addStep("Opening the report in a new tab", function(){
             var report=System.webapp.theReport;
@@ -22,6 +29,7 @@ export class TabResult {
         System.getAngularObject('tabStructure',true).executeReport();
     }
     doCleanBlankLines(){
+        var self=this;
         self.addStep("Updating and processing report...", function(){
       //      System.getAngularObject('tabStructure',true).executeReport();
             var ifr=document.getElementById("reportResultDiv");

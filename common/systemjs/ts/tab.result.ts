@@ -13,7 +13,6 @@ export class TabResult {
             report.openResultInNewTab();
 //            System.webapp.continueTask();
  //       },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
-
     }
     doSaveToFile(){
         var report=System.webapp.theReport;
@@ -22,4 +21,15 @@ export class TabResult {
     doRepeatReport(){
         System.getAngularObject('tabStructure',true).executeReport();
     }
+    doCleanBlankLines(){
+  //      System.getAngularObject('tabStructure',true).executeReport();
+        var ifr=document.getElementById("reportResultDiv");
+        var contentId=ifr.interactiveContentId;
+        alert(contentId);
+
+/*        openInWindow(thePageId,fncCallback,,"reportResultDiv");
+        openInWindow(idContent,callback,iFrameId,divShellId){
+
+        thePageId,fncCallback,"ReportResult","reportResultDiv");        
+*/    }
 }

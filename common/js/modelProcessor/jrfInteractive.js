@@ -272,9 +272,6 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			var pairs=[ [" <br>","<br>",0]
 						,[" <p>","<p>",0]
 						,[" </p>","</p>",0]
-						,["\n<br>","<br>",0]
-						,["\n<p>","<p>",0]
-						,["\n</p>","</p>",0]			
 						,["<br><p>","<p>",0]
 						,["<br><br>","<br>",0]
 						,["<p><br>","<p>",0]
@@ -284,13 +281,20 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 					];
 			var iPairClean=0;
 			var nPairs=pairs.length;
+			var sControl="";
+			var sControl2="";
+			var sControl3="";
 			var fncAddStep=webapp.createManagedCallback(function(pair){
 				webapp.addStep("Removing pair ["+ pair[0]+"] -> ["+pair[1]+"]"+" time:"+pair[2],function(){
 					var sTgt=pair[0];
 					var sRpl=pair[1];
 					pair[2]++;
+					sControl=sModelAux.saToString();
+					var iPos=sControl.indexOf(sTgt);
 					if (sModelAux.saExists(sTgt)){
+						sControl3=sControl.replaceAll(sTgt,sRpl);
 						sModelAux=sModelAux.saReplaceAll(sTgt,sRpl,true);
+						sControl2=sModelAux.saToString();
 						iPairClean=0;
 					} else {
 						iPairClean++;

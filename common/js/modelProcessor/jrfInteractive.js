@@ -266,7 +266,8 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
         alert(contentId);
         var self=this;
 	    var pageContent=self.getInteractiveContent(contentId);
-		system.webapp.addStep("Removing empty lines of HTML ",function(sModelProcessedResult){
+		var webapp=System.webapp;
+		webapp.addStep("Removing empty lines of HTML ",function(sModelProcessedResult){
 			var sModelAux=pageContent;
 			var pairs=[ [" <br>","<br>",0]
 						,[" <p>","<p>",0]
@@ -283,8 +284,8 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 					];
 			var iPairClean=0;
 			var nPairs=pairs.length;
-			var fncAddStep=system.webapp.createManagedCallback(function(pair){
-				system.webapp.addStep("Removing pair ["+ pair[0]+"] -> ["+pair[1]+"]"+" time:"+pair[2],function(){
+			var fncAddStep=webapp.createManagedCallback(function(pair){
+				webapp.addStep("Removing pair ["+ pair[0]+"] -> ["+pair[1]+"]"+" time:"+pair[2],function(){
 					var sTgt=pair[0];
 					var sRpl=pair[1];
 					pair[2]++;
@@ -297,13 +298,13 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 					if (iPairClean<nPairs){
 						fncAddStep(pair);
 					}
-					system.webapp.continueTask();
+					webapp.continueTask();
 				});
 			});
 			pairs.forEach(function(pair){
 				fncAddStep(pair);
 			});
-			system.webapp.continueTask([sModelAux]);
+			webapp.continueTask([sModelAux]);
 		});
 	}
 }

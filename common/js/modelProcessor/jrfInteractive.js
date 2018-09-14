@@ -264,6 +264,48 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	}
 	cleanContent(contentId){
         alert(contentId);
+	    var pageContent=self.getInteractiveContent(contentId);
+		self.addStep("Removing empty lines of HTML ",function(sModelProcessedResult){
+			var sModelAux=sModelProcessedResult;
+			var fncAux=function(arrChanges){
+				var iNoneExists=0;
+				var iPair=0;
+				while (iNoneExists<arrChanges.length){
+					var pair=arrChanges[iPair];
+					var sTgt=pair[0];
+					var sRpl=pair[1];
+					if (sModelAux.saExists(sTgt)){
+						sModelAux=sModelAux.saReplaceAll(sTgt,sRpl,true);
+						iNoneExists=0;
+					} else {
+						iNoneExists++;
+					}
+					iPair++;
+					if (iPair>=arrChanges.length){
+						iPair=0;
+						if (iNoneExists<arrChanges.length){
+							iNoneExists=0;
+						}
+					}
+				}
+			}
+
+			fncAux([ [" <br>","<br>"]
+					,[" <p>","<p>"]
+					,[" </p>","</p>"]
+/*					,["\n<br>","<br>"]
+					,["\n<p>","<p>"]
+					,["\n</p>","</p>"]			
+*/					,["<br><p>","<p>"]
+					,["<br><br>","<br>"]
+					,["<p><br>","<p>"]
+					,["<p></p>",""]
+					,["<span></span>",""]
+					,['<p >','<p>']		
+					]);	
+
+			self.continueTask([sModelAux]);
+		});
 	}
 }
 

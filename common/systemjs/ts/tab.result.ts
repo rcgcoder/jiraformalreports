@@ -22,10 +22,13 @@ export class TabResult {
         System.getAngularObject('tabStructure',true).executeReport();
     }
     doCleanBlankLines(){
-  //      System.getAngularObject('tabStructure',true).executeReport();
-        var ifr=document.getElementById("reportResultDiv");
-        var contentId=ifr.interactiveContentId;
-        modelInteractiveFunctions.cleanContent(contentId);
+        self.addStep("Updating and processing report...", function(){
+      //      System.getAngularObject('tabStructure',true).executeReport();
+            var ifr=document.getElementById("reportResultDiv");
+            var contentId=ifr.interactiveContentId;
+            modelInteractiveFunctions.cleanContent(contentId);
+            self.continueTask();
+        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
 
 
 /*        openInWindow(thePageId,fncCallback,,"reportResultDiv");

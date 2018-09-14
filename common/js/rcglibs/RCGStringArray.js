@@ -467,6 +467,9 @@ String.prototype.saLength= function (){
 	return this.length;
 };
 
+String.prototype.saReplaceAll=function(strTgt,sReplace,repeat){
+	return [this].saReplaceAll(strTgt,sReplace,repeat);
+}
 String.prototype.saAppend= function (sText){
 	return this+sText;
 };

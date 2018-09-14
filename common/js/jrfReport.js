@@ -1393,7 +1393,7 @@ var jrfReport=class jrfReport {
 					var sTgt=pair[0];
 					var sRpl=pair[1];
 					if (sModelAux.saExists(sTgt)){
-						sHtml=sHtml.saReplaceAll(sTgt,sRpl,true);
+						sModelAux=sModelAux.saReplaceAll(sTgt,sRpl,true);
 						iNoneExists=0;
 					} else {
 						iNoneExists++;

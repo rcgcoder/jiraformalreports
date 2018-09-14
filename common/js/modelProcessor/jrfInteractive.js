@@ -268,7 +268,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	    var pageContent=self.getInteractiveContent(contentId);
 		var webapp=System.webapp;
 		webapp.addStep("Removing empty lines of HTML ",function(sModelProcessedResult){
-			var sModelAux=pageContent;
+			var sModelAux=pageContent.html;
 			var pairs=[ [" <br>","<br>",0]
 						,[" <p>","<p>",0]
 						,[" </p>","</p>",0]

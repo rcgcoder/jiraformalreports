@@ -378,14 +378,16 @@ Array.prototype.saSubstring=function(iPosStart,iPosEnd){
 }
 Array.prototype.saReplaceAll=function(strTgt,sReplace,repeat){
 	var iPos=0;
-	iPos=sHtml.saFindPos(strTgt,false,iPos);
+	var saAux=this;
+	iPos=saAux.saFindPos(strTgt,false,iPos);
 	while (iPos>=0){
-		sHtml=sHtml.saReplace(iPos,strTgt.length,sReplace);
+		saAux=saAux.saReplace(iPos,strTgt.length,sReplace);
 		if (isDefined(repeat)&&repeat){
 			iPos=0;
 		}
 		iPos=sHtml.saFindPos(strTgt,false,iPos);
 	}
+	return saAux;
 }
 
 Array.prototype.saReplace=function(iPosStart,nLetters,sTextToSet){

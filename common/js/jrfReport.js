@@ -1384,7 +1384,7 @@ var jrfReport=class jrfReport {
 			});
 			self.continueTask();
 		});
-		
+		/*
 		self.addStep("Removing empty lines of HTML ",function(sModelProcessedResult){
 			var sModelAux=sModelProcessedResult;
 			var fncAux=function(arrChanges){
@@ -1426,7 +1426,7 @@ var jrfReport=class jrfReport {
 
 			self.continueTask([sModelAux]);
 		});
-
+*/
 		self.addStep("Setting the HTML",function(sModelProcessedResult){
 			var tm=self.getTaskManager();
 			tm.autoFree=false;

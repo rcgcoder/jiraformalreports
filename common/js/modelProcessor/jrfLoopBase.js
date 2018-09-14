@@ -16,32 +16,39 @@ var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition al
 	apply(){
 		var self=this;
 		//debugger;
-		self.loopElements=super.apply();
-		var iLoopElemsCount=self.loopElements.length();
-		self.addStep("Start processing the Loop",function(){
+		var iLoopElemsCount;
+		self.addStep("Initializing loop base",function(){
+			super.apply();
+		});
+		self.addStep("Start processing the Loop",function([loopElems]){
+			self.loopElements=super.apply();
+			iLoopElemsCount=self.loopElements.length();
 			self.loopStart(iLoopElemsCount);
 			self.continueTask();
 		});
 		// processing total elements
-		var iLoopIndex=0;
-		var bCancelLoop=false;
-		self.loopElements.walk(function(loopElem,iDeep,itemKey,iLoopIndex){
-			self.addStep("Processing the Loop item:"+iLoopIndex + " of " +iLoopElemsCount,function(){
-				self.variables.pushVar("LoopElemsCount",iLoopElemsCount);
-				self.variables.pushVar("LoopIndex",iLoopIndex );
-				if (!bCancelLoop) {
-					if (self.innerVarName!=""){
-						self.initVariables(self.innerVarName,undefined,loopElem);
+		self.addStep("Processing the Loop",function(){
+			var iLoopIndex=0;
+			var bCancelLoop=false;
+			self.loopElements.walk(function(loopElem,iDeep,itemKey,iLoopIndex){
+				self.addStep("Processing the Loop item:"+iLoopIndex + " of " +iLoopElemsCount,function(){
+					self.variables.pushVar("LoopElemsCount",iLoopElemsCount);
+					self.variables.pushVar("LoopIndex",iLoopIndex );
+					if (!bCancelLoop) {
+						if (self.innerVarName!=""){
+							self.initVariables(self.innerVarName,undefined,loopElem);
+						}
+						var bContinue=self.loopItemProcess(loopElem,iLoopIndex,iLoopElemsCount);
+						if (isDefined(bContinue)&&(!bContinue)){
+							bCancelLoop=true;;
+						}
 					}
-					var bContinue=self.loopItemProcess(loopElem,iLoopIndex,iLoopElemsCount);
-					if (isDefined(bContinue)&&(!bContinue)){
-						bCancelLoop=true;;
-					}
-				}
-				self.variables.popVar("LoopIndex");
-				self.variables.popVar("LoopElemsCount");
-				self.continueTask();
+					self.variables.popVar("LoopIndex");
+					self.variables.popVar("LoopElemsCount");
+					self.continueTask();
+				});
 			});
+			self.continueTask();
 		});
 		self.addStep("Ending processing the Loop",function(){
 			self.loopEnd(iLoopElemsCount);

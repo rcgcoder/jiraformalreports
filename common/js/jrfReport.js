@@ -1409,6 +1409,7 @@ var jrfReport=class jrfReport {
 					}
 				}
 			}
+
 			fncAux([ [" <br>","<br>"]
 					,[" <p>","<p>"]
 					,[" </p>","</p>"]
@@ -1420,7 +1421,6 @@ var jrfReport=class jrfReport {
 					,["<p><br>","<p>"]
 					,["<p></p>",""]
 					,["<span></span>",""]
-					,['class="auto-cursor-target"',""]
 					,['<p >','<p>']		
 					]);	
 

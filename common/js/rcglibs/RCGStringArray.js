@@ -304,7 +304,7 @@ Array.prototype.saFindPos=function(sTargetText,bFromEnd,initPos){
 				var iPosAux=iPos;
 				iBlock--;
 				sBlockStr=self[iBlock];
-				while ((iLengthAux-self[iBlock].length)>iPosAux){
+				while ((iBlock>=0)&&((iLengthAux-self[iBlock].length)>iPosAux)){
 					sBlockStr=self[iBlock];
 					iLengthAux-=sBlockStr.length;
 					iBlock--;

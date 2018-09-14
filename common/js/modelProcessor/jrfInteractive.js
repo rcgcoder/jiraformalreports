@@ -266,46 +266,44 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
         alert(contentId);
         var self=this;
 	    var pageContent=self.getInteractiveContent(contentId);
-		self.addStep("Removing empty lines of HTML ",function(sModelProcessedResult){
-			var sModelAux=sModelProcessedResult;
-			var fncAux=function(arrChanges){
-				var iNoneExists=0;
-				var iPair=0;
-				while (iNoneExists<arrChanges.length){
-					var pair=arrChanges[iPair];
+		system.webapp.addStep("Removing empty lines of HTML ",function(sModelProcessedResult){
+			var sModelAux=pageContent;
+			var pairs=[ [" <br>","<br>",0]
+						,[" <p>","<p>",0]
+						,[" </p>","</p>",0]
+			/*					,["\n<br>","<br>"]
+						,["\n<p>","<p>"]
+						,["\n</p>","</p>"]			
+			*/					,["<br><p>","<p>",0]
+						,["<br><br>","<br>",0]
+						,["<p><br>","<p>",0]
+						,["<p></p>","",0]
+						,["<span></span>","",0]
+						,['<p >','<p>',0]		
+					];
+			var iPairClean=0;
+			var nPairs=pairs.length;
+			var fncAddStep=system.webapp.createManagedCallback(function(pair){
+				system.webapp.addStep("Removing pair ["+ pair[0]+"] -> ["+pair[1]+"]"+" time:"+pair[2],function(){
 					var sTgt=pair[0];
 					var sRpl=pair[1];
+					pair[2]++;
 					if (sModelAux.saExists(sTgt)){
 						sModelAux=sModelAux.saReplaceAll(sTgt,sRpl,true);
-						iNoneExists=0;
+						iPairClean=0;
 					} else {
-						iNoneExists++;
+						iPairClean++;
 					}
-					iPair++;
-					if (iPair>=arrChanges.length){
-						iPair=0;
-						if (iNoneExists<arrChanges.length){
-							iNoneExists=0;
-						}
+					if (iPairClean<nPairs){
+						fncAddStep(pair);
 					}
-				}
-			}
-
-			fncAux([ [" <br>","<br>"]
-					,[" <p>","<p>"]
-					,[" </p>","</p>"]
-/*					,["\n<br>","<br>"]
-					,["\n<p>","<p>"]
-					,["\n</p>","</p>"]			
-*/					,["<br><p>","<p>"]
-					,["<br><br>","<br>"]
-					,["<p><br>","<p>"]
-					,["<p></p>",""]
-					,["<span></span>",""]
-					,['<p >','<p>']		
-					]);	
-
-			self.continueTask([sModelAux]);
+					system.webapp.continueTask();
+				});
+			});
+			pairs.forEach(function(pair){
+				fncAddStep(pair);
+			});
+			system.webapp.continueTask([sModelAux]);
 		});
 	}
 }

@@ -385,7 +385,7 @@ Array.prototype.saReplaceAll=function(strTgt,sReplace,repeat){
 		if (isDefined(repeat)&&repeat){
 			iPos=0;
 		}
-		iPos=sHtml.saFindPos(strTgt,false,iPos);
+		iPos=saAux.saFindPos(strTgt,false,iPos);
 	}
 	return saAux;
 }

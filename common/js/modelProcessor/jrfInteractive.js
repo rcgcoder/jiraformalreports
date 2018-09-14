@@ -191,7 +191,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	    var jqDiv=$("#"+divShellId);
 	    var viewWidth=jqDiv.width();
 	    var viewHeight=jqDiv.height();
-	    jqDiv.interactiveContentId=idContent;
+	    jqDiv[0].interactiveContentId=idContent;
 	    
 		loggerFactory.getLogger().enabled=true;
 	    var hasHScroll=function(theIframe){

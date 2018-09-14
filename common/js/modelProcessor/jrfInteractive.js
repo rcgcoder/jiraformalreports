@@ -263,7 +263,6 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		}*/
 	}
 	cleanContent(oContent){
-        alert(contentId);
         var self=this;
 	    var pageContent=self.getInteractiveContent(oContent.contentId);
 		var webapp=System.webapp;

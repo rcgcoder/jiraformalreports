@@ -120,14 +120,17 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 			var sRecurField=self.replaceVars(self.recursiveField).saToString().trim();
 			if (sRecurField!=""){
 				self.addStep("Recursive elements in subset",function(){
-					var hsAux=newHashMap();
+					/*var hsAux=newHashMap();
 					hsResults.walk(function(item){
 						hsAux.add(item.getKey(),item);
-						});
-					hsAux.walk(function(item){
-						self.includeRecursiveElements(item,sRecurField,"getKey",hsResults);
-						});
-					self.continueTask([hsResults]);
+						});*/
+					self.model.report.walkAsync(
+							hsResults,
+							function(item){
+								self.includeRecursiveElements(item,sRecurField,"getKey",hsResults);
+							},
+							self.continueTask([hsResults]));
+					
 				});
 			}
 		}

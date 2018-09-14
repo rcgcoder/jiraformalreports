@@ -22,6 +22,7 @@ var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition al
 		var iLoopElemsCount;  
 		self.addStep("Initializing loop base",function(){
 			self.innerApply();
+			self.continueTask();
 		});
 		self.addStep("Start processing the Loop",function(loopElems){
 			self.loopElements=loopElems;

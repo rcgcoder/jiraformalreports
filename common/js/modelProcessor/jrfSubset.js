@@ -263,12 +263,11 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 	apply(){
 		//		debugger;
 		var self=this;
-		var elemsInForEach;
 		self.addStep("Getting elements for subset.", function(){
-			elemsInForEach=self.getElementsInSubset();
+			self.getElementsInSubset();
 		});
 		self.addStep("Processing resultos",function(retrElements){
-			elemsInForEach=retrElements;
+			var elemsInForEach=retrElements;
 			if (self.name!="") elemsInForEach.name=self.name;
 			var varName=self.resultVarName;
 			if (varName!=""){

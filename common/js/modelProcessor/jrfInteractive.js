@@ -191,7 +191,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	    var jqDiv=$("#"+divShellId);
 	    var viewWidth=jqDiv.width();
 	    var viewHeight=jqDiv.height();
-	    jqDiv[0].interactiveContentId=idContent;
+	    jqDiv[0].interactiveContentId={idContent:idContent,callback:callback,idIframe:iFrameId,divId:divShellId};
 	    
 		loggerFactory.getLogger().enabled=true;
 	    var hasHScroll=function(theIframe){
@@ -262,10 +262,10 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			self.openResultInNewTab();
 		}*/
 	}
-	cleanContent(contentId){
+	cleanContent(oContent){
         alert(contentId);
         var self=this;
-	    var pageContent=self.getInteractiveContent(contentId);
+	    var pageContent=self.getInteractiveContent(oContent.contentId);
 		var webapp=System.webapp;
 		webapp.addStep("Removing empty lines of HTML ",function(sModelProcessedResult){
 			var sModelAux=pageContent.html;
@@ -305,6 +305,10 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 				fncAddStep(pair);
 			});
 			webapp.continueTask([sModelAux]);
+		});
+		webapp.addStep("change content in result window",function(){
+			self.openInWindow(oContent.idContent,oContent.callback,oContent.idIframe,oContent.divId);
+			webapp.continueTask();
 		});
 	}
 }

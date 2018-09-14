@@ -376,6 +376,18 @@ Array.prototype.saSubstring=function(iPosStart,iPosEnd){
 	}
 	return sResult;
 }
+Array.prototype.saReplaceAll=function(strTgt,sReplace,repeat){
+	var iPos=0;
+	iPos=sHtml.saFindPos(strTgt,false,iPos);
+	while (iPos>=0){
+		sHtml=sHtml.saReplace(iPos,strTgt.length,sReplace);
+		if (isDefined(repeat)&&repeat){
+			iPos=0;
+		}
+		iPos=sHtml.saFindPos(strTgt,false,iPos);
+	}
+}
+
 Array.prototype.saReplace=function(iPosStart,nLetters,sTextToSet){
 	// first goto to the block....
 	var self=this;

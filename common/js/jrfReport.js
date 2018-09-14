@@ -87,12 +87,13 @@ var jrfReport=class jrfReport {
 		arrStringsToRemove.push('color: rgb(23,43,77);');
 		arrStringsToRemove.push('style=""');
 		arrStringsToRemove.forEach(function(strTgt){
-			var iPos=0;
+			sHtml=sHtml.saReplaceAll(strTgt,"",true);
+/*			var iPos=0;
 			iPos=sHtml.saFindPos(strTgt,false,iPos);
 			while (iPos>=0){
 				sHtml=sHtml.saReplace(iPos,strTgt.length,"");
 				iPos=sHtml.saFindPos(strTgt,false,iPos);
-			}
+			}*/
 		});
 		return sHtml.saToString();
 	}
@@ -1382,6 +1383,39 @@ var jrfReport=class jrfReport {
 			self.continueTask();
 		});
 		
+		self.addStep("Removing empty lines of HTML ",function(sModelProcessedResult){
+			var sModelAux=sModelProcessedResult;
+			var fncAux=function(arrChanges){
+				var iNoneExists=0;
+				var iPair=0;
+				while (iNoneExists<arrChanges.length){
+					var pair=arrChanges[iPair];
+					var sTgt=pair[0];
+					var sRpl=pair[1];
+					if (sModelAux.saExists(sTgt)){
+						sHtml=sHtml.saReplaceAll(sTgt,sRpl,true);
+						iNoneExists=0;
+					} else {
+						iNoneExists++;
+					}
+					iPair++;
+					if (iPair>=arrChanges.length){
+						iPair=0;
+						if (iNoneExists<arrChanges.length){
+							iNoneExists=0;
+						}
+					}
+				}
+			}
+			fncAux([[" <br>","<br>"]
+					,[" <p>","<p>"]
+					,["<br><p>","<p>"]
+					,["<br><br>","<br>"]
+					,["<p><br>","<p>"]
+					]);	
+
+			self.continueTask([sModelAux]);
+		});
 
 		self.addStep("Setting the HTML",function(sModelProcessedResult){
 			var tm=self.getTaskManager();

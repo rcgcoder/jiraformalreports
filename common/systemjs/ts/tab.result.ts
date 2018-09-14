@@ -25,7 +25,8 @@ export class TabResult {
   //      System.getAngularObject('tabStructure',true).executeReport();
         var ifr=document.getElementById("reportResultDiv");
         var contentId=ifr.interactiveContentId;
-        alert(contentId);
+        modelInteractiveFunctions.cleanContent(contentId);
+
 
 /*        openInWindow(thePageId,fncCallback,,"reportResultDiv");
         openInWindow(idContent,callback,iFrameId,divShellId){

@@ -262,6 +262,9 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			self.openResultInNewTab();
 		}*/
 	}
+	cleanContent(contentId){
+        alert(contentId);
+	}
 }
 
 var modelInteractiveFunctions=new jrfInteractive();

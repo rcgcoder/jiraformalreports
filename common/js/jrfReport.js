@@ -85,6 +85,7 @@ var jrfReport=class jrfReport {
 		arrStringsToRemove.push('color: rgb(0,0,0);');
 		arrStringsToRemove.push('color: rgb(51,51,51);');
 		arrStringsToRemove.push('color: rgb(23,43,77);');
+		arrStringsToRemove.push(' style="color: rgb(9,30,66);"');
 		arrStringsToRemove.push('class="auto-cursor-target"');
 		arrStringsToRemove.push('style=""');
 		arrStringsToRemove.forEach(function(strTgt){

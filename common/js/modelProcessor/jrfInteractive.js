@@ -264,7 +264,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	}
 	cleanContent(oContent){
         var self=this;
-	    var pageContent=self.getInteractiveContent(oContent.contentId);
+	    var pageContent=self.getInteractiveContent(oContent.idContent);
 		var webapp=System.webapp;
 		webapp.addStep("Removing empty lines of HTML ",function(sModelProcessedResult){
 			var sModelAux=pageContent.html;

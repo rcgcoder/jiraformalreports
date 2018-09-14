@@ -266,7 +266,7 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 		self.addStep("Getting elements for subset.", function(){
 			self.getElementsInSubset();
 		});
-		self.addStep("Processing resultos",function(retrElements){
+		self.addStep("Processing results",function(retrElements){
 			var elemsInForEach=retrElements;
 			if (self.name!="") elemsInForEach.name=self.name;
 			var varName=self.resultVarName;
@@ -280,7 +280,6 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 			}
 			self.continueTask([elemsInForEach]);
 		});
-		self.continueTask();
 	}
 
 }

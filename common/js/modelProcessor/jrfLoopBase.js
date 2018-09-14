@@ -1,6 +1,5 @@
 var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition allows to hot-reload
 	loadOwnProperties(){
-		super.loadOwnProperties();
 		var self=this;
 		self.loopElements;
 	}

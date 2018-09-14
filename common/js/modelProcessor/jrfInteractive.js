@@ -293,7 +293,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 					sControl=sModelAux.saToString();
 					var iPos=sControl.indexOf(sTgt);
 					if (sModelAux.saExists(sTgt)){
-						sControl3=sControl.replaceAll(sTgt,sRpl);
+						sControl3=replaceAll(sControl,sTgt,sRpl);
 						sModelAux=sModelAux.saReplaceAll(sTgt,sRpl,true);
 						sControl2=sModelAux.saToString();
 						iPairClean=0;

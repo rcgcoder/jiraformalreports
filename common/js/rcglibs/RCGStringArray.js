@@ -423,7 +423,7 @@ Array.prototype.saReplace=function(iPosStart,nLetters,sTextToSet){
 		} else {
 			var sResult=sAux.substring(0,iPosAux);
 			sResult+=sReplace;
-			if ((iPosAux+nLetters)<sAux.length){
+			if ((iPosAux+nLetters)<=sAux.length){ //if iPosAux+nLetters<sAuxLength or == sAuxLength... its not got to another block
 				sResult+=sAux.substring(iPosAux+nLetters,sAux.length);
 				self[iBlock]=sResult;
 				return self;

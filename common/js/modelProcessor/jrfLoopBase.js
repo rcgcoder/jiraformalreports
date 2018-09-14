@@ -13,13 +13,15 @@ var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition al
 	loopEnd(){
 		
 	}
+	innerApply(){
+		super.apply();
+	}
 	apply(){
 		var self=this;
-		var theSuper=super;
 		//debugger;
 		var iLoopElemsCount;
 		self.addStep("Initializing loop base",function(){
-			theSuper.apply();
+			self.innerApply();
 		});
 		self.addStep("Start processing the Loop",function([loopElems]){
 			self.loopElements=super.apply();

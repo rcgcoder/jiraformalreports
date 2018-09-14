@@ -85,6 +85,7 @@ var jrfReport=class jrfReport {
 		arrStringsToRemove.push('color: rgb(0,0,0);');
 		arrStringsToRemove.push('color: rgb(51,51,51);');
 		arrStringsToRemove.push('color: rgb(23,43,77);');
+		arrStringsToRemove.push('class="auto-cursor-target"');
 		arrStringsToRemove.push('style=""');
 		arrStringsToRemove.forEach(function(strTgt){
 			sHtml=sHtml.saReplaceAll(strTgt,"",true);
@@ -1407,11 +1408,16 @@ var jrfReport=class jrfReport {
 					}
 				}
 			}
-			fncAux([[" <br>","<br>"]
+			fncAux([ [" <br>","<br>"]
 					,[" <p>","<p>"]
+					,[" </p>","</p>"]
 					,["<br><p>","<p>"]
 					,["<br><br>","<br>"]
 					,["<p><br>","<p>"]
+					,["<p></p>",""]
+					,["<span></span>",""]
+					,['class="auto-cursor-target"',""]
+					,['<p >','<p>']		
 					]);	
 
 			self.continueTask([sModelAux]);

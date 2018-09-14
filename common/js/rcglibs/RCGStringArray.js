@@ -288,7 +288,7 @@ Array.prototype.saFindPos=function(sTargetText,bFromEnd,initPos){
 			auxCad=gotoResult.sTextPart;
 			bCustomStart=true;
 		}
-		while (bCustomStart||((iBlock<selfLength)&&(iPos<0))){
+		while ((iBlock>=0)&&(bCustomStart||((iBlock<selfLength)&&(iPos<0)))){
 			bCustomStart=false;
 			while ((auxCad.length<tgtLength)&&(iBlock<selfLength)){
 				auxCad=auxCad+self[iBlock];
@@ -303,14 +303,16 @@ Array.prototype.saFindPos=function(sTargetText,bFromEnd,initPos){
 				var iLengthAux=auxCad.length;
 				var iPosAux=iPos;
 				iBlock--;
-				sBlockStr=self[iBlock];
-				while ((iBlock>=0)&&((iLengthAux-self[iBlock].length)>iPosAux)){
+				if (iBlock>=0){
 					sBlockStr=self[iBlock];
-					iLengthAux-=sBlockStr.length;
-					iBlock--;
+					while ((iBlock>=0)&&((iLengthAux-self[iBlock].length)>iPosAux)){
+						sBlockStr=self[iBlock];
+						iLengthAux-=sBlockStr.length;
+						iBlock--;
+					}
+					var iPosRest=iPosAux-(iLengthAux-sBlockStr.length);
+					iPos=iPosRest;
 				}
-				var iPosRest=iPosAux-(iLengthAux-sBlockStr.length);
-				iPos=iPosRest;
 			}
 		}
 		if (iPos<0) return -1;

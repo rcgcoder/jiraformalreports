@@ -286,7 +286,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		} else if (nFaseNum==0) {
 			return "Identificado";
 		} else {
-			return "NoCreado";
+			return "No Creado";
 		}
     }
     getBillingFieldUsed(){
@@ -549,8 +549,8 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		var antSnapshot="";
 		var antImportes="";
 		var antHourCost="";
-		var antFase=0;
-		var actFase=0;
+		var antFase=-1;
+		var actFase=-1;
 		var fieldFaseName;
 		var actFaseImporte=0;
 		var antFaseImporte=0;
@@ -565,7 +565,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 			sSnapshotDate=formatDate(snapshot.source.atDatetime,4);
 			bNoExiste=false;
 			if (actFase==="") {
-				actFase=0;
+				actFase=-1;
 				bNoExiste=true;
 			}
 			if (actFase<antFase){

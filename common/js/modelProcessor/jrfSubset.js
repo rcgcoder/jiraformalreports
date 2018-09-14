@@ -119,16 +119,19 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 		if ((self.recursiveField!=="")&&(self.recursiveField!="empty")){
 			var sRecurField=self.replaceVars(self.recursiveField).saToString().trim();
 			if (sRecurField!=""){
-				var hsAux=newHashMap();
-				hsResults.walk(function(item){
-					hsAux.add(item.getKey(),item);
-					});
-				hsAux.walk(function(item){
-					self.includeRecursiveElements(item,sRecurField,"getKey",hsResults);
-					});
+				self.addStep("Recursive elements in subset",function(){
+					var hsAux=newHashMap();
+					hsResults.walk(function(item){
+						hsAux.add(item.getKey(),item);
+						});
+					hsAux.walk(function(item){
+						self.includeRecursiveElements(item,sRecurField,"getKey",hsResults);
+						});
+					self.continueTask([hsResults]);
+				});
 			}
 		}
-		return hsResults;
+		self.continueTask([hsResults]);
 	}
 	filter(elemsInForEach){
 		var self=this;
@@ -244,27 +247,41 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 	}
 	getElementsInSubset(){
 		var self=this;
-		var elemsInForEach=self.getElementsInForEach();
-		elemsInForEach=self.filter(elemsInForEach);
-		elemsInForEach=self.order(elemsInForEach);
-		elemsInForEach=self.bounds(elemsInForEach);
-		return elemsInForEach;
+		var elemsInForEach;
+		self.addStep("Retrieving bulk subset elements",function(){
+			self.getElementsInForEach();
+		});
+		self.addStep("Applying filter, order and bounds",function(elemsRetrieved){
+			elemsInForEach=elemsRetrieved;
+			elemsInForEach=self.filter(elemsInForEach);
+			elemsInForEach=self.order(elemsInForEach);
+			elemsInForEach=self.bounds(elemsInForEach);
+			self.continueTask([elemsInForEach]);
+		});
+		self.continueTask();
 	}
 	apply(){
 //		debugger;
 		var self=this;
-		var elemsInForEach=self.getElementsInSubset();
-		if (self.name!="") elemsInForEach.name=self.name;
-		var varName=self.resultVarName;
-		if (varName!=""){
-			self.variables.pushVar(varName,elemsInForEach,-1); //if variable does not exists... it puts in parent block
-		}
-		if (self.bWithRest){
-			varName=self.restVarName;
-			self.variables.pushVar(varName,self.hsRest,-1); //if variable does not exists... it puts in parent block
-			
-		}
-		return elemsInForEach;
+		var elemsInForEach;
+		self.addStep("Getting elements for subset.", function(){
+			elemsInForEach=self.getElementsInSubset();
+		});
+		self.addStep("Processing resultos",function(retrElements){
+			elemsInForEach=retrElements;
+			if (self.name!="") elemsInForEach.name=self.name;
+			var varName=self.resultVarName;
+			if (varName!=""){
+				self.variables.pushVar(varName,elemsInForEach,-1); //if variable does not exists... it puts in parent block
+			}
+			if (self.bWithRest){
+				varName=self.restVarName;
+				self.variables.pushVar(varName,self.hsRest,-1); //if variable does not exists... it puts in parent block
+				
+			}
+			self.continueTask([elemsInForEach]);
+		});
+		self.continueTask();
 	}
 
 }

@@ -1,6 +1,6 @@
 var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition allows to hot-reload
 	loadOwnProperties(){
-		//super.loadOwnProperties();
+		super.loadOwnProperties();
 		var self=this;
 		self.loopElements;
 	}
@@ -15,11 +15,10 @@ var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition al
 	}
 	apply(){
 		var self=this;
-		//super.apply();
 		//debugger;
 		var iLoopElemsCount;  
 		self.addStep("Initializing loop base",function(){
-			self.innerApply();
+			self.innerSubsetApply();
 		});
 		self.addStep("Start processing the Loop",function([loopElems]){
 			self.loopElements=super.apply();

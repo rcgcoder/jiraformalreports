@@ -260,7 +260,7 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 		});
 		self.continueTask();
 	}
-	apply(){
+	innerSubsetApply(){
 //		debugger;
 		var self=this;
 		var elemsInForEach;
@@ -282,6 +282,12 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 			self.continueTask([elemsInForEach]);
 		});
 		self.continueTask();
+	}
+	
+	apply(){
+//		debugger;
+		var self=this;
+		self.innerSubsetApply();
 	}
 
 }

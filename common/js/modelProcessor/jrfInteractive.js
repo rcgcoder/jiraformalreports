@@ -268,7 +268,8 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		var webapp=System.webapp;
 		webapp.addStep("Removing empty lines of HTML ",function(sModelProcessedResult){
 			debugger;
-			var sModelAux=pageContent.html;
+//			var sModelAux=pageContent.html;
+			sModelAux=pageContent.html.concat([]);
 			var pairs=[ [" <br>","<br>",0]
 						,[" <p>","<p>",0]
 						,[" </p>","</p>",0]

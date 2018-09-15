@@ -312,7 +312,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 							logError("Error in length");
 							sModelAux2=sModelAux.concat([]);
 							sModelAux2=sModelAux2.saReplaceAll(sTgt,sRpl,true);
-						} else if (sControl3!=sModelAux2.saToString())
+						} else if (sControl3!=sModelAux2.saToString()) {
 							logError("Content error ");
 							sModelAux2=sModelAux.concat([]);
 							sModelAux2=sModelAux2.saReplaceAll(sTgt,sRpl,true);

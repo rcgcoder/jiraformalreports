@@ -268,8 +268,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		var webapp=System.webapp;
 		webapp.addStep("Removing empty lines of HTML ",function(sModelProcessedResult){
 			debugger;
-//			var sModelAux=pageContent.html;
-			var sModelAux=pageContent.html.concat([]);
+			var sModelAux=pageContent.html;
 			var pairs=[ [" <br>","<br>",0]
 						,[" <p>","<p>",0]
 						,[" </p>","</p>",0]
@@ -295,10 +294,10 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 					pair[2]++;
 					sControl=sModelAux.saToString();
 					var iPos=sControl.indexOf(sTgt);
-					var isaPos=sModelAux.saIndexOf(sTgt);
-					if (iPos!=isaPos.iPos){
+					var isaPos=sModelAux.saFindPos(sTgt,false,0);
+					if (iPos!=isaPos){
 						logError("not equals...");
-						isaPos=sModelAux.saIndexOf(sTgt);
+						isaPos=sModelAux.saFindPos(sTgt,false,0);
 					} else if ((iPos>=0)&&(!sModelAux.saExists(sTgt))){
 						logError("Exists error...");
 					} else if ((iPos<0)&&(sModelAux.saExists(sTgt))){
@@ -306,18 +305,13 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 					}
 					if (sModelAux.saExists(sTgt)){
 						sControl3=replaceAll(sControl,sTgt,sRpl);
-						var sModelAux2=sModelAux.concat([]);
-						sModelAux2=sModelAux2.saReplaceAll(sTgt,sRpl,true);
-						if (sControl3.length!=sModelAux2.saLength()){
+						sModelAux=sModelAux.saReplaceAll(sTgt,sRpl,true);
+						if (sControl3.length!=sModelAux.saLength()){
 							logError("Error in length");
-							sModelAux2=sModelAux.concat([]);
-							sModelAux2=sModelAux2.saReplaceAll(sTgt,sRpl,true);
+							debugger;
 						} else if (sControl3!=sModelAux2.saToString()) {
 							logError("Content error ");
-							sModelAux2=sModelAux.concat([]);
-							sModelAux2=sModelAux2.saReplaceAll(sTgt,sRpl,true);
-					    } else {
-							sModelAux=sModelAux.saReplaceAll(sTgt,sRpl,true);
+							debugger;
 					    }
 						iPairClean=0;
 					} else {

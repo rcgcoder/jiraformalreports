@@ -414,10 +414,14 @@ Array.prototype.saReplaceAll=function(strTgt,sReplace,repeat){
 				debugger;
 			}
 			bReplaced=true;
+			var iPosAnt=iPos;
 			iPos=saAux.saFindPos(strTgt,false,iPos);
 			iPosControl=sControl.indexOf(strTgt,iPosControl);
-			if (iPosControl!=iPos){
+			while (iPosControl!=iPos){
 				logError("The target position are different");
+				iPos=iPosAnt;
+				iPosControl=sControl.indexOf(strTgt,iPos);
+				iPos=saAux.saFindPos(strTgt,false,iPos);
 				debugger;
 			}
 		}

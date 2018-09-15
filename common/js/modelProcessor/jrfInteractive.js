@@ -283,6 +283,9 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 						,["<br><br>","<br>",0]
 						,["<p><br>","<p>",0]
 						,["<p></p>","",0]
+						,["<p><span></p>","<br>",0]
+						,["<p><span></span></p>","<br>",0]
+						,["<span >","<span>",0]
 						,["<span></span>","",0]
 						,['<p >','<p>',0]		
 					];

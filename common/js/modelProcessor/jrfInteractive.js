@@ -275,6 +275,9 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 						,["\n<p>","<p>",0]
 						,["\n<br>","<br>",0]
 						,["\n</p>","</p>",0]
+						,["&nbsp;<p>","<p>",0]
+						,["&nbsp;<br>","<br>",0]
+						,["&nbsp;</p>","</p>",0]
 						,["<br><p>","<p>",0]
 						,["<br><br>","<br>",0]
 						,["<p><br>","<p>",0]
@@ -284,15 +287,15 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 					];
 			var iPairClean=0;
 			var nPairs=pairs.length;
-			var sControl="";
-			var sControl2="";
-			var sControl3="";
+//			var sControl="";
+//			var sControl2="";
+//			var sControl3="";
 			var fncAddStep=webapp.createManagedCallback(function(pair){
 				webapp.addStep("Removing pair ["+ pair[0]+"] -> ["+pair[1]+"]"+" time:"+pair[2],function(){
 					var sTgt=pair[0];
 					var sRpl=pair[1];
 					pair[2]++;
-					sControl=sModelAux.saToString();
+/*					sControl=sModelAux.saToString();
 					var iPos=sControl.indexOf(sTgt);
 					var isaPos=sModelAux.saFindPos(sTgt,false,0);
 					if (iPos!=isaPos){
@@ -303,7 +306,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 					} else if ((iPos<0)&&(sModelAux.saExists(sTgt))){
 						logError("Exists error 2...");
 					}
-					if (sModelAux.saExists(sTgt)){
+*/					if (sModelAux.saExists(sTgt)){
 						sModelAux=sModelAux.saReplaceAll(sTgt,sRpl,true);
 						iPairClean=0;
 					} else {

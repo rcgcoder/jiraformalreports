@@ -304,15 +304,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 						logError("Exists error 2...");
 					}
 					if (sModelAux.saExists(sTgt)){
-						sControl3=replaceAll(sControl,sTgt,sRpl);
 						sModelAux=sModelAux.saReplaceAll(sTgt,sRpl,true);
-						if (sControl3.length!=sModelAux.saLength()){
-							logError("Error in length");
-							debugger;
-						} else if (sControl3!=sModelAux2.saToString()) {
-							logError("Content error ");
-							debugger;
-					    }
 						iPairClean=0;
 					} else {
 						iPairClean++;

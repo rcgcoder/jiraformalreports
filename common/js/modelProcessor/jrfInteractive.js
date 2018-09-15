@@ -295,10 +295,30 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 					pair[2]++;
 					sControl=sModelAux.saToString();
 					var iPos=sControl.indexOf(sTgt);
+					var isaPos=sModelAux.saIndexOf(sTgt);
+					if (iPos!=isaPos){
+						logError("not equals...");
+						isaPos=sModelAux.saIndexOf(sTgt);
+					} else if ((iPos>=0)&&(!sModelAux.saExists(sTgt))){
+						logError("Exists error...");
+					} else if ((iPos<0)&&(sModelAux.saExists(sTgt))){
+						logError("Exists error 2...");
+					}
 					if (sModelAux.saExists(sTgt)){
 						sControl3=replaceAll(sControl,sTgt,sRpl);
-						sModelAux=sModelAux.saReplaceAll(sTgt,sRpl,true);
-						sControl2=sModelAux.saToString();
+						var sModelAux2=sModelAux.concat([]);
+						sModelAux2=sModelAux2.saReplaceAll(sTgt,sRpl,true);
+						if (sControl3.length!=sModelAux2.saLength()){
+							logError("Error in length");
+							sModelAux2=sModelAux.concat([]);
+							sModelAux2=sModelAux2.saReplaceAll(sTgt,sRpl,true);
+						} else if (sControl3!=sModelAux2.saToString())
+							logError("Content error ");
+							sModelAux2=sModelAux.concat([]);
+							sModelAux2=sModelAux2.saReplaceAll(sTgt,sRpl,true);
+					    } else {
+							sModelAux=sModelAux.saReplaceAll(sTgt,sRpl,true);
+					    }
 						iPairClean=0;
 					} else {
 						iPairClean++;

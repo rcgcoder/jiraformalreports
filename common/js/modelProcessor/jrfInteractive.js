@@ -296,7 +296,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 					sControl=sModelAux.saToString();
 					var iPos=sControl.indexOf(sTgt);
 					var isaPos=sModelAux.saIndexOf(sTgt);
-					if (iPos!=isaPos){
+					if (iPos!=isaPos.iPos){
 						logError("not equals...");
 						isaPos=sModelAux.saIndexOf(sTgt);
 					} else if ((iPos>=0)&&(!sModelAux.saExists(sTgt))){

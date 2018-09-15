@@ -312,7 +312,7 @@ Array.prototype.saFindPos=function(sTargetText,bFromEnd,initPos){
 						iBlock--;
 					}
 					if (iBlock>=0){
-						iPos=self[iBlock].length-iLengthAux;
+						iPos=iPos+self[iBlock].length-iLengthAux;
 					} else {
 						iPos=-1;
 					}

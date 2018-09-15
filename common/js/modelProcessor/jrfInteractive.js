@@ -262,13 +262,62 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			self.openResultInNewTab();
 		}*/
 	}
+	getResultFromBrowser(idIframe){
+		var ifr=document.getElementById(idIframe);
+		var ifrDoc=ifr.contentDocument;
+		var ifrBodyHtml=ifrDoc.body.innerHTML;
+		var arrHtml=[];
+		var iInit=0;
+		while (iInit<ifrBodyHtml.length){
+		     arrHtml.push(ifrBodyHtml.substring(iInit,iInit+4096));
+		     iInit+=4096;
+		}
+		sModelProcessedResult=arrHtml;
+        var saPrependContent=[];
+		saPrependContent.push(`<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//ES"
+				"http://www.w3.org/TR/html4/strict.dtd">
+				<HTML>
+				<HEAD> 
+				<meta http-equiv='Content-Type' content='Type=text/html; charset=utf-8'>
+				<script type="text/javascript" src="https://unpkg.com/xlsx/dist/shim.min.js"></script>
+				<script type="text/javascript" src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+				
+				<script type="text/javascript" src="https://unpkg.com/blob.js@1.0.1/Blob.js"></script>
+				<script type="text/javascript" src="https://unpkg.com/file-saver@1.3.3/FileSaver.js"></script>`
+				);
+		var arrFiles=[	//"ts/demo.ts",
+			"css/RCGTaskManager.css",
+			"aui/css/aui.css",
+            "aui/css/aui-experimental.css",
+            ]; //test
+		arrFiles.forEach(function (sRelativePath){
+			var sAbsPath=System.webapp.composeUrl(sRelativePath);
+			saPrependContent.push('<link rel="stylesheet" type="text/css" href="'+sAbsPath+'">');
+		});
+		saPrependContent.push(`
+				<script type="text/javascript" >
+				function onBodyLoadEvent(){
+					alert("Is Full Loaded");
+				}
+				</script>
+				</HEAD> <BODY>
+				`);		
+		var vAux;
+		while (saPrependContent.length>0){
+			vAux=saPrependContent.pop();
+			sModelProcessedResult.unshift(vAux);
+		}
+		sModelProcessedResult.push("</BODY></HTML>");
+		return sModelProcessedResult;
+	}
 	cleanContent(oContent){
         var self=this;
-	    var pageContent=self.getInteractiveContent(oContent.idContent);
-		var webapp=System.webapp;
-		webapp.addStep("Removing empty lines of HTML ",function(sModelProcessedResult){
+	    var intContent=self.getInteractiveContent(oContent.idContent);
+        var sModelAux=self.getResultFromBrowser("ReportResult");
+        intContent.html=sModelAux;
+        var webapp=System.webapp;
+		webapp.addStep("Removing empty lines of HTML ",function(){
 			debugger;
-			var sModelAux=pageContent.html;
 			var otherSpace=String.fromCharCode(160);
 			var pairs=[ [" <br>","<br>",0]
 						,[" <p>","<p>",0]

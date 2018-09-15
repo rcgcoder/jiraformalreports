@@ -310,13 +310,14 @@ Array.prototype.saFindPos=function(sTargetText,bFromEnd,initPos){
 						iLengthAux-=sBlockStr.length;
 						iBlock--;
 					}
+					var iPosRest=iPosAux-(iLengthAux-sBlockStr.length);
 					while ((iBlock>=0)&&(iPosRest<0)){
 						sBlockStr=self[iBlock];
 						iPosRest=sBlockStr.length+iPosRest;
 						if (iPosRest<0){
 							iBlock--;
 						}
-					}
+					}					
 					iPos=iPosRest;
 				}
 			}

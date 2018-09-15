@@ -269,15 +269,16 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		webapp.addStep("Removing empty lines of HTML ",function(sModelProcessedResult){
 			debugger;
 			var sModelAux=pageContent.html;
+			var otherSpace=String.fromCharCode(160);
 			var pairs=[ [" <br>","<br>",0]
 						,[" <p>","<p>",0]
 						,[" </p>","</p>",0]
 						,["\n<p>","<p>",0]
 						,["\n<br>","<br>",0]
 						,["\n</p>","</p>",0]
-						,["&nbsp;<p>","<p>",0]
-						,["&nbsp;<br>","<br>",0]
-						,["&nbsp;</p>","</p>",0]
+						,[otherSpace+"<p>","<p>",0]
+						,[otherSpace+"<br>","<br>",0]
+						,[otherSpace+"</p>","</p>",0]
 						,["<br><p>","<p>",0]
 						,["<br><br>","<br>",0]
 						,["<p><br>","<p>",0]

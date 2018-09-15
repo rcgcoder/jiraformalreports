@@ -415,7 +415,7 @@ Array.prototype.saReplaceAll=function(strTgt,sReplace,repeat){
 			}
 			bReplaced=true;
 			iPos=saAux.saFindPos(strTgt,false,iPos);
-			iPosControl=sControl.indexOf(strTgt);
+			iPosControl=sControl.indexOf(strTgt,iPosControl);
 			if (iPosControl!=iPos){
 				logError("The target position are different");
 				debugger;

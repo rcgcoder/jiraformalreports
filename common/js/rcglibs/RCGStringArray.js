@@ -299,6 +299,7 @@ Array.prototype.saFindPos=function(sTargetText,bFromEnd,initPos){
 			if (iPos<0){
 				auxCad=auxCad.substring(auxCad.length-(tgtLength-1),auxCad.length);
 			} else {
+				debugger;
 				var sBlockStr="";
 				var iLengthAux=auxCad.length;
 				var iPosAux=iPos;

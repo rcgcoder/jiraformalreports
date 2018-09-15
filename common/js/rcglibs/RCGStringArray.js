@@ -399,10 +399,10 @@ Array.prototype.saReplaceAll=function(strTgt,sReplace,repeat){
 				logError("The target position are different");
 				debugger;
 			}
-			sControl1=sControl.substring(iPosControl-3,iPosControl+sReplace.length+6);
-			sControl=sControl.substring(0,iPosControl)+sReplace+sControl.substring(iPosControl+sReplace.length,sControl.length);
+			sControl1=sControl.substring(iPosControl-3,iPosControl+strTgt.length+6);
+			sControl=sControl.substring(0,iPosControl)+sReplace+sControl.substring(iPosControl+strTgt.length,sControl.length);
 			sControl2=sControl.substring(iPosControl-3,iPosControl+sReplace.length+6);
-			sControl3=saAux.saSubstring(iPos-3,iPos+sReplace.length+6);
+			sControl3=saAux.saSubstring(iPos-3,iPos+strTgt.length+6);
 			saAux=saAux.saReplace(iPos,strTgt.length,sReplace);
 			sControl4=saAux.saSubstring(iPos-3,iPos+sReplace.length+6);
 			if (sControl1!=sControl3.saToString()){

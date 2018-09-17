@@ -13,6 +13,7 @@ var RCGDocxSaver=class RCGDocxSaver{ //this kind of definition allows to hot-rel
 			var sInformeFileName="pandoc/"+self.fileNameBase+"-"+formatDate(new Date(),2);
 			var sHtmlFileName=sInformeFileName+".html";
 			var sDocxFileName=sInformeFileName+".docx";
+			uploaderBaseUrl=self.urlBase;
 			var uploader=newBlobUploader(sHtmlFileName,"text",50*1024*1024,
 					function(){
 						log("Block Send");

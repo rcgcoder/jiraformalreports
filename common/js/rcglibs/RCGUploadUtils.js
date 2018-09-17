@@ -1,3 +1,4 @@
+var uploaderBaseUrl="";
 function newUploader(file,serverFileName,type,chunkSize,readAllToMemory,cbBlockRead,cbFileRead,cbBlockSend,cbFileSend){
 	var uploader={
 		callbackFileRead:null,
@@ -158,7 +159,7 @@ function newUploader(file,serverFileName,type,chunkSize,readAllToMemory,cbBlockR
 			objMe=this;
 			$.ajax({
 				type: 'POST',
-				url: "php/uploaddownload/upload.php",
+				url: uploaderBaseUrl+"php/uploaddownload/upload.php",
 				data: formData,
 				processData: false,
 				contentType: false

@@ -326,75 +326,78 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		var sModelAux=self.getResultFromBrowser("ReportResult");
         intContent.html=sModelAux;
         var webapp=System.webapp;
+		var otherSpace=String.fromCharCode(160);
+		var pairs=[ [" <br>","<br>",0]
+					,[" <p>","<p>",0]
+					,[" </p>","</p>",0]
+					,[" <div>","<div>",0]
+					,["\n<div>","<div>",0]
+					,["\n<p>","<p>",0]
+					,["\n<br>","<br>",0]
+					,["\n</p>","</p>",0]
+					,["\n</span>","</span>",0]
+					,["\n</em>","</em>",0]
+					,[otherSpace+"<div>","<div>",0]
+					,[otherSpace+"<p>","<p>",0]
+					,[otherSpace+"<br>","<br>",0]
+					,[otherSpace+"</p>","</p>",0]
+					,[otherSpace+otherSpace+"</em>",otherSpace+"</em>",0]
+		
+					,["<br><p>","<p>",0]
+					,["<br><br>","<br>",0]
+					,["<p><br>","<p>",0]
+					,["</p><br>","</p>",0]
+					,["<br></p>","</p>",0]
+					,["<strong></strong>","",0]
+					,["<strong></strong>","",0]
+					,["<p></p>","",0]
+					,["<em>"+otherSpace+"</em>"," ",0]
+					,["<p><span></p>","<br>",0]
+					,["<span >","<span>",0]
+					,["<span></span>","",0]
+					,["<span> </span>","",0]
+					,["  </span>"," </span>",0]
+					,["<span>"+otherSpace+"</span>","",0]
+					,[otherSpace+otherSpace+"</span>",otherSpace+"</span>",0]
+					,[' colspan="1"',"",0]
+					,['<p >','<p>',0]		
+				];
+        var fncAddStepOuther;
+		var fncAddStepInner=function(pair){
+			webapp.addStep("Removing pair ["+ pair[0]+"] -> ["+pair[1]+"]"+" time:"+pair[2],function(){
+				var sTgt=pair[0];
+				var sRpl=pair[1];
+				pair[2]++;
+				if (sModelAux.saExists(sTgt)){
+					sModelAux=sModelAux.saReplaceAll(sTgt,sRpl,true);
+					iPairClean=0;
+				} else {
+					iPairClean++;
+				}
+				if (iPairClean<nPairs){
+					fncAddStepOuther(pair);
+				}
+				webapp.continueTask();
+			});
+		};
 		webapp.addStep("Removing empty lines of HTML ",function(){
 			debugger;
-			var otherSpace=String.fromCharCode(160);
-			var pairs=[ [" <br>","<br>",0]
-						,[" <p>","<p>",0]
-						,[" </p>","</p>",0]
-						,[" <div>","<div>",0]
-						,["\n<div>","<div>",0]
-						,["\n<p>","<p>",0]
-						,["\n<br>","<br>",0]
-						,["\n</p>","</p>",0]
-						,["\n</span>","</span>",0]
-						,["\n</em>","</em>",0]
-						,[otherSpace+"<div>","<div>",0]
-						,[otherSpace+"<p>","<p>",0]
-						,[otherSpace+"<br>","<br>",0]
-						,[otherSpace+"</p>","</p>",0]
-						,[otherSpace+"</em>","</em>",0]
-			
-			
-						,["<br><p>","<p>",0]
-						,["<br><br>","<br>",0]
-						,["<p><br>","<p>",0]
-						,["</p><br>","</p>",0]
-						,["<br></p>","</p>",0]
-			
-						,["<p></p>","",0]
-						,["<em></em>","",0]
-						,["<p><span></p>","<br>",0]
-						,["<span >","<span>",0]
-						,["<span></span>","",0]
-						,[' colspan="1"',"",0]
-						,['<p >','<p>',0]		
-					];
 			var iPairClean=0;
 			var nPairs=pairs.length;
-//			var sControl="";
-//			var sControl2="";
-//			var sControl3="";
-			var fncAddStep=webapp.createManagedCallback(function(pair){
-				webapp.addStep("Removing pair ["+ pair[0]+"] -> ["+pair[1]+"]"+" time:"+pair[2],function(){
-					var sTgt=pair[0];
-					var sRpl=pair[1];
-					pair[2]++;
-/*					sControl=sModelAux.saToString();
-					var iPos=sControl.indexOf(sTgt);
-					var isaPos=sModelAux.saFindPos(sTgt,false,0);
-					if (iPos!=isaPos){
-						logError("not equals...");
-						isaPos=sModelAux.saFindPos(sTgt,false,0);
-					} else if ((iPos>=0)&&(!sModelAux.saExists(sTgt))){
-						logError("Exists error...");
-					} else if ((iPos<0)&&(sModelAux.saExists(sTgt))){
-						logError("Exists error 2...");
-					}
-*/					if (sModelAux.saExists(sTgt)){
-						sModelAux=sModelAux.saReplaceAll(sTgt,sRpl,true);
-						iPairClean=0;
-					} else {
-						iPairClean++;
-					}
-					if (iPairClean<nPairs){
-						fncAddStep(pair);
-					}
-					webapp.continueTask();
-				});
-			});
+			var fncAddStepOuther=webapp.createManagedCallback(fncAddStepOuther);
 			pairs.forEach(function(pair){
-				fncAddStep(pair);
+				fncAddStepOuther(pair);
+			});
+			webapp.continueTask([sModelAux]);
+		});
+		webapp.addStep("Removing final <p> </p>... replaced by <br>",function(){
+			debugger;
+			pairs.unshift([ ["<p>","<br>",0],["</p>","<br>",0]]);
+			var iPairClean=0;
+			var nPairs=pairs.length;
+			var fncAddStepOuther=webapp.createManagedCallback(fncAddStepOuther);
+			pairs.forEach(function(pair){
+				fncAddStepOuther(pair);
 			});
 			webapp.continueTask([sModelAux]);
 		});

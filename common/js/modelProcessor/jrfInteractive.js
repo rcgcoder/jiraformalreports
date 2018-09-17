@@ -364,8 +364,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 				];
 		var iPairClean=0;
 		var nPairs=pairs.length;
-        var fncAddStepOuther;
-		var fncAddStepInner=function(pair){
+		var fncAddStepInner=function(pair,fncAddStepOuther){
 			webapp.addStep("Removing pair ["+ pair[0]+"] -> ["+pair[1]+"]"+" time:"+pair[2],function(){
 				var sTgt=pair[0];
 				var sRpl=pair[1];
@@ -377,7 +376,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 					iPairClean++;
 				}
 				if (iPairClean<nPairs){
-					fncAddStepOuther(pair);
+					fncAddStepOuther(pair,fncAddStepOuther);
 				}
 				webapp.continueTask();
 			});
@@ -387,7 +386,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			nPairs=pairs.length;
 			var fncAddStepOuther=webapp.createManagedCallback(fncAddStepInner);
 			pairs.forEach(function(pair){
-				fncAddStepOuther(pair);
+				fncAddStepOuther(pair,fncAddStepOuther);
 			});
 			webapp.continueTask([sModelAux]);
 		});
@@ -397,7 +396,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			iPairClean=0;
 			nPairs=pairs.length;
 			var fncAddStepOuther=webapp.createManagedCallback(fncAddStepInner);
-			pairs.forEach(function(pair){
+			pairs.forEach(function(pair,fncAddStepOuther){
 				fncAddStepOuther(pair);
 			});
 			webapp.continueTask([sModelAux]);

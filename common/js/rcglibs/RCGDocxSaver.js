@@ -20,9 +20,10 @@ var RCGDocxSaver=class RCGDocxSaver{ //this kind of definition allows to hot-rel
 					},
 					function(){
 						var sinfName=sInformeFileName.replace(".html",".docx");
-						downloader.initialize(1*1024*1024,"php/getPandoc.php");
+						downloader.initialize(1*1024*1024,"https://cantabrana.no-ip.org/seguimiento/php/getPandoc.php");
 						downloader.getFile(sDocxFileName,
 											function(data){
+												debugger;
 												saver.saveArrayBuffer(data,sDocxFileName);
 												log("Docx file saved");
 												});

@@ -360,7 +360,9 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 					,["<span>"+otherSpace+"</span>","",0]
 					,[otherSpace+otherSpace+"</span>",otherSpace+"</span>",0]
 					,[' colspan="1"',"",0]
-					,['<p >','<p>',0]		
+					,['<p >','<p>',0]
+		            ,[' style="text-align: right;"','',0]
+        			,[' style="text-align: left;"','',0]
 				];
 		var iPairClean=0;
 		var nPairs=pairs.length;
@@ -392,7 +394,25 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		});
 		webapp.addStep("Removing final <p> </p>... replaced by <br>",function(){
 			debugger;
-			pairs.unshift([ ["<p>","<br>",0],["</p>","<br>",0]]);
+			var fncIsolatedHtmlTag=function(sTagOpen,sTagClose){
+				pairs.unshift(["<br>"+sTagOpen,sTagOpen,0]);
+				pairs.unshift([sTagOpen+"<br>",sTagOpen,0]);
+				pairs.unshift(["<br>"+sTagClose,sTagClose,0]);
+				pairs.unshift([sTagClose+"<br>",sTagClose,0]);
+			}
+			pairs.unshift(["<p>","<br>",0]);
+			pairs.unshift(["</p>","<br>",0]);
+			pairs.unshift(['"&nbsp;&nbsp;','"&nbsp;',0]);
+			pairs.unshift(['"&nbsp;"','',0]);
+			fncIsolatedHtmlTag("<div>","</div>");
+			fncIsolatedHtmlTag("<h1>","</h1>");
+			fncIsolatedHtmlTag("<h2>","</h2>");
+			fncIsolatedHtmlTag("<h3>","</h3>");
+			fncIsolatedHtmlTag("<h4>","</h4>");
+			fncIsolatedHtmlTag("<h5>","</h5>");
+			fncIsolatedHtmlTag("<h6>","</h6>");
+			fncIsolatedHtmlTag("<td>","</td>");
+			fncIsolatedHtmlTag("<table>","</table>");
 			iPairClean=0;
 			nPairs=pairs.length;
 			var fncAddStepOuther=webapp.createManagedCallback(fncAddStepInner);

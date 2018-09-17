@@ -4,7 +4,10 @@ import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
   templateUrl: System.composeUrl('systemjs/html/components/docxSaver.html'),
 })
 export class docxSaver {
-    @Input() name: string = 'advSelection';
+    @Input() name: string = 'docxSaver';
+    @Input() htmlElementId: string = 'docxSaverHtmlId';
+    @Input() baseUrl: string = 'docxSaverBaseUrl';
+    @Input() fileNameBase: string = 'docxSaverFileName';
     ngOnInit() {
         var self=this;
         System.addPostProcess(function(){
@@ -29,12 +32,14 @@ export class docxSaver {
             
             self.addStep("Loading docx templater engine.... ",function(){
                 var arrFiles=[  //"ts/demo.ts",
+                                "js/rcglibs/RCGUploadUtils.js",
+                                "js/rcglibs/RCGDownloadUtils.js",
                                 "js/rcglibs/RCGDocxSaver.js"
                                 ]; //test
                 System.webapp.loadRemoteFiles(arrFiles);
             });
             self.addStep("Launching docx saver engine",function(){
-                var vDocx=new RCGDocxSaver(self.getTaskManager());
+                var vDocx=new RCGDocxSaver(self.getTaskManager(),self.htmlElementId,self.baseUrl,self.fileNameBase);
                 vDocx.process();
             });
             self.continueTask();

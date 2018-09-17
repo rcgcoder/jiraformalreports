@@ -363,6 +363,8 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 					,['<p >','<p>',0]
 		            ,[' style="text-align: right;"','',0]
         			,[' style="text-align: left;"','',0]
+					,[' class="wrapped"','',0]
+					,["<div></div>","",0]
 				];
 		var iPairClean=0;
 		var nPairs=pairs.length;
@@ -400,6 +402,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 				pairs.unshift(["<br>"+sTagClose,sTagClose,0]);
 				pairs.unshift([sTagClose+"<br>",sTagClose,0]);
 			}
+			pairs.unshift(["</p>","<br>",0]);
 			pairs.unshift(["<p>","<br>",0]);
 			pairs.unshift(["</p>","<br>",0]);
 			pairs.unshift(['"&nbsp;&nbsp;','"&nbsp;',0]);

@@ -212,6 +212,8 @@ var jrfReport=class jrfReport {
 								"js/rcglibs/RCGVarEngine.js",
 								"js/rcglibs/RCGFilterManager.js",
 								"js/rcglibs/RCGFileUtils.js",
+								"js/rcglibs/RCGUploadUtils.js",
+								"js/rcglibs/RCGDownloadUtils.js",
 								"js/modelProcessor/jrfHtmlCleaner.js",
 								"js/modelProcessor/jrfInteractive.js",
 								"js/modelProcessor/jrfModel.js",

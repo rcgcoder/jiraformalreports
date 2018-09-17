@@ -272,7 +272,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		     arrHtml.push(ifrBodyHtml.substring(iInit,iInit+4096));
 		     iInit+=4096;
 		}
-		sModelProcessedResult=arrHtml;
+		var sModelProcessedResult=arrHtml;
         var saPrependContent=[];
 		saPrependContent.push(`<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//ES"
 				"http://www.w3.org/TR/html4/strict.dtd">

@@ -384,7 +384,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			debugger;
 			var iPairClean=0;
 			var nPairs=pairs.length;
-			var fncAddStepOuther=webapp.createManagedCallback(fncAddStepOuther);
+			var fncAddStepOuther=webapp.createManagedCallback(fncAddStepInner);
 			pairs.forEach(function(pair){
 				fncAddStepOuther(pair);
 			});
@@ -395,7 +395,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			pairs.unshift([ ["<p>","<br>",0],["</p>","<br>",0]]);
 			var iPairClean=0;
 			var nPairs=pairs.length;
-			var fncAddStepOuther=webapp.createManagedCallback(fncAddStepOuther);
+			var fncAddStepOuther=webapp.createManagedCallback(fncAddStepInner);
 			pairs.forEach(function(pair){
 				fncAddStepOuther(pair);
 			});

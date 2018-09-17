@@ -31,6 +31,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		obj.ifEmpty=obj.getAttrVal("ifEmpty");
 		obj.inFormat=obj.getAttrVal("informat");
 		obj.outFormat=obj.getAttrVal("format");
+		obj.maxLength=obj.getAttrVal("maxlength");
 		obj.ifCondition=obj.getAttrVal("if",reportElem,false);
 		obj.processOrder=obj.getAttrVal("processOrder");
 		obj.visibility=obj.getAttrVal("visibility",reportElem,false);
@@ -606,6 +607,18 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				if ((sValAux=="")||(sValAux=="empty")){
 					sValAux=self.ifEmpty;
 				}
+			}
+		}
+		if (self.maxLength!=""){
+			var nLetter=-1;
+			if (isString(self.maxLength)||isArray(self.maxLength)){
+				nLetter=parseInt(self.maxLength.saToString());
+			} else {
+				nLetter=self.maxLength;
+			}
+			if (sValAux.saLength()>self.maxLength){
+				sValAux=sValAux.saSubstring(0,self.maxLength-3);
+				sValAux.push("...");
 			}
 		}
 		if (self.inFormat!=""){

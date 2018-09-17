@@ -44,4 +44,16 @@ export class TabResult {
 
         thePageId,fncCallback,"ReportResult","reportResultDiv");        
 */    }
+    doDownloadAsDocx(){
+        var self=this;
+        self.addStep("Updating and processing report...", function(){
+            self.addStep("Loading docx engine.... ",function(){
+                var arrFiles=[  "js/rcglibs/RCGUploadUtils.js",
+                                "js/rcglibs/RCGDownloadUtils.js"
+                             ]; //test
+                self.loadRemoteFiles(arrFiles);
+            });
+            self.continueTask();
+        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
+    }
 }

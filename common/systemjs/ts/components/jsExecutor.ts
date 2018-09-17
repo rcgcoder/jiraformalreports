@@ -18,7 +18,7 @@ export class jsExecutor {
     
     execute(){
         var self=this;
-        auxObj=System.getAngularObject(self.name+'-editor',true);
+        var auxObj=System.getAngularObject(self.name+'-editor',true);
         var theScript=auxObj.getValue();
 
         var theTextArea=System.getAngularDomObject(self.name+"-code")[0];

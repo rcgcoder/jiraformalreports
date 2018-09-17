@@ -313,6 +313,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	removeHiddenElements(iFrameDocument){
 		$(iFrameDocument.body).find("tr").not(":visible").remove(); 
 		$(iFrameDocument.body).find("td").not(":visible").remove(); 
+		$(iFrameDocument.body).find("th").not(":visible").remove(); 
 	}
 	cleanContent(oContent){
         var self=this;
@@ -336,19 +337,27 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 						,["\n<p>","<p>",0]
 						,["\n<br>","<br>",0]
 						,["\n</p>","</p>",0]
-						,["\n</span>","</p>",0]
+						,["\n</span>","</span>",0]
+						,["\n</em>","</em>",0]
 						,[otherSpace+"<div>","<div>",0]
 						,[otherSpace+"<p>","<p>",0]
 						,[otherSpace+"<br>","<br>",0]
 						,[otherSpace+"</p>","</p>",0]
+						,[otherSpace+"</em>","</em>",0]
+			
+			
 						,["<br><p>","<p>",0]
 						,["<br><br>","<br>",0]
 						,["<p><br>","<p>",0]
+						,["</p><br>","</p>",0]
+						,["<br></p>","</p>",0]
+			
 						,["<p></p>","",0]
+						,["<em></em>","",0]
 						,["<p><span></p>","<br>",0]
-						,["<p><span></span></p>","<br>",0]
 						,["<span >","<span>",0]
 						,["<span></span>","",0]
+						,[' colspan="1"',"",0]
 						,['<p >','<p>',0]		
 					];
 			var iPairClean=0;

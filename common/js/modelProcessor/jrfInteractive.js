@@ -362,6 +362,8 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 					,[' colspan="1"',"",0]
 					,['<p >','<p>',0]		
 				];
+		var iPairClean=0;
+		var nPairs=pairs.length;
         var fncAddStepOuther;
 		var fncAddStepInner=function(pair){
 			webapp.addStep("Removing pair ["+ pair[0]+"] -> ["+pair[1]+"]"+" time:"+pair[2],function(){
@@ -381,9 +383,8 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			});
 		};
 		webapp.addStep("Removing empty lines of HTML ",function(){
-			debugger;
-			var iPairClean=0;
-			var nPairs=pairs.length;
+			iPairClean=0;
+			nPairs=pairs.length;
 			var fncAddStepOuther=webapp.createManagedCallback(fncAddStepInner);
 			pairs.forEach(function(pair){
 				fncAddStepOuther(pair);
@@ -393,8 +394,8 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		webapp.addStep("Removing final <p> </p>... replaced by <br>",function(){
 			debugger;
 			pairs.unshift([ ["<p>","<br>",0],["</p>","<br>",0]]);
-			var iPairClean=0;
-			var nPairs=pairs.length;
+			iPairClean=0;
+			nPairs=pairs.length;
 			var fncAddStepOuther=webapp.createManagedCallback(fncAddStepInner);
 			pairs.forEach(function(pair){
 				fncAddStepOuther(pair);

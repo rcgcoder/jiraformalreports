@@ -24,7 +24,7 @@ var RCGDocxSaver=class RCGDocxSaver{ //this kind of definition allows to hot-rel
 						downloader.getFile(sDocxFileName,
 											function(data){
 												debugger;
-												saver.saveArrayBuffer(data,sDocxFileName);
+												saveDataToFile (data,sDocxFileName);
 												log("Docx file saved");
 												});
 					});

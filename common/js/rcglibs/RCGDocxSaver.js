@@ -9,7 +9,24 @@ var RCGDocxSaver=class RCGDocxSaver{ //this kind of definition allows to hot-rel
 	process(){
 		var self=this;
 		self.addStep("Processing content to save Docx",function(){
-			var html=$("#"+self.sourceHtmlId).find("iframe")[0].contentDocument.body.innerHTML;
+			var html="<html><body>"+$("#"+self.sourceHtmlId).find("iframe")[0].contentDocument.body.innerHTML+"</body></html>";
+			var sInformeFileName="pandoc/"+self.fileNameBase+"-"+formatDate(new Date(),2);
+			var sHtmlFileName=sInformeFileName+".html";
+			var sDocxFileName=sInformeFileName+".docx";
+			var uploader=newBlobUploader(sHtmlFileName,"text",50*1024*1024,
+					function(){
+						log("Block Send");
+					},
+					function(){
+						var sinfName=sInformeFileName.replace(".html",".docx");
+						downloader.initialize(1*1024*1024,"php/getPandoc.php");
+						downloader.getFile(sDocxFileName,
+											function(data){
+												saver.saveArrayBuffer(data,sDocxFileName);
+												log("Docx file saved");
+												});
+					});
+			uploader.sendText(html);
 			debugger;
 	    	self.continueTask();
 		    });

@@ -299,7 +299,7 @@ Array.prototype.saFindPos=function(sTargetText,bFromEnd,initPos){
 			if (iPos<0){
 				auxCad=auxCad.substring(auxCad.length-(tgtLength-1),auxCad.length);
 			} else {
-				debugger;
+//				debugger;
 				var sBlockStr="";
 				var iLengthAux=auxCad.length;
 				var iPosAux=iPos;
@@ -387,19 +387,19 @@ Array.prototype.saReplaceAll=function(strTgt,sReplace,repeat){
 	var saAux=this;
 	var bAllReplaced=false;
 	var bReplaced=false;
-	var sControl="";
+/*	var sControl="";
 	var sControl1="";
 	var sControl2="";
 	var sControl3="";
 	var sControl4="";
 	var iPosControl=0;
-	while (!bAllReplaced){
-		sControl=saAux.saToString();
-		iPosControl=sControl.indexOf(strTgt);
+*/	while (!bAllReplaced){
+//		sControl=saAux.saToString();
+//		iPosControl=sControl.indexOf(strTgt);
 		iPos=saAux.saFindPos(strTgt,false,0);
 		bReplaced=false;
 		while (iPos>=0){
-			if (iPosControl!=iPos){
+/*			if (iPosControl!=iPos){
 				logError("The target position are different");
 				debugger;
 			}
@@ -407,8 +407,8 @@ Array.prototype.saReplaceAll=function(strTgt,sReplace,repeat){
 			sControl=sControl.substring(0,iPosControl)+sReplace+sControl.substring(iPosControl+strTgt.length,sControl.length);
 			sControl2=sControl.substring(iPosControl-3,iPosControl+sReplace.length+6);
 			sControl3=saAux.saSubstring(iPos-3,iPos+strTgt.length+6);
-			saAux=saAux.saReplace(iPos,strTgt.length,sReplace);
-			sControl4=saAux.saSubstring(iPos-3,iPos+sReplace.length+6);
+*/			saAux=saAux.saReplace(iPos,strTgt.length,sReplace);
+/*			sControl4=saAux.saSubstring(iPos-3,iPos+sReplace.length+6);
 			if (sControl1!=sControl3.saToString()){
 				logError("The control of initial are differents");
 				debugger;
@@ -417,10 +417,10 @@ Array.prototype.saReplaceAll=function(strTgt,sReplace,repeat){
 				logError("The control of results are differents");
 				debugger;
 			}
-			bReplaced=true;
+*/			bReplaced=true;
 			var iPosAnt=iPos;
 			iPos=saAux.saFindPos(strTgt,false,iPos);
-			iPosControl=sControl.indexOf(strTgt,iPosControl);
+/*			iPosControl=sControl.indexOf(strTgt,iPosControl);
 			while (iPosControl!=iPos){
 				logError("The target position are different");
 				iPos=iPosAnt;
@@ -428,7 +428,8 @@ Array.prototype.saReplaceAll=function(strTgt,sReplace,repeat){
 				iPos=saAux.saFindPos(strTgt,false,iPos);
 				debugger;
 			}
-		}
+		*/
+		}		
 		if (!bReplaced){
 			bAllReplaced=true;
 		} else if (isDefined(repeat)&&repeat){

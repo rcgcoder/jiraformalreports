@@ -317,7 +317,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
         var self=this;
 	    var intContent=self.getInteractiveContent(oContent.idContent);
 	    
-		var ifr=document.getElementById(idIframe);
+		var ifr=document.getElementById(oContent.idIframe);
 		var ifrDoc=ifr.contentDocument;
 		self.removeHiddenElements(ifrDoc);
 		

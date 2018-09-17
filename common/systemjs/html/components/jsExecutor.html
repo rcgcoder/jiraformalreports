@@ -1,7 +1,6 @@
 <button (click)="execute()" class="aui-button">execute</button> 
 <input type="file" name="userPhoto" id="userPhoto" />
-
-<textarea name="{{name}}-code" rows=40 style="width:100%;">
+<div id="{{name}}-ace" style="width:100%;">
                 var  saveAttachment=function (issueId,theDataToSave) {
                     // theDataToSave is a large block of base-64 encoded binary data
                     var theFileName = "testattachment.txt";
@@ -75,5 +74,5 @@
               var uint8Values= new Uint8Array(iValues);
               var sB64=fromByteArray(uint8Values);
               saveAttachment("PDP-37",sB64);
-</textarea>
+</div>
 <button (click)="execute()" class="aui-button">execute</button> 

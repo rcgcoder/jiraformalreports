@@ -5,14 +5,20 @@ import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 })
 export class jsExecutor {
     @Input() name: string = 'jsExecutor';
+    editor:object;
     ngOnInit() {
         var self=this;
         System.addPostProcess(function(){
             log("PostProcessing:"+self.name);
             System.bindObj(self);
             System.webapp.getTaskManager().extendObject(self);
+            ace.config.set('basePath', System.webapp.composeUrl("js/libs/ace/src-noconflict")); 
+            self.editor = ace.edit(self.name+"-ace");
+            self.editor.setTheme("ace/theme/Cobalt");
+            self.editor.session.setMode("ace/mode/javascript");
         });
     }
+
     
     execute(){
         var self=this;

@@ -1,5 +1,11 @@
 <button (click)="execute()" class="aui-button">execute</button> 
 <input type="file" name="userPhoto" id="userPhoto" />
-<div id="{{name}}-ace" style="width:100%;">
-</div>
+<jiraCorrelator 
+	withToggle=true 
+	name="{{name}}-executor" 
+	functionHeader=""
+	functionFooter=""
+	caption="Execute the content as javascript">
+</jiraCorrelator>
+
 <button (click)="execute()" class="aui-button">execute</button> 

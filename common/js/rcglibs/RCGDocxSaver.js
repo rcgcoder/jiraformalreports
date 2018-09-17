@@ -8,8 +8,9 @@ var RCGDocxSaver=class RCGDocxSaver{ //this kind of definition allows to hot-rel
 	}
 	process(){
 		var self=this;
-		self.addStep("Processing",function(){
+		self.addStep("Processing content to save Docx",function(){
 			var htmlelement = document.getElementById(self.sourceHtmlId);
+			debugger;
 	    	self.continueTask();
 		    });
 	    self.continueTask();

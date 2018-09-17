@@ -310,10 +310,18 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		sModelProcessedResult.push("</BODY></HTML>");
 		return sModelProcessedResult;
 	}
+	removeHiddenElements(iFrame){
+		$($(iFrame)[0].contentDocument.body).find("tr").not(":visible").remove(); 
+	}
 	cleanContent(oContent){
         var self=this;
 	    var intContent=self.getInteractiveContent(oContent.idContent);
-        var sModelAux=self.getResultFromBrowser("ReportResult");
+	    
+		var ifr=document.getElementById(idIframe);
+		var ifrDoc=ifr.contentDocument;
+		self.removeHiddenElements(ifrDoc);
+		
+		var sModelAux=self.getResultFromBrowser("ReportResult");
         intContent.html=sModelAux;
         var webapp=System.webapp;
 		webapp.addStep("Removing empty lines of HTML ",function(){

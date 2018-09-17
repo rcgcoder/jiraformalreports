@@ -396,8 +396,8 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			iPairClean=0;
 			nPairs=pairs.length;
 			var fncAddStepOuther=webapp.createManagedCallback(fncAddStepInner);
-			pairs.forEach(function(pair,fncAddStepOuther){
-				fncAddStepOuther(pair);
+			pairs.forEach(function(pair){
+				fncAddStepOuther(pair,fncAddStepOuther);
 			});
 			webapp.continueTask([sModelAux]);
 		});

@@ -51,7 +51,7 @@ export class TabResult {
                 var arrFiles=[  "js/rcglibs/RCGUploadUtils.js",
                                 "js/rcglibs/RCGDownloadUtils.js"
                              ]; //test
-                self.loadRemoteFiles(arrFiles);
+                System.webapp.loadRemoteFiles(arrFiles);
             });
             self.continueTask();
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);

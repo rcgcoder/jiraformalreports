@@ -189,7 +189,7 @@ export class jiraCorrelator {
         log("it´s clicked show button");
         log("Showind the dialog");
         self.getDialog().show();
-        debugger;
+//        debugger;
         var auxObj=System.getAngularDomObject(self.name+"-ChildParentHelpers");
         var adjustHeight=auxObj.height();
         if (!self.withChildParentHelpers){

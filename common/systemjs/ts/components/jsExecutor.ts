@@ -18,10 +18,13 @@ export class jsExecutor {
     
     execute(){
         var self=this;
+        auxObj=System.getAngularObject(self.name+'-editor',true);
+        var theScript=auxObj.getValue();
+
         var theTextArea=System.getAngularDomObject(self.name+"-code")[0];
         var code=`"";
                  log("executing");
-                 `+theTextArea.value+`
+                 `+theScript.value+`
                  log("executed");
                  `;
         self.addStep("Executing text area code.... ",function(){

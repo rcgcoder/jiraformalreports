@@ -311,7 +311,8 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		return sModelProcessedResult;
 	}
 	removeHiddenElements(iFrameDocument){
-		$(iFrameDocument.body).not(":visible").remove(); 
+		$(iFrameDocument.body).find("tr").not(":visible").remove(); 
+		$(iFrameDocument.body).find("td").not(":visible").remove(); 
 	}
 	cleanContent(oContent){
         var self=this;

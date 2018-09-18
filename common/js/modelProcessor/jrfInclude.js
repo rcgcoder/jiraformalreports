@@ -69,7 +69,13 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
     			var sTitle="";
                 if (self.titlePostpend!=""){
                 	var antContent;
-        			self.addStep("Getting title and prepend:"+self.titlePostpend+" to downlad the especific content of "+srcUrl,function(oContent){
+        			self.addStep("Getting title and prepend:"+self.titlePostpend+" to downlad the especific content of "+srcUrl,function(jsonContent){
+        				var oContent;
+        				if (typeof jsonContent==="object") {
+        					oContent=jsonContent;
+        				} else {  
+            				oContent=JSON.parse(jsonContent);
+        				}
         				antContent=oContent;
         				sTitle=oContent.title;
         				sTitle+=" - "+self.replaceVars(self.titlePostpend).saToString().trim();

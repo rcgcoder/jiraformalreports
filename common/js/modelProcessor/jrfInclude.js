@@ -13,6 +13,7 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
 		self.preprocessed=false;
 		self.includeId="";
 		self.autoAddPostHtml=false;
+		self.finalUrl="";
 		
 //		debugger;
 		self.titlePostpend=self.getAttrVal("titlePostpend").trim(); // now only content or javascript
@@ -54,6 +55,7 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
             if (bCached){
             	var oCached=self.model.includeCache.getValue(theHash);
             	var tagCached=oCached.tag;
+            	tag.finalUrl=tagCached.finalUrl;
             	var hsChilds=tagCached.getChilds();
             	hsChilds.walk(function(child,iDeep,key){
             		tag.addChild(child,key);
@@ -62,6 +64,7 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
             } else {
 	            self.addStep("Downloading content:"+contentId+" from "+srcUrl,function(){
 	                	cflc.getContent(contentId);
+	                	tag.finalUrl=srcUrl;
 	            });
     			var sTitle="";
                 if (self.titlePostpend!=""){
@@ -75,7 +78,10 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
         			self.addStep("Processing Confluence search Content:"+contentId+" from "+srcUrl,function(oContent){
         				var oResult=antContent;
         				if (oContent.size>0){
+    	                	tag.finalUrl="Title:("+sTitle+")";
         					oResult=oContent.results[0];
+        				} else {
+    	                	tag.finalUrl="url:("+srcUrl+")";
         				}
     					self.continueTask([oResult]);
         			});
@@ -150,6 +156,9 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
 //		debugger;
 		var self=this;
 		self.addStep("Processing all Childs of jrfInclude",function(){
+			if (self.model.variables.getVar("withComprobations")){
+				self.addHtml("["+self.finalUrl+"]");
+			}
 			self.processAllChilds();
 		});
 		self.addStep("Finalizing the jrfInclude",function(){

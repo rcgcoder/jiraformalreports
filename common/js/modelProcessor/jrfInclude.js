@@ -157,7 +157,7 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
 		var self=this;
 		self.addStep("Processing all Childs of jrfInclude",function(){
 			if (self.model.variables.getVar("withComprobations")){
-				self.addHtml("["+self.finalUrl+"]");
+				self.tag.addHtml("["+self.finalUrl+"]");
 			}
 			self.processAllChilds();
 		});

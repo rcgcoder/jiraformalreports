@@ -413,13 +413,7 @@ var jrfReport=class jrfReport {
 			}
 			if ((isDefined(self.config.excludeFunctionEnabled)&&self.config.excludeFunctionEnabled)&&
 			   (isDefined(self.config.excludeFunction)&&(self.config.excludeFunction.trim()!=""))){
-				debugger;
 				var fncExclusion=self.config.excludeFunction;
-				while (fncExclusion.indexOf("useFilter")>=0){
-					//debugger;
-					fncExclusion=self.objModel.filters.useFilter(fncExclusion);
-				}
-
 				self.allIssues.setExcludeFunction(fncExclusion);
 			}
 			if ((isDefined(self.config.relatedIssuesFindFunctionEnabled)&&self.config.relatedIssuesFindFunctionEnabled)&&

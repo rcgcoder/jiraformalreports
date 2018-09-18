@@ -56,6 +56,7 @@ function newIssueFactory(report){
 			if (isArray(fncExclusion)){
 				sSource=fncExclusion.saToString();
 			}
+			
 			sSource=`'';
 					var issue=_arrRefs_[0];
 					var report=_arrRefs_[1];

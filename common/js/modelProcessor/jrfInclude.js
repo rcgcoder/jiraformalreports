@@ -81,7 +81,13 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
         				sTitle+=" - "+self.replaceVars(self.titlePostpend).saToString().trim();
                     	cflc.getContentByTitle(sTitle);
         			});            
-        			self.addStep("Processing Confluence search Content:"+contentId+" from "+srcUrl,function(oContent){
+        			self.addStep("Processing Confluence search Content:"+contentId+" from "+srcUrl,function(jsonContent){
+        				var oContent;
+        				if (typeof jsonContent==="object") {
+        					oContent=jsonContent;
+        				} else {  
+            				oContent=JSON.parse(jsonContent);
+        				}
         				var oResult=antContent;
         				if (oContent.size>0){
     	                	tag.finalUrl="Title:("+sTitle+")";

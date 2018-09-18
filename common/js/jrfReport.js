@@ -413,6 +413,7 @@ var jrfReport=class jrfReport {
 			}
 			if ((isDefined(self.config.excludeFunctionEnabled)&&self.config.excludeFunctionEnabled)&&
 			   (isDefined(self.config.excludeFunction)&&(self.config.excludeFunction.trim()!=""))){
+				debugger;
 				var fncExclusion=self.config.excludeFunction;
 				while (fncExclusion.indexOf("useFilter")>=0){
 					//debugger;

@@ -311,9 +311,12 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		return sModelProcessedResult;
 	}
 	removeHiddenElements(iFrameDocument){
-		$(iFrameDocument.body).find("tr").not(":visible").remove(); 
-		$(iFrameDocument.body).find("td").not(":visible").remove(); 
-		$(iFrameDocument.body).find("th").not(":visible").remove(); 
+		var jqBody=$(iFrameDocument.body);
+		var jqTRs=jqBody.find("tr");
+		var jqNotVisibles=jqTRs.not(":visible");
+		jqNotVisibles.remove(); 
+//		$(iFrameDocument.body).find("td").not(":visible").remove(); 
+//		$(iFrameDocument.body).find("th").not(":visible").remove(); 
 	}
 	cleanContent(oContent){
         var self=this;
@@ -385,7 +388,14 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 				webapp.continueTask();
 			});
 		};
-		webapp.addStep("Removing empty lines of HTML ",function(){
+		var fncEndLoop=function(fncAddLoopStep){
+			if (iPairClean>=nPairs) {
+				webapp.continueTask();
+			} else {
+				fncAddLoopStep();
+			}
+		}
+		webapp.addStep("Removing empty lines of HTML....",function(){
 			iPairClean=0;
 			nPairs=pairs.length;
 			var fncAddStepOuther=webapp.createManagedCallback(fncAddStepInner);

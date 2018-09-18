@@ -1105,7 +1105,6 @@ var jrfReport=class jrfReport {
 				});
 			});
 			self.addStep("Creating child relations by issue custom formulas",function(){
-				debugger;
 				self.walkAsync(issuesAdded,function(issueParent){
 					if (issueParent.existsRelationFilter("Child")){
 						//debugger;
@@ -1214,6 +1213,7 @@ var jrfReport=class jrfReport {
 					var issueKey=issue.getKey();
 					if (self.childs.exists(issueKey)){
 						self.childs.remove(issueKey);
+						issuesAdded.remove(issueKey);
 						nRemoves++;
 					}
 					if (isDefined(issRemove.removeFromParent)

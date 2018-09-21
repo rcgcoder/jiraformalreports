@@ -234,6 +234,8 @@ class ChronoFactory{
 		this.chronos[sPID]=undefinedValue;
 	}
 	chronoStartFunction(sAuxiliarInfo,nIndex){
+		var self=this;
+		if (!self.enabled) return "";
 		var newIndex=1
 		if (isDefined(nIndex)){
 			newIndex+=nIndex;
@@ -242,18 +244,22 @@ class ChronoFactory{
 	}
 	chronoStopFunction(nIndex){
 		var newIndex=1
+		if (!self.enabled) return "";
 		if (isDefined(nIndex)){
 			newIndex+=nIndex;
 		}
 		return this.getChronos().chronoStop("",newIndex);
 	}
 	chronoStart(name,sAuxiliarInfo){
+		if (!self.enabled) return "";
 		return this.getChronos().chronoStart(name,sAuxiliarInfo);
 	}
 	chronoStop(name){
+		if (!self.enabled) return "";
 		return this.getChronos().chronoStop(name);
 	}
 	traceBlock(sLabel,sValue,sMeasure){
+		if (!self.enabled) return "";
 		var sRowSeparator=", ";
 		var sFieldSeparator="";
 		return sRowSeparator
@@ -363,7 +369,7 @@ class ChronoFactory{
 	}
 }
 var chronoFactory=new ChronoFactory();
-
+var enabledChronos=false;
 class RCGChronoUtils{
 	constructor(){
 		log("Creating ChronoUtils");

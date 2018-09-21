@@ -6,9 +6,10 @@ class RCGHashMapFactory{
 			this.stackAsyncCalls="";
 			
 		}
-		newHashMap(){
+		newHashMap(storable){
 			this.nHashCreated++;
 			var obj={
+					storable:storable,
 				    root:"",
 					nodeCache:"",
 					nNodes:0}
@@ -53,7 +54,6 @@ class RCGHashMapFactory{
 			obj.remove=this.remove;
 			obj.length=this.length;
 			obj.toArray=this.toArray;
-			
 			return obj;
 		}
 		resetNode(node){
@@ -1592,9 +1592,9 @@ class RCGHashMapUtils{
 	constructor(){
 		log("Creating HashMapUtils");
 	}
-	newHashMap(){
+	newHashMap(storable){
 //		log("Start Chrono:"+sName);
-		return hashmapFactory.newHashMap();
+		return hashmapFactory.newHashMap(storable);
 	}
 }
 registerClass(RCGHashMapUtils);

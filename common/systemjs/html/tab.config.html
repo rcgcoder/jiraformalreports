@@ -26,6 +26,14 @@
 					(onFullFillRequest)="onGetFullListOfModels($event)"
 					>
 				</dlgEditableList>
+				<dlgEditableList id="listContracts" name="listContracts" 
+					typeDescriptor="List of Contracts Available to Report" 
+					columns=2
+					columnDefinitions='[{"caption":"key"},{"caption":"Long Name"}]'
+				    openDialogCaption="List of Contracts Available to Report"
+					(onApply)="onChangeListOfContracts($event)"
+					>
+				</dlgEditableList>
 				<dlgEditableList id="importModelsFromAttachment" name="importModelsFromAttachment" 
 					typeDescriptor="Import models from attachment of the report issue" 
 					columns=3

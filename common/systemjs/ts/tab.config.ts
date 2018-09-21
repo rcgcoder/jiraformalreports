@@ -218,6 +218,11 @@ export class TabConfig {
         value=auxObj.getElements();
         dfReport["listDefaultVariables"]=value;
 
+        auxObj=System.getAngularObject('listContracts',true);
+        value=auxObj.getElements();
+        dfReport["listContracts"]=value;
+        
+        
         auxObj=System.getAngularObject('listReportsHistory',true);
         value=auxObj.getElements();
         dfReport["listReportsHistory"]=value;
@@ -387,6 +392,10 @@ export class TabConfig {
         if (isDefined(config.listDefaultVariables)){
             auxObj.setElements(config.listDefaultVariables);
         }
+        auxObj=System.getAngularObject('listContracts',true);
+        if (isDefined(config.listContracts)){
+            auxObj.setElements(config.listContracts);
+        }
         
         auxObj=System.getAngularObject('listReportsHistory',true);
         if (isDefined(config.listReportsHistory)){
@@ -454,6 +463,15 @@ export class TabConfig {
         });
         self.continueTask();
     }
+    
+    onChangeListOfContracts(arrContracts){
+        var self=this;
+        log("applying contracts conf:"+arrTypes.length);
+/*        System.webapp.setIssueLinkTypes(arrTypes); 
+        System.getAngularObject('selInterestIssueLinkTypes',true).reloadItems();
+        System.getAngularObject("tabConfig",true).updateCorrelators();
+ */   }    
+    
     onChangeIssueLinkTypesConfiguration(arrTypes){
         var self=this;
         log("applying issue link types conf:"+arrTypes.length);

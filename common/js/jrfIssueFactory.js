@@ -862,6 +862,9 @@ function newIssueFactory(report){
 					" To:"+(history[2]!=null?JSON.stringify(history[2]):"null") );
 */			if ((i==0)&&(history[3]=="adjust")){
 				auxVal=history[2];
+				if (history[0].getTime()<=dateTime.getTime()){
+					bLocated=true;
+				}
 			} else if (history[0].getTime()<=dateTime.getTime()){ // if next is <= that the date.... finish
 				auxVal=history[2];
 				bLocated=true;

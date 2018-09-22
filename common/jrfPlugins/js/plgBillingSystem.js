@@ -338,8 +338,8 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		var timespent=0;
 		if (self.fieldValue("project.key")!="OT"){
 			timespent=self.fieldAccumChilds("timespent",atDatetime);
-			timeoriginalestimate=self.getReport().adjustAccumItem("Childs",timeoriginalestimate,self,"timeoriginalestimate");
-			timeestimate=self.getReport().adjustAccumItem("Childs",timeestimate,self,"timeestimate");
+			timeoriginalestimate=self.getReport().adjustAccumItem("Childs",timeoriginalestimate,self,"timeoriginalestimate",atDatetime);
+			timeestimate=self.getReport().adjustAccumItem("Childs",timeestimate,self,"timeestimate",atDatetime);
 		} else {
 			timespent=self.fieldValue("timespent",false,atDatetime);
 		}

@@ -388,7 +388,7 @@ function newIssueFactory(report){
 					if (isString(vAux)){
 						vAux=parseFloat(vAux);
 					}
-					vAux=self.getReport().adjustAccumItem(childType,vAux,issue,fieldName,notAdjust);
+					vAux=self.getReport().adjustAccumItem(childType,vAux,issue,fieldName,dateKey,notAdjust);
 					vAccum+=vAux;
 				}
 			});
@@ -461,7 +461,7 @@ function newIssueFactory(report){
 		}
 		var auxNotAdjust=(isDefined(notAdjust)&&notAdjust); // not adjust uses only if TRUE is received
 		if ((!bPrecomputed)&&(!auxNotAdjust)) {
-			accumValue=self.getReport().adjustAccumItem(childType,accumValue,self,theFieldName,auxNotAdjust);
+			accumValue=self.getReport().adjustAccumItem(childType,accumValue,self,theFieldName,dateTime,auxNotAdjust);
 		}
 //		accumCache.add(cacheKey,accumValue);
 		keyValuesCache.add(cacheTimeKey,accumValue);

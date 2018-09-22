@@ -182,6 +182,10 @@ function isObject(obj){
 function isBoolean(obj){
 	return ( (typeof obj === "boolean") && (obj !== null) && isDefined(obj) );
 }
+function isNumber(obj){
+	return ( (typeof obj === "number") && (obj !== null) && isDefined(obj) );
+}
+
 
 function isInArray(theArray,theKey,theFieldOrFunctionName){
 	var bExists=false;

@@ -23,11 +23,11 @@ var jrfReport=class jrfReport {
 		self.adjustAccumItemFunctions=newHashMap();
 		self.reportDateTime=new Date();
 	}
-	adjustAccumItem(accumType,accumValue,issue,fieldName,notAdjust){
+	adjustAccumItem(accumType,accumValue,issue,fieldName,atDatetime,notAdjust){
 		var self=this;
 		var fnc=self.adjustAccumItemFunctions.getValue(accumType);
 		if (fnc!=""){
-			return fnc(accumValue,issue,fieldName,notAdjust);
+			return fnc(accumValue,issue,fieldName,atDatetime,notAdjust);
 		}
 		return accumValue;
 	}
@@ -395,13 +395,13 @@ var jrfReport=class jrfReport {
 	        }
 	        var sBillingAdjustFunction=self.config.BillingElementAdjustFunction;
 	        if (isDefined(sBillingAdjustFunction)&&(sBillingAdjustFunction!="")){
-	    		var fncFormula=Function("actualValue","issue",sBillingAdjustFunction);
+	    		var fncFormula=Function("actualValue","issue","fieldName","atDatetime","notAdjust",sBillingAdjustFunction);
 	    		self.adjustAccumItemFunctions.add("Childs",fncFormula);
 	        }
 	        
 	        var sAdvanceAdjustFunction=self.config.AdvanceElementAdjustFunction;
 	        if (isDefined(sAdvanceAdjustFunction)&&(sAdvanceAdjustFunction!="")){
-	    		var fncFormula=Function("actualValue","issue",sAdvanceAdjustFunction);
+	    		var fncFormula=Function("actualValue","issue","fieldName","atDatetime","notAdjust",sAdvanceAdjustFunction);
 	    		self.adjustAccumItemFunctions.add("AdvanceChilds",fncFormula);
 	        }
 	        

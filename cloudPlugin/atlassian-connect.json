@@ -29,8 +29,19 @@
                  }
              }
          ]
-		,   "staticContentMacros": [{
-        "renderingMethod": "get",
+		,   
+    "dynamicContentMacros": [
+      {
+        "width": "200px",
+        "height": "200px",
+        "renderModes": {
+          "pdf": {
+            "url": "/render-map-pdf"
+          },
+          "default": {
+            "url": "/render-map-static"
+          }
+        },
         "url": "/render-map?pageTitle={page.title}",
         "description": {
           "value": "Shows a configurable map"
@@ -84,7 +95,7 @@
           ]
         },
         "editor": {
-          "url": "/jfreports/php/hello.php",
+          "url": "/map-editor",
           "editTitle": {
             "value": "Edit Map"
           },
@@ -95,7 +106,8 @@
         "name": {
           "value": "Maps"
         },
-        "key": "static-macro-example"
-      }]
+        "key": "dynamic-macro-example"
+      }
+    ]
      }
  }

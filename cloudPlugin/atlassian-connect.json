@@ -29,21 +29,6 @@
                  }
              }
          ]
-		,"jiraEntityProperties": [{
-			"name": {
-				"value": "Sauce index",
-				"i18n": "sauce.index"
-			},
-			"key": "sauce-entity-job-id",
-			"entityType": "issue",
-			"keyConfigurations": [{
-				"propertyKey": "sauce",
-				"extractions": [{
-					"objectName": "sauce.id",
-					"type": "string"
-				}]
-			}]
-		}]
 		,   "staticContentMacros": [{
         "renderingMethod": "get",
         "url": "/render-map?pageTitle={page.title}",

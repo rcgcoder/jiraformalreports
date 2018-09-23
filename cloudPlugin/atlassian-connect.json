@@ -44,5 +44,73 @@
 				}]
 			}]
 		}]
+		,   "staticContentMacros": [{
+        "renderingMethod": "get",
+        "url": "/render-map?pageTitle={page.title}",
+        "description": {
+          "value": "Shows a configurable map"
+        },
+        "icon": {
+          "width": 80,
+          "height": 80,
+          "url": "/maps/icon.png"
+        },
+        "documentation": {
+          "url": "http://docs.example.com/addons/maps"
+        },
+        "categories": [
+          "visuals"
+        ],
+        "outputType": "block",
+        "bodyType": "none",
+        "aliases": [
+          "map"
+        ],
+        "featured": true,
+        "parameters": [
+          {
+            "identifier": "view",
+            "name": {
+              "value": "Map View"
+            },
+            "description": {
+              "value": "Allows switching between view types"
+            },
+            "type": "enum",
+            "required": true,
+            "multiple": false,
+            "defaultValue": "Map",
+            "values": [
+              "Map",
+              "Satellite"
+            ],
+            "hidden": false
+          }
+        ],
+        "autoconvert": {
+          "urlParameter": "url",
+          "matchers": [
+            {
+              "pattern": "https://www.example.com/maps/{}/{}"
+            },
+            {
+              "pattern": "https://www.example.com/map-editor/{}"
+            }
+          ]
+        },
+        "editor": {
+          "url": "/map-editor",
+          "editTitle": {
+            "value": "Edit Map"
+          },
+          "insertTitle": {
+            "value": "Insert Map"
+          }
+        },
+        "name": {
+          "value": "Maps"
+        },
+        "key": "static-macro-example"
+      }]
      }
  }

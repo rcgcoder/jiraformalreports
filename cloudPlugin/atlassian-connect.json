@@ -95,7 +95,7 @@
           ]
         },
         "editor": {
-          "url": "/map-editor",
+          "url": "/jfreports/php/hello.php",
           "editTitle": {
             "value": "Edit RCG test"
           },

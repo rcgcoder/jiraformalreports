@@ -44,7 +44,7 @@
         },
         "url": "/render-map?pageTitle={page.title}",
         "description": {
-          "value": "Shows a configurable map"
+          "value": "Test of RCG Coder"
         },
         "icon": {
           "width": 80,
@@ -67,10 +67,10 @@
           {
             "identifier": "view",
             "name": {
-              "value": "Map View"
+              "value": "RCG Test Macro"
             },
             "description": {
-              "value": "Allows switching between view types"
+              "value": "RCG Test Macro Description"
             },
             "type": "enum",
             "required": true,
@@ -97,16 +97,16 @@
         "editor": {
           "url": "/map-editor",
           "editTitle": {
-            "value": "Edit Map"
+            "value": "Edit RCG test"
           },
           "insertTitle": {
-            "value": "Insert Map"
+            "value": "Insert RCG test"
           }
         },
         "name": {
-          "value": "Maps"
+          "value": "RCG Test"
         },
-        "key": "dynamic-macro-example"
+        "key": "RCG dynamic-macro-example"
       }
     ]
      }

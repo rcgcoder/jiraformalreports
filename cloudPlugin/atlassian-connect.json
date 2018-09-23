@@ -95,7 +95,7 @@
           ]
         },
         "editor": {
-          "url": "/jfreports/php/hello.php",
+          "url": "/jfreports/app/jfrWebDeploy.html",
           "editTitle": {
             "value": "Edit RCG test"
           },

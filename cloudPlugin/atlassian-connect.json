@@ -221,7 +221,7 @@
 		"webItems": 
 		[
 			{
-				"location": "system.preset.filters",
+				"location": "system.header/left",
 				"weight": 200,
 				"styleClasses": 
 				[

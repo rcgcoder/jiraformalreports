@@ -28,6 +28,20 @@
                      "value": "Formal Reports"
                  }
              }
+             ,  {
+                "key": "loginreport",
+                "url": "/loginreport",
+                "name": {
+                    "value": "Login Report"
+                }
+            },
+            {
+                "key": "test",
+                "url": "/assets/testgeneralpage.html",
+                "name": {
+                    "value": "Test General Page HTML"
+                }
+            }
          ]
 		,   
     "dynamicContentMacros": [
@@ -121,22 +135,7 @@
         }
       }
     ],
-    "generalPages": [
-            {
-                "key": "loginreport",
-                "url": "/loginreport",
-                "name": {
-                    "value": "Login Report"
-                }
-            },
-            {
-                "key": "test",
-                "url": "/assets/testgeneralpage.html",
-                "name": {
-                    "value": "Test General Page HTML"
-                }
-            }
-        ],    
+ 
     "webhooks": [
       {
         "event": "blueprint_page_created",

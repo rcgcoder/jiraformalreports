@@ -229,7 +229,6 @@
 					"system-present-webitem"
 				],
 
-				"url": "/my-web-item",
 				"context": "addon",
 				"target": 
 				{

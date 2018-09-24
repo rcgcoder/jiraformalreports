@@ -120,6 +120,12 @@
           "value": "Simple Remote Blueprint"
         }
       }
+    ],
+    "webhooks": [
+      {
+        "event": "blueprint_page_created",
+        "url": "/created"
+      }
     ]
    }
  }

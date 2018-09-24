@@ -154,5 +154,11 @@
         "url": "/created"
       }
     ]
-   }
+   }, 
+   "target": {
+    "type": "dialogmodule",
+    "options": {
+      "key": "dialog-module-key"
+    }
+  }
  }

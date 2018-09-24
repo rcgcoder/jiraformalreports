@@ -1,164 +1,264 @@
 {
-     "name": "Formal Reports",
-     "description": "Jira Formal Reports Plugin",
-     "key": "com.rcgcoder.jiraformalreports",
-	 "enableLicensing": true,
-     "baseUrl": "https://cantabrana.no-ip.org/",
-     "scopes": [
-            "read", "write"
-        ],
-     "vendor": {
-         "name": "RCG Coder",
-         "url": "https://www.github.com/rcgcoder"
-     },
-     "authentication": {
-         "type": "jwt" 
-     },
-     "lifecycle": {
-            "installed": "/jfreports/callback"
-     }     
-     ,"apiVersion": 1,
-     "modules": {
-         "generalPages": [
-             {
-                 "url": "/jfreports/app/jfrWebDeploy.html",
-                 "key": "JiraFormalReportPlugin",
-                 "location": "system.top.navigation.bar",
-                 "name": {
-                     "value": "Formal Reports"
-                 }
-             }
-             ,  {
-                "key": "loginreport",
-                "url": "/loginreport",
-                "name": {
-                    "value": "Login Report"
-                }
-            },
-            {
-                "key": "test",
-                "url": "/assets/testgeneralpage.html",
-                "location": "system.header/left",
-                "name": {
-                    "value": "Test General Page HTML"
-                }
-            }
-         ]
-		,   
-    "dynamicContentMacros": [
-      {
-        "width": "200px",
-        "height": "200px",
-        "renderModes": {
-          "pdf": {
-            "url": "/render-map-pdf"
-          },
-          "default": {
-            "url": "/render-map-static"
-          }
-        },
-        "url": "/render-map?pageTitle={page.title}",
-        "description": {
-          "value": "Test of RCG Coder"
-        },
-        "icon": {
-          "width": 80,
-          "height": 80,
-          "url": "/maps/icon.png"
-        },
-        "documentation": {
-          "url": "http://docs.example.com/addons/maps"
-        },
-        "categories": [
-          "visuals"
-        ],
-        "outputType": "block",
-        "bodyType": "none",
-        "aliases": [
-          "map"
-        ],
-        "featured": true,
-        "parameters": [
-          {
-            "identifier": "view",
-            "name": {
-              "value": "RCG Test Macro"
-            },
-            "description": {
-              "value": "RCG Test Macro Description"
-            },
-            "type": "enum",
-            "required": true,
-            "multiple": false,
-            "defaultValue": "Map",
-            "values": [
-              "Map",
-              "Satellite"
-            ],
-            "hidden": false
-          }
-        ],
-        "autoconvert": {
-          "urlParameter": "url",
-          "matchers": [
-            {
-              "pattern": "https://www.example.com/maps/{}/{}"
-            },
-            {
-              "pattern": "https://www.example.com/map-editor/{}"
-            }
-          ]
-        },
-        "editor": {
-          "url": "/jfreports/app/jfrWebDeploy.html",
-          "editTitle": {
-            "value": "Edit RCG test"
-          },
-          "insertTitle": {
-            "value": "Insert RCG test"
-          }
-        },
-        "name": {
-          "value": "RCG Test"
-        },
-        "key": "dynamic-macro-example"
-      }
-    ],
-	"blueprints": [
-      {
-        "template": {
-          "url": "/jfreports/blueprint.xml"
-        },
-        "createResult": "edit",
-        "key": "remote-blueprint",
-        "name": {
-          "value": "Simple Remote Blueprint"
-        }
-      }
-    ],
-    "dialogs": [
-      {
-        "url": "/my-dialog-content",
-        "options": {
-          "size": "fullscreen",
-          "header": {
-            "value": "Example Dialog"
-          }
-        },
-        "key": "dialog-module-key"
-      }
-    ],    
-    "webhooks": [
-      {
-        "event": "blueprint_page_created",
-        "url": "/created"
-      }
-    ]
-   }, 
-   "target": {
-    "type": "dialogmodule",
-    "options": {
-      "key": "dialog-module-key"
-    }
-  }
- }
+	"name": "Formal Reports",
+	"description": "Jira Formal Reports Plugin",
+	"key": "com.rcgcoder.jiraformalreports",
+	"enableLicensing": true,
+	"baseUrl": "https://cantabrana.no-ip.org/",
+	"scopes": 
+	[
+		"read",
+		"write"
+	],
+
+	"vendor": 
+	{
+		"name": "RCG Coder",
+		"url": "https://www.github.com/rcgcoder"
+	},
+
+	"authentication": 
+	{
+		"type": "jwt"
+	},
+
+	"lifecycle": 
+	{
+		"installed": "/jfreports/callback"
+	},
+
+	"apiVersion": 1,
+	"modules": 
+	{
+		"generalPages": 
+		[
+			{
+				"url": "/jfreports/app/jfrWebDeploy.html",
+				"key": "JiraFormalReportPlugin",
+				"location": "system.top.navigation.bar",
+				"name": 
+				{
+					"value": "Formal Reports"
+				}
+			},
+
+			{
+				"key": "loginreport",
+				"url": "/loginreport",
+				"name": 
+				{
+					"value": "Login Report"
+				}
+			},
+
+			{
+				"key": "test",
+				"url": "/assets/testgeneralpage.html",
+				"location": "system.header/left",
+				"name": 
+				{
+					"value": "Test General Page HTML"
+				}
+			}
+		],
+
+		"dynamicContentMacros": 
+		[
+			{
+				"width": "200px",
+				"height": "200px",
+				"renderModes": 
+				{
+					"pdf": 
+					{
+						"url": "/render-map-pdf"
+					},
+
+					"default": 
+					{
+						"url": "/render-map-static"
+					}
+				},
+
+				"url": "/render-map?pageTitle={page.title}",
+				"description": 
+				{
+					"value": "Test of RCG Coder"
+				},
+
+				"icon": 
+				{
+					"width": 80,
+					"height": 80,
+					"url": "/maps/icon.png"
+				},
+
+				"documentation": 
+				{
+					"url": "http://docs.example.com/addons/maps"
+				},
+
+				"categories": 
+				[
+					"visuals"
+				],
+
+				"outputType": "block",
+				"bodyType": "none",
+				"aliases": 
+				[
+					"map"
+				],
+
+				"featured": true,
+				"parameters": 
+				[
+					{
+						"identifier": "view",
+						"name": 
+						{
+							"value": "RCG Test Macro"
+						},
+
+						"description": 
+						{
+							"value": "RCG Test Macro Description"
+						},
+
+						"type": "enum",
+						"required": true,
+						"multiple": false,
+						"defaultValue": "Map",
+						"values": 
+						[
+							"Map",
+							"Satellite"
+						],
+
+						"hidden": false
+					}
+				],
+
+				"autoconvert": 
+				{
+					"urlParameter": "url",
+					"matchers": 
+					[
+						{
+							"pattern": "https://www.example.com/maps/{}/{}"
+						},
+
+						{
+							"pattern": "https://www.example.com/map-editor/{}"
+						}
+					]
+				},
+
+				"editor": 
+				{
+					"url": "/jfreports/app/jfrWebDeploy.html",
+					"editTitle": 
+					{
+						"value": "Edit RCG test"
+					},
+
+					"insertTitle": 
+					{
+						"value": "Insert RCG test"
+					}
+				},
+
+				"name": 
+				{
+					"value": "RCG Test"
+				},
+
+				"key": "dynamic-macro-example"
+			}
+		],
+
+		"blueprints": 
+		[
+			{
+				"template": 
+				{
+					"url": "/jfreports/blueprint.xml"
+				},
+
+				"createResult": "edit",
+				"key": "remote-blueprint",
+				"name": 
+				{
+					"value": "Simple Remote Blueprint"
+				}
+			}
+		],
+
+		"dialogs": 
+		[
+			{
+				"url": "/my-dialog-content",
+				"options": 
+				{
+					"size": "fullscreen",
+					"header": 
+					{
+						"value": "Example Dialog"
+					}
+				},
+
+				"key": "dialog-module-key"
+			}
+		],
+
+		"webhooks": 
+		[
+			{
+				"event": "blueprint_page_created",
+				"url": "/created"
+			}
+		],
+
+		"webItems": 
+		[
+			{
+				"location": "system.preset.filters",
+				"weight": 200,
+				"styleClasses": 
+				[
+					"webitem",
+					"system-present-webitem"
+				],
+
+				"url": "/my-web-item",
+				"context": "addon",
+				"target": 
+				{
+					"type": "dialogmodule",
+					"options": 
+					{
+						"key": "dialog-module-key"
+					}
+				},
+
+				"tooltip": 
+				{
+					"value": "Example tooltip"
+				},
+
+				"icon": 
+				{
+					"width": 16,
+					"height": 16,
+					"url": "/maps/icon.png"
+				},
+
+				"name": 
+				{
+					"value": "My Web Item"
+				},
+
+				"key": "web-item-example"
+			}
+		]
+	}
+}

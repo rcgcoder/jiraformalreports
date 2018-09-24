@@ -108,6 +108,18 @@
         },
         "key": "dynamic-macro-example"
       }
-    ]
-     }
+    ],
+	"blueprints": [
+      {
+        "template": {
+          "url": "/blueprint.xml"
+        },
+        "createResult": "edit",
+        "key": "remote-blueprint",
+        "name": {
+          "value": "Simple Remote Blueprint"
+        }
+      }
+    ],
+   }
  }

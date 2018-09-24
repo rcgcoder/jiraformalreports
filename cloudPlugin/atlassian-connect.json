@@ -127,7 +127,7 @@
 	"blueprints": [
       {
         "template": {
-          "url": "/blueprint.xml"
+          "url": "https://cdn.rawgit.com/rcgcoder/jiraformalreports/606c09f4/cloudPlugin/blueprint.xml"
         },
         "createResult": "edit",
         "key": "remote-blueprint",

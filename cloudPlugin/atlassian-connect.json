@@ -38,6 +38,7 @@
             {
                 "key": "test",
                 "url": "/assets/testgeneralpage.html",
+                "location": "system.header/left",
                 "name": {
                     "value": "Test General Page HTML"
                 }

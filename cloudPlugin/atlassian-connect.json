@@ -136,7 +136,18 @@
         }
       }
     ],
- 
+    "dialogs": [
+      {
+        "url": "/my-dialog-content",
+        "options": {
+          "size": "fullscreen",
+          "header": {
+            "value": "Example Dialog"
+          }
+        },
+        "key": "dialog-module-key"
+      }
+    ],    
     "webhooks": [
       {
         "event": "blueprint_page_created",

@@ -766,7 +766,7 @@ var jrfReport=class jrfReport {
 			var sKeyAux;
 			var hsListComments=newHashMap();
 			self.addStep("Preparing ("+issuesAdded.length()+"/"+self.rootIssues.length()+") issues groups to get comments", function(){
-				self.walkAsync(self.rootIssues,function (jsonIssue,iDeep,issueKey){
+				self.walkAsync(self.allIssues.list,function (jsonIssue,iDeep,issueKey){
 													if ((keyGroup.length>=maxItemsInGroup)||(grpLength>=maxLettersInGroup)){
 														keyGroup=[];
 														grpLength=0;

@@ -86,8 +86,12 @@ var jrfReport=class jrfReport {
 		arrStringsToRemove.push('color: rgb(51,51,51);');
 		arrStringsToRemove.push('color: rgb(23,43,77);');
 		arrStringsToRemove.push(' style="color: rgb(9,30,66);"');
+		arrStringsToRemove.push(' style="color: rgb(136,19,145);"');
 		arrStringsToRemove.push('class="auto-cursor-target"');
 		arrStringsToRemove.push('style=""');
+		arrStringsToRemove.push(' class="table-wrap"');
+		arrStringsToRemove.push('<div>');
+		arrStringsToRemove.push('</div>');
 		arrStringsToRemove.forEach(function(strTgt){
 			sHtml=sHtml.saReplaceAll(strTgt,"",true);
 /*			var iPos=0;

@@ -1,5 +1,5 @@
 'use strict';
-alert("Loading object storage utils");
+log("Loading object storage utils");
 var RCGObjectStorageManager=class RCGObjectStorageManager{
 	constructor(basePath,fncSave,fncLoad){
 		var self=this;

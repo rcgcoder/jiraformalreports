@@ -1,1 +1,1 @@
-alert("Testing");
+log("Testing");

@@ -81,14 +81,14 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 	processFileObj(objContent){
 		var self=this;
 		var objResult;
-		if (isArray(objContent)){
+		if ((objContent.type=="string")||(objContent.type=="float")){
+			return objContent.value;
+		} else if (objContent.type=="array"){
 			objResult=[];
-			objContent.forEach(function(elem){
+			objContent.value.forEach(function(elem){
 				objResult.push(self.processFileObj(elem));
 			});
-		} else if ((objResult.type=="string")||(objResult.type=="float")){
-			return objResult.value;
-		}
+		} 
 		return objResult;
 	}
 	load(key,fncProcess){

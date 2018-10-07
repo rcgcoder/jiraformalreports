@@ -28,6 +28,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		return "object";
 	}
 	getStorageObject(item){
+		var self=this;
 		var objToSave={};
 		if (isDefined(item)){
 			if (self.isBaseType(item)){

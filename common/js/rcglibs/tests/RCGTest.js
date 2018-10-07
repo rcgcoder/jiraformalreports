@@ -38,7 +38,8 @@ System.webapp.addStep("hashMap",function(){
 		}
 		return hsAux;
 	}
-	storer.save("testHashMap",fncCreateHashMap(3));
+	var hsAux=fncCreateHashMap(3);
+	storer.save("testHashMap",hsAux);
 });
 System.webapp.addStep("End Save",function(){
 	log("End Save Tests");

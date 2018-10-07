@@ -100,12 +100,12 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 					var objContent=JSON.parse(sContent);
 					var objProcessed=self.processFileObj(objContent);
 					if (isDefined(self.onLoad)){
-						self.onLoad(key,objContent.value);
+						self.onLoad(key,objProcessed);
 					} else {
 						if (isDefined(fncProcess)){
-							fncProcess(objContent.value);
+							fncProcess(objProcessed);
 						}
-						self.continueTask(objContent.value);
+						self.continueTask(objProcessed);
 					}
 			    },
 			    function(e){

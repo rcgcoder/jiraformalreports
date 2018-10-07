@@ -34,7 +34,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			if (self.isBaseType(item)){
 				objToSave.type=self.getType(item);
 				objToSave.value=item;
-			} if (isArray(item)){
+			} else if (isArray(item)){
 				objToSave.type="array";
 				objToSave.value=[];
 				item.forEach(function(elem){

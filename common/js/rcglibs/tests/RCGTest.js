@@ -11,14 +11,33 @@ System.webapp.addStep("Array",function(){
 	storer.save("testArray",["a","b",5,32]);
 });
 System.webapp.addStep("Object",function(){
-	storer.save("testObject",{attString:"String to save",attFloat:6.2,attArray:["a","b",9,8,"z"]});
+	var auxObj={attString:"String to save",attFloat:6.2,attArray:["a","b",9,8,"z"]}
+	storer.save("testObject",auxObj);
 });
 System.webapp.addStep("hashMap",function(){
-	var hsAux=newHashMap();
-	for (var i=0;i<10;i++){
-		hsAux.add("Key"+i,"aa"+i);
+	var fncCreateHashMap=function(iDeepMax){
+		var hsAux=newHashMap();
+		if (iDeepMax<0) return hsAux;
+		for (var i=0;i<10;i++){
+			var vRnd=(Math.random()*100);
+			var vKey=Math.round(vRnd/10);
+			if (vRnd<10){
+				hsAux.add("Key"+vKey,"aa"+vRnd);
+			} else if (vRnd<40){
+				hsAux.add("Key"+vKey,vRnd.toFixed(5));			
+			} else if (vRnd<80){
+				var auxObj={attString:"String to save "+vRnd,
+								attFloat:vRnd
+								,attArray:["a"+vRnd,"b"+vRnd,1000+vRnc,8000+vRnd,"z"+vRnd]
+								,attHashMap:fncCreateHashMap(iDeepMax-1)
+							}
+				hsAux.add("Key"+vKey,auxObj);			
+			} else {
+				hsAux.add("Key"+vKey,fncCreateHashMap(iDeepMax-1));			
+			}
+		}
 	}
-	storer.save("testHashMap",hsAux);
+	storer.save("testHashMap",fncCreateHashMap(3));
 });
 System.webapp.addStep("End Save",function(){
 	log("End Save Tests");

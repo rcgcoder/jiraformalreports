@@ -42,14 +42,15 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				});
 			} else {
 				objToSave.type="object";
-				if (item.isStorable()){
+				if (isDefined(item.getStorageObject)){
 					objToSave.value=item.getStorageObject();
+				} else {
+					var arrProps=getAllProperties(item);
+					objToSave.value={};
+					arrProps.forEach(function(prop){
+						objToSave.value[prop]=self.getStorageObject(item[prop]);
+					});
 				}
-				var arrProps=getAllProperties(item);
-				objToSave.value={};
-				arrProps.forEach(function(prop){
-					objToSave.value[prop]=self.getStorageObject(item[prop]);
-				});
 			}
 		}
 		return objToSave;

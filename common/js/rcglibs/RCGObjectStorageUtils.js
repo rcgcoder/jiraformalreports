@@ -78,6 +78,19 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 						}
 				    });
 	}
+	processFileObj(objContent){
+		var self=this;
+		var objResult;
+		if (isArray(objContent)){
+			objResult=[];
+			objContent.forEach(function(elem){
+				objResult.push(self.processFileObj(elem));
+			});
+		} else if ((objResult.type=="string")||(objResult.type=="float")){
+			return objResult.value;
+		}
+		return objResult;
+	}
 	load(key,fncProcess){
 		var self=this;
 		var fileName=(self.basePath+"/"+key);
@@ -85,6 +98,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				function(sContent){
 					log("Key:"+key+" loaded."+sContent.length+" bytes");
 					var objContent=JSON.parse(sContent);
+					var objProcessed=self.processFileObj(objContent);
 					if (isDefined(self.onLoad)){
 						self.onLoad(key,objContent.value);
 					} else {

@@ -18,7 +18,7 @@ System.webapp.addStep("hashMap",function(){
 	var fncCreateHashMap=function(iDeepMax){
 		var hsAux=newHashMap();
 		if (iDeepMax<0) return hsAux;
-		for (var i=0;i<10;i++){
+		for (var i=0;i<30;i++){
 			var vRnd=(Math.random()*100);
 			var vKey=Math.round(vRnd/10);
 			if (vRnd<10){
@@ -28,7 +28,7 @@ System.webapp.addStep("hashMap",function(){
 			} else if (vRnd<80){
 				var auxObj={attString:"String to save "+vRnd,
 								attFloat:vRnd
-								,attArray:["a"+vRnd,"b"+vRnd,1000+vRnc,8000+vRnd,"z"+vRnd]
+								,attArray:["a"+vRnd,"b"+vRnd,1000+vRnd,8000+vRnd,"z"+vRnd]
 								,attHashMap:fncCreateHashMap(iDeepMax-1)
 							}
 				hsAux.add("Key"+vKey,auxObj);			
@@ -36,6 +36,7 @@ System.webapp.addStep("hashMap",function(){
 				hsAux.add("Key"+vKey,fncCreateHashMap(iDeepMax-1));			
 			}
 		}
+		return hsAux;
 	}
 	storer.save("testHashMap",fncCreateHashMap(3));
 });

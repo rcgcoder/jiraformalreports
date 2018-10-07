@@ -173,6 +173,9 @@ function isString(variable){
 	}
 	return false;
 }
+function isHashMap(obj){
+	return ( (typeof obj === "RCGHashMap") && (obj !== null) && isDefined(obj) );
+}
 function isArray(variable){
 	return Array.isArray(variable);
 }

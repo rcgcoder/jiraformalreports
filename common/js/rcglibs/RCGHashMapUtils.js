@@ -1,5 +1,53 @@
 'use strict';
-
+var RCGHashMap=class RCGHashMap{
+	constructor(storable,hashMapFactory){
+		var obj=this;
+		obj.root="";
+		obj.nodeCache="";
+		obj.nNodes=0;
+		obj.name="";
+		obj.getFirst=hashMapFactory.getFirst;
+		obj.getLast=hashMapFactory.getLast;
+		obj.resetNode=hashMapFactory.resetNode;
+		obj.intern_node_getChildNumber=hashMapFactory.intern_node_getChildNumber;
+		obj.intern_node_getFirst=hashMapFactory.intern_node_getFirst;
+		obj.intern_node_getLast=hashMapFactory.intern_node_getLast;
+		obj.newEmptyNode=hashMapFactory.newEmptyNode;
+		obj.newNode=hashMapFactory.newNode;
+		obj.logicDelete=hashMapFactory.logicDelete;
+		obj.findMaxKey=hashMapFactory.findMaxKey;
+		obj.findMinKey=hashMapFactory.findMinKey;
+		obj.findPos=hashMapFactory.findPos;
+		obj.getValue=hashMapFactory.getValue;
+		obj.setValue=hashMapFactory.setValue;
+		obj.getValueByAttr=hashMapFactory.getValueByAttr;
+		obj.exists=hashMapFactory.exists;
+		obj.find=hashMapFactory.find;
+		obj.findByInd=hashMapFactory.findByInd;
+		obj.internal_updateFirstLast=hashMapFactory.internal_updateFirstLast;
+		obj.updateFirstLast=hashMapFactory.updateFirstLast;
+		obj.refreshChildNumber=hashMapFactory.refreshChildNumber;
+		obj.updateChildNumber=hashMapFactory.updateChildNumber;
+		obj.trace=hashMapFactory.trace;
+		obj.traceAll=hashMapFactory.traceAll;
+		obj.walk=hashMapFactory.walk;
+		obj.walkAsync=hashMapFactory.walkAsync;
+		obj.check=hashMapFactory.check;
+		obj.clear=hashMapFactory.clear;
+		obj.swing_acumulators=hashMapFactory.swing_acumulators;
+		obj.swing=hashMapFactory.swing;
+		obj.push=hashMapFactory.push;
+		obj.pop=hashMapFactory.pop;
+		obj.top=hashMapFactory.top;
+		obj.add=hashMapFactory.add;
+		obj.addOrReplace=hashMapFactory.addOrReplace;
+		obj.addNode=hashMapFactory.addNode;
+		obj.changeParent=hashMapFactory.changeParent;
+		obj.remove=hashMapFactory.remove;
+		obj.length=hashMapFactory.length;
+		obj.toArray=hashMapFactory.toArray;
+	}
+} 
 class RCGHashMapFactory{
 		constructor(){
 			this.nHashCreated=0;
@@ -8,53 +56,7 @@ class RCGHashMapFactory{
 		}
 		newHashMap(storable){
 			this.nHashCreated++;
-			var obj={
-					storable:storable,
-				    root:"",
-					nodeCache:"",
-					nNodes:0}
-			obj.name="";
-			obj.getFirst=this.getFirst;
-			obj.getLast=this.getLast;
-			obj.resetNode=this.resetNode;
-			obj.intern_node_getChildNumber=this.intern_node_getChildNumber;
-			obj.intern_node_getFirst=this.intern_node_getFirst;
-			obj.intern_node_getLast=this.intern_node_getLast;
-			obj.newEmptyNode=this.newEmptyNode;
-			obj.newNode=this.newNode;
-			obj.logicDelete=this.logicDelete;
-			obj.findMaxKey=this.findMaxKey;
-			obj.findMinKey=this.findMinKey;
-			obj.findPos=this.findPos;
-			obj.getValue=this.getValue;
-			obj.setValue=this.setValue;
-			obj.getValueByAttr=this.getValueByAttr;
-			obj.exists=this.exists;
-			obj.find=this.find;
-			obj.findByInd=this.findByInd;
-			obj.internal_updateFirstLast=this.internal_updateFirstLast;
-			obj.updateFirstLast=this.updateFirstLast;
-			obj.refreshChildNumber=this.refreshChildNumber;
-			obj.updateChildNumber=this.updateChildNumber;
-			obj.trace=this.trace;
-			obj.traceAll=this.traceAll;
-			obj.walk=this.walk;
-			obj.walkAsync=this.walkAsync;
-			obj.check=this.check;
-			obj.clear=this.clear;
-			obj.swing_acumulators=this.swing_acumulators;
-			obj.swing=this.swing;
-			obj.push=this.push;
-			obj.pop=this.pop;
-			obj.top=this.top;
-			obj.add=this.add;
-			obj.addOrReplace=this.addOrReplace;
-			obj.addNode=this.addNode;
-			obj.changeParent=this.changeParent;
-			obj.remove=this.remove;
-			obj.length=this.length;
-			obj.toArray=this.toArray;
-			return obj;
+			return new RCGHashMap(storable,this);
 		}
 		resetNode(node){
 				node.key="";

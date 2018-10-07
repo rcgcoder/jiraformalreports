@@ -13,6 +13,13 @@ System.webapp.addStep("Array",function(){
 System.webapp.addStep("Object",function(){
 	storer.save("testObject",{attString:"String to save",attFloat:6.2,attArray:["a","b",9,8,"z"]});
 });
+System.webapp.addStep("hashMap",function(){
+	var hsAux=newHashMap();
+	for (var i=0;i<10;i++){
+		hsAux.add("Key"+i,"aa"+i);
+	}
+	storer.save("testHashMap",hsAux);
+});
 System.webapp.addStep("End Save",function(){
 	log("End Save Tests");
 	System.webapp.continueTask();
@@ -35,6 +42,11 @@ System.webapp.addStep("Array",function(){
 System.webapp.addStep("Object",function(){
 	storer.load("testObject",function(result){
 		log("End Load Obj:"+result);
+	});
+});
+System.webapp.addStep("HashMap",function(){
+	storer.load("testHashMap",function(result){
+		log("End Load HashMap:"+result);
 	});
 });
 System.webapp.addStep("End Load",function(){

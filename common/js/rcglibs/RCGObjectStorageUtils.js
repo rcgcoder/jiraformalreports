@@ -25,23 +25,27 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		if (isNumber(item))return "float";
 		if (isBoolean(item))return "boolean";
 		if (isArray(item)) return "array";
+		if (isHashMap(item)) return "hashmap";
 		return "object";
 	}
 	getStorageObject(item){
 		var self=this;
 		var objToSave={};
 		if (isDefined(item)){
+			objToSave.type=self.getType(item);
 			if (self.isBaseType(item)){
-				objToSave.type=self.getType(item);
 				objToSave.value=item;
 			} else if (isArray(item)){
-				objToSave.type="array";
 				objToSave.value=[];
 				item.forEach(function(elem){
 					objToSave.value.push(self.getStorageObject(elem));
 				});
+			} else if (isHashMap(item)){
+				objToSave.value=[];
+				item.walk(function(elem,deep,key){
+					objToSave.value.push({key:key,value:self.getStorageObject(elem)});
+				});
 			} else {
-				objToSave.type="object";
 				if (isDefined(item.getStorageObject)){
 					objToSave.value=item.getStorageObject();
 				} else {
@@ -88,6 +92,14 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			objContent.value.forEach(function(elem){
 				objResult.push(self.processFileObj(elem));
 			});
+		} else if (objContent.type=="hashmap"){
+			objResult=newHashMap();
+			objContent.value.forEach(function(hsElem){
+				var key=hsElem.key;
+				var hsValue=hsElem.value;
+				objResult.add(key,self.processFileObj(hsValue));
+			});
+			objResult.swing();
 		} else if (objContent.type=="object"){
 			var arrProps=getAllProperties(objContent.value);
 			objResult={};

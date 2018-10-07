@@ -1,4 +1,5 @@
 log("Testing");
+debugger;
 var storer=new RCGObjectStorageManager("Testing",System.webapp.getTaskManager());
 System.webapp.addStep("String",function(){
 	storer.save("testString","String to save");

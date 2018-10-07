@@ -1,8 +1,9 @@
 'use strict';
 log("Loading object storage utils");
 var RCGObjectStorageManager=class RCGObjectStorageManager{
-	constructor(basePath,fncSave,fncLoad){
+	constructor(basePath,taskManager,fncSave,fncLoad){
 		var self=this;
+		taskManager.extendObject(self);
 		self.basePath=basePath;
 		self.onSave=fncSave;
 		self.onLoad=fncLoad;
@@ -57,7 +58,23 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		var fileToSave="";
 		var objToSave=self.getStorageObject(item);
 		var jsonToSave=JSON.stringify(objToSave);
-		filesystem.SaveFile(self.basePath+"/"+key,jsonToSave,self.onSave,self.onError);
+		filesystem.SaveFile(self.basePath+"/"+key,jsonToSave,
+					function(){
+						log("Key:"+key+" saved."+jsonToSave.length+" bytes");
+						if (isDefined(self.onSave)){
+							self.onSave(key);
+						} else {
+							self.continueTask(key);
+						}
+				    },
+				    function(e){
+						logError("Error saving Key:"+key+" saved."+jsonToSave.length+" bytes."+e);
+						if (isDefined(self.onError)){
+							self.onError(key,e);
+						} else {
+							self.continueTask("Error");
+						}
+				    });
 	}
 	load(key){
 		

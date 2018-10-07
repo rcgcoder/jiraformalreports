@@ -15,6 +15,7 @@ System.webapp.addStep("Object",function(){
 });
 System.webapp.addStep("End Save",function(){
 	log("End Save Tests");
+	System.webapp.continueTask();
 });
 System.webapp.addStep("String",function(){
 	storer.load("testString",function(result){
@@ -38,4 +39,5 @@ System.webapp.addStep("Object",function(){
 });
 System.webapp.addStep("End Load",function(){
 	log("End Load Tests");
+	System.webapp.continueTask();
 });

@@ -86,12 +86,12 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 					log("Key:"+key+" loaded."+sContent.length+" bytes");
 					var objContent=JSON.parse(sContent);
 					if (isDefined(self.onLoad)){
-						self.onLoad(key,objContent);
+						self.onLoad(key,objContent.value);
 					} else {
 						if (isDefined(fncProcess)){
-							fncProcess(objContent);
+							fncProcess(objContent.value);
 						}
-						self.continueTask(objContent);
+						self.continueTask(objContent.value);
 					}
 			    },
 			    function(e){

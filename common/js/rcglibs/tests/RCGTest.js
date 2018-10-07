@@ -13,6 +13,29 @@ System.webapp.addStep("Array",function(){
 System.webapp.addStep("Object",function(){
 	storer.save("testObject",{attString:"String to save",attFloat:6.2,attArray:["a","b",9,8,"z"]});
 });
-System.webapp.addStep("String",function(){
+System.webapp.addStep("End Save",function(){
 	log("End Save Tests");
+});
+System.webapp.addStep("String",function(){
+	storer.load("testString",function(result){
+		log(result);
+	});
+});
+System.webapp.addStep("Float",function(){
+	storer.load("testFloat",function(result){
+		log(result);
+	});
+});
+System.webapp.addStep("Array",function(){
+	storer.load("testArray",function(result){
+		log(result);
+	});
+});
+System.webapp.addStep("Object",function(){
+	storer.load("testObject",function(result){
+		log("End Load Obj:"+result);
+	});
+});
+System.webapp.addStep("End Load",function(){
+	log("End Load Tests");
 });

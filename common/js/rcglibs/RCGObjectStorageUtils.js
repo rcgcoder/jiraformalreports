@@ -85,7 +85,8 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		var baseName=self.basePath+"/"+key;
 		var objToSave=self.getStorageObject(item);
 		var jsonToSave=JSON.stringify(objToSave);
-		if (jsonToSave.length<(10*1024*1024)){
+		var totalLength=jsonToSave.length;
+		if (totalLength<(10*1024*1024)){
 			self.internal_saveFile(key,baseName,jsonToSave,self.onSave,self.onError);
 		} else {
 			var arrParts=[];
@@ -93,7 +94,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			var blockLength=9*1024*1024;
 			var endPos=iniPos+blockLength;
 			var iCount=0;
-			while (iniPos<jsonToSave.length){
+			while (iniPos<totalLength){
 				arrParts.push({
 						    partNumber:iCount,
 						    partName:(iCount==0?baseName:baseName+"_part_"+iCount),

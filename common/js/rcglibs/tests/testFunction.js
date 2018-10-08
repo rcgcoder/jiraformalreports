@@ -16,5 +16,4 @@ System.webapp.addStep("Refreshing ...", function(){
         System.webapp.loadRemoteFiles(arrFiles);
     });
     System.webapp.continueTask();
-},0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
-System.webapp.continueTask();
+});

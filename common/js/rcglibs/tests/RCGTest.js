@@ -18,7 +18,7 @@ System.webapp.addStep("hashMap",function(){
 	var fncCreateHashMap=function(iDeepMax){
 		var hsAux=newHashMap();
 		if (iDeepMax<0) return hsAux;
-		for (var i=0;i<40;i++){
+		for (var i=0;i<30;i++){
 			var vRnd=(Math.random()*100);
 			var vKey=Math.round(vRnd/10);
 			if (vRnd<10){

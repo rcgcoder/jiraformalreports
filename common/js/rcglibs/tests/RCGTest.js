@@ -14,6 +14,7 @@ System.webapp.addStep("Object",function(){
 	var auxObj={attString:"String to save",attFloat:6.2,attArray:["a","b",9,8,"z"]}
 	storer.save("testObject",auxObj);
 });
+/*
 System.webapp.addStep("hashMap",function(){
 	var fncCreateHashMap=function(iDeepMax){
 		var hsAux=newHashMap();
@@ -44,6 +45,7 @@ System.webapp.addStep("hashMap",function(){
 	});
 	System.webapp.continueTask();
 });
+*/
 System.webapp.addStep("End Save",function(){
 	log("End Save Tests");
 	System.webapp.continueTask();
@@ -68,11 +70,13 @@ System.webapp.addStep("Object",function(){
 		log("End Load Obj:"+result);
 	});
 });
+/*
 System.webapp.addStep("HashMap",function(){
 	storer.load("testHashMap",function(result){
 		log("End Load HashMap:"+result);
 	});
 });
+*/
 System.webapp.addStep("End Load",function(){
 	log("End Load Tests");
 	System.webapp.continueTask();

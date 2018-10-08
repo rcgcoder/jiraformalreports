@@ -116,6 +116,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				}
 				self.parallelizeCalls(arrParts,fncSavePart,undefined,5);
 			});
+			self.continueTask();
 		}
 	}
 	processFileObj(objContent){

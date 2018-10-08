@@ -28,7 +28,9 @@ export class jsExecutor {
                  `;
         self.addStep("Executing text area code.... ",function(){
             log("executing the code:"+code);
-            executeFunction([],code);
+            self.createManagedCallback(function(){
+                executeFunction([],code);
+            });
             self.continueTask();
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
         // apply

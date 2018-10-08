@@ -62,22 +62,22 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 	internal_saveFile(key,baseName,contentToSave,onSave,onError){
 		var self=this;
 		filesystem.SaveFile(baseName,contentToSave,
-				function(){
+				self.createManagedCallback(function(){
 					log(baseName+" saved."+contentToSave.length+" bytes");
 					if (isDefined(onSave)){
 						onSave(key);
 					} else {
 						self.continueTask(key);
 					}
-			    },
-			    function(e){
+			    }),
+			    self.createManagedCallback(function(e){
 					logError("Error saving "+baseName+" saved."+contentToSave.length+" bytes."+e);
 					if (isDefined(onError)){
 						onError(key,e);
 					} else {
 						self.continueTask("Error");
 					}
-			    });
+			    }));
 	}
 	save(key,item){
 		var self=this;

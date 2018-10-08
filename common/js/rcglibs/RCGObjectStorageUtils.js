@@ -105,13 +105,17 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				endPos+=blockLength;
 				iCount=iCount+1;
 			}
-			var fncSavePart=function(part){
-				var contentToSave=jsonToSave.substring(part.iniPos,part.endPos);
-				var objPartToSave={isPart:true,partNumber:part.partNumber,content:contentToSave};
-				var jsonPartToSave=JSON.stringify(objPartToSave);
-				self.internal_saveFile(key,part.partName,jsonPartToSave,undefined,self.onError);
-			}
-			self.parallelizeCalls(arrParts,fncSavePart,undefined,5);
+			self.addStep("Saving Parallelized "+totalLength+" bytes in "+ arrParts.length+" parts",function(){
+				var fncSavePart=function(part){
+					self.addStep("Save Part "+part.partNumber,function(){
+						var contentToSave=jsonToSave.substring(part.iniPos,part.endPos);
+						var objPartToSave={isPart:true,partNumber:part.partNumber,content:contentToSave};
+						var jsonPartToSave=JSON.stringify(objPartToSave);
+						self.internal_saveFile(key,part.partName,jsonPartToSave,undefined,self.onError);
+					}
+				}
+				self.parallelizeCalls(arrParts,fncSavePart,undefined,5);
+			});
 		}
 	}
 	processFileObj(objContent){

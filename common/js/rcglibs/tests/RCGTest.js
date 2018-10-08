@@ -39,7 +39,10 @@ System.webapp.addStep("hashMap",function(){
 		return hsAux;
 	}
 	var hsAux=fncCreateHashMap(3);
-	storer.save("testHashMap",hsAux);
+	self.addStep("Saving hashMap",function(){
+		storer.save("testHashMap",hsAux);
+	});
+	self.continueTask();
 });
 System.webapp.addStep("End Save",function(){
 	log("End Save Tests");

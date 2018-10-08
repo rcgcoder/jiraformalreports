@@ -62,7 +62,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 	internal_saveFile(key,baseName,contentToSave,onSave,onError){
 		var self=this;
 		var innerOnSave=function(e){
-				log(baseName+" saved."+contentToSave.length+" bytes."+e);
+				log(baseName+" saved."+contentToSave.length+" bytes."+e.loaded+"/"+e.total);
 				if (isDefined(onSave)){
 					onSave(key);
 				} else {

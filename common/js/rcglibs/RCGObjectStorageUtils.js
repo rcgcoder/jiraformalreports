@@ -64,22 +64,22 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		var tm=self.getTaskManager();
 		var runningTask=tm.getRunningTask();
 		log("Task for "+baseName+" ->"+runningTask.forkId);
-		var innerOnSave=function(e){
-				log(baseName+" saved."+contentToSave.length+" bytes."+e.loaded+"/"+e.total);
-				if (isDefined(onSave)){
-					onSave(key);
-				} else {
-					self.continueTask(key);
-				}
-		    };
-		var innerOnError=function(e){
+		var innerOnSave=self.createManagedCallback(function(e){
+			log(baseName+" saved."+contentToSave.length+" bytes."+e.loaded+"/"+e.total);
+			if (isDefined(onSave)){
+				onSave(key);
+			} else {
+				self.continueTask(key);
+			}
+		});
+		var innerOnError=self.createManagedCallback(function(e){
 			logError("Error saving "+baseName+" saved."+contentToSave.length+" bytes."+e);
 			if (isDefined(onError)){
 				onError(key,e);
 			} else {
 				self.continueTask("Error");
 			}
-	    };
+	    });
 		filesystem.SaveFile(baseName,contentToSave,innerOnSave,innerOnError);
 	}
 	save(key,item){

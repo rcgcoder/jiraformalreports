@@ -107,17 +107,11 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			}
 			self.addStep("Saving Parallelized "+totalLength+" bytes in "+ arrParts.length+" parts",function(){
 				var fncSavePart=function(part){
-					self.addStep("Save Part "+part.partNumber,function(){
-						var contentToSave=jsonToSave.substring(part.iniPos,part.endPos);
-						var objPartToSave={isPart:true,partNumber:part.partNumber,content:contentToSave};
-						var jsonPartToSave=JSON.stringify(objPartToSave);
-						self.internal_saveFile(key,part.partName,jsonPartToSave,undefined,self.onError);
-					});
-					self.addStep("Part "+part.partNumber+" saved",function(){
-						log("Part Saved");
-						self.continueTask();
-					});
-					self.continueTask();
+					debugger;
+					var contentToSave=jsonToSave.substring(part.iniPos,part.endPos);
+					var objPartToSave={isPart:true,partNumber:part.partNumber,content:contentToSave};
+					var jsonPartToSave=JSON.stringify(objPartToSave);
+					self.internal_saveFile(key,part.partName,jsonPartToSave,undefined,self.onError);
 				}
 				self.parallelizeCalls(arrParts,fncSavePart,undefined,5);
 			});

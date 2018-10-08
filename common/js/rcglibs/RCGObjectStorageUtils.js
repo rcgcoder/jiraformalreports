@@ -60,6 +60,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		return objToSave;
 	}
 	internal_saveFile(key,baseName,contentToSave,onSave,onError){
+		var self=this;
 		filesystem.SaveFile(baseName,contentToSave,
 				function(){
 					log(baseName+" saved."+contentToSave.length+" bytes");

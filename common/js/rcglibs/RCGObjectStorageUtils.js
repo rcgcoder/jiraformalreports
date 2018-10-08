@@ -61,22 +61,22 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 	}
 	internal_saveFile(key,baseName,contentToSave,onSave,onError){
 		var self=this;
-		var innerOnSave=self.createManagedCallback(function(){
-				log(baseName+" saved."+contentToSave.length+" bytes");
+		var innerOnSave=function(e){
+				log(baseName+" saved."+contentToSave.length+" bytes."+e);
 				if (isDefined(onSave)){
 					onSave(key);
 				} else {
 					self.continueTask(key);
 				}
-		    });
-		var innerOnError=self.createManagedCallback(function(e){
+		    };
+		var innerOnError=function(e){
 			logError("Error saving "+baseName+" saved."+contentToSave.length+" bytes."+e);
 			if (isDefined(onError)){
 				onError(key,e);
 			} else {
 				self.continueTask("Error");
 			}
-	    });
+	    };
 		filesystem.SaveFile(baseName,contentToSave,innerOnSave,innerOnError);
 	}
 	save(key,item){
@@ -111,8 +111,8 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 					var contentToSave=jsonToSave.substring(part.iniPos,part.endPos);
 					var objPartToSave={isPart:true,partNumber:part.partNumber,content:contentToSave};
 					var jsonPartToSave=JSON.stringify(objPartToSave);
-					//self.internal_saveFile(key,part.partName,jsonPartToSave,undefined,self.onError);
-					self.continueTask();
+					self.internal_saveFile(key,part.partName,jsonPartToSave,undefined,self.onError);
+					//self.continueTask();
 				}
 				self.parallelizeCalls(arrParts,fncSavePart,undefined,5);
 			});

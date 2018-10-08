@@ -233,7 +233,7 @@ class RCGZippedApp{
 		self.mainClass="";
 		self.tsCompiler="";
 		self.bWithPersistentStorage=isChrome();
-		self.localStorageMaxSize=200*1024*1024; // 200 MBytes by default
+		self.localStorageMaxSize=4*1024*1024*1024; // 200 MBytes by default
 		taskManager.extendObject(self);
 		log("ZippedApp Created");
 		self.requestFileSystem = window.webkitRequestFileSystem 

@@ -111,7 +111,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 					var contentToSave=jsonToSave.substring(part.iniPos,part.endPos);
 					var objPartToSave={isPart:true,partNumber:part.partNumber,content:contentToSave};
 					var jsonPartToSave=JSON.stringify(objPartToSave);
-					self.internal_saveFile(key,part.partName,jsonPartToSave,undefined,self.onError);
+					//self.internal_saveFile(key,part.partName,jsonPartToSave,undefined,self.onError);
 				}
 				self.parallelizeCalls(arrParts,fncSavePart,undefined,5);
 			});

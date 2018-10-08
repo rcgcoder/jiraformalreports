@@ -59,28 +59,58 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		}
 		return objToSave;
 	}
+	internal_saveFile(key,baseName,contentToSave,onSave,onError){
+		filesystem.SaveFile(baseName,contentToSave,
+				function(){
+					log(baseName+" saved."+contentToSave.length+" bytes");
+					if (isDefined(onSave)){
+						onSave(key);
+					} else {
+						self.continueTask(key);
+					}
+			    },
+			    function(e){
+					logError("Error saving "+baseName+" saved."+contentToSave.length+" bytes."+e);
+					if (isDefined(onError)){
+						onError(key,e);
+					} else {
+						self.continueTask("Error");
+					}
+			    });
+	}
 	save(key,item){
 		var self=this;
 		var fileToSave="";
+		var baseName=self.basePath+"/"+key;
 		var objToSave=self.getStorageObject(item);
 		var jsonToSave=JSON.stringify(objToSave);
-		filesystem.SaveFile(self.basePath+"/"+key,jsonToSave,
-					function(){
-						log("Key:"+key+" saved."+jsonToSave.length+" bytes");
-						if (isDefined(self.onSave)){
-							self.onSave(key);
-						} else {
-							self.continueTask(key);
-						}
-				    },
-				    function(e){
-						logError("Error saving Key:"+key+" saved."+jsonToSave.length+" bytes."+e);
-						if (isDefined(self.onError)){
-							self.onError(key,e);
-						} else {
-							self.continueTask("Error");
-						}
-				    });
+		if (jsonToSave.length<(10*1024*1024)){
+			self.internal_saveFile(key,baseName,jsonToSave,self.onSave,self.onError);
+		} else {
+			var arrParts=[];
+			var iniPos=0;
+			var blockLength=9*1024*1024;
+			var endPos=iniPos+blockLength;
+			var iCount=0;
+			while (iniPos<jsonToSave.length){
+				arrParts.push({
+						    partNumber:iCount,
+						    partName:(iCount==0?baseName:baseName+"_part_"+iCount),
+						    iniPos:iniPos,
+						    endPos:endPos
+							});
+				iniPos=endPos;
+				endPos+=blockLength;
+				iCount=iCount+1;
+			}
+			var fncSavePart=function(part){
+				var contentToSave=jsonToSave.substring(part.iniPos,part.endPos);
+				var objPartToSave={isPart:true,partNumber:part.partNumber,content:contentToSave};
+				var jsonPartToSave=JSON.stringify(objPartToSave);
+				self.internal_saveFile(key,part.partName,jsonPartToSave,undefined,self.onError);
+			}
+			self.parallelizeCalls(arrParts,fncSavePart,undefined,5);
+		}
 	}
 	processFileObj(objContent){
 		var self=this;

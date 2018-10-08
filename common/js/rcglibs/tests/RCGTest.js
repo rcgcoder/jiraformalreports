@@ -14,12 +14,12 @@ System.webapp.addStep("Object",function(){
 	var auxObj={attString:"String to save",attFloat:6.2,attArray:["a","b",9,8,"z"]}
 	storer.save("testObject",auxObj);
 });
-/*
+
 System.webapp.addStep("hashMap",function(){
 	var fncCreateHashMap=function(iDeepMax){
 		var hsAux=newHashMap();
 		if (iDeepMax<0) return hsAux;
-		for (var i=0;i<30;i++){
+		for (var i=0;i<10;i++){
 			var vRnd=(Math.random()*100);
 			var vKey=Math.round(vRnd/10);
 			if (vRnd<10){
@@ -45,7 +45,7 @@ System.webapp.addStep("hashMap",function(){
 	});
 	System.webapp.continueTask();
 });
-*/
+
 System.webapp.addStep("End Save",function(){
 	log("End Save Tests");
 	System.webapp.continueTask();
@@ -70,13 +70,12 @@ System.webapp.addStep("Object",function(){
 		log("End Load Obj:"+result);
 	});
 });
-/*
 System.webapp.addStep("HashMap",function(){
 	storer.load("testHashMap",function(result){
 		log("End Load HashMap:"+result);
 	});
 });
-*/
+
 System.webapp.addStep("End Load",function(){
 	log("End Load Tests");
 	System.webapp.continueTask();

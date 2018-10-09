@@ -46,6 +46,7 @@ var RCGHashMap=class RCGHashMap{
 		obj.remove=hashMapFactory.remove;
 		obj.length=hashMapFactory.length;
 		obj.toArray=hashMapFactory.toArray;
+		obj.autoSwing=true;
 	}
 } 
 class RCGHashMapFactory{
@@ -1057,8 +1058,9 @@ class RCGHashMapFactory{
 			this.root="";
 		}
 		swing(node){
-//				log("Swinging");
 				if (this.root=="") return;
+				if (this.autoSwing==false) return;
+				log("Swinging");
 				chronoStartFunction();
 		//		this.check(this.root);
 		//		this.traceAll();

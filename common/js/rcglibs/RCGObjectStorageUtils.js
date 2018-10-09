@@ -134,11 +134,13 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			});
 		} else if (objContent.type=="h"/*"hashmap"*/){
 			objResult=newHashMap();
+			objResult.autoSwing=false;
 			objContent.value.forEach(function(hsElem){
 				var key=hsElem.key;
 				var hsValue=hsElem.value;
 				objResult.add(key,self.processFileObj(hsValue));
 			});
+			objResult.autoSwing=true;
 			objResult.swing();
 		} else if (objContent.type=="o" /*"object"*/){
 			var arrProps=getAllProperties(objContent.value);

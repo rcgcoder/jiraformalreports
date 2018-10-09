@@ -18,6 +18,7 @@ System.webapp.addStep("Object",function(){
 System.webapp.addStep("hashMap",function(){
 	var fncCreateHashMap=function(iDeepMax){
 		var hsAux=newHashMap();
+		hsAux.autoSwing=false;
 		if (iDeepMax<0) return hsAux;
 		for (var i=0;i<10;i++){
 			var vRnd=(Math.random()*100);
@@ -37,6 +38,8 @@ System.webapp.addStep("hashMap",function(){
 				hsAux.add("Key"+vKey,fncCreateHashMap(iDeepMax-1));			
 			}
 		}
+		hsAux.autoSwing=true;
+		hsAux.swing();
 		return hsAux;
 	}
 	var hsAux=fncCreateHashMap(3);

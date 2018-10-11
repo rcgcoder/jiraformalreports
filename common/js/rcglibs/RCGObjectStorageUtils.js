@@ -89,7 +89,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		var objToSave=self.getStorageObject(item);
 		var jsonToSave=JSON.stringify(objToSave);
 		var totalLength=jsonToSave.length;
-		if (true){ //(totalLength<(7*1024*1024)){
+		if (totalLength<(7*1024*1024)){
 			self.internal_saveFile(key,baseName,jsonToSave,self.onSave,self.onError);
 		} else {
 			var arrParts=[];

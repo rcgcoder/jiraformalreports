@@ -1,4 +1,3 @@
-debugger;
 System.webapp.addStep("Refreshing ...", function(){
     System.webapp.addStep("Refresh de Commit Id for update de report class", function(){
         var antCommitId=System.webapp.github.commitId;

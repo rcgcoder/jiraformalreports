@@ -1145,7 +1145,9 @@ class RCGTaskManager{
 			var nextAccumulator=0;
 			var fncAddThread=function(iThread){
 				return self.addStep("Parallel call Thread "+iThread,function(){
+					log("Parallel Step "+iThread);
 					var fncParallelCall=self.createManagedCallback(function(){
+						log("Parallel Call "+iThread);
 						if (hsListItems.length()==0)return;
 						var iPet=hsListItems.length()-1;
 						var item=hsListItems.pop();
@@ -1167,6 +1169,7 @@ class RCGTaskManager{
 							});
 						}
 						self.addStep("trying next petition...",function(){
+							log("Evaluating next petition");
 //							nItemsProcessed++;
 							if (hsListItems.length()>0){
 								log("There are "+hsListItems.length()+" petitions pending... let´s go next petition");

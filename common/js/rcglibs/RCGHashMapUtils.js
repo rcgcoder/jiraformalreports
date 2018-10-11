@@ -1060,7 +1060,7 @@ class RCGHashMapFactory{
 		swing(node){
 				if (this.root=="") return;
 				if (this.autoSwing==false) return;
-				log("Swinging");
+//				log("Swinging");
 				chronoStartFunction();
 		//		this.check(this.root);
 		//		this.traceAll();

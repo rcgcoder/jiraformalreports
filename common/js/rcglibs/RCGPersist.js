@@ -158,11 +158,11 @@ function InitializeFileSystem(initCallBack,quota){
 						DatFile.createWriter(
 							function(DatContent) {
 								DatContent.onwriteend = function(e) {
-									console.log(newName+' Write completed.');
+									log(newName+' Write completed.');
 									endWriteCallback(e);
 								};			
 								DatContent.onerror = function(e) {
-									console.log(newName+'Write failed: ' + e);
+									log(newName+'Write failed: ' + e);
 									errorCallback(e);
 								};
 								var theBlob;

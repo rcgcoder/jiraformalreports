@@ -1187,7 +1187,9 @@ class RCGTaskManager{
 			}
 //			self.getRunningTask().barrier.nItems=maxThreads+1;
 			for (var i=0;(i<maxThreads);i++){
+				log("Creating Thread:"+i);
 				var theWorkerThread=fncAddThread(i);
+				log("Created Thread:"+i);
 //				log(theWorkerThread);
 			}
 			self.continueTask();

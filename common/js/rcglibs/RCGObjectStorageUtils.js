@@ -99,10 +99,10 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			var iCount=0;
 			while (iniPos<totalLength){
 				arrParts.push({
-						    partNumber:iCount+0,
+						    partNumber:iCount,
 						    partName:(iCount==0?baseName:baseName+"_part_"+iCount),
-						    iniPos:iniPos+0,
-						    endPos:endPos+0
+						    iniPos:iniPos,
+						    endPos:endPos
 							});
 				iniPos=endPos;
 				endPos+=blockLength;
@@ -114,6 +114,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 					var contentToSave=jsonToSave.substring(part.iniPos,part.endPos);
 					var objPartToSave={isPart:true,partNumber:part.partNumber,content:contentToSave};
 					var jsonPartToSave=JSON.stringify(objPartToSave);
+					log("Key:"+key+" part:"+part.partName+" length:"+jsonPartToSave.length+" ini:"+part.iniPos+" end:"+part.endPos);
 					self.internal_saveFile(key,part.partName,jsonPartToSave,undefined,self.onError);
 					//self.continueTask();
 				}

@@ -99,10 +99,10 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			var iCount=0;
 			while (iniPos<totalLength){
 				arrParts.push({
-						    partNumber:iCount,
+						    partNumber:iCount+0,
 						    partName:(iCount==0?baseName:baseName+"_part_"+iCount),
-						    iniPos:iniPos,
-						    endPos:endPos
+						    iniPos:iniPos+0,
+						    endPos:endPos+0
 							});
 				iniPos=endPos;
 				endPos+=blockLength;

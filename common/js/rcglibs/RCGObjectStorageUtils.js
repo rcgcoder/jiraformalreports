@@ -120,7 +120,10 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 					});
 					self.continueTask();
 				}
-				self.parallelizeCalls(arrParts,fncSavePart,undefined,5);
+				var fncProcessed=function(part){
+					log("Saved Part:"+part.partNumber+" Key:"+key+" part:"+part.partName+" ini:"+part.iniPos+" end:"+part.endPos);
+				}
+				self.parallelizeCalls(arrParts,fncSavePart,fncProcessed,5);
 			});
 			self.continueTask();
 		}

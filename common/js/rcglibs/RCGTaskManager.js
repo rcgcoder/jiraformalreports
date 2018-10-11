@@ -1202,6 +1202,7 @@ class RCGTaskManager{
 		var bckTaskCallsBlock;
 		var bckTaskCallsMaxDeep;
 		self.addStep("Change autofree and taskCallsblock", function(){
+			log("Change autofree");
 			bckAutoFree=tm.autoFree;
 			bckTaskCallsBlock=tm.asyncTaskCallsBlock;
 			bckTaskCallsMaxDeep=tm.asyncTaskCallsMaxDeep;
@@ -1211,9 +1212,11 @@ class RCGTaskManager{
 			tm.next();
 		});
 		self.addStep("Call parallelized pseudoThreaded",function(){
+			log("Call internal parallelized..");
 			self.internal_parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads);
 		});
 		self.addStep("Restore AutoFree and CallsBlock params",function(){
+			log("Restore autofree and callsblock..");
 //			tm.autoFree=bckAutoFree;
 			tm.asyncTaskCallsBlock=bckTaskCallsBlock;
 			tm.asyncTaskCallsMaxDeep=bckTaskCallsMaxDeep;

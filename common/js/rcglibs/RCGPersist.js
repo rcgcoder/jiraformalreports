@@ -148,19 +148,21 @@ function InitializeFileSystem(initCallBack,quota){
 		var newName=replaceAll(filename,"/","_DIR_");
 		var rootFs=this.fs.root;
 		var onDelete=function(){
+			log("onDelete function..."+newName);
 			rootFs.getFile(newName, {create: true},
 					function(DatFile) {
+						log("Prepare to write..."+newName);
 						DatFile.isFile=true;
 						DatFile.name=newName;
 						DatFile.fullPath = '/'+newName;
 						DatFile.createWriter(
 							function(DatContent) {
 								DatContent.onwriteend = function(e) {
-	//								console.log('Write completed.');
+									console.log(newName+' Write completed.');
 									endWriteCallback(e);
 								};			
 								DatContent.onerror = function(e) {
-									console.log('Write failed: ' + e);
+									console.log(newName+'Write failed: ' + e);
 									errorCallback(e);
 								};
 								var theBlob;
@@ -203,6 +205,7 @@ function InitializeFileSystem(initCallBack,quota){
 													}
 												});
 								} else {
+									log("Writting "+newName+"...");
 									theBlob = new Blob([theString], {type: "text/plain"});
 									DatContent.write(theBlob);
 								}
@@ -211,6 +214,7 @@ function InitializeFileSystem(initCallBack,quota){
 		}
 		//deleting file;
 		rootFs.getFile(newName, {create: false}, function(fileEntry) {
+				log("Trying to delete:"+newName);
 			    fileEntry.remove(onDelete,onDelete);
 			  }, onDelete);		
 		

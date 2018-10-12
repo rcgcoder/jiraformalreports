@@ -110,6 +110,8 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			}
 			self.addStep("Saving Parallelized "+totalLength+" bytes in "+ arrParts.length+" parts",function(){
 				var fncSavePart=function(part){
+					debugger;
+					log("Parrallel Saving step");
 					self.addStep("Save Part:"+part.partNumber,function(){
 						debugger;
 						var contentToSave=jsonToSave.substring(part.iniPos,part.endPos);

@@ -123,6 +123,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				var fncProcessed=function(part){
 					log("Saved Part:"+part.partNumber+" Key:"+key+" part:"+part.partName+" ini:"+part.iniPos+" end:"+part.endPos);
 				}
+				debugger;
 				self.parallelizeCalls(arrParts,fncSavePart,fncProcessed,5);
 			});
 			self.addStep("Everithing Saved",function(){

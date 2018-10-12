@@ -1147,7 +1147,7 @@ class RCGTaskManager{
 			var fncAddThread=function(iThread){
 				return self.addStep("Parallel call Thread "+iThread,function(){
 					log("Parallel Step "+iThread);
-					var fncParallelCall=self.createManagedCallback(function(){
+					var fncParallelCallBase=function(){
 						log("Parallel Call "+iThread);
 						if (hsListItems.length()==0)return;
 						var iPet=hsListItems.length()-1;
@@ -1174,14 +1174,16 @@ class RCGTaskManager{
 //							nItemsProcessed++;
 							if (hsListItems.length()>0){
 								log("There are "+hsListItems.length()+" petitions pending... let´s go next petition");
-								fncParallelCall();
+								var auxParallelCall=self.createManagedCallback(fncParallelCallBase);
+								auxParallelCall();
 							} else {
 								log("There is not more petitions");
 								self.continueTask();
 							}
 						});
 						self.continueTask();
-					});
+					};
+					var fncParallelCall=self.createManagedCallback(fncParallelCallBase);
 					fncParallelCall();
 				},0,1,undefined,undefined,undefined,"INNER",undefined
 				);

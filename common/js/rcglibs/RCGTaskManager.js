@@ -838,6 +838,7 @@ class RCGTaskManager{
 						  // [removed] 1 - calls in the stack array LIFO
 						  // 2 - calls in the step array FIFO
 		var self=this;
+		log("Doing Next");
 		var stepRunning=self.getRunningTask();
 		
 		

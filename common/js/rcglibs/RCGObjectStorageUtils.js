@@ -127,6 +127,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			});
 			self.addStep("Everithing Saved",function(){
 				log("Calls running");
+				self.continueTask();
 			});
 			self.continueTask();
 		}

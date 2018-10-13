@@ -104,7 +104,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			while (iniPos<totalLength){
 				arrParts.push({
 						    partNumber:arrParts.length,
-						    partName:(iCount==0?baseName:baseName+"_part_"+iCount),
+						    partName:(arrParts.length==0?baseName:baseName+"_part_"+arrParts.length),
 						    totalParts:0,
 						    iniPos:iniPos,
 						    endPos:endPos
@@ -124,7 +124,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 //						if (part.partNumber==0) {
 							objPartToSave={isPart:true,
 											partNumber:part.partNumber,
-											totalParts:8,
+											totalParts:part.totalParts,
 											content:contentToSave};
 /*						} else {
 							objPartToSave={partNumber:part.partNumber,

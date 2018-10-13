@@ -65,9 +65,9 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		var runningTask=tm.getRunningTask();
 		log("Task for "+baseName+" ->"+runningTask.forkId);
 		var innerOnSave=self.createManagedCallback(function(e){
-			log(baseName+" saved."+contentToSave.length+" bytes."+e.loaded+"/"+e.total);
-			alert("Test:"+baseName);
-			debugger;
+//			log(baseName+" saved."+contentToSave.length+" bytes."+e.loaded+"/"+e.total);
+//			alert("Test:"+baseName);
+//			debugger;
 			if (isDefined(onSave)){
 				onSave(key);
 			} else {
@@ -95,7 +95,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		if (totalLength<(7*1024*1024)){
 			self.internal_saveFile(key,baseName,jsonToSave,self.onSave,self.onError);
 		} else {
-			debugger;
+//			debugger;
 			var arrParts=[];
 			var iniPos=0;
 			var blockLength=7*1024*1024;
@@ -114,14 +114,14 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			}
 			self.addStep("Saving Parallelized "+totalLength+" bytes in "+ arrParts.length+" parts",function(){
 				var fncSavePart=function(part){
-					debugger;
-					log("Parrallel Saving step:"+part.partNumber);
+//					debugger;
+//					log("Parrallel Saving step:"+part.partNumber);
 					self.addStep("Save Part:"+part.partNumber,function(){
-						debugger;
+//						debugger;
 						var contentToSave=jsonToSave.substring(part.iniPos,part.endPos);
 						var objPartToSave={isPart:true,partNumber:part.partNumber,content:contentToSave};
 						var jsonPartToSave=JSON.stringify(objPartToSave);
-						log("Part:"+part.partNumber+" Key:"+key+" part:"+part.partName+" length:"+jsonPartToSave.length+" ini:"+part.iniPos+" end:"+part.endPos);
+//						log("Part:"+part.partNumber+" Key:"+key+" part:"+part.partName+" length:"+jsonPartToSave.length+" ini:"+part.iniPos+" end:"+part.endPos);
 						self.internal_saveFile(key,part.partName,jsonPartToSave,undefined,self.onError);
 					});
 					self.continueTask();
@@ -129,7 +129,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				var fncProcessed=function(part){
 					log("Saved Part:"+part.partNumber+" Key:"+key+" part:"+part.partName+" ini:"+part.iniPos+" end:"+part.endPos);
 				}
-				debugger;
+//				debugger;
 				self.parallelizeCalls(arrParts,fncSavePart,fncProcessed,5);
 			});
 			self.addStep("Everithing Saved",function(){
@@ -165,6 +165,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			arrProps.forEach(function(prop){
 				objResult[prop]=self.processFileObj(objContent.value[prop]);
 			});
+			
 		} 
 		return objResult;
 	}

@@ -1148,9 +1148,9 @@ class RCGTaskManager{
 			var nextAccumulator=0;
 			var fncAddThread=function(iThread){
 				return self.addStep("Parallel call Thread "+iThread,function(){
-					log("Parallel Step "+iThread);
+//					log("Parallel Step "+iThread);
 					var fncParallelCallBase=function(){
-						log("Parallel Call "+iThread);
+//						log("Parallel Call "+iThread);
 						if (hsListItems.length()==0)return;
 						var iPet=hsListItems.length()-1;
 						var item=hsListItems.pop();
@@ -1172,14 +1172,14 @@ class RCGTaskManager{
 							});
 						}
 						self.addStep("trying next petition...",function(){
-							log("Evaluating next petition");
+//							log("Evaluating next petition");
 //							nItemsProcessed++;
 							if (hsListItems.length()>0){
-								log("There are "+hsListItems.length()+" petitions pending... let´s go next petition");
+//								log("There are "+hsListItems.length()+" petitions pending... let´s go next petition");
 								var auxParallelCall=self.createManagedCallback(fncParallelCallBase);
 								auxParallelCall();
 							} else {
-								log("There is not more petitions");
+//								log("There is not more petitions");
 								self.continueTask();
 							}
 						});
@@ -1195,9 +1195,9 @@ class RCGTaskManager{
 			}
 //			self.getRunningTask().barrier.nItems=maxThreads+1;
 			for (var i=0;(i<maxThreads);i++){
-				log("Creating Thread:"+i);
+//				log("Creating Thread:"+i);
 				var theWorkerThread=fncAddThread(i);
-				log("Created Thread:"+i);
+//				log("Created Thread:"+i);
 //				log(theWorkerThread);
 			}
 			self.continueTask();

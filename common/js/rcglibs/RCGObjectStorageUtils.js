@@ -121,16 +121,16 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 //						debugger;
 						var contentToSave=jsonToSave.substring(part.iniPos,part.endPos);
 						var objPartToSave;
-						if (part.partNumber==0) {
+//						if (part.partNumber==0) {
 							objPartToSave={isPart:true,
 											partNumber:part.partNumber,
-											totalParts:part.totalParts,
+//											totalParts:part.totalParts,
 											content:contentToSave};
-						} else {
+/*						} else {
 							objPartToSave={partNumber:part.partNumber,
 									content:contentToSave};
 						}
-						var jsonPartToSave=JSON.stringify(objPartToSave);
+*/						var jsonPartToSave=JSON.stringify(objPartToSave);
 //						log("Part:"+part.partNumber+" Key:"+key+" part:"+part.partName+" length:"+jsonPartToSave.length+" ini:"+part.iniPos+" end:"+part.endPos);
 						self.internal_saveFile(key,part.partName,jsonPartToSave,undefined,self.onError);
 					});

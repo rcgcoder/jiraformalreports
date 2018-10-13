@@ -133,7 +133,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				self.parallelizeCalls(arrParts,fncSavePart,fncProcessed,5);
 			});
 			self.addStep("Everithing Saved",function(){
-				log("Calls running");
+				log("Every Thing is Saved for:"+baseName);
 				self.continueTask();
 			});
 			self.continueTask();

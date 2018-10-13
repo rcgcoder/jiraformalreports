@@ -105,13 +105,14 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				arrParts.push({
 						    partNumber:arrParts.length,
 						    partName:(iCount==0?baseName:baseName+"_part_"+iCount),
+						    totalParts:0,
 						    iniPos:iniPos,
 						    endPos:endPos
 							});
 				iniPos=endPos;
 				endPos+=blockLength;
 			}
-			arrParts[0]["totalParts"]=arrParts.length;
+			arrParts[0].totalParts=arrParts.length;
 			self.addStep("Saving Parallelized "+totalLength+" bytes in "+ arrParts.length+" parts",function(){
 				var fncSavePart=function(part){
 //					debugger;

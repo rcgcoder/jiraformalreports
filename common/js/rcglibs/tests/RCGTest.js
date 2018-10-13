@@ -74,6 +74,7 @@ System.webapp.addStep("Object",function(){
 	});
 });
 System.webapp.addStep("HashMap",function(){
+	debugger;
 	storer.load("testHashMap",function(result){
 		log("End Load HashMap:"+result);
 	});

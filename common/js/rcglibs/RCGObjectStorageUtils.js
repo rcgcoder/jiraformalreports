@@ -26,6 +26,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		if (isBoolean(item))return "b";
 		if (isArray(item)) return "a";
 		if (isHashMap(item)) return "h";
+		// part is "p"
 		return "o";
 	}
 	getStorageObject(item){
@@ -120,17 +121,11 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 					self.addStep("Save Part:"+part.partNumber,function(){
 //						debugger;
 						var contentToSave=jsonToSave.substring(part.iniPos,part.endPos);
-						var objPartToSave;
-//						if (part.partNumber==0) {
-							objPartToSave={isPart:true,
+						var objPartToSave={type:"p",
 											partNumber:part.partNumber,
 											totalParts:part.totalParts,
 											content:contentToSave};
-/*						} else {
-							objPartToSave={partNumber:part.partNumber,
-									content:contentToSave};
-						}
-*/						var jsonPartToSave=JSON.stringify(objPartToSave);
+						var jsonPartToSave=JSON.stringify(objPartToSave);
 //						log("Part:"+part.partNumber+" Key:"+key+" part:"+part.partName+" length:"+jsonPartToSave.length+" ini:"+part.iniPos+" end:"+part.endPos);
 						self.internal_saveFile(key,part.partName,jsonPartToSave,undefined,self.onError);
 					});
@@ -149,7 +144,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			self.continueTask();
 		}
 	}
-	processFileObj(objContent){
+	processFileObj(objContent,fsKey,filename){
 		var self=this;
 		var objResult;
 		if ((objContent.type=="s" /*"string"*/)||(objContent.type=="n"/*"number"*/)){
@@ -175,6 +170,8 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			arrProps.forEach(function(prop){
 				objResult[prop]=self.processFileObj(objContent.value[prop]);
 			});
+		} else if (objContent.type=="p" /* object part */){
+			
 			
 		} 
 		return objResult;
@@ -185,15 +182,28 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		var innerOnLoad=self.createManagedCallback(function(sContent){
 			log("Key:"+key+" loaded."+sContent.length+" bytes");
 			var objContent=JSON.parse(sContent);
-			var objProcessed=self.processFileObj(objContent);
-			if (isDefined(self.onLoad)){
-				self.onLoad(key,objProcessed);
-			} else {
-				if (isDefined(fncProcess)){
-					fncProcess(objProcessed);
+			var objProcessed;
+			self.addStep("Processing content",function(){
+				objProcessed=self.processFileObj(objContent);
+				self.continueTask();
+			});
+			self.addStep("Returning result",function(){
+				if (isDefined(self.onLoad)){
+					self.addStep("Default Defined process result",function(){
+						self.onLoad(key,objProcessed);
+						self.continueTask([objProcessed]);
+					});
+				} else {
+					if (isDefined(fncProcess)){
+						self.addStep("User Defined process result",function(){
+							fncProcess(objProcessed,key,fileName);
+							self.continueTask([objProcessed]);
+						});
+					}
+					self.continueTask([objProcessed]);
 				}
-				self.continueTask(objProcessed);
-			}
+			});
+			self.continueTask();
 	    });
 		var innerOnError=self.createManagedCallback(function(e){
 			logError("Error Loading Key:"+key+"."+e);

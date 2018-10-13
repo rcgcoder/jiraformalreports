@@ -66,6 +66,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		log("Task for "+baseName+" ->"+runningTask.forkId);
 		var innerOnSave=self.createManagedCallback(function(e){
 			log(baseName+" saved."+contentToSave.length+" bytes."+e.loaded+"/"+e.total);
+			debugger;
 			if (isDefined(onSave)){
 				onSave(key);
 			} else {
@@ -74,6 +75,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		});
 		var innerOnError=self.createManagedCallback(function(e){
 			logError("Error saving "+baseName+" saved."+contentToSave.length+" bytes."+e);
+			debugger;
 			if (isDefined(onError)){
 				onError(key,e);
 			} else {

@@ -65,13 +65,13 @@ function InitializeFileSystem(initCallBack,quota){
 		theStorage.requestQuota(iQuota, 
 			function(grantedBytes) {
 			  console.log("Quota granted:"+grantedBytes);
-			  window.requestFileSystem(window.PERSISTENT, grantedBytes, onInitFs, fsErrorHandler);
+			  window.requestFileSystem(Window.TEMPORARY, grantedBytes, onInitFs, fsErrorHandler);
 			}, 
 			function(e) {
 			  console.log('Error', e);
 			});
 	} else {
-		window.requestFileSystem(window.PERSISTENT, iQuota, onInitFs, fsErrorHandler);
+		window.requestFileSystem(Window.TEMPORARY, iQuota, onInitFs, fsErrorHandler);
 	}
 	filesystem.ReadFile=function(filename,cbExistsAndLoaded,cbNotExists){
 		var newName=replaceAll(filename,"/","_DIR_");

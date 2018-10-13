@@ -103,15 +103,15 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			var iCount=0;
 			while (iniPos<totalLength){
 				arrParts.push({
-						    partNumber:iCount,
+						    partNumber:arrParts.length,
 						    partName:(iCount==0?baseName:baseName+"_part_"+iCount),
 						    iniPos:iniPos,
 						    endPos:endPos
 							});
 				iniPos=endPos;
 				endPos+=blockLength;
-				iCount=iCount+1;
 			}
+			arrParts[0]["totalParts"]=arrParts.length;
 			self.addStep("Saving Parallelized "+totalLength+" bytes in "+ arrParts.length+" parts",function(){
 				var fncSavePart=function(part){
 //					debugger;
@@ -120,6 +120,9 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 //						debugger;
 						var contentToSave=jsonToSave.substring(part.iniPos,part.endPos);
 						var objPartToSave={isPart:true,partNumber:part.partNumber,content:contentToSave};
+						if (part.partNumber==0){
+							objPartToSave["totalParts"]=part.totalParts;
+						}
 						var jsonPartToSave=JSON.stringify(objPartToSave);
 //						log("Part:"+part.partNumber+" Key:"+key+" part:"+part.partName+" length:"+jsonPartToSave.length+" ini:"+part.iniPos+" end:"+part.endPos);
 						self.internal_saveFile(key,part.partName,jsonPartToSave,undefined,self.onError);

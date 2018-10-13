@@ -124,7 +124,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 //						if (part.partNumber==0) {
 							objPartToSave={isPart:true,
 											partNumber:part.partNumber,
-//											totalParts:part.totalParts,
+											totalParts:8,
 											content:contentToSave};
 /*						} else {
 							objPartToSave={partNumber:part.partNumber,

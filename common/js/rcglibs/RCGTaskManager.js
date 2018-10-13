@@ -1050,9 +1050,11 @@ class RCGTaskManager{
 		var tm=self.getTaskManager();
 		var runningTask=tm.getRunningTask();
 		var fncManagedCallback=function(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10){
+			var prevRunningTask=tm.getRunningTask();
 			tm.setRunningTask(runningTask);
 //			log("Calling Traditional Callback in fork:"+runningTask.forkId);
-			return fncTraditionalCallback(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10);
+			var vResult=fncTraditionalCallback(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10);
+			tm.setRunningTask(prevRunningTask);
 		}
 		return fncManagedCallback;
 	}

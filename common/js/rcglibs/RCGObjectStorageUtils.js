@@ -66,6 +66,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		log("Task for "+baseName+" ->"+runningTask.forkId);
 		var innerOnSave=self.createManagedCallback(function(e){
 			log(baseName+" saved."+contentToSave.length+" bytes."+e.loaded+"/"+e.total);
+			alert("Test:"+baseName);
 			debugger;
 			if (isDefined(onSave)){
 				onSave(key);

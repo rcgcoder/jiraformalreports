@@ -171,8 +171,36 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				objResult[prop]=self.processFileObj(objContent.value[prop]);
 			});
 		} else if (objContent.type=="p" /* object part */){
-			
-			
+			if (objContent.partNumber==0){
+				debugger;
+				var arrContents=new Array(objContent.totalParts);
+				arrContents[0]=objContent.content;
+				self.addStep("Retrieving other "+(objContent.totalParts-1)+" parts",function(){
+					var arrPets=[];
+					for (var i=1;i<objContent.totalParts;i++){
+						arrPets.push(fsKey+"_part_"+i);
+					}
+					var fncLoadPart=function(part){
+						load(part,fncProcess);
+					};
+					var fncProcessed=function(partId,part){
+						arrContents[part.partNumber]=part.content;
+					};
+					self.parallelizeCalls(arrParts,fncLoadPart,fncProcessed,5);
+				});
+				self.addStep("Creating and parsing JSON of "+objContent.totalParts,function(){
+					var sJSON=arrContents.saToString();
+					var objJson=JSON.parse(sJSON);
+					var objResultAux=self.processFileObj(objJson);
+					self.continueTask([objResultAux]);
+				});
+				self.addStep("Returning Result of "+objContent.totalParts,function(processedResult){
+					self.continueTask([processedResult]);
+				});
+				self.continueTask();
+			} else {
+				objResult=objContent;
+			}
 		} 
 		return objResult;
 	}
@@ -184,7 +212,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			var objContent=JSON.parse(sContent);
 			var objProcessed;
 			self.addStep("Processing content",function(){
-				objProcessed=self.processFileObj(objContent);
+				objProcessed=self.processFileObj(objContent,key);
 				self.continueTask();
 			});
 			self.addStep("Returning result",function(){

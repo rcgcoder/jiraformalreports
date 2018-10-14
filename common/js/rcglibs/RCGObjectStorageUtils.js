@@ -197,7 +197,6 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				self.addStep("Returning Result of "+objContent.totalParts,function(processedResult){
 					self.continueTask([processedResult]);
 				});
-				self.continueTask();
 			} else {
 				objResult=objContent;
 			}

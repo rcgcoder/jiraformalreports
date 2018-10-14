@@ -1481,12 +1481,14 @@ function initMath(){
 		});
 		return newScope;
 	}
-	math.import({	
-		  exists:fncExists
-		  ,text:text
-		  ,genScope:genScope
-		  ,extractSymbols:extractSymbols
-		});
+	if (isUndefined(math.exists)){
+		math.import({	
+			  exists:fncExists
+			  ,text:text
+			  ,genScope:genScope
+			  ,extractSymbols:extractSymbols
+			});
+	}
 }
 initMath();
 

@@ -9,6 +9,7 @@ System.webapp.addStep("Refreshing ...", function(){
     });
     System.webapp.addStep("Dynamic load test class", function(){
         var arrFiles=[                  
+		    		"js/rcglibs/RCGStringArray.js",
 				    "js/rcglibs/RCGObjectStorageUtils.js",
 				    "js/rcglibs/tests/RCGTest.js"
                      ]; //test

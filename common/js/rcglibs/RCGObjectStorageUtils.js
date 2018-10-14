@@ -191,11 +191,11 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				self.addStep("Creating and parsing JSON of "+objContent.totalParts,function(){
 					var sJSON=arrContents.saToString();
 					var objJson=JSON.parse(sJSON);
-					var objResultAux=self.processFileObj(objJson);
-					self.continueTask([objResultAux]);
+					var objProcessed=self.processFileObj(objJson);
+					self.continueTask([objProcessed]);
 				});
-				self.addStep("Returning Result of "+objContent.totalParts,function(processedResult){
-					self.continueTask([processedResult]);
+				self.addStep("Returning Result of "+objContent.totalParts,function(objProcessed){
+					self.continueTask([objProcessed]);
 				});
 			} else {
 				objResult=objContent;
@@ -209,26 +209,24 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		var innerOnLoad=self.createManagedCallback(function(sContent){
 			log("Key:"+key+" loaded."+sContent.length+" bytes");
 			var objContent=JSON.parse(sContent);
-			var objProcessed;
+			
 			self.addStep("Processing content",function(){
-				objProcessed=self.processFileObj(objContent,key);
-				self.continueTask();
+				var objProcessed=self.processFileObj(objContent,key);
+				self.continueTask([objProcessed]);
 			});
-			self.addStep("Returning result",function(){
+			self.addStep("Returning result",function(objProcessed){
 				if (isDefined(self.onLoad)){
-					self.addStep("Default Defined process result",function(){
+					self.addStep("Default Defined process result",function(objProcessed){
 						self.onLoad(key,objProcessed);
 						self.continueTask([objProcessed]);
 					});
-				} else {
-					if (isDefined(fncProcess)){
-						self.addStep("User Defined process result",function(){
-							fncProcess(objProcessed,key,fileName);
-							self.continueTask([objProcessed]);
-						});
-					}
-					self.continueTask([objProcessed]);
+				} else if (isDefined(fncProcess)){
+					self.addStep("User Defined process result",function(objProcessed){
+						fncProcess(objProcessed,key,fileName);
+						self.continueTask([objProcessed]);
+					});
 				}
+				self.continueTask([objProcessed]);
 			});
 			self.continueTask();
 	    });

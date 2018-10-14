@@ -17,10 +17,10 @@ System.webapp.addStep("Object",function(){
 System.webapp.addStep("Dynamic Object",function(){
 	debugger;
 	var dynObj=newDynamicObjectFactory(
-			[{name:"TestString",description:"One String",type:"String"},
+			[{name:"TestStringList",description:"One String List",type:"String"},
 			]
 			,
-			["TestList"
+			["TestOneString"
 			]
 			,
 			[]

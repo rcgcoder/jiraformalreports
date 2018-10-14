@@ -899,7 +899,7 @@ var factoryObjects=class factoryObjects{
 		var self=this; //self is an individual object
 		var objResult={};
 		self.factory.attributes.walk(function(key,deep,value){
-			objResult[key]=value;
+			objResult[value]=self[value];
 		});
 		return objResult;
 	}

@@ -26,6 +26,13 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		if (isBoolean(item))return "b";
 		if (isArray(item)) return "a";
 		if (isHashMap(item)) return "h";
+		if (isObject(item)){
+			if (isDefined(item.getStorageObject)){
+				return "co";
+			} else {
+				return "o";
+			}
+		}
 		// part is "p"
 		return "o";
 	}

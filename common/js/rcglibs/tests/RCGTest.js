@@ -16,6 +16,7 @@ System.webapp.addStep("Object",function(){
 });
 System.webapp.addStep("Dynamic Object",function(){
 	debugger;
+	registerClass(RCGDynamicObjectUtils);
 	var dynObj=newDynamicObjectFactory(
 			[{name:"TestStringList",description:"One String List",type:"String"},
 			]

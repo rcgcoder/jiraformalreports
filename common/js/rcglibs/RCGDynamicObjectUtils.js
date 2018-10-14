@@ -899,7 +899,7 @@ var factoryObjects=class factoryObjects{
 	getStorageObject(storer){
 		var self=this; //self is an individual object
 		var objResult={};
-		self.factory.attrTypes.walk(function(key,deep,value){
+		self.factory.attrTypes.walk(function(value,deep,key){
 			var attrName=key;
 			var attrType=value.type;
 			if (attrType=="Value"){

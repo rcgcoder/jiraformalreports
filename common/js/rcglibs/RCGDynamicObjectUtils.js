@@ -13,7 +13,7 @@ var LogUtils=require("./LogUtils.js");
 var ChronoUtils=require("./ChronoUtils.js");
 var HashMapUtils=require("./HashMapUtils.js");
 */
-class RCGDynamicObject{
+var RCGDynamicObject=class RCGDynamicObject{
 	constructor(theFactory,name,arrAttributeList,arrAttributes,arrAttributesPercs){
 		var self=this;
 		var factory=theFactory;

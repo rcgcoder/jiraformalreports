@@ -186,7 +186,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 					var fncProcessed=function(partId,part){
 						arrContents[part.partNumber]=part.content;
 					};
-					self.parallelizeCalls(arrParts,fncLoadPart,fncProcessed,5);
+					self.parallelizeCalls(arrPets,fncLoadPart,fncProcessed,5);
 				});
 				self.addStep("Creating and parsing JSON of "+objContent.totalParts,function(){
 					var sJSON=arrContents.saToString();

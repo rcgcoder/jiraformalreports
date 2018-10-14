@@ -53,6 +53,7 @@ class RCGDynamicObject{
 		self.trace=factory.trace;
 		self.toArray=factory.toArray;
 		self.swing=factory.swing;
+		self.getStorageObject=factory.getStorageObject;
 		self.configFromExcel=factory.configFromExcel;
 		self.loadFromExcel=factory.loadFromExcel;
 		self.loadFromExceAsync=factory.loadFromExceAsync;
@@ -893,6 +894,14 @@ class factoryObjects{
 			});
 			
 		}
+	getStorageObject(){
+		var self=this; //self is an individual object
+		var objResult={};
+		self.factory.attributes.walk(function(key,deep,value){
+			objResult[key]=value;
+		});
+		return objResult;
+	}
 	toArray(arrFields){ //[{doFieldName:,resultFieldName},{}.{}]
 		// convert the list of objects to an array []
 		var arrResult=[]

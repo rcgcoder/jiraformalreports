@@ -780,7 +780,7 @@ var factoryObjects=class factoryObjects{
 			newObj.getId=this.internal_getId;
 			newObj.getName=this.internal_getName;
 			newObj.generateTypes=this.generateTypes;
-			
+			newObj.getStorageObject=this.getStorageObject;
 			this.list.add(newObj.id,newObj);
 	/*		newObj.addAttributeList=this.objaddAttributeList;
 			newObj.addAttribute=this.objaddAttribute;

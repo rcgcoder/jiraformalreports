@@ -8,7 +8,8 @@ System.webapp.addStep("Refreshing ...", function(){
         System.webapp.github.updateLastCommit();
     });
     System.webapp.addStep("Dynamic load test class", function(){
-        var arrFiles=[                  
+        var arrFiles=[  
+        			"js/rcglibs/RCGDynamicObjectUtils.js",
 		    		"js/rcglibs/RCGStringArray.js",
 				    "js/rcglibs/RCGObjectStorageUtils.js",
 				    "js/rcglibs/tests/RCGTest.js"

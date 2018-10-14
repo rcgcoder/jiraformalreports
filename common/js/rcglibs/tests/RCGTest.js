@@ -14,6 +14,21 @@ System.webapp.addStep("Object",function(){
 	var auxObj={attString:"String to save",attFloat:6.2,attArray:["a","b",9,8,"z"]}
 	storer.save("testObject",auxObj);
 });
+System.webapp.addStep("Dynamic Object",function(){
+	debugger;
+	var dynObj=newDynamicObjectFactory(
+			[{name:"TestString",description:"One String",type:"String"},
+			]
+			,
+			["TestList"
+			]
+			,
+			[]
+			,
+			undefined);
+	var auxObj=dynObj.new("Test DynObj");
+	storer.save("testObject",auxObj);
+});
 
 System.webapp.addStep("hashMap",function(){
 	var fncCreateHashMap=function(iDeepMax){
@@ -74,7 +89,6 @@ System.webapp.addStep("Object",function(){
 	});
 });
 System.webapp.addStep("HashMap",function(){
-	debugger;
 	storer.load("testHashMap",function(result){
 		log("End Load HashMap:"+result);
 	});

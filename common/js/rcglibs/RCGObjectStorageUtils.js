@@ -181,7 +181,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 						arrPets.push(fsKey+"_part_"+i);
 					}
 					var fncLoadPart=function(part){
-						load(part);
+						self.load(part);
 					};
 					var fncProcessed=function(partId,part){
 						arrContents[part.partNumber]=part.content;

@@ -48,7 +48,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				});
 			} else {
 				if (isDefined(item.getStorageObject)){
-					objToSave.value=item.getStorageObject();
+					objToSave.value=item.getStorageObject(self);
 				} else {
 					var arrProps=getAllProperties(item);
 					objToSave.value={};

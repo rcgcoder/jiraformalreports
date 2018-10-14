@@ -896,11 +896,17 @@ var factoryObjects=class factoryObjects{
 			});
 			
 		}
-	getStorageObject(){
+	getStorageObject(storer){
 		var self=this; //self is an individual object
 		var objResult={};
-		self.factory.attributes.walk(function(key,deep,value){
-			objResult[value]=self[value];
+		self.factory.attrTypes.walk(function(key,deep,value){
+			var attrName=key;
+			var attrType=value.type;
+			if (attrType=="Value"){
+				objResult[attrName]=self["get"+attrName]();
+			} else if(attrType=="List") {
+				objResult[attrName]=storer.getStorageObject(self["get"+attrName+"s"]());
+			}
 		});
 		return objResult;
 	}

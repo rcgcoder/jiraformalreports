@@ -76,7 +76,7 @@ var RCGDynamicObject=class RCGDynamicObject{
 	}
 }
 
-class factoryObjects{
+var factoryObjects=class factoryObjects{
 	constructor(){
 		var self=this;
 		self.nfactorys=0;
@@ -1499,7 +1499,7 @@ if (typeof baseDynamicObjectFactory==="undefined"){
 	}
 }
 
-class RCGDynamicObjectUtils{
+var RCGDynamicObjectUtils=class RCGDynamicObjectUtils{
 	newDynamicObjectFactory(arrAttributeList,arrAttributes,arrAttributesPercs,globalName){
 		var sName="";
 		var isGlobal=false;

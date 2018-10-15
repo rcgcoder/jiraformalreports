@@ -176,7 +176,12 @@ class GitHub{
 					,undefined,undefined,undefined,
 					[{ key:"Accept",
 					   value:"application/vnd.github.the-key-preview+json,application/vnd.github.v3+json,application/vnd.github.cerberus-preview,application/vnd.github.mockingbird-preview,application/vnd.github.squirrel-girl-preview,application/vnd.github.barred-rock-preview,application/vnd.github.damage-preview,application/vnd.github.ant-man-preview+json,application/vnd.github.cryptographer-preview,application/vnd.github.polaris-preview"
-				     }]
+				     },
+				     { key:"Accept-Encoding",
+						   value:"gzip, deflate, br, json"
+					 }				     
+				     
+				     ]
 					);
 		
 		

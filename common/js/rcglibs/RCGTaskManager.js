@@ -1134,7 +1134,7 @@ class RCGTaskManager{
 	}
 	internal_parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads){
 		var self=this;
-		var maxThreads=25;
+		var maxThreads=10;
 		if (isDefined(maxParallelThreads)) maxThreads=maxParallelThreads; 
 		var hsListItems=newHashMap();
 		var fncName="walk";

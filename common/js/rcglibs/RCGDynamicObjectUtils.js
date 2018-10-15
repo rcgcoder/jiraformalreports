@@ -955,7 +955,7 @@ var factoryObjects=class factoryObjects{
 	getStorageObject(storer){
 		var self=this; //self is an individual object
 		var objResult={};
-		objResult.key=self.getID();
+		objResult.key=self.id;
 		self.factory.attrTypes.walk(function(value,deep,key){
 			var attrName=key;
 			var attrType=value.type;

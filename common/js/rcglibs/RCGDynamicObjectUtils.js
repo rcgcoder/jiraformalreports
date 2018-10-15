@@ -49,6 +49,7 @@ var RCGDynamicObject=class RCGDynamicObject{
 		self.internal_getFactory=factory.internal_getFactory;			
 		self.internal_setID=factory.internal_setID;		
 		self.updateAttributesFunctions=factory.updateAttributesFunctions;
+		self.updatePrototypeAttributesFunctions=factory.updatePrototypeAttributesFunctions;
 		self.newObject=factory.newObject;
 		self.new=factory.new;							
 		self.processAllAttributes=factory.processAllAttributes;						

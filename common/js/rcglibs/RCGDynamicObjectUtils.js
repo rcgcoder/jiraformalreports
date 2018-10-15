@@ -811,7 +811,10 @@ var factoryObjects=class factoryObjects{
 								 var `+this.name+`=class `+this.name+`{};
 								 return `+this.name;
 					this.derivedClass=executeFunction([],sScript);
-					this.derivedClass.prototype.setID=this.internal_setID;
+/*
+ * Removed because use of prototype is very slow
+ * 
+ * 					this.derivedClass.prototype.setID=this.internal_setID;
 					this.derivedClass.prototype.execFunction=this.internal_execFunction;
 					this.derivedClass.prototype.getFactory=this.internal_getFactory;
 					this.derivedClass.prototype.getId=this.internal_getId;
@@ -819,23 +822,23 @@ var factoryObjects=class factoryObjects{
 					this.derivedClass.prototype.generateTypes=this.generateTypes;
 					this.derivedClass.prototype.getStorageObject=this.getStorageObject;
 					this.updatePrototypeAttributesFunctions(this.derivedClass);
-				}
+*/				}
 				newObj=new this.derivedClass();
 			} else {
 				newObj={};
-				newObj.setID=this.internal_setID;
-				newObj.execFunction=this.internal_execFunction;
-				newObj.getFactory=this.internal_getFactory;
-				newObj.getId=this.internal_getId;
-				newObj.getName=this.internal_getName;
-				newObj.generateTypes=this.generateTypes;
-				newObj.getStorageObject=this.getStorageObject;
-				this.updateAttributesFunctions(newObj);
 			}
 			
 			newObj.id=sNewID;
 			newObj.name=sName;
 			newObj.factory=this;
+			newObj.setID=this.internal_setID;
+			newObj.execFunction=this.internal_execFunction;
+			newObj.getFactory=this.internal_getFactory;
+			newObj.getId=this.internal_getId;
+			newObj.getName=this.internal_getName;
+			newObj.generateTypes=this.generateTypes;
+			newObj.getStorageObject=this.getStorageObject;
+			this.updateAttributesFunctions(newObj);
 			
 			this.list.add(newObj.id,newObj);
 	/*		newObj.addAttributeList=this.objaddAttributeList;

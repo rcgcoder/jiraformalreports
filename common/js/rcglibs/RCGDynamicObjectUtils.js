@@ -781,29 +781,37 @@ var factoryObjects=class factoryObjects{
 								 var `+this.name+`=class `+this.name+`{};
 								 return `+this.name;
 					self.derivedClass=executeFunction([],sScript);
+					self.derivedClass.prototype.setID=this.internal_setID;
+					self.derivedClass.prototype.execFunction=this.internal_execFunction;
+					self.derivedClass.prototype.getFactory=this.internal_getFactory;
+					self.derivedClass.prototype.getId=this.internal_getId;
+					self.derivedClass.prototype.getName=this.internal_getName;
+					self.derivedClass.prototype.generateTypes=this.generateTypes;
+					self.derivedClass.prototype.getStorageObject=this.getStorageObject;
 				}
 				newObj=new self.derivedClass();
 			} else {
 				newObj={};
+				newObj.setID=this.internal_setID;
+				newObj.execFunction=this.internal_execFunction;
+				newObj.getFactory=this.internal_getFactory;
+				newObj.getId=this.internal_getId;
+				newObj.getName=this.internal_getName;
+				newObj.generateTypes=this.generateTypes;
+				newObj.getStorageObject=this.getStorageObject;
 			}
 			
 			newObj.id=sNewID;
-			newObj.setID=this.internal_setID;
-			newObj.execFunction=this.internal_execFunction;
 			newObj.name=sName;
 			newObj.factory=this;
-			newObj.getFactory=this.internal_getFactory;
-			newObj.getId=this.internal_getId;
-			newObj.getName=this.internal_getName;
-			newObj.generateTypes=this.generateTypes;
-			newObj.getStorageObject=this.getStorageObject;
+			this.updateAttributesFunctions(newObj);
+			
 			this.list.add(newObj.id,newObj);
 	/*		newObj.addAttributeList=this.objaddAttributeList;
 			newObj.addAttribute=this.objaddAttribute;
 			newObj.addAttributeWithPerc=this.objaddAttributeWithPerc;
 	*/		
 
-			this.updateAttributesFunctions(newObj);
 			chronoStopFunction();
 			return newObj;
 		}

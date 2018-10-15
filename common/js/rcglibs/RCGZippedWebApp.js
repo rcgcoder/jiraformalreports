@@ -169,8 +169,6 @@ class GitHub{
 	updateLastCommit(){
 		var self=this;
 		self.pushCallback(self.processLastCommit);
-		debugger;
-//		apiCall(sTargetUrl,sPage,sType,callback,arrHeaders){
 		self.apiCall("../getCommitId?refreshCommitId=1");
 	}
 	updateAllCommits(deployZips){

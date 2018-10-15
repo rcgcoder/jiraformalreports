@@ -169,7 +169,9 @@ class GitHub{
 	updateLastCommit(){
 		var self=this;
 		self.pushCallback(self.processLastCommit);
-		self.apiCall("https://api.github.com/repos/"+self.repository+"/commits/master");
+		debugger;
+		self.apiCall("https://api.github.com/search/commits?q=repo:rcgcoder/jiraformalreports");
+		//self.apiCall("https://api.github.com/repos/"+self.repository+"/commits/master");
 	}
 	updateAllCommits(deployZips){
 		var self=this;

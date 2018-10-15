@@ -170,7 +170,13 @@ class GitHub{
 		var self=this;
 		self.pushCallback(self.processLastCommit);
 		debugger;
-		self.apiCall("https://api.github.com/search/commits?q=repo:rcgcoder/jiraformalreports");
+//		apiCall(sTargetUrl,sPage,sType,callback,arrHeaders){
+		
+		self.apiCall("https://api.github.com/search/commits?q=repo:rcgcoder/jiraformalreports"
+					,undefined,undefined,undefined,["Accept: application/vnd.github.mercy-preview+json"]
+					);
+		
+		
 		//self.apiCall("https://api.github.com/repos/"+self.repository+"/commits/master");
 	}
 	updateAllCommits(deployZips){

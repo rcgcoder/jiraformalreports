@@ -98,6 +98,12 @@ System.webapp.addStep("HashMap",function(){
 		log("End Load HashMap:"+result);
 	});
 });
+System.webapp.addStep("Dynamic Object",function(){
+	debugger;
+	storer.load("testObject",function(result){
+		log("End Load Dynamic Object:"+result);
+	});
+});
 
 System.webapp.addStep("End Load",function(){
 	log("End Load Tests");

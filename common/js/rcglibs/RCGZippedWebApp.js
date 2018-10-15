@@ -158,7 +158,7 @@ class GitHub{
 		}
 	}
 	processLastCommit(response){
-		var self=this;
+		var self=this; 
 		self.lastCommit=response;
 		var sCommitLongId=self.lastCommit.sha;
 		var sCommitShortId=sCommitLongId.substring(0,8);

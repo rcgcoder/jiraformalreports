@@ -57,7 +57,6 @@ System.webapp.addStep("Dynamic Object",function(){
 	storer.save("testObject",auxObj);
 });
 System.webapp.addStep("Dynamic Object",function(){
-	debugger;
 	storer.load("testObject",function(result){
 		log("End Load Dynamic Object:"+result);
 	});

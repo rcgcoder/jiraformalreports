@@ -182,6 +182,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				objResult[prop]=self.processFileObj(objContent.value[prop]);
 			});
 		} else if (objContent.type=="co" /* custom object */){
+			debugger;
 			var factoryName=objContent.factoryName;
 			if (isDefined(factoryName)){
 				var theFactory=baseDynamicObjectFactory.getFactoryGlobal(factoryName);

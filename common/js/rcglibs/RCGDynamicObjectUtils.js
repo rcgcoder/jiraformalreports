@@ -773,13 +773,10 @@ var factoryObjects=class factoryObjects{
 			chronoStartFunction();
 			var me=this;
 			var sNewID=this.getNewId();
-				self.name=name;
-			self.derivedClass="";
-			self.global=global;
 
 			var newObj;
 			if (this.global){
-				if ((this.list.length()==0)&&(this.deriveClass==="")){
+				if ((this.list.length()==0)&&(this.derivedClass==="")){
 					var sScript="var "+this.name+"=class "+this.name+"{};return "+this.name+";";
 					self.derivedClass=executeFunction([],itemFunction);
 				}

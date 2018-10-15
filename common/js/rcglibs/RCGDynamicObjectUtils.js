@@ -820,7 +820,7 @@ var factoryObjects=class factoryObjects{
 					this.derivedClass.prototype.getStorageObject=this.getStorageObject;
 					this.updatePrototypeAttributesFunctions(this.derivedClass);
 				}
-				newObj=new self.derivedClass();
+				newObj=new this.derivedClass();
 			} else {
 				newObj={};
 				newObj.setID=this.internal_setID;

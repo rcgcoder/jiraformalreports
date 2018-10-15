@@ -805,7 +805,7 @@ var factoryObjects=class factoryObjects{
 			var sNewID=this.getNewId();
 
 			var newObj;
-			if (this.global){
+			if (this.name!==""){
 				if ((this.list.length()==0)&&(this.derivedClass==="")){
 					var sScript=`''; 
 								 var `+this.name+`=class `+this.name+`{};

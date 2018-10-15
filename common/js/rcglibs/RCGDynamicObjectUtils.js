@@ -27,6 +27,7 @@ var RCGDynamicObject=class RCGDynamicObject{
 		self.getParentMethod=factory.getParentMethod;
 		self.executeParentMethod=factory.executeParentMethod;
 		self.name=name;
+		self.derivedClass="";
 		self.global=global;
 		self.attrTypes=newHashMap(); // lista de names de attributes, type, etc
 		self.attributes=newHashMap();  // lista total de attributes del theObject
@@ -772,7 +773,21 @@ var factoryObjects=class factoryObjects{
 			chronoStartFunction();
 			var me=this;
 			var sNewID=this.getNewId();
-			var newObj={};
+				self.name=name;
+			self.derivedClass="";
+			self.global=global;
+
+			var newObj;
+			if (this.global){
+				if ((this.list.length()==0)&&(this.deriveClass==="")){
+					var sScript="var "+this.name+"=class "+this.name+"{};return "+this.name+";";
+					self.derivedClass=executeFunction([],itemFunction);
+				}
+				newObj=new self.derivedClass();
+			} else {
+				newObj={};
+			}
+			
 			newObj.id=sNewID;
 			newObj.setID=this.internal_setID;
 			newObj.execFunction=this.internal_execFunction;

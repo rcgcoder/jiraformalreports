@@ -25,8 +25,8 @@ System.webapp.addStep("Dynamic Object",function(){
 			,
 			[]
 			,
-			undefined 
-			//"DynamicObjectTest"
+			//undefined 
+			"DynamicObjectTest"
 			);
 	var auxObj=dynObj.new("Test DynObj");
 	auxObj.setTestOneString("Tested String Values");

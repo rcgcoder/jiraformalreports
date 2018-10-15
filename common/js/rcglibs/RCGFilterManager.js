@@ -4,7 +4,7 @@ var newRCGFilterManagerFactory=function(){
 					 {name:"FilterCache",description:"Filters",type:"string"}
 						],
 					[],
-					[]);
+					[],"Filter");
 	dynObj.functions.add("newFilter",function(filterName,filterBody){
 		var self=this;
 		if (self.existsFilterCache(filterName)){

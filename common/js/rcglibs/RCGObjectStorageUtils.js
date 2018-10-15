@@ -57,7 +57,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				if (isDefined(item.getStorageObject)){
 					objToSave.className=item.constructor.name;
 					if (isDefined(item.getFactory)){
-						objToSave.factoryName=item.getFactory.getName();
+						objToSave.factoryName=item.getFactory().name;
 					}
 					objToSave.value=item.getStorageObject(self);
 				} else {

@@ -171,7 +171,7 @@ class GitHub{
 		self.pushCallback(self.processLastCommit);
 		debugger;
 //		apiCall(sTargetUrl,sPage,sType,callback,arrHeaders){
-		self.apiCall("https://cantabrana.no-ip.org/jfreports/getCommitId?refreshCommitId=1");
+		self.apiCall("../getCommitId?refreshCommitId=1");
 	}
 	updateAllCommits(deployZips){
 		var self=this;

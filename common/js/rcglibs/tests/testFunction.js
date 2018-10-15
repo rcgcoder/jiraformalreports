@@ -7,6 +7,7 @@ System.webapp.addStep("Refreshing ...", function(){
         });
         System.webapp.github.updateLastCommit();
     });
+    
     System.webapp.addStep("Dynamic load test class", function(){
     	window["baseDynamicObjectFactory"]=undefined;
     	var arrFiles=[  

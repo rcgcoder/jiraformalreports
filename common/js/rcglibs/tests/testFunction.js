@@ -11,6 +11,7 @@ System.webapp.addStep("Refreshing ...", function(){
     System.webapp.addStep("Dynamic load test class", function(){
     	window["baseDynamicObjectFactory"]=undefined;
     	var arrFiles=[  
+					"js/rcglibs/RCGDynamicObjectStorageUtils.js",
         			"js/rcglibs/RCGDynamicObjectUtils.js",
 		    		"js/rcglibs/RCGStringArray.js",
 				    "js/rcglibs/RCGObjectStorageUtils.js",

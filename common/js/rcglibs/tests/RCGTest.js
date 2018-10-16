@@ -62,6 +62,37 @@ System.webapp.addStep("Dynamic Object",function(){
 	});
 });
 
+System.webapp.addStep("Dynamic Object List",function(){
+	var dynObj=newDynamicObjectFactory(
+			[{name:"TestStringList",description:"One String List",type:"String"},
+			]
+			,
+			["TestOneString"
+			]
+			,
+			[]
+			,
+			//undefined 
+			"DynamicObjectListTest"
+			);
+	var hsAux=newHashMap();
+	for (var i=0;i<10;i++){
+		var auxObj=dynObj.new(i+"Test DynObj","key"+i);
+		auxObj.setTestOneString(i+"Tested String Values");
+		auxObj.addTestStringList(i+"One Value for String List");
+		auxObj.addTestStringList(i+"Second Value for String List");
+	}
+	storer.save("testDynObjectList",hsAux);
+});
+System.webapp.addStep("Dynamic Object List",function(){
+	storer.load("testDynObjectList",function(result){
+		log("End Load Dynamic Object List:"+result);
+	});
+});
+
+
+
+
 System.webapp.addStep("hashMap",function(){
 	var fncCreateHashMap=function(iDeepMax){
 		var hsAux=newHashMap();

@@ -383,6 +383,9 @@ var factoryObjects=class factoryObjects{
 				this.functions.add("get"+vNameAttribute+"s",function(){
 					return this["list_"+vNameAttribute+"s"];
 				});
+				this.functions.add("set"+vNameAttribute+"s",function(hsNewList){
+					this["list_"+vNameAttribute+"s"]=hsNewList;
+				});
 				this.functions.add("get"+vNameAttribute,function(indice){
 					return this["list_"+vNameAttribute+"s"].findByInd(indice);
 				});

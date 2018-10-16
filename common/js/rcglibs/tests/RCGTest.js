@@ -73,7 +73,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 			[]
 			,
 			//undefined 
-			"DynamicObjectTest"
+			"DynamicObjectWithChildsTest"
 			);
 	var auxObj=dynObj.new("Test DynObj");
 	auxObj.setTestOneString("Tested String Values");

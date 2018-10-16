@@ -192,6 +192,21 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				if (dynObj===""){
 					dynObj=theFactory.new(storedObj.name,objId);
 				}
+				var auxValue;
+				theFactory.attrTypes.walk(function(value,deep,key){
+					var attrName=key;
+					var attrType=value.type;
+					if (isDefined(storedObj[attrName])){
+						auxValue=self.processFileObj(storedObj[attrName].value);
+					} else {
+						auxValue="";
+					}
+					if (attrType=="Value"){
+						dynObj["set"+attrName](auxValue);
+					} else if(attrType=="List") {
+						dynObj["set"+attrName+"s"](auxValue);
+					}
+				});
 				
 			}
 		

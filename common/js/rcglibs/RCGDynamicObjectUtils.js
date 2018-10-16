@@ -112,7 +112,7 @@ var factoryObjects=class factoryObjects{
 		self.nfactorys++;
 		if (isDefined(isGlobal)&&isGlobal){
 			this.addfactoryGlobal(obj);
-			if (isDefined(isStorable)){
+			if (isDefined(isStorable)&&isStorable){
 				obj.setStorable(isStorable);
 				obj.setStorageManager(new RCGDynamicObjectStorage(self));
 			}

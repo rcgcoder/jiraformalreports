@@ -84,7 +84,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 		childObj.setTestOneString(i+"Tested String Values");
 		childObj.addTestStringList(i+"One Value for String List");
 		childObj.addTestStringList(i+"Second Value for String List");
-		dynObj.addChild(childObj);
+		auxObj.addChild(childObj);
 	}
 	storer.save("testObjectWithChilds",auxObj);
 });

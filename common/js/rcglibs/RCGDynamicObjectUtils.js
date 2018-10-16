@@ -980,8 +980,13 @@ var factoryObjects=class factoryObjects{
 		var self=this;
 		storer.addStep("Saving to storage "+self.getId(),function(){
 			log("Saving to storage:"+self.getId());
+			storer.save(self.getFactory().name+"/"+self.getId(),self);
+		});
+		storer.addStep("Item Saved",function(key){
+			log("Item Saved:"+key);
 			storer.continueTask();
 		});
+		//storer.continueTask(); // not continues because the steps process at the end of the secuence
 	}
 	loadFromStorageObject(storedObject,storer){
 		var dynObj=theFactory.getById(objId);

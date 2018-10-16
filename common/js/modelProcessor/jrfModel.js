@@ -343,6 +343,10 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 	}
 	getTokenName(tag){
 		var tagAttrs=tag.getAttributes();
+		if (tag.getTagText().toLowerCase().indexOf("formula")>0){
+			debugger;
+			log("Includes Formula");
+		}
 		var sTokenName="jrfNoop";
 		if (tagAttrs.exists("foreach")){
 			sTokenName="jrfForEach";

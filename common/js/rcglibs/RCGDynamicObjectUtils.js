@@ -111,7 +111,7 @@ var factoryObjects=class factoryObjects{
 */		
 	newFactory(name,isGlobal,arrAttributeList,arrAttributes,arrAttributesPercs,isStorable){
 		var self=this;
-		var obj=new RCGDynamicObject(self,name,arrAttributeList,arrAttributes,arrAttributesPercs);
+		var obj=new RCGDynamicObject(self,name,arrAttributeList,arrAttributes,arrAttributesPercs,isStorable);
 		self.nfactorys++;
 		if (isDefined(isGlobal)&&isGlobal){
 			this.addfactoryGlobal(obj);
@@ -1622,7 +1622,9 @@ var RCGDynamicObjectUtils=class RCGDynamicObjectUtils{
 			}
 		}
 		var obj=baseDynamicObjectFactory.newFactory(
-						sName,isGlobal,arrAttributeList,arrAttributes,arrAttributesPercs,isStorable);
+					sName,isGlobal,
+					arrAttributeList,arrAttributes,arrAttributesPercs,
+					isStorable);
 		return obj;
 	}
 	newDynamicObjectFactoryFromFile(sDefinitionFile,globalName){

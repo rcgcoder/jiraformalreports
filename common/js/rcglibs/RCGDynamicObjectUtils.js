@@ -977,7 +977,7 @@ var factoryObjects=class factoryObjects{
 		return objResult;
 	}
 	saveToStorage(storer){
-		
+		log("Saving to storage:"+this.getId());
 	}
 	loadFromStorageObject(storedObject,storer){
 		var dynObj=theFactory.getById(objId);

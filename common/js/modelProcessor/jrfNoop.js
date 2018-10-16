@@ -1,6 +1,6 @@
 var jrfNoop=class jrfNoop extends jrfToken{//this kind of definition allows to hot-reload
 	loadOwnProperties(){
-//		debugger;
+		debugger;
 		var self=this;
 		if ((self.tag.getTagText().toUpperCase().indexOf("SUM")>=0)
 			||

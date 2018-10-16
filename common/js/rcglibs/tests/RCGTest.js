@@ -81,6 +81,7 @@ System.webapp.addStep("Dynamic Object List",function(){
 		auxObj.setTestOneString(i+"Tested String Values");
 		auxObj.addTestStringList(i+"One Value for String List");
 		auxObj.addTestStringList(i+"Second Value for String List");
+		hsAux.push(auxObj);
 	}
 	storer.save("testDynObjectList",hsAux);
 });

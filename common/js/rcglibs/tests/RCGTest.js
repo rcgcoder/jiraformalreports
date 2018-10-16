@@ -49,6 +49,7 @@ System.webapp.addStep("Dynamic Object",function(){
 			,
 			//undefined 
 			"DynamicObjectTest"
+			,true
 			);
 	var auxObj=dynObj.new("Test DynObj");
 	auxObj.setTestOneString("Tested String Values");

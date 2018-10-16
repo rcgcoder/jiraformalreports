@@ -61,6 +61,39 @@ System.webapp.addStep("Dynamic Object",function(){
 		log("End Load Dynamic Object:"+result);
 	});
 });
+System.webapp.addStep("Dynamic Object With Childs",function(){
+	var dynObj=newDynamicObjectFactory(
+			[{name:"TestStringList",description:"One String List",type:"String"},
+			 {name:"Child",description:"List of DynObjs",type:"object"},
+			]
+			,
+			["TestOneString"
+			]
+			,
+			[]
+			,
+			//undefined 
+			"DynamicObjectTest"
+			);
+	var auxObj=dynObj.new("Test DynObj");
+	auxObj.setTestOneString("Tested String Values");
+	auxObj.addTestStringList("One Value for String List");
+	auxObj.addTestStringList("Second Value for String List");
+	for (var i=0;i<3;i++){
+		var childObj=dynObj.new("ChildDynObj"+i);
+		childObj.setTestOneString(i+"Tested String Values");
+		childObj.addTestStringList(i+"One Value for String List");
+		childObj.addTestStringList(i+"Second Value for String List");
+		dynObj.addChild(childObj);
+	}
+	storer.save("testObjectWithChilds",auxObj);
+});
+System.webapp.addStep("Dynamic Object With Childs",function(){
+	debugger;
+	storer.load("testObjectWithChilds",function(result){
+		log("End Load Dynamic Object:"+result);
+	});
+});
 
 System.webapp.addStep("Dynamic Object List",function(){
 	var dynObj=newDynamicObjectFactory(

@@ -85,6 +85,7 @@ System.webapp.addStep("Dynamic Object List",function(){
 	storer.save("testDynObjectList",hsAux);
 });
 System.webapp.addStep("Dynamic Object List",function(){
+	debugger;
 	storer.load("testDynObjectList",function(result){
 		log("End Load Dynamic Object List:"+result);
 	});

@@ -197,7 +197,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 					var attrName=key;
 					var attrType=value.type;
 					if (isDefined(storedObj[attrName])){
-						auxValue=self.processFileObj(storedObj[attrName].value);
+						auxValue=self.processFileObj(storedObj[attrName]);
 					} else {
 						auxValue="";
 					}

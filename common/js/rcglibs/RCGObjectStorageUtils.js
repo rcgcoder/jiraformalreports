@@ -192,6 +192,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				if (dynObj===""){
 					dynObj=theFactory.new(storedObj.name,objId);
 				}
+				
 			}
 		
 		} else if (objContent.type=="p" /* object part */){

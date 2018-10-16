@@ -961,7 +961,7 @@ var factoryObjects=class factoryObjects{
 			var attrName=key;
 			var attrType=value.type;
 			if (attrType=="Value"){
-				objResult[attrName]=self["get"+attrName]();
+				objResult[attrName]=storer.getStorageObject(self["get"+attrName]());
 			} else if(attrType=="List") {
 				objResult[attrName]=storer.getStorageObject(self["get"+attrName+"s"]());
 			}

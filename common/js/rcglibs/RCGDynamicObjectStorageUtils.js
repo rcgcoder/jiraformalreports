@@ -1,4 +1,4 @@
-var RCGDynamicObjectStorageUtils=class RCGDynamicObjectStorageUtils{
+var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 	constructor(theFactory){
 		var self=this;
 		self.factory=factory;

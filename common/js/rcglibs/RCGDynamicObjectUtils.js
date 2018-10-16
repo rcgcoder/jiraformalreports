@@ -971,6 +971,31 @@ var factoryObjects=class factoryObjects{
 		});
 		return objResult;
 	}
+	saveToStorage(storer){
+		
+	}
+	loadFromStorageObject(storedObject,storer){
+		var dynObj=theFactory.getById(objId);
+		if (dynObj===""){
+			dynObj=theFactory.new(storedObj.name,objId);
+		}
+		var auxValue;
+		theFactory.attrTypes.walk(function(value,deep,key){
+			var attrName=key;
+			var attrType=value.type;
+			if (isDefined(storedObj[attrName])){
+				auxValue=self.processFileObj(storedObj[attrName]);
+			} else {
+				auxValue="";
+			}
+			if (attrType=="Value"){
+				dynObj["set"+attrName](auxValue);
+			} else if(attrType=="List") {
+				dynObj["set"+attrName+"s"](auxValue);
+			}
+		});
+
+	}
 	toArray(arrFields){ //[{doFieldName:,resultFieldName},{}.{}]
 		// convert the list of objects to an array []
 		var arrResult=[]

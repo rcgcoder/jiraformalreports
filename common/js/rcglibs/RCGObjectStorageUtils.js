@@ -17,8 +17,8 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 	setOnLoad(fncOnLoad){
 		this.onLoad=fncOnLoad;
 	}
-	isBaseType(item){
-		return isString(item)||isNumber(item)||isBoolean(item);
+	isBaseType(itemType){
+		return (itemType=="s")||(itemType=="n")||(itemType=="b");
 	}
 	getType(item){
 		if (isString(item))return "s";
@@ -28,6 +28,9 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		if (isHashMap(item)) return "h";
 		if (isObject(item)){
 			if (isDefined(item.getStorageObject)){
+				if (isDefined(item.getFactory)){
+					return "fo";
+				}
 				return "co";
 			} else {
 				return "o";
@@ -41,32 +44,32 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		var objToSave={};
 		if (isDefined(item)){
 			objToSave.type=self.getType(item);
-			if (self.isBaseType(item)){
+			if (self.isBaseType(objToSave.type)){
 				objToSave.value=item;
-			} else if (isArray(item)){
+			} else if (objToSave.type=="a"){
 				objToSave.value=[];
 				item.forEach(function(elem){
 					objToSave.value.push(self.getStorageObject(elem));
 				});
-			} else if (isHashMap(item)){
+			} else if (objToSave.type=="h"){
 				objToSave.value=[];
 				item.walk(function(elem,deep,key){
 					objToSave.value.push({key:key,value:self.getStorageObject(elem)});
 				});
-			} else {
-				if (isDefined(item.getStorageObject)){
-					objToSave.className=item.constructor.name;
-					if (isDefined(item.getFactory)){
-						objToSave.factoryName=item.getFactory().name;
-					}
-					objToSave.value=item.getStorageObject(self);
-				} else {
-					var arrProps=getAllProperties(item);
-					objToSave.value={};
-					arrProps.forEach(function(prop){
-						objToSave.value[prop]=self.getStorageObject(item[prop]);
-					});
-				}
+			} else if (objToSave.type=="o"){
+				var arrProps=getAllProperties(item);
+				objToSave.value={};
+				arrProps.forEach(function(prop){
+					objToSave.value[prop]=self.getStorageObject(item[prop]);
+				});
+			} else if (objToSave.type=="co"){
+				objToSave.className=item.constructor.name;
+				objToSave.value=item.getStorageObject(self);
+			} else if (objToSave.type=="fo"){
+				objToSave.className=item.constructor.name;
+				objToSave.factoryName=item.getFactory().name;
+				objToSave.value={key:item.getID()};
+				item.saveToStorage();
 			}
 		}
 		return objToSave;
@@ -158,7 +161,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 	processFileObj(objContent,fsKey,filename){
 		var self=this;
 		var objResult;
-		if ((objContent.type=="s" /*"string"*/)||(objContent.type=="n"/*"number"*/)){
+		if (self.isBaseType(objContent.type)){
 			return objContent.value;
 		} else if (objContent.type=="a"/*"array"*/){
 			objResult=[];
@@ -182,34 +185,19 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				objResult[prop]=self.processFileObj(objContent.value[prop]);
 			});
 		} else if (objContent.type=="co" /* custom object */){
+			var objResult=new window[objToSave.className]();
+			objResult.loadFromStorageObject(objContent.value);
+		} else if (objContent.type=="fo" /* object with factory */){
 			debugger;
 			var factoryName=objContent.factoryName;
-			if (isDefined(factoryName)){
-				var theFactory=baseDynamicObjectFactory.getFactoryGlobal(factoryName);
-				var storedObj=objContent.value;
-				var objId=storedObj.key;
-				var dynObj=theFactory.getById(objId);
-				if (dynObj===""){
-					dynObj=theFactory.new(storedObj.name,objId);
-				}
-				var auxValue;
-				theFactory.attrTypes.walk(function(value,deep,key){
-					var attrName=key;
-					var attrType=value.type;
-					if (isDefined(storedObj[attrName])){
-						auxValue=self.processFileObj(storedObj[attrName]);
-					} else {
-						auxValue="";
-					}
-					if (attrType=="Value"){
-						dynObj["set"+attrName](auxValue);
-					} else if(attrType=="List") {
-						dynObj["set"+attrName+"s"](auxValue);
-					}
-				});
-				
+			var theFactory=baseDynamicObjectFactory.getFactoryGlobal(factoryName);
+			var storedObj=objContent.value;
+			var objId=storedObj.key;
+			var dynObj=theFactory.getById(objId);
+			if (dynObj===""){
+				dynObj=theFactory.new(storedObj.name,objId);
 			}
-		
+			objResult=dynObj;
 		} else if (objContent.type=="p" /* object part */){
 			if (objContent.partNumber==0){
 				debugger;

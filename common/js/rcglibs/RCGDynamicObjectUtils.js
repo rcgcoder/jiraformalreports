@@ -973,10 +973,10 @@ var factoryObjects=class factoryObjects{
 		var self=this;
 		if (!(isDefined(bStorable)&&bStorable)){
 			self.storable=false;
-			self.storageManager="";
+			self.storeManager="";
 		} else if (!self.storable){
 			self.storable=true;
-			self.setStorageManager(new RCGDynamicObjectStorage(self));
+			self.setStoreManager(new RCGDynamicObjectStorage(self));
 		}
 	}
 	object_isStorable(){

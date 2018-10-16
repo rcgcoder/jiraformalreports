@@ -16,7 +16,7 @@ var ChronoUtils=require("./ChronoUtils.js");
 var HashMapUtils=require("./HashMapUtils.js");
 */
 var RCGDynamicObject=class RCGDynamicObject{
-	constructor(theFactory,name,arrAttributeList,arrAttributes,arrAttributesPercs){
+	constructor(theFactory,name,arrAttributeList,arrAttributes,arrAttributesPercs,storable){
 		var self=this;
 		var factory=theFactory;
 		self.factory=factory;
@@ -65,6 +65,9 @@ var RCGDynamicObject=class RCGDynamicObject{
 		self.setStoreManager=factory.setStoreManager;
 		self.getStorageObject=factory.getStorageObject;
 		self.saveToStorage=factory.saveToStorage;
+		if (isDefined(storable)&&storable){
+			self.setStorable(true);
+		}
 
 		self.configFromExcel=factory.configFromExcel;
 		self.loadFromExcel=factory.loadFromExcel;
@@ -112,10 +115,6 @@ var factoryObjects=class factoryObjects{
 		self.nfactorys++;
 		if (isDefined(isGlobal)&&isGlobal){
 			this.addfactoryGlobal(obj);
-			if (isDefined(isStorable)&&isStorable){
-				obj.setStorable(isStorable);
-				obj.setStorageManager(new RCGDynamicObjectStorage(self));
-			}
 		}
 		return obj;
 	}
@@ -971,7 +970,14 @@ var factoryObjects=class factoryObjects{
 			
 		}
 	setStorable(bStorable){
-		this.storable=(isDefined(bStorable)&&bStorable);
+		var self=this;
+		if (!(isDefined(bStorable)&&bStorable)){
+			self.storable=false;
+			self.storageManager="";
+		} else if (!self.storable){
+			self.storable=true;
+			self.setStorageManager(new RCGDynamicObjectStorage(self));
+		}
 	}
 	object_isStorable(){
 		return this.factory.storable;

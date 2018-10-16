@@ -1,7 +1,7 @@
 var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 	constructor(theFactory){
 		var self=this;
-		self.factory=factory;
+		self.factory=theFactory;
 		self.storer=new RCGObjectStorageManager(self.factory.name,System.webapp.getTaskManager());
 		self.activeObjects=newHashMap();
 		self.inactiveObjects=newHashMap();

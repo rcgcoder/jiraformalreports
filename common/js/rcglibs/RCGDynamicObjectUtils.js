@@ -58,6 +58,8 @@ var RCGDynamicObject=class RCGDynamicObject{
 		self.toArray=factory.toArray;
 		self.swing=factory.swing;
 		self.getStorageObject=factory.getStorageObject;
+		self.saveToStorage=factory.saveToStorage;
+		self.loadFromStorageObject=factory.loadFromStorageObject;
 		self.configFromExcel=factory.configFromExcel;
 		self.loadFromExcel=factory.loadFromExcel;
 		self.loadFromExceAsync=factory.loadFromExceAsync;
@@ -841,6 +843,9 @@ var factoryObjects=class factoryObjects{
 			newObj.getName=this.internal_getName;
 			newObj.generateTypes=this.generateTypes;
 			newObj.getStorageObject=this.getStorageObject;
+			newObj.saveToStorage=this.saveToStorage;
+			newObj.loadFromStorageObject=this.loadFromStorageObject;
+
 			this.updateAttributesFunctions(newObj);
 			
 			this.list.add(newObj.id,newObj);

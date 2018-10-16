@@ -69,7 +69,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				objToSave.className=item.constructor.name;
 				objToSave.factoryName=item.getFactory().name;
 				objToSave.value={key:item.getId()};
-				item.saveToStorage();
+				item.saveToStorage(self);
 			}
 		}
 		return objToSave;

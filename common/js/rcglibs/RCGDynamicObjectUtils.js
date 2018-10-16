@@ -980,7 +980,7 @@ var factoryObjects=class factoryObjects{
 		var self=this;
 		storer.addStep("Saving to storage "+self.getId(),function(){
 			log("Saving to storage:"+self.getId());
-			storer.save(self.getFactory().name+"/"+self.getId(),self);
+			storer.save(self.getFactory().name+"/"+self.getId(),self.getStorageObject(storer));
 		});
 		storer.addStep("Item Saved",function(key){
 			log("Item Saved:"+key);

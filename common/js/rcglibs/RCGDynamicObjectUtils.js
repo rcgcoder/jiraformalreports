@@ -992,7 +992,7 @@ var factoryObjects=class factoryObjects{
 		var self=this; //self is an individual object
 		var objResult={};
 		if (self.isStorable()){
-			objResult=self.storeManager.getStorageObject(self);
+			objResult=self.factory.storeManager.getStorageObject(self);
 		} else {
 			objResult.key=self.id;
 			objResult.name=self.name;
@@ -1002,7 +1002,7 @@ var factoryObjects=class factoryObjects{
 	saveToStorage(){
 		var self=this;
 		if (self.isStorable()){
-			self.storeManager.saveToStorage(self);
+			self.factory.storeManager.saveToStorage(self);
 		};
 	}
 	

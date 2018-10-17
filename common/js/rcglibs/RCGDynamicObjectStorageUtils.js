@@ -1,6 +1,7 @@
 var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 	constructor(theFactory){
 		var self=this;
+		self.cacheItemsMax=0;
 		self.factory=theFactory;
 		self.storer=new RCGObjectStorageManager(self.factory.name,System.webapp.getTaskManager());
 		self.activeObjects=newHashMap();
@@ -45,14 +46,17 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 	saveToStorage(dynObj){
 		var self=this;
 		var storer=self.storer;
-		storer.addStep("Saving to storage "+self.factory.name +"/"+dynObj.getId(),function(){
-			log("Saving to storage:"+dynObj.getId());
-			storer.save(dynObj.getId(),self.getStorageObject(dynObj));
-		});
-		storer.addStep("Item Saved "+self.factory.name +"/"+dynObj.getId(),function(key){
-			log("Item Saved:"+key);
-			storer.continueTask();
-		});
+		if ((!self.isLocked())&&self.isChanged()&&self.isFullyLoaded()){
+			storer.addStep("Saving to storage "+self.factory.name +"/"+dynObj.getId(),function(){
+				log("Saving to storage:"+dynObj.getId());
+				storer.save(dynObj.getId(),self.getStorageObject(dynObj));
+			});
+			storer.addStep("Item Saved "+self.factory.name +"/"+dynObj.getId(),function(key){
+				log("Item Saved:"+key);
+				self.clearChanges();
+				storer.continueTask();
+			});
+		}
 		//storer.continueTask(); // not continues because the steps process at the end of the secuence
 	}
 	loadFromStorage(dynObj){
@@ -60,6 +64,28 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		var self=this;
 		var storer=self.storer;
 		var objId=dynObj.getId();
+		var nTotalItems=self.inactiveObjects.length()+self.activeObjects.length();
+
+		if ((self.cacheItemsMax<nTotalItems)&&(self.inactiveObjects.length()>0)){
+			storer.addStep("Remove all inactive Objects ("+self.inactiveObjects.length()+")",function(){
+				var fncSaveCall=function(inactiveObject){
+					if (!inactiveObject.isLocked()){
+						storer.saveToStorage(inactiveObject);
+					}
+					self.continueTask();
+				}
+				var fncUnloadAndRemove=function(inactiveObject){
+					if (!inactiveObject.isLocked()){
+						if (inactiveObject.isFullyLoaded()){
+							inactiveObject.fullUnload();
+						}
+						self.inactiveObjects.remove(inactiveObject.getId());
+					}
+					self.continueTask();
+				}
+				storer.parallelizeCalls(self.inactiveObjects,fncSaveCall,fncUnloadAndRemove,5);
+			});
+		}
 		if (dynObj.isFullyLoaded()){
 			storer.addStep("Is already loaded. Returning the object "+self.factory.name +"/"+objId,function(){
 				storer.continueTask([dynObj]);

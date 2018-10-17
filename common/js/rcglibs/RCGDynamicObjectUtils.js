@@ -59,6 +59,7 @@ var RCGDynamicObject=class RCGDynamicObject{
 		self.swing=factory.swing;
 		self.lock=factory.lock;
 		self.unlock=factory.unlock;
+		self.isLocked=factory.isLocked;
 		self.isChanged=factory.isChanged;
 		self.change=factory.change;
 		self.clearChanges=factory.clearChanges;
@@ -866,6 +867,7 @@ var factoryObjects=class factoryObjects{
 			newObj.getStorageObject=this.getStorageObject;
 			newObj.saveToStorage=this.saveToStorage;
 			newObj.numLocks=0;
+			newObj.isLocked=this.isLocked;
 			newObj.lock=this.lock;
 			newObj.unlock=this.unlock;
 			newObj.numChanges=1;
@@ -994,6 +996,9 @@ var factoryObjects=class factoryObjects{
 			});
 			
 		}
+	isLocked(){
+		return this.numLocks!=0;
+	}
 	lock(){
 		var self=this;
 		if (self.numLocks==0){
@@ -1037,6 +1042,21 @@ var factoryObjects=class factoryObjects{
 		if (self.isStorable()){
 			self.getFactory().storeManager.loadFromStorage(self);
 		} 
+	}
+	fullUnload(){
+		var self=this;
+		var theFactory=self.factory;
+		var auxValue;
+		theFactory.attrTypes.walk(function(value,deep,key){
+			var attrName=key;
+			var attrType=value.type;
+			if (attrType=="Value"){
+				dynObj["set"+attrName](undefined);
+			} else if(attrType=="List") {
+				dynObj["set"+attrName+"s"](undefined);
+			}
+		});
+		self.setFullyUnloaded();
 	}
 	
 	setStorable(bStorable){

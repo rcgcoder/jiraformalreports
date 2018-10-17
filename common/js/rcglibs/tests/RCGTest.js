@@ -56,6 +56,10 @@ System.webapp.addStep("Dynamic Object",function(){
 	auxObj.addTestStringList("One Value for String List");
 	auxObj.addTestStringList("Second Value for String List");
 	auxObj.unlock();
+	self.addStep("Save to Storage",function(){
+		auxObj.storeManager.saveToStorage(auxObj);
+	});
+	storer.continueTask();
 });
 System.webapp.addStep("Dynamic Object",function(){
 	storer.load("testObject",function(result){

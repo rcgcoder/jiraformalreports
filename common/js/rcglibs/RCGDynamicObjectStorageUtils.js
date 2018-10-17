@@ -95,7 +95,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 					dynObj.setFullyLoaded();
 					dynObj.clearChanges();
 				}
-				self.continueTask([dynObj]);
+				storer.continueTask([dynObj]);
 			});
 		}
 		//storer.continueTask(); // not continues because the steps process at the end of the secuence

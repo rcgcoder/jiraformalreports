@@ -998,7 +998,7 @@ var factoryObjects=class factoryObjects{
 		var self=this;
 		if (self.numLocks==0){
 			if (self.isStorable()){
-				self.storeManager.reserve(self);
+				self.getFactory().storeManager.reserve(self);
 			}
 		}
 		self.numLocks++;
@@ -1010,7 +1010,7 @@ var factoryObjects=class factoryObjects{
 			logError("The object "+self.getId()+" is unlocked too much times. There is some bug");
 		} else if(self.numLocks==0){
 			if (self.isStorable()){
-				self.storeManager.release(self);
+				self.getFactory().storeManager.release(self);
 			}
 		}
 	}
@@ -1035,7 +1035,7 @@ var factoryObjects=class factoryObjects{
 	fullLoad(){
 		var self=this;
 		if (self.isStorable()){
-			self.storeManager.loadFromStorage(self);
+			self.getFactory().storeManager.loadFromStorage(self);
 		} 
 	}
 	

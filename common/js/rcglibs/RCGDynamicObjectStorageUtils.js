@@ -14,7 +14,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 			self.inactiveObjects.remove(key);
 		}
 		if (!self.activeObjects.exists(key)){
-			self.activeObjects.add(dynObj,key);
+			self.activeObjects.add(key,dynObj);
 		}
 	}
 	release(dynObj){
@@ -24,7 +24,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 			self.activeObjects.remove(key);
 		}
 		if (!self.inactiveObjects.exists(key)){
-			self.inactiveObjects.add(dynObj,key);
+			self.inactiveObjects.add(key,dynObj);
 		}
 	}
 	getStorageObject(dynObj){

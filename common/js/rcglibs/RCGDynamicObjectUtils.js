@@ -57,6 +57,17 @@ var RCGDynamicObject=class RCGDynamicObject{
 		self.trace=factory.trace;
 		self.toArray=factory.toArray;
 		self.swing=factory.swing;
+		self.lock=factory.lock;
+		self.unlock=factory.unlock;
+		self.isChanged=factory.isChanged;
+		self.change=factory.change;
+		self.clearChanges=factory.clearChanges;
+		
+		self.isFullyLoaded=factory.isFullyLoaded;
+		self.setFullyLoaded=factory.setFullyLoaded;
+		self.setFullyUnloaded=factory.setFullyUnloaded;
+		self.fullLoad=factory.fullLoad;
+		
 		self.storable=false;
 		self.setStorable=factory.setStorable;
 		self.isStorable=factory.factory_isStorable;
@@ -854,6 +865,19 @@ var factoryObjects=class factoryObjects{
 			newObj.isStorable=this.object_isStorable;
 			newObj.getStorageObject=this.getStorageObject;
 			newObj.saveToStorage=this.saveToStorage;
+			newObj.numLocks=0;
+			newObj.lock=this.lock;
+			newObj.unlock=this.unlock;
+			newObj.numChanges=1;
+			newObj.isChanged=this.isChanged;
+			newObj.change=this.change;
+			newObj.clearChanges=this.clearChanges;
+			
+			newObj.isFullyLoaded=this.isFullyLoaded;
+			newObj.setFullyLoaded=this.setFullyLoaded;
+			newObj.setFullyUnloaded=this.setFullyUnloaded;
+			newObj.fullLoad=this.fullLoad;
+			
 
 			this.updateAttributesFunctions(newObj);
 			
@@ -878,6 +902,7 @@ var factoryObjects=class factoryObjects{
 			} else {
 				objNew.factory.executeParentMethod("childConstructor");
 			}
+			objNew.lock();
 			chronoStopFunction();
 			return objNew;
 		}
@@ -969,6 +994,51 @@ var factoryObjects=class factoryObjects{
 			});
 			
 		}
+	lock(){
+		var self=this;
+		if (self.numLocks==0){
+			if (self.isStorable()){
+				self.storeManager.reserve(self);
+			}
+		}
+		self.numLocks++;
+	}
+	unlock(){
+		var self=this;
+		self.numLocks--;
+		if (this.numLocks<0){
+			logError("The object "+self.getId()+" is unlocked too much times. There is some bug");
+		} else if(self.numLocks==0){
+			if (self.isStorable()){
+				self.storeManager.release(self);
+			}
+		}
+	}
+	change(){
+		this.numChanges++;
+	}
+	isChanged(){
+		return (this.numChanges>0);
+	}
+	clearChanges(){
+		this.numChanges=0;
+	}
+	isFullyLoaded(){
+		this.loaded;
+	}
+	setFullyLoaded(){
+		this.loaded=true;
+	}
+	setFullyUnloaded(){
+		this.loaded=false;
+	}
+	fullLoad(){
+		var self=this;
+		if (self.isStorable()){
+			self.storeManager.loadFromStorage(self);
+		} 
+	}
+	
 	setStorable(bStorable){
 		var self=this;
 		if (!(isDefined(bStorable)&&bStorable)){

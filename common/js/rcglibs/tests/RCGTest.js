@@ -56,10 +56,19 @@ System.webapp.addStep("Dynamic Object",function(){
 	auxObj.addTestStringList("One Value for String List");
 	auxObj.addTestStringList("Second Value for String List");
 	storer.save("testObject",auxObj);
+	auxObj.unlock();
 });
 System.webapp.addStep("Dynamic Object",function(){
-	storer.load("testObject",function(result){
-		log("End Load Dynamic Object:"+result);
+	debugger;
+	storer.addStep("Load substep",function(){
+		storer.load("testObject",function(result){
+			log("End Load Dynamic Object:"+result);
+			result.fullLoad();
+			storer.continueTask([result]);
+		});
+	});
+	storer.addStep("Full loaded",function(dynObj){
+		log("Full loaded:"+ dynObj.getId());
 	});
 });
 System.webapp.addStep("Dynamic Object With Childs",function(){

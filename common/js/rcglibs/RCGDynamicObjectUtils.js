@@ -68,6 +68,7 @@ var RCGDynamicObject=class RCGDynamicObject{
 		self.setFullyLoaded=factory.setFullyLoaded;
 		self.setFullyUnloaded=factory.setFullyUnloaded;
 		self.fullLoad=factory.fullLoad;
+		self.fullUnload=factory.fullUnload;
 		
 		self.storable=false;
 		self.setStorable=factory.setStorable;
@@ -880,6 +881,7 @@ var factoryObjects=class factoryObjects{
 			newObj.setFullyLoaded=this.setFullyLoaded;
 			newObj.setFullyUnloaded=this.setFullyUnloaded;
 			newObj.fullLoad=this.fullLoad;
+			newObj.fullUnload=this.fullUnload;
 			
 
 			this.updateAttributesFunctions(newObj);

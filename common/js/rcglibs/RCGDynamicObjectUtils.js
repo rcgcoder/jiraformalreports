@@ -1040,9 +1040,11 @@ var factoryObjects=class factoryObjects{
 	}
 	fullLoad(){
 		var self=this;
-		if (self.isStorable()){
+		if (self.isStorable()&&(!self.isFullyLoaded())){
 			self.getFactory().storeManager.loadFromStorage(self);
-		} 
+		} else {
+			System.webapp.continueTask([self]); // to use in configurable apps
+		}
 	}
 	fullUnload(){
 		var self=this;

@@ -69,16 +69,16 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 						storer.saveToStorage(inactiveObject);
 					});
 				}
-				self.continueTask();
+				storer.continueTask();
 			}
 			var fncUnloadAndRemove=function(inactiveObject){
 				if (!inactiveObject.isLocked()){
 					if (inactiveObject.isFullyLoaded()){
 						inactiveObject.fullUnload();
 					}
-					self.inactiveObjects.remove(inactiveObject.getId());
+					storer.inactiveObjects.remove(inactiveObject.getId());
 				}
-				self.continueTask();
+				storer.continueTask();
 			}
 			storer.parallelizeCalls(self.inactiveObjects,fncSaveCall,fncUnloadAndRemove,5);
 		});

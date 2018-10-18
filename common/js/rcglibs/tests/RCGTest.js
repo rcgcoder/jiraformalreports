@@ -66,7 +66,6 @@ System.webapp.addStep("Dynamic Object",function(){
 		storer.load("testObject",function(result){
 			log("End Load Dynamic Object:"+result);
 			result.fullLoad();
-			storer.continueTask([result]);
 		});
 	})
 	storer.addStep("Full loaded",function(dynObj){

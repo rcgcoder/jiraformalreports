@@ -70,6 +70,7 @@ System.webapp.addStep("Dynamic Object",function(){
 	})
 	storer.addStep("Full loaded",function(dynObj){
 		log("Full loaded:"+ dynObj.getId());
+		storer.continueTask();
 	});
 	storer.continueTask();
 });

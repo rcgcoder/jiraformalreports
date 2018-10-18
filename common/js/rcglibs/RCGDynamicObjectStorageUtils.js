@@ -49,7 +49,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		if ((!dynObj.isLocked())&&dynObj.isChanged()&&dynObj.isFullyLoaded()){
 			storer.addStep("Saving to storage "+self.factory.name +"/"+dynObj.getId(),function(){
 				log("Saving to storage:"+dynObj.getId());
-				self.clearChanges();
+				dynObj.clearChanges();
 				storer.save(dynObj.getId(),self.getStorageObject(dynObj));
 			});
 			storer.addStep("Item Saved "+self.factory.name +"/"+dynObj.getId(),function(key){

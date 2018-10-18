@@ -875,6 +875,7 @@ var factoryObjects=class factoryObjects{
 			newObj.change=this.change;
 			newObj.clearChanges=this.clearChanges;
 			
+			newObj.loaded=true;
 			newObj.isFullyLoaded=this.isFullyLoaded;
 			newObj.setFullyLoaded=this.setFullyLoaded;
 			newObj.setFullyUnloaded=this.setFullyUnloaded;

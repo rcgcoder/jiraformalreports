@@ -76,7 +76,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 					if (inactiveObject.isFullyLoaded()){
 						inactiveObject.fullUnload();
 					}
-					storer.inactiveObjects.remove(inactiveObject.getId());
+					self.inactiveObjects.remove(inactiveObject.getId());
 				}
 				storer.continueTask();
 			}

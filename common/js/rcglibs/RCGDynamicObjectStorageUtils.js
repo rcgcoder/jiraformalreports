@@ -60,6 +60,8 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		//storer.continueTask(); // not continues because the steps process at the end of the secuence
 	}
 	saveAllUnlocked(){
+		var self=this;
+		var storer=self.storer;
 		storer.addStep("Remove all inactive Objects ("+self.inactiveObjects.length()+")",function(){
 			var fncSaveCall=function(inactiveObject){
 				if ((!inactiveObject.isLocked())&&inactiveObject.isChanged()&&inactiveObject.isFullyLoaded()){

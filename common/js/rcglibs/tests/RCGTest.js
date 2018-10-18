@@ -60,7 +60,7 @@ System.webapp.addStep("Dynamic Object",function(){
 	});
 	storer.addStep("Unlock and store by factory",function(){
 		auxObj.unlock();
-		auxObj.saveAllUnlocked();
+		auxObj.getFactory().storeManager.saveAllUnlocked();
 	});
 	storer.continueTask();
 });

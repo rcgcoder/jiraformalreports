@@ -1030,7 +1030,7 @@ var factoryObjects=class factoryObjects{
 		this.numChanges=0;
 	}
 	isFullyLoaded(){
-		this.loaded;
+		return this.loaded;
 	}
 	setFullyLoaded(){
 		this.loaded=true;

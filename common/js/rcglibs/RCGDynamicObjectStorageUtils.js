@@ -66,7 +66,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 			var fncSaveCall=function(inactiveObject){
 				if ((!inactiveObject.isLocked())&&inactiveObject.isChanged()&&inactiveObject.isFullyLoaded()){
 					storer.addStep("Saving "+inactiveObject.getId(),function(){
-						storer.saveToStorage(inactiveObject);
+						self.saveToStorage(inactiveObject);
 					});
 				}
 				storer.continueTask();

@@ -86,18 +86,20 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 			[]
 			,
 			//undefined 
-			"DynamicObjectWithChildsTest"
+			"DynamicObjectWithChildsTest",
+			true
 			);
 	var auxObj=dynObj.new("Test DynObj");
 	auxObj.setTestOneString("Tested String Values");
 	auxObj.addTestStringList("One Value for String List");
 	auxObj.addTestStringList("Second Value for String List");
-	for (var i=0;i<3;i++){
+	for (var i=0;i<20;i++){
 		var childObj=dynObj.new("ChildDynObj"+i);
 		childObj.setTestOneString(i+"Tested String Values");
 		childObj.addTestStringList(i+"One Value for String List");
 		childObj.addTestStringList(i+"Second Value for String List");
 		auxObj.addChild(childObj);
+		childObj.unlock();
 	}
 	storer.save("testObjectWithChilds",auxObj);
 });
@@ -105,6 +107,14 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 	debugger;
 	storer.load("testObjectWithChilds",function(result){
 		log("End Load Dynamic Object:"+result);
+		//walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
+		var fncCallEnd=storer.createManagedCallback(function(){
+			storer.continueTask();
+		});
+		var fncCallNode=storer.createManagedCallback(function(step){
+			debugger;
+		});
+		result.getChilds().walkAsync("Processing Childs",fncCallNode,fncCallEnd);
 	});
 });
 

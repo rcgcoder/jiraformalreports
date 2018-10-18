@@ -626,7 +626,7 @@ class RCGHashMapFactory{
 						} else if (type==1){
 							objStep.value=objStep.index-1;
 						}
-						vResult=!callItem(objStep);
+						vResult=!callItem(objStep,objStep.actualNode.value,objStep.actualNode.key);
 						bFinish=false;
 						if (typeof vResult!=="undefined"){
 							bFinish=!vResult;

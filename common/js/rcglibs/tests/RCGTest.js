@@ -55,9 +55,12 @@ System.webapp.addStep("Dynamic Object",function(){
 	auxObj.setTestOneString("Tested String Values");
 	auxObj.addTestStringList("One Value for String List");
 	auxObj.addTestStringList("Second Value for String List");
-	auxObj.unlock();
 	storer.addStep("Save to Storage",function(){
 		storer.save("testObject",auxObj);
+	});
+	storer.addStep("Unlock and store by factory",function(){
+		auxObj.unlock();
+		auxObj.saveAllUnlocked();
 	});
 	storer.continueTask();
 });

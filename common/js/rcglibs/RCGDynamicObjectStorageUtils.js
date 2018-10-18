@@ -46,7 +46,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 	saveToStorage(dynObj){
 		var self=this;
 		var storer=self.storer;
-		if ((!self.isLocked())&&self.isChanged()&&self.isFullyLoaded()){
+		if ((!dynObj.isLocked())&&dynObj.isChanged()&&dynObj.isFullyLoaded()){
 			storer.addStep("Saving to storage "+self.factory.name +"/"+dynObj.getId(),function(){
 				log("Saving to storage:"+dynObj.getId());
 				storer.save(dynObj.getId(),self.getStorageObject(dynObj));

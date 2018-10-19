@@ -1172,7 +1172,9 @@ class RCGTaskManager{
 					var fncParallelCallBase=function(){
 						log("Parallel Call "+iThread);
 //						debugger;
-						if (nActualCall>=nTotalCalls)return;
+						if (nActualCall>=nTotalCalls) {
+							return self.continueTask();
+						}
 						var iPet=nActualCall;
 						var item=fncPopNewAction();
 						/*var callInfo=hsIssueGetProperties.pop();//push({issue:issue,key:propertyKey});

@@ -96,7 +96,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 	auxObj.setTestOneString("Tested String Values");
 	auxObj.addTestStringList("One Value for String List");
 	auxObj.addTestStringList("Second Value for String List");
-	for (var i=0;i<3;i++){
+	for (var i=0;i<5;i++){
 		var childObj=dynObj.new("ChildDynObj"+i);
 		childObj.setTestOneString(i+"Tested String Values");
 		childObj.addTestStringList(i+"One Value for String List");

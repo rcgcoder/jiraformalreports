@@ -1053,7 +1053,6 @@ var factoryObjects=class factoryObjects{
 		} else {
 			self.setFullyLoaded();
 			self.lock();
-			System.webapp.continueTask([self]); // to use in configurable apps
 		}
 	}
 	fullUnload(){

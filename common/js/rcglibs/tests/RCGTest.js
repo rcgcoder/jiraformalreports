@@ -113,14 +113,12 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 	});
 	storer.addStep("Parallelize the full load test",function(result){
 		//walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
-		var fncLoaded=storer.createManagedCallback(function(oneChild){
+		var fncLoaded=function(oneChild){
 			oneChild.unlock();
-		});
-		var fncLoad=storer.createManagedCallback(function(oneChild){
-			storer.addStep("Full loading",function(){
+		};
+		var fncLoad=function(oneChild){
 				oneChild.fullLoad();
-			});
-		});
+		};
 		storer.parallelizeCalls(result.getChilds(),fncLoad,fncLoaded,5);
 	});
 	storer.continueTask();

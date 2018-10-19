@@ -108,8 +108,10 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 });
 System.webapp.addStep("Dynamic Object With Childs",function(){
 	debugger;
-	storer.load("testObjectWithChilds",function(result){
-		log("End Load Dynamic Object:"+result);
+	storer.addStep("Load the root object",function(){
+		storer.load("testObjectWithChilds");
+	});
+	storer.addStep("Parallelize the full load test",function(result){
 		//walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
 		var fncLoaded=storer.createManagedCallback(function(oneChild){
 			oneChild.unlock();

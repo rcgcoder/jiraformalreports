@@ -85,7 +85,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 				}
 //				storer.continueTask();
 			}
-			storer.parallelizeCalls(self.inactiveObjects,fncSaveCall,fncUnloadAndRemove,5);
+			storer.parallelizeCalls(self.inactiveObjects,fncSaveCall,fncUnloadAndRemove,1);
 		});
 		storer.continueTask();
 	}

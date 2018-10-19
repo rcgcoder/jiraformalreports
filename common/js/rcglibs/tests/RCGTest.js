@@ -117,7 +117,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 			auxObj.getFactory().storeManager.saveAllUnlocked();
 		});
 		storer.addStep("Continuing the test",function(){
-			storer.continueTask([auxObj]);
+			auxObj.fullLoad();
 		});
 		storer.continueTask();
 	});
@@ -127,7 +127,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 			oneChild.unlock();
 		};
 		var fncLoad=function(oneChild){
-				oneChild.fullLoad();
+			oneChild.fullLoad();
 		};
 		storer.parallelizeCalls(result.getChilds(),fncLoad,fncLoaded,5);
 	});

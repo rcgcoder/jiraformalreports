@@ -29,7 +29,7 @@ stepper.addStep("Parallelizing test",function(result){
 	for (var i=0;i<20;i++){
 		arrTest.push("Key"+i);
 	}
-	storer.parallelizeCalls(arrTest,fncCall,fncProcess,5);
+	stepper.parallelizeCalls(arrTest,fncCall,fncProcess,5);
 });
 
 //var storer=new RCGObjectStorageManager("Testing",System.webapp.getTaskManager());

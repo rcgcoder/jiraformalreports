@@ -111,13 +111,13 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 	storer.load("testObjectWithChilds",function(result){
 		log("End Load Dynamic Object:"+result);
 		//walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
-		var fncCallEnd=storer.createManagedCallback(function(){
-			storer.continueTask();
+		var fncCallEnd=storer.createManagedCallback(function(oneChild){
+			oneChild.unlock();
 		});
-		var fncCallNode=storer.createManagedCallback(function(step){
-			debugger;
+		var fncLoad=storer.createManagedCallback(function(oneChild){
+			oneChild.fullLoad();
 		});
-		result.getChilds().walkAsync("Processing Childs",fncCallNode,fncCallEnd);
+		storer.parallelizeCalls(result.getChilds(),fncLoad,fncProcessEnd,5);
 	});
 });
 

@@ -47,6 +47,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		var self=this;
 		var storer=self.storer;
 		if ((!dynObj.isLocked())&&dynObj.isChanged()&&dynObj.isFullyLoaded()){
+			log("Preparing to save:"+dynObj.getId());
 			storer.addStep("Saving to storage "+self.factory.name +"/"+dynObj.getId(),function(){
 				log("Saving to storage:"+dynObj.getId());
 				dynObj.clearChanges();
@@ -59,6 +60,11 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 				}
 				storer.continueTask();
 			});
+		} else {
+			log("The object "+dynObj.getId() 
+					+" not is locked:"+(!dynObj.isLocked())
+					+" and is changed:"+dynObj.isChanged()
+					+" and is Fully Loaded:"+dynObj.isFullyLoaded());
 		}
 		//storer.continueTask(); // not continues because the steps process at the end of the secuence
 	}
@@ -69,7 +75,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 			var fncSaveCall=function(inactiveObject){
 				log("Saving All to Storage:"+inactiveObject.getId());
 				self.saveToStorage(inactiveObject);
-//				storer.continueTask();
+				storer.continueTask();
 			}
 			var fncUnloadAndRemove=function(inactiveObject){
 				log("Unload and Remove from inactive objects:"+inactiveObject.getId());

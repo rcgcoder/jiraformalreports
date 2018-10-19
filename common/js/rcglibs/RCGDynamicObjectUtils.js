@@ -1051,6 +1051,7 @@ var factoryObjects=class factoryObjects{
 		if (self.isStorable()&&(!self.isFullyLoaded())){
 			self.getFactory().storeManager.loadFromStorage(self);
 		} else {
+			self.setFullyLoaded();
 			System.webapp.continueTask([self]); // to use in configurable apps
 		}
 	}

@@ -1057,7 +1057,7 @@ var factoryObjects=class factoryObjects{
 		}
 	}
 	fullUnload(){
-		debugger;
+//		debugger;
 		var self=this;
 		var theFactory=self.factory;
 		var auxValue;

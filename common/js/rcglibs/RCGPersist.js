@@ -165,11 +165,11 @@ function InitializeFileSystem(initCallBack,quota){
 							function(DatContent) {
 								DatContent.onwriteend = function(e) {
 									console.log(newName+' Write completed.');
-									setTimeout(endWriteCallback(e));
+									setTimeout(function(){endWriteCallback(e);});
 								};			
 								DatContent.onerror = function(e) {
 									console.log(newName+'Write failed: ' + e);
-									setTimeout(errorCallback(e));
+									setTimeout(function(){errorCallback(e);});
 								};
 								var theBlob;
 								if (false){

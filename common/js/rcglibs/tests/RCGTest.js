@@ -111,6 +111,16 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 	storer.addStep("Load the root object",function(){
 		storer.load("testObjectWithChilds");
 	});
+	storer.addStep("Unlock and store by factory",function(auxObj){
+		storer.addStep("Saving all dynobjs",function(){
+			auxObj.unlock();
+			auxObj.getFactory().storeManager.saveAllUnlocked();
+		});
+		storer.addStep("Continuing the test",function(){
+			storer.continueTask([auxObj]);
+		});
+		storer.continueTask();
+	});
 	storer.addStep("Parallelize the full load test",function(result){
 		//walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
 		var fncLoaded=function(oneChild){

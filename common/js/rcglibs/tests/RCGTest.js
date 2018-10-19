@@ -137,7 +137,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 	});
 	storer.continueTask();
 });
-
+/*
 System.webapp.addStep("Dynamic Object List",function(){
 	var dynObj=newDynamicObjectFactory(
 			[{name:"TestStringList",description:"One String List",type:"String"},
@@ -218,7 +218,7 @@ System.webapp.addStep("HashMap",function(){
 		log("End Load HashMap:"+result);
 	});
 });
-
+*/
 System.webapp.addStep("End Save and Load tests",function(){
 	log("End Save and Load tests");
 	System.webapp.continueTask();

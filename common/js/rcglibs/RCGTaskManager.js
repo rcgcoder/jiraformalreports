@@ -1173,7 +1173,7 @@ class RCGTaskManager{
 						log("Parallel Call "+iThread);
 //						debugger;
 						if (nActualCall>=nTotalCalls) {
-							return self.continueTask();
+							return ;//self.continueTask();
 						}
 						var iPet=nActualCall;
 						var item=fncPopNewAction();

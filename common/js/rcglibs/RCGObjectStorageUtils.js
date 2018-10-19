@@ -203,7 +203,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			objResult=dynObj;
 		} else if (objContent.type=="p" /* object part */){
 			if (objContent.partNumber==0){
-				debugger;
+				//debugger;
 				var arrContents=new Array(objContent.totalParts);
 				arrContents[0]=objContent.content;
 				self.addStep("Retrieving other "+(objContent.totalParts-1)+" parts",function(){

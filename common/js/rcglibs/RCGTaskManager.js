@@ -1170,8 +1170,8 @@ class RCGTaskManager{
 				return self.addStep("Parallel call Thread "+iThread,function(){
 //					log("Parallel Step "+iThread);
 					var fncParallelCallBase=function(){
-//						log("Parallel Call "+iThread);
-						debugger;
+						log("Parallel Call "+iThread);
+//						debugger;
 						if (nActualCall>=nTotalCalls)return;
 						var iPet=nActualCall;
 						var item=fncPopNewAction();

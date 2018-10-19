@@ -1,4 +1,3 @@
-debugger;
 log("Loading Dynamic Object Utils");
 if (typeof math==="undefined"){
 	if (isInNodeJS()){

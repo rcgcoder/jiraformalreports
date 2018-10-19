@@ -1056,9 +1056,9 @@ var factoryObjects=class factoryObjects{
 			var attrName=key;
 			var attrType=value.type;
 			if (attrType=="Value"){
-				dynObj["set"+attrName](undefined);
+				self["set"+attrName](undefined);
 			} else if(attrType=="List") {
-				dynObj["set"+attrName+"s"](undefined);
+				self["set"+attrName+"s"](undefined);
 			}
 		});
 		self.setFullyUnloaded();

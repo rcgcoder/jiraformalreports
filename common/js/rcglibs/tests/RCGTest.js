@@ -150,15 +150,24 @@ System.webapp.addStep("Dynamic Object List",function(){
 			,
 			//undefined 
 			"DynamicObjectListTest"
+			, true
 			);
 	var hsAux=newHashMap();
-	for (var i=0;i<10;i++){
-		var auxObj=dynObj.new(i+"Test DynObj","key"+i);
-		auxObj.setTestOneString(i+"Tested String Values");
-		auxObj.addTestStringList(i+"One Value for String List");
-		auxObj.addTestStringList(i+"Second Value for String List");
-		hsAux.push(auxObj);
-	}
+	storer.addStep("Creating a lot of objects",function(){
+		var fncUnlock=function(oneChild){
+			oneChild.unlock();
+			//storer.continueTask();
+		};
+		var fncCreate=function(nIndex){
+			var auxObj=dynObj.new(nIndex+"Test DynObj"+dynObj.list.length());
+			var key=auxObj.getId();
+			auxObj.setTestOneString(nIndex+ " - " +key+" - Tested String Values");
+			auxObj.addTestStringList(nIndex+ " - " +key + " - One Value for String List");
+			auxObj.addTestStringList(nIndex+ " - " +key + " - Second Value for String List");
+			hsAux.push(auxObj);
+		};
+		storer.parallelizeCalls(20,fncCreate,fncUnlock,5);
+	});
 	storer.save("testDynObjectList",hsAux);
 });
 System.webapp.addStep("Dynamic Object List",function(){

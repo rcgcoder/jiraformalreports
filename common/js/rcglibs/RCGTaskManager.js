@@ -1136,24 +1136,45 @@ class RCGTaskManager{
 		var self=this;
 		var maxThreads=10;
 		if (isDefined(maxParallelThreads)) maxThreads=maxParallelThreads; 
-		var hsListItems=newHashMap();
+		var arrListItems=[]; //newHashMap();
+		var nTotalCalls=0;
+		var nActualCall=0;
 		var fncName="walk";
+		var bNeedsListArray=false;
 		if (Array.isArray(hsListItemsToProcess)){
 			fncName="forEach";
+			nTotalCalls=hsListItemsToProcess.length;
+			bNeedsListArray=true;
+		} else if (isNumber(hsListItemsToProcess)){
+			nTotalCalls=hsListItemsToProcess;
+		} else {
+			nTotalCalls=hsListItemsToProcess.length();
+			bNeedsListArray=true;
 		}
-		hsListItemsToProcess[fncName](function(item){
-			hsListItems.push(item);
-		});
-		self.addStep("Doing " + hsListItems.length()+" parallels calls grouped by "+maxThreads, function(){
+		if (bNeedsListArray){
+			hsListItemsToProcess[fncName](function(item){
+				arrListItems.push(item);
+				});
+		}
+		var fncPopNewAction=function(){
+			var nPreviousPosition=nActualCall;
+			nActualCall++;
+			if (bNeedsListArray){
+				return arrListItems[nPreviousPosition];
+			} else {
+				return nPreviousPosition;
+			}
+		}
+		self.addStep("Doing " + nTotalCalls +" parallels calls grouped by "+maxThreads, function(){
 			var nextAccumulator=0;
 			var fncAddThread=function(iThread){
 				return self.addStep("Parallel call Thread "+iThread,function(){
 //					log("Parallel Step "+iThread);
 					var fncParallelCallBase=function(){
 //						log("Parallel Call "+iThread);
-						if (hsListItems.length()==0)return;
-						var iPet=hsListItems.length()-1;
-						var item=hsListItems.pop();
+						if (nActualCall>=nTotalCalls)return;
+						var iPet=nActualCall;
+						var item=fncPopNewAction;
 						/*var callInfo=hsIssueGetProperties.pop();//push({issue:issue,key:propertyKey});
 						var issue=callInfo.issue;
 						var propKey=callInfo.key;
@@ -1174,7 +1195,7 @@ class RCGTaskManager{
 						self.addStep("trying next petition...",function(){
 //							log("Evaluating next petition");
 //							nItemsProcessed++;
-							if (hsListItems.length()>0){
+							if (nActualCall<nTotalCalls){
 //								log("There are "+hsListItems.length()+" petitions pending... let´s go next petition");
 								var auxParallelCall=self.createManagedCallback(fncParallelCallBase);
 								auxParallelCall();
@@ -1190,8 +1211,8 @@ class RCGTaskManager{
 				},0,1,undefined,undefined,undefined,"INNER",undefined
 				);
 			}
-			if (maxThreads>hsListItems.length()){
-				maxThreads=hsListItems.length();
+			if (maxThreads>nTotalCalls){
+				maxThreads=nTotalCalls;
 			}
 //			self.getRunningTask().barrier.nItems=maxThreads+1;
 			for (var i=0;(i<maxThreads);i++){

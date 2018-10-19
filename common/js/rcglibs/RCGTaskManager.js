@@ -1158,7 +1158,7 @@ class RCGTaskManager{
 		var fncPopNewAction=function(){
 			var nPreviousPosition=nActualCall;
 			nActualCall++;
-			if (bNeedsListArray){
+			if (fncName!==""){
 				return arrListItems[nPreviousPosition];
 			} else {
 				return nPreviousPosition;

@@ -30,8 +30,8 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 	getStorageObject(dynObj){
 		var self=this; //self is an individual object
 		var objResult={};
-		objResult.key=self.id;
-		objResult.name=self.name;
+		objResult.key=dynObj.id;
+		objResult.name=dynObj.name;
 		self.factory.attrTypes.walk(function(value,deep,key){
 			var attrName=key;
 			var attrType=value.type;

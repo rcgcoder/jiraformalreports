@@ -65,7 +65,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		storer.addStep("Remove all inactive Objects ("+self.inactiveObjects.length()+")",function(){
 			var fncSaveCall=function(inactiveObject){
 				self.saveToStorage(inactiveObject);
-				//storer.continueTask();
+				storer.continueTask();
 			}
 			var fncUnloadAndRemove=function(inactiveObject){
 				if (!inactiveObject.isLocked()){

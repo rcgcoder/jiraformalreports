@@ -107,12 +107,12 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 	storer.save("testObjectWithChilds",auxObj);
 });
 System.webapp.addStep("Dynamic Object With Childs",function(){
-	debugger;
 	storer.addStep("Load the root object",function(){
 		storer.load("testObjectWithChilds");
 	});
 	storer.addStep("Unlock and store by factory",function(auxObj){
 		storer.addStep("Saving all dynobjs",function(){
+			debugger;
 			auxObj.unlock();
 			auxObj.getFactory().storeManager.saveAllUnlocked();
 		});

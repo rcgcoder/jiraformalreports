@@ -64,15 +64,21 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		var storer=self.storer;
 		storer.addStep("Remove all inactive Objects ("+self.inactiveObjects.length()+")",function(){
 			var fncSaveCall=function(inactiveObject){
+				log("Saving to Storage:"+inactiveObject.getId());
 				self.saveToStorage(inactiveObject);
 				storer.continueTask();
 			}
 			var fncUnloadAndRemove=function(inactiveObject){
+				log("Unload and Remove from inactive objects:"+inactiveObject.getId());
 				if (!inactiveObject.isLocked()){
 					if (inactiveObject.isFullyLoaded()){
+						log("Unloading :"+inactiveObject.getId());
 						inactiveObject.fullUnload();
 					}
+					log("Removing :"+inactiveObject.getId());
 					self.inactiveObjects.remove(inactiveObject.getId());
+				} else {
+					log("It´s not in inactive objects:"+inactiveObject.getId());
 				}
 //				storer.continueTask();
 			}

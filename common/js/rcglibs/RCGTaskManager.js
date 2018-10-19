@@ -1136,22 +1136,21 @@ class RCGTaskManager{
 		var self=this;
 		var maxThreads=10;
 		if (isDefined(maxParallelThreads)) maxThreads=maxParallelThreads; 
-		var arrListItems=[]; //newHashMap();
 		var nTotalCalls=0;
 		var nActualCall=0;
-		var fncName="walk";
-		var bNeedsListArray=false;
+		var arrListItems;
+		var fncName="";
 		if (Array.isArray(hsListItemsToProcess)){
 			fncName="forEach";
 			nTotalCalls=hsListItemsToProcess.length;
-			bNeedsListArray=true;
 		} else if (isNumber(hsListItemsToProcess)){
 			nTotalCalls=hsListItemsToProcess;
 		} else {
+			fncName="walk";
 			nTotalCalls=hsListItemsToProcess.length();
-			bNeedsListArray=true;
 		}
-		if (bNeedsListArray){
+		if (fncName!==""){
+			arrListItems=[]; //newHashMap();
 			hsListItemsToProcess[fncName](function(item){
 				arrListItems.push(item);
 				});
@@ -1174,7 +1173,7 @@ class RCGTaskManager{
 //						log("Parallel Call "+iThread);
 						if (nActualCall>=nTotalCalls)return;
 						var iPet=nActualCall;
-						var item=fncPopNewAction;
+						var item=fncPopNewAction();
 						/*var callInfo=hsIssueGetProperties.pop();//push({issue:issue,key:propertyKey});
 						var issue=callInfo.issue;
 						var propKey=callInfo.key;

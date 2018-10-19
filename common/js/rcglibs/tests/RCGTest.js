@@ -1,6 +1,6 @@
 log("Testing");
 debugger;
-var stepper=System.webapp;
+/*var stepper=System.webapp;
 stepper.addStep("Parallelizing test",function(result){
 	//walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
 	var fncCall=function(theKey){
@@ -31,7 +31,7 @@ stepper.addStep("Parallelizing test",function(result){
 	}
 	stepper.parallelizeCalls(arrTest,fncCall,fncProcess,5);
 });
-
+*/
 var storer=new RCGObjectStorageManager("Testing",System.webapp.getTaskManager());
 /*System.webapp.addStep("String",function(){
 	storer.save("testString","String to save");

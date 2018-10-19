@@ -117,6 +117,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 			auxObj.getFactory().storeManager.saveAllUnlocked();
 		});
 		storer.addStep("Continuing the test",function(){
+			log("All unlocked saved... now full load " + auxObj.getId());
 			auxObj.fullLoad();
 		});
 		storer.continueTask();

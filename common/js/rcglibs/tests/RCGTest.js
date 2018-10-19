@@ -115,7 +115,9 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 			oneChild.unlock();
 		});
 		var fncLoad=storer.createManagedCallback(function(oneChild){
-			oneChild.fullLoad();
+			storer.addStep("Full loading",function(){
+				oneChild.fullLoad();
+			});
 		});
 		storer.parallelizeCalls(result.getChilds(),fncLoad,fncLoaded,5);
 	});

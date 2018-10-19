@@ -1,6 +1,36 @@
 log("Testing");
 debugger;
-var storer=new RCGObjectStorageManager("Testing",System.webapp.getTaskManager());
+var stepper=System.webapp;
+stepper.addStep("Parallelizing test",function(result){
+	//walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
+	var fncCall=function(theKey){
+		log("Calling "+theKey);
+		stepper.addStep("Call"+theKey,function(){
+			log("Step of call "+theKey);
+			var fncAsyncCall=stepper.createManagedCallback(function(){
+				log("Calling async "+theKey);
+				stepper.continueTask();
+			});
+			setTimeout(fncAsyncCall,Math.random()*2000);
+		})
+		stepper.continueTask();
+	};
+	var fncProcess=function(theKey){
+		log("Processing... "+theKey);
+		var fncAsync=stepper.createManagedCallback(function(){
+			log("Processing async "+theKey);
+			stepper.continueTask();
+		});
+		setTimeout(fncAsync,Math.random()*2000);
+	};
+	var arrTest=[];
+	for (var i=0;i<20;i++){
+		arrTest.push("Key"+i);
+	}
+	storer.parallelizeCalls(arrTest,fncCall,fncProcess,5);
+});
+
+//var storer=new RCGObjectStorageManager("Testing",System.webapp.getTaskManager());
 /*System.webapp.addStep("String",function(){
 	storer.save("testString","String to save");
 });
@@ -78,6 +108,7 @@ System.webapp.addStep("Dynamic Object",function(){
 	storer.continueTask();
 });
 */
+/*
 System.webapp.addStep("Dynamic Object With Childs",function(){
 	var dynObj=newDynamicObjectFactory(
 			[{name:"TestStringList",description:"One String List",type:"String"},
@@ -138,6 +169,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 	});
 	storer.continueTask();
 });
+*/
 /*
 System.webapp.addStep("Dynamic Object List",function(){
 	var dynObj=newDynamicObjectFactory(

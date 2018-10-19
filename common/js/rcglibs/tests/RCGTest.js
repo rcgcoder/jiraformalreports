@@ -123,6 +123,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 		});
 		storer.parallelizeCalls(result.getChilds(),fncLoad,fncLoaded,5);
 	});
+	storer.continueTask();
 });
 
 System.webapp.addStep("Dynamic Object List",function(){

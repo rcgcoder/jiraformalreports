@@ -127,9 +127,11 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 		//walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
 		var fncLoaded=function(oneChild){
 			oneChild.unlock();
+			//storer.continueTask();
 		};
 		var fncLoad=function(oneChild){
 			oneChild.fullLoad();
+			storer.continueTask();
 		};
 		storer.parallelizeCalls(result.getChilds(),fncLoad,fncLoaded,5);
 	});

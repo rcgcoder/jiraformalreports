@@ -17,11 +17,13 @@ stepper.addStep("Parallelizing test",function(result){
 	};
 	var fncProcess=function(theKey){
 		log("Processing... "+theKey);
-		var fncAsync=stepper.createManagedCallback(function(){
-			log("Processing async "+theKey);
-			stepper.continueTask();
+		stepper.addStep("Processing",function(){
+			var fncAsync=stepper.createManagedCallback(function(){
+				log("Processing async "+theKey);
+				stepper.continueTask();
+			});
+			setTimeout(fncAsync,Math.random()*2000);
 		});
-		setTimeout(fncAsync,Math.random()*2000);
 	};
 	var arrTest=[];
 	for (var i=0;i<20;i++){

@@ -288,7 +288,13 @@ var factoryObjects=class factoryObjects{
 					}
 				});
 				this.functions.add("set"+vNameAttribute,function(value){
-					if (bFormula){
+					if (typeof value==="undefined"){
+						this["attr_"+vNameAttribute]=value;
+						if (!bWithoutMinMaxMargins){
+							this["attr_"+vNameAttribute+"Min"]=value;
+							this["attr_"+vNameAttribute+"Max"]=value;
+						}
+					} else if (bFormula){
 						this["attr_"+vNameAttribute]={formula:value,nodeMath:"",code:"",symbols:""};
 					} else if ((typeof value==="object") && (value.isObjValue==true)){
 						this["attr_"+vNameAttribute]=value.value;

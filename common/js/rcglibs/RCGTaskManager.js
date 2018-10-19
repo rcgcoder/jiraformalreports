@@ -1193,7 +1193,7 @@ class RCGTaskManager{
 							});
 						}
 						self.addStep("trying next petition...",function(){
-//							log("Evaluating next petition");
+							log("Evaluating next petition");
 //							nItemsProcessed++;
 							if (nActualCall<nTotalCalls){
 //								log("There are "+hsListItems.length()+" petitions pending... let´s go next petition");

@@ -53,7 +53,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 				storer.save(dynObj.getId(),self.getStorageObject(dynObj));
 			});
 			storer.addStep("Item Saved "+self.factory.name +"/"+dynObj.getId(),function(key){
-				log("Item Saved:"+key);
+				log("Item Saved:"+dynObj.getId()+" vs "+key);
 				storer.continueTask();
 			});
 		}

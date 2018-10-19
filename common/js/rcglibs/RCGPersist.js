@@ -169,7 +169,7 @@ function InitializeFileSystem(initCallBack,quota){
 								};			
 								DatContent.onerror = function(e) {
 									console.log(newName+'Write failed: ' + e);
-									setTiemout(errorCallback(e));
+									setTimeout(errorCallback(e));
 								};
 								var theBlob;
 								if (false){

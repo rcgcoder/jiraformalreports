@@ -1,7 +1,7 @@
 log("Testing");
 debugger;
 var storer=new RCGObjectStorageManager("Testing",System.webapp.getTaskManager());
-System.webapp.addStep("String",function(){
+/*System.webapp.addStep("String",function(){
 	storer.save("testString","String to save");
 });
 System.webapp.addStep("String",function(){
@@ -77,6 +77,7 @@ System.webapp.addStep("Dynamic Object",function(){
 	});
 	storer.continueTask();
 });
+*/
 System.webapp.addStep("Dynamic Object With Childs",function(){
 	var dynObj=newDynamicObjectFactory(
 			[{name:"TestStringList",description:"One String List",type:"String"},

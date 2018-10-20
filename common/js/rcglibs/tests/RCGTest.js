@@ -154,7 +154,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 			storer.addStep("Creating child "+childNum,function(){
 				var childObj=dynObj.new("ChildDynObj_"+childNum,"Child_"+childNum);
 				childObj.setTestOneString(childNum+"Tested String Values");
-				for (var i=0;i<100;i++){
+				for (var i=0;i<1000;i++){
 					childObj.addTestStringList(childNum+"_"+i+" Value for String List ");
 				}
 				childObj.unlock();

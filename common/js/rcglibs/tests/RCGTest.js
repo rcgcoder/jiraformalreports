@@ -203,6 +203,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 	});
 	storer.addStep("Finished the child list tests",function(){
 		log("Finished the child list tests");
+		storer.continueTask();
 	});
 	storer.continueTask();
 });

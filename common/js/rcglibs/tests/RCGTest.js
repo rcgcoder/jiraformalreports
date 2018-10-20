@@ -147,7 +147,6 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 	});
 	storer.addStep("Unlock and store by factory",function(auxObj){
 		storer.addStep("Saving all dynobjs",function(){
-			debugger;
 			auxObj.unlock();
 			auxObj.getFactory().storeManager.saveAllUnlocked();
 		});
@@ -159,7 +158,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 		storer.continueTask();
 	});
 	storer.addStep("Parallelize the full load test",function(result){
-		//walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
+		debugger;
 		var fncLoaded=function(oneChild){
 			oneChild.unlock();
 			//storer.continueTask();

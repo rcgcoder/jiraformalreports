@@ -1,5 +1,6 @@
 log("Testing");
 debugger;
+console.log("=====================================");
 /*
 var stepper=System.webapp;
 stepper.addStep("Parallelizing test",function(result){
@@ -218,6 +219,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 		storer.parallelizeCalls(result.getChilds(),fncLoad,fncLoaded,5);
 	});
 	storer.addStep("Finished the child list tests",function(){
+		console.log("Finished the child list tests "+getMemStatus());				  
 		log("Finished the child list tests");
 		storer.continueTask();
 	});
@@ -308,5 +310,6 @@ System.webapp.addStep("HashMap",function(){
 */
 System.webapp.addStep("End Save and Load tests",function(){
 	log("End Save and Load tests");
+	console.log("End all tests "+getMemStatus());				  
 	System.webapp.continueTask();
 });

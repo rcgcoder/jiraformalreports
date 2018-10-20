@@ -2,7 +2,9 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 	constructor(theFactory){
 		var self=this;
 		self.isSavingInactives=false;
+		self.savingSemaphore=new RCGSemaphore(function(){return (!self.isSavingInactives);});
 		self.cacheItemsMax=0;
+		self.peakMax=0.10;
 		self.factory=theFactory;
 		self.storer=new RCGObjectStorageManager(self.factory.name,System.webapp.getTaskManager());
 		self.activeObjects=newHashMap();
@@ -78,7 +80,23 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 	saveAllUnlocked(){
 		var self=this;
 		var storer=self.storer;
-		if (!self.isSavingInactives){
+		if (self.isSavingInactives){
+			storer.addStep("Waiting for finishing of save all inactives ",function(){
+				self.savingSemaphore.taskArrived(storer.getRunningTask());
+/*				var fncContinue=storer.createManagedCallback(function(){
+					storer.continueTask();
+				});
+				var fncCheckInactivesSaved=function(){
+					if (self.isSavingInactives){
+						setTimeout(fncCheckInactivesSaved,250);
+					} else {
+						fncContinue();
+					}
+				}
+				fncCheckInactivesSaved();
+*/
+			});
+		} else {
 			self.isSavingInactives=true;
 			storer.addStep("Remove all inactive Objects ("+self.countInactiveObjects()+")",function(){
 				var fncSaveCall=function(inactiveObject){
@@ -111,15 +129,22 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		}
 		storer.continueTask();
 	}
+	isFlushInactivesNeeded(){
+		var self=this;
+		var nTotalItems=self.countInactiveObjects()
+						+self.countActiveObjects();
+		var nTotalPeak=(nTotalItems*self.peakMax);
+		if ((self.cacheItemsMax<nTotalItems)&&(self.countInactiveObjects()>nTotalPeak)){
+			return true;
+		}
+		return false;
+	}
 	loadFromStorage(dynObj){
 		dynObj.lock(); // lock the object to avoid unload before the step executions   
 		var self=this;
 		var storer=self.storer;
 		var objId=dynObj.getId();
-		var nTotalItems=self.countInactiveObjects()
-						+self.countActiveObjects();
-
-		if ((self.cacheItemsMax<nTotalItems)&&(self.countInactiveObjects()>0)){
+		if (self.isFlushInactivesNeeded){
 			storer.addStep("Save all unlocked objects",function(){
 				self.saveAllUnlocked();
 			});

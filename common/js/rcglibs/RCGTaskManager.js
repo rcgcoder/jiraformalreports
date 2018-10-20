@@ -27,8 +27,53 @@
     // Add the one thing we want added to the window object.
     window.setZeroTimeout = setZeroTimeout;
 })();
-
-
+class RCGSemaphore{
+	constructor(fncIsOpen){
+		var self=this;
+		self.fncIsOpen=fncIsOpen;
+		self.taskWaiting=[];
+		self.isWaiting=false;
+	}
+	newId(){
+		var newId="smp-"+(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
+		return newId;
+	}
+	continueAll(){
+		var self=this;
+		var fncContinueTask=function(task){
+			setZerotimeout(function(){
+				task.setRunningTask(task);
+				task.getTaskManager().next();
+			});
+		}
+		while (self.taskWaiting.length>0){
+			var task=self.taskWaiting.pop();
+			fncContinueTask(task);
+		}
+	}
+	waiting(self){
+		self.isWaiting=true;
+		if (self.fncIsOpen()){
+			self.isWaiting=false;
+			self.continueAll();
+		} else {
+			setZeroTimeout(function(){
+				self.waiting(self);
+			});
+		}
+	}
+	taskArrived(task){
+		var self=this;
+		if (self.fncIsOpen()){
+			task.continueTask();
+		} else {
+			self.taskWaiting.push(task);
+			if (!self.isWaiting){
+				self.waiting(self);
+			}
+		}
+	}
+}
 
 class RCGBarrier{
 	constructor(callback,nItems){

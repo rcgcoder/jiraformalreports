@@ -20,10 +20,10 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		var self=this;
 		var key=dynObj.getId();
 		if (self.inactiveObjects.exists(key)){
-			self.inactiveObjects.traceAll();
-			debugger;
+//			self.inactiveObjects.traceAll();
+//			debugger;
 			self.inactiveObjects.remove(key);
-			self.inactiveObjects.traceAll();
+//			self.inactiveObjects.traceAll();
 		}
 		if (!self.activeObjects.exists(key)){
 			self.activeObjects.add(key,dynObj);
@@ -33,10 +33,10 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		var self=this;
 		var key=dynObj.getId();
 		if (self.activeObjects.exists(key)){
-			self.activeObjects.traceAll();
-			debugger;
+//			self.activeObjects.traceAll();
+//			debugger;
 			self.activeObjects.remove(key);
-			self.activeObjects.traceAll();
+//			self.activeObjects.traceAll();
 		}
 		if (!self.inactiveObjects.exists(key)){
 			self.inactiveObjects.add(key,dynObj);
@@ -62,24 +62,25 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		var self=this;
 		var storer=self.storer;
 		if ((!dynObj.isLocked())&&dynObj.isChanged()&&dynObj.isFullyLoaded()){
-			log("Preparing to save:"+dynObj.getId());
+//			log("Preparing to save:"+dynObj.getId());
 			storer.addStep("Saving to storage "+self.factory.name +"/"+dynObj.getId(),function(){
-				log("Saving to storage:"+dynObj.getId());
+//				log("Saving to storage:"+dynObj.getId());
 				dynObj.clearChanges();
 				storer.save(dynObj.getId(),self.getStorageObject(dynObj));
 			});
 			storer.addStep("Item Saved "+self.factory.name +"/"+dynObj.getId(),function(key){
-				log("Item Saved:"+dynObj.getId()+" vs "+key);
+//				log("Item Saved:"+dynObj.getId()+" vs "+key);
 				if (isUndefined(key)){
 					debugger;
 				}
 				storer.continueTask();
 			});
 		} else {
-			log("The object "+dynObj.getId() 
+			/*log("The object "+dynObj.getId() 
 					+" not is locked:"+(!dynObj.isLocked())
 					+" and is changed:"+dynObj.isChanged()
 					+" and is Fully Loaded:"+dynObj.isFullyLoaded());
+			*/
 		}
 		//storer.continueTask(); // not continues because the steps process at the end of the secuence
 	}
@@ -106,23 +107,23 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 			self.isSavingInactives=true;
 			storer.addStep("Remove all inactive Objects ("+self.countInactiveObjects()+")",function(){
 				var fncSaveCall=function(inactiveObject){
-					log("Saving All to Storage:"+inactiveObject.getId());
+					//log("Saving All to Storage:"+inactiveObject.getId());
 					self.saveToStorage(inactiveObject);
 					storer.continueTask();
 				}
 				var fncUnloadAndRemove=function(inactiveObject){
-					log("Unload and Remove from inactive objects:"+inactiveObject.getId());
+					//log("Unload and Remove from inactive objects:"+inactiveObject.getId());
 					if (!inactiveObject.isLocked()){
 						if (inactiveObject.isFullyLoaded()){
-							log("Unloading :"+inactiveObject.getId());
+							//log("Unloading :"+inactiveObject.getId());
 							inactiveObject.fullUnload();
 						}
-						log("Removing :"+inactiveObject.getId());
+						//log("Removing :"+inactiveObject.getId());
 						if (self.inactiveObjects.exists(inactiveObject.getId())){
 							self.inactiveObjects.remove(inactiveObject.getId());
 						}
 					} else {
-						log("It´s not in inactive objects:"+inactiveObject.getId());
+						//log("It´s not in inactive objects:"+inactiveObject.getId());
 					}
 	//				storer.continueTask();
 				}
@@ -161,7 +162,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 			});
 		} else {
 			storer.addStep("Loading from storage "+self.factory.name +"/"+objId,function(){
-				log("Loading from storage:"+objId);
+				//log("Loading from storage:"+objId);
 				if (dynObj.isFullyLoaded()){ // prevent a previous load of the object....  
 					storer.continueTask();
 				} else {
@@ -171,7 +172,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 			storer.addStep("Item Loaded"+self.factory.name +"/"+objId,function(storedObj){
 				if (!dynObj.isFullyLoaded()){ // prevent a previous load of the object....
 					var theFactory=self.factory;
-					log("Loaded from storage:"+theFactory.name +"/"+objId);
+					//log("Loaded from storage:"+theFactory.name +"/"+objId);
 					var auxValue;
 					theFactory.attrTypes.walk(function(value,deep,key){
 						var attrName=key;

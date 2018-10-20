@@ -96,17 +96,17 @@ class RCGBarrier{
 	}
 	reach(task){
 		var self=this;
-		log("Barrier "+self.id+" reached task:["+task.forkId+" - "+task.description+"] - "+self.nItems +" --> "+ (self.nItems-1) );
+		//log("Barrier "+self.id+" reached task:["+task.forkId+" - "+task.description+"] - "+self.nItems +" --> "+ (self.nItems-1) );
 		self.tasksReached.push(task); // to debug activity
 		task.running=false;
 		task.done(false);
 		if (self.nItems<=0) {
-			log("Barrier "+self.id+" You reached to barrier but no items asigned to. It´s a bug in your program... no callback is launched");
+			//log("Barrier "+self.id+" You reached to barrier but no items asigned to. It´s a bug in your program... no callback is launched");
 			return;
 		}
 		self.nItems--;
 		if (self.nItems<=0){
-			log("Barrier "+self.id+" Barrier reached!");
+			//log("Barrier "+self.id+" Barrier reached!");
 			self.isReached=true;
 			//debugger;
 			self.tasksBarried=[]; // remove the arrays for free memory
@@ -118,7 +118,7 @@ class RCGBarrier{
 	}
 	add(task){
 		var self=this;
-		log("Barrier "+self.id+" added task:["+task.forkId+" - "+task.description+"] - "+self.nItems);
+		//log("Barrier "+self.id+" added task:["+task.forkId+" - "+task.description+"] - "+self.nItems);
 		self.tasksBarried.push(task); // to debug barrier activity
 		if (self.fixedItem) return;
 		self.nItems++;

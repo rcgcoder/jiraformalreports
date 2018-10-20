@@ -160,7 +160,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 	storer.addStep("Parallelize the full load test",function(result){
 		debugger;
 		var fncLoaded=function(oneChild){
-			log("Full loaded "+oneChild.getId());
+			log("Full loaded "+oneChild.getId()+" value test:"+oneChild.getTestOneString());
 //			oneChild.unlock();
 			//storer.continueTask();
 		};

@@ -131,15 +131,34 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 	auxObj.setTestOneString("Tested String Values");
 	auxObj.addTestStringList("One Value for String List");
 	auxObj.addTestStringList("Second Value for String List");
-	for (var i=0;i<20;i++){
-		var childObj=dynObj.new("ChildDynObj"+i);
-		childObj.setTestOneString(i+"Tested String Values");
-		childObj.addTestStringList(i+"One Value for String List");
-		childObj.addTestStringList(i+"Second Value for String List");
-		auxObj.addChild(childObj,childObj.getId());
-		childObj.unlock();
-	}
-	storer.save("testObjectWithChilds",auxObj);
+
+	storer.addStep("Filling a lot of childs",function(){
+		var nChilds=0;
+		var fncSave=function(childNum){
+			auxObj.getFactory().storeManager.saveAllUnlocked();
+		};
+		var fncCreateChild=function(childNum){
+			storer.addStep("Creating child "+childNum,function(){
+				var childObj=dynObj.new("ChildDynObj_"+childNum,"Child_"+childNum);
+				childObj.setTestOneString(childNum+"Tested String Values");
+				for (var i=0;i<20;i++){
+					childObj.addTestStringList(childNum+"_"+i+" Value for String List");
+				}
+				childObj.unlock();
+				auxObj.addChild(childObj,childObj.getId());
+				nChilds++;
+			});
+			storer.continueTask();
+		};
+		storer.parallelizeCalls(50,fncCreateChild,fncSave,5);
+	});
+	storer.addStep("Saving the rest of childs",function(){
+		auxObj.getFactory().storeManager.saveAllUnlocked();
+	});
+	storer.addStep("Saving the Object",function(){
+		storer.save("testObjectWithChilds",auxObj);
+	});
+	storer.continueTask();
 });
 System.webapp.addStep("Dynamic Object With Childs",function(){
 	storer.addStep("Load the root object",function(){

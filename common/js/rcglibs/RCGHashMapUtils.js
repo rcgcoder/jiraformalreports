@@ -1529,7 +1529,9 @@ class RCGHashMapFactory{
 					}
 					if (pos.parent==""){ //si el deleted es el root la nueva root será prevAux;
 						this.root=prevAux;
-						this.root.parent="";
+						if (this.root!=""){
+							this.root.parent="";
+						}
 						chronoStop();
 					} 
 		//			chronoStopFunction();

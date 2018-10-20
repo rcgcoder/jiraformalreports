@@ -139,6 +139,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 		var fncSave=function(childNum){
 			if (dynObj.storeManager.isFlushInactivesNeeded()){
 				storer.addStep("Save All in "+childNum,function(){
+					console.log("Saving All ("+childNum+")");
 					auxObj.getFactory().storeManager.saveAllUnlocked();
 				});
 			}

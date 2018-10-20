@@ -78,10 +78,12 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 				var fncAsyncCall=storer.createManagedCallback(function(){
 					debugger;
 					storer.addStep("Calling saveToStorage",function(){
+						log("Calling saveToStorage");
 						self.saveToStorage(inactiveObject);
 						storer.continueTask();
 					});
 					storer.addStep("Continuing task",function(){
+						log("Continuing Calling saveToStorage");
 						debugger;
 						storer.continueTask();
 					})

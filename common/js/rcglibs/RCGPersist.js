@@ -84,7 +84,7 @@ function InitializeFileSystem(initCallBack,quota){
 		filesystem.error_callback=cbNotExists;
 		this.fs.root.getFile(newName, {create: false}, function(fileEntry) {
 				fileEntry.file(function(file) {
-					console.log("Reading File From Persistent Storage");
+					//console.log("Reading File From Persistent Storage");
 					var reader = new FileReader();
 					reader.content="";
 					reader.onload=function(event){
@@ -121,13 +121,13 @@ function InitializeFileSystem(initCallBack,quota){
 											log("result["+xi+"]:"+result[xi]);
 										}*/
 										if (result==null){
-											console.log("not compressed... direct load:"+reader.content.length);
+											//console.log("not compressed... direct load:"+reader.content.length);
 											cbExistsAndLoaded(reader.contenido);
 										} else {
 											/*for (var xi=0;xi<16;xi++){
 												log("result["+xi+"]:"+result[xi]);
 											}*/
-											console.log("Decompressed: " + result.length + "/"+arrBytes.length);
+											//console.log("Decompressed: " + result.length + "/"+arrBytes.length);
 											cbExistsAndLoaded(result);
 										}
 									}, 
@@ -135,11 +135,11 @@ function InitializeFileSystem(initCallBack,quota){
 										if ((percent*100)-lastPerc>10){
 											lastPerc=(percent*100);
 											/// Decompressing progress code goes here.
-											console.log("Decompressing: " + (percent * 100).toFixed(2) + "% "+((Date.now()-timeStart)/1000).toFixed(2)+" secs");
+											//console.log("Decompressing: " + (percent * 100).toFixed(2) + "% "+((Date.now()-timeStart)/1000).toFixed(2)+" secs");
 										}
 									});
 							} else {
-								console.log("File not compressed:"+reader.content.length);
+								//console.log("File not compressed:"+reader.content.length);
 								cbExistsAndLoaded(reader.content);
 							}
 						}
@@ -154,23 +154,23 @@ function InitializeFileSystem(initCallBack,quota){
 		var newName=replaceAll(filename,"/","_DIR_");
 		var rootFs=this.fs.root;
 		var onDelete=function(){
-			console.log("onDelete function..."+newName);
+			//console.log("onDelete function..."+newName);
 			rootFs.getFile(newName, {create: true},
 					function(DatFile) {
-						console.log("Prepare to write..."+newName);
+						//console.log("Prepare to write..."+newName);
 						DatFile.isFile=true;
 						DatFile.name=newName;
 						DatFile.fullPath = '/'+newName;
 						DatFile.createWriter(
 							function(DatContent) {
 								DatContent.onwriteend = function(e) {
-									console.log(newName+' Write completed.');
+									//console.log(newName+' Write completed.');
 									//setTimeout(function(){
 										endWriteCallback(e);
 									//});
 								};			
 								DatContent.onerror = function(e) {
-									console.log(newName+'Write failed: ' + e);
+									//console.log(newName+'Write failed: ' + e);
 									//setTimeout(function(){
 										errorCallback(e);
 									//});
@@ -215,7 +215,7 @@ function InitializeFileSystem(initCallBack,quota){
 													}
 												});
 								} else {
-									console.log("Writting "+newName+"...");
+									//console.log("Writting "+newName+"...");
 									theBlob = new Blob([theString], {type: "text/plain"});
 									DatContent.write(theBlob);
 								}
@@ -224,7 +224,7 @@ function InitializeFileSystem(initCallBack,quota){
 		}
 		//deleting file;
 		rootFs.getFile(newName, {create: false}, function(fileEntry) {
-				console.log("Trying to delete:"+newName);
+				//console.log("Trying to delete:"+newName);
 			    fileEntry.remove(onDelete,onDelete);
 			  }, onDelete);		
 		

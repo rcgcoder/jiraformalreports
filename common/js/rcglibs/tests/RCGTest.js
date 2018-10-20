@@ -158,7 +158,6 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 		});
 		storer.continueTask();
 	});
-	/*
 	storer.addStep("Parallelize the full load test",function(result){
 		//walkAsync(sName,callNode,callEnd,callBlockPercent,callBlockTime,secsLoop,hsOtherParams,barrier){
 		var fncLoaded=function(oneChild){
@@ -170,7 +169,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 			storer.continueTask();
 		};
 		storer.parallelizeCalls(result.getChilds(),fncLoad,fncLoaded,5);
-	});*/
+	});
 	storer.continueTask();
 });
 

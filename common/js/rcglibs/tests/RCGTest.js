@@ -139,6 +139,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 	auxObj.addTestStringList("One Value for String List");
 	auxObj.addTestStringList("Second Value for String List");
 	var nTotalChilds=1500;
+	console.log("Start the creation process ("+nTotalChilds+") "+getMemStatus());
 	debugger;
 	storer.addStep("Filling a lot ( "+nTotalChilds+" ) of childs",function(){
 		var nChilds=0;

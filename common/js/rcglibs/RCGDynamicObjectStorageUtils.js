@@ -80,7 +80,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 	saveAllUnlocked(){
 		var self=this;
 		var storer=self.storer;
-		if (self.isSavingInactives){
+		if (self.isSavingInactives()){
 			storer.addStep("Waiting for finishing of save all inactives ",function(){
 				self.savingSemaphore.taskArrived(storer.getRunningTask());
 /*				var fncContinue=storer.createManagedCallback(function(){

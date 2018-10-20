@@ -41,7 +41,7 @@ class RCGSemaphore{
 	continueAll(){
 		var self=this;
 		var fncContinueTask=function(task){
-			setZerotimeout(function(){
+			setZeroTimeout(function(){
 				task.setRunningTask(task);
 				task.getTaskManager().next();
 			});

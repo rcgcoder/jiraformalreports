@@ -191,7 +191,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 	storer.addStep("Unlock and store by factory",function(auxObj){
 		storer.addStep("Saving all dynobjs",function(){
 			auxObj.unlock();
-			if (dynObj.storeManager.isFlushInactivesNeeded()){
+			if (auxObj.getFactory().storeManager.isFlushInactivesNeeded()){
 				console.log("Saving all inactive dynobjs "+getMemStatus());				  
 				auxObj.getFactory().storeManager.saveAllUnlocked();
 			} else {

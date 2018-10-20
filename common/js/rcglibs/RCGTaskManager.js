@@ -1197,7 +1197,7 @@ class RCGTaskManager{
 								self.continueTask();
 								log("End of the "+iPet+" Processing of parallel process");
 							});
-						}
+						} 
 						self.addStep("trying next petition...",function(){
 							log("Evaluating next petition");
 //							nItemsProcessed++;

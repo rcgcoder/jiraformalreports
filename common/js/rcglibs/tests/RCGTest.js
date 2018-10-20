@@ -165,6 +165,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 			//storer.continueTask();
 		};
 		var fncLoad=function(oneChild){
+			log("Trying to Full loaded "+oneChild.getId()+" value test:"+oneChild.getTestOneString());
 			oneChild.fullLoad();
 			storer.continueTask();
 		};

@@ -1183,15 +1183,19 @@ class RCGTaskManager{
 						*/
 						if (isDefined(fncCall)){
 							self.addStep("Petition:"+iPet+" of parallel process ",function(){
+								log("Start the "+iPet+" Call of parallel process");
 								var fncManagedCall=self.createManagedCallback(fncCall);
 								fncManagedCall(item);
+								log("End of the "+iPet+" Call of parallel process");
 							});
 						}
 						if (isDefined(fncProcess)){
 							self.addStep("Petition:"+iPet+" Processing result and Trying Next Call...",function(objResult){
+								log("Start the "+iPet+" Processing of parallel process");
 								var fncManagedProcessCall=self.createManagedCallback(fncProcess);
 								fncManagedProcessCall(item,objResult);
 								self.continueTask();
+								log("End of the "+iPet+" Processing of parallel process");
 							});
 						}
 						self.addStep("trying next petition...",function(){

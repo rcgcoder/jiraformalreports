@@ -131,8 +131,8 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 	auxObj.setTestOneString("Tested String Values");
 	auxObj.addTestStringList("One Value for String List");
 	auxObj.addTestStringList("Second Value for String List");
-
-	storer.addStep("Filling a lot of childs",function(){
+	var nTotalChilds=20;
+	storer.addStep("Filling a lot ("+nTotalChilds+") of childs",function(){
 		var nChilds=0;
 		var fncSave=function(childNum){
 			auxObj.getFactory().storeManager.saveAllUnlocked();
@@ -150,7 +150,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 			});
 			storer.continueTask();
 		};
-		storer.parallelizeCalls(50,fncCreateChild,fncSave,5);
+		storer.parallelizeCalls(nTotalChilds,fncCreateChild,fncSave,5);
 	});
 	storer.addStep("Saving the rest of childs",function(){
 		auxObj.getFactory().storeManager.saveAllUnlocked();

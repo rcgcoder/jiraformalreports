@@ -1156,6 +1156,7 @@ class RCGTaskManager{
 				});
 		}
 		var fncPopNewAction=function(){
+			log("fncPopNewAction "+nActualCall);
 			var nPreviousPosition=nActualCall;
 			nActualCall++;
 			if (fncName!==""){

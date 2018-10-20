@@ -38,17 +38,17 @@ class RCGSemaphore{
 		var newId="smp-"+(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
 		return newId;
 	}
+	taskContinue(task){
+		setZeroTimeout(function(){
+			task.setRunningTask(task);
+			task.getTaskManager().next();
+		});
+	}
 	continueAll(){
 		var self=this;
-		var fncContinueTask=function(task){
-			setZeroTimeout(function(){
-				task.setRunningTask(task);
-				task.getTaskManager().next();
-			});
-		}
 		while (self.taskWaiting.length>0){
 			var task=self.taskWaiting.pop();
-			fncContinueTask(task);
+			self.taskContinue(task);
 		}
 	}
 	waiting(self){
@@ -65,7 +65,7 @@ class RCGSemaphore{
 	taskArrived(task){
 		var self=this;
 		if (self.fncIsOpen()){
-			task.getTaskManager().next();
+			self.taskContinue(task);
 		} else {
 			self.taskWaiting.push(task);
 			if (!self.isWaiting){

@@ -21,6 +21,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		var key=dynObj.getId();
 		if (self.inactiveObjects.exists(key)){
 			self.inactiveObjects.remove(key);
+			self.inactiveObjects.traceAll();
 		}
 		if (!self.activeObjects.exists(key)){
 			self.activeObjects.add(key,dynObj);
@@ -31,6 +32,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		var key=dynObj.getId();
 		if (self.activeObjects.exists(key)){
 			self.activeObjects.remove(key);
+			self.activeObjects.traceAll();
 		}
 		if (!self.inactiveObjects.exists(key)){
 			self.inactiveObjects.add(key,dynObj);

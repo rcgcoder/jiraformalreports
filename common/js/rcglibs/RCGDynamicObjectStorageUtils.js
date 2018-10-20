@@ -91,7 +91,9 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 						inactiveObject.fullUnload();
 					}
 					log("Removing :"+inactiveObject.getId());
-					self.inactiveObjects.remove(inactiveObject.getId());
+					if (self.inactiveObjects.exists(inactiveObject.getId())){
+						self.inactiveObjects.remove(inactiveObject.getId());
+					}
 				} else {
 					log("It´s not in inactive objects:"+inactiveObject.getId());
 				}

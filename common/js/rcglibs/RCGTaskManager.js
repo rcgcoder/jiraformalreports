@@ -1168,10 +1168,10 @@ class RCGTaskManager{
 			var nextAccumulator=0;
 			var fncAddThread=function(iThread){
 				return self.addStep("Parallel call Thread "+iThread,function(){
-//					log("Parallel Step "+iThread);
+					log("Parallel Step "+iThread);
 					var fncParallelCallBase=function(){
 						log("Parallel Call "+iThread);
-//						debugger;
+						debugger;
 						if (nActualCall>=nTotalCalls) {
 							return ;//self.continueTask();
 						}

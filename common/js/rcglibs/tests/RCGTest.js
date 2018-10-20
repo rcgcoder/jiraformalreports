@@ -134,7 +134,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 			"DynamicObjectWithChildsTest",
 			true
 			);
-	dynObj.storeManager.cacheItemsMax=100000;
+	dynObj.storeManager.cacheItemsMax=1000;
 	var auxObj=dynObj.new("Test DynObj");
 	auxObj.setTestOneString("Tested String Values");
 	auxObj.addTestStringList("One Value for String List");

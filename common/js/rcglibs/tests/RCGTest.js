@@ -148,6 +148,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 				childObj.unlock();
 				auxObj.addChild(childObj,childObj.getId());
 				nChilds++;
+				storer.continueTask();
 			});
 			storer.continueTask();
 		};

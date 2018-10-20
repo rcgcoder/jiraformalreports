@@ -55,7 +55,6 @@ class RCGSemaphore{
 		self.isWaiting=true;
 		if (self.fncIsOpen()){
 			self.isWaiting=false;
-			
 			task.getTaskManager().next();
 		} else {
 			setZeroTimeout(function(){
@@ -66,7 +65,7 @@ class RCGSemaphore{
 	taskArrived(task){
 		var self=this;
 		if (self.fncIsOpen()){
-			task.continueTask();
+			task.getTaskManager().next();
 		} else {
 			self.taskWaiting.push(task);
 			if (!self.isWaiting){

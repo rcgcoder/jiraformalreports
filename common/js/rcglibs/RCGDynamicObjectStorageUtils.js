@@ -75,7 +75,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 			var fncSaveCall=function(inactiveObject){
 				log("Saving All to Storage:"+inactiveObject.getId());
 				self.saveToStorage(inactiveObject);
-				storer.continueTask();
+				//storer.continueTask();
 			}
 			var fncUnloadAndRemove=function(inactiveObject){
 				log("Unload and Remove from inactive objects:"+inactiveObject.getId());

@@ -136,7 +136,9 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 	storer.addStep("Filling a lot ( "+nTotalChilds+" ) of childs",function(){
 		var nChilds=0;
 		var fncSave=function(childNum){
-			//auxObj.getFactory().storeManager.saveAllUnlocked();
+			self.addStep("Save All in "+childNum,function(){
+				auxObj.getFactory().storeManager.saveAllUnlocked();
+			});
 		};
 		var fncCreateChild=function(childNum){
 			storer.addStep("Creating child "+childNum,function(){

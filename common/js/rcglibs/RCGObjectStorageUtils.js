@@ -99,11 +99,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				self.continueTask("Error");
 			}
 	    });
-//		log("Async call to fs.savefile");
-//		setTimeout(function(){
-//			log("Now Called fs.savefile");
-			filesystem.SaveFile(baseName,contentToSave,innerOnSave,innerOnError);
-//		},5000);
+		filesystem.SaveFile(baseName,contentToSave,innerOnSave,innerOnError);
 	}
 	save(key,item){
 		var self=this;
@@ -114,8 +110,8 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		var totalLength=jsonToSave.length;
 		log("Storer save:"+baseName);
 		if (totalLength<(7*1024*1024)){
+//			log("Internal saveFile called for:"+baseName);
 			self.internal_saveFile(key,baseName,jsonToSave,self.onSave,self.onError);
-			log("Internal saveFile called for:"+baseName);
 		} else {
 //			debugger;
 			var arrParts=[];

@@ -1156,7 +1156,7 @@ class RCGTaskManager{
 				});
 		}
 		var fncPopNewAction=function(){
-			log("fncPopNewAction "+nActualCall);
+//			log("fncPopNewAction "+nActualCall);
 			var nPreviousPosition=nActualCall;
 			nActualCall++;
 			if (fncName!==""){
@@ -1169,10 +1169,10 @@ class RCGTaskManager{
 			var nextAccumulator=0;
 			var fncAddThread=function(iThread){
 				return self.addStep("Parallel call Thread "+iThread,function(){
-					log("Parallel Step "+iThread);
+//					log("Parallel Step "+iThread);
 					var fncParallelCallBase=function(){
-						log("Parallel Call "+iThread);
-						debugger;
+//						log("Parallel Call "+iThread);
+//						debugger;
 						if (nActualCall>=nTotalCalls) {
 							return ;//self.continueTask();
 						}
@@ -1184,30 +1184,30 @@ class RCGTaskManager{
 						*/
 						if (isDefined(fncCall)){
 							self.addStep("Petition:"+iPet+" of parallel process ",function(){
-								log("Start the "+iPet+" Call of parallel process");
+//								log("Start the "+iPet+" Call of parallel process");
 								var fncManagedCall=self.createManagedCallback(fncCall);
 								fncManagedCall(item);
-								log("End of the "+iPet+" Call of parallel process");
+//								log("End of the "+iPet+" Call of parallel process");
 							});
 						}
 						if (isDefined(fncProcess)){
 							self.addStep("Petition:"+iPet+" Processing result and Trying Next Call...",function(objResult){
-								log("Start the "+iPet+" Processing of parallel process");
+//								log("Start the "+iPet+" Processing of parallel process");
 								var fncManagedProcessCall=self.createManagedCallback(fncProcess);
 								fncManagedProcessCall(item,objResult);
 								self.continueTask();
-								log("End of the "+iPet+" Processing of parallel process");
+//								log("End of the "+iPet+" Processing of parallel process");
 							});
 						} 
 						self.addStep("trying next petition...",function(){
-							log("Evaluating next petition");
+							log("Evaluating next petition:"+nActualCall + " of " +nTotalCalls);
 //							nItemsProcessed++;
 							if (nActualCall<nTotalCalls){
-//								log("There are "+hsListItems.length()+" petitions pending... let´s go next petition");
+								log("There are "+(nTotalCalls-nActualCall)+" petitions pending... let´s go next petition");
 								var auxParallelCall=self.createManagedCallback(fncParallelCallBase);
 								auxParallelCall();
 							} else {
-//								log("There is not more petitions");
+								log("There is not more petitions");
 								self.continueTask();
 							}
 						});

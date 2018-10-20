@@ -162,8 +162,8 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 		var fncLoaded=function(oneChild){
 			log("Full loaded "+oneChild.getId()
 					+" value test:"+oneChild.getTestOneString()
-					+" active Objects:"+storer.countActiveObjects()
-					+" inactive Objects:"+storer.countInactiveObjects()
+					+" active Objects:"+oneChild.getFactory.storeMananger.countActiveObjects()
+					+" inactive Objects:"+oneChild.getFactory.storeMananger.countInactiveObjects()
 					);
 //			oneChild.unlock();
 			//storer.continueTask();

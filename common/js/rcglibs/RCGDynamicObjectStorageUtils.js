@@ -75,22 +75,8 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 			var fncSaveCall=function(inactiveObject){
 				debugger;
 				log("Saving All to Storage:"+inactiveObject.getId());
-				var fncAsyncCall=storer.createManagedCallback(function(){
-					debugger;
-					storer.addStep("Calling saveToStorage",function(){
-						log("Calling saveToStorage");
-						self.saveToStorage(inactiveObject);
-						storer.continueTask();
-					});
-					storer.addStep("Continuing task",function(){
-						log("Continuing Calling saveToStorage");
-						debugger;
-						storer.continueTask();
-					})
-					storer.continueTask();
-					debugger;
-				});
-				setTimeout(fncAsyncCall);
+				self.saveToStorage(inactiveObject);
+				storer.continueTask();
 				debugger;
 			}
 			var fncUnloadAndRemove=function(inactiveObject){

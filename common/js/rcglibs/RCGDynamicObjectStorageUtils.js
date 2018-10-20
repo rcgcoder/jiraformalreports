@@ -1,6 +1,7 @@
 var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 	constructor(theFactory){
 		var self=this;
+		self.isSavingInactives=false;
 		self.cacheItemsMax=0;
 		self.factory=theFactory;
 		self.storer=new RCGObjectStorageManager(self.factory.name,System.webapp.getTaskManager());
@@ -76,31 +77,38 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 	}
 	saveAllUnlocked(){
 		var self=this;
-		var storer=self.storer;
-		storer.addStep("Remove all inactive Objects ("+self.countInactiveObjects()+")",function(){
-			var fncSaveCall=function(inactiveObject){
-				log("Saving All to Storage:"+inactiveObject.getId());
-				self.saveToStorage(inactiveObject);
-				storer.continueTask();
-			}
-			var fncUnloadAndRemove=function(inactiveObject){
-				log("Unload and Remove from inactive objects:"+inactiveObject.getId());
-				if (!inactiveObject.isLocked()){
-					if (inactiveObject.isFullyLoaded()){
-						log("Unloading :"+inactiveObject.getId());
-						inactiveObject.fullUnload();
-					}
-					log("Removing :"+inactiveObject.getId());
-					if (self.inactiveObjects.exists(inactiveObject.getId())){
-						self.inactiveObjects.remove(inactiveObject.getId());
-					}
-				} else {
-					log("It´s not in inactive objects:"+inactiveObject.getId());
+		if (!self.isSavingInactives){
+			self.isSavingInactives=true;
+			var storer=self.storer;
+			storer.addStep("Remove all inactive Objects ("+self.countInactiveObjects()+")",function(){
+				var fncSaveCall=function(inactiveObject){
+					log("Saving All to Storage:"+inactiveObject.getId());
+					self.saveToStorage(inactiveObject);
+					storer.continueTask();
 				}
-//				storer.continueTask();
-			}
-			storer.parallelizeCalls(self.inactiveObjects,fncSaveCall,fncUnloadAndRemove,5);
-		});
+				var fncUnloadAndRemove=function(inactiveObject){
+					log("Unload and Remove from inactive objects:"+inactiveObject.getId());
+					if (!inactiveObject.isLocked()){
+						if (inactiveObject.isFullyLoaded()){
+							log("Unloading :"+inactiveObject.getId());
+							inactiveObject.fullUnload();
+						}
+						log("Removing :"+inactiveObject.getId());
+						if (self.inactiveObjects.exists(inactiveObject.getId())){
+							self.inactiveObjects.remove(inactiveObject.getId());
+						}
+					} else {
+						log("It´s not in inactive objects:"+inactiveObject.getId());
+					}
+	//				storer.continueTask();
+				}
+				storer.parallelizeCalls(self.inactiveObjects,fncSaveCall,fncUnloadAndRemove,5);
+			});
+			storer.addStep("Save Inactive objects is Finished",function(){
+				self.isSavingInactives=false;
+				storer.continueTask();
+			});
+		}
 		storer.continueTask();
 	}
 	loadFromStorage(dynObj){

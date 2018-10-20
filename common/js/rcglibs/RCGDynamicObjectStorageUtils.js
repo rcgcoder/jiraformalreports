@@ -8,10 +8,10 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		self.inactiveObjects=newHashMap();
 	}
 	countActiveObjects(){
-		this.activeObjects.length();
+		return this.activeObjects.length();
 	}
 	countInactiveObjects(){
-		this.inactiveObjects.length();
+		return this.inactiveObjects.length();
 	}
 	reserve(dynObj){
 		var self=this;

@@ -103,7 +103,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		setTimeout(function(){
 			log("Now Called fs.savefile");
 			filesystem.SaveFile(baseName,contentToSave,innerOnSave,innerOnError);
-		},1000);
+		},5000);
 	}
 	save(key,item){
 		var self=this;

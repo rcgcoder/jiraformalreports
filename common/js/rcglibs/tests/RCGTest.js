@@ -139,7 +139,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 		var fncSave=function(childNum){
 			if (dynObj.storeManager.isFlushInactivesNeeded()){
 				storer.addStep("Save All in "+childNum,function(){
-					console.log("Saving All ("+childNum+")");
+					console.log("Saving All ("+childNum+"/"+nTotalChilds+")");
 					auxObj.getFactory().storeManager.saveAllUnlocked();
 				});
 			}
@@ -161,6 +161,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 		storer.parallelizeCalls(nTotalChilds,fncCreateChild,fncSave,5);
 	});
 	storer.addStep("Saving the rest of childs",function(){
+		console.log("Saving All the rest of "+nTotalChilds);
 		auxObj.getFactory().storeManager.saveAllUnlocked();
 	});
 	storer.addStep("Saving the Object",function(){

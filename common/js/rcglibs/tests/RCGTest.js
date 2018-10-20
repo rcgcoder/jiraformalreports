@@ -131,7 +131,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 	auxObj.setTestOneString("Tested String Values");
 	auxObj.addTestStringList("One Value for String List");
 	auxObj.addTestStringList("Second Value for String List");
-	var nTotalChilds=20;
+	var nTotalChilds=15;
 	debugger;
 	storer.addStep("Filling a lot ( "+nTotalChilds+" ) of childs",function(){
 		var nChilds=0;

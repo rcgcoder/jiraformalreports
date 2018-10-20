@@ -208,6 +208,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 					+" active Objects:"+oneChild.getFactory().storeManager.countActiveObjects()
 					+" inactive Objects:"+oneChild.getFactory().storeManager.countInactiveObjects()
 					);
+			oneChild.change(); // to force save
 			oneChild.unlock();
 			log("Full loaded "+oneChild.getId() + " Unlocked!"
 					+" value test:"+oneChild.getTestOneString()

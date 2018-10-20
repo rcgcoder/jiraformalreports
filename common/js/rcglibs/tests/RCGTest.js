@@ -178,7 +178,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 			oneChild.fullLoad();
 			storer.continueTask();
 		};
-		storer.parallelizeCalls(result.getChilds(),fncLoad,fncLoaded,5);
+		storer.parallelizeCalls(result.getChilds(),fncLoad,fncLoaded,1);
 	});
 	storer.addStep("Finished the child list tests",function(){
 		log("Finished the child list tests");

@@ -169,8 +169,13 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 		storer.parallelizeCalls(nTotalChilds,fncCreateChild,fncSave,5);
 	});
 	storer.addStep("Saving the rest of childs",function(){
-		console.log("Saving All the rest of "+nTotalChilds+ " "+getMemStatus());							  
-		auxObj.getFactory().storeManager.saveAllUnlocked();
+		if (dynObj.storeManager.isFlushInactivesNeeded()){
+			console.log("Saving All the rest of "+nTotalChilds+ " "+getMemStatus());							  
+			auxObj.getFactory().storeManager.saveAllUnlocked();
+		} else {
+			console.log("NOT Saving All the rest of "+nTotalChilds+ " "+getMemStatus());							 
+			storer.continueTask();
+		}
 	});
 	storer.addStep("Saving the Object",function(){
 		console.log("End of creationg process "+getMemStatus());				  
@@ -186,7 +191,13 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 	storer.addStep("Unlock and store by factory",function(auxObj){
 		storer.addStep("Saving all dynobjs",function(){
 			auxObj.unlock();
-			auxObj.getFactory().storeManager.saveAllUnlocked();
+			if (dynObj.storeManager.isFlushInactivesNeeded()){
+				console.log("Saving all inactive dynobjs "+getMemStatus());				  
+				auxObj.getFactory().storeManager.saveAllUnlocked();
+			} else {
+				console.log("NOT Saving all inactive dynobjs "+getMemStatus());				  
+				storer.continueTask();
+			}
 		});
 		storer.addStep("Continuing the test",function(){
 			log("All unlocked saved... now full load " + auxObj.getId());

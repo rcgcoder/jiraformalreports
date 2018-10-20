@@ -99,7 +99,11 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				self.continueTask("Error");
 			}
 	    });
-		filesystem.SaveFile(baseName,contentToSave,innerOnSave,innerOnError);
+		log("Async call to fs.savefile");
+		setTimeout(function(){
+			log("Now Called fs.savefile");
+			filesystem.SaveFile(baseName,contentToSave,innerOnSave,innerOnError);
+		},1000);
 	}
 	save(key,item){
 		var self=this;

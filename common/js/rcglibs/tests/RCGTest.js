@@ -134,12 +134,12 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 			"DynamicObjectWithChildsTest",
 			true
 			);
-	dynObj.storeManager.cacheItemsMax=1000;
+	dynObj.storeManager.cacheItemsMax=100000;
 	var auxObj=dynObj.new("Test DynObj");
 	auxObj.setTestOneString("Tested String Values");
 	auxObj.addTestStringList("One Value for String List");
 	auxObj.addTestStringList("Second Value for String List");
-	var nTotalChilds=1500;
+	var nTotalChilds=15000;
 	console.log("Start the creation process ("+nTotalChilds+") "+getMemStatus());
 	debugger;
 	storer.addStep("Filling a lot ( "+nTotalChilds+" ) of childs",function(){

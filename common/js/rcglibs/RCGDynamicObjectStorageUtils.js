@@ -20,6 +20,8 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		var self=this;
 		var key=dynObj.getId();
 		if (self.inactiveObjects.exists(key)){
+			self.inactiveObjects.traceAll();
+			debugger;
 			self.inactiveObjects.remove(key);
 			self.inactiveObjects.traceAll();
 		}
@@ -31,6 +33,8 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		var self=this;
 		var key=dynObj.getId();
 		if (self.activeObjects.exists(key)){
+			self.activeObjects.traceAll();
+			debugger;
 			self.activeObjects.remove(key);
 			self.activeObjects.traceAll();
 		}

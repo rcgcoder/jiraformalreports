@@ -79,6 +79,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 					debugger;
 					storer.addStep("Calling saveToStorage",function(){
 						self.saveToStorage(inactiveObject);
+						storer.continueTask();
 					});
 					storer.addStep("Continuing task",function(){
 						debugger;

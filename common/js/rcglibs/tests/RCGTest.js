@@ -161,11 +161,16 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 		debugger;
 		var fncLoaded=function(oneChild){
 			log("Full loaded "+oneChild.getId()
-					+" value test:"+oneChild.getTestOneString());
-			log(     " active Objects:"+oneChild.getFactory().storeManager.countActiveObjects()
+					+" value test:"+oneChild.getTestOneString()
+					+" active Objects:"+oneChild.getFactory().storeManager.countActiveObjects()
 					+" inactive Objects:"+oneChild.getFactory().storeManager.countInactiveObjects()
 					);
-//			oneChild.unlock();
+			oneChild.unlock();
+			log("Full loaded "+oneChild.getId() + " Unlocked!"
+					+" value test:"+oneChild.getTestOneString()
+					+" active Objects:"+oneChild.getFactory().storeManager.countActiveObjects()
+					+" inactive Objects:"+oneChild.getFactory().storeManager.countInactiveObjects()
+					);
 			//storer.continueTask();
 		};
 		var fncLoad=function(oneChild){

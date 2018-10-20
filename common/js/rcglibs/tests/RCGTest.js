@@ -111,6 +111,12 @@ System.webapp.addStep("Dynamic Object",function(){
 	storer.continueTask();
 });
 */
+function getMemStatus(){
+	var giga=(1024*1024);
+	return " totalJSHeapSize:"+ (performance.memory.totalJSHeapSize/giga).toFixed(3) + ',' +
+			"usedJSHeapSize:"  + (performance.memory.usedJSHeapSize/giga).toFixed(3)  + ',' +
+			"jsHeapSizeLimit:" + (performance.memory.jsHeapSizeLimit/giga).toFixed(3);
+}
 
 System.webapp.addStep("Dynamic Object With Childs",function(){
 	var dynObj=newDynamicObjectFactory(
@@ -139,10 +145,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 		var fncSave=function(childNum){
 			if (dynObj.storeManager.isFlushInactivesNeeded()){
 				storer.addStep("Save All in "+childNum,function(){
-					console.log("Saving All ("+childNum+"/"+nTotalChilds+")"+
-							  " totalJSHeapSize:"+ performance.memory.totalJSHeapSize + ',' +
-					          "usedJSHeapSize:"  + performance.memory.usedJSHeapSize  + ',' +
-					          "jsHeapSizeLimit:" + performance.memory.jsHeapSizeLimit);
+					console.log("Saving All ("+childNum+"/"+nTotalChilds+") "+getMemStatus());
 					auxObj.getFactory().storeManager.saveAllUnlocked();
 				});
 			}
@@ -164,22 +167,17 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 		storer.parallelizeCalls(nTotalChilds,fncCreateChild,fncSave,5);
 	});
 	storer.addStep("Saving the rest of childs",function(){
-		console.log("Saving All the rest of "+nTotalChilds+							  
-				  " totalJSHeapSize:"+ performance.memory.totalJSHeapSize + ',' +
-		          "usedJSHeapSize:"  + performance.memory.usedJSHeapSize  + ',' +
-		          "jsHeapSizeLimit:" + performance.memory.jsHeapSizeLimit);
+		console.log("Saving All the rest of "+nTotalChilds+ " "+getMemStatus());							  
 		auxObj.getFactory().storeManager.saveAllUnlocked();
 	});
 	storer.addStep("Saving the Object",function(){
-		console.log("End of creationg process "+							  
-				  " totalJSHeapSize:"+ performance.memory.totalJSHeapSize + ',' +
-		          "usedJSHeapSize:"  + performance.memory.usedJSHeapSize  + ',' +
-		          "jsHeapSizeLimit:" + performance.memory.jsHeapSizeLimit);
+		console.log("End of creationg process "+getMemStatus());				  
 		storer.save("testObjectWithChilds",auxObj);
 	});
 	storer.continueTask();
 });
 System.webapp.addStep("Dynamic Object With Childs",function(){
+	console.log("Init of load process "+getMemStatus());				  
 	storer.addStep("Load the root object",function(){
 		storer.load("testObjectWithChilds");
 	});

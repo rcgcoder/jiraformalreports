@@ -127,7 +127,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 			"DynamicObjectWithChildsTest",
 			true
 			);
-	dynObj.getFactory().storeManager.cacheItemsMax=1000;
+	dynObj.storeManager.cacheItemsMax=1000;
 	var auxObj=dynObj.new("Test DynObj");
 	auxObj.setTestOneString("Tested String Values");
 	auxObj.addTestStringList("One Value for String List");
@@ -137,7 +137,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 	storer.addStep("Filling a lot ( "+nTotalChilds+" ) of childs",function(){
 		var nChilds=0;
 		var fncSave=function(childNum){
-			if (auxObj.getFactory().storeManager.isFlushInactivesNeeded()){
+			if (dynObj.storeManager.isFlushInactivesNeeded()){
 				storer.addStep("Save All in "+childNum,function(){
 					auxObj.getFactory().storeManager.saveAllUnlocked();
 				});

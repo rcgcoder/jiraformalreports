@@ -5,6 +5,12 @@ if (typeof require!=="undefined"){
 	var shell = require('shelljs' );
 	var StackUtils=require("./StackUtils.js");
 }
+function getMemStatus(){
+	var giga=(1024*1024);
+	return " totalJSHeapSize:"+ (performance.memory.totalJSHeapSize/giga).toFixed(3) + ',' +
+			"usedJSHeapSize:"  + (performance.memory.usedJSHeapSize/giga).toFixed(3)  + ',' +
+			"jsHeapSizeLimit:" + (performance.memory.jsHeapSizeLimit/giga).toFixed(3);
+}
 
 function isInNodeJS(){
 	return bInNodeJS;

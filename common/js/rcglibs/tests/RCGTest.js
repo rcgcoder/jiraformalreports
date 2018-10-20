@@ -112,12 +112,6 @@ System.webapp.addStep("Dynamic Object",function(){
 	storer.continueTask();
 });
 */
-function getMemStatus(){
-	var giga=(1024*1024);
-	return " totalJSHeapSize:"+ (performance.memory.totalJSHeapSize/giga).toFixed(3) + ',' +
-			"usedJSHeapSize:"  + (performance.memory.usedJSHeapSize/giga).toFixed(3)  + ',' +
-			"jsHeapSizeLimit:" + (performance.memory.jsHeapSizeLimit/giga).toFixed(3);
-}
 
 System.webapp.addStep("Dynamic Object With Childs",function(){
 	var dynObj=newDynamicObjectFactory(
@@ -147,7 +141,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 		var fncSave=function(childNum){
 			if (dynObj.storeManager.isFlushInactivesNeeded()){
 				storer.addStep("Save All in "+childNum,function(){
-					console.log("Saving All ("+childNum+"/"+nTotalChilds+") "+getMemStatus());
+//					console.log("Saving All ("+childNum+"/"+nTotalChilds+") "+getMemStatus());
 					auxObj.getFactory().storeManager.saveAllUnlocked();
 				});
 			}

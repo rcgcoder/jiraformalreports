@@ -55,6 +55,7 @@ class RCGSemaphore{
 		self.isWaiting=true;
 		if (self.fncIsOpen()){
 			self.isWaiting=false;
+			
 			task.getTaskManager().next();
 		} else {
 			setZeroTimeout(function(){

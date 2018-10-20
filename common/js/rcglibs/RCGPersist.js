@@ -224,7 +224,7 @@ function InitializeFileSystem(initCallBack,quota){
 		}
 		//deleting file;
 		rootFs.getFile(newName, {create: false}, function(fileEntry) {
-				//console.log("Trying to delete:"+newName);
+				//console.log("Trying to delete:"+newName); 
 			    fileEntry.remove(onDelete,onDelete);
 			  }, onDelete);		
 		

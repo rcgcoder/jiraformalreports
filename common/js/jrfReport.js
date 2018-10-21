@@ -638,9 +638,23 @@ var jrfReport=class jrfReport {
 			var nStepsPlaned=0;
 			self.addStep("Extracting pending keys of ("+self.rootIssues.length()+") root issues",function(){
 				//debugger;
-				self.walkAsync(self.rootIssues,fncExtractPendingKeys);
+				//self.walkAsync(self.rootIssues,fncExtractPendingKeys);
+				var fncCall=function(issue){
+					issue.fullLoad();
+					storer.continueTask();
+				};
+				var fncProcess=function(issue){
+					storer.addStep("Wait if storer is saving",function(){
+						dynObj.storeManager.waitFinishSave();
+					});
+					storer.addStep("Extracting Pending Keys",function(){
+						fncExtractPendingKeys(issue);
+					});
+				}
+				self.parallelizeCalls(self.rootIssues,fncCall,fncProcess);
 			});
 			self.addStep("Getting root base issues",function(){
+				alert("Extracted pending keys of initial root issues");
 				var fncRetrieveGroup=self.createManagedCallback(function(group){
 					//debugger;
 					if (group.length>0){

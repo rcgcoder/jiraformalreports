@@ -105,9 +105,13 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 			});
 		} else {
 			self.isSavingInactives=true;
+			var countSaved=0;
 			storer.addStep("Remove all inactive Objects ("+self.countInactiveObjects()+")",function(){
 				var fncSaveCall=function(inactiveObject){
 					//log("Saving All to Storage:"+inactiveObject.getId());
+					if (inactiveObject.isChanged()){
+						countSaved++;
+					}
 					self.saveToStorage(inactiveObject);
 					storer.continueTask();
 				}
@@ -131,7 +135,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 			});
 			storer.addStep("Save Inactive objects is Finished",function(){
 				self.isSavingInactives=false;
-				console.log("Saved all inactive objects ("+self.factory.list.length()+")"+getMemStatus());
+				console.log("Saved all inactive objects ("+countSaved+"/"+self.factory.list.length()+")"+getMemStatus());
 				storer.continueTask();
 			});
 		}

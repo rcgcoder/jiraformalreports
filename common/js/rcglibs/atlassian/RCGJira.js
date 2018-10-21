@@ -413,7 +413,7 @@ class RCGJira{
 					});
 				}
 				if (isDefined(fncProcessIssue)){
-					//debugger;
+					debugger;
 					self.addStep("Custom Processing the issues",function(){
 						self.parallelizeCalls(blkIssues,fncProcessIssue,undefined,1);
 					});

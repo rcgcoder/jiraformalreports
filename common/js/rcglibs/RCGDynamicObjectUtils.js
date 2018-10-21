@@ -71,6 +71,7 @@ var RCGDynamicObject=class RCGDynamicObject{
 		
 		self.storable=false;
 		self.setStorable=factory.setStorable;
+		self.changeStorableParams=factory.changeStorableParams;
 		self.isStorable=factory.factory_isStorable;
 		self.object_isStorable=factory.object_isStorable;
 		self.storeManager="";
@@ -1069,6 +1070,26 @@ var factoryObjects=class factoryObjects{
 			}
 		});
 		self.setFullyUnloaded();
+	}
+	
+	setStorable(bStorable){
+		var self=this;
+		if (!(isDefined(bStorable)&&bStorable)){
+			self.storable=false;
+			self.storeManager="";
+		} else if (!self.storable){
+			self.storable=true;
+			self.setStoreManager(new RCGDynamicObjectStorage(self));
+		}
+	}
+	
+	changeStorableParams(cacheMaxItems,peakPercent,withAutoSave){
+		var self=this;
+		if (self.isStorable()){
+			if (isDefined(withAutoSave)) self.storeManager.withAutoSave=withAutoSave;
+			if (isDefined(peakPercent)) self.storeManager.peakMax=peakPercent;
+			if (isDefined(cacheMaxItems)) self.storeManager.cacheItemsMax=cacheMaxItems;
+		}
 	}
 	
 	setStorable(bStorable){

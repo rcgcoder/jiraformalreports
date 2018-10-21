@@ -10,7 +10,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		self.activeObjects=newHashMap();
 		self.inactiveObjects=newHashMap();
 		self.withAutoSave=false;
-		self.lastAutoSavePeriod=1000;
+//		self.lastAutoSavePeriod=1000;
 		self.autoSaveSemaphore=new RCGSemaphore(function(){return (self.needsAutoSave());});
 	}
 	enableAutoSave(){

@@ -57,6 +57,7 @@ var jrfReport=class jrfReport {
 		oIssue.updateInfo();
 		oIssue.setJiraObject("");
 		oIssue.setKey(jsonIssue.key);
+		oIssue.unlock();
 		return oIssue;
 	}
 	cleanModel(sContent){
@@ -433,6 +434,7 @@ var jrfReport=class jrfReport {
 		});
 		// first launch all issue retrieve ...
 		self.addStep("Getting All Issues in the Scope.... ",function(){
+			self.allIssues.changeStorableParams(1000,0.10,true);
 			if (self.isReusingIssueList()){
 				return self.continueTask();
 			}
@@ -448,6 +450,7 @@ var jrfReport=class jrfReport {
 		});	
 		self.addStep("Asigning all Issues in the scope.... ",function(){
 			log("All issues in Report:"+ self.allIssues.list.length()+ " issues");
+			self.allIssues.changeStorableParams(undefined,undefined,false);
 			self.continueTask();
 		});	
 

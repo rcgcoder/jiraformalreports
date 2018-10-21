@@ -56,7 +56,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 	}
 	needsAutoSave(){
 		var self=this;
-		return ((self.withAutoSave)&&(!self.isSavingInactives)&&(self.isFlushInactivesNeeded()));
+		return ((!self.isSavingInactives)&&(self.isFlushInactivesNeeded()));
 	}
 	countActiveObjects(){
 		return this.activeObjects.length();

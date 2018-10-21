@@ -450,7 +450,6 @@ var jrfReport=class jrfReport {
 		});	
 		self.addStep("Asigning all Issues in the scope.... ",function(){
 			log("All issues in Report:"+ self.allIssues.list.length()+ " issues");
-			self.allIssues.changeStorableParams(undefined,undefined,false);
 			self.continueTask();
 		});	
 
@@ -513,6 +512,7 @@ var jrfReport=class jrfReport {
 		
 		var hsKeyWaiting=newHashMap();
 		self.addStep("Processing root elements.... ",function(){
+			self.allIssues.changeStorableParams(undefined,undefined,false);
 			debugger;
 			if (self.isReusingIssueList()){
 				return self.continueTask();

@@ -56,6 +56,13 @@ class RCGSemaphore{
 		if (self.fncIsOpen()){
 			self.isWaiting=false;
 			self.continueAll();
+		} else if (self.taskWaiting.length==0) {
+			// end of wait.... 
+			self.isWaiting=false;
+		} else if (self.taskWaiting[0].getTaskManager().globalForks.length==0){
+			// the task was killed..... 
+			self.taskWaiting.clear();
+			self.isWaiting=false;
 		} else {
 			setZeroTimeout(function(){
 				self.waiting(self);

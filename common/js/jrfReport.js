@@ -512,7 +512,6 @@ var jrfReport=class jrfReport {
 		
 		var hsKeyWaiting=newHashMap();
 		self.addStep("Processing root elements.... ",function(){
-			self.allIssues.changeStorableParams(undefined,undefined,false);
 			debugger;
 			if (self.isReusingIssueList()){
 				return self.continueTask();
@@ -641,13 +640,13 @@ var jrfReport=class jrfReport {
 				//self.walkAsync(self.rootIssues,fncExtractPendingKeys);
 				var fncCall=function(issue){
 					issue.fullLoad();
-					storer.continueTask();
+					self.continueTask();
 				};
 				var fncProcess=function(issue){
-					storer.addStep("Wait if storer is saving",function(){
+					self.addStep("Wait if storer is saving",function(){
 						dynObj.storeManager.waitFinishSave();
 					});
-					storer.addStep("Extracting Pending Keys",function(){
+					self.addStep("Extracting Pending Keys",function(){
 						fncExtractPendingKeys(issue);
 					});
 				}
@@ -655,6 +654,7 @@ var jrfReport=class jrfReport {
 			});
 			self.addStep("Getting root base issues",function(){
 				alert("Extracted pending keys of initial root issues");
+				self.allIssues.changeStorableParams(undefined,undefined,false);
 				var fncRetrieveGroup=self.createManagedCallback(function(group){
 					//debugger;
 					if (group.length>0){

@@ -78,6 +78,7 @@ var RCGDynamicObject=class RCGDynamicObject{
 		self.setStoreManager=factory.setStoreManager;
 		self.getStorageObject=factory.getStorageObject;
 		self.saveToStorage=factory.saveToStorage;
+		self.waitForStorageSaveEnd=factory.waitForStorageSaveEnd;
 		if (isDefined(storable)&&storable){
 			self.setStorable(true);
 		}
@@ -1134,7 +1135,12 @@ var factoryObjects=class factoryObjects{
 			self.factory.storeManager.saveToStorage(self);
 		};
 	}
-	
+	waitForStorageSaveEnd(){
+		var self=this;
+		if (self.isStorable()){
+			self.factory.storeManager.waitFinishSave();
+		};
+	}
 	toArray(arrFields){ //[{doFieldName:,resultFieldName},{}.{}]
 		// convert the list of objects to an array []
 		var arrResult=[]

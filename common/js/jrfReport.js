@@ -640,11 +640,11 @@ var jrfReport=class jrfReport {
 				//self.walkAsync(self.rootIssues,fncExtractPendingKeys);
 				var fncCall=function(issue){
 					issue.fullLoad();
-					self.continueTask();
+					self.continueTask([issue]);
 				};
 				var fncProcess=function(issue){
 					self.addStep("Wait if storer is saving",function(){
-						dynObj.storeManager.waitFinishSave();
+						issue.getFactory().waitForStorageSaveEnd();
 					});
 					self.addStep("Extracting Pending Keys",function(){
 						fncExtractPendingKeys(issue);

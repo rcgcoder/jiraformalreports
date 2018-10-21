@@ -414,13 +414,16 @@ class RCGJira{
 				}
 				if (isDefined(fncProcessIssue)){
 					//debugger;
-					var auxHashMap=newHashMap();
+					self.addStep("Custom Processing the issues",function(){
+						self.parallelizeCalls(blkIssues,fncProcessIssue,undefined,1);
+					});
+/*					var auxHashMap=newHashMap();
 					blkIssues.forEach(function(issue){
 						auxHashMap.push(issue);
 					});
 					auxHashMap.walk(function(issue){
 						fncProcessIssue(issue);
-					});
+					});*/
 				}
 			}
 		};

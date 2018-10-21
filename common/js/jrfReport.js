@@ -604,12 +604,18 @@ var jrfReport=class jrfReport {
 							var issueParent=self.allIssues.getById(eLink);
 							if (key!=""){
 								if (issueParent!=""){
-									if (!issueParent.existsLinkedIssueKey(key)){
-										issueParent.addLinkedIssueKey(key,key);
-									}
-									if (!issueParent.existsEpicChild(key)){
-										issueParent.addEpicChild(issue);
-									}
+									self.addStep("Loading Issue Parent "+ eLink,function(){
+										issueParent.fullLoad();
+									});
+									self.addStep("Loading Issue Parent "+ eLink,function(){
+										if (!issueParent.existsLinkedIssueKey(key)){
+											issueParent.addLinkedIssueKey(key,key);
+										}
+										if (!issueParent.existsEpicChild(key)){
+											issueParent.addEpicChild(issue);
+										}
+										issueParent.unlockAndWaitAllSave();
+									});
 								} else {
 									fncAddToGroup(eLink);
 								}
@@ -622,7 +628,14 @@ var jrfReport=class jrfReport {
 			};
 			var fncProcessEpicChilds=function(jsonIssue,index,resultLength){
 				if (index==0) nPendingIssues+=resultLength; // now all the issues are pending....
-				fncExtractPendingKeys(jsonIssue);
+				self.addStep("Extracting Pending Keys",function(){
+					fncExtractPendingKeys(jsonIssue);
+					self.continueTask();
+				});
+				self.addStep("Unlock And Wait all Saved",function(){
+					issue.unlockAndWaitAllSave();
+				});
+				self.continueTask();
 			};
 			
 			var nCallsStarted=0;
@@ -645,11 +658,10 @@ var jrfReport=class jrfReport {
 				var fncProcess=function(issue){
 					self.addStep("Extracting Pending Keys",function(){
 						fncExtractPendingKeys(issue);
-						issue.unlock();
 						self.continueTask();
 					});
-					self.addStep("Wait if storer is saving",function(){
-						issue.getFactory().waitForStorageSaveEnd();
+					self.addStep("Unlock And Wait all Saved",function(){
+						issue.unlockAndWaitAllSave();
 					});
 				}
 				self.parallelizeCalls(self.rootIssues,fncCall,fncProcess);
@@ -701,7 +713,7 @@ var jrfReport=class jrfReport {
 							self.addStep("Retrieving issues of Epic Group ["+sIssues+"]",function(){
 								nCallsStarted++;
 								//logError(nCallsStarted+" - JQL:"+theJQL);
-								self.jira.processJQLIssues(theJQL,fncProcessEpicChilds
+								self.jira.processJQLIssues(theJQL,self.createManagedCallback(fncProcessEpicChilds)
 														    ,undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
 							});
 							self.addStep("Finish Retrieving issues of Epic Group ["+sIssues+"]",function(){

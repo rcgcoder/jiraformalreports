@@ -58,6 +58,7 @@ var RCGDynamicObject=class RCGDynamicObject{
 		self.swing=factory.swing;
 		self.lock=factory.lock;
 		self.unlock=factory.unlock;
+		self.unlockAndWaitAllSave=factory.unlockAndWaitAllSave;
 		self.isLocked=factory.isLocked;
 		self.isChanged=factory.isChanged;
 		self.change=factory.change;
@@ -878,6 +879,8 @@ var factoryObjects=class factoryObjects{
 			newObj.isLocked=this.isLocked;
 			newObj.lock=this.lock;
 			newObj.unlock=this.unlock;
+			newObj.unlockAndWaitAllSave=this.unlockAndWaitAllSave;
+
 			newObj.numChanges=1;
 			newObj.isChanged=this.isChanged;
 			newObj.change=this.change;
@@ -1028,6 +1031,11 @@ var factoryObjects=class factoryObjects{
 				self.getFactory().storeManager.release(self);
 			}
 		}
+	}
+	unlockAndWaitAllSave(){
+		var self=this;
+		self.unlock();
+		self.getFactory().waitForStorageSaveEnd();
 	}
 	change(){
 		this.numChanges++;

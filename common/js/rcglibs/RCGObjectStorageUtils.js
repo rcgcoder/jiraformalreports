@@ -36,6 +36,12 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				return "o";
 			}
 		}
+		if (isNull(item)){
+			return "null";
+		}
+		if (isUndefined(item)){
+			return "undef";
+		}
 		// part is "p"
 		return "o";
 	}
@@ -70,7 +76,12 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				objToSave.factoryName=item.getFactory().name;
 				objToSave.value={key:item.getId()};
 				//item.saveToStorage(self);
-			}
+			} else if (objToSave.type=="null"){
+				objToSave.value=undefined;
+			} else if (objToSave.type=="undef"){
+				objToSave.value=undefined;
+				//item.saveToStorage(self);
+			} 
 		}
 		return objToSave;
 	}
@@ -166,6 +177,10 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		var objResult;
 		if (self.isBaseType(objContent.type)){
 			return objContent.value;
+		} else if (objContent.type=="null"/*"null"*/){
+			return null;
+		} else if (objContent.type=="undef"/*"null"*/){
+			return undefined;
 		} else if (objContent.type=="a"/*"array"*/){
 			objResult=[];
 			objContent.value.forEach(function(elem){

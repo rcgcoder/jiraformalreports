@@ -61,7 +61,7 @@ class RCGSemaphore{
 			self.isWaiting=false;
 		} else if (self.taskWaiting[0].getTaskManager().globalForks.length==0){
 			// the task was killed..... 
-			self.taskWaiting.clear();
+			self.taskWaiting.length=0;// remove all taks waiting
 			self.isWaiting=false;
 		} else {
 			setZeroTimeout(function(){

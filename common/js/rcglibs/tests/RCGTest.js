@@ -169,7 +169,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 		storer.parallelizeCalls(nTotalChilds,fncCreateChild,undefined /*fncSave*/,5);
 	});
 	storer.addStep("Saving the rest of childs",function(){
-		dynObj.disableAutoSave();
+		dynObj.storeManager.disableAutoSave();
 		if (dynObj.storeManager.isFlushInactivesNeeded()){
 			console.log("Saving All the rest of "+nTotalChilds+ " "+getMemStatus());							  
 			auxObj.getFactory().storeManager.saveAllUnlocked();

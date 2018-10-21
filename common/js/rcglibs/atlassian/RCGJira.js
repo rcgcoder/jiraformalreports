@@ -414,12 +414,12 @@ class RCGJira{
 				}
 				if (isDefined(fncProcessIssue)){
 					debugger;
-					var fncManagedProcessIssue=self.createManagedCallback(function(issue){
-								fncProcessIssue(issue);
-								self.continueTask(issue);
-					});
+					var fncUnmanagedProcess=function(issue){
+						fncProcessIssue(issue);
+						self.continueTask(issue);
+					};
 					self.addStep("Custom Processing the issues",function(){
-						self.parallelizeCalls(blkIssues,fncManagedProcessIssue,undefined,1);
+						self.parallelizeCalls(blkIssues,self.createManagedCallback(fncUnmanagedProcess),undefined,1);
 					});
 /*					var auxHashMap=newHashMap();
 					blkIssues.forEach(function(issue){

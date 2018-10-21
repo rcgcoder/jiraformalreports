@@ -416,7 +416,7 @@ class RCGJira{
 					debugger;
 					var fncUnmanagedProcess=function(issue){
 						fncProcessIssue(issue);
-						self.continueTask(issue);
+						self.continueTask();
 					};
 					self.addStep("Custom Processing the issues",function(){
 						self.parallelizeCalls(blkIssues,self.createManagedCallback(fncUnmanagedProcess),undefined,1);

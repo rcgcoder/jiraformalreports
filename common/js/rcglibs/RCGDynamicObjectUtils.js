@@ -1091,7 +1091,7 @@ var factoryObjects=class factoryObjects{
 					self.storeManager.enableAutoSave();
 				} else {
 					self.storeManager.disableAutoSave();
-				}
+				} 
 			}
 			if (isDefined(peakPercent)) self.storeManager.peakMax=peakPercent;
 			if (isDefined(cacheMaxItems)) self.storeManager.cacheItemsMax=cacheMaxItems;

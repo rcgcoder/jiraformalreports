@@ -15,6 +15,10 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 	}
 	enableAutoSave(){
 		var self=this;
+		var storer=self.storer;
+		if (self.withAutoSave) {
+			return storer.continueTask();
+		}
 		self.withAutoSave=true;
 		storer.addStep("Dynamic "+self.factory.name+" AutoSave", function(){
 			var fncAddAutoSaveCycle=storer.createManagedCallback(function(){

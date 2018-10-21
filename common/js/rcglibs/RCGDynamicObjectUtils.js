@@ -1086,7 +1086,11 @@ var factoryObjects=class factoryObjects{
 	changeStorableParams(cacheMaxItems,peakPercent,withAutoSave){
 		var self=this;
 		if (self.isStorable()){
-			if (isDefined(withAutoSave)) self.storeManager.withAutoSave=withAutoSave;
+			if (isDefined(withAutoSave)){
+				self.storeManager.enableAutoSave();
+			} else {
+				self.storeManager.disableAutoSave();
+			}
 			if (isDefined(peakPercent)) self.storeManager.peakMax=peakPercent;
 			if (isDefined(cacheMaxItems)) self.storeManager.cacheItemsMax=cacheMaxItems;
 		}

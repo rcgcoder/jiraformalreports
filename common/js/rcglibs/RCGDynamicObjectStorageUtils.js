@@ -41,6 +41,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 						if (self.withAutoSave){
 							fncAddAutoSaveCycle();
 						} else {
+							debugger;
 							storer.continueTask();
 						}
 					});

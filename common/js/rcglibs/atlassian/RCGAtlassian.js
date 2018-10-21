@@ -123,10 +123,11 @@ class RCGAtlassian{
 			});	
 			if (isDefined(callback)){
 				var responseArray;
+				debugger;
 				self.addStep("Calling the user callback",function(response,xhr,sUrl,headers){
 					responseArray=[response,xhr,sUrl,headers];
 					callback(response,xhr,sUrl,headers);
-					self.continueTask();
+					self.continueTask(); 
 				});
 				self.addStep("Returning response",function(){
 					self.continueTask(responseArray);

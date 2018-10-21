@@ -160,38 +160,41 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		} else {
 			self.isSavingInactives=true;
 			var countSaved=0;
-			storer.addStep("Remove all inactive Objects ("+self.countInactiveObjects()+")",function(){
-				var fncSaveCall=function(inactiveObject){
-					//log("Saving All to Storage:"+inactiveObject.getId());
-					if (inactiveObject.isChanged()){
-						countSaved++;
+			storer.addStep("Saving All in a Global pseudothread",function(){
+				storer.addStep("Remove all inactive Objects ("+self.countInactiveObjects()+")",function(){
+					var fncSaveCall=function(inactiveObject){
+						//log("Saving All to Storage:"+inactiveObject.getId());
+						if (inactiveObject.isChanged()){
+							countSaved++;
+						}
+						self.saveToStorage(inactiveObject);
+						storer.continueTask();
 					}
-					self.saveToStorage(inactiveObject);
+					var fncUnloadAndRemove=function(inactiveObject){
+						//log("Unload and Remove from inactive objects:"+inactiveObject.getId());
+						if (!inactiveObject.isLocked()){
+							if (inactiveObject.isFullyLoaded()){
+								//log("Unloading :"+inactiveObject.getId());
+								inactiveObject.fullUnload();
+							}
+							//log("Removing :"+inactiveObject.getId());
+							if (self.inactiveObjects.exists(inactiveObject.getId())){
+								self.inactiveObjects.remove(inactiveObject.getId());
+							}
+						} else {
+							//log("It´s not in inactive objects:"+inactiveObject.getId());
+						}
+		//				storer.continueTask();
+					}
+					storer.parallelizeCalls(self.inactiveObjects,fncSaveCall,fncUnloadAndRemove,5);
+				});
+				storer.addStep("Save Inactive objects is Finished",function(){
+					self.isSavingInactives=false;
+					console.log("Saved all inactive objects ("+countSaved+"/"+self.factory.list.length()+")"+getMemStatus());
 					storer.continueTask();
-				}
-				var fncUnloadAndRemove=function(inactiveObject){
-					//log("Unload and Remove from inactive objects:"+inactiveObject.getId());
-					if (!inactiveObject.isLocked()){
-						if (inactiveObject.isFullyLoaded()){
-							//log("Unloading :"+inactiveObject.getId());
-							inactiveObject.fullUnload();
-						}
-						//log("Removing :"+inactiveObject.getId());
-						if (self.inactiveObjects.exists(inactiveObject.getId())){
-							self.inactiveObjects.remove(inactiveObject.getId());
-						}
-					} else {
-						//log("It´s not in inactive objects:"+inactiveObject.getId());
-					}
-	//				storer.continueTask();
-				}
-				storer.parallelizeCalls(self.inactiveObjects,fncSaveCall,fncUnloadAndRemove,5);
-			});
-			storer.addStep("Save Inactive objects is Finished",function(){
-				self.isSavingInactives=false;
-				console.log("Saved all inactive objects ("+countSaved+"/"+self.factory.list.length()+")"+getMemStatus());
+				});
 				storer.continueTask();
-			});
+	        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
 		}
 		storer.continueTask();
 	}

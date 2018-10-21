@@ -213,6 +213,8 @@ var jrfReport=class jrfReport {
 								"js/libs/showdown.js",
 								"js/libs/wiki2html.js",
 								"js/rcglibs/RCGStringArray.js",
+								"js/rcglibs/RCGDynamicObjectStorageUtils.js",
+			        			"js/rcglibs/RCGDynamicObjectUtils.js",
 								"js/rcglibs/RCGVarEngine.js",
 								"js/rcglibs/RCGFilterManager.js",
 								"js/rcglibs/RCGFileUtils.js",

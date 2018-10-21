@@ -327,5 +327,5 @@ System.webapp.addStep("End Save and Load tests",function(){
 	System.webapp.continueTask();
 });
 
-storer.continueTask();
+storer.continueTask(); 
 },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);

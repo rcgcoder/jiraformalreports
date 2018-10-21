@@ -1,6 +1,9 @@
 log("Testing");
 debugger;
+var storer=new RCGObjectStorageManager("Testing",System.webapp.getTaskManager());
 console.log("=====================================");
+storer.addStep("Testing in Global Thread", function(){
+
 /*
 var stepper=System.webapp;
 stepper.addStep("Parallelizing test",function(result){
@@ -34,7 +37,6 @@ stepper.addStep("Parallelizing test",function(result){
 	stepper.parallelizeCalls(arrTest,fncCall,fncProcess,5);
 });
 */
-var storer=new RCGObjectStorageManager("Testing",System.webapp.getTaskManager());
 /*System.webapp.addStep("String",function(){
 	storer.save("testString","String to save");
 });
@@ -324,3 +326,6 @@ System.webapp.addStep("End Save and Load tests",function(){
 	console.log("End all tests "+getMemStatus());				  
 	System.webapp.continueTask();
 });
+
+storer.continueTask();
+},0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);

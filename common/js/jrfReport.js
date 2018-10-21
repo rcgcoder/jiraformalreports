@@ -434,7 +434,7 @@ var jrfReport=class jrfReport {
 		});
 		// first launch all issue retrieve ...
 		self.addStep("Getting All Issues in the Scope.... ",function(){
-			self.allIssues.changeStorableParams(10,0.10,true);
+			self.allIssues.changeStorableParams(1000,0.10,true);
 			if (self.isReusingIssueList()){
 				return self.continueTask();
 			}

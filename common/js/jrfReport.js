@@ -643,11 +643,13 @@ var jrfReport=class jrfReport {
 					self.continueTask([issue]);
 				};
 				var fncProcess=function(issue){
-					self.addStep("Wait if storer is saving",function(){
-						issue.getFactory().waitForStorageSaveEnd();
-					});
 					self.addStep("Extracting Pending Keys",function(){
 						fncExtractPendingKeys(issue);
+						issue.unlock();
+						self.continueTask();
+					});
+					self.addStep("Wait if storer is saving",function(){
+						issue.getFactory().waitForStorageSaveEnd();
 					});
 				}
 				self.parallelizeCalls(self.rootIssues,fncCall,fncProcess);

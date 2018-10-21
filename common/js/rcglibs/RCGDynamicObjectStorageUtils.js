@@ -132,12 +132,17 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		}
 		//storer.continueTask(); // not continues because the steps process at the end of the secuence
 	}
+	waitFinishSave(){
+		var self=this;
+		var storer=self.storer;
+		self.savingSemaphore.taskArrived(storer.getRunningTask());
+	}
 	saveAllUnlocked(){
 		var self=this;
 		var storer=self.storer;
 		if (self.isSavingInactives){
 			storer.addStep("Waiting for finishing of save all inactives ",function(){
-				self.savingSemaphore.taskArrived(storer.getRunningTask());
+				self.waitFinishSave();
 /*				var fncContinue=storer.createManagedCallback(function(){
 					storer.continueTask();
 				});

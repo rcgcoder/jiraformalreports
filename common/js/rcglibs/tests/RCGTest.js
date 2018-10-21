@@ -159,6 +159,9 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 				nChilds++;
 				storer.continueTask();
 			});
+			storer.addStep("Wait if storer is saving",function(){
+				dynObj.storeManager.waitFinishSave();
+			});
 			storer.continueTask();
 		};
 		storer.parallelizeCalls(nTotalChilds,fncCreateChild,undefined /*fncSave*/,5);

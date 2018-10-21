@@ -129,6 +129,7 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 			true
 			);
 	dynObj.storeManager.cacheItemsMax=1000;
+	dynObj.storeManager.enableAutoSave();
 	var auxObj=dynObj.new("Test DynObj");
 	auxObj.setTestOneString("Tested String Values");
 	auxObj.addTestStringList("One Value for String List");
@@ -160,9 +161,10 @@ System.webapp.addStep("Dynamic Object With Childs",function(){
 			});
 			storer.continueTask();
 		};
-		storer.parallelizeCalls(nTotalChilds,fncCreateChild,fncSave,5);
+		storer.parallelizeCalls(nTotalChilds,fncCreateChild,undefined /*fncSave*/,5);
 	});
 	storer.addStep("Saving the rest of childs",function(){
+		dynObj.disableAutoSave();
 		if (dynObj.storeManager.isFlushInactivesNeeded()){
 			console.log("Saving All the rest of "+nTotalChilds+ " "+getMemStatus());							  
 			auxObj.getFactory().storeManager.saveAllUnlocked();

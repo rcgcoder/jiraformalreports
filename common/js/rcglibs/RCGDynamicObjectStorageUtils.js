@@ -9,6 +9,54 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		self.storer=new RCGObjectStorageManager(self.factory.name,System.webapp.getTaskManager());
 		self.activeObjects=newHashMap();
 		self.inactiveObjects=newHashMap();
+		self.withAutoSave=false;
+		self.lastAutoSavePeriod=1000;
+		self.autoSaveSemaphore=new RCGSemaphore(function(){return (self.needsAutoSave());});
+	}
+	enableAutoSave(){
+		var self=this;
+		self.withAutoSave=true;
+		storer.addStep("Dynamic "+self.factory.name+" AutoSave", function(){
+			var fncAddAutoSaveCycle=storer.createManagedCallback(function(){
+				storer.addStep("AutoSave Cycle",function(){
+					storer.addStep("Wait to Semaphore",function(){
+						self.autoSaveSemaphore.taskArrived(storer.getRunningTask());
+					});
+					storer.addStep("Autosave",function(){
+						if (self.isFlushInactivesNeeded()){
+							console.log("Saving "+self.countInactiveObjects()
+											+" of "+self.countActiveObjects()
+											+ "/"+self.factory.list.length()
+											+ ". "+getMemStatus());							  
+							self.saveAllUnlocked();
+						} else {
+							console.log("Not Saving "+self.countInactiveObjects()
+									+" of "+self.countActiveObjects()
+									+ "/"+self.factory.list.length()
+									+ ". "+getMemStatus());
+							storer.continueTask();
+						}
+					});
+					storer.addStep("Preparing to wait again",function(){
+						if (self.withAutoSave){
+							fncAddAutoSaveCycle();
+						} else {
+							storer.continueTask();
+						}
+					});
+					storer.continueTask();
+				});
+				storer.continueTask();
+			});
+			fncAddAutoSaveCycle();
+        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
+	}
+	disableAutoSave(){
+		this.withAutoSave=false;
+	}
+	needsAutoSave(){
+		var self=this;
+		return ((self.withAutoSave)&&(!self.isSavingInactives)&&(self.isFlushInactivesNeeded()));
 	}
 	countActiveObjects(){
 		return this.activeObjects.length();

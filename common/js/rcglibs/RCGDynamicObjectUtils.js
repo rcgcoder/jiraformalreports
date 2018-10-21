@@ -1023,7 +1023,7 @@ var factoryObjects=class factoryObjects{
 		if (this.numLocks<0){
 			logError("The object "+self.getId()+" is unlocked too much times. There is some bug");
 		} else if(self.numLocks==0){
-			if (self.isStorable()){
+			if (self.isStorable()){ 
 				self.getFactory().storeManager.release(self);
 			}
 		}

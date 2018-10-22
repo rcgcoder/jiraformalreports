@@ -434,7 +434,7 @@ class RCGJira{
 
 		self.addStep("Fetching And Process Issues"+" of JQL ["+jqlAux+"]",function(){
 			self.addStep("Fetching Issues"+" of JQL ["+jqlAux+"]",function(){
-				debugger; 
+				debugger;  
 				self.getJQLIssues(jqlAux,fncProcessDownloadedBlock,bNotReturnAll);
 			});
 			self.continueTask();

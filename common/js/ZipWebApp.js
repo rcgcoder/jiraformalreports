@@ -69,7 +69,7 @@ class ZipWebApp{
 			},0,1,undefined,undefined,undefined,"GLOBAL",undefined
 //			}
 			);  */
-
+if(false){
 			self.addStep("Getting All Project and issuetypes .... ",function(){
 				var jira=self.getJira();
 				jira.getProjectsAndMetaInfo();
@@ -98,7 +98,7 @@ class ZipWebApp{
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 //			}
 			);
-			
+}			
 			self.addStep("Getting All Labels.... ",function(){
 				var jira=self.getJira();
 				jira.getAllLabels()

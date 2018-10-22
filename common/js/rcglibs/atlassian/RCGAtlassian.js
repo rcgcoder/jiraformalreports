@@ -122,9 +122,14 @@ class RCGAtlassian{
 				self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,undefined,undefined,arrHeaders);
 			});	
 			if (isDefined(callback)){
+				var vResult=[];
 				self.addStep("Calling the user callback",function(response,xhr,sUrl,headers){
+					vResult=[response,xhr,sUrl,headers];
 					var fncManagedCallback=self.createManagedCallback(callback);
 					fncManagedCallback(response,xhr,sUrl,headers);
+				});
+				self.addStep("Returning Result",function(){
+					self.continueTaks(vResult);
 				});
 			}
 			self.addStep("Processing result of call "+sTarget,function(response,xhr,sUrl,headers){
@@ -166,9 +171,14 @@ class RCGAtlassian{
 							self.apiCallApp(appInfo,sTarget,callType,data,callInfo.first,callInfo.nBlockItems,undefined,undefined,arrHeaders);
 						});
 						if (isDefined(callback)){
+							var vResult=[];
 							self.addStep("Calling the user callback",function(response,xhr,sUrl,headers){
+								vResult=[response,xhr,sUrl,headers];
 								var fncManagedCallback=self.createManagedCallback(callback);
 								fncManagedCallback(response,xhr,sUrl,headers);
+							});
+							self.addStep("Return values",function(){
+								self.continueTask(vResult);
 							});
 						}
 						self.continueTask();

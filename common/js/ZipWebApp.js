@@ -62,7 +62,6 @@ class ZipWebApp{
 				sjs.loadEngine();
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 			);
-			if (false){
 
 /*			self.addStep("Getting All Issues.... ",function(){
 				var jira=self.getJira();
@@ -99,7 +98,6 @@ class ZipWebApp{
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 //			}
 			);
-			}
 			
 			self.addStep("Getting All Labels.... ",function(){
 				var jira=self.getJira();

@@ -281,7 +281,7 @@ class RCGJira{
 				}
 			}
 		}
-		debugger;
+//		debugger;
 		self.processJQLIssues("labels is not empty",fncProcessIssue,doFactory);
 	}
 	getAllEpics(){
@@ -414,7 +414,7 @@ class RCGJira{
 					});
 				}
 				if (isDefined(fncProcessIssue)){
-					debugger;
+					//debugger;
 					var fncProcessIndex=function(issueIndex){
 						fncProcessIssue(blkIssues[issueIndex]);
 					};
@@ -434,11 +434,11 @@ class RCGJira{
 		};
 
 		self.addStep("Fetching And Process Issues"+" of JQL ["+jqlAux+"]",function(){
-			self.addStep("Fetching Issues"+" of JQL ["+jqlAux+"]",function(){
-				debugger;  
-				self.getJQLIssues(jqlAux,fncProcessDownloadedBlock,bNotReturnAll);
+			self.getJQLIssues(jqlAux,fncProcessDownloadedBlock,bNotReturnAll);
+/*			self.addStep("Fetching Issues"+" of JQL ["+jqlAux+"]",function(){
+				//debugger;  
 			});
-			self.continueTask();
+			self.continueTask();*/
 		});
 		self.addStep("Returning Variable"+" of JQL ["+jqlAux+"]",function(){
 			var fncEnd;

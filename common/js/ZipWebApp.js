@@ -145,6 +145,10 @@ class ZipWebApp{
 //			}
 			);
 			*/
+			self.addStep("All initilizing parallel tasks launched",function(){
+				log("All initilizing parallel tasks launched");
+				self.continueTask();
+			});
 			self.continueTask();
 		});
 		self.addStep("Setting <initialized> Atlassian Engine.... ",function(){

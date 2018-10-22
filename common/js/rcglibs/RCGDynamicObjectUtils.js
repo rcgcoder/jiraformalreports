@@ -1147,6 +1147,8 @@ var factoryObjects=class factoryObjects{
 		var self=this;
 		if (self.isStorable()){
 			self.storeManager.waitFinishSave();
+		} else {
+			self.continueTask();
 		};
 	}
 	toArray(arrFields){ //[{doFieldName:,resultFieldName},{}.{}]

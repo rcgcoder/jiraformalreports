@@ -90,6 +90,7 @@ class ZipWebApp{
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 //			}
 			);
+			}
 			
 			self.addStep("Getting Current User Info.... ",function(){
 				var atl=self.getJira().manager;
@@ -112,7 +113,6 @@ class ZipWebApp{
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 //			}
 			);
-			}
 
 			self.addStep("Getting All Filters.... ",function(){
 				var jira=self.getJira();

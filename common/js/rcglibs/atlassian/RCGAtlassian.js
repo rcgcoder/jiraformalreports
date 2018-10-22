@@ -129,7 +129,7 @@ class RCGAtlassian{
 					fncManagedCallback(response,xhr,sUrl,headers);
 				});
 				self.addStep("Returning Result",function(){
-					self.continueTaks(vResult);
+					self.continueTask(vResult);
 				});
 			}
 			self.addStep("Processing result of call "+sTarget,function(response,xhr,sUrl,headers){

@@ -119,20 +119,24 @@ class RCGAtlassian{
 		var nLast=0;
 		self.addStep("Calling for "+sTarget,function(){
 			self.addStep("Calling to api "+sTarget,function(){
+				log("Calling API "+sTarget);
 				self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,undefined,undefined,arrHeaders);
 			});	
 			if (isDefined(callback)){
 				var vResult=[];
 				self.addStep("Calling the user callback",function(response,xhr,sUrl,headers){
+					log("Called API "+sTarget+" processing response");
 					vResult=[response,xhr,sUrl,headers];
 					var fncManagedCallback=self.createManagedCallback(callback);
 					fncManagedCallback(response,xhr,sUrl,headers);
 				});
 				self.addStep("Returning Result",function(){
+					log("Returning API "+sTarget+" result");
 					self.continueTask(vResult);
 				});
 			}
 			self.addStep("Processing result of call "+sTarget,function(response,xhr,sUrl,headers){
+				log("continue processing API "+sTarget+" result");
 				var objResp;
 				if (typeof response==="string"){
 					if (response=="") return self.continueTask([[]]);
@@ -196,6 +200,7 @@ class RCGAtlassian{
 						}
 					}
 					//debugger;
+					log("Parallelize")
 					self.parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,10);
 				}
 			});

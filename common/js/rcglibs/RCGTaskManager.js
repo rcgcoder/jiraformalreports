@@ -998,7 +998,7 @@ class RCGTaskManager{
 			var taskToRun=stepRunning;
 			if (taskToRun.isFork){ // if the step is a fork.... maybe inner or global
 				// remove the step..... and continue
-				log ("Next running task is fork: " + taskToRun.description + "("+taskToRun.forkId+")");
+				//log ("Next running task is fork: " + taskToRun.description + "("+taskToRun.forkId+")");
 				var parent=taskToRun.parent;
 				var iStep=parent.actStep;
 				if (parent!=""){

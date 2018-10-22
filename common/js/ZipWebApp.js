@@ -112,6 +112,7 @@ class ZipWebApp{
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 //			}
 			);
+			}
 
 			self.addStep("Getting All Filters.... ",function(){
 				var jira=self.getJira();
@@ -119,7 +120,6 @@ class ZipWebApp{
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 //			}
 			);
-}
 			/*
 			self.addStep("Getting All Epics.... ",function(){
 				var jira=self.getJira();

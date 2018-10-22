@@ -173,9 +173,15 @@ class RCGAtlassian{
 							self.apiCallApp(appInfo,sTarget,callType,data,callInfo.first,callInfo.nBlockItems,undefined,undefined,arrHeaders);
 						});
 						if (isDefined(callback)){
+							var responseArray;
 							self.addStep("Calling the user callback",function(response,xhr,sUrl,headers){
-								callback(response,xhr,sUrl,headers);
-								self.continueTask([response,xhr,sUrl,headers]);
+								responseArray=[response,xhr,sUrl,headers];
+								var fncManagedCallback=self.createManagedCallback(callback);
+								fncManagedCallback(response,xhr,sUrl,headers);
+								self.continueTask(); 
+							});
+							self.addStep("Returning response",function(){
+								self.continueTask(responseArray);
 							});
 						}
 						self.continueTask();

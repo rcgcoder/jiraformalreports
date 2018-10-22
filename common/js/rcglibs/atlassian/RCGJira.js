@@ -430,6 +430,7 @@ class RCGJira{
 					});*/
 				}
 			}
+			self.continueTask();
 		};
 
 		self.addStep("Fetching And Process Issues"+" of JQL ["+jqlAux+"]",function(){

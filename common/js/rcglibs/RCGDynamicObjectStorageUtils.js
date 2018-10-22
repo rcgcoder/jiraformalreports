@@ -27,6 +27,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 						self.autoSaveSemaphore.taskArrived(storer.getRunningTask());
 					});
 					storer.addStep("Autosave",function(){
+						debugger;
 						if (self.isFlushInactivesNeeded()){
 							console.log("Saving "+self.countInactiveObjects()
 											+" of "+self.countActiveObjects()
@@ -146,6 +147,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		var self=this;
 		var storer=self.storer;
 		if (self.isSavingInactives){
+			debugger;
 			storer.addStep("Waiting for finishing of save all inactives ",function(){
 				self.waitFinishSave();
 /*				var fncContinue=storer.createManagedCallback(function(){
@@ -162,6 +164,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 */
 			});
 		} else {
+			debugger;
 			self.isSavingInactives=true;
 			var countSaved=0;
 			storer.addStep("Saving All in a Global pseudothread",function(){

@@ -1252,14 +1252,14 @@ class RCGTaskManager{
 							});
 						} 
 						self.addStep("trying next petition...",function(){
-							log("Evaluating next petition:"+nActualCall + " of " +nTotalCalls);
+							//log("Evaluating next petition:"+nActualCall + " of " +nTotalCalls);
 //							nItemsProcessed++;
 							if (nActualCall<nTotalCalls){
-								log("There are "+(nTotalCalls-nActualCall)+" petitions pending... let´s go next petition");
+								//log("There are "+(nTotalCalls-nActualCall)+" petitions pending... let´s go next petition");
 								var auxParallelCall=self.createManagedCallback(fncParallelCallBase);
 								auxParallelCall();
 							} else {
-								log("There is not more petitions");
+								//log("There is not more petitions");
 								self.continueTask();
 							}
 						});

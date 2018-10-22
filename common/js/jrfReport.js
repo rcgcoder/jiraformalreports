@@ -670,7 +670,7 @@ var jrfReport=class jrfReport {
 				alert("Extracted pending keys of initial root issues");
 				self.allIssues.changeStorableParams(undefined,undefined,false);
 				var fncRetrieveGroup=self.createManagedCallback(function(group){
-					//debugger;
+					debugger;
 					if (group.length>0){
 						var sIssues="";
 						group.forEach(function (key){
@@ -685,7 +685,7 @@ var jrfReport=class jrfReport {
 								//logError(nCallsStarted+" - JQL:"+theJQL);
 								self.jira.processJQLIssues(
 										theJQL,
-										fncExtractPendingKeys,
+										self.createManagedCallback(fncExtractPendingKeys),
 										undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
 							});
 							self.addStep("Finish Retrieving issues of Group ["+sIssues+"]",function(){

@@ -90,14 +90,7 @@ class ZipWebApp{
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 //			}
 			);
-			}
 			
-			self.addStep("Getting Current User Info.... ",function(){
-				var atl=self.getJira().manager;
-				atl.getUser();
-			},0,1,undefined,undefined,undefined,"INNER",undefined
-//			}
-			);
 
 			
 			self.addStep("Getting All Users to do a list.... ",function(){
@@ -110,6 +103,13 @@ class ZipWebApp{
 			self.addStep("Getting All Labels.... ",function(){
 				var jira=self.getJira();
 				jira.getAllLabels()
+			},0,1,undefined,undefined,undefined,"INNER",undefined
+//			}
+			);
+			}
+			self.addStep("Getting Current User Info.... ",function(){
+				var atl=self.getJira().manager;
+				atl.getUser();
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 //			}
 			);

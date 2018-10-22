@@ -441,7 +441,15 @@ var jrfReport=class jrfReport {
 			if (self.config.jqlScope.jql!=""){
 				self.jira.processJQLIssues(self.config.jqlScope.jql,
 							function(jsonIssue){
-								self.loadJSONIssue(jsonIssue)
+								var oIssue;
+								self.addStep("Load json",function(){
+									oIssue=self.loadJSONIssue(jsonIssue);
+									self.continueTask();
+								});
+								self.addStep("unlock",function(){
+									oIssue.unlockAndWaitAllSave();
+								});
+								self.continueTask();
 							},
 							undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
 			} else {
@@ -493,9 +501,19 @@ var jrfReport=class jrfReport {
 					var fncProcessRootIssue=function(jsonIssue){
 						var issue=self.allIssues.getById(jsonIssue.key);
 						if (issue==""){
-							issue=self.loadJSONIssue(jsonIssue);
-						}
-						self.rootIssues.add(jsonIssue.key,issue);
+							self.addStep("Load json",function(){
+								issue=self.loadJSONIssue(jsonIssue);
+								self.continueTask();
+							});
+							self.addStep("unlock",function(){
+								issue.unlockAndWaitAllSave();
+							});
+						} 
+						self.addStep("Adding issue to root list",function(){
+							self.rootIssues.add(jsonIssue.key,issue);
+							self.continueTask();
+						});
+						self.continueTask();
 					}
 					self.addStep("Processing jql to get root issues:"+theJQL,function(){
 						self.jira.processJQLIssues(
@@ -574,6 +592,7 @@ var jrfReport=class jrfReport {
 				log("Issue "+key+"("+nProcessedIssues+") issues:"+nRetrievedIssues+"/" +nPendingIssues+ " Epics :"+nRetrievedEpics+"/"+nPendingEpics);
 				var issue=self.allIssues.getById(key);
 				if (issue==""){
+					debugger;
 					issue=self.loadJSONIssue(inputIssue);
 				} else {
 					nDuplicatedIssues++;					
@@ -626,15 +645,31 @@ var jrfReport=class jrfReport {
 					}
 				}
 			};
-			var fncProcessEpicChilds=function(jsonIssue,index,resultLength){
+			var fncProcessEpicChilds=function(issue,index,resultLength){
 				if (index==0) nPendingIssues+=resultLength; // now all the issues are pending....
 				self.addStep("Extracting Pending Keys",function(){
-					fncExtractPendingKeys(jsonIssue);
+					fncExtractPendingKeys(issue);
 					self.continueTask();
 				});
 				self.addStep("Unlock And Wait all Saved",function(){
 					issue.unlockAndWaitAllSave();
 				});
+				self.continueTask();
+			};
+			var fncProcessChildAndExtract=function(jsonIssue,index,resultLength){
+				var issue;
+				self.addStep("Loading Issue",function(){
+					issue=self.loadJSONIssue(jsonIssue);
+					self.continueTask();
+				});
+				self.addStep("Extracting Pending Keys",function(){
+					fncExtractPendingKeys(issue);
+					self.continueTask();
+				});
+				self.addStep("Unlock And Wait all Saved",function(){
+					issue.unlockAndWaitAllSave();
+				});
+				self.
 				self.continueTask();
 			};
 			
@@ -685,7 +720,7 @@ var jrfReport=class jrfReport {
 								//logError(nCallsStarted+" - JQL:"+theJQL);
 								self.jira.processJQLIssues(
 										theJQL,
-										self.createManagedCallback(fncExtractPendingKeys),
+										self.createManagedCallback(fncProcessChildAndExtract),
 										undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
 							});
 							self.addStep("Finish Retrieving issues of Group ["+sIssues+"]",function(){

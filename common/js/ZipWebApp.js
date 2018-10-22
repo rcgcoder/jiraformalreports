@@ -57,12 +57,12 @@ class ZipWebApp{
 		});  
 		self.addStep("launching the engines and get atlassian base information.... "
 					,function(){
-if (false){
 			self.addStep("Launching Systemjs.... ",function(){
 				var sjs=self.getSystemjs();
 				sjs.loadEngine();
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 			);
+			if (false){
 
 /*			self.addStep("Getting All Issues.... ",function(){
 				var jira=self.getJira();

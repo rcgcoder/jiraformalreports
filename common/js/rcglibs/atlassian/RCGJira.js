@@ -419,7 +419,7 @@ class RCGJira{
 						fncProcessIssue(blkIssues[issueIndex]);
 					};
 					self.addStep("Custom Processing the issues",function(){
-						self.parallelizeCalls(blkIssues.length,undefined,fncProcessIssue,1);
+						self.parallelizeCalls(blkIssues.length,undefined,fncProcessIndex,1);
 					});
 /*					var auxHashMap=newHashMap();
 					blkIssues.forEach(function(issue){

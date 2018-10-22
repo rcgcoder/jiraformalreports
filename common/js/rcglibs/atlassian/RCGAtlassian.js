@@ -126,7 +126,8 @@ class RCGAtlassian{
 				debugger;
 				self.addStep("Calling the user callback",function(response,xhr,sUrl,headers){
 					responseArray=[response,xhr,sUrl,headers];
-					callback(response,xhr,sUrl,headers);
+					var fncManagedCallback=self.createManagedCallback(callback);
+					fncManagedCallback(response,xhr,sUrl,headers);
 					self.continueTask(); 
 				});
 				self.addStep("Returning response",function(){

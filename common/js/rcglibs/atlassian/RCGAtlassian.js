@@ -196,7 +196,7 @@ class RCGAtlassian{
 						}
 					}
 					//debugger;
-					self.parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,10);
+					self.parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,5);
 				}
 			});
 			self.continueTask();

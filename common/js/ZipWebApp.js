@@ -57,7 +57,7 @@ class ZipWebApp{
 		});  
 		self.addStep("launching the engines and get atlassian base information.... "
 					,function(){
-
+if (false){
 			self.addStep("Launching Systemjs.... ",function(){
 				var sjs=self.getSystemjs();
 				sjs.loadEngine();
@@ -119,6 +119,7 @@ class ZipWebApp{
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 //			}
 			);
+}
 			/*
 			self.addStep("Getting All Epics.... ",function(){
 				var jira=self.getJira();
@@ -146,7 +147,7 @@ class ZipWebApp{
 			*/
 			self.continueTask();
 		});
-		self.addStep("Setting <initized> Atlassian Engine.... ",function(){
+		self.addStep("Setting <initialized> Atlassian Engine.... ",function(){
 			var atl=self.getAtlassian();
 			atl.initialized=true;
 			self.continueTask();

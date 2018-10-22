@@ -57,7 +57,7 @@ var jrfReport=class jrfReport {
 		oIssue.updateInfo();
 		oIssue.setJiraObject("");
 		oIssue.setKey(jsonIssue.key);
-		oIssue.unlock();
+		//oIssue.unlock(); // dont Unlock.... loaded for use
 		return oIssue;
 	}
 	cleanModel(sContent){

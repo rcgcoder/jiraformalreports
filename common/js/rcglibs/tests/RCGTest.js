@@ -4,7 +4,7 @@ var storer=new RCGObjectStorageManager("Testing",System.webapp.getTaskManager())
 console.log("=====================================");
 storer.addStep("Global Test",function(){
 	storer.addStep("Testing getLabels",function(){
-		var jira=System.webapp.getJira();
+/*		var jira=System.webapp.getJira();
 		storer.addStep("Getting All Project and issuetypes .... ",function(){
 			jira.getProjectsAndMetaInfo();
 		},0,1,undefined,undefined,undefined,"INNER",undefined
@@ -35,7 +35,7 @@ storer.addStep("Global Test",function(){
 		},0,1,undefined,undefined,undefined,"INNER",undefined
 //		}
 		);
-		storer.addStep("Launching all inner threads",function(){
+*/		storer.addStep("Launching all inner threads",function(){
 			log("Launching all inner threads");
 			storer.continueTask();
 		});

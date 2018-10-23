@@ -5,7 +5,7 @@ console.log("=====================================");
 storer.addStep("Global Test",function(){
 	storer.addStep("Testing getLabels",function(){
 		var jira=System.webapp.getJira();
-		jira.getAllUsers();
+		jira.getAllEpics();
 	});
 	storer.addStep("Finish getLabels tests",function(){
 		log("getLabels test ends");

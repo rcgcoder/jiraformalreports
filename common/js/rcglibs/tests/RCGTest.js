@@ -5,7 +5,41 @@ console.log("=====================================");
 storer.addStep("Global Test",function(){
 	storer.addStep("Testing getLabels",function(){
 		var jira=System.webapp.getJira();
-		jira.getFieldsAndSchema();
+		storer.addStep("Getting All Project and issuetypes .... ",function(){
+			jira.getProjectsAndMetaInfo();
+		},0,1,undefined,undefined,undefined,"INNER",undefined
+//		}
+		);
+		storer.addStep("Getting All field info.... ",function(){
+			jira.getFieldsAndSchema();
+		},0,1,undefined,undefined,undefined,"INNER",undefined
+//		}
+		);
+
+		storer.addStep("Getting All Epics  to do a list.... ",function(){
+			jira.getAllEpics();
+		},0,1,undefined,undefined,undefined,"INNER",undefined
+//		}
+		);
+		
+
+		
+		storer.addStep("Getting All Users to do a list.... ",function(){
+			jira.getAllUsers();
+		},0,1,undefined,undefined,undefined,"INNER",undefined
+//		}
+		);
+
+		storer.addStep("Getting All Labels.... ",function(){
+			jira.getAllLabels()
+		},0,1,undefined,undefined,undefined,"INNER",undefined
+//		}
+		);
+		storer.addStep("Launching all inner threads",function(){
+			log("Launching all inner threads");
+			storer.continueTask();
+		});
+		storer.continueTask();
 	});
 	storer.addStep("Finish getLabels tests",function(){
 		log("getLabels test ends");

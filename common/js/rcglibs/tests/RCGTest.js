@@ -12,8 +12,8 @@ storer.addStep("Global Test",function(){
 		storer.continueTask();
 	});
 },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
-return;
 
+if (false){
 
 
 
@@ -344,3 +344,4 @@ System.webapp.addStep("End Save and Load tests",function(){
 
 storer.continueTask(); 
 },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
+}

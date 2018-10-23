@@ -3,6 +3,7 @@ debugger;
 var storer=new RCGObjectStorageManager("Testing",System.webapp.getTaskManager());
 console.log("=====================================");
 storer.addStep("Normal Step",function(){
+	log("running Normal Step");
 storer.addStep("Global Test",function(){
 	storer.addStep("Testing getLabels",function(){
 /*		var jira=System.webapp.getJira();

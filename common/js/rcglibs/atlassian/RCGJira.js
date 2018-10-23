@@ -285,6 +285,11 @@ class RCGJira{
 		self.addStep("Getting all Labels",function(){
 			self.processJQLIssues("labels is not empty",fncProcessIssue,doFactory);
 		});
+		self.addStep("Waiting for lables",function(){
+			debugger;
+			log("Labels correctly finished?");
+			self.continueTask();
+		});
 		self.continueTask();
 	}
 	getAllEpics(){

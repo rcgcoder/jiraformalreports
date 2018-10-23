@@ -11,6 +11,7 @@ storer.addStep("Global Test",function(){
 		log("getLabels test ends");
 		storer.continueTask();
 	});
+	storer.continueTask();
 },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
 
 if (false){

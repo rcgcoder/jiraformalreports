@@ -282,7 +282,9 @@ class RCGJira{
 			}
 		}
 		debugger;
-		self.processJQLIssues("labels is not empty",fncProcessIssue,doFactory);
+		self.addStep("Getting all Labels",function(){
+			self.processJQLIssues("labels is not empty",fncProcessIssue,doFactory);
+		});
 	}
 	getAllEpics(){
 		var self=this;

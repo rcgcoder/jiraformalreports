@@ -2,6 +2,7 @@ log("Testing");
 debugger;
 var storer=new RCGObjectStorageManager("Testing",System.webapp.getTaskManager());
 console.log("=====================================");
+storer.addStep("Normal Step",function(){
 storer.addStep("Global Test",function(){
 	storer.addStep("Testing getLabels",function(){
 /*		var jira=System.webapp.getJira();
@@ -47,7 +48,7 @@ storer.addStep("Global Test",function(){
 	});
 	storer.continueTask();
 },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
-
+});
 if (false){
 
 

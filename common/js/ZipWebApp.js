@@ -57,12 +57,6 @@ class ZipWebApp{
 			self.continueTask();
 		});  
 		self.addStep("launching the engines and get atlassian base information.... ",function(){
-			self.addStep("Launching Systemjs.... ",function(){
-				var sjs=self.getSystemjs();
-				sjs.loadEngine();
-			},0,1,undefined,undefined,undefined,"INNER",undefined
-			//}
-			);
 
 /*			self.addStep("Getting All Issues.... ",function(){
 				var jira=self.getJira();
@@ -148,12 +142,19 @@ class ZipWebApp{
 			});
 			self.continueTask();
 		});
-		self.addStep("Setting <initialized> Atlassian Engine.... ",function(){
+/*		self.addStep("Launching Systemjs.... ",function(){
+			var sjs=self.getSystemjs();
+			sjs.loadEngine();
+		//},0,1,undefined,undefined,undefined,"INNER",undefined
+		}
+		);
+*/		self.addStep("Setting <initialized> Atlassian Engine.... ",function(){
 			debugger;
 			var atl=self.getAtlassian();
 			atl.initialized=true;
 			self.continueTask();
 		});  
+
 /*		self.addStep("Trying to render content... needs oauth connect",function(){
 			var jira=self.getJira();
 			self.addStep("Connecting OAUTH",function(){

@@ -308,10 +308,10 @@ class ZipWebApp{
 		}));
 		self.initializationBarrier.add(self.getRunningTask());
 		self.addStep("Initializing engines.... ",self.initialize);
-/*		self.addStep("Waiting to Barrier Reach.... ",function(){
+		self.addStep("Waiting to Barrier Reach.... ",function(){
 			log("Waiting to reach!.... not continues... it will continue when initialization barrier reachs all");
 		});
-*/		self.addStep("Default Config.... ",function(){
+		self.addStep("Default Config.... ",function(){
 			log("Everything is initialized! now Config!");
 			debugger;
 			self.addStep("Loading default config from Storage",function(){

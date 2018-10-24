@@ -39,7 +39,6 @@ class App {
     taskm.extendObject(self);
     
     
-    var fncManagedCheckForFinishLoad;
     var fncCheckForFinishLoad = function(){
         debugger;
         var theApp=$("#appMain");       
@@ -90,7 +89,7 @@ class App {
     var prevRunningTask=taskm.getRunningTask();
     taskm.setRunningTask(rTask);
 //  log("Calling Traditional Callback in fork:"+runningTask.forkId);
-    fncManagedCheckForFinishLoad=self.createManagedCallback(fncCheckForFinishLoad);
+    var fncManagedCheckForFinishLoad=self.createManagedCallback(fncCheckForFinishLoad);
     taskm.setRunningTask(prevRunningTask);
     fncManagedCheckForFinishLoad();
 }

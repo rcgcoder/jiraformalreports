@@ -98,7 +98,6 @@ if(false){
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 //			}
 			);
-}			
 			self.addStep("Getting All Labels.... ",function(){
 				var jira=self.getJira();
 				jira.getAllLabels()
@@ -147,9 +146,11 @@ if(false){
 				log("All initilizing parallel tasks launched");
 				self.continueTask();
 			});
+}			
 			self.continueTask();
 		});
 		self.addStep("Setting <initialized> Atlassian Engine.... ",function(){
+			debugger;
 			var atl=self.getAtlassian();
 			atl.initialized=true;
 			self.continueTask();

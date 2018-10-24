@@ -79,6 +79,7 @@ class App {
            //},0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined
            }
            );
+            self.continueTask();
         } else {
             log("App is not loaded... waiting");
             setTimeout(fncManagedCheckForFinishLoad,1000);

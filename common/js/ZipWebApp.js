@@ -142,13 +142,13 @@ class ZipWebApp{
 			});
 			self.continueTask();
 		});
-/*		self.addStep("Launching Systemjs.... ",function(){
+		self.addStep("Launching Systemjs.... ",function(){
 			var sjs=self.getSystemjs();
 			sjs.loadEngine();
 		//},0,1,undefined,undefined,undefined,"INNER",undefined
 		}
 		);
-*/		self.addStep("Setting <initialized> Atlassian Engine.... ",function(){
+		self.addStep("Setting <initialized> Atlassian Engine.... ",function(){
 			debugger;
 			var atl=self.getAtlassian();
 			atl.initialized=true;

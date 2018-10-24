@@ -37,6 +37,7 @@ class App {
     log("--- initializing class app.ts");
     taskManager.extendObject(self);
     var fncCheckForFinishLoad = function(){
+        debugger;
         var theApp=$("#appMain");
 //        taskm.setRunningTask(rTask);
         log("Checking if Systemjs app is loaded");

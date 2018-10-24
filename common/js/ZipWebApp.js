@@ -56,8 +56,13 @@ class ZipWebApp{
 			atl.initialized=false;
 			self.continueTask();
 		});  
-		self.addStep("launching the engines and get atlassian base information.... "
-					,function(){
+		self.addStep("launching the engines and get atlassian base information.... ",function(){
+			self.addStep("Launching Systemjs.... ",function(){
+				var sjs=self.getSystemjs();
+				sjs.loadEngine();
+			},0,1,undefined,undefined,undefined,"INNER",undefined
+			//}
+			);
 
 /*			self.addStep("Getting All Issues.... ",function(){
 				var jira=self.getJira();
@@ -169,12 +174,6 @@ class ZipWebApp{
 			 ]; //test
 			self.loadRemoteFiles(arrFiles);
 		});*/		
-		self.addStep("Launching Systemjs.... ",function(){
-			var sjs=self.getSystemjs();
-			sjs.loadEngine();
-		//},0,1,undefined,undefined,undefined,"INNER",undefined
-		}
-		);
 		self.continueTask();
 	}
 

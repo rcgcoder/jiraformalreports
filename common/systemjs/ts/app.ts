@@ -31,17 +31,17 @@ class App {
 //  constructor() {
   ngOnInit() {
     this.name = 'Angular2';
-    debugger;
-    alert("Initializing"):
     var self=this;
-    var rTask=System.systemJSTask;
+    var taskm=taskManager;
+//    var rTask=System.systemJSTask;
     log("--- initializing class app.ts");
-    rTask.taskManager.extendObject(self);
+    taskManager.extendObject(self);
     var fncCheckForFinishLoad = function(){
         debugger;
-        var theApp=$("#appMain");       
+        var theApp=$("#appMain");
+//        taskm.setRunningTask(rTask);
         log("Checking if Systemjs app is loaded");
-        if (theApp.length>0){
+        if (theApp.length>0){ 
             log("App loaded!... launching systemjs initialization global thread");
             debugger;
             self.addStep("Systemjs components Initializacion",function(){
@@ -66,33 +66,25 @@ class App {
                             System.postProcess[i]();
                             self.continueTask();
                         });
-                    }  
+                    }   
+
                     self.parallelizeCalls(System.postProcess.length,undefined,fncAddPostProcessStep,5);
-*/                  
-                    
-                    System.postProcess.forEach(function(postProcessFunction){
+*/                  System.postProcess.forEach(function(postProcessFunction){
                         postProcessFunction();
                       //  fncAddPostProcessStep(i);
                     });
                     self.continueTask();
                 });
                 self.continueTask();
-//           },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
-            });
-            self.continueTask();
+           },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
         } else {
             log("App is not loaded... waiting");
-            setTimeout(fncManagedCheckForFinishLoad,1000);
+            setTimeout(fncCheckForFinishLoad,1000);
         }
     };
-    var prevRunningTask=self.getRunningTask();
-    self.setRunningTask(rTask);
-//  log("Calling Traditional Callback in fork:"+runningTask.forkId);
-    var fncManagedCheckForFinishLoad=self.createManagedCallback(fncCheckForFinishLoad);
-    self.setRunningTask(prevRunningTask);
-    fncManagedCheckForFinishLoad();
-    
-  }
+    fncCheckForFinishLoad();
+   }
+}
 
 @NgModule({
   schemas: [

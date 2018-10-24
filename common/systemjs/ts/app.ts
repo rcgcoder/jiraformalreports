@@ -31,6 +31,68 @@ class App {
 //  constructor() {
   ngOnInit() {
     this.name = 'Angular2';
+    debugger;
+    alert("Initializing"):
+    var self=this;
+    var rTask=System.systemJSTask;
+    log("--- initializing class app.ts");
+    rTask.taskManager.extendObject(self);
+    
+    
+    var fncCheckForFinishLoad = function(){
+        debugger;
+        var theApp=$("#appMain");       
+        log("Checking if Systemjs app is loaded");
+        if (theApp.length>0){
+            log("App loaded!... launching systemjs initialization global thread");
+            debugger;
+            self.addStep("Systemjs components Initializacion",function(){
+                
+                log("Running global systemjs components initialization");
+                self.addStep("Applying AUI and other interface components.... ",function(){
+                    var arrFiles=[
+                                  "js/libs/flatpickr/flatpickr.css",
+                                  "js/libs/flatpickr/flatpickr.js",
+                                  "aui/js/aui.js",
+                                  "aui/css/aui.css",
+                                  "aui/css/aui-experimental.css",
+                                  "aui/js/aui-experimental.js",
+                                  "aui/js/aui-datepicker.js",
+                                  "aui/js/aui-soy.js"
+                               ]; //test
+                              System.webapp.loadRemoteFiles(arrFiles);
+                });
+                self.addStep("Postprocessing systemjs components.... ",function(){
+/*                    var fncAddPostProcessStep=function(i){
+                        self.addStep("PostProcessing..."+i+"/"+System.postProcess.length,function(){
+                            System.postProcess[i]();
+                            self.continueTask();
+                        });
+                    }   
+
+                    self.parallelizeCalls(System.postProcess.length,undefined,fncAddPostProcessStep,5);
+*/                  System.postProcess.forEach(function(postProcessFunction){
+                        postProcessFunction();
+                      //  fncAddPostProcessStep(i);
+                    });
+                    self.continueTask();
+                });
+                self.continueTask();
+//           },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
+            });
+            self.continueTask();
+        } else {
+            log("App is not loaded... waiting");
+            setTimeout(fncCheckForFinishLoad,1000);
+        }
+    };
+    var prevRunningTask=taskm.getRunningTask();
+    taskm.setRunningTask(rTask);
+//  log("Calling Traditional Callback in fork:"+runningTask.forkId);
+    var fncManagedCheckForFinishLoad=self.createManagedCallback(fncCheckForFinishLoad);
+    taskm.setRunningTask(prevRunningTask);
+    fncManagedCheckForFinishLoad();
+    
   }
 
 @NgModule({

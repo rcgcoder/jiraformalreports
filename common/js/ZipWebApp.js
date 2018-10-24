@@ -150,6 +150,7 @@ class ZipWebApp{
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 			//}
 			);
+			self.continueTask();
 		});
 		self.addStep("Setting <initialized> Atlassian Engine.... ",function(){
 			debugger;

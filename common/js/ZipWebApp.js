@@ -89,9 +89,6 @@ class ZipWebApp{
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 //			}
 			);
-			
-
-			
 			self.addStep("Getting All Users to do a list.... ",function(){
 				var jira=self.getJira();
 				jira.getAllUsers();
@@ -315,6 +312,7 @@ class ZipWebApp{
 		});
 */		self.addStep("Default Config.... ",function(){
 			log("Everything is initialized! now Config!");
+			debugger;
 			self.addStep("Loading default config from Storage",function(){
 				var tbConfig=System.getAngularObject('tabConfig',true);
 				tbConfig.loadDefaultReport();

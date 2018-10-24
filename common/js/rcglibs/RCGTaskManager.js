@@ -590,6 +590,7 @@ class RCGTaskManager{
 //		self.windows=[window];
 		self.globalForks=[]; // list of pseudothreaded global tasks
 		self.innerForks=[];   // list of pseudothreaded inner forks (forks in a subtask)
+		self.previousTaskExecuted="";
 		self.runningTask="";
 		self.onChangeStatus="";
 		//self.extendObject(obj);
@@ -892,7 +893,7 @@ class RCGTaskManager{
 		var self=this;
 		//log("Doing Next");
 		var stepRunning=self.getRunningTask();
-		
+		self.previousTaskExecuted=stepRunning;
 		
 		var bWithSubSteps;
 		var bwithCallbacks;

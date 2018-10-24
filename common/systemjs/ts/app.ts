@@ -75,7 +75,7 @@ class App {
                     self.continueTask();
                 });
                 self.continueTask();
-           },0,1,undefined,undefined,undefined,"GLOBAL",undefined);
+           },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
         } else {
             log("App is not loaded... waiting");
             setTimeout(fncCheckForFinishLoad,1000);

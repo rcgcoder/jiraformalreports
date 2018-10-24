@@ -4,51 +4,51 @@ var storer=new RCGObjectStorageManager("Testing",System.webapp.getTaskManager())
 console.log("=====================================");
 storer.addStep("Normal Step",function(){
 	log("running Normal Step");
-storer.addStep("Global Test",function(){
-	storer.addStep("Testing getLabels",function(){
-/*		var jira=System.webapp.getJira();
-		storer.addStep("Getting All Project and issuetypes .... ",function(){
-			jira.getProjectsAndMetaInfo();
-		},0,1,undefined,undefined,undefined,"INNER",undefined
-//		}
-		);
-		storer.addStep("Getting All field info.... ",function(){
-			jira.getFieldsAndSchema();
-		},0,1,undefined,undefined,undefined,"INNER",undefined
-//		}
-		);
-
-		storer.addStep("Getting All Epics  to do a list.... ",function(){
-			jira.getAllEpics();
-		},0,1,undefined,undefined,undefined,"INNER",undefined
-//		}
-		);
-		
-
-		
-		storer.addStep("Getting All Users to do a list.... ",function(){
-			jira.getAllUsers();
-		},0,1,undefined,undefined,undefined,"INNER",undefined
-//		}
-		);
-
-		storer.addStep("Getting All Labels.... ",function(){
-			jira.getAllLabels()
-		},0,1,undefined,undefined,undefined,"INNER",undefined
-//		}
-		);
-*/		storer.addStep("Launching all inner threads",function(){
-			log("Launching all inner threads");
+	storer.addStep("Global Test",function(){
+		storer.addStep("Testing getLabels",function(){
+	/*		var jira=System.webapp.getJira();
+			storer.addStep("Getting All Project and issuetypes .... ",function(){
+				jira.getProjectsAndMetaInfo();
+			},0,1,undefined,undefined,undefined,"INNER",undefined
+	//		}
+			);
+			storer.addStep("Getting All field info.... ",function(){
+				jira.getFieldsAndSchema();
+			},0,1,undefined,undefined,undefined,"INNER",undefined
+	//		}
+			);
+	
+			storer.addStep("Getting All Epics  to do a list.... ",function(){
+				jira.getAllEpics();
+			},0,1,undefined,undefined,undefined,"INNER",undefined
+	//		}
+			);
+			
+	
+			
+			storer.addStep("Getting All Users to do a list.... ",function(){
+				jira.getAllUsers();
+			},0,1,undefined,undefined,undefined,"INNER",undefined
+	//		}
+			);
+	
+			storer.addStep("Getting All Labels.... ",function(){
+				jira.getAllLabels()
+			},0,1,undefined,undefined,undefined,"INNER",undefined
+	//		}
+			);
+	*/		storer.addStep("Launching all inner threads",function(){
+				log("Launching all inner threads");
+				storer.continueTask();
+			});
+			storer.continueTask();
+		});
+		storer.addStep("Finish getLabels tests",function(){
+			log("test ends");
 			storer.continueTask();
 		});
 		storer.continueTask();
-	});
-	storer.addStep("Finish getLabels tests",function(){
-		log("getLabels test ends");
-		storer.continueTask();
-	});
-	storer.continueTask();
-},0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
+	},0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
 });
 if (false){
 

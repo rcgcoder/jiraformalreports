@@ -38,7 +38,7 @@ class App {
     taskManager.extendObject(self);
     var fncCheckForFinishLoad = function(){
         var theApp=$("#appMain");
-        taskm.setRunningTask(rTask);
+//        taskm.setRunningTask(rTask);
         log("Checking if Systemjs app is loaded");
         if (theApp.length>0){
             log("App loaded!... launching systemjs initialization global thread");

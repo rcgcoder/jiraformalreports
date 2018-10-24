@@ -33,10 +33,9 @@ class App {
     this.name = 'Angular2';
     debugger;
     var self=this;
-    var taskm=taskManager;
     var rTask=System.systemJSTask;
     log("--- initializing class app.ts");
-    taskm.extendObject(self);
+    rTask.taskManager.extendObject(self);
     
     
     var fncCheckForFinishLoad = function(){
@@ -83,7 +82,7 @@ class App {
             self.continueTask();
         } else {
             log("App is not loaded... waiting");
- //           setTimeout(fncManagedCheckForFinishLoad,1000);
+            setTimeout(fncCheckForFinishLoad,1000);
         }
     };
     /*

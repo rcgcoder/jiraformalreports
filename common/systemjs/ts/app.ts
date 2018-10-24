@@ -33,7 +33,7 @@ class App {
     this.name = 'Angular2';
     var self=this;
     var taskm=taskManager;
-    var rTask=System.systemJSTask;
+//    var rTask=System.systemJSTask;
     log("--- initializing class app.ts");
     taskManager.extendObject(self);
     var fncCheckForFinishLoad = function(){
@@ -41,35 +41,38 @@ class App {
         taskm.setRunningTask(rTask);
         log("Checking if Systemjs app is loaded");
         if (theApp.length>0){
-            log("App loaded!");
-            self.addStep("Applying AUI and other interface components.... ",function(){
-                var arrFiles=[
-                              "js/libs/flatpickr/flatpickr.css",
-                              "js/libs/flatpickr/flatpickr.js",
-                              "aui/js/aui.js",
-                              "aui/css/aui.css",
-                              "aui/css/aui-experimental.css",
-                              "aui/js/aui-experimental.js",
-                              "aui/js/aui-datepicker.js",
-                              "aui/js/aui-soy.js"
-                           ]; //test
-                          System.webapp.loadRemoteFiles(arrFiles);
-            });
-            self.addStep("Postprocessing systemjs components.... ",function(){
-                /*var fncAddPostProcessStep=function(i){
-                    self.addStep("PostProcessing..."+i+"/"+System.postProcess.length,function(){
+            log("App loaded!... launching systemjs initialization global thread");
+            self.addStep("Systemjs components Initializacion",function(){
+                log("Running global systemjs components initialization");
+                self.addStep("Applying AUI and other interface components.... ",function(){
+                    var arrFiles=[
+                                  "js/libs/flatpickr/flatpickr.css",
+                                  "js/libs/flatpickr/flatpickr.js",
+                                  "aui/js/aui.js",
+                                  "aui/css/aui.css",
+                                  "aui/css/aui-experimental.css",
+                                  "aui/js/aui-experimental.js",
+                                  "aui/js/aui-datepicker.js",
+                                  "aui/js/aui-soy.js"
+                               ]; //test
+                              System.webapp.loadRemoteFiles(arrFiles);
+                });
+                self.addStep("Postprocessing systemjs components.... ",function(){
+                    /*var fncAddPostProcessStep=function(i){
+                        self.addStep("PostProcessing..."+i+"/"+System.postProcess.length,function(){
+                            System.postProcess[i]();
+                            self.continueTask();
+                        });
+                    }
+                    */
+                    for (var i=0;i<System.postProcess.length;i++){
                         System.postProcess[i]();
-                        self.continueTask();
-                    });
-                }
-                */
-                for (var i=0;i<System.postProcess.length;i++){
-                    System.postProcess[i]();
-                  //  fncAddPostProcessStep(i);
-                }
+                      //  fncAddPostProcessStep(i);
+                    }
+                    self.continueTask();
+                });
                 self.continueTask();
-            });
-            self.continueTask();
+           },0,1,undefined,undefined,undefined,"GLOBAL",undefined);
         } else {
             log("App is not loaded... waiting");
             setTimeout(fncCheckForFinishLoad,1000);

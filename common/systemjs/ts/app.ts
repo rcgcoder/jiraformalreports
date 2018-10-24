@@ -86,11 +86,11 @@ class App {
             setTimeout(fncManagedCheckForFinishLoad,1000);
         }
     };
-    var prevRunningTask=tm.getRunningTask();
-    tm.setRunningTask(rTask);
+    var prevRunningTask=taskm.getRunningTask();
+    taskm.setRunningTask(rTask);
 //  log("Calling Traditional Callback in fork:"+runningTask.forkId);
     fncManagedCheckForFinishLoad=self.createManagedCallback(fncCheckForFinishLoad);
-    tm.setRunningTask(prevRunningTask);
+    taskm.setRunningTask(prevRunningTask);
     fncManagedCheckForFinishLoad();
 }
 

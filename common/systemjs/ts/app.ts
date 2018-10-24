@@ -37,8 +37,6 @@ class App {
     var rTask=System.systemJSTask;
     log("--- initializing class app.ts");
     rTask.taskManager.extendObject(self);
-    
-    
     var fncCheckForFinishLoad = function(){
         debugger;
         var theApp=$("#appMain");       
@@ -68,10 +66,11 @@ class App {
                             System.postProcess[i]();
                             self.continueTask();
                         });
-                    }   
-
+                    }  
                     self.parallelizeCalls(System.postProcess.length,undefined,fncAddPostProcessStep,5);
-*/                  System.postProcess.forEach(function(postProcessFunction){
+*/                  
+                    
+                    System.postProcess.forEach(function(postProcessFunction){
                         postProcessFunction();
                       //  fncAddPostProcessStep(i);
                     });
@@ -83,14 +82,14 @@ class App {
             self.continueTask();
         } else {
             log("App is not loaded... waiting");
-            setTimeout(fncCheckForFinishLoad,1000);
+            setTimeout(fncManagedCheckForFinishLoad,1000);
         }
     };
-    var prevRunningTask=taskm.getRunningTask();
-    taskm.setRunningTask(rTask);
+    var prevRunningTask=self.getRunningTask();
+    self.setRunningTask(rTask);
 //  log("Calling Traditional Callback in fork:"+runningTask.forkId);
     var fncManagedCheckForFinishLoad=self.createManagedCallback(fncCheckForFinishLoad);
-    taskm.setRunningTask(prevRunningTask);
+    self.setRunningTask(prevRunningTask);
     fncManagedCheckForFinishLoad();
     
   }

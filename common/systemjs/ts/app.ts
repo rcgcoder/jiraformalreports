@@ -61,7 +61,7 @@ class App {
                               System.webapp.loadRemoteFiles(arrFiles);
                 });
                 self.addStep("Postprocessing systemjs components.... ",function(){
-                    var fncAddPostProcessStep=function(i){
+/*                    var fncAddPostProcessStep=function(i){
                         self.addStep("PostProcessing..."+i+"/"+System.postProcess.length,function(){
                             System.postProcess[i]();
                             self.continueTask();
@@ -69,12 +69,12 @@ class App {
                     }   
 
                     self.parallelizeCalls(System.postProcess.length,undefined,fncAddPostProcessStep,5);
- /*                   for (var i=0;i<System.postProcess.length;i++){
-                        System.postProcess[i]();
+*/                  System.postProcess.forEach(function(postProcessFunction){
+                        postProcessFunction();
                       //  fncAddPostProcessStep(i);
-                    }
+                    });
                     self.continueTask();
- */               });
+                });
                 self.continueTask();
            },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
         } else {

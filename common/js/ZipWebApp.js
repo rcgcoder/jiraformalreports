@@ -142,6 +142,13 @@ class ZipWebApp{
 			});
 			self.continueTask();
 		});
+		self.addStep("Setting <initialized> Atlassian Engine.... ",function(){
+			debugger;
+			log("Initialize ends");
+			var atl=self.getAtlassian();
+			atl.initialized=true;
+			self.continueTask();
+		});  
 		self.addStep("Loading Systemjs",function(){
 			log("Isolated loading of systemjs");
 			self.addStep("Launching Systemjs.... ",function(){
@@ -152,13 +159,6 @@ class ZipWebApp{
 			);
 			self.continueTask();
 		});
-		self.addStep("Setting <initialized> Atlassian Engine.... ",function(){
-			debugger;
-			log("Initialize ends");
-			var atl=self.getAtlassian();
-			atl.initialized=true;
-			self.continueTask();
-		});  
 
 /*		self.addStep("Trying to render content... needs oauth connect",function(){
 			var jira=self.getJira();

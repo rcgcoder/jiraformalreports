@@ -249,6 +249,7 @@ export class advSelector {
         var barrierAux;
         if (self.initialized==false){
            barrierAux=System.webapp.initializationBarrier;
+           log(self.name+" is not initialize... geting barrier "+barrierAux.id+" to link the global thread to it");
         }
         var fork=System.webapp.addStep("Fork Getting values:"+self.name, function(){
             log("processing step Getting Values(get values async):"+self.name);

@@ -63,11 +63,11 @@ class App {
                     });
                 }
                 */
-/*                for (var i=0;i<System.postProcess.length;i++){
+                for (var i=0;i<System.postProcess.length;i++){
                     System.postProcess[i]();
                   //  fncAddPostProcessStep(i);
                 }
-*/                self.continueTask();
+                self.continueTask();
             });
             self.continueTask();
         } else {

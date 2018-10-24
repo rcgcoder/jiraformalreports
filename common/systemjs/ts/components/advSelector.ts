@@ -37,7 +37,7 @@ export class advSelector {
             }
             theSelect.auiSelect2();
             log("Default...onRetrieveTableData:"+self.name);
-//            self.onRetrieveTableData();
+            self.onRetrieveTableData();
             log("called onRetrieveTableData:"+self.name);
         });
     }

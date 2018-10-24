@@ -30,6 +30,7 @@ class ZipWebApp{
 	}
 	initializing(obj){
 		var self=this;
+		console.log("Waiting for initializing...");
 		self.waitForInitializing.push(obj);
 	}
 	initialize(){
@@ -50,7 +51,6 @@ class ZipWebApp{
 */						 ]; //test
 			self.loadRemoteFiles(arrFiles);
 		});
-if (false){
 		self.addStep("Setting <initialized=false> Atlassian Engine.... ",function(){
 			var atl=self.getAtlassian();
 			atl.initialized=false;
@@ -58,11 +58,6 @@ if (false){
 		});  
 		self.addStep("launching the engines and get atlassian base information.... "
 					,function(){
-			self.addStep("Launching Systemjs.... ",function(){
-				var sjs=self.getSystemjs();
-				sjs.loadEngine();
-			},0,1,undefined,undefined,undefined,"INNER",undefined
-			);
 
 /*			self.addStep("Getting All Issues.... ",function(){
 				var jira=self.getJira();
@@ -173,10 +168,16 @@ if (false){
 				"js/libs/grammar/grammar.js"
 			 ]; //test
 			self.loadRemoteFiles(arrFiles);
-		});*/
-}		
+		});*/		
+		self.addStep("Launching Systemjs.... ",function(){
+			var sjs=self.getSystemjs();
+			sjs.loadEngine();
+		//},0,1,undefined,undefined,undefined,"INNER",undefined
+		}
+		);
 		self.continueTask();
 	}
+
 	getListIssueTypes(){
 		var self=this;
 		if (self.getAtlassian().initialized==false){

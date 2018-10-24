@@ -33,7 +33,7 @@ class App {
     this.name = 'Angular2';
     var self=this;
     var taskm=taskManager;
-//    var rTask=System.systemJSTask;
+    var rTask=System.systemJSTask;
     log("--- initializing class app.ts");
     taskManager.extendObject(self);
     var fncCheckForFinishLoad = function(){
@@ -76,13 +76,19 @@ class App {
                     self.continueTask();
                 });
                 self.continueTask();
-           },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
+           //},0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined
+           }
+           );
         } else {
             log("App is not loaded... waiting");
-            setTimeout(fncCheckForFinishLoad,1000);
+            setTimeout(fncManagedCheckForFinishLoad,1000);
         }
     };
-    fncCheckForFinishLoad();
+    var prevTask=self.getRunningTask();
+    self.setRunningTask(rTask);
+    var fncManagedCheckForFinishLoad=self.createManagedCallback(fncCheckForFinishLoad);
+    self.setRunningTask(prevTask);
+    fncManagedCheckForFinishLoad();
    }
 }
 

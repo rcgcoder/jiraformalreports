@@ -43,7 +43,9 @@ class App {
         log("Checking if Systemjs app is loaded");
         if (theApp.length>0){
             log("App loaded!... launching systemjs initialization global thread");
+            debugger;
             self.addStep("Systemjs components Initializacion",function(){
+                
                 log("Running global systemjs components initialization");
                 self.addStep("Applying AUI and other interface components.... ",function(){
                     var arrFiles=[

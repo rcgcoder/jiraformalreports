@@ -33,13 +33,15 @@ class App {
     this.name = 'Angular2';
     var self=this;
     var taskm=taskManager;
-//    var rTask=System.systemJSTask;
+    var rTask=System.systemJSTask;
     log("--- initializing class app.ts");
     taskManager.extendObject(self);
+    
+    
+    var fncManagedCheckForFinishLoad;
     var fncCheckForFinishLoad = function(){
         debugger;
-        var theApp=$("#appMain");
-//        taskm.setRunningTask(rTask);
+        var theApp=$("#appMain");       
         log("Checking if Systemjs app is loaded");
         if (theApp.length>0){
             log("App loaded!... launching systemjs initialization global thread");
@@ -76,14 +78,20 @@ class App {
                     self.continueTask();
                 });
                 self.continueTask();
-           },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
+//           },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
+            });
+            self.continueTask();
         } else {
             log("App is not loaded... waiting");
-            setTimeout(fncCheckForFinishLoad,1000);
+            setTimeout(fncManagedCheckForFinishLoad,1000);
         }
     };
-    fncCheckForFinishLoad();
-   }
+    var prevRunningTask=tm.getRunningTask();
+    tm.setRunningTask(rTask);
+//  log("Calling Traditional Callback in fork:"+runningTask.forkId);
+    fncManagedCheckForFinishLoad=self.createManagedCallback(fncCheckForFinishLoad);
+    tm.setRunningTask(prevRunningTask);
+    fncManagedCheckForFinishLoad();
 }
 
 @NgModule({

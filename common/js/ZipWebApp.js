@@ -169,13 +169,13 @@ class ZipWebApp{
 			 ]; //test
 			self.loadRemoteFiles(arrFiles);
 		});*/		
-/*		self.addStep("Launching Systemjs.... ",function(){
+		self.addStep("Launching Systemjs.... ",function(){
 			var sjs=self.getSystemjs();
 			sjs.loadEngine();
 		//},0,1,undefined,undefined,undefined,"INNER",undefined
 		}
 		);
-*/		self.continueTask();
+		self.continueTask();
 	}
 
 	getListIssueTypes(){
@@ -305,10 +305,10 @@ class ZipWebApp{
 		}));
 //		self.initializationBarrier.add(self.getRunningTask());
 		self.addStep("Initializing engines.... ",self.initialize);
-		self.addStep("Waiting to Barrier Reach.... ",function(){
+/*		self.addStep("Waiting to Barrier Reach.... ",function(){
 			log("Waiting to reach!.... not continues... it will continue when initialization barrier reachs all");
 		});
-		self.addStep("Default Config.... ",function(){
+*/		self.addStep("Default Config.... ",function(){
 			log("Everything is initialized! now Config!");
 			self.addStep("Loading default config from Storage",function(){
 				var tbConfig=System.getAngularObject('tabConfig',true);

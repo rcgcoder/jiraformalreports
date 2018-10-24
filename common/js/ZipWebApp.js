@@ -50,6 +50,7 @@ class ZipWebApp{
 */						 ]; //test
 			self.loadRemoteFiles(arrFiles);
 		});
+if (false){
 		self.addStep("Setting <initialized=false> Atlassian Engine.... ",function(){
 			var atl=self.getAtlassian();
 			atl.initialized=false;
@@ -69,7 +70,6 @@ class ZipWebApp{
 			},0,1,undefined,undefined,undefined,"GLOBAL",undefined
 //			}
 			);  */
-if(false){
 			self.addStep("Getting All Project and issuetypes .... ",function(){
 				var jira=self.getJira();
 				jira.getProjectsAndMetaInfo();
@@ -146,7 +146,6 @@ if(false){
 				log("All initilizing parallel tasks launched");
 				self.continueTask();
 			});
-}			
 			self.continueTask();
 		});
 		self.addStep("Setting <initialized> Atlassian Engine.... ",function(){
@@ -175,7 +174,7 @@ if(false){
 			 ]; //test
 			self.loadRemoteFiles(arrFiles);
 		});*/
-		
+}		
 		self.continueTask();
 	}
 	getListIssueTypes(){

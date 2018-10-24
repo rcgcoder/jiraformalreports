@@ -83,15 +83,17 @@ class App {
             self.continueTask();
         } else {
             log("App is not loaded... waiting");
-            setTimeout(fncManagedCheckForFinishLoad,1000);
+ //           setTimeout(fncManagedCheckForFinishLoad,1000);
         }
     };
+    /*
     var prevRunningTask=taskm.getRunningTask();
     taskm.setRunningTask(rTask);
 //  log("Calling Traditional Callback in fork:"+runningTask.forkId);
     var fncManagedCheckForFinishLoad=self.createManagedCallback(fncCheckForFinishLoad);
     taskm.setRunningTask(prevRunningTask);
     fncManagedCheckForFinishLoad();
+    */
 }
 
 @NgModule({

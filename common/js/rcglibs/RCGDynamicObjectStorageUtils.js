@@ -33,15 +33,15 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 											+" of "+self.countActiveObjects()
 											+ "/"+self.factory.list.length()
 											+ ". "+getMemStatus());							  
-							self.addStep("Saving....",function(){
+							storer.addStep("Saving....",function(){
 								self.saveAllUnlocked();
 							});
-							self.addStep("Saved....",function(){
+							storer.addStep("Saved....",function(){
 								console.log("Saved... actual situation "+self.countInactiveObjects()
 										+" of "+self.countActiveObjects()
 										+ "/"+self.factory.list.length()
 										+ ". "+getMemStatus());							  
-								self.continueTask();
+								storer.continueTask();
 							});
 						} else {
 							console.log("Not Saving "+self.countInactiveObjects()

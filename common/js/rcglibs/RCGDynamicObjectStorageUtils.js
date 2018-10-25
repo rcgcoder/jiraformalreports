@@ -196,7 +196,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 					storer.continueTask();
 				});
 				storer.continueTask();
-	        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
+	        });
 		}
 		storer.continueTask();
 	}

@@ -408,6 +408,15 @@ class RCGTask{
 		}
 		return true;
 	}
+	getTaskDeep(){
+		var i=0;
+		var auxTask=this;
+		while(auxTask.parent!==""){
+			auxTask=auxTask.parent;
+			i++;
+		}
+		return i;
+	}
 	getStatus(){
 		var self=this;
 		if ((!self.isSomethingRunning())){

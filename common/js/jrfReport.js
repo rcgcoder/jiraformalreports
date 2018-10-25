@@ -454,7 +454,7 @@ var jrfReport=class jrfReport {
 		// first launch all issue retrieve ...
 		self.addStep("Getting All Issues in the Scope.... ",function(){
 			debugger;
-			self.allIssues.changeStorableParams(10,0.10,true);
+			self.allIssues.changeStorableParams(100,0.10,true);
 			if (self.isReusingIssueList()){
 				return self.continueTask();
 			}
@@ -515,7 +515,10 @@ var jrfReport=class jrfReport {
 						if (issue==""){
 							self.createNewIssueFromJsonSteps(jsonIssue);
 						} 
-						self.addStep("Adding issue to root list",function(){
+						self.addStep("Adding issue to root list",function(newIssue){
+							if (issue==""){
+								issue=newIssue;
+							}
 							self.rootIssues.add(jsonIssue.key,issue);
 							self.continueTask();
 						});
@@ -703,7 +706,7 @@ var jrfReport=class jrfReport {
 						issue.unlockAndWaitAllSave();
 					});
 				}
-				self.parallelizeCalls(self.rootIssues,fncCall,fncProcess);
+				self.parallelizeCalls(self.rootIssues.length(),fncCall,fncProcess);
 			});
 			self.addStep("Getting root base issues",function(){
 				alert("Extracted pending keys of initial root issues");

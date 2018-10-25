@@ -171,6 +171,9 @@ var jrfReport=class jrfReport {
 		self.addStep("unlock",function(){
 			oIssue.unlockAndWaitAllSave();
 		});
+		self.addStep("Return issue",function(){
+			self.continueTask([oIssue]);
+		});
 		self.continueTask();
 		
 	}
@@ -659,7 +662,6 @@ var jrfReport=class jrfReport {
 				self.continueTask();
 			};
 			var fncProcessChildAndExtract=function(jsonIssue,index,resultLength){
-				var issue;
 				self.addStep("Loading Issue",function(){
 					self.createNewIssueFromJsonSteps(jsonIssue);
 				});

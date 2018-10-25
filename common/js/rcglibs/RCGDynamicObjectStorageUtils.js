@@ -15,56 +15,11 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 	}
 	enableAutoSave(){
 		var self=this;
-		var storer=self.storer;
+/*		var storer=self.storer;
 		if (self.withAutoSave) {
 			return storer.continueTask();
 		}
-		self.withAutoSave=true;
-		storer.addStep("Dynamic "+self.factory.name+" AutoSave", function(){
-			var fncAddAutoSaveCycle=storer.createManagedCallback(function(){
-				storer.addStep("AutoSave Cycle",function(){
-					storer.addStep("Wait to Semaphore",function(){
-						self.autoSaveSemaphore.taskArrived(storer.getRunningTask());
-					});
-					storer.addStep("Autosave",function(){
-						debugger;
-						if (self.isFlushInactivesNeeded()){
-							console.log("Saving "+self.countInactiveObjects()
-											+" of "+self.countActiveObjects()
-											+ "/"+self.factory.list.length()
-											+ ". "+getMemStatus());							  
-							storer.addStep("Saving....",function(){
-								self.saveAllUnlocked();
-							});
-							storer.addStep("Saved....",function(){
-								console.log("Saved... actual situation "+self.countInactiveObjects()
-										+" of "+self.countActiveObjects()
-										+ "/"+self.factory.list.length()
-										+ ". "+getMemStatus());							  
-								storer.continueTask();
-							});
-						} else {
-							console.log("Not Saving "+self.countInactiveObjects()
-									+" of "+self.countActiveObjects()
-									+ "/"+self.factory.list.length()
-									+ ". "+getMemStatus());
-						}
-						storer.continueTask();
-					});
-					storer.addStep("Preparing to wait again",function(){
-						if (self.withAutoSave){
-							fncAddAutoSaveCycle();
-						} else {
-							debugger;
-							storer.continueTask();
-						}
-					});
-					storer.continueTask();
-				});
-				storer.continueTask();
-			});
-			fncAddAutoSaveCycle();
-        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
+*/		self.withAutoSave=true;
 	}
 	disableAutoSave(){
 		this.withAutoSave=false;
@@ -103,6 +58,36 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		}
 		if (!self.inactiveObjects.exists(key)){
 			self.inactiveObjects.add(key,dynObj);
+		}
+		if (self.needsAutoSave()){
+			storer.addStep("Dynamic "+self.factory.name+" AutoSave", function(){
+				storer.addStep("Autosaving",function(){
+					debugger;
+					if (self.isFlushInactivesNeeded()){
+						console.log("Saving "+self.countInactiveObjects()
+										+" of "+self.countActiveObjects()
+										+ "/"+self.factory.list.length()
+										+ ". "+getMemStatus());							  
+						storer.addStep("Saving....",function(){
+							self.saveAllUnlocked();
+						});
+						storer.addStep("Saved....",function(){
+							console.log("Saved... actual situation "+self.countInactiveObjects()
+									+" of "+self.countActiveObjects()
+									+ "/"+self.factory.list.length()
+									+ ". "+getMemStatus());							  
+							storer.continueTask();
+						});
+					} else {
+						console.log("Changed the need of saving... Not Saving "+self.countInactiveObjects()
+								+" of "+self.countActiveObjects()
+								+ "/"+self.factory.list.length()
+								+ ". "+getMemStatus());
+					}
+					storer.continueTask();
+				});
+				storer.continueTask();
+	        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
 		}
 	}
 	getStorageObject(dynObj){

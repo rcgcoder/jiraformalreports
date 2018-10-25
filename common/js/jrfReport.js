@@ -633,6 +633,7 @@ var jrfReport=class jrfReport {
 							if (key!=""){
 								if (issueParent!=""){
 									self.addStep("Loading Issue Parent "+ eLink,function(){
+										debugger;
 										issueParent.fullLoad();
 									});
 									self.addStep("Loading Issue Parent "+ eLink,function(){
@@ -710,7 +711,7 @@ var jrfReport=class jrfReport {
 			});
 			self.addStep("Getting root base issues",function(){
 				alert("Extracted pending keys of initial root issues");
-				self.allIssues.changeStorableParams(undefined,undefined,false);
+				//self.allIssues.changeStorableParams(undefined,undefined,false);
 				var fncRetrieveGroup=self.createManagedCallback(function(group){
 					debugger;
 					if (group.length>0){

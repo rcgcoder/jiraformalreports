@@ -49,6 +49,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 	}
 	release(dynObj){
 		var self=this;
+		var storer=self.storer;
 		var key=dynObj.getId();
 		if (self.activeObjects.exists(key)){
 //			self.activeObjects.traceAll();

@@ -61,6 +61,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 			self.inactiveObjects.add(key,dynObj);
 		}
 		if (self.needsAutoSave()){
+			self.isSavingInactives=true;
 			storer.addStep("Dynamic "+self.factory.name+" AutoSave", function(){
 				storer.addStep("Autosaving",function(){
 					debugger;
@@ -77,13 +78,9 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 									+" of "+self.countActiveObjects()
 									+ "/"+self.factory.list.length()
 									+ ". "+getMemStatus());							  
+							self.isSavingInactives=false;
 							storer.continueTask();
 						});
-					} else {
-						console.log("Changed the need of saving... Not Saving "+self.countInactiveObjects()
-								+" of "+self.countActiveObjects()
-								+ "/"+self.factory.list.length()
-								+ ". "+getMemStatus());
 					}
 					storer.continueTask();
 				});
@@ -141,63 +138,41 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 	saveAllUnlocked(){
 		var self=this;
 		var storer=self.storer;
-		if (self.isSavingInactives){
-			debugger;
-			storer.addStep("Waiting for finishing of save all inactives ",function(){
-				self.waitFinishSave();
-/*				var fncContinue=storer.createManagedCallback(function(){
-					storer.continueTask();
-				});
-				var fncCheckInactivesSaved=function(){
-					if (self.isSavingInactives){
-						setTimeout(fncCheckInactivesSaved,250);
-					} else {
-						fncContinue();
+		var countSaved=0;
+		storer.addStep("Saving All in a Global pseudothread",function(){
+			storer.addStep("Remove all inactive Objects ("+self.countInactiveObjects()+")",function(){
+				var fncSaveCall=function(inactiveObject){
+					//log("Saving All to Storage:"+inactiveObject.getId());
+					if (inactiveObject.isChanged()){
+						countSaved++;
 					}
+					self.saveToStorage(inactiveObject);
+					storer.continueTask();
 				}
-				fncCheckInactivesSaved();
-*/
+				var fncUnloadAndRemove=function(inactiveObject){
+					//log("Unload and Remove from inactive objects:"+inactiveObject.getId());
+					if (!inactiveObject.isLocked()){
+						if (inactiveObject.isFullyLoaded()){
+							//log("Unloading :"+inactiveObject.getId());
+							inactiveObject.fullUnload();
+						}
+						//log("Removing :"+inactiveObject.getId());
+						if (self.inactiveObjects.exists(inactiveObject.getId())){
+							self.inactiveObjects.remove(inactiveObject.getId());
+						}
+					} else {
+						//log("It´s not in inactive objects:"+inactiveObject.getId());
+					}
+	//				storer.continueTask();
+				}
+				storer.parallelizeCalls(self.inactiveObjects,fncSaveCall,fncUnloadAndRemove,5);
 			});
-		} else {
-			debugger;
-			self.isSavingInactives=true;
-			var countSaved=0;
-			storer.addStep("Saving All in a Global pseudothread",function(){
-				storer.addStep("Remove all inactive Objects ("+self.countInactiveObjects()+")",function(){
-					var fncSaveCall=function(inactiveObject){
-						//log("Saving All to Storage:"+inactiveObject.getId());
-						if (inactiveObject.isChanged()){
-							countSaved++;
-						}
-						self.saveToStorage(inactiveObject);
-						storer.continueTask();
-					}
-					var fncUnloadAndRemove=function(inactiveObject){
-						//log("Unload and Remove from inactive objects:"+inactiveObject.getId());
-						if (!inactiveObject.isLocked()){
-							if (inactiveObject.isFullyLoaded()){
-								//log("Unloading :"+inactiveObject.getId());
-								inactiveObject.fullUnload();
-							}
-							//log("Removing :"+inactiveObject.getId());
-							if (self.inactiveObjects.exists(inactiveObject.getId())){
-								self.inactiveObjects.remove(inactiveObject.getId());
-							}
-						} else {
-							//log("It´s not in inactive objects:"+inactiveObject.getId());
-						}
-		//				storer.continueTask();
-					}
-					storer.parallelizeCalls(self.inactiveObjects,fncSaveCall,fncUnloadAndRemove,5);
-				});
-				storer.addStep("Save Inactive objects is Finished",function(){
-					self.isSavingInactives=false;
-					console.log("Saved all inactive objects ("+countSaved+"/"+self.factory.list.length()+")"+getMemStatus());
-					storer.continueTask();
-				});
+			storer.addStep("Save Inactive objects is Finished",function(){
+				console.log("Saved all inactive objects ("+countSaved+"/"+self.factory.list.length()+")"+getMemStatus());
 				storer.continueTask();
-	        });
-		}
+			});
+			storer.continueTask();
+        });
 		storer.continueTask();
 	}
 	isFlushInactivesNeeded(){

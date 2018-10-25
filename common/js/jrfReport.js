@@ -168,7 +168,7 @@ var jrfReport=class jrfReport {
 			oIssue=self.loadJSONIssue(jsonIssue);
 			self.continueTask();
 		});
-		self.addStep("unlock",function(){
+		self.addStep("unlock and wait if necesary....",function(){
 			oIssue.unlockAndWaitAllSave();
 		});
 		self.addStep("Return issue",function(){

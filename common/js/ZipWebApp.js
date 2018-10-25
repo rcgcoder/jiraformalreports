@@ -308,7 +308,7 @@ class ZipWebApp{
 		}));
 //		self.initializationBarrier.add(self.getRunningTask());
 		self.addStep("Initializing engines.... ",self.initialize,
-					0,1,undefined,undefined,undefined,undefined,self.initializationBarrier);
+					0,1,undefined,undefined,undefined,"GLOBAL_RUN",self.initializationBarrier);
 		self.addStep("Waiting to Barrier Reach.... ",function(){
 			log("Waiting to reach!.... not continues... it will continue when initialization barrier reachs all");
 		});

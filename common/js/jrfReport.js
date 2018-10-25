@@ -158,6 +158,22 @@ var jrfReport=class jrfReport {
 									,fncUpdateStatus
 									,2);
 	}
+	createNewIssueFromJsonSteps(jsonIssue){
+		var oIssue;
+		var self=this;
+		self.addStep("Wait if is saving",function(){
+			self.allIssues.waitForStorageSaveEnd();
+		})
+		self.addStep("Load json",function(){
+			oIssue=self.loadJSONIssue(jsonIssue);
+			self.continueTask();
+		});
+		self.addStep("unlock",function(){
+			oIssue.unlockAndWaitAllSave();
+		});
+		self.continueTask();
+		
+	}
 
 	execute(bDontReloadFiles){
 		var self=this;
@@ -441,15 +457,7 @@ var jrfReport=class jrfReport {
 			if (self.config.jqlScope.jql!=""){
 				self.jira.processJQLIssues(self.config.jqlScope.jql,
 							function(jsonIssue){
-								var oIssue;
-								self.addStep("Load json",function(){
-									oIssue=self.loadJSONIssue(jsonIssue);
-									self.continueTask();
-								});
-								self.addStep("unlock",function(){
-									oIssue.unlockAndWaitAllSave();
-								});
-								self.continueTask();
+								self.createNewIssueFromJsonSteps(jsonIssue);
 							},
 							undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
 			} else {
@@ -501,13 +509,7 @@ var jrfReport=class jrfReport {
 					var fncProcessRootIssue=function(jsonIssue){
 						var issue=self.allIssues.getById(jsonIssue.key);
 						if (issue==""){
-							self.addStep("Load json",function(){
-								issue=self.loadJSONIssue(jsonIssue);
-								self.continueTask();
-							});
-							self.addStep("unlock",function(){
-								issue.unlockAndWaitAllSave();
-							});
+							self.createNewIssueFromJsonSteps(jsonIssue);
 						} 
 						self.addStep("Adding issue to root list",function(){
 							self.rootIssues.add(jsonIssue.key,issue);
@@ -659,8 +661,7 @@ var jrfReport=class jrfReport {
 			var fncProcessChildAndExtract=function(jsonIssue,index,resultLength){
 				var issue;
 				self.addStep("Loading Issue",function(){
-					issue=self.loadJSONIssue(jsonIssue);
-					self.continueTask();
+					self.createNewIssueFromJsonSteps(jsonIssue);
 				});
 				self.addStep("Extracting Pending Keys",function(){
 					fncExtractPendingKeys(issue);

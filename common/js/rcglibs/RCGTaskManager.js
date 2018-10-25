@@ -64,9 +64,9 @@ class RCGSemaphore{
 			self.taskWaiting.length=0;// remove all taks waiting
 			self.isWaiting=false;
 		} else {
-			setZeroTimeout(function(){
+			setTimeout(function(){
 				self.waiting(self);
-			});
+			},500);
 		}
 	}
 	taskArrived(task){

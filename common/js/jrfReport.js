@@ -695,7 +695,7 @@ var jrfReport=class jrfReport {
 				//self.walkAsync(self.rootIssues,fncExtractPendingKeys);
 				var fncCall=function(issue){
 					issue.fullLoad();
-					self.continueTask([issue]);
+					self.continueTask();
 				};
 				var fncProcess=function(issue){
 					self.addStep("Extracting Pending Keys",function(){
@@ -706,7 +706,7 @@ var jrfReport=class jrfReport {
 						issue.unlockAndWaitAllSave();
 					});
 				}
-				self.parallelizeCalls(self.rootIssues.length(),fncCall,fncProcess);
+				self.parallelizeCalls(self.rootIssues,fncCall,fncProcess);
 			});
 			self.addStep("Getting root base issues",function(){
 				alert("Extracted pending keys of initial root issues");

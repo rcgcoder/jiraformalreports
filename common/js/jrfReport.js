@@ -639,6 +639,7 @@ var jrfReport=class jrfReport {
 									self.addStep("Loading Issue Parent "+ eLink,function(){
 										debugger;
 										issueParent.fullLoad();
+										self.continueTask();
 									});
 									self.addStep("Loading Issue Parent "+ eLink,function(){
 										if (!issueParent.existsLinkedIssueKey(key)){

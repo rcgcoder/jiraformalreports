@@ -1490,7 +1490,7 @@ class RCGHashMapFactory{
 							nodSrc.left=nodTgt.left;
 							nodSrc.left.parent=nodSrc;
 						}
-						if (nodTgt.right!="") {
+						if (nodTgt.right=="") {
 							nodSrc.right="";
 						} else if (nodTgt.right.key==nodSrc.key){
 							nodSrc.right="";

@@ -1474,31 +1474,31 @@ class RCGHashMapFactory{
 								prevAux.last="";
 							//}
 							chronoStart("Asignamos_izda",prevAux.key);
-							if ((prevAux.left=="")||(prevAux.left.key==pos.key)){
+//							if ((prevAux.left=="")||(prevAux.left.key==pos.key)){
 								prevAux.left=pos.left; // colgamos todos los izquierdos del antiguo en el izquierdo del sustituto
 								if (prevAux.left!=""){ // si el nuevo izquierdo es node
 		//							chronoStart("node Asignado",prevAux.left.key);
 									prevAux.left.parent=prevAux; // asignamos el sustituto como parent
 		//							chronoStop();
 								}
-							} else {
+/*							} else {
 								alert("Error al eliminar node.. el Menor de los Mayores no debería tener IZQUIERDO:"+pos.key);
 								vUndef.peta("MegaError");
 							}
-							chronoStop();
+*/							chronoStop();
 							chronoStart("Asignamos_dcha",prevAux.key);
 							// si el node a sustitutir tenia nodes a la right hay que ponerlos a la right del sustituto
 							//if (pos.right!=""){ // el node a sustituir en esta rama siempre tiene nodes a la right
-							if ((prevAux.right=="")||(prevAux.right.key==pos.key)){
+//							if ((prevAux.right=="")||(prevAux.right.key==pos.key)){
 								prevAux.right=pos.right;
 								if (prevAux.right!=""){
 									prevAux.right.parent=prevAux;
 								}
-							} else {
+/*							} else {
 								alert("Error al eliminar node.. no debería tener Derecho:"+pos.key);
 								vUndef.peta("MegaError");
 							}
-							chronoStop();
+*/							chronoStop();
 							this.updateChildNumber(theParent,1+prevAux.brothers.length);
 							chronoStop();
 						} else {

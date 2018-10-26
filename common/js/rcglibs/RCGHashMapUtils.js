@@ -1498,6 +1498,17 @@ class RCGHashMapFactory{
 							nodSrc.right=nodTgt.right;
 							nodSrc.right.parent=nodSrc;
 						}
+						var bChangePreviousParent=false;
+						var previousParent=nodSrc.parent;
+						if (nodSrc.isRightChild()){
+							nodSrc.parent.right="";
+							bChangePreviousParent=true;
+						}  
+						if (nodSrc.isLeftChild()){
+							nodSrc.parent.left="";
+							bChangePreviousParent=true;
+						}
+						
 						if (nodTgt.parent==""){
 							self.root=nodSrc;
 						} else {
@@ -1509,6 +1520,10 @@ class RCGHashMapFactory{
 						}
 						nodSrc.parent=nodTgt.parent;
 						self.updateFirstLast(nodSrc);
+						if (bChangePreviousParent){
+							self.updateFirsLast(previousParent);
+						}
+
 					}
 					debugger;
 					// Ahora el arbol

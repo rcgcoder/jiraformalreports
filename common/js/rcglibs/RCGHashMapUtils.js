@@ -1500,13 +1500,15 @@ class RCGHashMapFactory{
 						}
 						var bChangePreviousParent=false;
 						var previousParent=nodSrc.parent;
-						if (nodSrc.isRightChild()){
-							nodSrc.parent.right="";
-							bChangePreviousParent=true;
-						}  
-						if (nodSrc.isLeftChild()){
-							nodSrc.parent.left="";
-							bChangePreviousParent=true;
+						if ((previousParent!="")&&(previousParent.key!=nodTgt.key)){
+							if (nodSrc.isRightChild()){
+								nodSrc.parent.right="";
+								bChangePreviousParent=true;
+							}  
+							if (nodSrc.isLeftChild()){
+								nodSrc.parent.left="";
+								bChangePreviousParent=true;
+							}
 						}
 						
 						if (nodTgt.parent==""){
@@ -1521,7 +1523,7 @@ class RCGHashMapFactory{
 						nodSrc.parent=nodTgt.parent;
 						self.updateFirstLast(nodSrc);
 						if (bChangePreviousParent){
-							self.updateFirsLast(previousParent);
+							self.updateFirstLast(previousParent);
 						}
 
 					}

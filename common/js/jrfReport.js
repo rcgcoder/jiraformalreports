@@ -169,11 +169,14 @@ var jrfReport=class jrfReport {
 		})
 		self.addStep("Load json",function(){
 			log("Load json");
-			var oIssue=self.allIssues.getById(jsonIssue.key);
+			oIssue=self.allIssues.getById(jsonIssue.key);
 			if (oIssue==""){
 				oIssue=self.loadJSONIssue(jsonIssue);
 			} else {
-				oIssue.lock();
+				self.addStep("full loading the issue",function(){
+					oIssue.fullLoad();
+					self.continueTask();
+				});
 			}
 			self.continueTask();
 		});

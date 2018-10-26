@@ -1427,16 +1427,16 @@ class RCGHashMapFactory{
 				}
 				chronoStopFunction();
 			}
-		internal_node_isRightChild(node){
-			if (node.parent=="") return false;
-			return ((node.parent.right!="")&&(node.parent.right.key==pos.key));
+		internal_node_isRightChild(){
+			if (this.parent=="") return false;
+			return ((this.parent.right!="")&&(this.parent.right.key==this.key));
 		}
-		internal_node_isLeftChild(node){
-			if (node.parent=="") return false;
-			return ((node.parent.left!="")&&(node.parent.left.key==pos.key));
+		internal_node_isLeftChild(){
+			if (this.parent=="") return false;
+			return ((this.parent.left!="")&&(this.parent.left.key==this.key));
 		}
-		internal_node_isRoot(node){
-			return node.parent=="";
+		internal_node_isRoot(){
+			return this.parent=="";
 		}
 		remove(key){
 				chronoStartFunction(key);

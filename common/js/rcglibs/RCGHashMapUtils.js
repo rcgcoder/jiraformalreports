@@ -1449,6 +1449,7 @@ class RCGHashMapFactory{
 					if (pos.parent==""){
 						chronoStart("Borrando_Raiz",pos.key);
 					}
+					debugger;
 					this.logicDelete(pos); // sacamos el node del arbol.
 					//// quitamos el numero de hijos del parent y ancestros 
 					//this.updateChildNumber(theParent,-(1+pos.brothers.length)); (lo hace logicDelete)
@@ -1460,9 +1461,11 @@ class RCGHashMapFactory{
 						pos.next.previous=pos.previous;
 						pos.previous.next=pos.next;
 					} else if (pos.next!=""){
-						pos.next.previous="";
-					} else if (pos.previous!=""){
+						pos.next.previous=pos.previous;
 						pos.previous.next="";
+					} else if (pos.previous!=""){
+						pos.previous.next=pos.next;
+						pos.next.previous="";
 					}
 					
 					var fncReplaceNode=function(nodSrc,nodTgt){ // mueve el nodo Src a la posicion de Tgt

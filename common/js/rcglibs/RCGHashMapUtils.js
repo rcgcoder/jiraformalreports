@@ -1474,17 +1474,17 @@ class RCGHashMapFactory{
 								prevAux.last="";
 							//}
 							chronoStart("Asignamos_izda",prevAux.key);
-							if (prevAux.left==""){
+//							if (prevAux.left==""){
 								prevAux.left=pos.left; // colgamos todos los izquierdos del antiguo en el izquierdo del sustituto
 								if (prevAux.left!=""){ // si el nuevo izquierdo es node
 		//							chronoStart("node Asignado",prevAux.left.key);
 									prevAux.left.parent=prevAux; // asignamos el sustituto como parent
 		//							chronoStop();
 								}
-							} else {
-								alert("Error al eliminar node.. el Menor de los Mayores no debería tener IZQUIERDO:"+key);
-								vUndef.peta("MegaError");
-							}
+	//						} else {
+	//							alert("Error al eliminar node.. el Menor de los Mayores no debería tener IZQUIERDO:"+key);
+	//							vUndef.peta("MegaError");
+	//						}
 							chronoStop();
 							chronoStart("Asignamos_dcha",prevAux.key);
 							// si el node a sustitutir tenia nodes a la right hay que ponerlos a la right del sustituto

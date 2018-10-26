@@ -1433,7 +1433,7 @@ class RCGHashMapFactory{
 		}
 		internal_node_isLeftChild(node){
 			if (node.parent=="") return false;
-			return ((node.parent.right!="")&&(node.parent.right.key==pos.key));
+			return ((node.parent.left!="")&&(node.parent.left.key==pos.key));
 		}
 		internal_node_isRoot(node){
 			return node.parent=="";

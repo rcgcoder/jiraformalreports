@@ -1475,9 +1475,9 @@ class RCGHashMapFactory{
 					}
 					
 					var fncReplaceNode=function(nodSrc,nodTgt){ // mueve el nodo Src a la posicion de Tgt
-						if (nodSrc.left!=""){
+						if (nodSrc.previous!=""){
 							fncReplaceNode(nodSrc.previous,nodSrc);
-						} else if (nodSrc.right!=""){
+						} else if (nodSrc.next!=""){
 							fncReplaceNode(nodSrc.next,nodSrc);
 						} 
 						if ((nodTgt.left!="") && (nodTgt.left.key==nodSrc.key)){
@@ -1517,9 +1517,9 @@ class RCGHashMapFactory{
 							}
 							self.updateFirstLast(pos.parent);
 						}
-					} else if (pos.left!=""){
+					} else if (pos.previous!=""){
 						fncReplaceNode(pos.previous,pos);
-					} else if (pos.right!="") {
+					} else if (pos.next!="") {
 						fncReplaceNode(pos.next,pos);
 					}
 					chronoStopFunction();

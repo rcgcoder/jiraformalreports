@@ -1486,6 +1486,7 @@ class RCGHashMapFactory{
 						this.updateFirstLast(nodSrc);
 						this.updateFirstLast(nodSrc.parent);
 					}
+					debugger;
 					// Ahora el arbol
 					if ((pos.left=="")&&(pos.right=="")){ // si no tiene ninguna hoja solo tiene que desaparecer
 						if (pos.parent==""){ // si es root se limpia el arbol

@@ -161,17 +161,22 @@ var jrfReport=class jrfReport {
 	createNewIssueFromJsonSteps(jsonIssue){
 		var oIssue;
 		var self=this;
+		debugger;
 		self.addStep("Wait if is saving",function(){
+			log("Wait if saving...");
 			self.allIssues.waitForStorageSaveEnd();
 		})
 		self.addStep("Load json",function(){
+			log("Load json");
 			oIssue=self.loadJSONIssue(jsonIssue);
 			self.continueTask();
 		});
 		self.addStep("unlock and wait if necesary....",function(){
+			log("unlock and wait for saving:"+oIssue.getKey());
 			oIssue.unlockAndWaitAllSave();
 		});
 		self.addStep("Return issue",function(){
+			log("Return issue:"+oIssue.getKey());
 			self.continueTask([oIssue]);
 		});
 		self.continueTask();

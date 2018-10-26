@@ -158,20 +158,30 @@ var jrfReport=class jrfReport {
 		//oIssue.unlock(); // dont Unlock.... loaded for use
 		return oIssue;
 	}
-	createNewIssueFromJsonSteps(jsonIssue,bLocked){
+	workOnIssueSteps(key,fncWork,bMaintainLocked,fncNotExists){
 		var oIssue;
 		var self=this;
 		var bUnlock=true;
-		if (isDefined(bLocked)&&bLocked) bUnlock=false;
+		if (isDefined(bMaintainLocked)&&bMaintainLocked) bUnlock=false;
 		self.addStep("Wait if is saving",function(){
 			log("Wait if saving...");
 			self.allIssues.waitForStorageSaveEnd();
 		})
-		self.addStep("Load json",function(){
-			log("Load json");
-			oIssue=self.allIssues.getById(jsonIssue.key);
+		self.addStep("Full Load issue"+key,function(){
+			oIssue=self.allIssues.getById(key);
 			if (oIssue==""){
-				oIssue=self.loadJSONIssue(jsonIssue);
+				if (isDefined(fncNotExists)){
+					self.addStep("Custom not Exists Function",function(){
+						var rstIssue=fncNotExists(key);
+						self.continueTask([rstIssue]);
+					});
+					self.addStep("Custom not Exists Function returns issue",function(rstIssue){
+						oIssue=rstIssue;
+						self.continueTask();
+					});
+				} else {
+					logError("Calling for a innexistent key "+key);
+				}
 			} else {
 				self.addStep("full loading the issue",function(){
 					oIssue.fullLoad();
@@ -180,6 +190,12 @@ var jrfReport=class jrfReport {
 			}
 			self.continueTask();
 		});
+		if (isDefined(fncWork)){
+			self.addStep("Working",function(){
+				fncWork(oIssue);
+				self.continueTask();
+			});
+		};
 		if (bUnlock){
 			self.addStep("unlock and wait if necesary....",function(){
 				log("unlock and wait for saving:"+oIssue.getKey());
@@ -191,7 +207,12 @@ var jrfReport=class jrfReport {
 			self.continueTask([oIssue]);
 		});
 //		self.continueTask();
-		
+	}
+	createNewIssueFromJsonSteps(jsonIssue,bMaintainLocked){
+		var self=this;
+		self.workOnIssueSteps(jsonIssue.key,undefined,bMaintainLocked,function(){
+			return self.loadJSONIssue(jsonIssue);
+			});
 	}
 
 	execute(bDontReloadFiles){
@@ -887,28 +908,22 @@ var jrfReport=class jrfReport {
 				var comment;
 				var htmlComment;
 				var objComment;
-				arrIssues.forEach(function (jsonIssue){
-					key=jsonIssue.key;
-					if (self.allIssues.exists(key)){
-						issue=self.allIssues.getById(key);
+				var fncProcessEachIssueComments=function(jsonIssue){
+					self.workOnIssueSteps(jsonIssue.key,function(issue){
 						comments=jsonIssue.fields.comment.comments;
 						htmlComments=jsonIssue.renderedFields.comment.comments;
-						var bFind=false;
 						for (var i=0;i<comments.length;i++){
 							comment=comments[i];
 							htmlComment=htmlComments[i];
 							objComment={id:comment.created.trim(),body:comment.body.trim(),htmlBody:htmlComment.body.trim()};
 							issue.addComment(objComment);
-							bFind=true;
+							issue.change();
 						}
-//						if (bFind){
-//							var vResult=issue.getHtmlLastCommentStartsWith("Descripción Formal",true,"<br/>",true);
-//							log (vResult);
-//						}
 						// applying "Jira Formal Report Adjusts"
 						var sTokenAdjustComment="Jira Formal Report Adjusts";
 						var hsReportAdjusts=issue.getCommentsStartsWith(sTokenAdjustComment);
 						hsReportAdjusts.walk(function(oAdjustComment){
+							issue.change();
 							//debugger;
 							var sCommentBody=oAdjustComment.body;
 							var sAux=sCommentBody.substring(sTokenAdjustComment.length+1,sCommentBody.length);
@@ -978,10 +993,9 @@ var jrfReport=class jrfReport {
 								}
 							});
 						});
-					} else {
-						logError("The issue ["+key+"] does not exists... Error");
-					}
-				});
+					});
+				}
+				self.parallelizeCalls(arrIssues,undefined,fncProcessEachIssueComments,1);
 			}
 			self.addStep("Getting comments parallelized.", function(){
 				var fncCall=function(group){

@@ -1450,6 +1450,8 @@ class RCGHashMapFactory{
 					chronoStopFunction();
 					return "";
 				} else {
+					var autoSwingBck=self.autoSwing;
+					self.autoSwing=false;
 					//logPush();
 					//self.traceAll();
 					//var sTraceArbol=logPop(false);
@@ -1501,7 +1503,6 @@ class RCGHashMapFactory{
 						}
 						nodSrc.parent=nodTgt.parent;
 						self.updateFirstLast(nodSrc);
-						self.updateFirstLast(nodSrc.parent);
 					}
 					debugger;
 					// Ahora el arbol
@@ -1531,6 +1532,7 @@ class RCGHashMapFactory{
 					if (self.nodeCache.key==pos.key){
 						self.nodeCache="";
 					}
+					self.autoSwing=autoSwingBck;
 					return pos;
 				}
 			}

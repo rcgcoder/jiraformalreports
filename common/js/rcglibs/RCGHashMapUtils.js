@@ -1475,10 +1475,10 @@ class RCGHashMapFactory{
 					}
 					
 					var fncReplaceNode=function(nodSrc,nodTgt){ // mueve el nodo Src a la posicion de Tgt
-						if (nodSrc.previous!=""){
-							fncReplaceNode(nodSrc.previous,nodSrc);
-						} else if (nodSrc.next!=""){
-							fncReplaceNode(nodSrc.next,nodSrc);
+						if (nodSrc.left!=""){
+							fncReplaceNode(nodSrc.left.getLast(),nodSrc);
+						} else if (nodSrc.right!=""){
+							fncReplaceNode(nodSrc.right.getFirst(),nodSrc);
 						} 
 						if ((nodTgt.left!="") && (nodTgt.left.key==nodSrc.key)){
 							nodSrc.left="";
@@ -1517,10 +1517,10 @@ class RCGHashMapFactory{
 							}
 							self.updateFirstLast(pos.parent);
 						}
-					} else if (pos.previous!=""){
-						fncReplaceNode(pos.previous,pos);
-					} else if (pos.next!="") {
-						fncReplaceNode(pos.next,pos);
+					} else if (pos.left!=""){
+						fncReplaceNode(pos.left.getLast(),pos);
+					} else if (pos.right!="") {
+						fncReplaceNode(pos.right.getFirst(),pos);
 					}
 					chronoStopFunction();
 					pos.previous="";

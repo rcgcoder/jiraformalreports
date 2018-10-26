@@ -1502,11 +1502,11 @@ class RCGHashMapFactory{
 							this.updateFirstLast(this.root);
 						} else {
 							if (pos.isLeftChild()){
-								this.parent.left="";
+								pos.parent.left="";
 							} else if (pos.isRightChild()){
-								this.parent.right="";
+								pos.parent.right="";
 							}
-							this.updateFirstLast(this.parent);
+							this.updateFirstLast(pos.parent);
 						}
 					} else if (pos.left!=""){
 						fncReplaceNode(pos.previous,pos);

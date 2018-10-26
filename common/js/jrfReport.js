@@ -527,7 +527,7 @@ var jrfReport=class jrfReport {
 							self.rootIssues.add(jsonIssue.key,issue);
 							self.continueTask();
 						});
-						self.continueTask();
+//						self.continueTask();
 					}
 					self.addStep("Processing jql to get root issues:"+theJQL,function(){
 						self.jira.processJQLIssues(

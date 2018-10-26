@@ -664,13 +664,13 @@ var jrfReport=class jrfReport {
 					}
 				}
 			};
-			var fncProcessEpicChilds=function(issue,index,resultLength){
+			var fncProcessEpicChilds=function(srcIssue,index,resultLength){
 				if (index==0) nPendingIssues+=resultLength; // now all the issues are pending....
 				self.addStep("Extracting Pending Keys",function(){
-					fncExtractPendingKeys(issue);
+					fncExtractPendingKeys(srcIssue);
 					self.continueTask();
 				});
-				self.addStep("Unlock And Wait all Saved",function(){
+				self.addStep("Unlock And Wait all Saved",function(issue){
 					issue.unlockAndWaitAllSave();
 				});
 				//self.continueTask();

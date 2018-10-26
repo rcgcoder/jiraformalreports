@@ -179,7 +179,7 @@ var jrfReport=class jrfReport {
 			log("Return issue:"+oIssue.getKey());
 			self.continueTask([oIssue]);
 		});
-		self.continueTask();
+//		self.continueTask();
 		
 	}
 

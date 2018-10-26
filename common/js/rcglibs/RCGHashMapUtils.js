@@ -1480,8 +1480,16 @@ class RCGHashMapFactory{
 						} else if (nodSrc.right!=""){
 							fncReplaceNode(nodSrc.next,nodSrc);
 						} 
-						nodSrc.left=nodTgt.left;
-						nodSrc.right=nodTgt.right;
+						if ((nodTgt.left!="") && (nodTgt.left.key==nodSrc.key)){
+							nodSrc.left="";
+						} else {
+							nodSrc.left=nodTgt.left;
+						}
+						if ((nodTgt.right!="") && (nodTgt.right.key==nodSrc.key)){
+							nodSrc.right="";
+						} else {
+							nodSrc.right=nodTgt.right;
+						}
 						if (nodTgt.parent==""){
 							self.root=nodSrc;
 						} else {

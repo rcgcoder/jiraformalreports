@@ -1421,6 +1421,17 @@ class RCGHashMapFactory{
 				}
 				chronoStopFunction();
 			}
+		isRightChild(node){
+			if (node.parent=="") return false;
+			return ((node.parent.right!="")&&(node.parent.right.key==pos.key));
+		}
+		isLeftChild(node){
+			if (node.parent=="") return false;
+			return ((node.parent.right!="")&&(node.parent.right.key==pos.key));
+		}
+		isRoot(node){
+			return node.parent=="";
+		}
 		remove(key){
 				chronoStartFunction(key);
 				var vUndef;
@@ -1454,100 +1465,38 @@ class RCGHashMapFactory{
 						pos.previous.next="";
 					}
 					
-					
-					// Ahora el arbol
-					if (pos.right!=""){ // si el node a borrar tiene mayores
-						chronoStart("TieneMayores");
-						prevAux=pos.right; // el node sustituto será uno de los de la right
-						if (prevAux.first!=""){ // Si hay un menor identificado entre los mayores (será el que sustituirá al node deleted)
-							prevAux=prevAux.first;
-							chronoStart("Sustituye_por_primero",prevAux.key);
-							var prevParent=prevAux.parent;
-							//if (prevParent!=""){ //siempre tiene que tener first porque la root no tiene last.
-									
-								//todos los elements derechos del sustituo son menores que su parent
-								//los colgamos de su antiguo parent parent (changeParent controla que prevAux.right sea "")
-								this.changeParent(prevParent,prevAux,prevAux.right);
-								// quitamos los hijos del parent y los ancestros.
-								this.updateChildNumber(prevParent,-(1+prevAux.brothers.length));
-								prevAux.right=""; // como ya estan movidos al antiguo parent el prevAux ahora no tiene derechos
-								prevAux.last="";
-							//}
-							chronoStart("Asignamos_izda",prevAux.key);
-//							if ((prevAux.left=="")||(prevAux.left.key==pos.key)){
-								prevAux.left=pos.left; // colgamos todos los izquierdos del antiguo en el izquierdo del sustituto
-								if (prevAux.left!=""){ // si el nuevo izquierdo es node
-		//							chronoStart("node Asignado",prevAux.left.key);
-									prevAux.left.parent=prevAux; // asignamos el sustituto como parent
-		//							chronoStop();
-								}
-/*							} else {
-								alert("Error al eliminar node.. el Menor de los Mayores no debería tener IZQUIERDO:"+pos.key);
-								vUndef.peta("MegaError");
-							}
-*/							chronoStop();
-							chronoStart("Asignamos_dcha",prevAux.key);
-							// si el node a sustitutir tenia nodes a la right hay que ponerlos a la right del sustituto
-							//if (pos.right!=""){ // el node a sustituir en esta rama siempre tiene nodes a la right
-//							if ((prevAux.right=="")||(prevAux.right.key==pos.key)){
-								prevAux.right=pos.right;
-								if (prevAux.right!=""){
-									prevAux.right.parent=prevAux;
-								}
-/*							} else {
-								alert("Error al eliminar node.. no debería tener Derecho:"+pos.key);
-								vUndef.peta("MegaError");
-							}
-*/							chronoStop();
-							this.updateChildNumber(theParent,1+prevAux.brothers.length);
-							chronoStop();
+					var fncReplaceNode=function(nodSrc,nodTgt){ // mueve el nodo Src a la posicion de Tgt
+						if (nodSrc.left!=""){
+							fncReplaceNode(nodSrc.previous,nodSrc);
+						} else if (nodSrc.right!=""){
+							fncReplaceNode(nodSrc.next,nodSrc);
+						} 
+						nodSrc.left=nodTgt.left;
+						nodSrc.right=nodTgt.right;
+						if (nodTgt.parent==""){
+							this.root=nodSrc;
 						} else {
-							chronoStart("Sustituye_por_hijoderecho",prevAux.key);
-							// si el node derecho no tiene hijos izquierdos. ponemos el hijo derecho como sustituto del node a eliminar
-							prevAux.left=pos.left;
-							if (prevAux.left!=""){
-								chronoStart("node Asignado",prevAux.left.key);
-								prevAux.left.parent=prevAux;
-								chronoStop();
+							if (this.isRightChild(nodTgt)){
+								nodTgt.parent.right=nodSrc;
+							} else if (this.isLeftChild(nodTgt)){
+								nodTgt.parent.left=nodSrc;
 							}
-							chronoStop();
 						}
-						chronoStart("updatenodes",prevAux.key+"_Padre_"+prevAux.parent.key);
-						prevAux.parent=theParent;
-						this.updateFirstLast(prevAux);
-						// se establece la relacion parent/hijo
-						this.changeParent(theParent,pos,prevAux);
-						this.updateFirstLast(theParent);
-						//this.updateChildNumber(theParent,1);
-						this.refreshChildNumber(prevAux);
-						//this.refreshChildNumber(theParent);
-						chronoStop();
-						chronoStop();
-					} else { // si no tiene mayores simplemente subiremos el node izquierdo
-						prevAux=pos.left;
-						chronoStart("Sustituye_por_hijoizquierdo",prevAux.key);
-						this.changeParent(theParent,pos,prevAux);
-						//this.updateChildNumber(theParent,-(1+pos.brothers.length));
-						this.refreshChildNumber(prevAux);
-						chronoStop();
+						nodSrc.parent=nodTgt.parent;
+						this.updateFirstLast(nodSrc);
+						this.updateFirstLast(nodSrc.parent);
 					}
-					if (pos.parent==""){ //si el deleted es el root la nueva root será prevAux;
-						this.root=prevAux;
-						if (this.root!=""){ // updating parent if the root has changed
-							this.root.parent="";
+					// Ahora el arbol
+					if ((pos.left=="")&&(pos.right=="")){ // si no tiene ninguna hoja solo tiene que desaparecer
+						if (pos.parent==""){ // si es root se limpia el arbol
+							this.root="";
+							this.updateFirstLast(this.root);
 						}
-						chronoStop();
-					} 
-		//			chronoStopFunction();
-		//			chronoStopFunction();
-		/*			if (this.check()){
-						log("ERROR BORRANDO node:"+key);
-						log("ARBOL-SITUACION INICIAL");
-						log(sTraceArbol);
-						log("ARBOL-SITUACION FINAL");
-						this.traceAll();
-						chronometros.listar();
-					}*/
+					} else if (pos.left!=""){
+						fncReplaceNode(pos.previous,pos);
+					} else if (pos.right!="") {
+						fncReplaceNode(pos.next,pos);
+					}
 					chronoStopFunction();
 					pos.previous="";
 					pos.next="";

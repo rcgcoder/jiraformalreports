@@ -158,22 +158,31 @@ var jrfReport=class jrfReport {
 		//oIssue.unlock(); // dont Unlock.... loaded for use
 		return oIssue;
 	}
-	createNewIssueFromJsonSteps(jsonIssue){
+	createNewIssueFromJsonSteps(jsonIssue,bLocked){
 		var oIssue;
 		var self=this;
+		var bUnlock=true;
+		if (isDefined(bLocked)&&bLocked) bUnlock=false;
 		self.addStep("Wait if is saving",function(){
 			log("Wait if saving...");
 			self.allIssues.waitForStorageSaveEnd();
 		})
 		self.addStep("Load json",function(){
 			log("Load json");
-			oIssue=self.loadJSONIssue(jsonIssue);
+			var oIssue=self.allIssues.getById(jsonIssue.key);
+			if (oIssue==""){
+				oIssue=self.loadJSONIssue(jsonIssue);
+			} else {
+				oIssue.lock();
+			}
 			self.continueTask();
 		});
-		self.addStep("unlock and wait if necesary....",function(){
-			log("unlock and wait for saving:"+oIssue.getKey());
-			oIssue.unlockAndWaitAllSave();
-		});
+		if (bUnlock){
+			self.addStep("unlock and wait if necesary....",function(){
+				log("unlock and wait for saving:"+oIssue.getKey());
+				oIssue.unlockAndWaitAllSave();
+			});
+		}
 		self.addStep("Return issue",function(){
 			log("Return issue:"+oIssue.getKey());
 			self.continueTask([oIssue]);
@@ -664,22 +673,13 @@ var jrfReport=class jrfReport {
 					}
 				}
 			};
-			var fncProcessEpicChilds=function(srcIssue,index,resultLength){
-				if (index==0) nPendingIssues+=resultLength; // now all the issues are pending....
-				self.addStep("Extracting Pending Keys",function(){
-					fncExtractPendingKeys(srcIssue);
-					self.continueTask();
-				});
-				self.addStep("Unlock And Wait all Saved",function(issue){
-					issue.unlockAndWaitAllSave();
-				});
-				//self.continueTask();
-			};
 			var fncProcessChildAndExtract=function(jsonIssue,index,resultLength){
+				var issue;
 				self.addStep("Loading Issue",function(){
-					self.createNewIssueFromJsonSteps(jsonIssue);
+					self.createNewIssueFromJsonSteps(jsonIssue,true);
 				});
-				self.addStep("Extracting Pending Keys",function(){
+				self.addStep("Extracting Pending Keys",function(oIssue){
+					issue=oIssue;
 					fncExtractPendingKeys(issue);
 					self.continueTask();
 				});
@@ -764,7 +764,7 @@ var jrfReport=class jrfReport {
 							self.addStep("Retrieving issues of Epic Group ["+sIssues+"]",function(){
 								nCallsStarted++;
 								//logError(nCallsStarted+" - JQL:"+theJQL);
-								self.jira.processJQLIssues(theJQL,self.createManagedCallback(fncProcessEpicChilds)
+								self.jira.processJQLIssues(theJQL,self.createManagedCallback(fncProcessChildAndExtract)
 														    ,undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
 							});
 							self.addStep("Finish Retrieving issues of Epic Group ["+sIssues+"]",function(){

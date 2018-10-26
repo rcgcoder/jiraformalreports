@@ -1482,15 +1482,21 @@ class RCGHashMapFactory{
 						} else if (nodSrc.right!=""){
 							fncReplaceNode(nodSrc.right.getFirst(),nodSrc);
 						} 
-						if ((nodTgt.left!="") && (nodTgt.left.key==nodSrc.key)){
+						if (nodTgt.left==""){
+							nodSrc.left="";
+						} else if (nodTgt.left.key==nodSrc.key){
 							nodSrc.left="";
 						} else {
 							nodSrc.left=nodTgt.left;
+							nodSrc.left.parent=nodSrc;
 						}
-						if ((nodTgt.right!="") && (nodTgt.right.key==nodSrc.key)){
+						if (nodTgt.right!="") {
+							nodSrc.right="";
+						} else if (nodTgt.right.key==nodSrc.key){
 							nodSrc.right="";
 						} else {
 							nodSrc.right=nodTgt.right;
+							nodSrc.right.parent=nodSrc;
 						}
 						if (nodTgt.parent==""){
 							self.root=nodSrc;

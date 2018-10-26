@@ -1494,6 +1494,13 @@ class RCGHashMapFactory{
 						if (pos.parent==""){ // si es root se limpia el arbol
 							this.root="";
 							this.updateFirstLast(this.root);
+						} else {
+							if (this.isLeftChild(pos)){
+								this.parent.left="";
+							} else if (this.isRightChild(pos)){
+								this.parent.right="";
+							}
+							this.updateFirstLast(this.parent);
 						}
 					} else if (pos.left!=""){
 						fncReplaceNode(pos.previous,pos);

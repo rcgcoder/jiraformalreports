@@ -680,6 +680,7 @@ var jrfReport=class jrfReport {
 				var issue;
 				self.addStep("Loading Issue",function(){
 					self.createNewIssueFromJsonSteps(jsonIssue,true);
+					self.continueTask();
 				});
 				self.addStep("Extracting Pending Keys",function(oIssue){
 					issue=oIssue;

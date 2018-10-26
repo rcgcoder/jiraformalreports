@@ -44,6 +44,9 @@ var RCGHashMap=class RCGHashMap{
 		obj.addNode=hashMapFactory.addNode;
 		obj.changeParent=hashMapFactory.changeParent;
 		obj.remove=hashMapFactory.remove;
+		obj.internal_node_isLeftChild=hashMapFactory.internal_node_isLeftChild;
+		obj.internal_node_isRightChild=hashMapFactory.internal_node_isRightChild;
+		obj.internal_node_isRoot=hashMapFactory.internal_node_isRoot;
 		obj.length=hashMapFactory.length;
 		obj.toArray=hashMapFactory.toArray;
 		obj.autoSwing=true;
@@ -75,6 +78,9 @@ class RCGHashMapFactory{
 				node.getNumSubnodes=this.intern_node_getChildNumber;
 				node.getFirst=this.intern_node_getFirst;
 				node.getLast=this.intern_node_getLast;
+				node.isLeftChild=this.internal_node_isLeftChild;
+				node.isRightChild=this.internal_node_isRightChild;
+				node.isRoot=this.internal_node_isRoot;
 				node.factory=this;
 
 		//		node.deleted=true;
@@ -1421,15 +1427,15 @@ class RCGHashMapFactory{
 				}
 				chronoStopFunction();
 			}
-		isRightChild(node){
+		internal_node_isRightChild(node){
 			if (node.parent=="") return false;
 			return ((node.parent.right!="")&&(node.parent.right.key==pos.key));
 		}
-		isLeftChild(node){
+		internal_node_isLeftChild(node){
 			if (node.parent=="") return false;
 			return ((node.parent.right!="")&&(node.parent.right.key==pos.key));
 		}
-		isRoot(node){
+		internal_node_isRoot(node){
 			return node.parent=="";
 		}
 		remove(key){
@@ -1478,9 +1484,9 @@ class RCGHashMapFactory{
 						if (nodTgt.parent==""){
 							this.root=nodSrc;
 						} else {
-							if (this.isRightChild(nodTgt)){
+							if (nodTgt.isRightChild()){
 								nodTgt.parent.right=nodSrc;
-							} else if (this.isLeftChild(nodTgt)){
+							} else if (nodTgt.isLeftChild()){
 								nodTgt.parent.left=nodSrc;
 							}
 						}
@@ -1495,9 +1501,9 @@ class RCGHashMapFactory{
 							this.root="";
 							this.updateFirstLast(this.root);
 						} else {
-							if (this.isLeftChild(pos)){
+							if (pos.isLeftChild()){
 								this.parent.left="";
-							} else if (this.isRightChild(pos)){
+							} else if (pos.isRightChild()){
 								this.parent.right="";
 							}
 							this.updateFirstLast(this.parent);

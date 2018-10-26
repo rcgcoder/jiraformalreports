@@ -644,9 +644,13 @@ var jrfReport=class jrfReport {
 									self.addStep("Loading Issue Parent "+ eLink,function(){
 										if (!issueParent.existsLinkedIssueKey(key)){
 											issueParent.addLinkedIssueKey(key,key);
+											issueParent.change();
+											issue.change();
 										}
 										if (!issueParent.existsEpicChild(key)){
 											issueParent.addEpicChild(issue);
+											issueParent.change();
+											issue.change();
 										}
 										issueParent.unlockAndWaitAllSave();
 									});
@@ -669,7 +673,7 @@ var jrfReport=class jrfReport {
 				self.addStep("Unlock And Wait all Saved",function(){
 					issue.unlockAndWaitAllSave();
 				});
-				self.continueTask();
+				//self.continueTask();
 			};
 			var fncProcessChildAndExtract=function(jsonIssue,index,resultLength){
 				self.addStep("Loading Issue",function(){
@@ -682,8 +686,7 @@ var jrfReport=class jrfReport {
 				self.addStep("Unlock And Wait all Saved",function(){
 					issue.unlockAndWaitAllSave();
 				});
-				self.
-				self.continueTask();
+				//self.continueTask();
 			};
 			
 			var nCallsStarted=0;

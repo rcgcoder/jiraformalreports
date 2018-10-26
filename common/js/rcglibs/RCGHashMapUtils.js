@@ -1439,25 +1439,26 @@ class RCGHashMapFactory{
 			return this.parent=="";
 		}
 		remove(key){
+				var self=this;
 				chronoStartFunction(key);
 				var vUndef;
 				var prevAux;
 				chronoStart("Buscar",key);
-				var pos=this.findPos(key);
+				var pos=self.findPos(key);
 				chronoStop();
 				if (pos.key!=key){
 					chronoStopFunction();
 					return "";
 				} else {
 					//logPush();
-					//this.traceAll();
+					//self.traceAll();
 					//var sTraceArbol=logPop(false);
 					if (pos.parent==""){
 						chronoStart("Borrando_Raiz",pos.key);
 					}
-					this.logicDelete(pos); // sacamos el node del arbol.
+					self.logicDelete(pos); // sacamos el node del arbol.
 					//// quitamos el numero de hijos del parent y ancestros 
-					//this.updateChildNumber(theParent,-(1+pos.brothers.length)); (lo hace logicDelete)
+					//self.updateChildNumber(theParent,-(1+pos.brothers.length)); (lo hace logicDelete)
 
 					var theParent=pos.parent; //cogemos el antiguo parent del que dependera el hijo sustituto
 					
@@ -1482,7 +1483,7 @@ class RCGHashMapFactory{
 						nodSrc.left=nodTgt.left;
 						nodSrc.right=nodTgt.right;
 						if (nodTgt.parent==""){
-							this.root=nodSrc;
+							self.root=nodSrc;
 						} else {
 							if (nodTgt.isRightChild()){
 								nodTgt.parent.right=nodSrc;
@@ -1491,22 +1492,22 @@ class RCGHashMapFactory{
 							}
 						}
 						nodSrc.parent=nodTgt.parent;
-						this.updateFirstLast(nodSrc);
-						this.updateFirstLast(nodSrc.parent);
+						self.updateFirstLast(nodSrc);
+						self.updateFirstLast(nodSrc.parent);
 					}
 					debugger;
 					// Ahora el arbol
 					if ((pos.left=="")&&(pos.right=="")){ // si no tiene ninguna hoja solo tiene que desaparecer
 						if (pos.parent==""){ // si es root se limpia el arbol
-							this.root="";
-							this.updateFirstLast(this.root);
+							self.root="";
+							self.updateFirstLast(self.root);
 						} else {
 							if (pos.isLeftChild()){
 								pos.parent.left="";
 							} else if (pos.isRightChild()){
 								pos.parent.right="";
 							}
-							this.updateFirstLast(pos.parent);
+							self.updateFirstLast(pos.parent);
 						}
 					} else if (pos.left!=""){
 						fncReplaceNode(pos.previous,pos);
@@ -1519,8 +1520,8 @@ class RCGHashMapFactory{
 					pos.first="";
 					pos.last="";
 					pos.nChilds=0;
-					if (this.nodeCache.key==pos.key){
-						this.nodeCache="";
+					if (self.nodeCache.key==pos.key){
+						self.nodeCache="";
 					}
 					return pos;
 				}

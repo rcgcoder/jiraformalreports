@@ -50,16 +50,6 @@ var jrfReport=class jrfReport {
 		}
 		return false;
 	}
-	loadJSONIssue(jsonIssue){
-		var self=this;
-		var oIssue=self.allIssues.new(jsonIssue.fields.summary,jsonIssue.key);
-		oIssue.setJiraObject(jsonIssue);
-		oIssue.updateInfo();
-		oIssue.setJiraObject("");
-		oIssue.setKey(jsonIssue.key);
-		//oIssue.unlock(); // dont Unlock.... loaded for use
-		return oIssue;
-	}
 	cleanModel(sContent){
 		//debugger;
 		sContent=replaceAll(sContent,"&lt;jRf","&lt;JRF",true);
@@ -158,10 +148,19 @@ var jrfReport=class jrfReport {
 									,fncUpdateStatus
 									,2);
 	}
+	loadJSONIssue(jsonIssue){
+		var self=this;
+		var oIssue=self.allIssues.new(jsonIssue.fields.summary,jsonIssue.key);
+		oIssue.setJiraObject(jsonIssue);
+		oIssue.updateInfo();
+		oIssue.setJiraObject("");
+		oIssue.setKey(jsonIssue.key);
+		//oIssue.unlock(); // dont Unlock.... loaded for use
+		return oIssue;
+	}
 	createNewIssueFromJsonSteps(jsonIssue){
 		var oIssue;
 		var self=this;
-		debugger;
 		self.addStep("Wait if is saving",function(){
 			log("Wait if saving...");
 			self.allIssues.waitForStorageSaveEnd();

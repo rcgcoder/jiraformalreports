@@ -669,7 +669,6 @@ var jrfReport=class jrfReport {
 							var issueParent=self.allIssues.getById(eLink);
 							if (key!=""){
 								if (issueParent!=""){
-/*									console.log("Parent");
 									self.workOnIssueSteps(issueParent.id,function(issueParent){
 										if (!issueParent.existsLinkedIssueKey(key)){
 											issueParent.addLinkedIssueKey(key,key);
@@ -682,7 +681,7 @@ var jrfReport=class jrfReport {
 											issue.change();
 										}
 									});
-*/								} else {
+								} else {
 									fncAddToGroup(eLink);
 								}
 							} else {
@@ -711,13 +710,9 @@ var jrfReport=class jrfReport {
 			var nStepsPlaned=0;
 			self.addStep("Extracting pending keys of ("+self.rootIssues.length()+") root issues",function(){
 				//debugger;
-				var fncTestNothing=function(issue){
-					log("do nothing");
-				}
 				var fncProcess=function(issue){
 					debugger;
-//					self.workOnIssueSteps(issue.id,fncExtractPendingKeys);
-					self.workOnIssueSteps(issue.id,fncTestNothing);
+					self.workOnIssueSteps(issue.id,fncExtractPendingKeys);
 
 				}
 				self.parallelizeProcess(self.rootIssues,fncProcess);

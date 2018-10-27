@@ -138,13 +138,19 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 	saveAllUnlocked(){
 		var self=this;
 		var storer=self.storer;
+		var countInactives=self.countInactiveObjects();
 		var countSaved=0;
+		var countNotNeedSave=0;
+		var countRemoved=0;
+		var countUnloaded=0;
 		storer.addStep("Saving All in a Global pseudothread",function(){
-			storer.addStep("Remove all inactive Objects ("+self.countInactiveObjects()+")",function(){
+			storer.addStep("Remove all inactive Objects ("+countInactives+")",function(){
 				var fncSaveCall=function(inactiveObject){
 					//log("Saving All to Storage:"+inactiveObject.getId());
 					if (inactiveObject.isChanged()){
 						countSaved++;
+					} else {
+						countNotNeedSave++;
 					}
 					self.saveToStorage(inactiveObject);
 					storer.continueTask();
@@ -155,10 +161,12 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 						if (inactiveObject.isFullyLoaded()){
 							//log("Unloading :"+inactiveObject.getId());
 							inactiveObject.fullUnload();
+							countUnloaded++;
 						}
 						//log("Removing :"+inactiveObject.getId());
 						if (self.inactiveObjects.exists(inactiveObject.getId())){
 							self.inactiveObjects.remove(inactiveObject.getId());
+							countRemoved++;
 						}
 					} else {
 						//log("It´s not in inactive objects:"+inactiveObject.getId());
@@ -168,7 +176,18 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 				storer.parallelizeCalls(self.inactiveObjects,fncSaveCall,fncUnloadAndRemove,5);
 			});
 			storer.addStep("Save Inactive objects is Finished",function(){
-				console.log("Saved all inactive objects ("+countSaved+"/"+self.factory.list.length()+")"+getMemStatus());
+				var countSaved=0;
+				var countNotNeedSave=0;
+				var countRemoved=0;
+				var countUnloaded=0;
+				console.log("Saved all inactive objects ("
+								+"Initial:"+countInactives
+								+",Saved:"+countSaved
+								+",Not Saved:"+countNotNeedSave
+								+",Removed:"+countRemoved
+								+",Unloaded:"+countUnloaded
+								+",Total Issues:"+self.factory.list.length()
+								+")"+getMemStatus());
 				storer.continueTask();
 			});
 			storer.continueTask();

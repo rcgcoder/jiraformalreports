@@ -146,7 +146,7 @@ class ZipWebApp{
 			self.continueTask();
 		});
 		self.addStep("Setting <initialized> Atlassian Engine.... ",function(){
-			debugger;
+			//debugger;
 			log("Initialize ends");
 			var atl=self.getAtlassian();
 			atl.initialized=true;
@@ -301,7 +301,7 @@ class ZipWebApp{
 		log("starting ZipWebApp");
 		var self=this;
 		self.initializationBarrier=new RCGBarrier(self.createManagedCallback(function(){
-			debugger;
+			//debugger;
 			log("Initialization finished");
 			$("#appMain").css('visibility','visible');
 			self.continueTask();
@@ -314,7 +314,7 @@ class ZipWebApp{
 		});
 		self.addStep("Default Config.... ",function(){
 			log("Everything is initialized! now Config!");
-			debugger;
+			//debugger;
 			self.addStep("Loading default config from Storage",function(){
 				var tbConfig=System.getAngularObject('tabConfig',true);
 				tbConfig.loadDefaultReport();

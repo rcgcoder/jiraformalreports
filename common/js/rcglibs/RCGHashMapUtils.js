@@ -1480,6 +1480,26 @@ class RCGHashMapFactory{
 						} else if (nodSrc.right!=""){
 							fncReplaceNode(nodSrc.right.getFirst(),nodSrc);
 						} 
+						
+						//extraemos la hoja SRC
+						var bChangePreviousParent=false;
+						var previousParent=nodSrc.parent;
+						if ((previousParent!="")&&(previousParent.key!=nodTgt.key)){
+							if (nodSrc.isRightChild()){
+								nodSrc.parent.right="";
+								bChangePreviousParent=true;
+							}  
+							if (nodSrc.isLeftChild()){
+								nodSrc.parent.left="";
+								bChangePreviousParent=true;
+							}
+							if (bChangePreviousParent){
+								self.updateChildNumber(previousParent,-(1+nodSrc.brothers.length));
+							}
+							nodSrc.parent="";
+						}
+						
+						// le asignamos los nuevos hijos
 						if (nodTgt.left==""){
 							nodSrc.left="";
 						} else if (nodTgt.left.key==nodSrc.key){
@@ -1496,18 +1516,7 @@ class RCGHashMapFactory{
 							nodSrc.right=nodTgt.right;
 							nodSrc.right.parent=nodSrc;
 						}
-						var bChangePreviousParent=false;
-						var previousParent=nodSrc.parent;
-						if ((previousParent!="")&&(previousParent.key!=nodTgt.key)){
-							if (nodSrc.isRightChild()){
-								nodSrc.parent.right="";
-								bChangePreviousParent=true;
-							}  
-							if (nodSrc.isLeftChild()){
-								nodSrc.parent.left="";
-								bChangePreviousParent=true;
-							}
-						}
+						self.refreshChildNumber(nodSrc);						
 						
 						if (nodTgt.parent==""){
 							self.root=nodSrc;
@@ -1519,13 +1528,15 @@ class RCGHashMapFactory{
 							}
 						}
 						nodSrc.parent=nodTgt.parent;
-						self.updateChildNumber(nodSrc.parent,1+nodSrc.brothers.length);
+						var auxParent=nodSrc.parent;
+						while (auxParent!=""){
+							self.refreshChildNumber(auxParent);
+							auxParent=auxParent.parent;
+						}
 						self.updateFirstLast(nodSrc);
 						if (bChangePreviousParent){
-							self.updateChildNumber(previousParent,-(1+nodSrc.brothers.length));
 							self.updateFirstLast(previousParent);
 						}
-
 					}
 					debugger;
 					// Ahora el arbol

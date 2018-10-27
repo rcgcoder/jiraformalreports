@@ -986,7 +986,7 @@ var jrfReport=class jrfReport {
 						});
 					});
 				}
-				self.parallelizeCalls(arrIssues,undefined,fncProcessEachIssueComments,1);
+				self.parallelizeProcess(arrIssues,fncProcessEachIssueComments,1);
 			}
 			self.addStep("Getting comments parallelized.", function(){
 				var fncCall=function(group){

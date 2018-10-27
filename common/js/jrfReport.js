@@ -158,10 +158,18 @@ var jrfReport=class jrfReport {
 		//oIssue.unlock(); // dont Unlock.... loaded for use
 		return oIssue;
 	}
-	workOnIssueSteps(key,fncWork,bMaintainLocked,fncNotExists){
+	workOnIssueSteps(keyOrIssue,fncWork,bMaintainLocked,fncNotExists){
 		var oIssue;
 		var self=this;
 		var bUnlock=true;
+		var key=keyOrIssue;
+		if (isObject(keyOrIssue)){
+			if (isDefined(keyOrIssue.key)){
+				key=keyOrIssue.key;
+			} else {
+				key=keyOrIssue.id;
+			}	
+		}
 		if (isDefined(bMaintainLocked)&&bMaintainLocked) bUnlock=false;
 		self.addStep("Wait if is saving",function(){
 			log("Wait if saving...");
@@ -207,6 +215,13 @@ var jrfReport=class jrfReport {
 			self.continueTask([oIssue]);
 		});
 //		self.continueTask();
+	}
+	workOnListOfIssueSteps(listOfIssues,fncWork,maxParallelThreads,fncNotExists){
+		var self=this;
+		var fncProcessIndividualIssue=function(issue){
+			self.workOnIssueSteps(issue,fncWork,false,fncNotExists);
+		}
+		self.parallelizeProcess(listOfIssues,fncProcessIndividualIssue,maxParallelThreads);
 	}
 	createNewIssueFromJsonSteps(jsonIssue,bMaintainLocked){
 		var self=this;
@@ -669,7 +684,7 @@ var jrfReport=class jrfReport {
 							var issueParent=self.allIssues.getById(eLink);
 							if (key!=""){
 								if (issueParent!=""){
-									self.workOnIssueSteps(issueParent.id,function(issueParent){
+									self.workOnIssueSteps(issueParent,function(issueParent){
 										if (!issueParent.existsLinkedIssueKey(key)){
 											issueParent.addLinkedIssueKey(key,key);
 											issueParent.change();
@@ -710,12 +725,7 @@ var jrfReport=class jrfReport {
 			var nStepsPlaned=0;
 			self.addStep("Extracting pending keys of ("+self.rootIssues.length()+") root issues",function(){
 				//debugger;
-				var fncProcess=function(issue){
-					debugger;
-					self.workOnIssueSteps(issue.id,fncExtractPendingKeys);
-
-				}
-				self.parallelizeProcess(self.rootIssues,fncProcess);
+				self.workOnListOfIssueSteps(self.rootIssues,fncExtractPendingKeys);
 			});
 			self.addStep("Getting root base issues",function(){
 				//alert("Extracted pending keys of initial root issues");
@@ -1014,25 +1024,18 @@ var jrfReport=class jrfReport {
 				});
 			});
 			self.addStep("Walking througth the roots to set to issuesAdded...",function(){
-				logError("Added "+countAdded+" "+ ((100*countAdded)/self.rootIssues.length()) +"% to the seletion JQL")
-				self.walkAsync(self.rootIssues,function(jsonIssue,iProf,key){
-					//log("Root Issue: "+key);
-					var issue=self.allIssues.getById(key);
-					if (issue!=""){
-						var bExcluded=false;
-						if (issue.isProjectExcluded()/*||(issue.isExcludedByFunction())*/){
-							//debugger;
-							nExcludedIssues++;
-						}else {
-							if (!issuesAdded.exists(key)){
-								issuesAdded.add(key,issue);
-							}
-							if (!self.childs.exists(key)){
-								self.childs.add(key,issue);
-							}
+				logError("Added "+countAdded+" "+ ((100*countAdded)/self.rootIssues.length()) +"% to the seletion JQL");
+				self.workOnListOfIssueSteps(self.rootIssues,function(issue){
+					if (issue.isProjectExcluded()/*||(issue.isExcludedByFunction())*/){
+						//debugger;
+						nExcludedIssues++;
+					}else {
+						if (!issuesAdded.exists(key)){
+							issuesAdded.add(key,issue);
 						}
-					} else {
-						logError("The issue "+ key + " does not exists in the all Issues retrieved list");
+						if (!self.childs.exists(key)){
+							self.childs.add(key,issue);
+						}
 					}
 				});
 			});

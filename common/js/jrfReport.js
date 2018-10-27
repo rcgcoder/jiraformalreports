@@ -718,7 +718,7 @@ var jrfReport=class jrfReport {
 				self.parallelizeProcess(self.rootIssues,fncProcess);
 			});
 			self.addStep("Getting root base issues",function(){
-				alert("Extracted pending keys of initial root issues");
+				//alert("Extracted pending keys of initial root issues");
 				log("Getting root base issues");
 				//self.allIssues.changeStorableParams(undefined,undefined,false);
 				var fncRetrieveGroup=self.createManagedCallback(function(group){
@@ -990,6 +990,8 @@ var jrfReport=class jrfReport {
 			
 		// assing childs and advance childs to root elements
 		self.addStep("Assign Childs and Advance",function(){
+			log("Assing Childs and Advance");
+			debugger;
 			if (self.isReusingIssueList()){
 				return self.continueTask();
 			}

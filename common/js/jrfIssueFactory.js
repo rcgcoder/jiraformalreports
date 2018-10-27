@@ -568,7 +568,11 @@ function newIssueFactory(report){
 			}
 		}
 		self.getEpicChilds().walk(function(epicChild){
-			eLink=epicChild.getKey();
+			if (epicChild.isFullyLoaded()){
+				eLink=epicChild.getKey();
+			} else {
+				eLink=epicChild.id;
+			}
 			linkedIssue="";
 			if (isDefined(issuesCache)) linkedIssue=issuesCache.getById(eLink);
 			if (linkedIssue==""){

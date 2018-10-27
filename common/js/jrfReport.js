@@ -203,7 +203,7 @@ var jrfReport=class jrfReport {
 			});
 		}
 		self.addStep("Return issue",function(){
-			log("Return issue:"+oIssue.getKey());
+			log("Return issue:"+oIssue.id);
 			self.continueTask([oIssue]);
 		});
 //		self.continueTask();

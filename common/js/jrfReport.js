@@ -223,10 +223,25 @@ var jrfReport=class jrfReport {
 	}
 	workOnListOfIssueSteps(listOfIssues,fncWork,maxParallelThreads,fncNotExists){
 		var self=this;
-		var fncProcessIndividualIssue=function(issue){
+		var numItems=0;
+		var listType=0;
+		if (isArray(listOfIssues)){
+			numItems=listOfIssues.length;
+			listType=1;
+		} else if (isHashMap(listOfIssues)){
+			numItems=listOfIssues.length();
+			listType=0;
+		}
+		var fncProcessIndividualIssue=function(itemNum){
+			var issue;
+			if (listType==1){
+				issue=listOfIssues[itemNum];
+			} else if (listType==0){
+				issue=listOfIssues.findByInd(itemNum);
+			}
 			self.workOnIssueSteps(issue,fncWork,false,fncNotExists);
 		}
-		self.parallelizeProcess(listOfIssues,fncProcessIndividualIssue,maxParallelThreads);
+		self.parallelizeProcess(numItems,fncProcessIndividualIssue,maxParallelThreads);
 	}
 	createNewIssueFromJsonSteps(jsonIssue,bMaintainLocked){
 		var self=this;

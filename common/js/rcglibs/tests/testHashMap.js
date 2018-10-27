@@ -1,21 +1,26 @@
 debugger;
-var nMaxItems=10;
+var hsTest=newHashMap();
+var nMaxItems=1000000;
 var fncGetRandomKey=function(){
-	return "key"+Math.floor(Math.random()*1000);
+	return "key"+Math.floor(Math.random()*nMaxItems);
 }
+var lastPercent=Math.floor(100*hsTest.length()/nMaxItems);
+var actPercent=Math.floor(100*hsTest.length()/nMaxItems);
 var key;
 loggerFactory.getLogger().enabled=true;
-var hsTest=newHashMap();
 while (hsTest.length()<nMaxItems){
 	key=fncGetRandomKey();
 	if (!hsTest.exists(key)){
 		hsTest.add(key,key);
+		actPercent=Math.floor(100*hsTest.length()/nMaxItems);
+		if (actPercent!=lastPercent){
+			log(actPercent+"%");
+			lastPercent=actPercent;
+		}
 	}
 }
 while (hsTest.length()>0){
 	key=fncGetRandomKey();
-	var lastPercent=Math.floor(hsTest.length()/nMaxItems);
-	var actPercent=Math.floor(hsTest.length()/nMaxItems);
 	if (hsTest.exists(key)){
 	    var iLength=hsTest.length();
 	    var iNodes=hsTest.nNodes;
@@ -26,8 +31,8 @@ while (hsTest.length()>0){
 	    if ((iNodes-1)!=hsTest.nNodes){
 	        logError("Error removing nNodes");
 	    }
-		actPercent=Math.floor(hsTest.length()/nMaxItems);
-		if (actPercent<lastPercent){
+		actPercent=Math.floor(100*hsTest.length()/nMaxItems);
+		if (actPercent!=lastPercent){
 			log(actPercent+"%");
 			lastPercent=actPercent;
 		}

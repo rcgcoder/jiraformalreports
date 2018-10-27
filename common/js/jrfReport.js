@@ -726,21 +726,12 @@ var jrfReport=class jrfReport {
 			var nStepsPlaned=0;
 			self.addStep("Extracting pending keys of ("+self.rootIssues.length()+") root issues",function(){
 				//debugger;
-				//self.walkAsync(self.rootIssues,fncExtractPendingKeys);
-				var fncCall=function(issue){
-					issue.fullLoad();
-					self.continueTask();
-				};
 				var fncProcess=function(issue){
-					self.addStep("Extracting Pending Keys",function(){
+					self.workOnIssueSteps(issue.getKey(),function(issue){
 						fncExtractPendingKeys(issue);
-						self.continueTask();
-					});
-					self.addStep("Unlock And Wait all Saved",function(){
-						issue.unlockAndWaitAllSave();
 					});
 				}
-				self.parallelizeCalls(self.rootIssues,fncCall,fncProcess);
+				self.parallelizeCalls(self.rootIssues,fncProcess);
 			});
 			self.addStep("Getting root base issues",function(){
 				alert("Extracted pending keys of initial root issues");

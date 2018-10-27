@@ -14,6 +14,8 @@ while (hsTest.length()<nMaxItems){
 }
 while (hsTest.length()>0){
 	key=fncGetRandomKey();
+	var lastPercent=Math.floor(hsTest.length()/nMaxItems);
+	var actPercent=Math.floor(hsTest.length()/nMaxItems);
 	if (hsTest.exists(key)){
 	    var iLength=hsTest.length();
 	    var iNodes=hsTest.nNodes;
@@ -24,5 +26,10 @@ while (hsTest.length()>0){
 	    if ((iNodes-1)!=hsTest.nNodes){
 	        logError("Error removing nNodes");
 	    }
+		actPercent=Math.floor(hsTest.length()/nMaxItems);
+		if (actPercent<lastPercent){
+			log(actPercent+"%");
+			lastPercent=actPercent;
+		}
 	}
 }

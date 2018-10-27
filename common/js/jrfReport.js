@@ -681,7 +681,6 @@ var jrfReport=class jrfReport {
 											issue.change();
 										}
 									});
-									self.continueTask();
 								} else {
 									fncAddToGroup(eLink);
 								}

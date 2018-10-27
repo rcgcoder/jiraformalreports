@@ -1533,6 +1533,8 @@ class RCGHashMapFactory{
 							self.refreshChildNumber(auxParent);
 							auxParent=auxParent.parent;
 						}
+						self.nNodes=(1+self.root.brothers.length)+node.nChilds;
+
 						self.updateFirstLast(nodSrc);
 						if (bChangePreviousParent){
 							self.updateFirstLast(previousParent);

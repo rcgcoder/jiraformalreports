@@ -140,6 +140,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		var self=this;
 		var storer=self.storer;
 		var countInactives=self.countInactiveObjects();
+		var countActives=self.countActiveObjects();
 		var countSaved=0;
 		var countNotNeedSave=0;
 		var countRemoved=0;
@@ -147,7 +148,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		storer.addStep("Saving All in a Global pseudothread",function(){
 			storer.addStep("Save Inactive objects is Started",function(){
 				console.log("Save all inactive objects Started ("
-								+"Initial:"+countInactives
+								+"Initial:"+countInactives +"+"+countActives
 								+",Total Issues:"+self.factory.list.length()
 								+")"+getMemStatus()
 								+ " Prev Task:"+storer.getRunningTask().forkId);
@@ -155,7 +156,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 			});
 			storer.addStep("Remove all inactive Objects ("+countInactives+")",function(){
 				console.log("Save all removing inactive objects ("
-						+"Initial:"+countInactives
+						+"Initial:"+countInactives +"+"+countActives
 						+",Total Issues:"+self.factory.list.length()
 						+")"+getMemStatus()
 						+ " Prev Task:"+storer.getRunningTask().forkId);

@@ -1026,6 +1026,7 @@ var jrfReport=class jrfReport {
 			self.addStep("Walking througth the roots to set to issuesAdded...",function(){
 				logError("Added "+countAdded+" "+ ((100*countAdded)/self.rootIssues.length()) +"% to the seletion JQL");
 				self.workOnListOfIssueSteps(self.rootIssues,function(issue){
+					var key=issue.getKey();
 					if (issue.isProjectExcluded()/*||(issue.isExcludedByFunction())*/){
 						//debugger;
 						nExcludedIssues++;

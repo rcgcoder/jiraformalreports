@@ -692,20 +692,10 @@ var jrfReport=class jrfReport {
 				}
 			};
 			var fncProcessChildAndExtract=function(jsonIssue,index,resultLength){
-				var issue;
-				self.addStep("Loading Issue",function(){
-					self.createNewIssueFromJsonSteps(jsonIssue,true);
-					self.continueTask();
-				});
-				self.addStep("Extracting Pending Keys",function(oIssue){
-					issue=oIssue;
-					fncExtractPendingKeys(issue);
-					self.continueTask();
-				});
-				self.addStep("Unlock And Wait all Saved",function(){
-					issue.unlockAndWaitAllSave();
-				});
-				//self.continueTask();
+				var fncNotExists=function(){
+					return self.loadJSONIssue(jsonIssue);
+				}
+				self.workOnIssueSteps(jsonIssue.key,fncExtractPendingKeys,undefined,false,fncNotExists);
 			};
 			
 			var nCallsStarted=0;
@@ -722,9 +712,7 @@ var jrfReport=class jrfReport {
 				//debugger;
 				var fncProcess=function(issue){
 					debugger;
-					self.workOnIssueSteps(issue.id,function(issue){
-						fncExtractPendingKeys(issue);
-					});
+					self.workOnIssueSteps(issue.id,fncExtractPendingKeys);
 				}
 				self.parallelizeProcess(self.rootIssues,fncProcess);
 			});

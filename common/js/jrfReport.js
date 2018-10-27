@@ -669,6 +669,7 @@ var jrfReport=class jrfReport {
 							var issueParent=self.allIssues.getById(eLink);
 							if (key!=""){
 								if (issueParent!=""){
+/*									console.log("Parent");
 									self.workOnIssueSteps(issueParent.id,function(issueParent){
 										if (!issueParent.existsLinkedIssueKey(key)){
 											issueParent.addLinkedIssueKey(key,key);
@@ -681,7 +682,7 @@ var jrfReport=class jrfReport {
 											issue.change();
 										}
 									});
-								} else {
+*/								} else {
 									fncAddToGroup(eLink);
 								}
 							} else {

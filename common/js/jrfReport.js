@@ -174,7 +174,8 @@ var jrfReport=class jrfReport {
 		self.addStep("Wait if is saving",function(){
 			log("Wait if saving...");
 			self.allIssues.waitForStorageSaveEnd();
-		})
+		});
+		var bExists=true;
 		self.addStep("Full Load issue"+key,function(){
 			oIssue=self.allIssues.getById(key);
 			if (oIssue==""){
@@ -189,6 +190,7 @@ var jrfReport=class jrfReport {
 					});
 				} else {
 					logError("Calling for a innexistent key "+key);
+					bExists=false;
 				}
 			} else {
 				self.addStep("full loading the issue",function(){
@@ -200,12 +202,15 @@ var jrfReport=class jrfReport {
 		});
 		if (isDefined(fncWork)){
 			self.addStep("Working",function(){
-				fncWork(oIssue);
+				if (bExists){
+					fncWork(oIssue);
+				}
 				self.continueTask();
 			});
 		};
 		if (bUnlock){
 			self.addStep("unlock and wait if necesary....",function(){
+				if (!bExists) return self.continueTask();
 				log("unlock and wait for saving:"+oIssue.getKey());
 				oIssue.unlockAndWaitAllSave();
 			});

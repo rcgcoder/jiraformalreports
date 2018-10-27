@@ -183,7 +183,8 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 								+",Removed:"+countRemoved
 								+",Unloaded:"+countUnloaded
 								+",Total Issues:"+self.factory.list.length()
-								+")"+getMemStatus());
+								+")"+getMemStatus()
+								+ " Prev Task:"+self.getRunningTask().forkId);
 				storer.continueTask();
 			});
 			storer.continueTask();

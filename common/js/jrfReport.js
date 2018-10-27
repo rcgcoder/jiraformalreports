@@ -731,7 +731,7 @@ var jrfReport=class jrfReport {
 						fncExtractPendingKeys(issue);
 					});
 				}
-				self.parallelizeCalls(self.rootIssues,fncProcess);
+				self.parallelizeProcess(self.rootIssues,fncProcess);
 			});
 			self.addStep("Getting root base issues",function(){
 				alert("Extracted pending keys of initial root issues");

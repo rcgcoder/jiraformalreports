@@ -1297,6 +1297,10 @@ class RCGTaskManager{
 		self.continueTask();
 	}
 	
+	extended_parallelizeProcess(hsListItemsToProcess,fncProcess,maxParallelThreads){
+		var self=this;
+		self.parallelizeCalls(hsListItemsToProcess,undefined,fncProcess,maxParallelThreads);
+	}
 	extended_parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads){
 		var self=this;
 		var tm=self.getTaskManager();
@@ -1345,6 +1349,7 @@ class RCGTaskManager{
 		obj.continueTask=self.extended_continueTask;
 		obj.internal_parallelizeCalls=self.internal_parallelizeCalls;
 		obj.parallelizeCalls=self.extended_parallelizeCalls;
+		obj.parallelizeProcess=self.extended_parallelizeProcess;
 	}
 	killTasks(){
 		var self=this;

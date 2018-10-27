@@ -669,12 +669,7 @@ var jrfReport=class jrfReport {
 							var issueParent=self.allIssues.getById(eLink);
 							if (key!=""){
 								if (issueParent!=""){
-									self.addStep("Loading Issue Parent "+ eLink,function(){
-										debugger;
-										issueParent.fullLoad();
-										self.continueTask();
-									});
-									self.addStep("Loading Issue Parent "+ eLink,function(){
+									self.workOnIssueSteps(issueParent.id,function(issueParent){
 										if (!issueParent.existsLinkedIssueKey(key)){
 											issueParent.addLinkedIssueKey(key,key);
 											issueParent.change();
@@ -685,8 +680,8 @@ var jrfReport=class jrfReport {
 											issueParent.change();
 											issue.change();
 										}
-										issueParent.unlockAndWaitAllSave();
 									});
+									self.continueTask();
 								} else {
 									fncAddToGroup(eLink);
 								}

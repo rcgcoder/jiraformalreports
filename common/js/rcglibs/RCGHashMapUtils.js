@@ -1541,26 +1541,25 @@ class RCGHashMapFactory{
 					debugger;
 					// Ahora el arbol
 					if ((pos.left=="")&&(pos.right=="")){ // si no tiene ninguna hoja solo tiene que desaparecer
+						self.logicDelete(pos); // descontamos el node y brothers del arbol.
+						//// quitamos el numero de hijos del parent y ancestros 
+						//self.updateChildNumber(theParent,-(1+pos.brothers.length)); (lo hace logicDelete)
 						if (pos.parent==""){ // si es root se limpia el arbol
 							self.root="";
-							self.updateFirstLast(self.root);
 						} else {
 							if (pos.isLeftChild()){
 								pos.parent.left="";
 							} else if (pos.isRightChild()){
 								pos.parent.right="";
 							}
-							self.updateFirstLast(pos.parent);
 						}
+						self.updateFirstLast(pos.parent);
 					} else if (pos.left!=""){
 						fncReplaceNode(pos.left.getLast(),pos);
 					} else if (pos.right!="") {
 						fncReplaceNode(pos.right.getFirst(),pos);
 					}
 					
-					self.logicDelete(pos); // descontamos el node y brothers del arbol.
-					//// quitamos el numero de hijos del parent y ancestros 
-					//self.updateChildNumber(theParent,-(1+pos.brothers.length)); (lo hace logicDelete)
 
 					chronoStopFunction();
 					pos.previous="";

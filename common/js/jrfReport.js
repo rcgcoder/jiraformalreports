@@ -727,7 +727,8 @@ var jrfReport=class jrfReport {
 			self.addStep("Extracting pending keys of ("+self.rootIssues.length()+") root issues",function(){
 				//debugger;
 				var fncProcess=function(issue){
-					self.workOnIssueSteps(issue.getKey(),function(issue){
+					debugger;
+					self.workOnIssueSteps(issue.id,function(issue){
 						fncExtractPendingKeys(issue);
 					});
 				}

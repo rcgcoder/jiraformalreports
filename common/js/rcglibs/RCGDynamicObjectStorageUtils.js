@@ -212,7 +212,17 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 						+self.countActiveObjects();
 		var nTotalPeak=(nTotalItems*self.peakMax);
 		if ((self.cacheItemsMax<nTotalItems)&&(self.countInactiveObjects()>nTotalPeak)){
-			return true;
+			var i=0;
+			while (i<self.inactiveObjects.length){
+				if (self.inactiveObjects[i].isChanged()){
+					i++;
+				} else {
+					self.inactiveObjects.splice(i, 1);
+				}
+			}
+			nTotalItems=self.countInactiveObjects()+self.countActiveObjects();
+			nTotalPeak=(nTotalItems*self.peakMax);
+			return ((self.cacheItemsMax<nTotalItems)&&(self.countInactiveObjects()>nTotalPeak));
 		}
 		return false;
 	}

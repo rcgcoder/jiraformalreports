@@ -1519,10 +1519,10 @@ class RCGHashMapFactory{
 							}
 						}
 						nodSrc.parent=nodTgt.parent;
-						updateChildNumber(nodSrc.parent,1+nodSrc.brothers.length);
+						self.updateChildNumber(nodSrc.parent,1+nodSrc.brothers.length);
 						self.updateFirstLast(nodSrc);
 						if (bChangePreviousParent){
-							updateChildNumber(previousParent,-(1+nodSrc.brothers.length));
+							self.updateChildNumber(previousParent,-(1+nodSrc.brothers.length));
 							self.updateFirstLast(previousParent);
 						}
 

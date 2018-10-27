@@ -696,7 +696,7 @@ var jrfReport=class jrfReport {
 				var fncNotExists=function(){
 					return self.loadJSONIssue(jsonIssue);
 				}
-				self.workOnIssueSteps(jsonIssue.key,fncExtractPendingKeys,undefined,false,fncNotExists);
+				self.workOnIssueSteps(jsonIssue.key,fncExtractPendingKeys,undefined,fncNotExists);
 			};
 			
 			var nCallsStarted=0;
@@ -711,14 +711,20 @@ var jrfReport=class jrfReport {
 			var nStepsPlaned=0;
 			self.addStep("Extracting pending keys of ("+self.rootIssues.length()+") root issues",function(){
 				//debugger;
+				var fncTestNothing=function(issue){
+					log("do nothing");
+				}
 				var fncProcess=function(issue){
 					debugger;
-					self.workOnIssueSteps(issue.id,fncExtractPendingKeys);
+//					self.workOnIssueSteps(issue.id,fncExtractPendingKeys);
+					self.workOnIssueSteps(issue.id,fncTestNothing);
+
 				}
 				self.parallelizeProcess(self.rootIssues,fncProcess);
 			});
 			self.addStep("Getting root base issues",function(){
 				alert("Extracted pending keys of initial root issues");
+				log("Getting root base issues");
 				//self.allIssues.changeStorableParams(undefined,undefined,false);
 				var fncRetrieveGroup=self.createManagedCallback(function(group){
 					debugger;

@@ -145,7 +145,20 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		var countRemoved=0;
 		var countUnloaded=0;
 		storer.addStep("Saving All in a Global pseudothread",function(){
+			storer.addStep("Save Inactive objects is Started",function(){
+				console.log("Save all inactive objects Started ("
+								+"Initial:"+countInactives
+								+",Total Issues:"+self.factory.list.length()
+								+")"+getMemStatus()
+								+ " Prev Task:"+storer.getRunningTask().forkId);
+				storer.continueTask();
+			});
 			storer.addStep("Remove all inactive Objects ("+countInactives+")",function(){
+				console.log("Save all removing inactive objects ("
+						+"Initial:"+countInactives
+						+",Total Issues:"+self.factory.list.length()
+						+")"+getMemStatus()
+						+ " Prev Task:"+storer.getRunningTask().forkId);
 				var fncSaveCall=function(inactiveObject){
 					//log("Saving All to Storage:"+inactiveObject.getId());
 					if (inactiveObject.isChanged()){
@@ -207,12 +220,12 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		var self=this;
 		var storer=self.storer;
 		var objId=dynObj.getId();
-		if (self.isFlushInactivesNeeded()){
+/*		if (self.isFlushInactivesNeeded()){
 			storer.addStep("Save all unlocked objects",function(){
 				self.saveAllUnlocked();
 			});
 		}
-		if (dynObj.isFullyLoaded()){
+*/		if (dynObj.isFullyLoaded()){
 			storer.addStep("Is already loaded. Returning the object "+self.factory.name +"/"+objId,function(){
 				storer.continueTask([dynObj]);
 			});

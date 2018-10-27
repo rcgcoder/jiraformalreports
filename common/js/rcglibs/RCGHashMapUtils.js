@@ -50,6 +50,7 @@ var RCGHashMap=class RCGHashMap{
 		obj.length=hashMapFactory.length;
 		obj.toArray=hashMapFactory.toArray;
 		obj.autoSwing=true;
+		obj.needsSwing=false;
 	}
 } 
 class RCGHashMapFactory{
@@ -436,6 +437,7 @@ class RCGHashMapFactory{
 					var nChilds=root.factory.nNodes;
 					var iProfMax=Math.log2(nChilds);
 					if ((iProf/iProfMax)>1.5){
+						root.factory.needsSwing=true;
 						root.factory.swing();
 					}
 				}
@@ -1066,6 +1068,7 @@ class RCGHashMapFactory{
 		swing(node){
 				if (this.root=="") return;
 				if (this.autoSwing==false) return;
+				this.needsSwing=false;
 //				log("Swinging");
 				chronoStartFunction();
 		//		this.check(this.root);
@@ -1458,11 +1461,6 @@ class RCGHashMapFactory{
 					if (pos.parent==""){
 						chronoStart("Borrando_Raiz",pos.key);
 					}
-					self.logicDelete(pos); // sacamos el node del arbol.
-					//// quitamos el numero de hijos del parent y ancestros 
-					//self.updateChildNumber(theParent,-(1+pos.brothers.length)); (lo hace logicDelete)
-
-					var theParent=pos.parent; //cogemos el antiguo parent del que dependera el hijo sustituto
 					
 					// antes de tocar el arbol tenemos que sustituir los next previous que son independientes
 					if ((pos.next!="")&&(pos.previous!="")){
@@ -1521,8 +1519,10 @@ class RCGHashMapFactory{
 							}
 						}
 						nodSrc.parent=nodTgt.parent;
+						updateChildNumber(nodSrc.parent,1+nodSrc.brothers.length);
 						self.updateFirstLast(nodSrc);
 						if (bChangePreviousParent){
+							updateChildNumber(previousParent,-(1+nodSrc.brothers.length));
 							self.updateFirstLast(previousParent);
 						}
 
@@ -1546,6 +1546,11 @@ class RCGHashMapFactory{
 					} else if (pos.right!="") {
 						fncReplaceNode(pos.right.getFirst(),pos);
 					}
+					
+					self.logicDelete(pos); // descontamos el node y brothers del arbol.
+					//// quitamos el numero de hijos del parent y ancestros 
+					//self.updateChildNumber(theParent,-(1+pos.brothers.length)); (lo hace logicDelete)
+
 					chronoStopFunction();
 					pos.previous="";
 					pos.next="";
@@ -1556,6 +1561,9 @@ class RCGHashMapFactory{
 						self.nodeCache="";
 					}
 					self.autoSwing=autoSwingBck;
+					if (self.autoSwing&&self.needsSwing){
+						self.swing();
+					}
 					return pos;
 				}
 			}

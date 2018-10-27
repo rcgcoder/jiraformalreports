@@ -61,6 +61,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 			self.inactiveObjects.add(key,dynObj);
 		}
 		if (self.needsAutoSave()){
+			log("key:"+key+" launch autosaving");
 			self.isSavingInactives=true;
 			storer.addStep("Dynamic "+self.factory.name+" AutoSave", function(){
 				storer.addStep("Autosaving",function(){

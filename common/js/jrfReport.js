@@ -531,7 +531,7 @@ var jrfReport=class jrfReport {
 		// first launch all issue retrieve ...
 		self.addStep("Getting All Issues in the Scope.... ",function(){
 			debugger;
-			self.allIssues.changeStorableParams(1000,0.10,true);
+			self.allIssues.changeStorableParams(100,0.10,true);
 			if (self.isReusingIssueList()){
 				return self.continueTask();
 			}
@@ -869,7 +869,9 @@ var jrfReport=class jrfReport {
 /*				self.rootProjects.walk(function(value,iProf,key){
 					log("Root Project: "+key);
 				});
-*/				log("Resume Root issues:"+self.rootIssues.length() +
+				
+*/				debugger;
+				log("Resume Root issues:"+self.rootIssues.length() +
 				    "		Root project:"+self.rootProjects.length()+
 				    "		Issues in scope:"+ self.allIssues.list.length());
 				self.continueTask();

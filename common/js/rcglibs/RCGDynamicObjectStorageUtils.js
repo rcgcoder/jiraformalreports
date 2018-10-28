@@ -224,7 +224,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		if ((self.cacheItemsMax<nTotalItems)&&(self.countInactiveObjects()>nTotalPeak)){
 			var i=0;
 			if (self.countInactiveUnchangedObjects()>0){
-				self.countInactiveUnchangedObjects.clear();
+				self.inactiveUnchangedObjects.clear();
 			}
 			var nTotalItemsAnt=nTotalItems;
 			nTotalItems=self.countInactiveObjects()+self.countActiveObjects();

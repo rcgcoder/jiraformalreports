@@ -174,10 +174,10 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 					//log("Saving All to Storage:"+inactiveObject.getId());
 					if (inactiveObject.isChanged()){
 						countSaved++;
+						self.saveToStorage(inactiveObject);
 					} else {
 						countNotNeedSave++;
 					}
-					self.saveToStorage(inactiveObject);
 					storer.continueTask();
 				}
 				var fncUnloadAndRemove=function(inactiveObject){

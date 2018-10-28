@@ -1095,7 +1095,9 @@ var jrfReport=class jrfReport {
 				}
 				var formulaChild=self.config.billingHierarchy;
 				var formulaAdvance=self.config.advanceHierarchy;
-				if (formulaChild!=""){
+				if (formulaChild==""){
+					self.continueTask();
+				} else {
 					var sFncFormulaChild="var bResult="+formulaChild+"; return bResult;";
 					var sFncFormulaAdv="var bResult="+formulaAdvance+"; return bResult;";
 					var fncIsChild=Function("child","parent",sFncFormulaChild);
@@ -1217,7 +1219,6 @@ var jrfReport=class jrfReport {
 					}
 					self.workOnListOfIssueSteps(self.childs,fncGetIssueChilds);
 				}
-				self.continueTask();
 			});
 			self.continueTask();
 		});

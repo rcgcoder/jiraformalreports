@@ -646,7 +646,7 @@ var jrfReport=class jrfReport {
 			var maxLettersInGroup=2000;
 			var grpLength=0;
 			var fncAddToGroup=function(issueKey){
-				if (isDefined(issueKey)&&(issuekey!="")){
+				if (isDefined(issueKey)&&(issueKey!="")){
 					if ((keyGroup.length>=maxItemsInGroup)
 						||
 						(((grpLength+issueKey.length))>=maxLettersInGroup)

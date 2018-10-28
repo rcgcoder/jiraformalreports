@@ -10,6 +10,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		self.storer=new RCGObjectStorageManager(self.factory.name,System.webapp.getTaskManager());
 		self.activeObjects=newHashMap();
 		self.inactiveObjects=newHashMap();
+		self.inactiveUnchangedObjects=newHashMap();
 		self.withAutoSave=false;
 //		self.lastAutoSavePeriod=1000;
 		self.autoSaveSemaphore=new RCGSemaphore(function(){return (self.needsAutoSave());});
@@ -33,16 +34,19 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		return this.activeObjects.length();
 	}
 	countInactiveObjects(){
-		return this.inactiveObjects.length();
+		return this.inactiveObjects.length()+this.inactiveUnchangedObjects.length();
+	}
+	countInactiveUnchangedObjects(){
+		return this.inactiveUnchangedObjects.length();
 	}
 	reserve(dynObj){
 		var self=this;
 		var key=dynObj.getId();
 		if (self.inactiveObjects.exists(key)){
-//			self.inactiveObjects.traceAll();
-//			debugger;
 			self.inactiveObjects.remove(key);
-//			self.inactiveObjects.traceAll();
+		}
+		if (self.inactiveUnchangedObjects.exists(key)){
+			self.inactiveUnchangedObjects.remove(key);
 		}
 		if (!self.activeObjects.exists(key)){
 			self.activeObjects.add(key,dynObj);
@@ -53,13 +57,16 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		var storer=self.storer;
 		var key=dynObj.getId();
 		if (self.activeObjects.exists(key)){
-//			self.activeObjects.traceAll();
-//			debugger;
 			self.activeObjects.remove(key);
-//			self.activeObjects.traceAll();
 		}
-		if (!self.inactiveObjects.exists(key)){
-			self.inactiveObjects.add(key,dynObj);
+		if (dynObj.isChanged()){
+			if (!self.inactiveObjects.exists(key)){
+				self.inactiveObjects.add(key,dynObj);
+			}
+		} else {
+			if (!self.inactiveUnchangedObjects.exists(key)){
+				self.inactiveUnchangedObjects.add(key,dynObj);
+			}
 		}
 		if (self.needsAutoSave()){
 			log("key:"+key+" launch autosaving");
@@ -216,15 +223,9 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		var nTotalPeak=(self.cacheItemsMax*self.peakMax);
 		if ((self.cacheItemsMax<nTotalItems)&&(self.countInactiveObjects()>nTotalPeak)){
 			var i=0;
-			var arrRemoves=[];
-			self.inactiveObjects.walk(function(elem,deep,key){
-				if (!elem.isChanged()) {
-					arrRemoves.push(key);
-				}
-			});
-			arrRemoves.forEach(function(key){
-				self.inactiveObjects.remove(key);
-			});
+			if (self.countInactiveUnchangedObjects()>0){
+				self.countInactiveUnchangedObjects.clear();
+			}
 			var nTotalItemsAnt=nTotalItems;
 			nTotalItems=self.countInactiveObjects()+self.countActiveObjects();
 			var bNeedsSave=((self.cacheItemsMax<nTotalItems)&&(self.countInactiveObjects()>nTotalPeak));

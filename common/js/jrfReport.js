@@ -646,18 +646,22 @@ var jrfReport=class jrfReport {
 			var maxLettersInGroup=2000;
 			var grpLength=0;
 			var fncAddToGroup=function(issueKey){
-				if ((keyGroup.length>=maxItemsInGroup)
-					||
-					(((grpLength+issueKey.length))>=maxLettersInGroup)
-					)
-						{
-					keyGroup=[];
-					grpLength=0;
-					arrKeyGroups.push(keyGroup);
+				if (isDefined(issueKey)&&(issuekey!="")){
+					if ((keyGroup.length>=maxItemsInGroup)
+						||
+						(((grpLength+issueKey.length))>=maxLettersInGroup)
+						)
+							{
+						keyGroup=[];
+						grpLength=0;
+						arrKeyGroups.push(keyGroup);
+					}
+					grpLength+=issueKey.length;
+					keyGroup.push(issueKey);
+					nPendingIssues++;
+				} else {
+					debugger;
 				}
-				grpLength+=issueKey.length;
-				keyGroup.push(issueKey);
-				nPendingIssues++;
 			}
 			var hsEpics=newHashMap();
 			var grpEpicsLength=0;

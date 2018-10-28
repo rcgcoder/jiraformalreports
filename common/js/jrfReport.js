@@ -1102,7 +1102,7 @@ var jrfReport=class jrfReport {
 					var fncIsAdvPart=Function("child","parent",sFncFormulaAdv);
 					
 		//			var treeIssues=issuesAdded.toArray([{doFieldName:"self",resultFieldName:"issue"}]);
-					var fncProcessChild=self.createManagedCallback(function(issueChild,issueParent){
+					var fncProcessChild=function(issueChild,issueParent){
 						var bIsChild=false;
 						try{
 							bIsChild=fncIsChild(issueChild,issueParent);
@@ -1172,7 +1172,7 @@ var jrfReport=class jrfReport {
 							issueParent.change();
 							issueChild.change();
 						}
-					});
+					};
 					var fncGetIssueChilds=function(issueParent){
 						var auxKey="Report";
 						if (isDefined(issueParent.getKey)){
@@ -1213,8 +1213,7 @@ var jrfReport=class jrfReport {
 							},1);
 							self.continueTask();
 						//},0,1,undefined,undefined,undefined,"INNER",undefined
-						}
-						);
+						});
 					}
 					self.workOnListOfIssueSteps(self.childs,fncGetIssueChilds);
 				}

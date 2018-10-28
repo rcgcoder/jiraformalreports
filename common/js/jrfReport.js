@@ -235,6 +235,8 @@ var jrfReport=class jrfReport {
 			listType=-1;
 			logError("The List of issues "+listOfIssues +" have to be an array or hashmap");
 		}
+		var lastPercent=0;
+		var actPercent=0;
 		if ((listType>=0)&&(numItems>0)){
 			var fncProcessIndividualIssue=function(itemNum){
 				var issue;
@@ -243,6 +245,11 @@ var jrfReport=class jrfReport {
 				} else if (listType==0){
 					issue=listOfIssues.findByInd(itemNum);
 				} 
+				actPercent=Math.round(10*itemNum/numIten))*10;
+				if (actPercent!=lastPercent){
+					logError("Perc:"+actPercent+"% issue:"+issue.id);
+					lastPercent=actPercent;
+				}
 				self.workOnIssueSteps(issue,fncWork,false,fncNotExists);
 			}
 			self.parallelizeProcess(numItems,fncProcessIndividualIssue,maxParallelThreads);

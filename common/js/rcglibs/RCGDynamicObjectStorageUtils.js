@@ -222,8 +222,11 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 			arrRemoves.forEach(function(key){
 				self.inactiveObjects.remove(key);
 			});
+			var nTotalItemsAnt=nTotalItems;
 			nTotalItems=self.countInactiveObjects()+self.countActiveObjects();
-			return ((self.cacheItemsMax<nTotalItems)&&(self.countInactiveObjects()>nTotalPeak));
+			var bNeedsSave=((self.cacheItemsMax<nTotalItems)&&(self.countInactiveObjects()>nTotalPeak));
+			log("removed "+ (nTotalItemsAnt-nTotalItems)+" now needs to save:"+bNeedsSave);
+			return bNeedsSave;
 		}
 		return false;
 	}

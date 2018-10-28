@@ -205,7 +205,7 @@ function newIssueFactory(report){
 					debugger;
 					report.addStep("Getting all the parents of "+dynAuxKey,function(){
 						debugger;
-						self.workOnListOfIssueSteps(hsParentsList,function(dynParent){
+						report.workOnListOfIssueSteps(hsParentsList,function(dynParent){
 							debugger;
 							var dynParentKey=dynParent.getKey();
 							dynParent.lock(); // lock for avoid the unload at end of list process
@@ -238,7 +238,7 @@ function newIssueFactory(report){
 							bReturn=true;
 							selectedParent=hsParentsList.findByInd(0);
 							hsParentsList.remove(selectedParent.getKey()); //the parent is loaded
-							self.workOnListOfIssueSteps(hsParentsList,function(dynParent){
+							report.workOnListOfIssueSteps(hsParentsList,function(dynParent){
 								var parentKey=dynParent.getKey();
 								dynAux.addError("The issue:"+ dynAuxKey+" has more than one parent.Removing relation with "+parentKey+" to continue process.");
 								dynParent.getChilds().remove(dynAuxKey);

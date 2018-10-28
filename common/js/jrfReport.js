@@ -531,7 +531,7 @@ var jrfReport=class jrfReport {
 		// first launch all issue retrieve ...
 		self.addStep("Getting All Issues in the Scope.... ",function(){
 			debugger;
-			self.allIssues.changeStorableParams(100,0.10,true);
+			self.allIssues.changeStorableParams(1000,0.10,true);
 			if (self.isReusingIssueList()){
 				return self.continueTask();
 			}

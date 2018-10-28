@@ -1230,8 +1230,8 @@ var jrfReport=class jrfReport {
 			self.addStep("Analizing child/parent billing cycles and multiple parents",function(){
 				self.workOnListOfIssueSteps(issuesAdded,function(issue){
 					var rootIssue=issue.getChildRoot();
-					if (!issuesAdded.exists(rootIssue.getKey())){
-						logError("The root issue: "+ rootIssue.getKey()+" does not exists in process issues list. Maybe an error");
+					if (!issuesAdded.exists(rootIssue.id)){ //using id because the root issue is not fullyloaded
+						logError("The root issue: "+ rootIssue.id +" does not exists in process issues list. Maybe an error");
 					}
 					self.addStep("Report is Checking the issue "+issue.getKey(),function(){
 						issue.checkChildCycles(self);

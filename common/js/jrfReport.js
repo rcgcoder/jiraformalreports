@@ -245,7 +245,10 @@ var jrfReport=class jrfReport {
 				} else if (listType==0){
 					issue=listOfIssues.findByInd(itemNum);
 				} 
-				actPercent=Math.round(10*itemNum/numItems)*10;
+				actPercent=Math.round(100*itemNum/numItems);
+				if (actPercent<2){
+					actPercent=(100*itemNum/numItems).toFixed(1);
+				}
 				if (actPercent!=lastPercent){
 					logError("Perc:"+actPercent+"% issue:"+issue.id);
 					lastPercent=actPercent;

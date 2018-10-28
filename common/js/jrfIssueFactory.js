@@ -162,7 +162,7 @@ function newIssueFactory(report){
 	dynObj.functions.add("getChildRootSteps",function(report){
 		var self=this;
 		var rootIssue=self;
-		var nParents=dynAux.countParentsChild();
+		var nParents=self.countParentsChild();
 		if (nParents>0){
 			var fncGetRootSteps=function(dynAux){
 				var nChildParents=dynAux.countParentsChild();

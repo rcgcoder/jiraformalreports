@@ -1233,10 +1233,12 @@ var jrfReport=class jrfReport {
 						issue.getChildRootSteps(self);
 					});
 					self.addStep("Checking root issue from "+issue.getKey(),function(rootIssue){
-						if (!issuesAdded.exists(rootIssue.getKey())){ //using id because the root issue is not fullyloaded
-							logError("The root issue: "+ rootIssue.getKey()+" does not exists in process issues list. Maybe an error");
+						if (issue.getKey()!=rootIssue.getKey()){
+							if (!issuesAdded.exists(rootIssue.getKey())){ //using id because the root issue is not fullyloaded
+								logError("The root issue: "+ rootIssue.getKey()+" does not exists in process issues list. Maybe an error");
+							}
+							rootIssue.unlock();
 						}
-						rootIssue.unlock();
 						self.continueTask();
 					});
 					self.addStep("Report is Checking the issue "+issue.getKey(),function(){

@@ -1230,7 +1230,7 @@ var jrfReport=class jrfReport {
 			self.addStep("Analizing child/parent billing cycles and multiple parents",function(){
 				self.workOnListOfIssueSteps(issuesAdded,function(issue){
 					self.addStep("Getting root issue from "+issue.getKey(),function(){
-						issue.getChildRootSteps();
+						issue.getChildRootSteps(self);
 					});
 					self.addStep("Checking root issue from "+issue.getKey(),function(rootIssue){
 						if (!issuesAdded.exists(rootIssue.getKey())){ //using id because the root issue is not fullyloaded
@@ -1242,7 +1242,7 @@ var jrfReport=class jrfReport {
 					self.addStep("Report is Checking the issue "+issue.getKey(),function(){
 						issue.checkChildCycles(self);
 					});
-				},1);
+				});
 			});
 			self.addStep("Creating child relations by issue custom formulas",function(){
 				self.workOnListOfIssueSteps(issuesAdded,function(issueParent){

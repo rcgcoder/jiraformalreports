@@ -1244,7 +1244,7 @@ var jrfReport=class jrfReport {
 					self.addStep("Report is Checking the issue "+issue.getKey(),function(){
 						issue.checkChildCycles(self);
 					});
-				});
+				},1);
 			});
 			self.addStep("Creating child relations by issue custom formulas",function(){
 				self.workOnListOfIssueSteps(issuesAdded,function(issueParent){

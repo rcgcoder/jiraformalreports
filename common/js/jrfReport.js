@@ -1209,7 +1209,7 @@ var jrfReport=class jrfReport {
 									if (issueChild.countChilds()>nChildsPrevChild) log("Child/Parent relation "+issueChild.getKey()+" -> "+ auxKey +" added.");
 								}
 							},1);
-							//self.continueTask();
+							self.continueTask();
 						//},0,1,undefined,undefined,undefined,"INNER",undefined
 						}
 						);
@@ -1224,15 +1224,15 @@ var jrfReport=class jrfReport {
 		self.addStep("Final Adjusts to retrieved list of issues",function(){
 			debugger;
 			self.addStep("Analizing child/parent billing cycles and multiple parents",function(){
-				self.walkAsync(issuesAdded,function(issue){
-					if (issue.hasChildCycle()){
-						logError("It's necessary to correct child/parent billing errors");
-					}
+				self.workOnListOfIssueSteps(issuesAdded,function(issue){
 					var rootIssue=issue.getChildRoot();
 					if (!issuesAdded.exists(rootIssue.getKey())){
 						logError("The root issue: "+ rootIssue.getKey()+" does not exists in process issues list. Maybe an error");
 					}
-				});
+					self.addStep("Report is Checking the issue "+issue.getKey(),function(){
+						issue.checkChildCycles(self);
+					});
+				},1);
 			});
 			self.addStep("Creating child relations by issue custom formulas",function(){
 				self.walkAsync(issuesAdded,function(issueParent){

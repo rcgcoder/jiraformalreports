@@ -245,7 +245,7 @@ function newIssueFactory(report){
 						report.continueTask();
 					});
 					report.addStep("Generating new steps for issue:"+selectedParent.getKey(),function(){
-						fncCheckIssue(selectedParent);
+						fncAddCheckIssueSteps(selectedParent);
 					});
 				});
 			} else {
@@ -255,7 +255,7 @@ function newIssueFactory(report){
 			}
 			report.continueTask();
 		});
-		fncCheckIssue(self);
+		fncAddCheckIssueSteps(self);
 	});
 	dynObj.functions.add("fieldExists",function(theFieldName){
 		var self=this;

@@ -252,6 +252,7 @@ var jrfReport=class jrfReport {
 				if (actPercent!=lastPercent){
 					logError("Perc:"+actPercent+"% issue:"+issue.id);
 					lastPercent=actPercent;
+					debugger;
 				}
 				self.workOnIssueSteps(issue,fncWork,false,fncNotExists);
 			}

@@ -1061,6 +1061,7 @@ var jrfReport=class jrfReport {
 				});
 			});
 			self.addStep("Finding Childs",function(){
+				log("Finding Childs");
 				if (nExcludedIssues>0){
 					log("Excluded "+nExcludedIssues+" root issues after apply project exclude list filter");
 				}

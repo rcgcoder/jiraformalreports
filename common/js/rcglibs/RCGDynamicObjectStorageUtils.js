@@ -74,15 +74,17 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 						storer.addStep("Saving....",function(){
 							self.saveAllUnlocked();
 						});
-						storer.addStep("Saved....",function(){
-							console.log("Saved... actual situation "+self.countInactiveObjects()
-									+" of "+self.countActiveObjects()
-									+ "/"+self.factory.list.length()
-									+ ". "+getMemStatus());							  
-							self.isSavingInactives=false;
-							storer.continueTask();
-						});
+					} else {
+						console.log("Saving....Some objects are changed and now is not necesary to save all");
 					}
+					storer.addStep("Saved....",function(){
+						console.log("Saved... freeing the semaphore.. actual situation "+self.countInactiveObjects()
+								+" of "+self.countActiveObjects()
+								+ "/"+self.factory.list.length()
+								+ ". "+getMemStatus());							  
+						self.isSavingInactives=false;
+						storer.continueTask();
+					});
 					storer.continueTask();
 				});
 				storer.continueTask();

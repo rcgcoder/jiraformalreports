@@ -159,17 +159,35 @@ function newIssueFactory(report){
 //		log("Error getting correct id of Field:"+sFieldName);
 		return sFieldName;
 	});
-	dynObj.functions.add("getChildRoot",function(){
+	dynObj.functions.add("getChildRootSteps",function(report){
 		var self=this;
-		var dynAux=self;
-		var nChildParents=dynAux.countParentsChild();
-		while (nChildParents>0){
-			var hsListParents=dynAux.getListParentsChild();
-			var firstNode=hsListParents.getFirst();
-			dynAux=firstNode.value;
-			nChildParents=dynAux.countParentsChild();
+		var rootIssue=self;
+		var nParents=dynAux.countParentsChild();
+		if (nParents>0){
+			var fncGetRootSteps=function(dynAux){
+				var nChildParents=dynAux.countParentsChild();
+				if (nChildParents>0){
+					var hsListParents=dynAux.getListParentsChild();
+					var firstNode=hsListParents.getFirst();
+					var parentIssue=firstNode.value;
+					dynAux.unlock();
+					report.workOnIssueSteps(parentIssue,function(issue){
+						fncGetRootSteps(issue);
+					},true);
+				} else {
+					rootIssue=dynAux;
+				}
+				report.continueTask();
+			};
+			report.addStep("Getting Child Root",function(){
+				var fncManagedCall=report.createManagedCallback(fncGetRootSteps);
+				fncManagedCall(self);
+			});
+			report.addStep("Returning value root of "+self.getKey(),function(){
+				report.continueTask([rootIssue]);
+			});
 		}
-		return dynAux;
+		report.continueTask([rootIssue]);
 	});
 	dynObj.functions.add("getErrorsAsHtml",function(returnTag){
 		var self=this;

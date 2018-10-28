@@ -250,7 +250,11 @@ var jrfReport=class jrfReport {
 					actPercent=(100*itemNum/numItems).toFixed(1);
 				}
 */				if (actPercent!=lastPercent){
-					logError("Perc:"+actPercent+"% issue:"+issue.id);
+					var theKey=issue;
+					if (!isString(theKey)){
+						theKey=issue.id;
+					}
+					logError("Perc:"+actPercent+"% issue:"+theKey);
 					lastPercent=actPercent;
 	//				debugger;
 				}
@@ -768,7 +772,7 @@ var jrfReport=class jrfReport {
 				log("Getting root base issues");
 				//self.allIssues.changeStorableParams(undefined,undefined,false);
 				var fncRetrieveGroup=self.createManagedCallback(function(group){
-					debugger;
+					//debugger;
 					if (group.length>0){
 						var sIssues="";
 						group.forEach(function (key){

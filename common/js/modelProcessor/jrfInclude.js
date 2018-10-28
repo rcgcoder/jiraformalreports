@@ -51,7 +51,7 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
             self.includeId=theHash;
             var cflc=System.webapp.getConfluence();
             var bCached=self.model.includeCache.exists(theHash);
-            debugger;
+            //debugger;
             if (bCached){
             	var oCached=self.model.includeCache.getValue(theHash);
             	var tagCached=oCached.tag;

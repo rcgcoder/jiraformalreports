@@ -257,6 +257,7 @@ function newIssueFactory(report){
 					report.continueTask();
 				});
 			} else {
+				debugger;
 				hsParents.walk(function(issue){
 					issue.unlock();
 				});

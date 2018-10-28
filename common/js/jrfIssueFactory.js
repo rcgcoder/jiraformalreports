@@ -191,7 +191,7 @@ function newIssueFactory(report){
 		var fncAddCheckIssueSteps=report.createManagedCallback(function(dynAux){
 			var dynAuxKey=dynAux.getKey();
 			if (dynAux.countParentsChild()>0){
-				hsParents.add(dynAuxKey,dynAuxKey);  // adding this issue to the list of parents
+				hsParents.add(dynAuxKey,dynAux);  // adding this issue to the list of parents
 				dynAux.lock(); // all the parents will be unlocked at the end
 				if (dynAux.countParentsChild()>1) {
 					dynAux.addError("The issue:"+ dynAuxKey +" has more ("+dynAux.countParentsChild()+") than one parent.");
@@ -259,7 +259,7 @@ function newIssueFactory(report){
 			} else {
 				debugger;
 				hsParents.walk(function(issue){
-					issue.unlock();
+					issue.unlock();// the parent is locked.....need to unlock
 				});
 			}
 			report.continueTask();

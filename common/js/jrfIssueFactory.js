@@ -200,9 +200,13 @@ function newIssueFactory(report){
 				var hsParentsList=dynAux.getListParentsChild();
 				var hsCycleParents=newHashMap();
 
+				debugger;
 				report.addStep("Checking issue:"+dynAuxKey,function(){
+					debugger;
 					report.addStep("Getting all the parents of "+dynAuxKey,function(){
+						debugger;
 						self.workOnListOfIssueSteps(hsParentsList,function(dynParent){
+							debugger;
 							var dynParentKey=dynParent.getKey();
 							dynParent.lock(); // lock for avoid the unload at end of list process
 							if (hsParents.exists(dynParentKey)){ //if the parent exist in the list......
@@ -213,6 +217,7 @@ function newIssueFactory(report){
 						report.continueTask();
 					});
 					report.addStep("Checking the CycleParents hashmap",function(){
+						debugger;
 						if (hsCycleParents.length()>0){ 
 							hsCycleParents.walk(function(dynParent){ // the parent is locked
 								var parentKey=dynParent.getKey();
@@ -228,6 +233,7 @@ function newIssueFactory(report){
 					});
 					var selectedParent;
 					report.addStep("Checking if issue has more than one parent",function(){
+						debugger;
 						if (hsParentsList.length()>1){
 							bReturn=true;
 							selectedParent=hsParentsList.findByInd(0);
@@ -245,8 +251,10 @@ function newIssueFactory(report){
 						report.continueTask();
 					});
 					report.addStep("Generating new steps for the parent issue of :"+dynAuxKey,function(){
+						debugger;
 						fncAddCheckIssueSteps(selectedParent);
 					});
+					report.continueTask();
 				});
 			} else {
 				hsParents.walk(function(issue){

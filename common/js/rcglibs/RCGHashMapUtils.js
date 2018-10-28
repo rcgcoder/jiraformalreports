@@ -1540,7 +1540,7 @@ class RCGHashMapFactory{
 							self.updateFirstLast(previousParent);
 						}
 					}
-					debugger;
+					//debugger;
 					// Ahora el arbol
 					if ((pos.left=="")&&(pos.right=="")){ // si no tiene ninguna hoja solo tiene que desaparecer
 						self.logicDelete(pos); // descontamos el node y brothers del arbol.

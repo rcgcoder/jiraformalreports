@@ -244,7 +244,7 @@ export class advSelector {
         
     onRetrieveTableData(theDlgSelector){
         var self=this;
-        debugger;
+        //debugger;
         log("Event onRetrieveTableData:"+self.name);
         var barrierAux;
         if (self.initialized==false){

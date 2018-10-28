@@ -37,13 +37,13 @@ class App {
     log("--- initializing class app.ts");
     taskManager.extendObject(self);
     var fncCheckForFinishLoad = function(){
-        debugger;
+        //debugger;
         var theApp=$("#appMain");
 //        taskm.setRunningTask(rTask);
         log("Checking if Systemjs app is loaded");
         if (theApp.length>0){ 
             log("App loaded!... launching systemjs initialization global thread");
-            debugger;
+            //debugger;
             self.addStep("Systemjs components Initializacion",function(){
                 
                 log("Running global systemjs components initialization");

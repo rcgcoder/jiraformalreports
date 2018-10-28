@@ -66,7 +66,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 			self.isSavingInactives=true;
 			storer.addStep("Dynamic "+self.factory.name+" AutoSave", function(){
 				storer.addStep("Autosaving",function(){
-					debugger;
+					//debugger;
 					if (self.isFlushInactivesNeeded()){
 						console.log("Saving "+self.countInactiveObjects()
 										+" of "+self.countActiveObjects()

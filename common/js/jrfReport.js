@@ -1211,7 +1211,7 @@ var jrfReport=class jrfReport {
 									if (issueChild.countChilds()>nChildsPrevChild) log("Child/Parent relation "+issueChild.getKey()+" -> "+ auxKey +" added.");
 								}
 							},1);
-							self.continueTask();
+							//self.continueTask();
 						//},0,1,undefined,undefined,undefined,"INNER",undefined
 						});
 					}

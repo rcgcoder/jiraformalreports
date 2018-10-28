@@ -190,7 +190,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 					}
 	//				storer.continueTask();
 				}
-				storer.parallelizeCalls(self.inactiveObjects,fncSaveCall,fncUnloadAndRemove,5);
+				storer.parallelizeCalls(self.inactiveObjects,fncSaveCall,fncUnloadAndRemove,50);
 			});
 			storer.addStep("Save Inactive objects is Finished",function(){
 				console.log("Saved all inactive objects ("

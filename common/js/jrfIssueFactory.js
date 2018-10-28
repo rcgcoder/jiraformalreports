@@ -244,7 +244,7 @@ function newIssueFactory(report){
 						}
 						report.continueTask();
 					});
-					report.addStep("Generating new steps for issue:"+selectedParent.getKey(),function(){
+					report.addStep("Generating new steps for the parent issue of :"+dynAuxKey,function(){
 						fncAddCheckIssueSteps(selectedParent);
 					});
 				});

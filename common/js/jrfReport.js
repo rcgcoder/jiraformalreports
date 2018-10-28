@@ -1200,7 +1200,7 @@ var jrfReport=class jrfReport {
 									if (issueParent.countChilds()>nChildsPrevParent) log("Child/Parent relation "+auxKey+" -> "+ issueChild.getKey()+" added.");
 									if (issueChild.countChilds()>nChildsPrevChild) log("Child/Parent relation "+issueChild.getKey()+" -> "+ auxKey +" added.");
 								}
-							});
+							},1);
 							self.continueTask();
 						//},0,1,undefined,undefined,undefined,"INNER",undefined
 						}
@@ -1212,8 +1212,6 @@ var jrfReport=class jrfReport {
 			});
 			self.continueTask();
 		});
-		
-		
 		
 		self.addStep("Final Adjusts to retrieved list of issues",function(){
 			debugger;

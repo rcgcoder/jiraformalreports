@@ -1239,93 +1239,69 @@ var jrfReport=class jrfReport {
 				},1);
 			});
 			self.addStep("Creating child relations by issue custom formulas",function(){
-				self.walkAsync(issuesAdded,function(issueParent){
+				self.workOnListOfIssueSteps(issuesAdded,function(issueParent){
 					if (issueParent.existsRelationFilter("Child")){
 						//debugger;
 						var childRelationFilter=issueParent.getRelationFilterById("Child");
-						self.addStep("Custom Relations for issue "+issueParent.getKey(),function(){
-							self.walkAsync(issuesAdded,function(issueChild){
-								if (issueChild.getKey()!=issueParent.getKey()){
-									var bResult=childRelationFilter([issueChild]);
-									if (bResult){
-										if (!issueParent.getChilds().exists(issueChild.getKey())){ // when reusing dynobj the childs are setted
-											issueParent.addChild(issueChild);
-										}
+						self.workOnListOfIssueSteps(issuesAdded,function(issueChild){
+							if (issueChild.getKey()!=issueParent.getKey()){
+								var bResult=childRelationFilter([issueChild]);
+								if (bResult){
+									if (!issueParent.getChilds().exists(issueChild.getKey())){ // when reusing dynobj the childs are setted
+										issueParent.addChild(issueChild);
+										issueParent.change();
+										issueChild.change();
 									}
 								}
-							});
+							}
 						});
 					}
 				});
 			});
 			var removeCounter=0;
 			var hsRemoveKeys=newHashMap();
-			if (self.config.removeChildIssuesFromRootList){
-				self.addStep("Identifying child issues in root list",function(){
-					self.walkAsync(issuesAdded,function(issue){
-						if (issue.countParentsChild()>0){
-							if (!hsRemoveKeys.exists(issue.getKey())){
-								removeCounter++;
-								hsRemoveKeys.add(issue.getKey(),{issue:issue});
-							}
-						}
-					});
-				});
+			
+			var bAdvancedWorks=self.objModel.variables.getVar("withAdvancedWorks");
+			var txtIniDate;
+			var dtIniDate;
+			if (bAdvancedWorks){
+	            txtIniDate=self.objModel.variables.getVar("ContractAdvancedDate"+"_text");
+	            dtIniDate=self.objModel.variables.getVar("ContractAdvancedDate");
+			} else {
+	            txtIniDate=self.objModel.variables.getVar("ContractInitDate"+"_text");
+	            dtIniDate=self.objModel.variables.getVar("ContractInitDate");
 			}
-			if (self.config.removeNotCreatedIssues){
-	            var txtEndDate=self.objModel.variables.getVar("ReportEndDate"+"_text");
-	            var rptEndDate=self.objModel.variables.getVar("ReportEndDate");
-				self.addStep("Identifying issues was not created at:"+txtEndDate,function(){
+			
+			
+			self.addStep("Identifying issues to exclude...",function(){
+				self.workOnListOfIssueSteps(issuesAdded,function(issue){
+		            var txtEndDate=self.objModel.variables.getVar("ReportEndDate"+"_text");
+		            var rptEndDate=self.objModel.variables.getVar("ReportEndDate");
 					var optGetFieldValues=[{key:"ifEmpty",value:0}];
-					self.walkAsync(issuesAdded,function(issue){
-						var faseAtEndReport=issue.fieldValue('Fase', false
-					            ,rptEndDate
-					            ,optGetFieldValues
-					            );
-						if ((faseAtEndReport<0)||(faseAtEndReport==="")){
-							if (!hsRemoveKeys.exists(issue.getKey())){
-								removeCounter++;
-								hsRemoveKeys.add(issue.getKey(),{issue:issue,removeFromParent:true});
-							}
-						}
-					});
-				});
-			}
-			if (self.config.removeClosedBefore){
-				var bAdvancedWorks=self.objModel.variables.getVar("withAdvancedWorks");
-				var txtIniDate;
-				var dtIniDate;
-				if (bAdvancedWorks){
-		            txtIniDate=self.objModel.variables.getVar("ContractAdvancedDate"+"_text");
-		            dtIniDate=self.objModel.variables.getVar("ContractAdvancedDate");
-				} else {
-		            txtIniDate=self.objModel.variables.getVar("ContractInitDate"+"_text");
-		            dtIniDate=self.objModel.variables.getVar("ContractInitDate");
-				}
-				self.addStep("Identifying issues was closed at:"+txtIniDate,function(){
-					var optGetFieldValues=[{key:"ifEmpty",value:0}];
-					self.walkAsync(issuesAdded,function(issue){
-						var faseAtEndReport=issue.fieldValue('Fase', false
-					            ,dtIniDate
-					            ,optGetFieldValues
-					            );
-						if ((faseAtEndReport>=4)){
-							if (!hsRemoveKeys.exists(issue.getKey())){
-								removeCounter++;
-								hsRemoveKeys.add(issue.getKey(),{issue:issue,removeFromParent:true});
-							}
-						}
-					});
-				});
-			}
-			self.addStep("Identifying issues by Exclude function",function(){
-				self.walkAsync(issuesAdded,function(issue){
-					if ((!hsRemoveKeys.exists(issue.getKey()))&&issue.isExcludedByFunction()){
+					var faseAtEndReport=issue.fieldValue('Fase', false
+				            ,rptEndDate
+				            ,optGetFieldValues
+				            );
+					var faseAtIniReport=issue.fieldValue('Fase', false
+				            ,dtIniDate
+				            ,optGetFieldValues
+				            );
+					if (issue.isExcludedByFunction()){
+						removeCounter++;
+						hsRemoveKeys.add(issue.getKey(),{issue:issue,removeFromParent:true});
+					} else if (self.config.removeChildIssuesFromRootList && (issue.countParentsChild()>0)){
+						removeCounter++;
+						hsRemoveKeys.add(issue.getKey(),{issue:issue});
+					} else if (self.config.removeNotCreatedIssues && ((faseAtEndReport<0)||(faseAtEndReport===""))){
+						removeCounter++;
+						hsRemoveKeys.add(issue.getKey(),{issue:issue,removeFromParent:true});
+					} else if (self.config.removeClosedBefore && (faseAtIniReport>=4)){
 						removeCounter++;
 						hsRemoveKeys.add(issue.getKey(),{issue:issue,removeFromParent:true});
 					}
 				});
 			});
+
 			
 			var nRemoves=0;
 			var nRootsPrevious=0;
@@ -1343,19 +1319,22 @@ var jrfReport=class jrfReport {
 				});*/
 				nRootsPrevious=self.childs.length();
 				self.walkAsync(hsRemoveKeys,function(issRemove){
-					var issue=issRemove.issue;
-					var issueKey=issue.getKey();
-					if (self.childs.exists(issueKey)){
-						self.childs.remove(issueKey);
-						issuesAdded.remove(issueKey);
-						nRemoves++;
-					}
-					if (isDefined(issRemove.removeFromParent)
-							&&issRemove.removeFromParent
-							&&(issue.countParentsChild()>0)){
-						var theParent=issue.getListParentsChild().getLast().value;
-						theParent.getChilds().remove(issueKey);
-					}
+					var issueBase=issRemove.issue;
+					self.workOnIssueSteps(issueBase,function(issue){
+						var issueKey=issue.getKey();
+						if (self.childs.exists(issueKey)){
+							self.childs.remove(issueKey);
+							issuesAdded.remove(issueKey);
+							nRemoves++;
+						}
+						if (isDefined(issRemove.removeFromParent)
+								&&issRemove.removeFromParent
+								&&(issue.countParentsChild()>0)){
+							self.workOnListOfIssueSteps(issue.getListParentsChild(),function(theParent){
+								theParent.getChilds().remove(issueKey);
+							});
+						}
+					});
 				});
 			});
 			self.addStep("Removing identified issues Finished",function(){
@@ -1369,11 +1348,8 @@ var jrfReport=class jrfReport {
 				loggerFactory.getLogger().enabled=false;
 				self.continueTask();
 			});
-			
 			self.continueTask();
-			
 		});
-		
 		
 		self.addStep("Processing Directives",function(){
 			//debugger;

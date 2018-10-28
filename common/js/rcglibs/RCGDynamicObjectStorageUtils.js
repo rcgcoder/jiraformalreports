@@ -3,6 +3,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		var self=this;
 		self.isSavingInactives=false;
 		self.savingSemaphore=new RCGSemaphore(function(){return (!self.isSavingInactives);});
+		self.concurrentSaveActionsMax=50;
 		self.cacheItemsMax=0;
 		self.peakMax=0.10;
 		self.factory=theFactory;
@@ -190,7 +191,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 					}
 	//				storer.continueTask();
 				}
-				storer.parallelizeCalls(self.inactiveObjects,fncSaveCall,fncUnloadAndRemove,50);
+				storer.parallelizeCalls(self.inactiveObjects,fncSaveCall,fncUnloadAndRemove,self.concurrentSaveActionsMax);
 			});
 			storer.addStep("Save Inactive objects is Finished",function(){
 				console.log("Saved all inactive objects ("

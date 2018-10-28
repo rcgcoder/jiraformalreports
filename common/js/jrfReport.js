@@ -1070,6 +1070,7 @@ var jrfReport=class jrfReport {
 				});
 			});
 			self.addStep("Walking througth the roots to set to issuesAdded...",function(){
+				debugger;
 				logError("Added "+countAdded+" "+ ((100*countAdded)/self.rootIssues.length()) +"% to the seletion JQL");
 				self.workOnListOfIssueSteps(self.rootIssues,function(issue){
 					var key=issue.getKey();
@@ -1087,6 +1088,7 @@ var jrfReport=class jrfReport {
 				});
 			});
 			self.addStep("Finding Childs",function(){
+				debugger;
 				log("Finding Childs");
 				if (nExcludedIssues>0){
 					log("Excluded "+nExcludedIssues+" root issues after apply project exclude list filter");

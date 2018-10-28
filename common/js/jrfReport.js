@@ -1183,37 +1183,26 @@ var jrfReport=class jrfReport {
 									relatedChilds.add(relatedIssueKey,relatedIssueKey);
 								}
 							}); 
-							relatedChilds.walk(function(issueChildStep){
-													var issueChild=issuesAdded.getValue(issueChildStep/*.actualNode.key*/);
-													if (!isString(issueChild)){
-														if (issueParent.getKey()==issueChild.getKey()){
-															debugger;
-															logError("Child and Parent are the same"+auxKey+" -> "+ issueParent.getKey());
-															log(issueParent.getRelatedIssuesByFunction());
-														} else {
-															var nChildsPrevParent=issueParent.countChilds();
-															var nChildsPrevChild=issueChild.countChilds();
-															fncProcessChild(issueChild,issueParent);
-															fncProcessChild(issueParent,issueChild);
-															if (issueParent.countChilds()>nChildsPrevParent) log("Child/Parent relation "+auxKey+" -> "+ issueChild.getKey()+" added.");
-															if (issueChild.countChilds()>nChildsPrevChild) log("Child/Parent relation "+issueChild.getKey()+" -> "+ auxKey +" added.");
-														}
-													} else {
-														logError("Related issue "+auxKey+" -> "+ issueChildStep +" have not been downloaded or is excluded");
-													}
-												});
+							self.workOnListOfIssueSteps(relatedChilds,function(issueChild){
+								if (issueParent.getKey()==issueChild.getKey()){
+									debugger;
+									logError("Child and Parent are the same"+auxKey+" -> "+ issueParent.getKey());
+									log(issueParent.getRelatedIssuesByFunction());
+								} else {
+									var nChildsPrevParent=issueParent.countChilds();
+									var nChildsPrevChild=issueChild.countChilds();
+									fncProcessChild(issueChild,issueParent);
+									fncProcessChild(issueParent,issueChild);
+									if (issueParent.countChilds()>nChildsPrevParent) log("Child/Parent relation "+auxKey+" -> "+ issueChild.getKey()+" added.");
+									if (issueChild.countChilds()>nChildsPrevChild) log("Child/Parent relation "+issueChild.getKey()+" -> "+ auxKey +" added.");
+								}
+							});
 							self.continueTask();
 						//},0,1,undefined,undefined,undefined,"INNER",undefined
 						}
 						);
 					}
-		
-					self.walkAsync(self.childs,function(childIssue){
-						if (childIssue==""){
-							logError("ChildIssue is ''");
-						}
-						fncGetIssueChilds(childIssue);
-					});
+					self.workOnListOfIssueSteps(self.childs,fncGetIssueChilds);
 				}
 				self.continueTask();
 			});
@@ -1223,6 +1212,7 @@ var jrfReport=class jrfReport {
 		
 		
 		self.addStep("Final Adjusts to retrieved list of issues",function(){
+			debugger;
 			self.addStep("Analizing child/parent billing cycles and multiple parents",function(){
 				self.walkAsync(issuesAdded,function(issue){
 					if (issue.hasChildCycle()){

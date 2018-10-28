@@ -158,7 +158,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 				storer.continueTask();
 			});
 			storer.addStep("Remove all inactive Objects ("+countInactives+")",function(){
-				console.log("Save all removing inactive objects ("
+				console.log("Save and removing inactive objects ("
 						+"Initial:"+countInactives +"+"+countActives
 						+",Total Issues:"+self.factory.list.length()
 						+")"+getMemStatus()

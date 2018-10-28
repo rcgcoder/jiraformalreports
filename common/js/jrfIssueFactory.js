@@ -234,9 +234,9 @@ function newIssueFactory(report){
 					var selectedParent;
 					report.addStep("Checking if issue has more than one parent",function(){
 						debugger;
+						selectedParent=hsParentsList.findByInd(0);
 						if (hsParentsList.length()>1){
 							bReturn=true;
-							selectedParent=hsParentsList.findByInd(0);
 							hsParentsList.remove(selectedParent.getKey()); //the parent is loaded
 							report.workOnListOfIssueSteps(hsParentsList,function(dynParent){
 								var parentKey=dynParent.getKey();

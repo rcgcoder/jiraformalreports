@@ -1127,6 +1127,8 @@ var jrfReport=class jrfReport {
 							if (!issuesAdded.exists(issueChild.getKey())){
 								issuesAdded.add(issueChild.getKey(),issueChild);
 							}
+							issueParent.change();
+							issueChild.change();
 						}
 						var bIsAdvPart=false;				
 						try{
@@ -1157,6 +1159,8 @@ var jrfReport=class jrfReport {
 							if (!issuesAdded.exists(issueChild.getKey())){
 								issuesAdded.add(issueChild.getKey(),issueChild);
 							}
+							issueParent.change();
+							issueChild.change();
 						}
 					});
 					var fncGetIssueChilds=function(issueParent){

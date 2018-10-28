@@ -231,17 +231,22 @@ var jrfReport=class jrfReport {
 		} else if (isHashMap(listOfIssues)){
 			numItems=listOfIssues.length();
 			listType=0;
+		} else {
+			listType=-1;
+			logError("The List of issues "+listOfIssues +" have to be an array or hashmap");
 		}
-		var fncProcessIndividualIssue=function(itemNum){
-			var issue;
-			if (listType==1){
-				issue=listOfIssues[itemNum];
-			} else if (listType==0){
-				issue=listOfIssues.findByInd(itemNum);
+		if ((listType>=0)&&(numItems>0)){
+			var fncProcessIndividualIssue=function(itemNum){
+				var issue;
+				if (listType==1){
+					issue=listOfIssues[itemNum];
+				} else if (listType==0){
+					issue=listOfIssues.findByInd(itemNum);
+				} 
+				self.workOnIssueSteps(issue,fncWork,false,fncNotExists);
 			}
-			self.workOnIssueSteps(issue,fncWork,false,fncNotExists);
+			self.parallelizeProcess(numItems,fncProcessIndividualIssue,maxParallelThreads);
 		}
-		self.parallelizeProcess(numItems,fncProcessIndividualIssue,maxParallelThreads);
 	}
 	createNewIssueFromJsonSteps(jsonIssue,bMaintainLocked){
 		var self=this;

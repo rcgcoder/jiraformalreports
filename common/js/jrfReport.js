@@ -261,6 +261,8 @@ var jrfReport=class jrfReport {
 				self.workOnIssueSteps(issue,fncWork,false,fncNotExists);
 			}
 			self.parallelizeProcess(numItems,fncProcessIndividualIssue,maxParallelThreads);
+		} else {
+			self.continueTask();
 		}
 	}
 	createNewIssueFromJsonSteps(jsonIssue,bMaintainLocked){

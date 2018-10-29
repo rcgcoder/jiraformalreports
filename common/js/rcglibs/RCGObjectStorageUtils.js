@@ -18,7 +18,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		this.onLoad=fncOnLoad;
 	}
 	isBaseType(itemType){
-		return (itemType=="s")||(itemType=="n")||(itemType=="b")||(itemType=="d");
+		return (itemType=="s")||(itemType=="n")||(itemType=="b");
 	}
 	getType(item){
 		if (isString(item))return "s";
@@ -53,6 +53,8 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			objToSave.type=self.getType(item);
 			if (self.isBaseType(objToSave.type)){
 				objToSave.value=item;
+			} else if (objToSave.type=="d"){
+				objToSave.value=(""+item);
 			} else if (objToSave.type=="a"){
 				objToSave.value=[];
 				item.forEach(function(elem){
@@ -180,8 +182,10 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			return objContent.value;
 		} else if (objContent.type=="null"/*"null"*/){
 			return null;
-		} else if (objContent.type=="undef"/*"null"*/){
+		} else if (objContent.type=="undef"/*"undef"*/){
 			return undefined;
+		} else if (objToSave.type=="d" /* date */){
+			return new Date(objContent.value);
 		} else if (objContent.type=="a"/*"array"*/){
 			objResult=[];
 			objContent.value.forEach(function(elem){

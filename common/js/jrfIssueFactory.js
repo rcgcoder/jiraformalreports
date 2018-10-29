@@ -179,6 +179,7 @@ function newIssueFactory(report){
 						report.continueTask([rootResult]);
 					});
 				});
+				report.continueTask();
 			});
 			report.addStep("returning rootIssue",function(){
 				report.continueTask([rootIssue]);

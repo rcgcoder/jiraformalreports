@@ -209,7 +209,7 @@ function newIssueFactory(report){
 		var dynAux=self;
 		var fncAddCheckIssueSteps=report.createManagedCallback(function(dynAux){
 			var dynAuxKey=dynAux.getKey();
-			if (dynAux.countParentsChild()>0){
+			if (false&&(dynAux.countParentsChild()>0)){
 				hsParents.add(dynAuxKey,dynAux);  // adding this issue to the list of parents
 				dynAux.lock(); // all the parents will be unlocked at the end
 				if (dynAux.countParentsChild()>1) {
@@ -218,7 +218,6 @@ function newIssueFactory(report){
 				}
 				var hsParentsList=dynAux.getListParentsChild();
 				var hsCycleParents=newHashMap();
-				debugger;
 				report.addStep("Checking issue:"+dynAuxKey,function(){
 					debugger;
 					report.addStep("Getting all the parents of "+dynAuxKey,function(){

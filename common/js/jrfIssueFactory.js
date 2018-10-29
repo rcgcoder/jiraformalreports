@@ -924,8 +924,13 @@ function newIssueFactory(report){
 		var auxVal=	self.fieldValue(sFieldName,false,undefined,otherParams); // getting actual Value
 		var history;
 		var bLocated=false;
-		for (var i=0;(i<arrLife.length) &&(!bLocated);i++){
+		for (var i=0;(i<arrLife.length) &&(!bLocated);i++){		
 			history=arrLife[i];
+			try {
+				var vTest=(history[0].getTime()<=dateTime.getTime());
+			}catch(err) {
+			    debugger;
+			}
 /*			log(sFieldName+" Life evaluating. Actual Value:" +JSON.stringify(auxVal)+ 
 					" Type:"+ history[3] + 
 					" Date:"+ history[0] + 

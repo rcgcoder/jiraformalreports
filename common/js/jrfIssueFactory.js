@@ -166,7 +166,7 @@ function newIssueFactory(report){
 		if (nParents==0){
 			report.continueTask([rootIssue]);
 		} else {
-			var hsListParents=dynAux.getListParentsChild();
+			var hsListParents=self.getListParentsChild();
 			var firstNode=hsListParents.getFirst();
 			var parentIssue=firstNode.value;
 			report.addStep("getting root from all parents",function(){

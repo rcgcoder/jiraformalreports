@@ -164,7 +164,7 @@ function newIssueFactory(report){
 		var rootIssue=self;
 		var nParents=self.countParentsChild();
 		if (nParents>0){
-			self.lock();
+			self.lock(); // to mantain locked.... at the end of the method
 			var fncGetRootSteps=function(dynAux){
 				var nChildParents=dynAux.countParentsChild();
 				if (nChildParents>0){
@@ -234,7 +234,7 @@ function newIssueFactory(report){
 								}
 							}
 						},1);
-						report.continueTask();
+//						report.continueTask();
 					});
 					report.addStep("Checking the CycleParents hashmap",function(){
 						debugger;
@@ -249,7 +249,7 @@ function newIssueFactory(report){
 								hsParentsList.remove(parentKey);
 							},1);
 						}
-						report.continueTask();
+//						report.continueTask();
 					});
 					var selectedParent;
 					report.addStep("Checking if issue has more than one parent",function(){
@@ -268,7 +268,7 @@ function newIssueFactory(report){
 								hsParentsList.remove(parentKey);
 							},1);
 						}
-						report.continueTask();
+//						report.continueTask();
 					});
 					report.addStep("Generating new steps for the parent issue of :"+dynAuxKey,function(){
 						debugger;

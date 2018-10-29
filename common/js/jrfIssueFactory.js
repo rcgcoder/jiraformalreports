@@ -207,9 +207,10 @@ function newIssueFactory(report){
 		var self=this;
 		var hsParents=newHashMap();
 		var dynAux=self;
-		var fncAddCheckIssueSteps=report.createManagedCallback(function(dynAux){
-			var dynAuxKey=dynAux.getKey();
-			if (false&&(dynAux.countParentsChild()>0)){
+		var selectedParent;
+		if (dynAux.countParentsChild()>0){
+			var fncAddCheckIssueSteps=function(dynAux){
+				var dynAuxKey=dynAux.getKey();
 				hsParents.add(dynAuxKey,dynAux);  // adding this issue to the list of parents
 				dynAux.lock(); // all the parents will be unlocked at the end
 				if (dynAux.countParentsChild()>1) {
@@ -235,7 +236,6 @@ function newIssueFactory(report){
 						},1);
 //						report.continueTask();
 					});
-					var selectedParent;
 					report.addStep("Checking if issue has Cycles and more than one parent",function(){
 						debugger;
 						if (hsCycleParents.length()>0){ 
@@ -266,22 +266,29 @@ function newIssueFactory(report){
 							report.continueTask();
 						}
 					});
-					report.addStep("Generating new steps for the parent issue of :"+dynAuxKey,function(){
-						debugger;
-						fncAddCheckIssueSteps(selectedParent);
-					});
 					report.continueTask();
 				});
-				report.continueTask();
-			} else {
-				debugger;
-				hsParents.walk(function(issue){
-					issue.unlock();// the parent is locked.....need to unlock
-				});
-				report.continueTask();
 			}
-		});
-		fncAddCheckIssueSteps(self);
+			var fncAddProcessIssue=report.createManagedCallback(function(issue){
+				report.addStep("Processing Issue",function(){
+					selectedParent=undefined;
+					fncAddCheckIssueSteps(issue);
+					report.continueTask();
+				});
+				report.addStep("Checking to add new try",function(){
+					if (isUndefined(selectedParent)){
+						hsParents.walk(function(issue){
+							issue.unlock();// the parent is locked.....need to unlock
+						});
+					} else {
+						fncAddProcessIssue(selectedParent);
+					}
+					report.continueTask();
+				});
+			});
+			fncAddProcessIssue(self);
+		}
+		report.continueTask();
 	});
 	dynObj.functions.add("fieldExists",function(theFieldName){
 		var self=this;

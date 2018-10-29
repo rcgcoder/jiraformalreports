@@ -236,7 +236,8 @@ function newIssueFactory(report){
 						},1);
 //						report.continueTask();
 					});
-					report.addStep("Checking the CycleParents hashmap",function(){
+					var selectedParent;
+					report.addStep("Checking if issue has Cycles and more than one parent",function(){
 						debugger;
 						if (hsCycleParents.length()>0){ 
 							hsCycleParents.walk(function(dynParent){ // the parent is locked
@@ -247,13 +248,8 @@ function newIssueFactory(report){
 								dynParent.change();
 								dynParent.unlock();
 								hsParentsList.remove(parentKey);
-							},1);
+							});
 						}
-//						report.continueTask();
-					});
-					var selectedParent;
-					report.addStep("Checking if issue has more than one parent",function(){
-						debugger;
 						selectedParent=hsParentsList.findByInd(0);
 						if (hsParentsList.length()>1){
 							bReturn=true;
@@ -267,8 +263,9 @@ function newIssueFactory(report){
 								dynParent.unlock();
 								hsParentsList.remove(parentKey);
 							},1);
+						} else {
+							report.continueTask();
 						}
-//						report.continueTask();
 					});
 					report.addStep("Generating new steps for the parent issue of :"+dynAuxKey,function(){
 						debugger;

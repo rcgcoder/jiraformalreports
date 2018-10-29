@@ -18,7 +18,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		this.onLoad=fncOnLoad;
 	}
 	isBaseType(itemType){
-		return (itemType=="s")||(itemType=="n")||(itemType=="b");
+		return (itemType=="s")||(itemType=="n")||(itemType=="b")||(itemType=="d");
 	}
 	getType(item){
 		if (isString(item))return "s";
@@ -26,6 +26,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		if (isBoolean(item))return "b";
 		if (isArray(item)) return "a";
 		if (isHashMap(item)) return "h";
+		if (isDate(item)) return "d";
 		if (isObject(item)){
 			if (isDefined(item.getStorageObject)){
 				if (isDefined(item.getFactory)){

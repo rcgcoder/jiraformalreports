@@ -217,7 +217,6 @@ function newIssueFactory(report){
 				}
 				var hsParentsList=dynAux.getListParentsChild();
 				var hsCycleParents=newHashMap();
-
 				debugger;
 				report.addStep("Checking issue:"+dynAuxKey,function(){
 					debugger;
@@ -228,8 +227,10 @@ function newIssueFactory(report){
 							var dynParentKey=dynParent.getKey();
 							dynParent.lock(); // lock for avoid the unload at end of list process
 							if (hsParents.exists(dynParentKey)){ //if the parent exist in the list......
-								hsCycleParents.add(dynParentKey,dynParent); // add this to the cycled....
-								dynParent.lock();
+								if (!hsCycleParents.exists(dynParentKey)){
+									hsCycleParents.add(dynParentKey,dynParent); // add this to the cycled....
+									dynParent.lock();
+								}
 							}
 						},1);
 						report.continueTask();
@@ -280,7 +281,7 @@ function newIssueFactory(report){
 					issue.unlock();// the parent is locked.....need to unlock
 				});
 			}
-			report.continueTask();
+			//report.continueTask();
 		});
 		fncAddCheckIssueSteps(self);
 	});

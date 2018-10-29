@@ -291,7 +291,6 @@ function newIssueFactory(report){
 			});
 			fncAddProcessIssue(self);
 		}
-		report.continueTask();
 	});
 	dynObj.functions.add("fieldExists",function(theFieldName){
 		var self=this;

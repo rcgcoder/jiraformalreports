@@ -275,6 +275,7 @@ function newIssueFactory(report){
 					});
 					report.continueTask();
 				});
+				report.continueTask();
 			} else {
 				debugger;
 				hsParents.walk(function(issue){

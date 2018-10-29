@@ -3,8 +3,8 @@ class RCGDateUtils {
 	isDate(value){
 		var vAux=value;
 		if ((isUndefined(vAux))
-			 ||(vAux==null)
-			 ||(vAux=="")) {
+			 ||(vAux===null)
+			 ||(vAux==="")) {
 			return false;
 		}
 		if ((typeof value==="object")&&(value.constructor.name=="Date")) return true;

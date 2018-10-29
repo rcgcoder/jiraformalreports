@@ -184,7 +184,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			return null;
 		} else if (objContent.type=="undef"/*"undef"*/){
 			return undefined;
-		} else if (objToSave.type=="d" /* date */){
+		} else if (objContent.type=="d" /* date */){
 			return new Date(objContent.value);
 		} else if (objContent.type=="a"/*"array"*/){
 			objResult=[];

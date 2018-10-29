@@ -163,32 +163,28 @@ function newIssueFactory(report){
 		var self=this;
 		var rootIssue=self;
 		var nParents=self.countParentsChild();
-		if (nParents>0){
-			self.lock(); // to mantain locked.... at the end of the method
-			var fncGetRootSteps=function(dynAux){
-				var nChildParents=dynAux.countParentsChild();
-				if (nChildParents>0){
-					var hsListParents=dynAux.getListParentsChild();
-					var firstNode=hsListParents.getFirst();
-					var parentIssue=firstNode.value;
-					dynAux.unlock();
-					report.workOnIssueSteps(parentIssue,function(issue){
-						fncGetRootSteps(issue);
-					},true);
-				} else {
-					rootIssue=dynAux;
-				}
-				report.continueTask();
-			};
-			report.addStep("Getting Child Root",function(){
-				var fncManagedCall=report.createManagedCallback(fncGetRootSteps);
-				fncManagedCall(self);
+		if (nParents==0){
+			report.continueTask([rootIssue]);
+		} else {
+			var hsListParents=dynAux.getListParentsChild();
+			var firstNode=hsListParents.getFirst();
+			var parentIssue=firstNode.value;
+			report.addStep("getting root from all parents",function(){
+				report.workOnIssueSteps(parentIssue,function(issue){
+					report.addStep("getting root from parent",function(){
+						issue.getChildRootSteps(report);
+					});
+					report.addStep("Assigning to rootIssue",function(rootResult){
+						rootIssue=rootResult;
+						report.continueTask([rootResult]);
+					});
+				});
 			});
-			report.addStep("Returning value root of "+self.getKey(),function(){
+			report.addStep("returning rootIssue",function(){
 				report.continueTask([rootIssue]);
 			});
+			report.continueTask();
 		}
-		report.continueTask([rootIssue]);
 	});
 	dynObj.functions.add("getErrorsAsHtml",function(returnTag){
 		var self=this;

@@ -271,12 +271,12 @@ function newIssueFactory(report){
 			}
 			var fncAddProcessIssue=report.createManagedCallback(function(issue){
 				report.addStep("Processing Issue",function(){
-					selectedParent=undefined;
+					selectedParent="";
 					fncAddCheckIssueSteps(issue);
 					report.continueTask();
 				});
 				report.addStep("Checking to add new try",function(){
-					if (isUndefined(selectedParent)){
+					if (selectedParent==""){
 						hsParents.walk(function(issue){
 							issue.unlock();// the parent is locked.....need to unlock
 						});

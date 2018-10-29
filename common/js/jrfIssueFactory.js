@@ -271,12 +271,18 @@ function newIssueFactory(report){
 			}
 			var fncAddProcessIssue=report.createManagedCallback(function(issue){
 				report.addStep("Processing Issue",function(){
-					selectedParent="";
+					selectedParent=undefined;
 					fncAddCheckIssueSteps(issue);
 					report.continueTask();
 				});
 				report.addStep("Checking to add new try",function(){
-					if (selectedParent==""){
+					var bFinish=false;
+					if ( isUndefined(selectedParent) || 
+						(isDefined(selectedParent)&&(selectedParent.countParentsChild()==0))
+					   )  {
+						bFinish=true;
+					} 
+					if (bFinish){
 						hsParents.walk(function(issue){
 							issue.unlock();// the parent is locked.....need to unlock
 						});

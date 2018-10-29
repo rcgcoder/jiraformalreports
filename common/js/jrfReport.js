@@ -1268,7 +1268,7 @@ var jrfReport=class jrfReport {
 			});
 			var removeCounter=0;
 			var hsRemoveKeys=newHashMap();
-			
+			debugger;
 			var bAdvancedWorks=self.objModel.variables.getVar("withAdvancedWorks");
 			var txtIniDate;
 			var dtIniDate;

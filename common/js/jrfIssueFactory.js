@@ -164,6 +164,7 @@ function newIssueFactory(report){
 		var rootIssue=self;
 		var nParents=self.countParentsChild();
 		if (nParents>0){
+			self.lock();
 			var fncGetRootSteps=function(dynAux){
 				var nChildParents=dynAux.countParentsChild();
 				if (nChildParents>0){

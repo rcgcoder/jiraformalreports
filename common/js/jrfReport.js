@@ -1242,7 +1242,8 @@ var jrfReport=class jrfReport {
 						self.continueTask();
 					});
 					self.addStep("Report is Checking the issue "+issue.getKey(),function(){
-						issue.checkChildCycles(self);
+//						issue.checkChildCycles(self);
+						self.continueTask();
 					});
 				},1);
 			});

@@ -280,8 +280,8 @@ function newIssueFactory(report){
 				hsParents.walk(function(issue){
 					issue.unlock();// the parent is locked.....need to unlock
 				});
+				report.continueTask();
 			}
-			//report.continueTask();
 		});
 		fncAddCheckIssueSteps(self);
 	});

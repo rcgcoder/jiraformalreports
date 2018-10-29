@@ -8,7 +8,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		self.onSave=fncSave;
 		self.onLoad=fncLoad;
 		self.onError=function(error){
-			alert("Error writing the object:"+e);
+			alert("Error writing the object:"+error);
 		}
 	}
 	setOnSave(fncOnSave){

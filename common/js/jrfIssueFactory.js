@@ -874,7 +874,11 @@ function newIssueFactory(report){
 					arrItems.forEach(function(chgField){
 						if ((chgField.field==sFieldName)||
 							(chgField.fieldId==sFieldName)){
-							arrResult.push([(new Date(sChangeDate)),chgField.fromString,chgField.toString,"system"]);
+							arrResult.push([
+											(new Date(sChangeDate)),
+											chgField.fromString,
+											chgField.toString
+											,"system"]);
 						}
 					});
 				});
@@ -882,7 +886,12 @@ function newIssueFactory(report){
 			var hsAdjusts=self.getFieldLifeAdjustById(sFieldName);
 			if (hsAdjusts!=""){
 				hsAdjusts.walk(function(oAdjust){
-					arrResult.push([oAdjust.effectDate,"",oAdjust.newValue,"adjust",oAdjust.fieldPath]);
+					arrResult.push([
+							(new Date(oAdjust.effectDate))
+							,""
+							,oAdjust.newValue
+							,"adjust"
+							,oAdjust.fieldPath]);
 				});
 			}
 		}

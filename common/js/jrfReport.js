@@ -1244,7 +1244,7 @@ var jrfReport=class jrfReport {
 						issue.checkChildCycles(self);
 						self.continueTask();
 					});
-				},1);
+				});
 			});
 			self.addStep("Creating child relations by issue custom formulas",function(){
 				self.workOnListOfIssueSteps(issuesAdded,function(issueParent){

@@ -19,6 +19,7 @@ var RCGDynamicObject=class RCGDynamicObject{
 		var self=this;
 		var factory=theFactory;
 		self.factory=factory;
+		self.isDynamicObject=true;
 		self.parentFactorys=[];
 		self.parentFactorys.push(factory);
 		self.extend=factory.extend;
@@ -70,6 +71,7 @@ var RCGDynamicObject=class RCGDynamicObject{
 		self.fullLoad=factory.fullLoad;
 		self.fullUnload=factory.fullUnload;
 		
+		self.setTaskManager=factory.setTaskManager;
 		self.storable=false;
 		self.setStorable=factory.setStorable;
 		self.changeStorableParams=factory.changeStorableParams;
@@ -83,7 +85,10 @@ var RCGDynamicObject=class RCGDynamicObject{
 		if (isDefined(storable)&&storable){
 			self.setStorable(true);
 		}
-
+		self.workOnSteps=factory.internal_workOnSteps;
+		self.workOnListSteps=factory.internal_workOnListSteps;
+	
+		
 		self.configFromExcel=factory.configFromExcel;
 		self.loadFromExcel=factory.loadFromExcel;
 		self.loadFromExceAsync=factory.loadFromExceAsync;
@@ -892,7 +897,6 @@ var factoryObjects=class factoryObjects{
 			newObj.setFullyUnloaded=this.setFullyUnloaded;
 			newObj.fullLoad=this.fullLoad;
 			newObj.fullUnload=this.fullUnload;
-			
 
 			this.updateAttributesFunctions(newObj);
 			
@@ -1091,6 +1095,10 @@ var factoryObjects=class factoryObjects{
 			self.setStoreManager(new RCGDynamicObjectStorage(self));
 		}
 	}
+	setTaskManager(theTaskManager){
+		var self=this;
+		theTaskManager.extendObject(self);
+	}
 	
 	changeStorableParams(cacheMaxItems,peakPercent,withAutoSave){
 		var self=this;
@@ -1151,6 +1159,117 @@ var factoryObjects=class factoryObjects{
 			self.continueTask();
 		};
 	}
+
+	internal_workOnSteps(theObjectOrKey,fncWork,bMaintainLocked,fncNotExists){
+		var oObj;
+		var self=this;
+		var bUnlock=true;
+		var key=theObject;
+		var bWasKey=true;
+		if (isObject(theObjectOrKey)){
+			bWasKey=false;
+			if (isDefined(theObjectOrKey.key)){
+				key=theObjectOrKey.key;
+			} else {
+				key=theObjectOrKey.id;
+			}	
+		}
+		if (isDefined(bMaintainLocked)&&bMaintainLocked) bUnlock=false;
+		oObj=self.getById(key);
+		if (isUndefined(self.continueTask)) { // is not defined
+			if (isDefined(fncNotExists)&&(oObj==="")){
+				var oObj=fncNotExists(key);
+			}
+			return fncWork(oObj);
+		} 
+		self.addStep("Wait if is saving",function(){
+			log("Wait if saving...");
+			self.waitForStorageSaveEnd();
+		});
+		var bExists=true;
+		self.addStep("Full Load storable Object"+key,function(){
+			if (oObj==""){
+				if (isDefined(fncNotExists)){
+					self.addStep("Custom not Exists Function",function(){
+						var rstObj=fncNotExists(key);
+						self.continueTask([rstObj]);
+					});
+					self.addStep("Custom not Exists Function returns Object",function(rstObj){
+						if (isDefined(rstObj)){
+							oObj=rstObj;
+							self.continueTask();
+						} else {
+							bExists=false;
+						}
+					});
+				} else {
+					logError("Calling for a innexistent key "+key);
+					bExists=false;
+				}
+			} else {
+				self.addStep("full loading the issue",function(){
+					oObj.fullLoad();
+					self.continueTask();
+				});
+			}
+			self.continueTask();
+		});
+		if (isDefined(fncWork)){
+			self.addStep("Working",function(){
+				if (bExists){
+					fncWork(oObj);
+				}
+				self.continueTask();
+			});
+		};
+		if (bUnlock){
+			self.addStep("unlock and wait if necesary....",function(){
+				if (!bExists) return self.continueTask();
+				log("unlock and wait for saving:"+oObj.getKey());
+				oObj.unlockAndWaitAllSave();
+			});
+		}
+		self.addStep("Return issue",function(){
+			log("Return issue:"+oObj.id);
+			self.continueTask([oObj]);
+		});
+//		self.continueTask();
+	}
+	
+	internal_workOnListSteps(listOfKeysOrObjects,fncWork,maxParallelThreads,fncNotExists){
+		var self=this;
+		var numItems=0;
+		var listType=0;
+		if (isArray(listOfKeysOrObjects)){
+			numItems=listOfObjects.length;
+			listType=1;
+		} else if (isHashMap(listOfKeysOrObjects)){
+			numItems=listOfObjects.length();
+			listType=0;
+		} else {
+			listType=-1;
+			logError("The List of objects "+listOfKeysOrObjects +" have to be an array or hashmap");
+		}
+		var lastPercent=0;
+		var actPercent=0;
+		if ((listType>=0)&&(numItems>0)){
+			var fncProcessIndividualObject=function(itemNum){
+				var item;
+				if (listType==1){
+					item=listOfKeysOrObjects[itemNum];
+				} else if (listType==0){
+					item=listOfKeysOrObjects.findByInd(itemNum);
+				} 
+				self.workOnSteps(fncWork,false,fncNotExists);
+			}
+			self.parallelizeProcess(numItems,fncProcessIndividualIssue,maxParallelThreads);
+		} else {
+			self.continueTask();
+		}
+	}
+
+
+	
 	toArray(arrFields){ //[{doFieldName:,resultFieldName},{}.{}]
 		// convert the list of objects to an array []
 		var arrResult=[]

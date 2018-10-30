@@ -284,4 +284,6 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		}
 		//storer.continueTask(); // not continues because the steps process at the end of the secuence
 	}
+
+
 }

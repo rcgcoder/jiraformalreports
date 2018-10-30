@@ -70,22 +70,9 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 //		var nItem=0;
 		self.rootBackUp=self.model.processingRoot;
 	}
-	loopItemProcess(eachElem,index,loopLength){
+	internal_ProcessLoopItem(newParent,bExpandAllRows,eachElem,index,loopLength){
+		
 		var self=this;
-		var bExpandAllRows=self.variables.getVar("expandAllRows");
-		if (bExpandAllRows=="")bExpandAllRows=false;
-//		debugger;
-		var newParent;
-		var bLastShowed=true;
-		if ((self.type=="root")||
-			(self.type=="child")||
-			(self.type=="advchild")||
-			(self.type=="list")
-			){
-			newParent=eachElem;
-		} else if (self.type=="array"){
-			newParent=self.reportElem;
-		}
 		var isRecursive=false;
 		if ((self.recursive!="")&&((self.replaceVarsAndExecute(self.recursive)+"").trim().toLowerCase()=="true")){
 			isRecursive=true;
@@ -252,6 +239,27 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				self.continueTask();
 			});
 			self.continueTask();
+		});
+	};
+	
+	loopItemProcess(eachElem,index,loopLength){
+		var self=this;
+		var bExpandAllRows=self.variables.getVar("expandAllRows");
+		if (bExpandAllRows=="")bExpandAllRows=false;
+//		debugger;
+		var newParent;
+		//var bLastShowed=true;
+		if ((self.type=="root")||
+			(self.type=="child")||
+			(self.type=="advchild")||
+			(self.type=="list")
+			){
+			newParent=eachElem;
+		} else if (self.type=="array"){
+			newParent=self.reportElem;
+		}
+		self.model.getReport().workOnIssueSteps(eachElem,function(){
+			self.internal_ProcessLoopItem(eachElem,bExpandAllRows,eachElem,index,loopLength);
 		});
 		return true; //allways continue
 	}

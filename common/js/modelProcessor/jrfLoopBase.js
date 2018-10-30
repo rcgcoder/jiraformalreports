@@ -34,7 +34,13 @@ var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition al
 		self.addStep("Processing the Loop",function(){
 			var iLoopIndex=0;
 			var bCancelLoop=false;
-			self.loopElements.walk(function(loopElem,iDeep,itemKey,iLoopIndex){
+			
+			self.parallelizeProcess(self.loopElements.length(),function(iLoopIndex){
+//			self.loopElements.walk(function(loopElem,iDeep,itemKey,iLoopIndex){
+				var loopElem=self.loopElements.findByInd(iLoopIndex);
+				if (isDefined(loopElem.isStorable)&&loopElem.isStorable()){
+					
+				}
 				self.addStep("Processing the Loop item:"+iLoopIndex + " of " +iLoopElemsCount,function(){
 					self.variables.pushVar("LoopElemsCount",iLoopElemsCount);
 					self.variables.pushVar("LoopIndex",iLoopIndex );
@@ -51,8 +57,8 @@ var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition al
 					self.variables.popVar("LoopElemsCount");
 					self.continueTask();
 				});
-			});
-			self.continueTask();
+			},1);
+//			self.continueTask();
 		});
 		self.addStep("Ending processing the Loop",function(){
 			self.loopEnd(iLoopElemsCount);

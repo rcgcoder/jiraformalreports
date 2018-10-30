@@ -163,8 +163,8 @@ function isUndefined(variable){
 function isDefined(variable){
 	return (typeof variable!=="undefined");
 }
-function isDefined(variable){
-	return (typeof variable!=="undefined");
+function isDynamicObject(variable){
+	return (isDefined(variable.factory)&&(variable.factory.isDynamicObject));
 }
 function isNull(variable){
 	return (variable===null);

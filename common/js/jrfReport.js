@@ -158,117 +158,6 @@ var jrfReport=class jrfReport {
 		//oIssue.unlock(); // dont Unlock.... loaded for use
 		return oIssue;
 	}
-	workOnIssueSteps(keyOrIssue,fncWork,bMaintainLocked,fncNotExists){
-		var oIssue;
-		var self=this;
-		var bUnlock=true;
-		var key=keyOrIssue;
-		if (isObject(keyOrIssue)){
-			if (isDefined(keyOrIssue.key)){
-				key=keyOrIssue.key;
-			} else {
-				key=keyOrIssue.id;
-			}	
-		}
-		if (isDefined(bMaintainLocked)&&bMaintainLocked) bUnlock=false;
-		self.addStep("Wait if is saving",function(){
-			log("Wait if saving...");
-			self.allIssues.waitForStorageSaveEnd();
-		});
-		var bExists=true;
-		self.addStep("Full Load issue"+key,function(){
-			oIssue=self.allIssues.getById(key);
-			if (oIssue==""){
-				if (isDefined(fncNotExists)){
-					self.addStep("Custom not Exists Function",function(){
-						var rstIssue=fncNotExists(key);
-						self.continueTask([rstIssue]);
-					});
-					self.addStep("Custom not Exists Function returns issue",function(rstIssue){
-						if (isDefined(rstIssue)){
-							oIssue=rstIssue;
-							self.continueTask();
-						} else {
-							bExists=false;
-						}
-					});
-				} else {
-					logError("Calling for a innexistent key "+key);
-					bExists=false;
-				}
-			} else {
-				self.addStep("full loading the issue",function(){
-					oIssue.fullLoad();
-					self.continueTask();
-				});
-			}
-			self.continueTask();
-		});
-		if (isDefined(fncWork)){
-			self.addStep("Working",function(){
-				if (bExists){
-					fncWork(oIssue);
-				}
-				self.continueTask();
-			});
-		};
-		if (bUnlock){
-			self.addStep("unlock and wait if necesary....",function(){
-				if (!bExists) return self.continueTask();
-				log("unlock and wait for saving:"+oIssue.getKey());
-				oIssue.unlockAndWaitAllSave();
-			});
-		}
-		self.addStep("Return issue",function(){
-			log("Return issue:"+oIssue.id);
-			self.continueTask([oIssue]);
-		});
-//		self.continueTask();
-	}
-	workOnListOfIssueSteps(listOfIssues,fncWork,maxParallelThreads,fncNotExists){
-		var self=this;
-		var numItems=0;
-		var listType=0;
-		if (isArray(listOfIssues)){
-			numItems=listOfIssues.length;
-			listType=1;
-		} else if (isHashMap(listOfIssues)){
-			numItems=listOfIssues.length();
-			listType=0;
-		} else {
-			listType=-1;
-			logError("The List of issues "+listOfIssues +" have to be an array or hashmap");
-		}
-		var lastPercent=0;
-		var actPercent=0;
-		if ((listType>=0)&&(numItems>0)){
-			var fncProcessIndividualIssue=function(itemNum){
-				var issue;
-				if (listType==1){
-					issue=listOfIssues[itemNum];
-				} else if (listType==0){
-					issue=listOfIssues.findByInd(itemNum);
-				} 
-/*				actPercent=Math.round(100*itemNum/numItems);
-				if (actPercent<2){
-					actPercent=(100*itemNum/numItems).toFixed(1);
-				}
-*/				if (actPercent!=lastPercent){
-					var theKey=issue;
-					if (!isString(theKey)){
-						theKey=issue.id;
-					}
-					logError("Perc:"+actPercent+"% issue:"+theKey);
-					lastPercent=actPercent;
-	//				debugger;
-				}
-				self.workOnIssueSteps(issue,fncWork,false,fncNotExists);
-			}
-			self.parallelizeProcess(numItems,fncProcessIndividualIssue,maxParallelThreads);
-		} else {
-			self.continueTask();
-		}
-	}
 	createNewIssueFromJsonSteps(jsonIssue,bMaintainLocked){
 		var self=this;
 		self.workOnIssueSteps(jsonIssue.key,undefined,bMaintainLocked,function(){
@@ -507,6 +396,14 @@ var jrfReport=class jrfReport {
 				return self.continueTask();
 			}
 			self.allIssues=newIssueFactory(self);
+			self.allIssues.setTaskManager(self.getTaskManager());
+			self.workOnIssueSteps=function(theObjectOrKey,fncWork,bMaintainLocked,fncNotExists){
+				self.allIssues.workOnSteps(theObjectOrKey,fncWork,bMaintainLocked,fncNotExists);
+			}
+			self.workOnListOfIssueSteps=function(listOfObjects,fncWork,maxParallelThreads,fncNotExists){
+				self.allIssues.workOnList(listOfKeysOrObjects,fncWork,maxParallelThreads,fncNotExists);
+			}
+
 			self.updatePrecomputedAccumulators=false;
 	        var bWithPrepcomps=self.config.ResetLeafPrecomputations;
 	        if (isDefined(bWithPrepcomps)&&bWithPrepcomps){

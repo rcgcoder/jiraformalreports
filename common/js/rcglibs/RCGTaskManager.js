@@ -1035,7 +1035,7 @@ class RCGTaskManager{
 			self.nextCalls.push({task:taskToRun,args:aArgs});
 			//taskToRun.callMethod(aArgs);
 		} else {
-			log("-->  FINISHING !!... InnerForks:"+self.innerForks.length+" Global Forks:"+self.globalForks.length+" "+getMemStatus());
+			logError("-->  FINISHING !!... InnerForks:"+self.innerForks.length+" Global Forks:"+self.globalForks.length+" "+getMemStatus());
 			self.changeStatus();
 			var i=0;
 			while (i< self.innerForks.length){
@@ -1068,7 +1068,7 @@ class RCGTaskManager{
 							window.gc();
 						},3000);
 			}
-			log("-->   FINISHED !! InnerForks:"+self.innerForks.length+" Global Forks:"+self.globalForks.length+ " "+getMemStatus());
+			logError("-->   FINISHED !! InnerForks:"+self.innerForks.length+" Global Forks:"+self.globalForks.length+ " "+getMemStatus());
 			self.asyncTimeWasted=0;
 //			return "";
 		}

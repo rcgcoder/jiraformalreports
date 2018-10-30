@@ -400,7 +400,7 @@ var jrfReport=class jrfReport {
 			self.workOnIssueSteps=function(theObjectOrKey,fncWork,bMaintainLocked,fncNotExists){
 				self.allIssues.workOnSteps(theObjectOrKey,fncWork,bMaintainLocked,fncNotExists);
 			}
-			self.workOnListOfIssueSteps=function(listOfObjects,fncWork,maxParallelThreads,fncNotExists){
+			self.workOnListOfIssueSteps=function(listOfKeysOrObjects,fncWork,maxParallelThreads,fncNotExists){
 				self.allIssues.workOnList(listOfKeysOrObjects,fncWork,maxParallelThreads,fncNotExists);
 			}
 

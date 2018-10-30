@@ -10,6 +10,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		self.onError=function(error){
 			alert("Error writing the object:"+error);
 		}
+		self.functions=newHashMap();
 	}
 	setOnSave(fncOnSave){
 		this.onSave=fncOnSave;
@@ -21,6 +22,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		return (itemType=="s")||(itemType=="n")||(itemType=="b");
 	}
 	getType(item){
+		if (isMethod(item))return "m";
 		if (isString(item))return "s";
 		if (isNumber(item))return "n";
 		if (isBoolean(item))return "b";
@@ -55,6 +57,15 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				objToSave.value=item;
 			} else if (objToSave.type=="d"){
 				objToSave.value=(""+item);
+			} else if (objToSave.type=="m"){
+				var sMethod=""+item.toString();
+				var hash = sha256.create();
+				hash.update(sFncFormula);
+				theHash=hash.hex();
+				if (!self.functions.exists(theHash)){
+					self.functions.add(theHash,item);
+				};
+				objToSave.value=theHash;
 			} else if (objToSave.type=="a"){
 				objToSave.value=[];
 				item.forEach(function(elem){
@@ -186,6 +197,10 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			return undefined;
 		} else if (objContent.type=="d" /* date */){
 			return new Date(objContent.value);
+		} else if (objContent.type=="m" /* method */){
+			var theHash=objContent.value;
+			var theMethod=self.functions.getValue(theHash);
+			return theMethod;
 		} else if (objContent.type=="a"/*"array"*/){
 			objResult=[];
 			objContent.value.forEach(function(elem){

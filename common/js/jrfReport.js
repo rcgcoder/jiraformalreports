@@ -1249,7 +1249,7 @@ var jrfReport=class jrfReport {
 			self.addStep("Creating child relations by issue custom formulas",function(){
 				self.workOnListOfIssueSteps(issuesAdded,function(issueParent){
 					if (issueParent.existsRelationFilter("Child")){
-						//debugger;
+						debugger;
 						var childRelationFilter=issueParent.getRelationFilterById("Child");
 						self.workOnListOfIssueSteps(issuesAdded,function(issueChild){
 							if (issueChild.getKey()!=issueParent.getKey()){

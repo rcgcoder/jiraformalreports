@@ -217,43 +217,38 @@ function newIssueFactory(report){
 				var hsParentsList=dynAux.getListParentsChild();
 				var arrParentsList=hsParentsList.toArray();
 				var hsCycleParents=newHashMap();
-				report.addStep("Checking issue:"+dynAuxKey,function(){
-					selectedParent=undefined;
-					report.addStep("Getting all ("+arrParentsList.length+") the parents of "+dynAuxKey,function(){
-						report.workOnListOfIssueSteps(arrParentsList,function(dynParent){
-							var dynParentKey=dynParent.getKey();
-							if (hsParents.exists(dynParentKey)){ //if the parent exist in the list......
-								dynAux.addError("The Issue:"+dynAuxKey+" has a cycle child/parent relation with "+dynParentKey+". Removing from relation.");
-								dynParent.getChilds().remove(dynAuxKey);
-								dynAux.change();
-								dynParent.change();
-							} else if (isUndefined(selectedParent)){
-								selectedParent=dynParent;
-							} else {
-								dynAux.addError("The issue:"+ dynAuxKey+" has more than one parent.Removing relation with "+parentKey+" to continue process.");
-								dynParent.getChilds().remove(dynAuxKey);
-								dynAux.change();
-								dynParent.change();
-							}
-						},1);
+				selectedParent=undefined;
+				report.addStep("Getting all ("+arrParentsList.length+") the parents of "+dynAuxKey,function(){
+					report.workOnListOfIssueSteps(arrParentsList,function(dynParent){
+						var dynParentKey=dynParent.getKey();
+						if (hsParents.exists(dynParentKey)){ //if the parent exist in the list......
+							dynAux.addError("The Issue:"+dynAuxKey+" has a cycle child/parent relation with "+dynParentKey+". Removing from relation.");
+							dynParent.getChilds().remove(dynAuxKey);
+							dynAux.change();
+							dynParent.change();
+						} else if (isUndefined(selectedParent)){
+							selectedParent=dynParent;
+						} else {
+							dynAux.addError("The issue:"+ dynAuxKey+" has more than one parent.Removing relation with "+parentKey+" to continue process.");
+							dynParent.getChilds().remove(dynAuxKey);
+							dynAux.change();
+							dynParent.change();
+						}
+					},1);
 //						report.continueTask();
+				});
+			}
+			var fncAddProcessIssue=report.createManagedCallback(function(inputIssue){
+				report.addStep("Processing Issue",function(){
+					report.workOnIssueSteps(inputIssue,function(issue){
+						fncAddCheckIssueSteps(issue);
 					});
 					report.continueTask();
 				});
-			}
-			var fncAddProcessIssue=report.createManagedCallback(function(issue){
-				report.addStep("Processing Issue",function(){
-					fncAddCheckIssueSteps(issue);
-					report.continueTask();
-				});
 				report.addStep("Checking to add new try",function(){
-					var bFinish=false;
-					if ( isUndefined(selectedParent) || 
+					if (!( isUndefined(selectedParent) || 
 						(isDefined(selectedParent)&&(selectedParent.countParentsChild()==0))
-					   )  {
-						bFinish=true;
-					} 
-					if (!bFinish){
+					   ))  {
 						fncAddProcessIssue(selectedParent);
 					}
 					report.continueTask();

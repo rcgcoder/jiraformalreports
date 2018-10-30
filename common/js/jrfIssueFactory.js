@@ -223,13 +223,15 @@ function newIssueFactory(report){
 						if (hsParents.exists(dynParentKey)){ //if the parent exist in the list......
 							dynAux.addError("The Issue:"+dynAuxKey+" has a cycle child/parent relation with "+dynParentKey+". Removing from relation.");
 							dynParent.getChilds().remove(dynAuxKey);
+							hsParentsList.remove(dynParentKey);
 							dynAux.change();
 							dynParent.change();
 						} else if (isUndefined(selectedParent)){
 							selectedParent=dynParent;
 						} else {
-							dynAux.addError("The issue:"+ dynAuxKey+" has more than one parent.Removing relation with "+parentKey+" to continue process.");
+							dynAux.addError("The issue:"+ dynAuxKey+" has more than one parent.Removing relation with "+dynParentKey+" to continue process.");
 							dynParent.getChilds().remove(dynAuxKey);
+							hsParentsList.remove(dynParentKey);
 							dynAux.change();
 							dynParent.change();
 						}

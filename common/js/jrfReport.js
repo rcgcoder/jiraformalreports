@@ -1367,117 +1367,123 @@ var jrfReport=class jrfReport {
 		});
 		
 		self.addStep("Processing Directives",function(){
-			//debugger;
+			debugger;
 			var hsVersions=newHashMap();
 			var hsAccumulators=newHashMap();
 			log("Analizing directives");
-			self.objModel.directives.walk(function(hsDirectives,iProof,sDirectiveKey){
-				hsDirectives.walk(function(sValue){
-					log(sDirectiveKey + " directive setted:"+sValue);
-					if ((sDirectiveKey=="use") && (sValue=="versions")){
-						self.treeIssues.walk(function(issue){
-							var arrVersions=issue.fieldValue("fixVersions");
-							arrVersions.forEach(function(version){
-								var name=version.name;
-								var released=version.released;
-								if (!hsVersions.exists(name)){
-									hsVersions.add(name,name);
-								};
-							});
-						});
-					} else if ((sDirectiveKey=="accumulators")
-								&&(!self.config.DontLoadLeafPrecomputations)){
-						// the directive accumulators is processed by the model 
-						var accumList=self.objModel.accumulatorList;
-						var hmKey;
-						accumList.walk(function(hsAccum,iProf,accumKey){
-							log("Type of accumulators:"+accumKey);		
-							hsAccum.walk(function(theFieldAccum){
-								issuesAdded.walk(function (issue){
-									if (issue.countParentsChild()==0){
-										hmKey=issue.getKey()+"."+theFieldAccum.key;
-										if (!hsAccumulators.exists(hmKey)){
-											hsAccumulators.add(hmKey,{issue:issue,key:theFieldAccum.key});
-										} else {
-											log("Key:"+hmKey+" is already added");
-										}
-									}
+			self.addStep("Analizing Directives",function() {
+				self.workOnListOfIssueSteps(issuesAdded,function(issue){
+					self.objModel.directives.walk(function(hsDirectives,iProof,sDirectiveKey){
+						hsDirectives.walk(function(sValue){
+							log(sDirectiveKey + " directive setted:"+sValue);
+							if ((sDirectiveKey=="use") && (sValue=="versions")){
+								var arrVersions=issue.fieldValue("fixVersions");
+								arrVersions.forEach(function(version){
+									var name=version.name;
+									var released=version.released;
+									if (!hsVersions.exists(name)){
+										hsVersions.add(name,name);
+									};
 								});
-							});
+							} else if ((sDirectiveKey=="accumulators")
+										&&(!self.config.DontLoadLeafPrecomputations)){
+								// the directive accumulators is processed by the model 
+								var accumList=self.objModel.accumulatorList;
+								var hmKey;
+								accumList.walk(function(hsAccum,iProf,accumKey){
+									log("Type of accumulators:"+accumKey);		
+									hsAccum.walk(function(theFieldAccum){
+										if (issue.countParentsChild()==0){
+											hmKey=issue.getKey()+"."+theFieldAccum.key;
+											if (!hsAccumulators.exists(hmKey)){
+												hsAccumulators.add(hmKey,{issue:issue,key:theFieldAccum.key});
+											} else {
+												log("Key:"+hmKey+" is already added");
+											}
+										}
+									});
+								});
+							}
 						});
-					}
+					});
 				});
 			});
-			if (hsAccumulators.length()>0){
-				self.addStep("Getting the accumulators",function(){
-					var fncCall=function(callInfo){
-						var issue=callInfo.issue;
-						var propKey=callInfo.key;
-						self.jira.getProperty(issue.getKey(),propKey);
-					};
-					var fncProcess=function(callInfo,objProperty){
-						var issue=callInfo.issue;
-						var propKey=callInfo.key;
-						if (objProperty!=""){
-							log("Start adding properties "+objProperty.key +" to issue:"+issue.getKey() );
-							issue.setPrecomputedPropertyLife(objProperty.key,objProperty.value);
-							log("End of adding properties "+objProperty.key +" to issue:"+issue.getKey() );
-						}
-					};
-					self.parallelizeCalls(hsAccumulators,fncCall,fncProcess);
-				});
-			}
-			if (hsVersions.length()>0){
-				log("Versions in report:"+hsVersions.length());
-				self.addStep("Version Directive Active. Getting "+hsVersions.length()+" Versions ....",function(){
-					var verCounter=0;
-					var sVersions="";
-					var fncGetVersionsIssues=function(sVersions){
-						self.addStep("Getting versions ("+sVersions+") issues",function(){
-							var fncProcessIssue=function(issue){
-								//debugger;
-								var oIssue;
-								if (!self.allIssues.list.exists(issue.key)){
-									oIssue=self.allIssues.new(issue.fields.summary,issue.key);
-									oIssue.setJiraObject(issue);
-									oIssue.updateInfo();
-									oIssue.setKey(issue.key);
-								} else {
-									oIssue=self.allIssues.list.getValue(issue.key);
+			self.addStep("Processing acummulators",function(){
+				if (hsAccumulators.length()>0){
+					self.addStep("Getting the accumulators",function(){
+						var fncCall=function(callInfo){
+							var issue=callInfo.issue;
+							var propKey=callInfo.key;
+							self.jira.getProperty(issue.id,propKey); //using id.... the issue is not fully loaded
+						};
+						var fncProcess=function(callInfo,objProperty){
+							self.workOnIssueSteps(callInfo.issue,function(issue){
+								if (objProperty!=""){
+									log("Start adding properties "+objProperty.key +" to issue:"+issue.getKey() );
+									issue.setPrecomputedPropertyLife(objProperty.key,objProperty.value);
+									log("End of adding properties "+objProperty.key +" to issue:"+issue.getKey() );
 								}
-								if (!self.treeIssues.exists(issue.key)){
-									self.treeIssues.add(issue.key,oIssue);
-								}
-							}
-							self.jira.processJQLIssues("fixVersion in ("+sVersions+")",
-													  fncProcessIssue
-													  ,undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
-						});
-					}
-					hsVersions.walk(function(versionName){
-						if (verCounter>=10){
-							fncGetVersionsIssues(sVersions);
-							verCounter=0;
-							sVersions="";
-						}
-						if (verCounter>0){
-							sVersions+=",";
-						}
-						sVersions+=versionName;
-						verCounter++;
+							});
+						};
+						self.parallelizeCalls(hsAccumulators,fncCall,fncProcess);
 					});
-					if ((verCounter>0)&&(verCounter<10)){
-						fncGetVersionsIssues(sVersions);
-					}
-				});
-			}
+				}
+				self.continueTask();
+			});
+			self.addStep("Processing versions",function(){
+				if (false &&(hsVersions.length()>0)){
+					log("Versions in report:"+hsVersions.length());
+					self.addStep("Version Directive Active. Getting "+hsVersions.length()+" Versions ....",function(){
+						var verCounter=0;
+						var sVersions="";
+						var fncGetVersionsIssues=function(sVersions){
+							self.addStep("Getting versions ("+sVersions+") issues",function(){
+								var fncProcessIssue=function(issue){
+									//debugger;
+									var oIssue;
+									if (!self.allIssues.list.exists(issue.key)){
+										oIssue=self.allIssues.new(issue.fields.summary,issue.key);
+										oIssue.setJiraObject(issue);
+										oIssue.updateInfo();
+										oIssue.setKey(issue.key);
+									} else {
+										oIssue=self.allIssues.list.getValue(issue.key);
+									}
+									if (!self.treeIssues.exists(issue.key)){
+										self.treeIssues.add(issue.key,oIssue);
+									}
+								}
+								self.jira.processJQLIssues("fixVersion in ("+sVersions+")",
+														  fncProcessIssue
+														  ,undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
+							});
+						}
+						hsVersions.walk(function(versionName){
+							if (verCounter>=10){
+								fncGetVersionsIssues(sVersions);
+								verCounter=0;
+								sVersions="";
+							}
+							if (verCounter>0){
+								sVersions+=",";
+							}
+							sVersions+=versionName;
+							verCounter++;
+						});
+						if ((verCounter>0)&&(verCounter<10)){
+							fncGetVersionsIssues(sVersions);
+						}
+					});
+				}
+				self.continueTask();
+			});
 			self.continueTask();
 		});
-
 		
 		// load report model and submodels
 		// Process Model with The Report
 		self.addStep("Processing Model",function(){
+			debugger;
 			var tm=self.getTaskManager();
 			tm.asyncTimeWasted=0;
 			tm.asyncTaskCallsBlock=5000;

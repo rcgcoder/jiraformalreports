@@ -1233,13 +1233,16 @@ var jrfReport=class jrfReport {
 			debugger;
 			self.addStep("Analizing child/parent billing cycles and multiple parents",function(){
 				self.workOnListOfIssueSteps(issuesAdded,function(issue){
-					self.addStep("Getting root issue from "+issue.getKey(),function(){
+					var issueKey=issue.getKey();
+					self.addStep("Getting root issue from "+issueKey,function(){
 						issue.getChildRootSteps(self);
 					});
-					self.addStep("Checking root issue from "+issue.getKey(),function(rootIssue){
-						if (issue.getKey()!=rootIssue.id){ //using id because the root issue is not fullyloaded
+					self.addStep("Checking root issue from "+issueKey,function(rootIssue){
+						if (issueKey!=rootIssue.id){ //using id because the root issue is not fullyloaded
 							if (!issuesAdded.exists(rootIssue.id)){ //using id because the root issue is not fullyloaded
-								logError("The root issue: "+ rootIssue.id+" does not exists in process issues list. Maybe an error");
+								logError("The "+issueKey+" root issue: "+ rootIssue.id+" does not exists in process issues list. Maybe an error");
+								issue.getListParentsChild().remove(rootIssue.id);
+								issue.change();
 							}
 						}
 						self.continueTask();

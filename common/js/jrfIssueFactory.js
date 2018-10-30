@@ -220,6 +220,7 @@ function newIssueFactory(report){
 				var fncNotExists=function(notExistsParentKey){
 					logError("Parent Issue "+notExistsParentKey+" of "+dynAuxKey+" does not exists... removing from list of parents");
 					hsParentsList.remove(notExistsParentKey);
+					dynAux.addError("The Issue:"+dynAuxKey+" has a parent relation with "+notExistsParentKey+". Issue "+notExistsParentKey+" is not retrieved maybe it has change the key.");
 					dynAux.change();
 					return undefined; // return undefined for not process the item
 				}

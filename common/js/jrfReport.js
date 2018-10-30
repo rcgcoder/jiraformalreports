@@ -401,7 +401,7 @@ var jrfReport=class jrfReport {
 				self.allIssues.workOnSteps(theObjectOrKey,fncWork,bMaintainLocked,fncNotExists);
 			}
 			self.workOnListOfIssueSteps=function(listOfKeysOrObjects,fncWork,maxParallelThreads,fncNotExists){
-				self.allIssues.workOnList(listOfKeysOrObjects,fncWork,maxParallelThreads,fncNotExists);
+				self.allIssues.workOnListSteps(listOfKeysOrObjects,fncWork,maxParallelThreads,fncNotExists);
 			}
 
 			self.updatePrecomputedAccumulators=false;

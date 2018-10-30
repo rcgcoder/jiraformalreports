@@ -1260,7 +1260,7 @@ var factoryObjects=class factoryObjects{
 				} 
 				self.workOnSteps(fncWork,false,fncNotExists);
 			}
-			self.parallelizeProcess(numItems,fncProcessIndividualIssue,maxParallelThreads);
+			self.parallelizeProcess(numItems,fncProcessIndividualObject,maxParallelThreads);
 		} else {
 			self.continueTask();
 		}

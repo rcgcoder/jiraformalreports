@@ -1164,10 +1164,8 @@ var factoryObjects=class factoryObjects{
 		var oObj;
 		var self=this;
 		var bUnlock=true;
-		var key=theObject;
-		var bWasKey=true;
+		var key=theObjectOrKey;
 		if (isObject(theObjectOrKey)){
-			bWasKey=false;
 			if (isDefined(theObjectOrKey.key)){
 				key=theObjectOrKey.key;
 			} else {

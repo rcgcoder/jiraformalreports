@@ -1307,25 +1307,28 @@ class RCGTaskManager{
 		var bckAutoFree;
 		var bckTaskCallsBlock;
 		var bckTaskCallsMaxDeep;
-		self.addStep("Change autofree and taskCallsblock", function(){
-			log("Change autofree");
-			bckAutoFree=tm.autoFree;
-			bckTaskCallsBlock=tm.asyncTaskCallsBlock;
-			bckTaskCallsMaxDeep=tm.asyncTaskCallsMaxDeep;
-//			tm.autoFree=false;
-			tm.asyncTaskCallsBlock=0;
-			tm.asyncTaskCallsMaxDeep=0;
-			tm.next();
-		});
-		self.addStep("Call parallelized pseudoThreaded",function(){
-			log("Call internal parallelized..");
-			self.internal_parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads);
-		});
-		self.addStep("Restore AutoFree and CallsBlock params",function(){
-			log("Restore autofree and callsblock..");
-//			tm.autoFree=bckAutoFree;
-			tm.asyncTaskCallsBlock=bckTaskCallsBlock;
-			tm.asyncTaskCallsMaxDeep=bckTaskCallsMaxDeep;
+		self.addStep("Parallelize launch Shell",function(){
+			self.addStep("Change autofree and taskCallsblock", function(){
+				log("Change autofree");
+				bckAutoFree=tm.autoFree;
+				bckTaskCallsBlock=tm.asyncTaskCallsBlock;
+				bckTaskCallsMaxDeep=tm.asyncTaskCallsMaxDeep;
+	//			tm.autoFree=false;
+				tm.asyncTaskCallsBlock=0;
+				tm.asyncTaskCallsMaxDeep=0;
+				tm.next();
+			});
+			self.addStep("Call parallelized pseudoThreaded",function(){
+				log("Call internal parallelized..");
+				self.internal_parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads);
+			});
+			self.addStep("Restore AutoFree and CallsBlock params",function(){
+				log("Restore autofree and callsblock..");
+	//			tm.autoFree=bckAutoFree;
+				tm.asyncTaskCallsBlock=bckTaskCallsBlock;
+				tm.asyncTaskCallsMaxDeep=bckTaskCallsMaxDeep;
+				tm.next();
+			});
 			tm.next();
 		});
 		tm.next();

@@ -61,7 +61,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				var sFncFormula=""+item.toString();
 				var hash = sha256.create();
 				hash.update(sFncFormula);
-				theHash=hash.hex();
+				var theHash=hash.hex();
 				if (!self.functions.exists(theHash)){
 					self.functions.add(theHash,item);
 				};

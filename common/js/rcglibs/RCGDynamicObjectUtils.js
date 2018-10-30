@@ -1258,7 +1258,7 @@ var factoryObjects=class factoryObjects{
 				} else if (listType==0){
 					item=listOfKeysOrObjects.findByInd(itemNum);
 				} 
-				self.workOnSteps(fncWork,false,fncNotExists);
+				self.workOnSteps(item,fncWork,false,fncNotExists);
 			}
 			self.parallelizeProcess(numItems,fncProcessIndividualObject,maxParallelThreads);
 		} else {

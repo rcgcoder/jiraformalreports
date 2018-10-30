@@ -185,8 +185,12 @@ var jrfReport=class jrfReport {
 						self.continueTask([rstIssue]);
 					});
 					self.addStep("Custom not Exists Function returns issue",function(rstIssue){
-						oIssue=rstIssue;
-						self.continueTask();
+						if (isDefined(rstIssue)){
+							oIssue=rstIssue;
+							self.continueTask();
+						} else {
+							bExists=false;
+						}
 					});
 				} else {
 					logError("Calling for a innexistent key "+key);

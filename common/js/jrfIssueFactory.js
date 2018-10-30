@@ -217,6 +217,12 @@ function newIssueFactory(report){
 				var arrParentsList=hsParentsList.toArray();
 				var hsCycleParents=newHashMap();
 				selectedParent=undefined;
+				var fncNotExists=function(notExistsParentKey){
+					logError("Parent Issue "+notExistsParentKey+" of "+dynAuxKey+" does not exists... removing from list of parents");
+					hsParentsList.remove(notExistsParentKey);
+					dynAux.change();
+					return undefined; // return undefined for not process the item
+				}
 				report.addStep("Getting all ("+arrParentsList.length+") the parents of "+dynAuxKey,function(){
 					report.workOnListOfIssueSteps(arrParentsList,function(dynParent){
 						var dynParentKey=dynParent.getKey();
@@ -235,7 +241,7 @@ function newIssueFactory(report){
 							dynAux.change();
 							dynParent.change();
 						}
-					},1);
+					},1,fncNotExists);
 //						report.continueTask();
 				});
 			}

@@ -1239,10 +1239,10 @@ var factoryObjects=class factoryObjects{
 		var numItems=0;
 		var listType=0;
 		if (isArray(listOfKeysOrObjects)){
-			numItems=listOfObjects.length;
+			numItems=listOfKeysOrObjects.length;
 			listType=1;
 		} else if (isHashMap(listOfKeysOrObjects)){
-			numItems=listOfObjects.length();
+			numItems=listOfKeysOrObjects.length();
 			listType=0;
 		} else {
 			listType=-1;

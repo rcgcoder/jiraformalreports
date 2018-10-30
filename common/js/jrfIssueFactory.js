@@ -209,7 +209,6 @@ function newIssueFactory(report){
 			var fncAddCheckIssueSteps=function(dynAux){
 				var dynAuxKey=dynAux.getKey();
 				hsParents.add(dynAuxKey,dynAux);  // adding this issue to the list of parents
-				dynAux.lock(); // all the parents will be unlocked at the end
 				if (dynAux.countParentsChild()>1) {
 					dynAux.addError("The issue:"+ dynAuxKey +" has more ("+dynAux.countParentsChild()+") than one parent.");
 					dynAux.change();

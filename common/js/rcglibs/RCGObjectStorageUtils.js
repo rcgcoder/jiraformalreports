@@ -58,7 +58,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			} else if (objToSave.type=="d"){
 				objToSave.value=(""+item);
 			} else if (objToSave.type=="m"){
-				var sMethod=""+item.toString();
+				var sFncFormula=""+item.toString();
 				var hash = sha256.create();
 				hash.update(sFncFormula);
 				theHash=hash.hex();

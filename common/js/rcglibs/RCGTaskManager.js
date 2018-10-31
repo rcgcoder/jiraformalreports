@@ -1298,7 +1298,7 @@ class RCGTaskManager{
 //					log("Parallel Step "+iThread);
 					var fncParallelCallSubSteps=self.createManagedCallback(fncAddThreadSubSteps);
 					fncParallelCallSubSteps(iThread,fncParallelCallSubSteps);
-					self.continueTask();
+//					self.continueTask();
 				},0,1,undefined,undefined,undefined,"INNER",undefined
 				);
 			}

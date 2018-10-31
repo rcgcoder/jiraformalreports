@@ -1196,7 +1196,7 @@ class RCGTaskManager{
 	}
 	internal_parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads){
 		var self=this;
-		if (isUndefined(fncCall)||isUndefined(fncProcess)) return self.continueTask();
+		if (isUndefined(fncCall)&&isUndefined(fncProcess)) return self.continueTask();
 		var maxThreads=10;
 		if (isDefined(maxParallelThreads)) maxThreads=maxParallelThreads; 
 		var nTotalCalls=0;

@@ -1288,6 +1288,7 @@ class RCGTaskManager{
 				});
 				self.addStep("If remaining.... launch a new block",function(){
 					if (isRemaining()){
+						debugger;
 						fncParallelCallSubSteps(iThread,fncParallelCallSubSteps);
 					}
 					self.continueTask();

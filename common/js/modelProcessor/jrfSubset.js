@@ -75,13 +75,20 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 			hsResults=parent["get"+recursiveField+"s"]();
 		}
 		var vKey;
-		hsResults.walk(function(child){
-			vKey=child[childKeyFunctionName]();
+		var fncProcessChild=function(child){
+			var vKey=child[childKeyFunctionName]();
 			if (!hsActualValues.exists(vKey)){
 				hsActualValues.add(vKey,child);
 				self.includeRecursiveElements(child,recursiveField,childKeyFunctionName,hsActualValues);
 			}
-		})
+		}
+		self.parallelizeProcess(hsResults,function(srcItem){
+			if (isDynamicObject(srcItem)){
+				srcItem.getFactory().workOnSteps(srcItem,fncProcessChild);
+			} else {
+				fncProcessChild(srcItem);
+			}
+		},1);
 	}
 	
 	getElementsInForEach(){
@@ -120,19 +127,15 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 			var sRecurField=self.replaceVars(self.recursiveField).saToString().trim();
 			if (sRecurField!=""){
 				self.addStep("Recursive elements in subset",function(){
-					var hsAux=newHashMap();
-					hsResults.walk(function(item){
-						hsAux.add(item.getKey(),item);
-						});
-					self.model.report.walkAsync(
-							hsAux,
-							function(item){
+					self.parallelizeProcess(hsResults,function(srcItem){
+						if (isDynamicObject(srcItem)){
+							item.factory.workOnSteps(srcItem,function(item){
 								self.includeRecursiveElements(item,sRecurField,"getKey",hsResults);
-							},
-							function(){
-								self.continueTask([hsResults]);
 							});
-					
+						} else {
+							self.includeRecursiveElements(srcItem,sRecurField,"getKey",hsResults);
+						}
+					},1);
 				});
 			}
 		}

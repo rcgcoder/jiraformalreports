@@ -1196,6 +1196,7 @@ class RCGTaskManager{
 	}
 	internal_parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads){
 		var self=this;
+		if (isUndefined(fncCall)||isUndefined(fncProcess)) return self.continueTask();
 		var maxThreads=10;
 		if (isDefined(maxParallelThreads)) maxThreads=maxParallelThreads; 
 		var nTotalCalls=0;
@@ -1227,12 +1228,16 @@ class RCGTaskManager{
 				return nPreviousPosition;
 			}
 		}
+		var isRemaining=function(){
+			return (nActualCall<nTotalCalls);
+		}
+		var blockCounter=[];
 		self.addStep("Doing " + nTotalCalls +" parallels calls grouped by "+maxThreads, function(){
 			var nextAccumulator=0;
 			var fncParallelCallBase=function(iThread,fncParallelCall){
 //				log("Parallel Call "+iThread);
 //				debugger;
-				if (nActualCall>=nTotalCalls) {
+				if (!isRemaining()) {
 					return ;//self.continueTask();
 				}
 				var iPet=nActualCall;
@@ -1241,49 +1246,59 @@ class RCGTaskManager{
 				var issue=callInfo.issue;
 				var propKey=callInfo.key;
 				*/
-				if (isDefined(fncCall)||isDefined(fncProcess)){
-					self.addStep("Parallel Call "+ iPet + " iteration",function(){
-						if (isDefined(fncCall)){
-							self.addStep("Petition:"+iPet+" of parallel process ",function(){
-		//						log("Start the "+iPet+" Call of parallel process");
-								var fncManagedCall=self.createManagedCallback(fncCall);
-								fncManagedCall(item);
-		//						log("End of the "+iPet+" Call of parallel process");
-							});
-						}
-						if (isDefined(fncProcess)){
-							self.addStep("Petition:"+iPet+" Processing result and Trying Next Call...",function(objResult){
-		//						log("Start the "+iPet+" Processing of parallel process");
-								var fncManagedProcessCall=self.createManagedCallback(fncProcess);
-								fncManagedProcessCall(item,objResult);
-								self.continueTask();
-		//						log("End of the "+iPet+" Processing of parallel process");
-							});
-						} 
-						self.addStep("trying next petition...",function(){
-							//log("Evaluating next petition:"+nActualCall + " of " +nTotalCalls);
-		//					nItemsProcessed++;
-							if (nActualCall<nTotalCalls){
-								//log("There are "+(nTotalCalls-nActualCall)+" petitions pending... let´s go next petition");
-								fncParallelCall(iThread,fncParallelCall);
-							} else {
-								//log("There is not more petitions");
-								self.continueTask();
-							}
+				self.addStep("Parallel Call "+ iPet + " iteration",function(){
+					if (isDefined(fncCall)){
+						self.addStep("Petition:"+iPet+" of parallel process ",function(){
+	//						log("Start the "+iPet+" Call of parallel process");
+							var fncManagedCall=self.createManagedCallback(fncCall);
+							fncManagedCall(item);
+	//						log("End of the "+iPet+" Call of parallel process");
 						});
-						self.continueTask();
+					}
+					if (isDefined(fncProcess)){
+						self.addStep("Petition:"+iPet+" Processing result and Trying Next Call...",function(objResult){
+	//						log("Start the "+iPet+" Processing of parallel process");
+							var fncManagedProcessCall=self.createManagedCallback(fncProcess);
+							fncManagedProcessCall(item,objResult);
+							self.continueTask();
+	//						log("End of the "+iPet+" Processing of parallel process");
+						});
+					} 
+					self.addStep("trying next petition...",function(){
+						//log("Evaluating next petition:"+nActualCall + " of " +nTotalCalls);
+	//					nItemsProcessed++;
+						blockCounter[iThread]++;
+						if (isRemaining()&&(blockCounter[iThread]<100)){
+							//log("There are "+(nTotalCalls-nActualCall)+" petitions pending... let´s go next petition");
+							fncParallelCall(iThread,fncParallelCall);
+						} else {
+							//log("There is not more petitions");
+							self.continueTask();
+						}
 					});
-				}
+					self.continueTask();
+				});
 				self.continueTask();
 			};
-			
-			
-			
+			var fncAddThreadSubSteps=function(iThread,fncParallelCallSubSteps){
+				blockCounter[iThread]=0;
+				self.addStep("Parallel thread call subset",function(){
+					var fncParallelCall=self.createManagedCallback(fncParallelCallBase);
+					fncParallelCall(iThread,fncParallelCall);
+				});
+				self.addStep("If remaining.... launch a new block",function(){
+					if (isRemaining()){
+						fncParallelCallSubSteps(iThread,fncParallelCallSubSteps);
+					}
+					self.continueTask();
+				});
+			}
 			var fncAddThread=function(iThread){
 				return self.addStep("Parallel call Thread "+iThread,function(){
 //					log("Parallel Step "+iThread);
-					var fncParallelCall=self.createManagedCallback(fncParallelCallBase);
-					fncParallelCall(iThread,fncParallelCall);
+					var fncParallelCallSubSteps=self.createManagedCallback(fncAddThreadSubSteps);
+					fncParallelCallSubSteps(iThread,fncParallelCallSubSteps);
+					self.continueTask();
 				},0,1,undefined,undefined,undefined,"INNER",undefined
 				);
 			}

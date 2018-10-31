@@ -1290,16 +1290,17 @@ class RCGTaskManager{
 					if (isRemaining()){
 						debugger;
 						fncParallelCallSubSteps(iThread,fncParallelCallSubSteps);
+					} else {
+						self.continueTask();
 					}
-					self.continueTask();
 				});
+				self.continueTask();
 			}
 			var fncAddThread=function(iThread){
 				return self.addStep("Parallel call Thread "+iThread,function(){
 //					log("Parallel Step "+iThread);
 					var fncParallelCallSubSteps=self.createManagedCallback(fncAddThreadSubSteps);
 					fncParallelCallSubSteps(iThread,fncParallelCallSubSteps);
-					self.continueTask();
 				},0,1,undefined,undefined,undefined,"INNER",undefined
 				);
 			}
@@ -1323,6 +1324,7 @@ class RCGTaskManager{
 		self.parallelizeCalls(hsListItemsToProcess,undefined,fncProcess,maxParallelThreads);
 	}
 	extended_parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads){
+		debugger;
 		var self=this;
 		var tm=self.getTaskManager();
 		var bckAutoFree;

@@ -237,8 +237,8 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 		var workList=new Array(arrElems.length);
 
 		var fncSelectItem=function(i,j){
-			itemI=arrElems[i];
-			itemJ=arrElems[j];
+			var itemI=arrElems[i];
+			var itemJ=arrElems[j];
 			if (isDynamicObject(itemI)){
 				self.addStep("load item "+i,function(){
 					itemI.fullLoad();

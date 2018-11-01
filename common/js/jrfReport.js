@@ -1186,6 +1186,7 @@ var jrfReport=class jrfReport {
 			
 			
 			self.addStep("Identifying issues to exclude...",function(){
+				debugger;
 				self.workOnListOfIssueSteps(issuesAdded,function(issue){
 		            var txtEndDate=self.objModel.variables.getVar("ReportEndDate"+"_text");
 		            var rptEndDate=self.objModel.variables.getVar("ReportEndDate");

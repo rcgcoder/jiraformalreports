@@ -127,19 +127,25 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 			var sRecurField=self.replaceVars(self.recursiveField).saToString().trim();
 			if (sRecurField!=""){
 				self.addStep("Recursive elements in subset",function(){
-					self.parallelizeProcess(hsResults,function(srcItem){
-						if (isDynamicObject(srcItem)){
-							item.factory.workOnSteps(srcItem,function(item){
-								self.includeRecursiveElements(item,sRecurField,"getKey",hsResults);
-							});
-						} else {
-							self.includeRecursiveElements(srcItem,sRecurField,"getKey",hsResults);
-						}
+					self.listProcess(hsResults,function(item){
+						self.includeRecursiveElements(item,sRecurField,"getKey",hsResults);
 					},1);
 				});
 			}
 		}
 		self.continueTask([hsResults]);
+	}
+	listProcess(listItems,fncProcess,nThreadsMax){
+		var self=this;
+		self.parallelizeProcess(listItems,function(srcItem,objCallResult,itemKey){
+			if (isDynamicObject(srcItem)){
+				srcItem.factory.workOnSteps(srcItem,function(item){
+					fncProcess(item,0,item.id);
+				});
+			} else {
+				fncProcess(item,0,itemKey);
+			}
+		},nThreadsMax);
 	}
 	filter(elemsInForEach){
 		var self=this;
@@ -151,8 +157,10 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 		if (self.whereCondition!="") {
 			//debugger;
 			var sWhere="";
-			var bWhereResult=false;
-			self.variables.pushVarEnv();
+			self.addStep("Pushing variables environment",function(){
+				self.variables.pushVarEnv();
+				self.continueTask();
+			});
 			var iCounter=0;
 			var iSelectedCounter=0;
 			sWhere=self.whereCondition;
@@ -168,43 +176,55 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 				var `+self.innerVarName+`={{`+self.innerVarName+`}};
 				var innerItem={{`+self.innerVarName+`}};
 				result=` +sWhere;
-			
-			elemsInForEach.walk(function(eachElem,deep,key){
-				if (self.innerVarName!=""){
-					self.initVariables(self.innerVarName,undefined,eachElem);
-				}
-				self.variables.pushVar("counter",iCounter);
-				self.variables.pushVar("counter_selected",iSelectedCounter);
-				bWhereResult=self.replaceVarsAndExecute(sWhere);
-
-				if (bWhereResult){
-					iSelectedCounter++;
-					self.hsResult.add(key,eachElem);
-				} else if (self.bWithRest){
-					self.hsRest.add(key,eachElem);
-				}
-				self.variables.popVar("counter_selected");
-				self.variables.popVar("counter");
-				iCounter++;
-				if (self.innerVarName!=""){
-					self.variables.popVar(self.innerVarName);
-				}
+			self.addStep("Efectively applying filter",function(){
+				self.listProcess(elemsInForEach,function(eachElem,objResult,key){
+					self.addStep("Initializing variables",function(){
+						if (self.innerVarName!=""){
+							self.initVariables(self.innerVarName,undefined,eachElem);
+						}
+						self.variables.pushVar("counter",iCounter);
+						self.variables.pushVar("counter_selected",iSelectedCounter);
+						self.continueTask();
+					});
+					self.addStep("Executing where clause",function(){
+						var bWhereResult=false;
+						bWhereResult=self.replaceVarsAndExecute(sWhere);
+						self.continueTask([bWhereResult]);
+					});
+					self.addStep("Processing Result and pop variables",function(bWhereResult){
+						if (bWhereResult){
+							iSelectedCounter++;
+							self.hsResult.add(key,eachElem);
+						} else if (self.bWithRest){
+							self.hsRest.add(key,eachElem);
+						}
+						self.variables.popVar("counter_selected");
+						self.variables.popVar("counter");
+						iCounter++;
+						if (self.innerVarName!=""){
+							self.variables.popVar(self.innerVarName);
+						}
+						self.continueTask();
+					});
+				});
 			});
-			self.variables.popVarEnv();
+			self.addStep("Poping variables environment and return",function(){
+				self.variables.popVarEnv();
+				self.continueTask([self.hsResult]);
+			});
 		} else {
 			self.hsResult=elemsInForEach;
 		}
-
 		return self.hsResult;
 	}
 	order(elemsInForEach){
 		var self=this;
-		if (self.orderFormula=="") return elemsInForEach;
+		if (self.orderFormula=="") {
+			self.continueTask([elemsInForEach]);
+			return elemsInForEach;
+		}
 		var hsResult=newHashMap();
 		var arrElems=[];
-		elemsInForEach.walk(function(elem){
-			arrElems.push(elem);
-		});
 		var sFormulaBody=self.replaceVars(self.orderFormula);
 		var sFormulaBody=sFormulaBody.saToString();
 		var sFncFormula=`
@@ -213,14 +233,133 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 			var elemB=_arrRefs_[1];
 			`+sFormulaBody+`;
 			`;
-		arrElems.sort(function(a,b){
-			var vValue=executeFunction([a,b],sFncFormula);
-			return vValue;
-		});	
-		arrElems.forEach(function(elem){
-			hsResult.push(elem);
+		var arrElems=elemsInForEach.toArray();
+		var workList=new Array(arrElems.length);
+
+		var fncSelectItem=function(i,j){
+			itemI=arrElems[i];
+			itemJ=arrElems[j];
+			if (isDynamicObject(itemI)){
+				self.addStep("load item "+i,function(){
+					itemI.fullLoad();
+					self.continueTask();
+				});
+			}
+			if (isDynamicObject(itemJ)){
+				self.addStep("load item "+j,function(){
+					itemJ.fullLoad();
+					self.continueTask();
+				});
+			}
+			self.addStep("Compare pair "+i+"/"+j,function(){
+				var vValue=executeFunction([arrElems[i],arrElems[j]],sFncFormula);
+				self.continueTask([vValue]);
+			});
+			self.addStep("Unlock and return Result index",function(vValue){
+				if (isDynamicObject(itemI)){
+					itemI.unlock();
+				}
+				if (isDynamicObject(itemJ)){
+					itemJ.unlock();
+				}
+				if (vValue<=0){
+					self.continueTask(i);
+				} else {
+					self.continueTask(j);
+				}
+			});
+		}
+		self.addStep("Another Way to do a merge sort",function(){
+			// preparing the cycles
+			var totalLength=arrElems.length;
+			var blockWidths=[];
+			var auxWidth=2;
+			while (auxWidth<totalLength){
+				blockWidths.push(auxWidth);
+				auxWidth*=2;
+			}
+			self.parallelizeProcess(blockWidths,function(blockWidth){
+				var nBlocks=Math.floor(totalLength/blockWidth);
+				self.parallelizeProcess(nBlocks,function(initIndex){
+					var iStart=initIndex*blockWidth; //0           4         16
+ 					var iEnd=iStart+(blockWidth-1);  //3=0+4-1     7=4+4-1   23=16+8-1
+					if ((iEnd+1)>totalLength){
+						iEnd=(totalLength-1);
+					}
+					var nItems=(iEnd-iStart);
+					if (nItems<=0){
+						log("nothing to do.... only one item or none")
+					} else if ((iEnd-iStart)==1){ // iEnd and iStart are index to process example elems[0] and elems[1]
+						log("only compare 2 items");
+						self.addStep("Comparing Items",function(){
+							fncSelectItem(iStart,iEnd);
+						});
+						self.addStep("Comparing Items result",function(indexSelected){
+							if (indexSelected==iEnd){
+								var vAux=arrElems[iStart];
+								arrElems[iStart]=arrElems[iEnd];
+								arrElems[iEnd]=vAux;
+							}
+							self.continueTask();
+						});
+					} else {// there are more than 2 items 4 8 16.... now 
+						// identify 2 lists
+						var iL1=iStart;  // bw = 4   0, 0+2-1  , 4 4+2-1  8 8+4-1 891011
+						var jL1=iStart+(blockWidth/2)-1;
+						var iL2=jL1+1; 
+						var jL2=iEnd;
+						var nL1=(jL1-iL1)+1;
+						var nL2=(jL2-iL2)+1;
+						var iWork=iL1;
+						var fncContinue=function(){
+							return (nL1>0)||(nL2>0);
+						}
+						self.loopProcess(fncContinue,function(){
+							if ((nL1==0)||(nL2==0)) {
+								if (nL2==0){
+									var iAux=iWork;
+									while(iAux<jL2){
+										arrElems[iAux]=arrElems[iL1];
+										iAux++;
+										iL1++;
+									}
+								}
+								var iAux=iStart;
+								while(iAux<iWork){
+									arrElems[iAux]=workList[iAux];
+									iAux++;
+								}
+								nL1==0;
+								nL2==0;
+							} else {
+								self.addStep("Comparing Items",function(){
+									fncSelectItem(iL1,iL2);
+								});
+								self.addStep("Comparing Items result",function(indexSelected){
+									if (indexSelected==iL1){
+										workList[iWork]=arrElems[iL1];
+										iWork++;
+										iL1++;
+										nL1--;
+									} else if (indexSelected==iL1){
+										workList[iWork]=arrElems[iL2];
+										iWork++;
+										iL2++;
+										nL2--;
+									}
+								});
+							}
+						});
+					}
+				},10);
+			});
+			self.addStep("Preparing and Returnin the result of sort",function(){
+				arrElems.forEach(function(elem){
+					hsResult.push(elem);
+				});
+				self.continueTask([hsResult]);
+			});
 		});
-		return hsResult;
 	}
 	bounds(elemsInForEach){
 		var self=this;
@@ -259,10 +398,18 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 		self.addStep("Retrieving bulk subset elements",function(){
 			self.getElementsInForEach();
 		});
-		self.addStep("Applying filter, order and bounds",function(elemsRetrieved){
+		self.addStep("Applying filter",function(elemsRetrieved){
 			elemsInForEach=elemsRetrieved;
 			elemsInForEach=self.filter(elemsInForEach);
+			self.continueTask([elemsInForEach]);
+		});
+		self.addStep("Applying Order",function(elemsFiltered){
+			elemsInForEach=elemsFiltered;
 			elemsInForEach=self.order(elemsInForEach);
+			self.continueTask();
+		});
+		self.addStep("Applying Bounds and Return",function(elemsOrdered){
+			elemsInForEach=elemsOrdered;
 			elemsInForEach=self.bounds(elemsInForEach);
 			self.continueTask([elemsInForEach]);
 		});

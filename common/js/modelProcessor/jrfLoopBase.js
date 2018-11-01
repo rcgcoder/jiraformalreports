@@ -38,24 +38,44 @@ var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition al
 			self.parallelizeProcess(self.loopElements.length(),function(iLoopIndex){
 //			self.loopElements.walk(function(loopElem,iDeep,itemKey,iLoopIndex){
 				var loopElem=self.loopElements.findByInd(iLoopIndex);
-				if (isDefined(loopElem.isStorable)&&loopElem.isStorable()){
-					
-				}
 				self.addStep("Processing the Loop item:"+iLoopIndex + " of " +iLoopElemsCount,function(){
-					self.variables.pushVar("LoopElemsCount",iLoopElemsCount);
-					self.variables.pushVar("LoopIndex",iLoopIndex );
-					if (!bCancelLoop) {
-						if (self.innerVarName!=""){
-							self.initVariables(self.innerVarName,undefined,loopElem);
+					self.addStep("Preparing the process of item "+iLoopIndex ,function(){
+						self.variables.pushVar("LoopElemsCount",iLoopElemsCount);
+						self.variables.pushVar("LoopIndex",iLoopIndex );
+						self.continueTask();
+					});
+					self.addStep("Processing...",function(){
+						if (!bCancelLoop) {
+							if (self.innerVarName!=""){
+								self.initVariables(self.innerVarName,undefined,loopElem);
+							}
+							if (isDynamicObject(loopElem)){
+								self.workOnSteps(loopElem,function(){
+									self.addStep("Processing",function(){
+										var bContinue=self.loopItemProcess(loopElem,iLoopIndex,iLoopElemsCount);
+										self.continueTask([bContinue]);
+									});
+								});
+							} else {
+								self.addStep("Process no Dynamic Object",function(){
+									var bContinue=self.loopItemProcess(loopElem,iLoopIndex,iLoopElemsCount);
+									self.continueTask([bContinue]);
+								});
+							}
 						}
-						var bContinue=self.loopItemProcess(loopElem,iLoopIndex,iLoopElemsCount);
+						self.continueTask([!bCancelLoop]);
+					});
+					self.addStep("Ending the process of item "+iLoopIndex,function(bContinue){
 						if (isDefined(bContinue)&&(!bContinue)){
-							bCancelLoop=true;;
+							bCancelLoop=true;
 						}
-					}
-					self.variables.popVar("LoopIndex");
-					self.variables.popVar("LoopElemsCount");
-					self.continueTask();
+						if (self.innerVarName!=""){
+							self.variables.popVar(self.innerVarName);
+						}
+						self.variables.popVar("LoopIndex");
+						self.variables.popVar("LoopElemsCount");
+						self.continueTask();
+					});
 				});
 			},1);
 //			self.continueTask();

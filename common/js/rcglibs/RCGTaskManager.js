@@ -1214,8 +1214,8 @@ class RCGTaskManager{
 		}
 		if (fncName!==""){
 			arrListItems=[]; //newHashMap();
-			hsListItemsToProcess[fncName](function(item){
-				arrListItems.push(item);
+			hsListItemsToProcess[fncName](function(item,iDeep,key){
+				arrListItems.push([item,key]);
 				});
 		}
 		var fncPopNewAction=function(){
@@ -1231,6 +1231,7 @@ class RCGTaskManager{
 		var isRemaining=function(){
 			return (nActualCall<nTotalCalls);
 		}
+		var nCallsPerBlock=0;
 		var blockCounter=[];
 		self.addStep("Doing " + nTotalCalls +" parallels calls grouped by "+maxThreads, function(){
 			var nextAccumulator=0;
@@ -1241,7 +1242,9 @@ class RCGTaskManager{
 					return ;//self.continueTask();
 				}
 				var iPet=nActualCall;
-				var item=fncPopNewAction();
+				var itemArray=fncPopNewAction();
+				var item=itemArray[0];
+				var itemKey=itemArray[1];
 				/*var callInfo=hsIssueGetProperties.pop();//push({issue:issue,key:propertyKey});
 				var issue=callInfo.issue;
 				var propKey=callInfo.key;
@@ -1259,7 +1262,7 @@ class RCGTaskManager{
 						self.addStep("Petition:"+iPet+" Processing result and Trying Next Call...",function(objResult){
 	//						log("Start the "+iPet+" Processing of parallel process");
 							var fncManagedProcessCall=self.createManagedCallback(fncProcess);
-							fncManagedProcessCall(item,objResult);
+							fncManagedProcessCall(item,objResult,itemKey);
 							self.continueTask();
 	//						log("End of the "+iPet+" Processing of parallel process");
 						});
@@ -1268,7 +1271,7 @@ class RCGTaskManager{
 						//log("Evaluating next petition:"+nActualCall + " of " +nTotalCalls);
 	//					nItemsProcessed++;
 						blockCounter[iThread]++;
-						if (isRemaining()&&(blockCounter[iThread]<100)){
+						if (isRemaining()&&(blockCounter[iThread]<nCallsPerBlock)){
 							//log("There are "+(nTotalCalls-nActualCall)+" petitions pending... let´s go next petition");
 							fncParallelCall(iThread,fncParallelCall);
 						} else {
@@ -1288,7 +1291,6 @@ class RCGTaskManager{
 				});
 				self.addStep("If remaining.... launch a new block",function(){
 					if (isRemaining()){
-						debugger;
 						fncParallelCallSubSteps(iThread,fncParallelCallSubSteps);
 					} else {
 						self.continueTask();
@@ -1307,13 +1309,68 @@ class RCGTaskManager{
 			if (maxThreads>nTotalCalls){
 				maxThreads=nTotalCalls;
 			}
-//			self.getRunningTask().barrier.nItems=maxThreads+1;
-			for (var i=0;(i<maxThreads);i++){
-//				log("Creating Thread:"+i);
-				var theWorkerThread=fncAddThread(i);
-//				log("Created Thread:"+i);
-//				log(theWorkerThread);
+			if (maxThreads>0){
+	//			self.getRunningTask().barrier.nItems=maxThreads+1;
+				var nCallsPerThread=(nTotalCalls/maxThreads);
+				if (nCallsPerThread<50){
+					nCallsPerBlock=nCallsPerThread+1;
+				} else {
+					nCallsPerBlock=50;
+				}
+				for (var i=0;(i<maxThreads);i++){
+	//				log("Creating Thread:"+i);
+					var theWorkerThread=fncAddThread(i);
+	//				log("Created Thread:"+i);
+	//				log(theWorkerThread);
+				}
 			}
+			self.continueTask();
+		});
+		self.continueTask();
+	}
+	
+	extended_loopProcess(fncWhileCondition,fncProcess){
+		var self=this;
+		var condResult=true;
+		var iterationBlockCounter=0;
+		var fncLoopSteps=function(fncManagedLoop){
+			self.addStep("Checking Condition",function(){
+				condResult=fncWhileCondition();
+				self.continueTask([condResult]);
+			});
+			self.addStep("New iteration",function(condResult){
+				iterationBlockCounter++;
+				if (isDefined(condResult)&&condResult){
+					self.addStep("Executing Iteration",function(){
+						fncProcess();
+					});
+					self.addStep("New Iteration",function(){
+						if (iterationBlockCounter<20){
+							fncManagedLoop();
+						}
+						self.continueTask([true]);
+					});
+				}
+				self.continueTask([false]);
+			});
+		}
+		var fncLoopBlockSteps=function(fncLoopBlock){
+			iterationBlockCounter=0;
+			self.addStep("Adding loop block step",function(){
+				var fncLoop=self.createManagedCallback(fncLoopSteps);
+				fncLoop(fncLoop);
+				self.continueTask();
+			});
+			self.addStep("Adding loop block step",function(bContinue){
+				if (bContinue){
+					fncLoopBlock();
+				}
+				self.continueTask();
+			});
+		}
+		self.addStep("Looping while condition is true",function(){
+			var fncLoopBlock=self.createManagedCallback(fncLoopBlockSteps);
+			fncLoopBlock(fncLoopBlock);
 			self.continueTask();
 		});
 		self.continueTask();
@@ -1373,6 +1430,8 @@ class RCGTaskManager{
 		obj.internal_parallelizeCalls=self.internal_parallelizeCalls;
 		obj.parallelizeCalls=self.extended_parallelizeCalls;
 		obj.parallelizeProcess=self.extended_parallelizeProcess;
+		obj.loopProcess=self.extended_loopProcess;
+
 	}
 	killTasks(){
 		var self=this;

@@ -1214,6 +1214,7 @@ class RCGTaskManager{
 		}
 		if (fncName!==""){
 			arrListItems=[]; //newHashMap();
+			debugger;
 			hsListItemsToProcess[fncName](function(item,iDeep,key){
 				arrListItems.push([item,key]);
 				});

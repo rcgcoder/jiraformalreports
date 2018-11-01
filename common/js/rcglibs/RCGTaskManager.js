@@ -1244,8 +1244,12 @@ class RCGTaskManager{
 				}
 				var iPet=nActualCall;
 				var itemArray=fncPopNewAction();
-				var item=itemArray[0];
-				var itemKey=itemArray[1];
+				var item=itemArray;
+				var itemKey;
+				if (isArray(itemArray)){
+					item=itemArray[0];
+					itemKey=itemArray[1];
+				}
 				/*var callInfo=hsIssueGetProperties.pop();//push({issue:issue,key:propertyKey});
 				var issue=callInfo.issue;
 				var propKey=callInfo.key;

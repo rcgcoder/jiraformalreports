@@ -94,7 +94,8 @@ var jrfReport=class jrfReport {
 				});
 				self.addStep("Assigning loaded Values",function(auxReport){
 					self.config=auxReport.config;
-					var attribs=["allIssues","childs","advanceChilds"
+					var attribs=[//"allIssues"  // not assign all issues
+								,"childs","advanceChilds"
 						        ,"treeIssues","rootElements","rootIssues","rootProjects"];
 					
 					attribs.forEach(function(attrName){

@@ -98,12 +98,9 @@ var jrfReport=class jrfReport {
 					var attribs=[//"allIssues"  // not assign all issues
 								,"childs","advanceChilds"
 						        ,"treeIssues","rootElements","rootIssues","rootProjects"];
-					
+					self.allIssues=baseDynamicObjectFactory.getFactoryGlobal("Issue");
 					attribs.forEach(function(attrName){
 						self[attrName]=auxReport[attrName];
-					});
-					auxReport.hsAllIssues.walk(function(issue,iDeep,issueKey){
-						
 					});
 					self.continueTask();
 				});

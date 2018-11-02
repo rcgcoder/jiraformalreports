@@ -22,8 +22,7 @@ var jrfReport=class jrfReport {
 		self.updatePrecomputedAccumulators=false;
 		self.adjustAccumItemFunctions=newHashMap();
 		self.reportDateTime=new Date();
-		self.storeManager=new RCGObjectStorageManager("Reports",self.getTaskManager());
-
+		self.storeManager="";
 	}	
 	getStorageObject(){
 		var self=this;
@@ -504,6 +503,12 @@ var jrfReport=class jrfReport {
 					}
 
         // change de "fieldValue" method
+			if (self.allIssues.isStorable()){
+				self.storeManager=new RCGObjectStorageManager("Reports",self.getTaskManager());
+			} else {
+				self.reuseAllIssues=false;
+			}
+
 			self.continueTask();
 		});
 		// first launch all issue retrieve ...

@@ -232,7 +232,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			var objResult=new window[objContent.className]();
 			objResult.loadFromStorageObject(objContent.value);
 		} else if (objContent.type=="fo" /* object with factory */){
-//			debugger;
+			debugger;
 			var factoryName=objContent.factoryName;
 			var theFactory=baseDynamicObjectFactory.getFactoryGlobal(factoryName);
 			var storedObj=objContent.value;

@@ -55,6 +55,7 @@ var jrfReport=class jrfReport {
 		attribs.forEach(function(attrName){
 			self[attrName]=storer.processFileObj(storedObj[attrName]);
 		});
+		self.hsAllIssues=storer.processFileObj(storedObj["allIssues"]);
 	}
 
 	adjustAccumItem(accumType,accumValue,issue,fieldName,atDatetime,notAdjust){
@@ -100,6 +101,9 @@ var jrfReport=class jrfReport {
 					
 					attribs.forEach(function(attrName){
 						self[attrName]=auxReport[attrName];
+					});
+					auxReport.hsAllIssues.walk(function(issue,iDeep,issueKey){
+						
 					});
 					self.continueTask();
 				});

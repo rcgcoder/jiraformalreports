@@ -229,7 +229,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				objResult[prop]=self.processFileObj(objContent.value[prop]);
 			});
 		} else if (objContent.type=="co" /* custom object */){
-			var objResult=new window[objToSave.className]();
+			var objResult=new window[objContent.className]();
 			objResult.loadFromStorageObject(objContent.value);
 		} else if (objContent.type=="fo" /* object with factory */){
 //			debugger;

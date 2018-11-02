@@ -1214,7 +1214,7 @@ class RCGTaskManager{
 		}
 		if (fncName!==""){
 			arrListItems=[]; //newHashMap();
-			debugger;
+			//debugger;
 			hsListItemsToProcess[fncName](function(item,iDeep,key){
 				arrListItems.push([item,key]);
 				});
@@ -1386,7 +1386,7 @@ class RCGTaskManager{
 		self.parallelizeCalls(hsListItemsToProcess,undefined,fncProcess,maxParallelThreads);
 	}
 	extended_parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads){
-		debugger;
+		//debugger;
 		var self=this;
 		var tm=self.getTaskManager();
 		var bckAutoFree;

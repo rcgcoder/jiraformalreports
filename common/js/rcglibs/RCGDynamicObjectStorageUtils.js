@@ -160,7 +160,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 				});
 			}
 		}
-		storer.parallelizeProcess(self.list,fncSaveAction,self.concurrentSaveActionsMax);
+		storer.parallelizeProcess(self.factory.list,fncSaveAction,self.concurrentSaveActionsMax);
 	}
 	saveAllUnlocked(){
 		var self=this;

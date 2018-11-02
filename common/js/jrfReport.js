@@ -1449,7 +1449,11 @@ var jrfReport=class jrfReport {
 		});
 		self.addStep("Saving Report to reuse",function(){
 			var self=this;
-			self.storeManager.save("LastReport",self);
+			if (self.allIssues.isStorable()){
+				self.storeManager.save("LastReport",self);
+			} else {
+				self.continueTask();
+			}
 		});
 		// load report model and submodels
 		// Process Model with The Report
@@ -1543,16 +1547,15 @@ var jrfReport=class jrfReport {
 		});
 		
 		self.addStep("Storing issue info or Removing all Issues in the scope.... ",function(){
-			if (!self.reuseAllIssues){
-				self.allIssues.list.clear();
-				log("Report uses "+ self.allIssues.list.length()+ " issues");
-				self.childs=newHashMap();
-				self.advanceChilds=newHashMap();
-				//self.treeIssues=newHashMap();
-				self.rootElements=newHashMap();
-				self.rootIssues=newHashMap();
-				self.rootProjects=newHashMap();
-			} else {
+			self.allIssues.list.clear();
+			log("Report uses "+ self.allIssues.list.length()+ " issues");
+			self.childs=newHashMap();
+			self.advanceChilds=newHashMap();
+			//self.treeIssues=newHashMap();
+			self.rootElements=newHashMap();
+			self.rootIssues=newHashMap();
+			self.rootProjects=newHashMap();
+/*			} else {
 				var issueCache={}
 				issueCache.allIssues=self.allIssues; 
 				issueCache.childs=self.childs;
@@ -1563,7 +1566,7 @@ var jrfReport=class jrfReport {
 				issueCache.treeIssues=self.treeIssues;
 				System.webapp.IssueCache=issueCache;
 			}
-			self.continueTask();
+*/			self.continueTask();
 		});
 		
 		self.addStep("Finally... launches the page results html.... ",function(){

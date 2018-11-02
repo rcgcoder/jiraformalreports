@@ -82,6 +82,7 @@ var jrfReport=class jrfReport {
 		self.continueTask();
 	}
 	load(idReport){
+		debugger;
 		var self=this;
 		var idReportKey="LastReport";
 		if (isDefined(idReport)) idReportKey=idReport;
@@ -1464,6 +1465,7 @@ var jrfReport=class jrfReport {
 			self.continueTask();
 		});
 		self.addStep("Saving Report to reuse",function(){
+			debugger;
 			var self=this;
 			if (self.allIssues.isStorable()){
 				self.addStep("Storing remaining issues in memory...",function(){

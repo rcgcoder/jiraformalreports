@@ -77,17 +77,27 @@ var jrfReport=class jrfReport {
 		var self=this;
 		var idReportKey="LastReport";
 		if (isDefined(idReport)) idReportKey=idReport;
-		self.addStep("Loading Report...",function(){
-			self.storeManager.load(idReportKey,self);
+		self.addStep("Check if "+idReportKey+" is saved",function(){
+			self.storeManager.exists(idReportKey);
 		});
-		self.addStep("Assigning loaded Values",function(auxReport){
-			self.config=auxReport.config;
-			var attribs=["allIssues","childs","advanceChilds"
-				        ,"treeIssues","rootElements","rootIssues","rootProjects"];
-			
-			attribs.forEach(function(attrName){
-				self[attrName]=auxReport[attrName];
-			});
+		self.addStep("Loading Report...",function(bExists){
+			if (bExists){
+				self.addStep("Exists.. loading ",function(auxReport){
+					self.storeManager.load(idReportKey,self);
+				});
+				self.addStep("Assigning loaded Values",function(auxReport){
+					self.config=auxReport.config;
+					var attribs=["allIssues","childs","advanceChilds"
+						        ,"treeIssues","rootElements","rootIssues","rootProjects"];
+					
+					attribs.forEach(function(attrName){
+						self[attrName]=auxReport[attrName];
+					});
+					self.continueTask();
+				});
+			} else {
+				self.reuseAllIssues=false;
+			}
 			self.continueTask();
 		});
 		self.continueTask();
@@ -501,16 +511,22 @@ var jrfReport=class jrfReport {
 			debugger;
 			self.allIssues.changeStorableParams(100,0.10,true);
 			if (self.isReusingIssueList()){
-				self.load(); // load al issues
-			} else if (self.config.jqlScope.jql!=""){
-				self.jira.processJQLIssues(self.config.jqlScope.jql,
-							function(jsonIssue){
-								self.createNewIssueFromJsonSteps(jsonIssue);
-							},
-							undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
-			} else {
-				self.continueTask();
-			}
+				self.addStep("Trying to load Issue",function(){
+					self.load(); // load all issues
+				})
+			} 
+			self.addStep("Loading the Scope",function(){
+				if (self.isReusingIssueList()&&(self.config.jqlScope.jql!="")){
+					self.jira.processJQLIssues(self.config.jqlScope.jql,
+								function(jsonIssue){
+									self.createNewIssueFromJsonSteps(jsonIssue);
+								},
+								undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
+				} else {
+					self.continueTask();
+				}
+			});
+			self.continueTask();
 		});	
 		self.addStep("Asigning all Issues in the scope.... ",function(){
 			log("All issues in Report:"+ self.allIssues.list.length()+ " issues");

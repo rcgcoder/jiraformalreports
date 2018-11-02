@@ -278,6 +278,14 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		} 
 		return objResult;
 	}
+	exists(key){
+		var self=this;
+		var fileName=(self.basePath+"/"+key);
+		filesystem.ReadFile(fileName,
+							function(){self.continueTask([true]);},
+							function(){self.continueTask([false]);}
+							);					
+	}
 	load(key,fncProcess){
 		var self=this;
 		var fileName=(self.basePath+"/"+key);

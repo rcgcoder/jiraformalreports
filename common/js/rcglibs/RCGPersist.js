@@ -79,6 +79,10 @@ function InitializeFileSystem(initCallBack,quota){
 	} else {
 		window.requestFileSystem(Window.PERSISTENT, iQuota, onInitFs, fsErrorHandler);
 	}
+	filesystem.ExistsFile=function(filename,cbExists,cbNotExists){
+		var newName=replaceAll(filename,"/","_DIR_");
+		this.fs.root.getFile(newName, {create: false}, cbExists,cbNotExists);
+	}
 	filesystem.ReadFile=function(filename,cbExistsAndLoaded,cbNotExists){
 		var newName=replaceAll(filename,"/","_DIR_");
 		filesystem.error_callback=cbNotExists;

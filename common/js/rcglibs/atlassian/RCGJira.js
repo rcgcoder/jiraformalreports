@@ -363,7 +363,7 @@ class RCGJira{
 			self.getFullList("/rest/api/2/search?fields=comment&expand=renderedFields&jql="+sJQL,"issues",undefined,undefined,cbBlock);
 		});
 		self.addStep("Returning all Issues from JQL:["+sJQL+"]", function(response,xhr,sUrl,headers){
-			self.addToCache(sCacheKey,response);
+			//self.addToCache(sCacheKey,response);
 			self.continueTask([response]);
 		});
 		self.continueTask();
@@ -382,7 +382,7 @@ class RCGJira{
 		if (isUndefined(bNotReturnAll)||(!bNotReturnAll)){
 			self.addStep("Returning all Issues from JQL", function(response,xhr,sUrl,headers){
 				//debugger;
-				self.addToCache(sCacheKey,response);
+				//self.addToCache(sCacheKey,response);
 				self.continueTask([response]);
 			});
 		}

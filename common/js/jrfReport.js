@@ -22,7 +22,34 @@ var jrfReport=class jrfReport {
 		self.updatePrecomputedAccumulators=false;
 		self.adjustAccumItemFunctions=newHashMap();
 		self.reportDateTime=new Date();
+		self.storeManager=new RCGObjectStorageManager("Reports",self.getTaskManager());
+
+	}	
+	getStorageObject(){
+		var self=this;
+		var objResult={};
+		objResult.config=self.config;
+		objResult.allIssues=self.allIssues.list;
+		objResult.childs=self.childs;
+		objResult.advanceChilds=self.advanceChilds;
+		objResult.treeIssues=self.treeIssues;
+		objResult.rootElements=self.rootElements;
+		objResult.rootIssues=self.rootIssues;
+		objResult.rootProjects=self.rootProjects;
+		return objResult;
 	}
+	
+	loadFromStorageObject(storedObj){
+		var self=this;
+		var storer=self.storeManager;
+		self.config=storedObj.config;
+		var attribs=["allIssues","childs","advanceChilds"
+			        ,"treeIssues","rootElements","rootIssues","rootProjects"];
+		attribs.forEach(function(attrName){
+			objResult[attrName]=storer.processFileObj(storedObj[attrName]);
+		});
+	}
+
 	adjustAccumItem(accumType,accumValue,issue,fieldName,atDatetime,notAdjust){
 		var self=this;
 		var fnc=self.adjustAccumItemFunctions.getValue(accumType);
@@ -37,11 +64,33 @@ var jrfReport=class jrfReport {
 	getAdvanceChilds(){
 		return this.advanceChilds;
 	}
-	save(){
-		
+	save(idReport){
+		var self=this;
+		var idReportKey="LastReport";
+		if (isDefined(idReport))idReportKey=idReport;
+		self.addStep("Saving Report...",function(){
+			self.storeManager.save(idReportKey,self);
+		});
+		self.continueTask();
 	}
-	load(){
-		
+	load(idReport){
+		var self=this;
+		var idReportKey="LastReport";
+		if (isDefined(idReport)) idReportKey=idReport;
+		self.addStep("Loading Report...",function(){
+			self.storeManager.load(idReportKey,self);
+		});
+		self.addStep("Assigning loaded Values",function(auxReport){
+			self.config=auxReport.config;
+			var attribs=["allIssues","childs","advanceChilds"
+				        ,"treeIssues","rootElements","rootIssues","rootProjects"];
+			
+			attribs.forEach(function(attrName){
+				self[attrName]=auxReport[attrName];
+			});
+			self.continueTask();
+		});
+		self.continueTask();
 	}
 	isReusingIssueList(){
 		var self=this;
@@ -451,9 +500,8 @@ var jrfReport=class jrfReport {
 			debugger;
 			self.allIssues.changeStorableParams(100,0.10,true);
 			if (self.isReusingIssueList()){
-				return self.continueTask();
-			}
-			if (self.config.jqlScope.jql!=""){
+				self.load(); // load al issues
+			} else if (self.config.jqlScope.jql!=""){
 				self.jira.processJQLIssues(self.config.jqlScope.jql,
 							function(jsonIssue){
 								self.createNewIssueFromJsonSteps(jsonIssue);
@@ -1377,7 +1425,10 @@ var jrfReport=class jrfReport {
 			});
 			self.continueTask();
 		});
-		
+		self.addStep("Saving Report to reuse",function(){
+			var self=this;
+			self.storeManager.save("LastReport",self);
+		});
 		// load report model and submodels
 		// Process Model with The Report
 		self.addStep("Processing Model",function(){

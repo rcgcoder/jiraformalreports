@@ -130,61 +130,67 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		var self=this;
 		var fileToSave="";
 		var baseName=self.basePath+"/"+key;
-		var objToSave=self.getStorageObject(item);
-		var jsonToSave=JSON.stringify(objToSave);
-		var totalLength=jsonToSave.length;
-		log("Storer save:"+baseName);
-		if (totalLength<(7*1024*1024)){
-//			log("Internal saveFile called for:"+baseName);
-			self.internal_saveFile(key,baseName,jsonToSave,self.onSave,self.onError);
-		} else {
-//			debugger;
-			var arrParts=[];
-			var iniPos=0;
-			var blockLength=7*1024*1024;
-			var endPos=iniPos+blockLength;
-			var iCount=0;
-			while (iniPos<totalLength){
-				arrParts.push({
-						    partNumber:arrParts.length,
-						    partName:(arrParts.length==0?baseName:baseName+"_part_"+arrParts.length),
-						    totalParts:0,
-						    iniPos:iniPos,
-						    endPos:endPos
-							});
-				iniPos=endPos;
-				endPos+=blockLength;
-			}
-			arrParts[0].totalParts=arrParts.length;
-			self.addStep("Saving Parallelized "+totalLength+" bytes in "+ arrParts.length+" parts",function(){
-				var fncSavePart=function(part){
-//					debugger;
-//					log("Parrallel Saving step:"+part.partNumber);
-					self.addStep("Save Part:"+part.partNumber,function(){
-//						debugger;
-						var contentToSave=jsonToSave.substring(part.iniPos,part.endPos);
-						var objPartToSave={type:"p",
-											partNumber:part.partNumber,
-											totalParts:part.totalParts,
-											content:contentToSave};
-						var jsonPartToSave=JSON.stringify(objPartToSave);
-//						log("Part:"+part.partNumber+" Key:"+key+" part:"+part.partName+" length:"+jsonPartToSave.length+" ini:"+part.iniPos+" end:"+part.endPos);
-						self.internal_saveFile(key,part.partName,jsonPartToSave,undefined,self.onError);
-					});
+		self.addStep("Getting info to store from item "+key,function(){
+			var objToSave=self.getStorageObject(item);
+			self.continueTask([objToSave]);
+		});
+		self.addStep("Saving the object "+key,function(objToSave){
+			var jsonToSave=JSON.stringify(objToSave);
+			var totalLength=jsonToSave.length;
+			log("Storer save:"+baseName);
+			if (totalLength<(7*1024*1024)){
+	//			log("Internal saveFile called for:"+baseName);
+				self.internal_saveFile(key,baseName,jsonToSave,self.onSave,self.onError);
+			} else {
+	//			debugger;
+				var arrParts=[];
+				var iniPos=0;
+				var blockLength=7*1024*1024;
+				var endPos=iniPos+blockLength;
+				var iCount=0;
+				while (iniPos<totalLength){
+					arrParts.push({
+							    partNumber:arrParts.length,
+							    partName:(arrParts.length==0?baseName:baseName+"_part_"+arrParts.length),
+							    totalParts:0,
+							    iniPos:iniPos,
+							    endPos:endPos
+								});
+					iniPos=endPos;
+					endPos+=blockLength;
+				}
+				arrParts[0].totalParts=arrParts.length;
+				self.addStep("Saving Parallelized "+totalLength+" bytes in "+ arrParts.length+" parts",function(){
+					var fncSavePart=function(part){
+	//					debugger;
+	//					log("Parrallel Saving step:"+part.partNumber);
+						self.addStep("Save Part:"+part.partNumber,function(){
+	//						debugger;
+							var contentToSave=jsonToSave.substring(part.iniPos,part.endPos);
+							var objPartToSave={type:"p",
+												partNumber:part.partNumber,
+												totalParts:part.totalParts,
+												content:contentToSave};
+							var jsonPartToSave=JSON.stringify(objPartToSave);
+	//						log("Part:"+part.partNumber+" Key:"+key+" part:"+part.partName+" length:"+jsonPartToSave.length+" ini:"+part.iniPos+" end:"+part.endPos);
+							self.internal_saveFile(key,part.partName,jsonPartToSave,undefined,self.onError);
+						});
+						self.continueTask();
+					}
+					var fncProcessed=function(part){
+						log("Saved Part:"+part.partNumber+" Key:"+key+" part:"+part.partName+" ini:"+part.iniPos+" end:"+part.endPos);
+					}
+	//				debugger;
+					self.parallelizeCalls(arrParts,fncSavePart,fncProcessed,5);
+				});
+				self.addStep("Everithing Saved",function(){
+					log("Every Thing is Saved for:"+baseName);
 					self.continueTask();
-				}
-				var fncProcessed=function(part){
-					log("Saved Part:"+part.partNumber+" Key:"+key+" part:"+part.partName+" ini:"+part.iniPos+" end:"+part.endPos);
-				}
-//				debugger;
-				self.parallelizeCalls(arrParts,fncSavePart,fncProcessed,5);
-			});
-			self.addStep("Everithing Saved",function(){
-				log("Every Thing is Saved for:"+baseName);
+				});
 				self.continueTask();
-			});
-			self.continueTask();
-		}
+			}
+		});
+		self.continueTask();
 	}
 	processFileObj(objContent,fsKey,filename){
 		var self=this;
@@ -232,8 +238,11 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			var storedObj=objContent.value;
 			var objId=storedObj.key;
 			var dynObj=theFactory.getById(objId);
-			if (dynObj===""){
-				dynObj=theFactory.new(storedObj.name,objId);
+			if (dynObj===""){ // if object not exists in factory.... creates one
+				dynObj=theFactory.new(storedObj.name,objId); // the new object is marked as changed and locked
+				dynObj.setFullyUnloaded();
+				dynObj.clearChanges(); // mark as unchanged
+				dynObj.unlock(); // unlock!
 			}
 			objResult=dynObj;
 		} else if (objContent.type=="p" /* object part */){

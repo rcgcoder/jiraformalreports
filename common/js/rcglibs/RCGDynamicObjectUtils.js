@@ -1057,7 +1057,11 @@ var factoryObjects=class factoryObjects{
 		this.loaded=true;
 	}
 	setFullyUnloaded(){
-		this.loaded=false;
+		if (this.isStorable()){
+			this.loaded=false;
+		} else {
+			this.loaded=true;
+		}
 	}
 	fullLoad(){
 		var self=this;
@@ -1071,17 +1075,19 @@ var factoryObjects=class factoryObjects{
 	fullUnload(){
 //		debugger;
 		var self=this;
-		var theFactory=self.factory;
-		var auxValue;
-		theFactory.attrTypes.walk(function(value,deep,key){
-			var attrName=key;
-			var attrType=value.type;
-			if (attrType=="Value"){
-				self["set"+attrName](undefined);
-			} else if(attrType=="List") {
-				self["set"+attrName+"s"](undefined);
-			}
-		});
+		if (self.isStorable()&&(!self.isFullyLoaded())){
+			var theFactory=self.factory;
+			var auxValue;
+			theFactory.attrTypes.walk(function(value,deep,key){
+				var attrName=key;
+				var attrType=value.type;
+				if (attrType=="Value"){
+					self["set"+attrName](undefined);
+				} else if(attrType=="List") {
+					self["set"+attrName+"s"](undefined);
+				}
+			});
+		}
 		self.setFullyUnloaded();
 	}
 	

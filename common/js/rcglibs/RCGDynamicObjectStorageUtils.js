@@ -127,6 +127,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 			});
 			storer.addStep("Item Saved "+self.factory.name +"/"+dynObj.getId(),function(key){
 //				log("Item Saved:"+dynObj.getId()+" vs "+key);
+				dynObj.setStored(true);
 				if (isUndefined(key)){
 					debugger;
 				}
@@ -239,6 +240,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		var self=this;
 		var storer=self.storer;
 		var objId=dynObj.getId();
+
 /*		if (self.isFlushInactivesNeeded()){
 			storer.addStep("Save all unlocked objects",function(){
 				self.saveAllUnlocked();
@@ -276,6 +278,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 							dynObj["set"+attrName+"s"](auxValue);
 						}
 					});
+					dynObj.setStored(true);
 					dynObj.setFullyLoaded();
 					dynObj.clearChanges();
 				}

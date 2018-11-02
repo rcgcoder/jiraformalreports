@@ -242,6 +242,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				dynObj=theFactory.new(storedObj.name,objId); // the new object is marked as changed and locked
 				dynObj.setFullyUnloaded();
 				dynObj.clearChanges(); // mark as unchanged
+				dynObj.setStored(true);
 				dynObj.unlock(); // unlock!
 			}
 			objResult=dynObj;

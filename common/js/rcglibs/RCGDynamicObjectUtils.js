@@ -63,6 +63,7 @@ var RCGDynamicObject=class RCGDynamicObject{
 		self.isLocked=factory.isLocked;
 		self.isChanged=factory.isChanged;
 		self.change=factory.change;
+		self.setStored=factory.setStored;
 		self.clearChanges=factory.clearChanges;
 		
 		self.isFullyLoaded=factory.isFullyLoaded;
@@ -890,7 +891,8 @@ var factoryObjects=class factoryObjects{
 			newObj.isChanged=this.isChanged;
 			newObj.change=this.change;
 			newObj.clearChanges=this.clearChanges;
-			
+			newObj.stored=false;
+			newObj.setStored=this.setStored;
 			newObj.loaded=true;
 			newObj.isFullyLoaded=this.isFullyLoaded;
 			newObj.setFullyLoaded=this.setFullyLoaded;
@@ -1046,6 +1048,9 @@ var factoryObjects=class factoryObjects{
 	}
 	isChanged(){
 		return (this.numChanges>0);
+	}
+	setStored(bValue){
+		this.stored=true;
 	}
 	clearChanges(){
 		this.numChanges=0;

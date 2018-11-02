@@ -44,6 +44,10 @@ var jrfReport=class jrfReport {
 	loadFromStorageObject(storedObj){
 		var self=this;
 		var storer=self.storeManager;
+		if ((storer==="")||(isUndefined(storer))){
+			self.storeManager=new RCGObjectStorageManager("Reports",self.getTaskManager());
+			storer=self.storeManager;
+		}
 		self.config=storedObj.config;
 		var attribs=["allIssues","childs","advanceChilds"
 			        ,"treeIssues","rootElements","rootIssues","rootProjects"];
@@ -85,7 +89,7 @@ var jrfReport=class jrfReport {
 		self.addStep("Loading Report...",function(bExists){
 			if (bExists){
 				self.addStep("Exists.. loading ",function(auxReport){
-					self.storeManager.load(idReportKey,self);
+					self.storeManager.load(idReportKey);
 				});
 				self.addStep("Assigning loaded Values",function(auxReport){
 					self.config=auxReport.config;

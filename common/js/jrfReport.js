@@ -1478,6 +1478,7 @@ var jrfReport=class jrfReport {
 							logError("The issue "+issue.id+" is still locked "+issue.numLocks);
 						}
 					});
+					self.continueTask();
 				});
 				self.addStep("Storing last report...",function(){
 					self.storeManager.save("LastReport",self);

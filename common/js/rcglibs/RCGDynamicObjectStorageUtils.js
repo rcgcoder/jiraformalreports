@@ -157,6 +157,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 				});
 				storer.addStep("Setting stored:"+dynObj.id,function(){
 					dynObj.setStored(true);
+					storer.continueTask();
 				});
 			}
 		}

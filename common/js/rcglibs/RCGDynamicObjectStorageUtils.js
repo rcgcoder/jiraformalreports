@@ -152,10 +152,10 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		var storer=self.storer;
 		var fncSaveAction=function(dynObj){
 			if (dynObj.isFullyLoaded()&&(!dynObj.stored)){
-				self.addStep("Saving not stored object:"+dynObj.id,function(){
+				storer.addStep("Saving not stored object:"+dynObj.id,function(){
 					storer.save(dynObj.getId(),self.getStorageObject(dynObj));
 				});
-				self.addStep("Setting stored:"+dynObj.id,function(){
+				storer.addStep("Setting stored:"+dynObj.id,function(){
 					dynObj.setStored(true);
 				});
 			}

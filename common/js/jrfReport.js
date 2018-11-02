@@ -94,10 +94,11 @@ var jrfReport=class jrfReport {
 	}
 	isReusingIssueList(){
 		var self=this;
-		if ((isDefined(System.webapp.IssueCache)&&(self.reuseAllIssues))){
+		return self.reuseAllIssues;
+/*		if ((isDefined(System.webapp.IssueCache)&&(self.reuseAllIssues))){
 			return true;
 		}
-		return false;
+		return false;*/
 	}
 	cleanModel(sContent){
 		//debugger;

@@ -1,28 +1,30 @@
 var jrfReport=class jrfReport {
 	constructor(theConfig){
 		var self=this;
-//		self.allFieldNames=newHashMap();
-		self.allIssues;
-		self.reuseAllIssues=false;
-		self.config=theConfig;
-		self.config.model=System.webapp.model;
-		self.objModel;
-		self.childs=newHashMap();
-		self.advanceChilds=newHashMap();
-		self.treeIssues=newHashMap();
-		self.rootElements=newHashMap();
-		self.rootIssues=newHashMap();
-		self.rootProjects=newHashMap();
-		self.bFinishReport=false;
-		System.webapp.getTaskManager().extendObject(self);
-		self.jira=System.webapp.getJira();
-		self.confluence=System.webapp.getConfluence();
-		self.result="";
-		self.resultContentId="";
-		self.updatePrecomputedAccumulators=false;
-		self.adjustAccumItemFunctions=newHashMap();
-		self.reportDateTime=new Date();
-		self.storeManager="";
+		if (isDefined(theConfig)){
+	//		self.allFieldNames=newHashMap();
+			self.allIssues;
+			self.reuseAllIssues=false;
+			self.config=theConfig;
+			self.config.model=System.webapp.model;
+			self.objModel;
+			self.childs=newHashMap();
+			self.advanceChilds=newHashMap();
+			self.treeIssues=newHashMap();
+			self.rootElements=newHashMap();
+			self.rootIssues=newHashMap();
+			self.rootProjects=newHashMap();
+			self.bFinishReport=false;
+			System.webapp.getTaskManager().extendObject(self);
+			self.jira=System.webapp.getJira();
+			self.confluence=System.webapp.getConfluence();
+			self.result="";
+			self.resultContentId="";
+			self.updatePrecomputedAccumulators=false;
+			self.adjustAccumItemFunctions=newHashMap();
+			self.reportDateTime=new Date();
+			self.storeManager="";
+		}
 	}	
 	getStorageObject(){
 		var self=this;

@@ -49,7 +49,8 @@ var jrfReport=class jrfReport {
 			storer=self.storeManager;
 		}
 		self.config=storedObj.config;
-		var attribs=["allIssues","childs","advanceChilds"
+		var attribs=[//"allIssues", // allIssues is the factory... not need to be assigned
+			         "childs","advanceChilds"
 			        ,"treeIssues","rootElements","rootIssues","rootProjects"];
 		attribs.forEach(function(attrName){
 			self[attrName]=storer.processFileObj(storedObj[attrName]);
@@ -1205,6 +1206,9 @@ var jrfReport=class jrfReport {
 		
 		self.addStep("Final Adjusts to retrieved list of issues",function(){
 			debugger;
+			if (self.isReusingIssueList()){
+				return self.continueTask();
+			}
 			self.addStep("Analizing child/parent billing cycles and multiple parents",function(){
 				self.workOnListOfIssueSteps(issuesAdded,function(issue){
 					var issueKey=issue.getKey();
@@ -1343,6 +1347,9 @@ var jrfReport=class jrfReport {
 		
 		self.addStep("Processing Directives",function(){
 			debugger;
+			if (self.isReusingIssueList()){
+				return self.continueTask();
+			}
 			var hsVersions=newHashMap();
 			var hsAccumulators=newHashMap();
 			log("Analizing directives");

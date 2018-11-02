@@ -442,10 +442,10 @@ var jrfReport=class jrfReport {
 		});
 
 		self.addStep("Construct Issue Dynamic Object.... ",function(){
-			if (self.isReusingIssueList()){
+/*			if (self.isReusingIssueList()){
 				return self.continueTask();
 			}
-			self.allIssues=newIssueFactory(self);
+*/			self.allIssues=newIssueFactory(self);
 			self.allIssues.setTaskManager(self.getTaskManager());
 			self.workOnIssueSteps=function(theObjectOrKey,fncWork,bMaintainLocked,fncNotExists){
 				self.allIssues.workOnSteps(theObjectOrKey,fncWork,bMaintainLocked,fncNotExists);

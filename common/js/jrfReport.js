@@ -26,15 +26,16 @@ var jrfReport=class jrfReport {
 	}	
 	getStorageObject(){
 		var self=this;
+		var storer=self.storeManager;
 		var objResult={};
 		objResult.config=self.config;
-		objResult.allIssues=self.allIssues.list;
-		objResult.childs=self.childs;
-		objResult.advanceChilds=self.advanceChilds;
-		objResult.treeIssues=self.treeIssues;
-		objResult.rootElements=self.rootElements;
-		objResult.rootIssues=self.rootIssues;
-		objResult.rootProjects=self.rootProjects;
+		objResult.allIssues=storer.getStorageObject(self.allIssues.list);
+		objResult.childs=storer.getStorageObject(self.childs);
+		objResult.advanceChilds=storer.getStorageObject(self.advanceChilds);
+		objResult.treeIssues=storer.getStorageObject(self.treeIssues);
+		objResult.rootElements=storer.getStorageObject(self.rootElements);
+		objResult.rootIssues=storer.getStorageObject(self.rootIssues);
+		objResult.rootProjects=storer.getStorageObject(self.rootProjects);
 		return objResult;
 	}
 	

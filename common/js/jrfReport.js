@@ -1466,7 +1466,20 @@ var jrfReport=class jrfReport {
 		self.addStep("Saving Report to reuse",function(){
 			var self=this;
 			if (self.allIssues.isStorable()){
-				self.addStep("Storing las report...",function(){
+				self.addStep("Storing remaining issues in memory...",function(){
+					self.allIssues.saveAllNotStored();
+				});
+				self.addStep("Checking if exists issues a) not stored b) locked",function(){
+					self.allIssues.list.walk(function(issue){
+						if (!issue.stored){
+							logError("The issue "+issue.id+" is not stored");
+						}
+						if (issue.isLocked()){
+							logError("The issue "+issue.id+" is still locked "+issue.numLocks);
+						}
+					});
+				});
+				self.addStep("Storing last report...",function(){
 					self.storeManager.save("LastReport",self);
 				});
 			}

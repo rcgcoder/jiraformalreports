@@ -83,6 +83,7 @@ var RCGDynamicObject=class RCGDynamicObject{
 		self.getStorageObject=factory.getStorageObject;
 		self.saveToStorage=factory.saveToStorage;
 		self.waitForStorageSaveEnd=factory.waitForStorageSaveEnd;
+		self.saveAllNotStored=factory.saveAllNotStored;
 		if (isDefined(storable)&&storable){
 			self.setStorable(true);
 		}
@@ -123,6 +124,9 @@ var factoryObjects=class factoryObjects{
 		return this.hsFactoriesGlobal.getValue(name);
 	}
 	addfactoryGlobal(factory){
+		if (this.hsFactoriesGlobal.exists(factory.name)){
+			this.hsFactoriesGlobal.remove(factory.name);
+		}
 		this.hsFactoriesGlobal.add(factory.name,factory);
 	}
 /*		,attrTypes:factoryHashMaps.newHashMap()  // lista de types de Attribute
@@ -1170,6 +1174,15 @@ var factoryObjects=class factoryObjects{
 			self.continueTask();
 		};
 	}
+	saveAllNotStored(){
+		var self=this;
+		if (self.isStorable()){
+			self.storeManager.saveAllNotStored();
+		} else {
+			self.continueTask();
+		}
+	}
+
 
 	internal_workOnSteps(theObjectOrKey,fncWork,bMaintainLocked,fncNotExists){
 		var oObj;

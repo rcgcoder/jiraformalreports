@@ -1451,10 +1451,11 @@ var jrfReport=class jrfReport {
 		self.addStep("Saving Report to reuse",function(){
 			var self=this;
 			if (self.allIssues.isStorable()){
-				self.storeManager.save("LastReport",self);
-			} else {
-				self.continueTask();
+				self.addStep("Storing las report...",function(){
+					self.storeManager.save("LastReport",self);
+				});
 			}
+			self.continueTask();
 		});
 		// load report model and submodels
 		// Process Model with The Report

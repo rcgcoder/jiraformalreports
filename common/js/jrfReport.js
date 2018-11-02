@@ -234,7 +234,7 @@ var jrfReport=class jrfReport {
         jqResult.html("");
 
         //debugger;
-        if (self.isReusingIssueList()){
+/*        if (self.isReusingIssueList()){
 			var issueCache=System.webapp.IssueCache;
 			self.allIssues=issueCache.allIssues; 
 			self.childs=issueCache.childs;
@@ -245,14 +245,14 @@ var jrfReport=class jrfReport {
 			self.treeIssues=issueCache.treeIssues;
         } else {
 //        if (!self.isReusingIssueList()){
-			self.allIssues=undefined; // unassing allIssues.... to free memory
+*/			self.allIssues=undefined; // unassing allIssues.... to free memory
 			self.childs=newHashMap();
 			self.advanceChilds=newHashMap();
 			self.rootElements=newHashMap();
 			self.rootIssues=newHashMap();
 			self.rootProjects=newHashMap();
 			self.treeIssues=newHashMap();
-		}
+//		}
         var ifr=document.getElementById("ReportResult");
         ifr.onload=undefined;
         ifr.src=window.URL.createObjectURL(new Blob(["generating report...."],{type:"text/html"}));

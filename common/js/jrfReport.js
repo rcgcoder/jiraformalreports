@@ -45,7 +45,7 @@ var jrfReport=class jrfReport {
 		var self=this;
 		var storer=self.storeManager;
 		if ((storer==="")||(isUndefined(storer))){
-			self.storeManager=new RCGObjectStorageManager("Reports",self.getTaskManager());
+			self.storeManager=new RCGObjectStorageManager("Reports",System.webapp.getTaskManager());
 			storer=self.storeManager;
 		}
 		self.config=storedObj.config;

@@ -48,7 +48,7 @@ var jrfReport=class jrfReport {
 		var attribs=["allIssues","childs","advanceChilds"
 			        ,"treeIssues","rootElements","rootIssues","rootProjects"];
 		attribs.forEach(function(attrName){
-			objResult[attrName]=storer.processFileObj(storedObj[attrName]);
+			self[attrName]=storer.processFileObj(storedObj[attrName]);
 		});
 	}
 

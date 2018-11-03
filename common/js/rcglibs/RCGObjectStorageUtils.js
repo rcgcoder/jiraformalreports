@@ -195,7 +195,6 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 	processFileObj(objContent,fsKey,filename){
 		debugger;
 		var self=this;
-		var objResult;
 		if (self.isBaseType(objContent.type)){ 
 			return objContent.value;
 		} else if (objContent.type=="null"/*"null"*/){
@@ -209,63 +208,36 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			var theMethod=self.functions.getValue(theHash);
 			return theMethod;
 		} else if (objContent.type=="a"/*"array"*/){
-			objResult=[];
-			self.addStep("Processing all items",function(){
-				self.parallelizeProcess(objContent.value,function(elem){
-					self.addStep("process object",function(){
-						var oPartialResult=self.processFileObj(elem);
-						self.continueTask([oPartialResult]);
-					});
-					self.addStep("Assign partial result",function(oPartial){
-						objResult.push(oPartial);
-						self.continueTask();
-					});
-				},1);
+			var objResult=[];
+			objContent.value.forEach(function(elem){
+				var oPartial=self.processFileObj(elem);
+				objResult.push(oPartial);
 			});
-			self.addStep("Finish the array process",function(){
-				self.continueTask([objResult]); 
-			});
+			return objResult;
 		} else if (objContent.type=="h"/*"hashmap"*/){
-			objResult=newHashMap();
+			var objResult=newHashMap();
 			objResult.autoSwing=false;
-			self.addStep("Processing all items",function(){
-				self.parallelizeProcess(objContent.value,function(hsElem){
-					var key=hsElem.key;
-					var hsValue=hsElem.value;
-					self.addStep("process object",function(){
-						var oPartialResult=self.processFileObj(hsValue);
-						self.continueTask([oPartialResult]);
-					});
-					self.addStep("Assign partial result",function(oPartial){
-						objResult.add(key,oPartial);
-						self.continueTask();
-					});
-				},1);
+			objContent.value.walk(function(hsElem){
+				var key=hsElem.key;
+				var hsValue=hsElem.value;
+				var oPartial=self.processFileObj(hsValue);
+				objResult.add(key,oPartial);
 			});
-			self.addStep("Finish the list process",function(){
-				objResult.swing();
-				self.continueTask([objResult]);
-			});
+			objResult.autoSwing=true;
+			objResult.swing();
+			return objResult;
 		} else if (objContent.type=="o" /*"object"*/){
 			var arrProps=getAllProperties(objContent.value);
-			objResult={};
-			self.addStep("Processing list of properties",function(){
-				self.parallelizeProcess(arrProps,function(prop){
-					objResult[prop]=self.processFileObj(objContent.value[prop]);
-				},1);
+			var objResult={};
+			arrProps.forEach(function(prop){
+				var oPartial=self.processFileObj(objContent.value[prop]);
+				objResult[prop]=oPartial;
 			});
-			self.addStep("Finish the list process",function(){
-				self.continueTask([objResult]);
-			});
+			return objResult;
 		} else if (objContent.type=="co" /* custom object */){
 			var objResult=new window[objContent.className]();
-			self.addStep("Loading custom object",function(){
-				objResult.loadFromStorageObject(objContent.value);
-				self.continueTask();
-			});
-			self.addStep("Returning custom object",function(){
-				self.continueTask([objResult]);
-			});
+			objResult.loadFromStorageObject(objContent.value);
+			return objResult;
 		} else if (objContent.type=="fo" /* object with factory */){
 			debugger;
 			var factoryName=objContent.factoryName;
@@ -305,14 +277,16 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 					var objProcessed=self.processFileObj(objJson);
 					self.continueTask([objProcessed]);
 				});
-				self.addStep("Returning Result of "+objContent.totalParts,function(objProcessed){
+				self.addStep("Setting values to Returning Result of "+objContent.totalParts,function(objProcessed){
 					self.continueTask([objProcessed]);
 				});
+				return undefined;
 			} else {
-				objResult=objContent;
+				return objContent;
 			}
 		} 
-		return objResult;
+		logError("ERROR... the processFile must never reach this line....");
+//		return objResult;
 	}
 	exists(key){
 		var self=this;

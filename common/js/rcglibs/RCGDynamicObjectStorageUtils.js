@@ -263,9 +263,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 			});
 		}
 */		if (dynObj.isFullyLoaded()){
-			storer.addStep("Is already loaded. Returning the object "+self.factory.name +"/"+objId,function(){
-				storer.continueTask([dynObj]);
-			});
+			return dynObj;
 		} else {
 			storer.addStep("Loading from storage "+self.factory.name +"/"+objId,function(){
 				//log("Loading from storage:"+objId);
@@ -290,34 +288,34 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 					dynObj.loading=true;
 					var theFactory=self.factory;
 					//log("Loaded from storage:"+theFactory.name +"/"+objId);
-					storer.addStep("Process Atributes",function(){
-						storer.parallelizeProcess(theFactory.attrTypes,function(value,deep,key){
-							var attrName=key;
-							var attrType=value.type;
-							storer.addStep("Processing object",function(){
+					storer.addStep("Setting attributes",function(){
+						theFactory.attrTypes.walk(function(value,deep,key){
+								var attrName=key;
+								var attrType=value.type;
 								var auxValue;
 								if (isDefined(storedObj[attrName])){
 									auxValue=storer.processFileObj(storedObj[attrName]);
 								} else {
 									auxValue="";
 								}
-								storer.continueTask([auxValue])
-							});
-							storer.addStep("Assigning Value",function(auxValue){
 								if (attrType=="Value"){
 									dynObj["set"+attrName](auxValue);
 								} else if(attrType=="List") {
 									dynObj["set"+attrName+"s"](auxValue);
 								}
-								storer.continueTask();
-							});
-						},1);
+						});
+						storer.continueTask();
 					});
-					storer.addStep("Setting oject attributes and return",function(){
+					storer.addStep("Setting object attributes and return",function(){
 						dynObj.setStored(true);
 						dynObj.setFullyLoaded();
 						dynObj.clearChanges();
-						dynObj.loading=false; // this releases the semaphore
+						if (dynObj.loadingSemaphore!==""){
+							if (dynObj.loadingSemaphore.countWaitingTasks()>0){
+								dynObj.loadingSemaphore.open();
+							}
+						}
+						dynObj.loading=false; // this set the semaphore open
 						storer.continueTask(dynObj);
 					})
 				}

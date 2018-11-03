@@ -28,11 +28,15 @@
     window.setZeroTimeout = setZeroTimeout;
 })();
 class RCGSemaphore{
-	constructor(fncIsOpen){
+	constructor(fncIsOpen,autoWait){
 		var self=this;
 		self.fncIsOpen=fncIsOpen;
 		self.taskWaiting=[];
 		self.isWaiting=false;
+		self.autoWait=false;
+		if (isDefined(autoWait)){
+			self.autoWait=autoWait;
+		}
 	}
 	newId(){
 		var newId="smp-"+(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
@@ -50,6 +54,12 @@ class RCGSemaphore{
 			var task=self.taskWaiting.pop();
 			self.taskContinue(task);
 		}
+	}
+	open(){
+		this.continueAll();
+	}
+	countWaitingTasks(){
+		return this.taskWaiting.length;
 	}
 	waiting(self){
 		self.isWaiting=true;
@@ -75,7 +85,7 @@ class RCGSemaphore{
 			self.taskContinue(task);
 		} else {
 			self.taskWaiting.push(task);
-			if (!self.isWaiting){
+			if ((self.autoWait)&&(!self.isWaiting)){
 				self.waiting(self);
 			}
 		}

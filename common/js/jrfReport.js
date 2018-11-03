@@ -65,7 +65,7 @@ var jrfReport=class jrfReport {
 		});
 		storer.addStep("Setting Attribs",function(){
 			storer.parallelizeProcess(attribs,function(attrName){
-				storer.addStep("Processing attribute",function(){
+				storer.addStep("Processing attribute "+attrName,function(){
 					var auxVal=storer.processFileObj(storedObj[attrName]);
 					storer.continueTask([auxVal]);
 				});

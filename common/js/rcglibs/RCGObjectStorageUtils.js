@@ -193,6 +193,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		self.continueTask();
 	}
 	processFileObj(objContent,fsKey,filename){
+		debugger;
 		var self=this;
 		var objResult;
 		if (self.isBaseType(objContent.type)){
@@ -209,28 +210,57 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			return theMethod;
 		} else if (objContent.type=="a"/*"array"*/){
 			objResult=[];
-			objContent.value.forEach(function(elem){
-				objResult.push(self.processFileObj(elem));
+			self.parallelProcess(objContent.value,function(elem){
+				self.addStep("process object",function(){
+					var oPartialResult=self.processFileObj(elem);
+					self.continueTask([oPartialResult]);
+				});
+				self.addStep("Assign partial result",function(oPartial){
+					objResult.push(oPartial);
+					self.continueTask();
+				});
 			});
 		} else if (objContent.type=="h"/*"hashmap"*/){
 			objResult=newHashMap();
 			objResult.autoSwing=false;
-			objContent.value.forEach(function(hsElem){
-				var key=hsElem.key;
-				var hsValue=hsElem.value;
-				objResult.add(key,self.processFileObj(hsValue));
+			self.addStep("Processing all items",function(){
+				self.parallelProcess(objContent.value,function(hsElem){
+					var key=hsElem.key;
+					var hsValue=hsElem.value;
+					self.addStep("process object",function(){
+						var oPartialResult=self.processFileObj(hsValue);
+						self.continueTask([oPartialResult]);
+					});
+					self.addStep("Assign partial result",function(oPartial){
+						objResult.add(key,oPartial);
+						self.continueTask();
+					});
+				});
 			});
-			objResult.autoSwing=true;
-			objResult.swing();
+			self.addStep("Finish the list process",function(){
+				objResult.swing();
+				self.continueTask([objResult]);
+			});
 		} else if (objContent.type=="o" /*"object"*/){
 			var arrProps=getAllProperties(objContent.value);
 			objResult={};
-			arrProps.forEach(function(prop){
-				objResult[prop]=self.processFileObj(objContent.value[prop]);
+			self.addStep("Processing list of properties",function(){
+				self.parallelProcess(arrProps,function(prop){
+					objResult[prop]=self.processFileObj(objContent.value[prop]);
+				});
+			});
+			self.addStep("Finish the list process",function(){
+				objResult.swing();
+				self.continueTask([objResult]);
 			});
 		} else if (objContent.type=="co" /* custom object */){
 			var objResult=new window[objContent.className]();
-			objResult.loadFromStorageObject(objContent.value);
+			self.addStep("Loading custom object",function(){
+				objResult.loadFromStorageObject(objContent.value);
+			});
+			self.addStep("Returning custom object",function(){
+				self.continueTask([objResult]);
+			});
 		} else if (objContent.type=="fo" /* object with factory */){
 			debugger;
 			var factoryName=objContent.factoryName;

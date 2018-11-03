@@ -196,7 +196,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		debugger;
 		var self=this;
 		var objResult;
-		if (self.isBaseType(objContent.type)){
+		if (self.isBaseType(objContent.type)){ 
 			return objContent.value;
 		} else if (objContent.type=="null"/*"null"*/){
 			return null;

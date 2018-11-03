@@ -217,7 +217,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		} else if (objContent.type=="h"/*"hashmap"*/){
 			var objResult=newHashMap();
 			objResult.autoSwing=false;
-			objContent.value.walk(function(hsElem){
+			objContent.value.forEach(function(hsElem){
 				var key=hsElem.key;
 				var hsValue=hsElem.value;
 				var oPartial=self.processFileObj(hsValue);

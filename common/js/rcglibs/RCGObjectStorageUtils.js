@@ -257,6 +257,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			var objResult=new window[objContent.className]();
 			self.addStep("Loading custom object",function(){
 				objResult.loadFromStorageObject(objContent.value);
+				self.continueTask();
 			});
 			self.addStep("Returning custom object",function(){
 				self.continueTask([objResult]);

@@ -223,7 +223,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				},1);
 			});
 			self.addStep("Finish the array process",function(){
-				self.continueTask([objResult]);
+				self.continueTask([objResult]); 
 			});
 		} else if (objContent.type=="h"/*"hashmap"*/){
 			objResult=newHashMap();

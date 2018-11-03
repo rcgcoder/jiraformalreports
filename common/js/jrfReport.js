@@ -65,7 +65,14 @@ var jrfReport=class jrfReport {
 			},1);
 		});
 		storer.addStep("Setting All Issues hashMap",function(){
-			self.hsAllIssues=storer.processFileObj(storedObj["allIssues"]);
+			storer.addStep("Process all issues hashmap",function(){
+				var auxIssues=storer.processFileObj(storedObj["allIssues"]);
+				storer.continueTask([auxIssues]);
+			});
+			storer.addStep("Assign all issues to attribute",function(hsAllIssues){
+				self.hsAllIssues=hsAllIssues;
+				storer.continueTask();
+			});
 			storer.continueTask();
 		});
 		storer.addStep("Returning Result",function(){

@@ -80,7 +80,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				var arrProps=getAllProperties(item);
 				objToSave.atts={};
 				var nProps=arrProps.length;
-				if (nProps===0){
+				if (nProps>0){
 					arrProps.forEach(function(prop){
 						objToSave.atts[prop]=self.getStorageObject(item[prop]);
 					});

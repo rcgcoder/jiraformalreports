@@ -52,17 +52,17 @@ var jrfReport=class jrfReport {
 		var attribs=[//"allIssues", // allIssues is the factory... not need to be assigned
 			         "childs","advanceChilds"
 			        ,"treeIssues","rootElements","rootIssues","rootProjects"];
-		self.addStep("Setting Attribs",function(){
-			self.parallelizeProcess(attribs,function(attrName){
+		storer.addStep("Setting Attribs",function(){
+			storer.parallelizeProcess(attribs,function(attrName){
 				self[attrName]=storer.processFileObj(storedObj[attrName]);
 			});
 		});
-		self.addStep("Setting All Issues hashMap",function(){
+		storer.addStep("Setting All Issues hashMap",function(){
 			self.hsAllIssues=storer.processFileObj(storedObj["allIssues"]);
-			self.continueTask();
+			storer.continueTask();
 		});
-		self.addStep("Returning Result",function(){
-			self.continueTask([self]);
+		storer.addStep("Returning Result",function(){
+			storer.continueTask([self]);
 		});
 		return self;
 	}

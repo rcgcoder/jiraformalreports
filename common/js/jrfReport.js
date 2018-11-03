@@ -48,7 +48,7 @@ var jrfReport=class jrfReport {
 			self.storeManager=new RCGObjectStorageManager("Reports",System.webapp.getTaskManager());
 			storer=self.storeManager;
 		}
-		self.config=storedObj.config;
+		self.config=storedObj.config; 
 		var attribs=[//"allIssues", // allIssues is the factory... not need to be assigned
 			         "childs","advanceChilds"
 			        ,"treeIssues","rootElements","rootIssues","rootProjects"];

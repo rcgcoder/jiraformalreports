@@ -52,6 +52,17 @@ var jrfReport=class jrfReport {
 		var attribs=[//"allIssues", // allIssues is the factory... not need to be assigned
 			         "childs","advanceChilds"
 			        ,"treeIssues","rootElements","rootIssues","rootProjects"];
+		storer.addStep("Setting All Issues hashMap",function(){
+			storer.addStep("Process all issues hashmap",function(){
+				var auxIssues=storer.processFileObj(storedObj["allIssues"]);
+				storer.continueTask([auxIssues]);
+			});
+			storer.addStep("Assign all issues to attribute",function(hsAllIssues){
+				self.hsAllIssues=hsAllIssues;
+				storer.continueTask();
+			});
+			storer.continueTask();
+		});
 		storer.addStep("Setting Attribs",function(){
 			storer.parallelizeProcess(attribs,function(attrName){
 				storer.addStep("Processing attribute",function(){
@@ -63,17 +74,6 @@ var jrfReport=class jrfReport {
 					storer.continueTask(); 
 				}); 
 			},1);
-		});
-		storer.addStep("Setting All Issues hashMap",function(){
-			storer.addStep("Process all issues hashmap",function(){
-				var auxIssues=storer.processFileObj(storedObj["allIssues"]);
-				storer.continueTask([auxIssues]);
-			});
-			storer.addStep("Assign all issues to attribute",function(hsAllIssues){
-				self.hsAllIssues=hsAllIssues;
-				storer.continueTask();
-			});
-			storer.continueTask();
 		});
 		storer.addStep("Returning Result",function(){
 			storer.continueTask([self]);

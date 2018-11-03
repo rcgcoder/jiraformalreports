@@ -559,7 +559,7 @@ var jrfReport=class jrfReport {
 				self.addStep("check if report exists in storage",function(){
 					self.existStored(); // load all issues
 				})
-				self.addStep("Trying to load report",function(){
+				self.addStep("Loading report...",function(){
 					if (self.isReusingIssueList()){
 						self.load(); // load all issues
 					}

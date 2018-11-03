@@ -276,34 +276,48 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 				}
 			});
 			storer.addStep("Item Loaded"+self.factory.name +"/"+objId,function(storedObj){
-				if (!dynObj.isFullyLoaded()){ // prevent a previous load of the object....
+				if ((!dynObj.isFullyLoaded())&&(dynObj.isLoading())){ // prevent a previous load of the object....
+					self.addStep("Waiting to load ends",function(){
+						if (dynObj.loadingSemaphore===""){
+							dynObj.loadingSemaphore=new RCGSemaphore(function(){return (!dynObj.isLoading());});
+						}
+						dynObj.loadingSemaphore.taskArrived(storer.getRunningTask());
+					});
+					self.addStep("Return the loaded object",function(){
+						storer.continueTask([dynObj]);
+					});
+				} else if (!dynObj.isFullyLoaded()){ // prevent a previous load of the object....
+					dynObj.loading=true;
 					var theFactory=self.factory;
 					//log("Loaded from storage:"+theFactory.name +"/"+objId);
-					storer.parallelizeProcess(theFactory.attrTypes,function(value,deep,key){
-						var attrName=key;
-						var attrType=value.type;
-						self.addStep("Processing object",function(){
-							var auxValue;
-							if (isDefined(storedObj[attrName])){
-								auxValue=storer.processFileObj(storedObj[attrName]);
-							} else {
-								auxValue="";
-							}
-							self.continueTask([auxValue])
-						});
-						self.addStep("Assigning Value",function(auxValue){
-							if (attrType=="Value"){
-								dynObj["set"+attrName](auxValue);
-							} else if(attrType=="List") {
-								dynObj["set"+attrName+"s"](auxValue);
-							}
-							self.continueTask();
-						});
+					self.addStep("Process Atributes",function(){
+						storer.parallelizeProcess(theFactory.attrTypes,function(value,deep,key){
+							var attrName=key;
+							var attrType=value.type;
+							storer.addStep("Processing object",function(){
+								var auxValue;
+								if (isDefined(storedObj[attrName])){
+									auxValue=storer.processFileObj(storedObj[attrName]);
+								} else {
+									auxValue="";
+								}
+								storer.continueTask([auxValue])
+							});
+							storer.addStep("Assigning Value",function(auxValue){
+								if (attrType=="Value"){
+									dynObj["set"+attrName](auxValue);
+								} else if(attrType=="List") {
+									dynObj["set"+attrName+"s"](auxValue);
+								}
+								self.continueTask();
+							});
+						},1);
 					});
 					self.addStep("Setting oject attributes and return",function(){
 						dynObj.setStored(true);
 						dynObj.setFullyLoaded();
 						dynObj.clearChanges();
+						dynObj.loading=false; // this releases the semaphore
 						self.continueTask(dynObj);
 					})
 				}

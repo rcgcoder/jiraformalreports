@@ -66,6 +66,7 @@ var RCGDynamicObject=class RCGDynamicObject{
 		self.setStored=factory.setStored;
 		self.clearChanges=factory.clearChanges;
 		
+		self.isLoading=factoy.isLoading;
 		self.isFullyLoaded=factory.isFullyLoaded;
 		self.setFullyLoaded=factory.setFullyLoaded;
 		self.setFullyUnloaded=factory.setFullyUnloaded;
@@ -898,6 +899,9 @@ var factoryObjects=class factoryObjects{
 			newObj.stored=false;
 			newObj.setStored=this.setStored;
 			newObj.loaded=true;
+			newObj.loading=false;
+			newObj.loadingSemaphore="";
+			newObj.isLoading=this.isLoading;
 			newObj.isFullyLoaded=this.isFullyLoaded;
 			newObj.setFullyLoaded=this.setFullyLoaded;
 			newObj.setFullyUnloaded=this.setFullyUnloaded;
@@ -1058,6 +1062,9 @@ var factoryObjects=class factoryObjects{
 	}
 	clearChanges(){
 		this.numChanges=0;
+	}
+	isLoading(){
+		return this.loading;
 	}
 	isFullyLoaded(){
 		return this.loaded;

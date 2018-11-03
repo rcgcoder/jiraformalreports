@@ -90,7 +90,9 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 								+" of "+self.countActiveObjects()
 								+ "/"+self.factory.list.length()
 								+ ". "+getMemStatus());							  
+						self.savingSemaphore.open();
 						self.isSavingInactives=false;
+						
 						storer.continueTask();
 					});
 					storer.continueTask();

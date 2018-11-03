@@ -52,10 +52,19 @@ var jrfReport=class jrfReport {
 		var attribs=[//"allIssues", // allIssues is the factory... not need to be assigned
 			         "childs","advanceChilds"
 			        ,"treeIssues","rootElements","rootIssues","rootProjects"];
-		attribs.forEach(function(attrName){
-			self[attrName]=storer.processFileObj(storedObj[attrName]);
+		self.addStep("Setting Attribs",function(){
+			self.parallelizeProcess(attribs,function(attrName){
+				self[attrName]=storer.processFileObj(storedObj[attrName]);
+			});
 		});
-		self.hsAllIssues=storer.processFileObj(storedObj["allIssues"]);
+		self.addStep("Setting All Issues hashMap",function(){
+			self.hsAllIssues=storer.processFileObj(storedObj["allIssues"]);
+			self.continueTask();
+		});
+		self.addStep("Returning Result",function(){
+			self.continueTask([self]);
+		});
+		return self;
 	}
 
 	adjustAccumItem(accumType,accumValue,issue,fieldName,atDatetime,notAdjust){

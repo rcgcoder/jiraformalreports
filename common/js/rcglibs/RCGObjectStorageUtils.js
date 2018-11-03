@@ -84,7 +84,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 						objToSave.atts[prop]=self.getStorageObject(item[prop]);
 					});
 				} else {
-					debugger;
+					debugger; 
 					logError("There is not properties of object");
 				}
 			} else if (objToSave.type=="co"){

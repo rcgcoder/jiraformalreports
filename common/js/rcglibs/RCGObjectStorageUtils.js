@@ -219,7 +219,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 					objResult.push(oPartial);
 					self.continueTask();
 				});
-			});
+			},1);
 		} else if (objContent.type=="h"/*"hashmap"*/){
 			objResult=newHashMap();
 			objResult.autoSwing=false;
@@ -235,7 +235,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 						objResult.add(key,oPartial);
 						self.continueTask();
 					});
-				});
+				},1);
 			});
 			self.addStep("Finish the list process",function(){
 				objResult.swing();
@@ -247,7 +247,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			self.addStep("Processing list of properties",function(){
 				self.parallelProcess(arrProps,function(prop){
 					objResult[prop]=self.processFileObj(objContent.value[prop]);
-				});
+				},1);
 			});
 			self.addStep("Finish the list process",function(){
 				objResult.swing();
@@ -276,7 +276,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				dynObj.setStored(true);
 				dynObj.unlock(); // unlock!
 			}
-			objResult=dynObj;
+			return dynObj;
 		} else if (objContent.type=="p" /* object part */){
 			if (objContent.partNumber==0){
 				//debugger;

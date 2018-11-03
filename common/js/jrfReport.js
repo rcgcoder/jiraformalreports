@@ -55,7 +55,7 @@ var jrfReport=class jrfReport {
 		storer.addStep("Setting Attribs",function(){
 			storer.parallelizeProcess(attribs,function(attrName){
 				self[attrName]=storer.processFileObj(storedObj[attrName]);
-			});
+			},1);
 		});
 		storer.addStep("Setting All Issues hashMap",function(){
 			self.hsAllIssues=storer.processFileObj(storedObj["allIssues"]);

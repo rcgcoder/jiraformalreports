@@ -210,16 +210,21 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			return theMethod;
 		} else if (objContent.type=="a"/*"array"*/){
 			objResult=[];
-			self.parallelizeProcess(objContent.value,function(elem){
-				self.addStep("process object",function(){
-					var oPartialResult=self.processFileObj(elem);
-					self.continueTask([oPartialResult]);
-				});
-				self.addStep("Assign partial result",function(oPartial){
-					objResult.push(oPartial);
-					self.continueTask();
-				});
-			},1);
+			self.addStep("Processing all items",function(){
+				self.parallelizeProcess(objContent.value,function(elem){
+					self.addStep("process object",function(){
+						var oPartialResult=self.processFileObj(elem);
+						self.continueTask([oPartialResult]);
+					});
+					self.addStep("Assign partial result",function(oPartial){
+						objResult.push(oPartial);
+						self.continueTask();
+					});
+				},1);
+			});
+			self.addStep("Finish the array process",function(){
+				self.continueTask([objResult]);
+			});
 		} else if (objContent.type=="h"/*"hashmap"*/){
 			objResult=newHashMap();
 			objResult.autoSwing=false;
@@ -250,7 +255,6 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				},1);
 			});
 			self.addStep("Finish the list process",function(){
-				objResult.swing();
 				self.continueTask([objResult]);
 			});
 		} else if (objContent.type=="co" /* custom object */){

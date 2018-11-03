@@ -104,7 +104,7 @@ var jrfReport=class jrfReport {
 		});
 		self.continueTask();
 	}
-	load(idReport){
+	existStored(idReport){
 		debugger;
 		var self=this;
 		var idReportKey="LastReport";
@@ -112,25 +112,31 @@ var jrfReport=class jrfReport {
 		self.addStep("Check if "+idReportKey+" is saved",function(){
 			self.storeManager.exists(idReportKey);
 		});
-		self.addStep("Loading Report...",function(bExists){
-			if (bExists){
-				self.addStep("Exists.. loading from storage... it takes a while",function(auxReport){
-					self.storeManager.load(idReportKey);
-				});
-				self.addStep("Assigning loaded Values",function(auxReport){
-					self.config=auxReport.config;
-					var attribs=[//"allIssues"  // not assign all issues
-								,"childs","advanceChilds"
-						        ,"treeIssues","rootElements","rootIssues","rootProjects"];
-					self.allIssues=baseDynamicObjectFactory.getFactoryGlobal("Issue");
-					attribs.forEach(function(attrName){
-						self[attrName]=auxReport[attrName];
-					});
-					self.continueTask();
-				});
-			} else {
+		self.addStep("update reusing flag",function(bExists){
+			if (!bExists){
 				self.reuseAllIssues=false;
 			}
+			self.continueTask();
+		});
+		self.continueTask();
+	}
+	load(idReport){
+		debugger;
+		var self=this;
+		var idReportKey="LastReport";
+		if (isDefined(idReport)) idReportKey=idReport;
+		self.addStep("loading Report from storage... it takes a while",function(auxReport){
+			self.storeManager.load(idReportKey);
+		});
+		self.addStep("Assigning loaded Values",function(auxReport){
+			self.config=auxReport.config;
+			var attribs=[//"allIssues"  // not assign all issues
+						,"childs","advanceChilds"
+				        ,"treeIssues","rootElements","rootIssues","rootProjects"];
+			self.allIssues=baseDynamicObjectFactory.getFactoryGlobal("Issue");
+			attribs.forEach(function(attrName){
+				self[attrName]=auxReport[attrName];
+			});
 			self.continueTask();
 		});
 		self.continueTask();
@@ -550,8 +556,13 @@ var jrfReport=class jrfReport {
 			debugger;
 			self.allIssues.changeStorableParams(100,0.10,true);
 			if (self.isReusingIssueList()){
-				self.addStep("Trying to load Issue",function(){
-					self.load(); // load all issues
+				self.addStep("check if report exists in storage",function(){
+					self.existStored(); // load all issues
+				})
+				self.addStep("Trying to load report",function(){
+					if (self.isReusingIssueList()){
+						self.load(); // load all issues
+					}
 				})
 			} 
 			self.addStep("Loading the Scope",function(){

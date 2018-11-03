@@ -79,7 +79,8 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			} else if (objToSave.type=="o"){
 				var arrProps=getAllProperties(item);
 				objToSave.atts={};
-				if (arrProps.length==0){
+				var nProps=arrProps.length;
+				if (nProps===0){
 					arrProps.forEach(function(prop){
 						objToSave.atts[prop]=self.getStorageObject(item[prop]);
 					});

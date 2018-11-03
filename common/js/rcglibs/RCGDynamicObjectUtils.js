@@ -66,7 +66,7 @@ var RCGDynamicObject=class RCGDynamicObject{
 		self.setStored=factory.setStored;
 		self.clearChanges=factory.clearChanges;
 		
-		self.isLoading=factoy.isLoading;
+		self.isLoading=factory.isLoading;
 		self.isFullyLoaded=factory.isFullyLoaded;
 		self.setFullyLoaded=factory.setFullyLoaded;
 		self.setFullyUnloaded=factory.setFullyUnloaded;

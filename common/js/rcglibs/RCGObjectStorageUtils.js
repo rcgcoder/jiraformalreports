@@ -78,9 +78,9 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				});
 			} else if (objToSave.type=="o"){
 				var arrProps=getAllProperties(item);
-				objToSave.value={};
+				objToSave.atts={};
 				arrProps.forEach(function(prop){
-					objToSave.value[prop]=self.getStorageObject(item[prop]);
+					objToSave.atts[prop]=self.getStorageObject(item[prop]);
 				});
 			} else if (objToSave.type=="co"){
 				objToSave.className=item.constructor.name;
@@ -227,10 +227,10 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			objResult.swing();
 			return objResult;
 		} else if (objContent.type=="o" /*"object"*/){
-			var arrProps=getAllProperties(objContent.value);
+			var arrProps=getAllProperties(objContent.atts);
 			var objResult={};
 			arrProps.forEach(function(prop){
-				var oPartial=self.processFileObj(objContent.value[prop]);
+				var oPartial=self.processFileObj(objContent.atts[prop]);
 				objResult[prop]=oPartial;
 			});
 			return objResult;

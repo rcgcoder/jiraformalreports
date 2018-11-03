@@ -237,12 +237,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			var objResult={};
 			arrProps.forEach(function(prop){
 				var oAtt=objContent.atts[prop];
-				var oPartial;
-				if (isDefined(oAtt.type)){
-					oPartial=self.processFileObj(oAtt);
-				} else {
-					oPartial=oAtt;
-				}
+				var oPartial=self.processFileObj(oAtt);
 				objResult[prop]=oPartial;
 			});
 			return objResult;
@@ -296,6 +291,8 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			} else {
 				return objContent;
 			}
+		} else if (isUndefined(objContent.type)){
+			return (objContent);
 		} else {
 			logError("Other type");
 			debugger;

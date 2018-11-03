@@ -114,7 +114,7 @@ var jrfReport=class jrfReport {
 		});
 		self.addStep("Loading Report...",function(bExists){
 			if (bExists){
-				self.addStep("Exists.. loading ",function(auxReport){
+				self.addStep("Exists.. loading from storage... it takes a while",function(auxReport){
 					self.storeManager.load(idReportKey);
 				});
 				self.addStep("Assigning loaded Values",function(auxReport){

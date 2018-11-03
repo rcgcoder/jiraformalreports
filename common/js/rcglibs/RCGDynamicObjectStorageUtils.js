@@ -279,24 +279,33 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 				if (!dynObj.isFullyLoaded()){ // prevent a previous load of the object....
 					var theFactory=self.factory;
 					//log("Loaded from storage:"+theFactory.name +"/"+objId);
-					var auxValue;
-					theFactory.attrTypes.walk(function(value,deep,key){
+					storer.parallelizeProcess(theFactory.attrTypes,function(value,deep,key){
 						var attrName=key;
 						var attrType=value.type;
-						if (isDefined(storedObj[attrName])){
-							auxValue=storer.processFileObj(storedObj[attrName]);
-						} else {
-							auxValue="";
-						}
-						if (attrType=="Value"){
-							dynObj["set"+attrName](auxValue);
-						} else if(attrType=="List") {
-							dynObj["set"+attrName+"s"](auxValue);
-						}
+						self.addStep("Processing object",function(){
+							var auxValue;
+							if (isDefined(storedObj[attrName])){
+								auxValue=storer.processFileObj(storedObj[attrName]);
+							} else {
+								auxValue="";
+							}
+							self.continueTask([auxValue])
+						});
+						self.addStep("Assigning Value",function(auxValue){
+							if (attrType=="Value"){
+								dynObj["set"+attrName](auxValue);
+							} else if(attrType=="List") {
+								dynObj["set"+attrName+"s"](auxValue);
+							}
+							self.continueTask();
+						});
 					});
-					dynObj.setStored(true);
-					dynObj.setFullyLoaded();
-					dynObj.clearChanges();
+					self.addStep("Setting oject attributes and return",function(){
+						dynObj.setStored(true);
+						dynObj.setFullyLoaded();
+						dynObj.clearChanges();
+						self.continueTask(dynObj);
+					})
 				}
 				storer.continueTask([dynObj]);
 			});

@@ -54,11 +54,11 @@ var jrfReport=class jrfReport {
 			        ,"treeIssues","rootElements","rootIssues","rootProjects"];
 		storer.addStep("Setting Attribs",function(){
 			storer.parallelizeProcess(attribs,function(attrName){
-				self.addStep("Processing attribute",function(){
+				storer.addStep("Processing attribute",function(){
 					var auxVal=storer.processFileObj(storedObj[attrName]);
-					self.continueTask([auxVal]);
+					storer.continueTask([auxVal]);
 				});
-				self.addStep("Setting value to attribute",function(attValue){
+				storer.addStep("Setting value to attribute",function(attValue){
 					self[attrName]=attValue;
 				});
 			},1);

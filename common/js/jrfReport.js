@@ -61,7 +61,7 @@ var jrfReport=class jrfReport {
 				storer.addStep("Setting value to attribute",function(attValue){
 					self[attrName]=attValue;
 					storer.continueTask();
-				});
+				}); 
 			},1);
 		});
 		storer.addStep("Setting All Issues hashMap",function(){

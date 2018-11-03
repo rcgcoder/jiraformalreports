@@ -210,7 +210,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			return theMethod;
 		} else if (objContent.type=="a"/*"array"*/){
 			objResult=[];
-			self.parallelProcess(objContent.value,function(elem){
+			self.parallelizeProcess(objContent.value,function(elem){
 				self.addStep("process object",function(){
 					var oPartialResult=self.processFileObj(elem);
 					self.continueTask([oPartialResult]);
@@ -224,7 +224,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			objResult=newHashMap();
 			objResult.autoSwing=false;
 			self.addStep("Processing all items",function(){
-				self.parallelProcess(objContent.value,function(hsElem){
+				self.parallelizeProcess(objContent.value,function(hsElem){
 					var key=hsElem.key;
 					var hsValue=hsElem.value;
 					self.addStep("process object",function(){
@@ -245,7 +245,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			var arrProps=getAllProperties(objContent.value);
 			objResult={};
 			self.addStep("Processing list of properties",function(){
-				self.parallelProcess(arrProps,function(prop){
+				self.parallelizeProcess(arrProps,function(prop){
 					objResult[prop]=self.processFileObj(objContent.value[prop]);
 				},1);
 			});

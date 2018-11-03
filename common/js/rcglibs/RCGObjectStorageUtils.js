@@ -284,7 +284,10 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			} else {
 				return objContent;
 			}
-		} 
+		} else {
+			logError("Other type");
+			debugger;
+		}
 		logError("ERROR... the processFile must never reach this line....");
 //		return objResult;
 	}

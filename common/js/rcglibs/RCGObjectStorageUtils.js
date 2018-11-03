@@ -84,9 +84,9 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 					arrProps.forEach(function(prop){
 						objToSave.atts[prop]=self.getStorageObject(item[prop]);
 					});
-				} else {
-					debugger; 
-					logError("There is not properties of object");
+//				} else {
+//					debugger; 
+//					logError("There is not properties of object");
 				}
 			} else if (objToSave.type=="co"){
 				objToSave.className=item.constructor.name;
@@ -236,7 +236,13 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			var arrProps=getAllProperties(objContent.atts);
 			var objResult={};
 			arrProps.forEach(function(prop){
-				var oPartial=self.processFileObj(objContent.atts[prop]);
+				var oAtt=objContent.atts[prop];
+				var oPartial;
+				if (isDefined(oAtt.type)){
+					oPartial=self.processFileObj(oAtt);
+				} else {
+					oPartial=oAtt;
+				}
 				objResult[prop]=oPartial;
 			});
 			return objResult;

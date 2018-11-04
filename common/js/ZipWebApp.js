@@ -299,7 +299,6 @@ class ZipWebApp{
 			//debugger;
 			log("Initialization finished");
 			$("#appMain").css('visibility','visible');
-			self.continueTask();
 		}));
 //		self.initializationBarrier.add(self.getRunningTask());
 		self.addStep("Initializing engines.... ",self.initialize,

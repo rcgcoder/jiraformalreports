@@ -147,7 +147,6 @@ function getUrlParameter(sParam) {
     }
 };
 
-
 function isMethod(variable){
 	return (typeof variable === 'function');
 }

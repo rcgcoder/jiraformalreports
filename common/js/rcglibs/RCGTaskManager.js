@@ -33,6 +33,10 @@ function isUndefined(variable){
 function isDefined(variable){
 	return (typeof variable!=="undefined");
 }
+function isNumber(obj){
+	return ( (typeof obj === "number") && (obj !== null) && isDefined(obj) );
+}
+
 function getMemStatus(){
 	var giga=(1024*1024);
 	return " totalJSHeapSize:"+ (performance.memory.totalJSHeapSize/giga).toFixed(3) + ',' +

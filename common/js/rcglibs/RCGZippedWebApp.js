@@ -880,8 +880,12 @@ class RCGZippedApp{
 	loadMemoryMonitor(){
 		var self=this;
 		var arrFiles=["js/libs/memory-stats.js"];
-		self.pushCallback(self.startMemoryMonitor);
-		return self.loadRemoteFiles(arrFiles);
+		self.addStep("Load files",function(){
+			self.loadRemoteFiles(arrFiles);
+		});
+		self.addStep("Start Memory monitor",function(){
+			self.startMemoryMonitor();
+		});
 	}
 	startMemoryMonitor(){
 		// add the monitor into our page and update it on a rAF loop

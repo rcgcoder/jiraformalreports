@@ -107,6 +107,8 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		objResult.key=dynObj.id;
 		objResult.name=dynObj.name;
 		self.factory.attrTypes.walk(function(value,deep,key){
+			var attrName=key;
+			var attrType=value.type;
 			if (attrType=="Value"){
 				objResult[attrName]=dynObj["get"+attrName]();
 			} else if(attrType=="List") {

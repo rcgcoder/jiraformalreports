@@ -658,6 +658,7 @@ class RCGZippedApp{
 		}
 	}
 	loadRemoteFiles(arrRelativePaths,fncPostProcessFile,theWindow){
+		debugger;
 		var self=this;
 		var arrStatus=[];
 		var fncAddStepDownloadRelativePath=function(iFile){

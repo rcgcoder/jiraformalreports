@@ -246,6 +246,9 @@ class RCGTask{
 		self.isDone=true;
 		self.freeMemory();
 	}
+	waitForEvent(){
+		return new RCGTaskResult(false);
+	}
 	canFreeMemory(){
 		var self=this;
 //		log("Free Memory of task:"+self.description);

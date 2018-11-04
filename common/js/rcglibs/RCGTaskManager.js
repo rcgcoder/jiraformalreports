@@ -1188,7 +1188,7 @@ class RCGTaskManager{
 			tm.setRunningTask(runningTask);
 //			log("Calling Traditional Callback in fork:"+runningTask.forkId);
 			var vResult=fncTraditionalCallback(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10);
-			if (!(isDefined(bWithContinueTask)&&bWithContinueTask)){
+			if (!(typeof bWithContinueTask!=="undefined")&&(bWithContinueTask)){
 				runningTask.processTaskResult(vResult);
 			}
 			tm.setRunningTask(prevRunningTask);

@@ -215,6 +215,7 @@ class GitHub{
 
 class RCGZippedApp{
 	constructor(){
+		debugger;
 		var self=this;
 		self.proxyPath=""; // url of the callback/connect proxy
 		self.rootPath="";

@@ -1175,8 +1175,11 @@ class RCGTaskManager{
 		}
 		return arrStatus;
 	}
-	
-	extended_createManagedCallback(fncTraditionalCallback){
+	extended_createManagedAddSteps(fncTraditionalFunction){
+		var self=this;
+		return self.createManagedCallback(fncTraditionalFunction,false);
+	}
+	extended_createManagedCallback(fncTraditionalCallback,bWithContinueTask){
 		var self=this;
 		var tm=self.getTaskManager();
 		var runningTask=tm.getRunningTask();
@@ -1185,7 +1188,9 @@ class RCGTaskManager{
 			tm.setRunningTask(runningTask);
 //			log("Calling Traditional Callback in fork:"+runningTask.forkId);
 			var vResult=fncTraditionalCallback(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10);
-			runningTask.processTaskResult(vResult);
+			if (!(isDefined(bWithContinueTask)&&bWithContinueTask)){
+				runningTask.processTaskResult(vResult);
+			}
 			tm.setRunningTask(prevRunningTask);
 		}
 		return fncManagedCallback;
@@ -1410,8 +1415,7 @@ class RCGTaskManager{
 		var iterationBlockCounter=0;
 		var fncLoopSteps=function(fncManagedLoop){
 			self.addStep("Checking Condition",function(){
-				condResult=fncWhileCondition();
-				self.continueTask([condResult]);
+				return fncWhileCondition();
 			});
 			self.addStep("New iteration",function(condResult){
 				iterationBlockCounter++;
@@ -1423,32 +1427,28 @@ class RCGTaskManager{
 						if (iterationBlockCounter<20){
 							fncManagedLoop();
 						}
-						self.continueTask([true]);
+						return true;
 					});
 				}
-				self.continueTask([false]);
+				return false;
 			});
 		}
 		var fncLoopBlockSteps=function(fncLoopBlock){
 			iterationBlockCounter=0;
 			self.addStep("Adding loop block step",function(){
-				var fncLoop=self.createManagedCallback(fncLoopSteps);
+				var fncLoop=self.createManagedAddSteps(fncLoopSteps);
 				fncLoop(fncLoop);
-				self.continueTask();
 			});
 			self.addStep("Adding loop block step",function(bContinue){
 				if (bContinue){
 					fncLoopBlock();
 				}
-				self.continueTask();
 			});
 		}
 		self.addStep("Looping while condition is true",function(){
-			var fncLoopBlock=self.createManagedCallback(fncLoopBlockSteps);
+			var fncLoopBlock=self.createManagedAddSteps(fncLoopBlockSteps);
 			fncLoopBlock(fncLoopBlock);
-			self.continueTask();
 		});
-		self.continueTask();
 	}
 	extended_taskResultJump(nJumps,p0,p1,p2,p3,p4,p5,p6,p7,p8,p9){
 		return new RCGTaskResult(true,nJumps,p0,p1,p2,p3,p4,p5,p6,p7,p8,p9);
@@ -1461,7 +1461,7 @@ class RCGTaskManager{
 	}
 	extended_parallelizeProcess(hsListItemsToProcess,fncProcess,maxParallelThreads){
 		var self=this;
-		self.parallelizeCalls(hsListItemsToProcess,undefined,fncProcess,maxParallelThreads);
+		return self.parallelizeCalls(hsListItemsToProcess,undefined,fncProcess,maxParallelThreads);
 	}
 	extended_parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads){
 		//debugger;
@@ -1478,20 +1478,17 @@ class RCGTaskManager{
 //			tm.autoFree=false;
 			tm.asyncTaskCallsBlock=0;
 			tm.asyncTaskCallsMaxDeep=0;
-			tm.next();
 		});
 		self.addStep("Call parallelized pseudoThreaded",function(){
 			log("Call internal parallelized..");
-			self.internal_parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads);
+			return self.internal_parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads);
 		});
 		self.addStep("Restore AutoFree and CallsBlock params",function(){
 			log("Restore autofree and callsblock..");
 //			tm.autoFree=bckAutoFree;
 			tm.asyncTaskCallsBlock=bckTaskCallsBlock;
 			tm.asyncTaskCallsMaxDeep=bckTaskCallsMaxDeep;
-			tm.next();
 		});
-		tm.next();
 	}
 	
 	extendObject(obj){
@@ -1505,6 +1502,7 @@ class RCGTaskManager{
 		obj.setTaskProgressMinMax=self.extended_setProgressMinMax;
 		obj.setTaskProgress=self.extended_setProgress;
 		obj.createManagedCallback=self.extended_createManagedCallback;
+		obj.createManagedAddSteps=self.extended_createManagedAddSteps;
 		obj.setRunningTask=self.extended_setRunningTask;
 		obj.getRunningTask=self.extended_getRunningTask;
 		obj.getTaskManagerStatus=self.extended_getTaskManagerStatus;

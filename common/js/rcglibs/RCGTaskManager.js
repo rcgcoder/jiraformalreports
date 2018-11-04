@@ -59,8 +59,9 @@ class RCGTaskResult{
 }
 function isTaskResult(vVar){
 	debugger;
-	if (typeof vVar==="undefined") return false;
-	if (typeof vVar!=="object") return false;
+	var theType=typeof vVar;
+	if (theType==="undefined") return false;
+	if (theType!=="object") return false;
 	return (vVar.constructor.name ==="RCGTaskResult");
 }
 class RCGSemaphore{

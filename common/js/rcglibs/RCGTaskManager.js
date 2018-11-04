@@ -27,6 +27,13 @@
     // Add the one thing we want added to the window object.
     window.setZeroTimeout = setZeroTimeout;
 })();
+function getMemStatus(){
+	var giga=(1024*1024);
+	return " totalJSHeapSize:"+ (performance.memory.totalJSHeapSize/giga).toFixed(3) + ',' +
+			"usedJSHeapSize:"  + (performance.memory.usedJSHeapSize/giga).toFixed(3)  + ',' +
+			"jsHeapSizeLimit:" + (performance.memory.jsHeapSizeLimit/giga).toFixed(3);
+}
+
 class RCGTaskResult{
 	constructor(bContinue,nJumps,p0,p1,p2,p3,p4,p5,p6,p7,p8,p9){
 		var self=this;

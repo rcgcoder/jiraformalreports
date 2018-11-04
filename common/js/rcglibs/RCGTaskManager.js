@@ -54,7 +54,7 @@ class RCGTaskResult{
 		arrParams[9]=p9;
 		var bWithParams=false;
 		for (var i=0;i<10;i++){
-			if (isDefined(arrParams[i])){
+			if (typeof arrParams[i]!=="undefined"){
 				bWithParams=true;
 			}
 		}

@@ -16,6 +16,7 @@ class JiraZipWebApp{
 		self.addStep("Download Image...",function(){
 			log("Requesting Image");
 			self.loadRemoteFile("img/reports2.jpg");
+			return self.waitForEvent();
 		});
 		self.addStep("changing image...",function(sPath,content){
 			log("Image Loaded:"+sPath);
@@ -24,7 +25,7 @@ class JiraZipWebApp{
 			log("Image changed");
 //			$('body').attr('ng-app', 'mySuperAwesomeApp');
 			$("#"+self.htmlContainerId).html("<heros></heros>");
-			self.popCallback(); // finishing the process.
+//			self.popCallback(); // finishing the process.
 		});
 		
 		self.addStep("Loading angularjs and typescript inline compiler and Jira REST Client.... ",function(){
@@ -36,6 +37,7 @@ class JiraZipWebApp{
 							"js/rcglibs/Jira/RCGJira.js"
 						 ]; //test
 			self.loadRemoteFiles(arrFiles);
+			return self.waitForEvent();
 		});
 		self.addStep("Getting Confluence Oauth Token", function(){
 			var jira=self.getJira();

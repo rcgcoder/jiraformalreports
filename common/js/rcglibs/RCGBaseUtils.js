@@ -185,6 +185,12 @@ function isHashMap(obj){
 function isArray(variable){
 	return Array.isArray(variable);
 }
+function isObjectOf(obj,className){
+	if (isObject(obj)&& (obj.constructor.name==className)){
+		return true;
+	}
+	return false;
+}
 function isObject(obj){
 	return ( (typeof obj === "object") && (obj !== null) && isDefined(obj) );
 }

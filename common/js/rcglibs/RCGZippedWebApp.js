@@ -106,14 +106,15 @@ class GitHub{
 		  log("Remaining GitHub Pets:"+nRemaining);
 		  if (xhr.status == 302) {
 			  var ghLink=xhr.getResponseHeader("Location");
-			  self.apiCall(ghLink);
+			  return self.apiCall(ghLink);
 		  } else if (xhr.status == 200) {
-			  self.popCallback([xhr.response,xhr,sTargetUrl,arrHeaders]);
+			  self.continueTask([xhr.response,xhr,sTargetUrl,arrHeaders]);
 		  } else {
-			  self.loadError({target:{src:sUrl}});			  
+			  return self.loadError({target:{src:sUrl}});			  
 		  }
 		});
 		xhr.send();	
+		return self.waitForEvent();
 	}
 	processCommitsPage(response,xhr,url,arrHeaders){
 	   var self=this;
@@ -132,13 +133,10 @@ class GitHub{
 			  arrLinks=arrLinks[0].split('=');
 			  var nextPage=arrLinks[1];
 			  self.pushCallback(self.processCommitsPage);
-			  self.apiCall(sUrl,nextPage,undefined,undefined,arrHeaders);
-		  } else {
-			  self.popCallback([self.arrCommits],1);
+			  return self.apiCall(sUrl,nextPage,undefined,undefined,arrHeaders);
 		  }
-	   } else {
-		  self.popCallback([self.arrCommits],1);
 	   }
+	   return self.taskResultJump(1,self.arrCommits);
 	}
 	getCommits(fromDate){
 		var self=this;
@@ -146,7 +144,7 @@ class GitHub{
 		self.arrCommits=[];
 		if (typeof fromDate==="undefined"){
 			self.pushCallback(self.processCommitsPage);
-			self.apiCall("https://api.github.com/repos/"+self.repository+"/commits");
+			return self.apiCall("https://api.github.com/repos/"+self.repository+"/commits");
 		} else {
 			self.pushCallback(self.processCommitsPage);
 			var arrHeaders=[
@@ -154,7 +152,7 @@ class GitHub{
 				];
 			var sDate = new Date(fromDate).toISOString();
 			sDate=sDate.substring(0,sDate.length-5);
-			self.apiCall("https://api.github.com/search/commits?q=repo:rcgcoder/jiraformalreports+committer-date:>"+sDate,undefined,undefined,undefined,arrHeaders);
+			return self.apiCall("https://api.github.com/search/commits?q=repo:rcgcoder/jiraformalreports+committer-date:>"+sDate,undefined,undefined,undefined,arrHeaders);
 		}
 	}
 	processLastCommit(response){
@@ -164,24 +162,24 @@ class GitHub{
 		var sCommitShortId=sCommitLongId.substring(0,8);
 		self.commitId=sCommitShortId;
 		self.commitDate=(new Date(self.lastCommit.commit.author.date)).getTime();
-		self.popCallback([self.commitId,self.commitDate]);
+		return self.taskResultMultiple(self.commitId,self.commitDate);
 	}
 	updateLastCommit(){
 		var self=this;
 		self.pushCallback(self.processLastCommit);
-		self.apiCall("../getCommitId?refreshCommitId=1");
+		return self.apiCall("../getCommitId?refreshCommitId=1");
 	}
 	updateAllCommits(deployZips){
 		var self=this;
 		if (typeof relativePaths!="undefined"){
 			self.pushCallback(function(arrCommits){
-				self.popCallback([self.commitId,arrCommits],1);
+				return self.taskResultJump(1,self.commitId,arrCommits);
 			});
 			self.pushCallback(function(){
-				self.getLastCommitOfFiles(relativePaths);
+				return self.getLastCommitOfFiles(relativePaths);
 			});
 		}
-		self.updateLastCommit();
+		return self.updateLastCommit();
 	}
 	processLastCommitOfFile(response){
 		var self=this;
@@ -190,29 +188,28 @@ class GitHub{
 		var sCommitLongId=lastCommit.sha;
 		var sCommitShortId=sCommitLongId.substring(0,8);
 		var sCommitDate=(new Date(lastCommit.commit.author.date)).getTime();
-		self.popCallback(sCommitShortId,sCommitDate);
+		return self.taskResultMultiple(sCommitShortId,sCommitDate);
 	}
 	getLastCommitOfFile(sRelativePath){
 		var self=this;
 		self.pushCallback(self.processLastCommitOfFile);
-		self.apiCall("https://api.github.com/repos/"+self.repository+"/commits?path="+sRelativePath);
+		return self.apiCall("https://api.github.com/repos/"+self.repository+"/commits?path="+sRelativePath);
 	}
 	updateDeployZipCommits(deployZips,iFile){
 		var self=this;
 		if (iFile>=deployZips.length){
-			self.popCallback();
+			return;
 		} else {
 			self.pushCallback(function(sCommitId,sCommitDate){
 				deployZips[iFile].commitId=sCommitId;
 				deployZips[iFile].commitDate=sCommitDate;
-				self.updateDeployZipCommits(deployZips,iFile+1);
+				return self.updateDeployZipCommits(deployZips,iFile+1);
 			});
-			self.getLastCommitOfFile(deployZips[iFile].relativePath);
+			return self.getLastCommitOfFile(deployZips[iFile].relativePath);
 		}
 	}
 	getLastCommitOfDeploys(deployZips){
-		
-		this.updateDeployZipCommits(deployZips,0);
+		return this.updateDeployZipCommits(deployZips,0);
 	}
 }
 
@@ -591,7 +588,7 @@ class RCGZippedApp{
 	    } else if (contentType.isDOCX){
 	    	auxContent='data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,'+auxContent;
 	    }
-	    self.popCallback([sRelativePath,auxContent]);
+	    return self.taskResultMultiple(sRelativePath,auxContent);
 	}
 	loadFileFromNetwork(sRelativePath,fileContent,contentType,theWindow){
 		var self=this;
@@ -612,14 +609,14 @@ class RCGZippedApp{
 		var self=this;
 		if ((!self.bWithPersistentStorage)||(self.storage=="")||(self.github=="")){ // if there is not storage initialized or github is not used
 			log("There is not storage engine loaded");
-			return self.popCallback([sRelativePath,"",undefined,theWindow]);
+			return self.taskResultMultiple(sRelativePath,"",undefined,theWindow);
 		}
 		// now there is storage and github
 		
 		// get the last commit id
 		var sCommitId=self.github.commitId;
 		if (sCommitId==""){ // imposible case.... all the repositories has one or more commits
-			return self.popCallback([sRelativePath,"",undefined,theWindow]);
+			return self.taskResultMultiple(sRelativePath,"",undefined,theWindow);
 		}
 		
 		var sContentType=self.storage.get('#FILEINFO#'+sRelativePath);
@@ -635,19 +632,20 @@ class RCGZippedApp{
 			var sVersion=jsonContentType.commitId;
 			if ((sCommitId==sVersion)||(sVersion=="")){ // if stored file version == github version are the same.... use the storage version
 				log("Loading from storage the File:"+sRelativePath);
-				return filesystem.ReadFile(sRelativePath,
+				filesystem.ReadFile(sRelativePath,
 						self.createManagedCallback(function(sStringContent){
 							log("file "+sRelativePath +" readed from storage");
-							self.popCallback([sRelativePath,sStringContent,jsonContentType,theWindow]);
+							return self.taskResultMultiple(sRelativePath,sStringContent,jsonContentType,theWindow);
 						}),
 						self.createManagedCallback(function(e){
 							log("file "+sRelativePath +" Error reading from storage");
-							self.popCallback([sRelativePath,"",undefined,theWindow]);
+							return self.taskResultMultiple(sRelativePath,"",undefined,theWindow);
 						})
 						);
+				return self.waitForEvent();
 			}
 		}
-		return self.popCallback([sRelativePath,"",undefined,theWindow]);
+		return self.taskResultMultiple(sRelativePath,"",undefined,theWindow);
 	}
 	
 	loadRemoteFile(sRelativePath,theWindow){
@@ -668,7 +666,7 @@ class RCGZippedApp{
 			var sFile=arrRelativePaths[iIntFile];
 			self.addStep("Downloading file:"+ sFile+ " pos:"+iIntFile,function(){
 				self.addStep("Reading File:"+sFile,function(){
-					self.loadFileFromStorage(sFile,theWindow);
+					return self.loadFileFromStorage(sFile,theWindow);
 				});
 				self.addStep("File:"+sFile+" ¿need to load from network?",function(sRelativePath,fileContent,contentType){
 					if (fileContent!=""){
@@ -702,7 +700,7 @@ class RCGZippedApp{
 //					log("YES postprocess file");
 					fncPostProcessFile(iFile,theWindow);
 				}
-				self.continueTask();
+//				self.continueTask();
 			});
 		}
 		self.pushCallback(function(){
@@ -710,18 +708,18 @@ class RCGZippedApp{
 				for (var i=0;i<arrRelativePaths.length;i++){
 					fncAddStepDownloadRelativePath(i);
 				}
-				self.continueTask();
+//				self.continueTask();
 			});
 			self.addStep("Processing "+arrRelativePaths.length+" files",function(){
 				for (var i=0;i<arrRelativePaths.length;i++){
 					var fileStatus=arrStatus[i];
 					fncAddStepProcessRelativePath(i,fileStatus);
 				}
-				self.continueTask();
+//				self.continueTask();
 			});
-			self.continueTask();
+//			self.continueTask();
 		});
-		self.popCallback();
+//		self.popCallback();
 	}
 
 	checkForDeploys(iFile){

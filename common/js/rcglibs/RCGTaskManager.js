@@ -27,6 +27,39 @@
     // Add the one thing we want added to the window object.
     window.setZeroTimeout = setZeroTimeout;
 })();
+class RCGTaskResult{
+	constructor(bContinue,nJumps,p0,p1,p2,p3,p4,p5,p6,p7,p8,p9){
+		var self=this;
+		self.continueTask=bContinue;
+		self.arrParams;
+		self.jump=nJumps;
+		self.withParams=false;
+		var arrParams=new Array(10);
+		arrParams[0]=p0;
+		arrParams[1]=p1;
+		arrParams[2]=p2;
+		arrParams[3]=p3;
+		arrParams[4]=p4;
+		arrParams[5]=p5;
+		arrParams[6]=p6;
+		arrParams[7]=p7;
+		arrParams[8]=p8;
+		arrParams[9]=p9;
+		var bWithParams=false;
+		for (var i=0;i<10;i++){
+			if (isDefined(arrParams[i])){
+				bWithParams=true;
+			}
+		}
+		if (bWithParams){
+			self.withParams=true;
+			self.arrParams=arrParams;
+		}
+	}
+}
+function isTaskResult(vVar){
+	return (isObjectOf(vVar,"RCGTaskResult"));
+}
 class RCGSemaphore{
 	constructor(fncIsOpen,autoWait){
 		var self=this;
@@ -293,6 +326,16 @@ class RCGTask{
 		var self=this;
 		self.getTaskManager().setRunningTask(theTask);
 	}
+	processTaskResult(theTaskResult){
+		var self=this;
+		if (isTaskResult(theTaskResult)){
+			if (theTaskResult.continueTask){
+				self.getTaskManager().next(theTaskResult.arrParams,theTaskResult.jump);
+			}
+		} else {
+			theTaskManager.next([theTaskResult]);
+		}
+	}
 	callMethod(aArgs){
 		var self=this;
 		self.running=true;
@@ -327,7 +370,8 @@ class RCGTask{
 				debugger;
 			}
 			
-			theMethod.apply(context,newArgs);
+			var vApplyResult=theMethod.apply(context,newArgs);
+			theTask.processTaskResult(vApplyResult);
 		}
 
 		var fncAsyncApply=function(){
@@ -1126,6 +1170,7 @@ class RCGTaskManager{
 			tm.setRunningTask(runningTask);
 //			log("Calling Traditional Callback in fork:"+runningTask.forkId);
 			var vResult=fncTraditionalCallback(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10);
+			runningTask.processTaskResult(vResult);
 			tm.setRunningTask(prevRunningTask);
 		}
 		return fncManagedCallback;
@@ -1390,7 +1435,15 @@ class RCGTaskManager{
 		});
 		self.continueTask();
 	}
-	
+	extended_taskResultJump(nJumps,p0,p1,p2,p3,p4,p5,p6,p7,p8,p9){
+		return new RCGTaskResult(true,nJumps,p0,p1,p2,p3,p4,p5,p6,p7,p8,p9);
+	}
+	extended_taskResultMultiple(p0,p1,p2,p3,p4,p5,p6,p7,p8,p9){
+		return new RCGTaskResult(true,undefined,p0,p1,p2,p3,p4,p5,p6,p7,p8,p9);
+	}
+	extended_waitForEvent(){
+		return new RCGTaskResult(false);
+	}
 	extended_parallelizeProcess(hsListItemsToProcess,fncProcess,maxParallelThreads){
 		var self=this;
 		self.parallelizeCalls(hsListItemsToProcess,undefined,fncProcess,maxParallelThreads);
@@ -1445,6 +1498,9 @@ class RCGTaskManager{
 		obj.internal_parallelizeCalls=self.internal_parallelizeCalls;
 		obj.parallelizeCalls=self.extended_parallelizeCalls;
 		obj.parallelizeProcess=self.extended_parallelizeProcess;
+		obj.waitForEvent=self.extended_waitForEvent;
+		obj.taskResultMultiple=extended_taskResultMultiple;
+		obj.taskResultJump=extended_taskResultJump;
 		obj.loopProcess=self.extended_loopProcess;
 
 	}

@@ -107,14 +107,19 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		objResult.key=dynObj.id;
 		objResult.name=dynObj.name;
 		self.factory.attrTypes.walk(function(value,deep,key){
-			var attrName=key;
+			if (attrType=="Value"){
+				objResult[attrName]=dynObj["get"+attrName]();
+			} else if(attrType=="List") {
+				objResult[attrName]=dynObj["get"+attrName+"s"]();
+			}
+/*			var attrName=key;
 			var attrType=value.type;
 			if (attrType=="Value"){
 				objResult[attrName]=self.storer.getStorageObject(dynObj["get"+attrName]());
 			} else if(attrType=="List") {
 				objResult[attrName]=self.storer.getStorageObject(dynObj["get"+attrName+"s"]());
 			}
-		});
+*/		});
 		return objResult;
 	}
 	saveToStorage(dynObj){
@@ -125,7 +130,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 			storer.addStep("Saving to storage "+self.factory.name +"/"+dynObj.getId(),function(){
 //				log("Saving to storage:"+dynObj.getId());
 				dynObj.clearChanges();
-				storer.save(dynObj.getId(),dynObj);
+				storer.save(dynObj.getId(),self.getStorageObject(dynObj));
 			});
 			storer.addStep("Item Saved "+self.factory.name +"/"+dynObj.getId(),function(key){
 //				log("Item Saved:"+dynObj.getId()+" vs "+key);

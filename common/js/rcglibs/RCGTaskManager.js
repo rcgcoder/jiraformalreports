@@ -1185,7 +1185,7 @@ class RCGTaskManager{
 		}
 		return arrStatus;
 	}
-	extended_createManagedAddSteps(fncTraditionalFunction){
+	extended_createManagedFunction(fncTraditionalFunction){
 		var self=this;
 		return self.createManagedCallback(fncTraditionalFunction,false);
 	}
@@ -1343,17 +1343,16 @@ class RCGTaskManager{
 					if (isDefined(fncCall)){
 						self.addStep("Petition:"+iPet+" of parallel process ",function(){
 	//						log("Start the "+iPet+" Call of parallel process");
-							var fncManagedCall=self.createManagedCallback(fncCall);
-							fncManagedCall(item);
+							var fncManagedCall=self.createManagedFunction(fncCall);
+							return fncManagedCall(item);
 	//						log("End of the "+iPet+" Call of parallel process");
 						});
 					}
 					if (isDefined(fncProcess)){
 						self.addStep("Petition:"+iPet+" Processing result and Trying Next Call...",function(objResult){
 	//						log("Start the "+iPet+" Processing of parallel process");
-							var fncManagedProcessCall=self.createManagedCallback(fncProcess);
-							fncManagedProcessCall(item,objResult,itemKey);
-							self.continueTask();
+							var fncManagedProcessCall=self.createManagedFunction(fncProcess);
+							return fncManagedProcessCall(item,objResult,itemKey);
 	//						log("End of the "+iPet+" Processing of parallel process");
 						});
 					} 
@@ -1364,34 +1363,26 @@ class RCGTaskManager{
 						if (isRemaining()&&(blockCounter[iThread]<nCallsPerBlock)){
 							//log("There are "+(nTotalCalls-nActualCall)+" petitions pending... let´s go next petition");
 							fncParallelCall(iThread,fncParallelCall);
-						} else {
-							//log("There is not more petitions");
-							self.continueTask();
 						}
 					});
-					self.continueTask();
 				});
-				self.continueTask();
 			};
 			var fncAddThreadSubSteps=function(iThread,fncParallelCallSubSteps){
 				blockCounter[iThread]=0;
 				self.addStep("Parallel thread call subset",function(){
-					var fncParallelCall=self.createManagedCallback(fncParallelCallBase);
+					var fncParallelCall=self.createManagedFunction(fncParallelCallBase);
 					fncParallelCall(iThread,fncParallelCall);
 				});
 				self.addStep("If remaining.... launch a new block",function(){
 					if (isRemaining()){
 						fncParallelCallSubSteps(iThread,fncParallelCallSubSteps);
-					} else {
-						self.continueTask();
 					}
 				});
-				self.continueTask();
 			}
 			var fncAddThread=function(iThread){
 				return self.addStep("Parallel call Thread "+iThread,function(){
 //					log("Parallel Step "+iThread);
-					var fncParallelCallSubSteps=self.createManagedCallback(fncAddThreadSubSteps);
+					var fncParallelCallSubSteps=self.createManagedFunction(fncAddThreadSubSteps);
 					fncParallelCallSubSteps(iThread,fncParallelCallSubSteps);
 				},0,1,undefined,undefined,undefined,"INNER",undefined
 				);
@@ -1414,9 +1405,7 @@ class RCGTaskManager{
 	//				log(theWorkerThread);
 				}
 			}
-			self.continueTask();
 		});
-		self.continueTask();
 	}
 	
 	extended_loopProcess(fncWhileCondition,fncProcess){
@@ -1446,7 +1435,7 @@ class RCGTaskManager{
 		var fncLoopBlockSteps=function(fncLoopBlock){
 			iterationBlockCounter=0;
 			self.addStep("Adding loop block step",function(){
-				var fncLoop=self.createManagedAddSteps(fncLoopSteps);
+				var fncLoop=self.createManagedFunction(fncLoopSteps);
 				fncLoop(fncLoop);
 			});
 			self.addStep("Adding loop block step",function(bContinue){
@@ -1456,7 +1445,7 @@ class RCGTaskManager{
 			});
 		}
 		self.addStep("Looping while condition is true",function(){
-			var fncLoopBlock=self.createManagedAddSteps(fncLoopBlockSteps);
+			var fncLoopBlock=self.createManagedFunction(fncLoopBlockSteps);
 			fncLoopBlock(fncLoopBlock);
 		});
 	}
@@ -1512,7 +1501,7 @@ class RCGTaskManager{
 		obj.setTaskProgressMinMax=self.extended_setProgressMinMax;
 		obj.setTaskProgress=self.extended_setProgress;
 		obj.createManagedCallback=self.extended_createManagedCallback;
-		obj.createManagedAddSteps=self.extended_createManagedAddSteps;
+		obj.createManagedFunction=self.extended_createManagedFunction;
 		obj.setRunningTask=self.extended_setRunningTask;
 		obj.getRunningTask=self.extended_getRunningTask;
 		obj.getTaskManagerStatus=self.extended_getTaskManagerStatus;

@@ -124,6 +124,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 */		});
 		return objResult;
 	}
+	
 	saveToStorage(dynObj){
 		var self=this;
 		var storer=self.storer;
@@ -303,7 +304,8 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 								var attrType=value.type;
 								var auxValue;
 								if (isDefined(storedObj[attrName])){
-									auxValue=storer.processFileObj(storedObj[attrName]);
+//									auxValue=storer.processFileObj(storedObj[attrName]);
+									auxValue=storedObj[attrName];
 								} else {
 									auxValue="";
 								}

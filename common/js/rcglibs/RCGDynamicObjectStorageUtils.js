@@ -113,7 +113,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 				objResult[attrName]=dynObj["get"+attrName]();
 			} else if(attrType=="List") {
 				objResult[attrName]=dynObj["get"+attrName+"s"]();
-			}
+			} 
 /*			var attrName=key;
 			var attrType=value.type;
 			if (attrType=="Value"){

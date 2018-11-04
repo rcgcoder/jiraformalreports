@@ -169,9 +169,8 @@
 					 var launcher=zipApp.addStep("Running the ZipApp Engine",function(){
 						 zipApp.run();
   					 });
-					 zipApp.continueTask();
-					 
-					 //launcher.callMethod();
+					 //zipApp.continueTask();
+					 launcher.callMethod();
 			 }
 			 getLastCommit(sRepo,function(sCommitId,tCommitDate){
 				 commitId=sCommitId;

@@ -336,7 +336,7 @@ class RCGTask{
 				self.getTaskManager().next(theTaskResult.arrParams,theTaskResult.jump);
 			}
 		} else {
-			self.getTaskManager().next([theTaskResult]);
+			self.getTaskManager().next([theTaskResult]); 
 		}
 	}
 	callMethod(aArgs){

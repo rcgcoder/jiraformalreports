@@ -58,7 +58,10 @@ class RCGTaskResult{
 	}
 }
 function isTaskResult(vVar){
-	return (vVar instanceof RCGTaskResult);
+	debugger;
+	if (typeof vVar==="undefined") return false;
+	if (typeof vVar!=="object") return false;
+	return (vVar.constructor.name ==="RCGTaskResult");
 }
 class RCGSemaphore{
 	constructor(fncIsOpen,autoWait){

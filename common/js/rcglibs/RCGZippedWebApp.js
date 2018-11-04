@@ -948,7 +948,7 @@ class RCGZippedApp{
 	}
 	startApplication(){
 		debugger;
-		var self=this;
+		var self=this; 
 		self.pushCallback(function(){
 			var webapp=new ZipWebApp();
 			self.extendFromObject(webapp);

@@ -58,7 +58,6 @@ class RCGTaskResult{
 	}
 }
 function isTaskResult(vVar){
-	debugger;
 	var theType=typeof vVar;
 	if (theType==="undefined") return false;
 	if (theType!=="object") return false;
@@ -337,7 +336,7 @@ class RCGTask{
 				self.getTaskManager().next(theTaskResult.arrParams,theTaskResult.jump);
 			}
 		} else {
-			theTaskManager.next([theTaskResult]);
+			self.getTaskManager().next([theTaskResult]);
 		}
 	}
 	callMethod(aArgs){

@@ -661,31 +661,27 @@ class RCGZippedApp{
 		debugger;
 		var self=this;
 		var arrStatus=[];
-		var fncAddStepDownloadRelativePath=function(iFile){
+		return self.parallelizeProcess(arrRelativePaths.length,function(iFile){
 			var iIntFile=iFile;
 			var sFile=arrRelativePaths[iIntFile];
-			self.addStep("Downloading file:"+ sFile+ " pos:"+iIntFile,function(){
-				self.addStep("Reading File:"+sFile,function(){
-					return self.loadFileFromStorage(sFile,theWindow);
-				});
-				self.addStep("File:"+sFile+" ¿need to load from network?",function(sRelativePath,fileContent,contentType){
-					if (fileContent!=""){
+			log("Downloading file:"+ sFile+ " pos:"+iIntFile);
+			self.addStep("Reading File:"+sFile,function(){
+				return self.loadFileFromStorage(sFile,theWindow);
+			});
+			self.addStep("File:"+sFile+" ¿need to load from network?",function(sRelativePath,fileContent,contentType){
+				if (fileContent!=""){
 //						log("File "+iIntFile+" "+sRelativePath+ " is in Storage");
-						return self.taskResultMultiple(sRelativePath,fileContent,contentType);
-					}
+					return self.taskResultMultiple(sRelativePath,fileContent,contentType);
+				}
 //					log("File "+iIntFile+" "+sRelativePath+ " is not in Storage... loading from network");
-					return self.loadFileFromNetwork(sRelativePath,fileContent,contentType,theWindow);
-				});
-				self.addStep("File:"+sFile+" fully loaded!",function(sRelativePath,fileContent,contentType){
+				return self.loadFileFromNetwork(sRelativePath,fileContent,contentType,theWindow);
+			});
+			self.addStep("File:"+sFile+" fully loaded!",function(sRelativePath,fileContent,contentType){
 //					log("File "+iIntFile+" "+sRelativePath+ " is loaded... updating status");
-					arrStatus[iIntFile]={path:sRelativePath,content:fileContent,type:contentType};
-				});
-			},0,1,undefined,undefined,undefined,"INNER",undefined
-//			}
-			);
-		}
-		var fncAddStepProcessRelativePath=function(iFile,fileStatus){
-			self.addStep("Processing "+iFile+" file:"+fileStatus.path,function(){
+				arrStatus[iIntFile]={path:sRelativePath,content:fileContent,type:contentType};
+				return arrStatus[iIntFile];
+			});
+			self.addStep("Processing "+iFile+" file:"+fileStatus.path,function(fileStatus){
 				return self.processFile(fileStatus.path,
 								 fileStatus.content,
 								 fileStatus.type
@@ -694,24 +690,9 @@ class RCGZippedApp{
 			});
 			if (typeof fncPostProcessFile!=="undefined"){
 				self.addStep("Processed "+iFile+" file:"+fileStatus.path,function(){
-//				log("Processed "+iFile+" file:"+fileStatus.path+"...¿postProcessing?");
-//					log("YES postprocess file");
-					return fncPostProcessFile(iFile,theWindow);
+					return fncPostProcessFile(iIntFile,theWindow);
 				});
 			}
-		}
-		self.pushCallback(function(){
-			self.addStep("Downloading "+arrRelativePaths.length+" files",function(){
-				for (var i=0;i<arrRelativePaths.length;i++){
-					fncAddStepDownloadRelativePath(i);
-				}
-			});
-			self.addStep("Processing "+arrRelativePaths.length+" files",function(){
-				for (var i=0;i<arrRelativePaths.length;i++){
-					var fileStatus=arrStatus[i];
-					fncAddStepProcessRelativePath(i,fileStatus);
-				}
-			});
 		});
 	}
 

@@ -27,6 +27,12 @@
     // Add the one thing we want added to the window object.
     window.setZeroTimeout = setZeroTimeout;
 })();
+function isUndefined(variable){
+	return (typeof variable==="undefined");
+}
+function isDefined(variable){
+	return (typeof variable!=="undefined");
+}
 function getMemStatus(){
 	var giga=(1024*1024);
 	return " totalJSHeapSize:"+ (performance.memory.totalJSHeapSize/giga).toFixed(3) + ',' +

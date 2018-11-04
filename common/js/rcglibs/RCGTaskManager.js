@@ -151,10 +151,11 @@ class RCGBarrier{
 		var self=this;
 		//log("Barrier "+self.id+" reached task:["+task.forkId+" - "+task.description+"] - "+self.nItems +" --> "+ (self.nItems-1) );
 		self.tasksReached.push(task); // to debug activity
+		// the task finished at barrier reach
 		task.running=false;
 		task.done(false);
 		if (self.nItems<=0) {
-			//log("Barrier "+self.id+" You reached to barrier but no items asigned to. It´s a bug in your program... no callback is launched");
+			logError("Barrier "+self.id+" You reached to barrier but no items asigned to. It´s a bug in your program... no callback is launched");
 			return;
 		}
 		self.nItems--;
@@ -167,7 +168,8 @@ class RCGBarrier{
 			var theCallback=self.callback;
 			self.callback="";// to free memory at the end
 			setZeroTimeout(theCallback); 
-		} 
+		}
+		return task.waitForEvent();
 	}
 	add(task){
 		var self=this;

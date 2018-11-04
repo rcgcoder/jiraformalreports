@@ -251,8 +251,6 @@ class RCGZippedApp{
 			}
 		}
 		fncShowStatus();
-
-		
 	}
 	useGitHub(sRepository,branch,code){
 		var self=this;
@@ -477,17 +475,15 @@ class RCGZippedApp{
 			filesystem.SaveFile(sRelativePath,sStringContent,
 				self.createManagedCallback(
 						function(e){
-							self.popCallback([sStringContent]);
+							return sStringContent;
 						}),
 				self.createManagedCallback(
 						function(e){
-							self.popCallback([""]);
+							return "";
 						})
 				);
-			
-			return sStringContent;
+			return self.waitForEvent();
 		}
-		self.popCallback([sStringContent]);
 		return sStringContent;
 	}
 	downloadFile(sUrl,sRelativePath){
@@ -506,20 +502,20 @@ class RCGZippedApp{
 			  var response="";
 			  var toSave="";
 			  self.pushCallback(function(sContent){
-				  self.popCallback([sContent,xhr,ct,sRelativePath]);
+				  return self.taskResultMultiple(sContent,xhr,ct,sRelativePath);
 			  });
 			  self.pushCallback(function(sContent){
 				  ct.commitId=self.github.commitId;
 				  ct.commitDate=self.github.commitDate;
 				  ct.saveDate=(new Date()).getTime();
 				  if (self.bWithPersistentStorage){
-					  var sResult=self.saveFileToStorage(sRelativePath,sContent,ct);
+					  return self.saveFileToStorage(sRelativePath,sContent,ct);
 				  } else {
 					  if (!ct.isText) {
 					      var u8Arr = new Uint8Array(toSave);
 						  toSave=fromByteArray(u8Arr);
 					  }
-					  self.popCallback(sContent);
+					  return sContent;
 				  }
 			  });
 			  if (ct.isText){
@@ -528,12 +524,13 @@ class RCGZippedApp{
 				  var bb = new Blob([uint8arr]);
 				  var f = new FileReader();
 				  f.onload = self.createManagedCallback(function(e) {
-				     self.popCallback(e.target.result);
+				     return e.target.result;
 				  });
 				  f.readAsText(bb);
+				  return self.waitForEvent();
 			  } else {
 				  toSave = xhr.response;
-				  self.popCallback(toSave);
+				  return toSave;
 			  }
 		  } else {
 			  log("Error downloading "+sRelativePath);
@@ -541,6 +538,7 @@ class RCGZippedApp{
 		  }
 		});
  		xhr.send();	
+ 		return self.waitForEvent();
 	}
 	addStyleString(cssContent,theWindow) {
 		var doc=document;
@@ -594,15 +592,15 @@ class RCGZippedApp{
 		var self=this;
 		if ((fileContent!="")&&(typeof fileContent!=="undefined")) {
 			log(sRelativePath+" loaded from persistent storage");
-			return self.popCallback([sRelativePath,fileContent,contentType,theWindow]);
+			return self.taskResultMultiple(sRelativePath,fileContent,contentType,theWindow);
 		}
 		log(sRelativePath+" loading from network");
 		var sUrl=self.composeUrl(sRelativePath);
 		self.pushCallback(function(content,xhr,contentType,sRelativePath){
 			log(sRelativePath+" loaded from network");
-			self.popCallback([sRelativePath,content,contentType,theWindow]);
+			self.taskResultMultiple(sRelativePath,content,contentType,theWindow);
 		});
-    	self.downloadFile(sUrl,sRelativePath);
+    	return self.downloadFile(sUrl,sRelativePath);
 	}
 	loadFileFromStorage(sRelativePath,theWindow){
 		log("Loading "+ sRelativePath + " from storage");
@@ -653,9 +651,9 @@ class RCGZippedApp{
 		self.pushCallback(self.processFile);
 		self.pushCallback(self.loadFileFromNetwork);
 		if (self.bWithPersistentStorage){
-			self.loadFileFromStorage(sRelativePath,theWindow);
+			return self.loadFileFromStorage(sRelativePath,theWindow);
 		} else {
-			self.popCallback([sRelativePath,"",undefined,theWindow]);
+			return self.taskResultMultiple(sRelativePath,"",undefined,theWindow);
 		}
 	}
 	loadRemoteFiles(arrRelativePaths,fncPostProcessFile,theWindow){
@@ -671,55 +669,48 @@ class RCGZippedApp{
 				self.addStep("File:"+sFile+" ¿need to load from network?",function(sRelativePath,fileContent,contentType){
 					if (fileContent!=""){
 //						log("File "+iIntFile+" "+sRelativePath+ " is in Storage");
-						return self.continueTask([sRelativePath,fileContent,contentType]);
+						return self.taskResultMultiple(sRelativePath,fileContent,contentType);
 					}
 //					log("File "+iIntFile+" "+sRelativePath+ " is not in Storage... loading from network");
-					self.loadFileFromNetwork(sRelativePath,fileContent,contentType,theWindow);
+					return self.loadFileFromNetwork(sRelativePath,fileContent,contentType,theWindow);
 				});
 				self.addStep("File:"+sFile+" fully loaded!",function(sRelativePath,fileContent,contentType){
 //					log("File "+iIntFile+" "+sRelativePath+ " is loaded... updating status");
 					arrStatus[iIntFile]={path:sRelativePath,content:fileContent,type:contentType};
-					self.continueTask();
 				});
-				self.continueTask();
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 //			}
 			);
 		}
 		var fncAddStepProcessRelativePath=function(iFile,fileStatus){
 			self.addStep("Processing "+iFile+" file:"+fileStatus.path,function(){
-				self.processFile(fileStatus.path,
+				return self.processFile(fileStatus.path,
 								 fileStatus.content,
 								 fileStatus.type
 								 ,theWindow
 								);
 			});
-			self.addStep("Processed "+iFile+" file:"+fileStatus.path,function(){
+			if (typeof fncPostProcessFile!=="undefined"){
+				self.addStep("Processed "+iFile+" file:"+fileStatus.path,function(){
 //				log("Processed "+iFile+" file:"+fileStatus.path+"...¿postProcessing?");
-				if (typeof fncPostProcessFile!=="undefined"){
 //					log("YES postprocess file");
-					fncPostProcessFile(iFile,theWindow);
-				}
-//				self.continueTask();
-			});
+					return fncPostProcessFile(iFile,theWindow);
+				});
+			}
 		}
 		self.pushCallback(function(){
 			self.addStep("Downloading "+arrRelativePaths.length+" files",function(){
 				for (var i=0;i<arrRelativePaths.length;i++){
 					fncAddStepDownloadRelativePath(i);
 				}
-//				self.continueTask();
 			});
 			self.addStep("Processing "+arrRelativePaths.length+" files",function(){
 				for (var i=0;i<arrRelativePaths.length;i++){
 					var fileStatus=arrStatus[i];
 					fncAddStepProcessRelativePath(i,fileStatus);
 				}
-//				self.continueTask();
 			});
-//			self.continueTask();
 		});
-//		self.popCallback();
 	}
 
 	checkForDeploys(iFile){
@@ -733,7 +724,7 @@ class RCGZippedApp{
 			iZip=iFile;
 		}
 		if (iZip>=self.DeployZips.length){
-			return self.popCallback();
+			return;
 		}
 		var bNotUpdate=true;
 		var theDeploy=self.DeployZips[iZip];
@@ -744,15 +735,14 @@ class RCGZippedApp{
 			// needs to be deployed
 			bNotUpdate=false;
 			self.addStep("Deploying Zip:"+ theDeploy.relativePath,function(){
-				self.deploy(theDeploy);
+				return self.deploy(theDeploy);
 			});
 			self.addStep("Checking for other Deploying Zip:"+ iZip,function(){
-				self.checkForDeploys(iZip+1);
+				return self.checkForDeploys(iZip+1);
 			});
-			self.taskManager.runSteps();
 		} else {
 			log("the deploy: "+ theDeploy.relativePath+ " is up to date");
-			self.checkForDeploys(iZip+1);
+			return self.checkForDeploys(iZip+1);
 		}
 	}
 	loadJSBaseEngine(){
@@ -773,10 +763,10 @@ class RCGZippedApp{
 			    			var auxObj = window[className]; 
 			    			rcgUtilsManager.makeGlobals(bMakeGlobals,auxObj);
 					}
-					self.loadRemoteFiles(auxArrLibs,fncPostProcessFile);
+					return self.loadRemoteFiles(auxArrLibs,fncPostProcessFile);
 				});
 				rcgUtilsManager.basePath="js/rcglibs/";
-				rcgUtilsManager.loadUtils(true);
+				return rcgUtilsManager.loadUtils(true);
 			});
 			var arrFiles=["css/RCGTaskManager.css",
 				          "js/libs/zip/zip.js",
@@ -790,16 +780,14 @@ class RCGZippedApp{
 	//			  ,"js/libs/zip/zip-ext.js"
 				  ];
 			return self.loadRemoteFiles(arrFiles);
-		} else {
-			return self.popCallback();
-		}
+		} 
 	}
 	addDeployFork(theDeploy){
 		var self=this;
 		var fncDeploy=function(){
 			var runningTask=self.getRunningTask();
 			log("Deploying Zip:"+ theDeploy.relativePath + "(Task "+runningTask.forkId+"name:"+runningTask.description+")");
-			self.deploy(theDeploy);
+			return self.deploy(theDeploy);
 		}
 		self.addStep("Fork Deploy zip:"+theDeploy.relativePath
 					,fncDeploy,undefined,undefined,"",undefined,undefined,"inner",undefined);
@@ -820,30 +808,16 @@ class RCGZippedApp{
 			   (theDeploy.commitDate>theDeploy.deployedDate)){ // new release
 				// needs to be deployed
 				arrDeploysToUpdate.push(theDeploy);
-				self.addDeployFork(theDeploy);				
+				//self.addDeployFork(theDeploy);				
 			} else {
 				log("the deploy: "+ theDeploy.relativePath+ " is up to date");
 			}
 		}
-		if (arrDeploysToUpdate.length>0){
-			self.addStep("Finished launching inner FORKS...",function(aArgs){
-				self.setRunningTask(runningTask);
-				log("Finished launching inner FORKS...");
-				self.continueTask(aArgs);
-			});
-			self.addStep("Waiting inner Forks Finish...",function(aArgs){
-				self.setRunningTask(runningTask);
-				log("...");
-				self.getRunningTask().barrier.reach(self);
-			});
-			self.addStep("All inner Forks Finished...",function(aArgs){
-				self.setRunningTask(runningTask);
-				log("Finish all inner Forks.... it´s necesary to increment the number of items in barrier");
-				runningTask.barrier.add(runningTask);
-				self.continueTask(aArgs);
-			});
-		}
-		self.continueTask();
+		return self.parallelizeProcess(arrDeploysToUpdate,function(theDeploy){
+			var runningTask=self.getRunningTask();
+			log("Deploying Zip:"+ theDeploy.relativePath + "(Task "+runningTask.forkId+"name:"+runningTask.description+")");
+			return self.deploy(theDeploy);
+		});
 	}
 
 
@@ -862,14 +836,12 @@ class RCGZippedApp{
 			log("Test");
 		});
 		log("GetCommits");
-		self.github.getCommits(minZipCommitDate);
-
-		
+		return self.github.getCommits(minZipCommitDate);
 	}
 	updateDeployZips(){
 		var self=this;
 		if (!self.bWithPersistentStorage){
-			return self.popCallback();
+			return;
 		}
 		var sTotalDeployInfo=self.storage.get('#FILEINFO#'+"LastDeployInfo");
 		var oTotalDeployInfo="";
@@ -890,7 +862,7 @@ class RCGZippedApp{
 		}
 //		self.pushCallback(self.updateFilesFromCommits);
 		self.pushCallback(self.checkForDeploysForked);
-		self.github.getLastCommitOfDeploys(self.DeployZips);
+		return self.github.getLastCommitOfDeploys(self.DeployZips);
 	}
 	loadPersistentStorage() {
 		var self=this;
@@ -906,9 +878,10 @@ class RCGZippedApp{
 							size:self.localStorageMaxSize
 							});
 		InitializeFileSystem(self.createManagedCallback(function(){
-								self.popCallback();
+								return;
 							 }),
 							 self.localStorageMaxSize);
+		return self.waitForEvent();
 	}
 	startPersistence(){
 		var self=this;
@@ -919,13 +892,13 @@ class RCGZippedApp{
 		if (self.bWithPersistentStorage){
 			self.pushCallback(self.loadPersistentStorage);
 		}
-		self.loadRemoteFiles(arrFiles);
+		return self.loadRemoteFiles(arrFiles);
 	}
 	loadMemoryMonitor(){
 		var self=this;
 		var arrFiles=["js/libs/memory-stats.js"];
 		self.pushCallback(self.startMemoryMonitor);
-		self.loadRemoteFiles(arrFiles);
+		return self.loadRemoteFiles(arrFiles);
 	}
 	startMemoryMonitor(){
 		// add the monitor into our page and update it on a rAF loop
@@ -960,7 +933,6 @@ class RCGZippedApp{
 			requestAnimationFrame(rAFloop);
 		});
 		//# sourceURL=generateGarbage.js
-		this.popCallback();
 	}
 	extendFromObject(srcObj){
 		var result=this;
@@ -969,24 +941,18 @@ class RCGZippedApp{
 			var vPropName=arrProperties[i];
 			if (vPropName!=="constructor"){
 				var vPropValue=srcObj[vPropName];
-				//if (isMethod(vPropValue)){
-					//if (typeof (result[vPropName])==="undefined"){
-						result[vPropName]=vPropValue;
-					//}
-				//}
+				result[vPropName]=vPropValue;
 			}
 		}
 	}
 	startApplication(){
 		var self=this;
 		self.pushCallback(function(){
-//			var webapp = new window[self.mainClass]();
 			var webapp=new ZipWebApp();
 			self.extendFromObject(webapp);
 			self.run();
-//			self.popCallback();
 		});
-		self.loadRemoteFile(self.mainJs);
+		return self.loadRemoteFile(self.mainJs);
 	}
 	updateStatus(){
 		var self=this;
@@ -1106,8 +1072,6 @@ class RCGZippedApp{
 		self.addStep("Loading Base Files...",self.loadJSBaseEngine);
 		self.addStep("Updating Deploy Zips...",self.updateDeployZips);
 		self.addStep("Starting Application...",self.startApplication);
-		self.continueTask();
-		 
 	}
 	onerror(message) {
 		alert(message);
@@ -1129,43 +1093,39 @@ class RCGZippedApp{
 				}, create);
 			});
 	}
-	addSaveZipEntryStep(entry){
+	saveZipEntries(arrEntries,iEntry){
 		var self=this;
-		var params=entry;
-		var model=params.model;
-		var entry=params.entry;
+		self.setTaskProgressMinMax(0,arrEntries.length);
 		var fncProgress=function(current, total) {
 //			log(current + "/" + total + "   " + Math.round((current/total)*100)+"%");
 		}
-		var fncSaveBlob=self.createManagedCallback(function (blob){
+		var fncSaveBlobEntry=function (blob){
 //			log("save blob");
 			var reader = new FileReader();
-			reader.onload = 
-				self.createManagedCallback(function(e) {
+			reader.onload = self.createManagedCallback(function(e) {
 				  var content = reader.result;
-				  self.saveFileToStorage(params.relativePath,content,params.type);
-				});
+				  return self.saveFileToStorage(params.relativePath,content,params.type);
+			});
 			if (params.type.isText){
 				reader.readAsText(blob);
 			} else {
 				reader.readAsArrayBuffer(blob);
 			}
+			return self.waitForEvent();
+		};
+		return self.parallelizeProcess(arrEntries,function(entry){
+			var params=entry;
+			var model=params.model;
+			var entry=params.entry;
+			var fncSaveBlob=self.createManagedCallback(fncSaveBlobEntry);
+			self.addStep("Saving file "+ params.relativePath+" from deploy zip ...",function(){
+				model.getEntryFile(entry
+						, "Blob"
+						, fncSaveBlob
+						, fncProgress);
+				return self.waitForEvent();
+			});
 		});
-		var fncGetEntry=function(){
-			model.getEntryFile(entry
-					, "Blob"
-					, fncSaveBlob
-					, fncProgress);
-		}
-		self.addStep("Saving file "+ params.relativePath+" from deploy zip ...",fncGetEntry);
-	}
-	saveZipEntries(arrEntries,iEntry){
-		var self=this;
-		self.setTaskProgressMinMax(0,arrEntries.length);
-		for (var i=0;i<arrEntries.length;i++){
-			self.addSaveZipEntryStep(arrEntries[i]);
-		}
-		self.continueTask();
 	}
 	deploy(deployInfo){ 
 		var self=this;
@@ -1179,87 +1139,85 @@ class RCGZippedApp{
 				};
 		*/
 		self.addStep("Saving Zip Entries...",self.saveZipEntries);
-		self.addStep("Updating Deploy Info...",
-				function(){
+		self.addStep("Updating Deploy Info...",function(){
 					deployInfo.deployedCommitId=deployInfo.commitId;
 					deployInfo.deployedDate=deployInfo.commitDate;
 					self.storage.set('#FILEINFO#'+deployInfo.relativePath,JSON.stringify(deployInfo));
-					self.popCallback();
 			});
 		var sZipUrl=deployInfo.url;
 		// prepare arrays
 		var model=new ZipModel();
+		var runningTask=self.getRunningTask();
 		var fncDownOnProgress=function (evt) {
 			log("Download Progress");
-	        if(evt.lengthComputable) {
+	        if(evt.lengthComputable){
 	            var percentComplete = evt.loaded / evt.total;
 	            console.log("Download progress:"+percentComplete);
 	        }
-	        self.setTaskProgressMinMax(0,evt.total);
-	        self.setTaskProgress(evt.loaded);
+			runningTask.progressMin=0;
+			runningTask.progressMax=evt.total;
+			runningTask.progress=evt.loaded;
 	    };
 	    var fncOnDone=function(entries) {
-				log("Processing Zip File:"+sZipUrl);
-				var arrFilesToSave=[];
-				entries.forEach(function(entry) {
-					var sFile=entry.filename;
-					var sImportPath;
-					var bWillNotSave=true;
-					var bContinue=true;
-					var sRelativePath="";
-					for (var i=0;(bContinue)&&(bWillNotSave) && 
-								 ((deployInfo.imports.length==0)||(i<deployInfo.imports.length))
-								 ;i++){
-						var sPrefix="";
-						var sLastChar=sFile.substring(sFile.length-1);
-						if (sLastChar=="/") {
-							bContinue=false;
-						} else if (deployInfo.imports.length==0){
-							sRelativePath=entry.filename;
-	//						log("Entry "+entry.filename + " will be saved as "+sRelativePath);
+			log("Processing Zip File:"+sZipUrl);
+			var arrFilesToSave=[];
+			entries.forEach(function(entry) {
+				var sFile=entry.filename;
+				var sImportPath;
+				var bWillNotSave=true;
+				var bContinue=true;
+				var sRelativePath="";
+				for (var i=0;(bContinue)&&(bWillNotSave) && 
+							 ((deployInfo.imports.length==0)||(i<deployInfo.imports.length))
+							 ;i++){
+					var sPrefix="";
+					var sLastChar=sFile.substring(sFile.length-1);
+					if (sLastChar=="/") {
+						bContinue=false;
+					} else if (deployInfo.imports.length==0){
+						sRelativePath=entry.filename;
+//						log("Entry "+entry.filename + " will be saved as "+sRelativePath);
+						bWillNotSave=false;
+					} else {
+						sImportPath=deployInfo.imports[i];
+						var sPrefix=sFile.substring(0,sImportPath.length);
+						sRelativePath=sFile.substring(sPrefix.length);
+						if ((sPrefix.length!=sFile.length)
+							  &&(sPrefix==sImportPath)){
+//							log("Entry "+entry.filename + " will be saved as "+sRelativePath);
 							bWillNotSave=false;
-						} else {
-							sImportPath=deployInfo.imports[i];
-							var sPrefix=sFile.substring(0,sImportPath.length);
-							sRelativePath=sFile.substring(sPrefix.length);
-							if ((sPrefix.length!=sFile.length)
-								  &&(sPrefix==sImportPath)){
-	//							log("Entry "+entry.filename + " will be saved as "+sRelativePath);
-								bWillNotSave=false;
-							}
 						}
 					}
-					if (!bWillNotSave){
-						var jsonContent=self.getContentTypeFromExtension(sFile);
-						var sContentSaved=self.storage.get('#FILEINFO#'+sRelativePath);
-						var oContentSaved="";
-						if (sContentSaved!=null){
-							oContentSaved=JSON.parse(sContentSaved);
-						}
-						if ((oContentSaved=="") || 
-							(oContentSaved.saveDate<deployInfo.commitDate)){
-	//						log("Entry "+entry.filename + " will be saved as "+sRelativePath);
-							jsonContent.commitId=deployInfo.commitId;
-							jsonContent.commitDate=deployInfo.commitDate;
-							arrFilesToSave.push({
-												model:model,
-												entry:entry,
-												type:jsonContent,
-												relativePath:sRelativePath
-												});
-						} else {
+				}
+				if (!bWillNotSave){
+					var jsonContent=self.getContentTypeFromExtension(sFile);
+					var sContentSaved=self.storage.get('#FILEINFO#'+sRelativePath);
+					var oContentSaved="";
+					if (sContentSaved!=null){
+						oContentSaved=JSON.parse(sContentSaved);
+					}
+					if ((oContentSaved=="") || 
+						(oContentSaved.saveDate<deployInfo.commitDate)){
+//						log("Entry "+entry.filename + " will be saved as "+sRelativePath);
+						jsonContent.commitId=deployInfo.commitId;
+						jsonContent.commitDate=deployInfo.commitDate;
+						arrFilesToSave.push({
+											model:model,
+											entry:entry,
+											type:jsonContent,
+											relativePath:sRelativePath
+											});
+					} else {
 //							log(sRelativePath+" saved is newer");
-						}
 					}
-				});
-				self.popCallback([arrFilesToSave]);
-			};
+				}
+			});
+			return arrFilesToSave;
+		};
 
 		log("Download Zip File:"+sZipUrl);
-		model.downloadAndGetEntries(sZipUrl,
-			self.createManagedCallback(fncOnDone),
-			self.createManagedCallback(fncDownOnProgress)
-		);
+		model.downloadAndGetEntries(sZipUrl,self.createManagedCallback(fncOnDone),fncDownOnProgress);
+		return self.waitForEvent();
 	}
 }
 

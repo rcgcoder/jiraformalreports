@@ -143,6 +143,7 @@
 			 var sRepo="rcgcoder/jiraformalreports";
 			 var commitId="";
 			 var commitDate="";
+			 var sRCGBaseUtils="js/rcglibs/RCGBaseUtils.js";
 			 var sRCGTaskManager="js/rcglibs/RCGTaskManager.js";
 			 var sRCGZipWebAppClass="js/rcglibs/RCGZippedWebApp.js";
 			 var appMainJs="js/ZipWebApp.js";
@@ -171,13 +172,18 @@
 			 }
 			 getLastCommit(sRepo,function(sCommitId,tCommitDate){
 				 commitId=sCommitId;
-				 commitDate=tCommitDate;				 
+				 commitDate=tCommitDate;	
+				 var sUrlBU=rootPath+"/"+sRepo+"/"+commitId+"/common/"+sRCGBaseUtils;
 				 var sUrlCM=rootPath+"/"+sRepo+"/"+commitId+"/common/"+sRCGTaskManager;
-				 getJavaScriptFile(sUrlCM,function(jsContent){
+				 var sUrlJs=rootPath+"/"+sRepo+"/"+commitId+"/common/"+sRCGZipWebAppClass;
+				 getJavaScriptFile(sUrlBU,function(jsContent){
 					 loadJavaScriptFile(jsContent,function(){
-						 var sUrlJs=rootPath+"/"+sRepo+"/"+commitId+"/common/"+sRCGZipWebAppClass;
-						 getJavaScriptFile(sUrlJs,function(jsContent){
-							 loadJavaScriptFile(jsContent,fncEngineStart);
+						 getJavaScriptFile(sUrlCM,function(jsContent){
+							 loadJavaScriptFile(jsContent,function(){
+								 getJavaScriptFile(sUrlJs,function(jsContent){
+									 loadJavaScriptFile(jsContent,fncEngineStart);
+								 });
+							 });
 						 });
 					 });
 				 });

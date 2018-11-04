@@ -1499,8 +1499,8 @@ class RCGTaskManager{
 		obj.parallelizeCalls=self.extended_parallelizeCalls;
 		obj.parallelizeProcess=self.extended_parallelizeProcess;
 		obj.waitForEvent=self.extended_waitForEvent;
-		obj.taskResultMultiple=extended_taskResultMultiple;
-		obj.taskResultJump=extended_taskResultJump;
+		obj.taskResultMultiple=self.extended_taskResultMultiple;
+		obj.taskResultJump=self.extended_taskResultJump;
 		obj.loopProcess=self.extended_loopProcess;
 
 	}

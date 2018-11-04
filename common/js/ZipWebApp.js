@@ -49,7 +49,7 @@ class ZipWebApp{
 							"js/rcglibs/RCGChronoUtils.js",
 							"js/rcglibs/RCGHashMapUtils.js"
 */						 ]; //test
-			self.loadRemoteFiles(arrFiles);
+			return self.loadRemoteFiles(arrFiles);
 		});
 		self.addStep("Launching Systemjs.... ",function(){
 			var sjs=self.getSystemjs();
@@ -60,10 +60,8 @@ class ZipWebApp{
 		self.addStep("Setting <initialized=false> Atlassian Engine.... ",function(){
 			var atl=self.getAtlassian();
 			atl.initialized=false;
-			self.continueTask();
 		});  
 		self.addStep("launching the engines and get atlassian base information.... ",function(){
-
 /*			self.addStep("Getting All Issues.... ",function(){
 				var jira=self.getJira();
 				jira.getAllIssues();
@@ -72,45 +70,45 @@ class ZipWebApp{
 			);  */
 			self.addStep("Getting All Project and issuetypes .... ",function(){
 				var jira=self.getJira();
-				jira.getProjectsAndMetaInfo();
+				return jira.getProjectsAndMetaInfo();
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 //			}
 			);
 			self.addStep("Getting All field info.... ",function(){
 				var jira=self.getJira();
-				jira.getFieldsAndSchema();
+				return jira.getFieldsAndSchema();
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 //			}
 			);
 	
 			self.addStep("Getting All Epics  to do a list.... ",function(){
 				var jira=self.getJira();
-				jira.getAllEpics();
+				return jira.getAllEpics();
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 //			}
 			);
 			self.addStep("Getting All Users to do a list.... ",function(){
 				var jira=self.getJira();
-				jira.getAllUsers();
+				return jira.getAllUsers();
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 //			}
 			);
 			self.addStep("Getting All Labels.... ",function(){
 				var jira=self.getJira();
-				jira.getAllLabels()
+				return jira.getAllLabels()
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 //			}
 			);
 			self.addStep("Getting Current User Info.... ",function(){
 				var atl=self.getJira().manager;
-				atl.getUser();
+				return atl.getUser();
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 //			}
 			);
 
 			self.addStep("Getting All Filters.... ",function(){
 				var jira=self.getJira();
-				jira.getAllFilters();
+				return jira.getAllFilters();
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 //			}
 			);
@@ -141,16 +139,13 @@ class ZipWebApp{
 			*/
 			self.addStep("All initilizing parallel tasks launched",function(){
 				log("All initilizing parallel tasks launched");
-				self.continueTask();
 			});
-			self.continueTask();
 		});
 		self.addStep("Setting <initialized> Atlassian Engine.... ",function(){
 			//debugger;
 			log("Initialize ends");
 			var atl=self.getAtlassian();
 			atl.initialized=true;
-			self.continueTask();
 		});  
 /*		self.addStep("Loading Systemjs",function(){
 			log("Isolated loading of systemjs");
@@ -177,7 +172,6 @@ class ZipWebApp{
 			 ]; //test
 			self.loadRemoteFiles(arrFiles);
 		});*/		
-		self.continueTask();
 	}
 
 	getListIssueTypes(){
@@ -298,6 +292,7 @@ class ZipWebApp{
 
 	
 	run(){
+		debugger;
 		log("starting ZipWebApp");
 		var self=this;
 		self.initializationBarrier=new RCGBarrier(self.createManagedCallback(function(){
@@ -311,13 +306,14 @@ class ZipWebApp{
 					0,1,undefined,undefined,undefined,"GLOBAL_RUN",self.initializationBarrier);
 		self.addStep("Waiting Initialization.... ",function(){
 			log("Waiting to reach!.... not continues... it will continue when initialization barrier reachs all");
+			return self.waitForEvent();
 		});
 		self.addStep("Default Config.... ",function(){
 			log("Everything is initialized! now Config!");
 			//debugger;
 			self.addStep("Loading default config from Storage",function(){
 				var tbConfig=System.getAngularObject('tabConfig',true);
-				tbConfig.loadDefaultReport();
+				return tbConfig.loadDefaultReport();
 			});
 /*            System.getAngularObject('advSelector[name="selProjects"]').fillOptions(self.getListProjects());
             System.getAngularObject('advSelector[name="selTypes"]').fillOptions(self.getListIssueTypes());
@@ -331,10 +327,7 @@ class ZipWebApp{
 */
 /*            System.getAngularObject('advSelector[name="selProjects"]').testNearley();
 */		
-			self.continueTask();
 		});
-		
-		self.continueTask();
 	}
 
 }

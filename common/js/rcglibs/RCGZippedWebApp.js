@@ -750,15 +750,11 @@ class RCGZippedApp{
 				var rcgUtilsManager=new RCGUtils();
 				rcgUtilsManager.requireLibs=function(bMakeGlobals,arrLibs){
 					self.addStep("Requiring all libs",function(){
-						var auxArrLibs=new Array(arrLibs.length);
 						self.addStep("Download parrallelized",function(){
 							return self.parallelizeCalls(arrLibs.length
 								,function(iLib){
-									var sRelativePath=rcgUtilsManager.basePath+arrLibs[i];
+									var sRelativePath=rcgUtilsManager.basePath+arrLibs[iLib];
 									return loadRemoteFile(sRelativePath);
-								}
-								,function(iLib,objResult,itemKey){
-									auxArrLibs[iLib]=objResult;
 								});
 						});
 						self.addStep("Load lib in order",function(){

@@ -872,19 +872,23 @@ class RCGZippedApp{
 					  "js/rcglibs/RCGPersist.js",
 	  		  		  "js/libs/b64.js",
 			  		  ];
+		self.addStep("Loading remote files",function(){
+			return self.loadRemoteFiles(arrFiles);
+		});
 		if (self.bWithPersistentStorage){
-			self.pushCallback(self.loadPersistentStorage);
+			self.addStep("Launch persistence engine",function(){
+				return self.loadPersistentStorage();
+			});
 		}
-		return self.loadRemoteFiles(arrFiles);
 	}
 	loadMemoryMonitor(){
 		var self=this;
 		var arrFiles=["js/libs/memory-stats.js"];
 		self.addStep("Load files",function(){
-			self.loadRemoteFiles(arrFiles);
+			return self.loadRemoteFiles(arrFiles);
 		});
 		self.addStep("Start Memory monitor",function(){
-			self.startMemoryMonitor();
+			return self.startMemoryMonitor();
 		});
 	}
 	startMemoryMonitor(){

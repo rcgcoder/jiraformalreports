@@ -732,9 +732,23 @@ class RCGZippedApp{
 		var self=this;
 		if (typeof zip==="undefined"){
 			log("Zip engine is not running.... loading all utils");
-			self.pushCallback(function(){
+			var arrFiles=["css/RCGTaskManager.css",
+				          "js/libs/zip/zip.js",
+				          "https://cdnjs.cloudflare.com/ajax/libs/mathjs/4.0.1/math.min.js",
+//						  "js/rcglibs/RCGBaseUtils.js",
+						  "js/rcglibs/RCGUtils.js"
+		//	, 
+					//	  "js/libs/angular.min.js",
+					//	  "js/libs/typescript.min.js",
+					//	  "js/libs/typescript.compile.js"
+	//			  ,"js/libs/zip/zip-ext.js"
+				  ];
+			self.addStep("Loading js base engine javascripts",function(){
+				return self.loadRemoteFiles(arrFiles);
+			});
+			self.addStep("Initializing jsbaseengine",function(){
 				var rcgUtilsManager=new RCGUtils();
-				rcgUtilsManager.requireLibs=self.createManagedCallback(function(bMakeGlobals,arrLibs){
+				rcgUtilsManager.requireLibs=self.createManagedFunction(function(bMakeGlobals,arrLibs){
 					var auxArrLibs=[];
 					for (var i=0;i<arrLibs.length;i++){
 						auxArrLibs.push(rcgUtilsManager.basePath+arrLibs[i]);
@@ -751,18 +765,6 @@ class RCGZippedApp{
 				rcgUtilsManager.basePath="js/rcglibs/";
 				return rcgUtilsManager.loadUtils(true);
 			});
-			var arrFiles=["css/RCGTaskManager.css",
-				          "js/libs/zip/zip.js",
-				          "https://cdnjs.cloudflare.com/ajax/libs/mathjs/4.0.1/math.min.js",
-//						  "js/rcglibs/RCGBaseUtils.js",
-						  "js/rcglibs/RCGUtils.js"
-		//	, 
-					//	  "js/libs/angular.min.js",
-					//	  "js/libs/typescript.min.js",
-					//	  "js/libs/typescript.compile.js"
-	//			  ,"js/libs/zip/zip-ext.js"
-				  ];
-			return self.loadRemoteFiles(arrFiles);
 		} 
 	}
 	addDeployFork(theDeploy){
@@ -1061,8 +1063,8 @@ class RCGZippedApp{
 			self.addStep("Starting Memory Monitor...",self.loadMemoryMonitor);
 		}		
 		self.addStep("Starting Persistence...",self.startPersistence);
-/*		self.addStep("Loading Base Files...",self.loadJSBaseEngine);
-		self.addStep("Updating Deploy Zips...",self.updateDeployZips);
+		self.addStep("Loading Base Files...",self.loadJSBaseEngine);
+/*		self.addStep("Updating Deploy Zips...",self.updateDeployZips);
 		self.addStep("Starting Application...",self.startApplication);
 */
 		self.addStep("Check Finish",function(){

@@ -754,7 +754,7 @@ class RCGZippedApp{
 							return self.parallelizeCalls(arrLibs.length
 								,function(iLib){
 									var sRelativePath=rcgUtilsManager.basePath+arrLibs[iLib];
-									return loadRemoteFile(sRelativePath);
+									return self.loadRemoteFile(sRelativePath);
 								});
 						});
 						self.addStep("Load lib in order",function(){
@@ -763,7 +763,7 @@ class RCGZippedApp{
 				    			var className=sFile.split(".")[0];
 								log("Post-Processing "+ iFile+" "+sFile+" className:"+className);
 				    			var auxObj = window[className]; 
-				    			rcgUtilsManager.makeGlobals(bMakeGlobals,auxObj);
+				    			return rcgUtilsManager.makeGlobals(bMakeGlobals,auxObj);
 							});
 						});
 					});

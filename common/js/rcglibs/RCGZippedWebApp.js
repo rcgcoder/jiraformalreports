@@ -754,7 +754,7 @@ class RCGZippedApp{
 			var arrFiles=["css/RCGTaskManager.css",
 				          "js/libs/zip/zip.js",
 				          "https://cdnjs.cloudflare.com/ajax/libs/mathjs/4.0.1/math.min.js",
-						  "js/rcglibs/RCGBaseUtils.js",
+//						  "js/rcglibs/RCGBaseUtils.js",
 						  "js/rcglibs/RCGUtils.js"
 		//	, 
 					//	  "js/libs/angular.min.js",
@@ -1061,9 +1061,14 @@ class RCGZippedApp{
 			self.addStep("Starting Memory Monitor...",self.loadMemoryMonitor);
 		}		
 		self.addStep("Starting Persistence...",self.startPersistence);
-		self.addStep("Loading Base Files...",self.loadJSBaseEngine);
+/*		self.addStep("Loading Base Files...",self.loadJSBaseEngine);
 		self.addStep("Updating Deploy Zips...",self.updateDeployZips);
 		self.addStep("Starting Application...",self.startApplication);
+*/
+		self.addStep("Check Finish",function(){
+			log("Ends the run");
+			debugger;
+		});
 	}
 	onerror(message) {
 		alert(message);

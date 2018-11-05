@@ -292,7 +292,7 @@ class ZipWebApp{
 
 	
 	run(){
-		debugger;
+//		debugger;
 		log("starting ZipWebApp");
 		var self=this;
 		self.initializationBarrier=new RCGBarrier(self.createManagedCallback(function(){

@@ -1048,7 +1048,7 @@ class RCGZippedApp{
 	}
 	run(){
 		var self=this;
-		self.getTaskManager().setOnChangeStatus(self.createManagedCallback(function(){
+		self.getTaskManager().setOnChangeStatus(self.createManagedFunction(function(){
 				self.updateStatus();}));
 		if ((self.github!="")&&((self.github.commitId=="")||(self.github.commitDate==""))){
 			self.addStep(self.github.updateLastCommit,undefined,self.github);

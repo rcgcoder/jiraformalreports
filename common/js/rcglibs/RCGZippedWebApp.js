@@ -1054,12 +1054,22 @@ class RCGZippedApp{
 			self.addStep(self.github.updateLastCommit,undefined,self.github);
 		}
 		if (typeof window.gc!=="undefined"){
-			self.addStep("Starting Memory Monitor...",self.loadMemoryMonitor);
+			self.addStep("Starting Memory Monitor...",function(){
+				return self.loadMemoryMonitor();
+			});
 		}		
-		self.addStep("Starting Persistence...",self.startPersistence);
-		self.addStep("Loading Base Files...",self.loadJSBaseEngine);
-		self.addStep("Updating Deploy Zips...",self.updateDeployZips);
-		self.addStep("Starting Application...",self.startApplication);
+		self.addStep("Starting Persistence...",function(){
+			return self.startPersistence();
+		});
+		self.addStep("Loading Base Files...",function(){
+			return self.loadJSBaseEngine();
+		});
+		self.addStep("Updating Deploy Zips...",function(){
+			self.updateDeployZips();
+		});
+		self.addStep("Starting Application...",function(){
+			self.startApplication();
+		});
 	}
 	onerror(message) {
 		alert(message);

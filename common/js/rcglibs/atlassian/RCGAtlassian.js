@@ -312,7 +312,7 @@ class RCGAtlassian{
 					} else if (xhr.status==500){
 						logError("Error 500 in atlassian server calling to "+sTarget);
 					} else {
-						return selt.taskResultMultiple(response,xhr,sUrl,headers);
+						return self.taskResultMultiple(response,xhr,sUrl,headers);
 					}
 				}
 			});

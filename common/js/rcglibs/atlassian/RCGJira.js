@@ -10,16 +10,16 @@ class RCGJira{
 		self.jqlCache=newHashMap();
 		taskManager.extendObject(self);
 		self.renderContent=function(sContent){
-			atlassian.renderContent(self,sContent);
+			return atlassian.renderContent(self,sContent);
 			};
 		self.oauthConnect=function(){
-			atlassian.oauthConnect(self);
+			return atlassian.oauthConnect(self);
 			};
 		self.apiCall=function(sTarget,callType,data,sPage,sResponseType,callback,arrHeaders,callSecurity,aditionalOptions){
-			atlassian.apiCallApp(self, sTarget, callType, data, sPage,undefined, sResponseType,callback,arrHeaders,callSecurity,aditionalOptions);
+			return atlassian.apiCallApp(self, sTarget, callType, data, sPage,undefined, sResponseType,callback,arrHeaders,callSecurity,aditionalOptions);
 			};
 		self.getFullList=function(sTarget,resultName,callType,data,callback,arrHeaders,bNotReturnAll){
-			atlassian.apiGetFullList(self, sTarget, resultName,callType, data, callback,arrHeaders,bNotReturnAll);
+			return atlassian.apiGetFullList(self, sTarget, resultName,callType, data, callback,arrHeaders,bNotReturnAll);
 			};
 
 		self.projects=newDynamicObjectFactory([],["InnerId"],[],"Projects");
@@ -82,26 +82,14 @@ class RCGJira{
 			doItem.setSubTask(itm.subtask);
 		}
 	}
-	processArrayIssues(arrIssues,fncProcessIssue,fncEndCallback,fncCustomBlockCallback){
+	processArrayIssues(arrIssues,fncProcessIssue,fncEndCallback){
 		var self=this;
-		var auxCbProcessIssue=function(issueIndex){
-			if ((issueIndex<0)||(issueIndex>=arrIssues.length)) return true;
-			var issue=arrIssues[issueIndex];
-			return fncProcessIssue(issue,issueIndex,arrIssues.length);
-		}
-
-		var fncItem=self.createManagedCallback(auxCbProcessIssue);
-		var fncEnd=self.createManagedCallback(fncEndCallback);
-		var fncBlock;
-		if (isDefined(fncCustomBlockCallback)){
-			fncBlock=self.createManagedCallback(fncCustomBlockCallback);
-		} else {
-			fncBlock=self.createManagedCallback(function(){
-				log("A block");
-			});
-		}
-		//from 0 to end.....
-		processOffline(0,undefined,fncItem,"issues",fncEnd,fncBlock);
+		self.addStep("Processing array of issues",function(){
+			return self.parallelizeProcess(arrIssues,fncProcessIssue,1);
+		});
+		self.addStep("End of process array",function(){
+			return fncEndCallback();
+		});
 	}
 	getIssueLinkFullList(scopeJQL){
 		var self=this;
@@ -124,7 +112,7 @@ class RCGJira{
 				}
 			}
 		};
-		self.processJQLIssues(scopeJQL,fncProcessIssue,hsTypes);
+		return self.processJQLIssues(scopeJQL,fncProcessIssue,hsTypes);
 	}
 	getFieldFullList(scopeJQL){
 		var self=this;
@@ -147,12 +135,12 @@ class RCGJira{
 				hsTypes.swing();
 			}
 		}
-		self.processJQLIssues(scopeJQL,fncProcessIssue,hsFields);
+		return self.processJQLIssues(scopeJQL,fncProcessIssue,hsFields);
 	}
 	getProjectsAndMetaInfo(){
 		var self=this;
 		self.addStep("Calling to API to get Project and Meta Info",function(){
-			self.apiCall("/rest/api/latest/issue/createmeta?expand=projects.issuetypes.fields");
+			return self.apiCall("/rest/api/latest/issue/createmeta?expand=projects.issuetypes.fields");
 		})
 		self.addStep("Process Project and Meta Info",function(sResponse,xhr,sUrl,headers){
 			//log("getAllProjects:"+response);
@@ -167,14 +155,12 @@ class RCGJira{
 					}
 				}
 			}
-			self.continueTask([self.projects]);
 		});
-		self.continueTask();
 	}
 	getFieldsAndSchema(){
 		var self=this;
 		self.addStep("Doing a api call to get fields and schema",function(){
-			self.apiCall("/rest/api/2/search?jql=&expand=names,schema");
+			return self.apiCall("/rest/api/2/search?jql=&expand=names,schema");
 		});
 		self.addStep("Processing results of get fields and schema",function(sResponse,xhr,sUrl,headers){
 			//log("getAllProjects:"+response);
@@ -199,9 +185,7 @@ class RCGJira{
 					}
 				}
 			}
-			self.continueTask([self.projects]);
 		});
-		self.continueTask();
 	}
 	getIssueLinkTypes(){
 		var self=this;
@@ -245,29 +229,23 @@ class RCGJira{
 	getAllUsers(){
 		var self=this;
 		self.addStep("Calling to API to get Users", function(){
-			self.apiCall(   "/rest/api/2/user/search?startAt=0&maxResults=1000&username=_");
+			return self.apiCall(   "/rest/api/2/user/search?startAt=0&maxResults=1000&username=_");
 		});
 		self.addStep("Procesing users info",function(response,xhr,sUrl,headers){
 			log("getAllUsers:"+response);
 			if (response!=""){
 				self.users=JSON.parse(response);
 			}
-			self.continueTask();
 		});
-		self.continueTask();
 	}
-
-	
 	getAllProjects(){
 		var self=this;
 		self.addStep("Getting all projects",function(){
-			self.apiCall("/rest/api/2/project?expand=issueTypes");
+			return self.apiCall("/rest/api/2/project?expand=issueTypes");
 		});
 		self.addStep(function(response,xhr,sUrl,headers){
 			log("getAllProjects:"+response);
-			self.continueTask();
 		});
-		self.continueTask();
 	}
 	getAllLabels(){
 		var self=this;
@@ -283,14 +261,12 @@ class RCGJira{
 		}
 		//debugger;
 		self.addStep("Getting all Labels",function(){
-			self.processJQLIssues("labels is not empty",fncProcessIssue,doFactory);
+			return self.processJQLIssues("labels is not empty",fncProcessIssue,doFactory);
 		});
 		self.addStep("Waiting for lables",function(){
 			//debugger;
 			log("Labels correctly finished?");
-			self.continueTask();
 		});
-		self.continueTask();
 	}
 	getAllEpics(){
 		var self=this;
@@ -301,12 +277,12 @@ class RCGJira{
 				doItem=doFactory.new(itm.fields.summary,itm.key);
 			}
 		}
-		self.processJQLIssues("issueType=epic",fncProcessIssue,doFactory);
+		return self.processJQLIssues("issueType=epic",fncProcessIssue,doFactory);
 	}
 	getAllFilters(){
 		var self=this;
 		self.addStep("Getting all filters",function(){
-			self.apiCall("/rest/api/2/filter");//,"GET",data);
+			return self.apiCall("/rest/api/2/filter");//,"GET",data);
 		});
 		self.addStep("Processing all filters info",function(sResponse,xhr,sUrl,headers){
 			log("getAllFilters:"+response);
@@ -314,21 +290,19 @@ class RCGJira{
 				var response=JSON.parse(sResponse);
 				self.filters=response;
 			}
-			self.continueTask([self.filters]);
+			return self.filters;
 		});
-		self.continueTask();
 	}
 	getAllIssues(cbBlock){
 		var self=this;
 		self.addStep("Getting All Issues", function(){
-			self.getFullList("/rest/api/2/search?expand=changelog","issues",undefined,undefined,cbBlock,undefined,true);
+			return self.getFullList("/rest/api/2/search?expand=changelog","issues",undefined,undefined,cbBlock,undefined,true);
 		});
 		/*
 		self.addStep("Processing all Issues", function(response,xhr,sUrl,headers){
 			self.popCallback([response]);
 		});
 		*/
-		self.continueTask();
 //		self.apiCall("/plugins/servlet/applinks/proxy?appId=d1015b5f-d448-3745-a3d3-3dff12863286&path=https://rcgcoder.atlassian.net/rest/api/2/search");
 		//expand=changelog&jql=updateddate>'2018/03/01'
 	}
@@ -360,22 +334,21 @@ class RCGJira{
 		if (vCache!="") return self.continueTask([vCache]);
 
 		self.addStep("Getting All Issues from JQL:["+sJQL+"]", function(){
-			self.getFullList("/rest/api/2/search?fields=comment&expand=renderedFields&jql="+sJQL,"issues",undefined,undefined,cbBlock);
+			return self.getFullList("/rest/api/2/search?fields=comment&expand=renderedFields&jql="+sJQL,"issues",undefined,undefined,cbBlock);
 		});
 		self.addStep("Returning all Issues from JQL:["+sJQL+"]", function(response,xhr,sUrl,headers){
 			//self.addToCache(sCacheKey,response);
-			self.continueTask([response]);
+			log("Comments getted");
 		});
-		self.continueTask();
 	}
 	getJQLIssues(jql,cbBlock,bNotReturnAll){
 		var self=this;
 		var sCacheKey="issues_"+jql;
 		var vCache=self.getFromCache(sCacheKey);
-		if (vCache!="") return self.continueTask([vCache]);
+		if (vCache!="") return vCache;
 		self.addStep("Getting All Issues from JQL", function(){
 			//debugger;
-			self.getFullList("/rest/api/2/search?jql="+jql+"&expand=renderedFields,changelog"
+			return self.getFullList("/rest/api/2/search?jql="+jql+"&expand=renderedFields,changelog"
 							,"issues",undefined,undefined,cbBlock
 							,undefined,bNotReturnAll);
 		});
@@ -383,10 +356,9 @@ class RCGJira{
 			self.addStep("Returning all Issues from JQL", function(response,xhr,sUrl,headers){
 				//debugger;
 				//self.addToCache(sCacheKey,response);
-				self.continueTask([response]);
+				return response;
 			});
 		}
-		self.continueTask();
 	}
 	processJQLIssues(jql,fncProcessIssue,returnVariable,cbEndProcess,cbDownloadBlock,cbProcessBlock,bNotReturnAll){
 		//debugger;
@@ -401,8 +373,7 @@ class RCGJira{
 				self.addStep("Processing Download Issues block as string: "
 								+jsonBlkIssues.length +" of JQL ["+jqlAux+"]",function(){
 					//debugger;
-					cbDownloadBlock(jsonBlkIssues);
-					self.continueTask();
+					return cbDownloadBlock(jsonBlkIssues);
 				});
 			}
 			if (isDefined(cbProcessBlock)||isDefined(fncProcessIssue)){
@@ -417,8 +388,7 @@ class RCGJira{
 				if (isDefined(cbProcessBlock)){
 					self.addStep("Processing Issues block: "+blkIssues.length +" of JQL ["+jqlAux+"]",function(){
 						//debugger;
-						cbProcessBlock(blkIssues);
-						self.continueTask();
+						return cbProcessBlock(blkIssues);
 					});
 				}
 				if (isDefined(fncProcessIssue)){
@@ -428,22 +398,14 @@ class RCGJira{
 					};
 					self.addStep("Custom Processing the issues",function(){
 						log("Calling parallelizeCalls to process each "+blkIssues.length+" issues");
-						self.parallelizeCalls(blkIssues.length,undefined,fncProcessIndex,1);
+						return self.parallelizeCalls(blkIssues.length,undefined,fncProcessIndex,1);
 					});
-/*					var auxHashMap=newHashMap();
-					blkIssues.forEach(function(issue){
-						auxHashMap.push(issue);
-					});
-					auxHashMap.walk(function(issue){
-						fncProcessIssue(issue);
-					});*/
 				}
 			}
-			self.continueTask();
 		};
 
 		self.addStep("Fetching And Process Issues"+" of JQL ["+jqlAux+"]",function(){
-			self.getJQLIssues(jqlAux,fncProcessDownloadedBlock,bNotReturnAll);
+			return self.getJQLIssues(jqlAux,fncProcessDownloadedBlock,bNotReturnAll);
 /*			self.addStep("Fetching Issues"+" of JQL ["+jqlAux+"]",function(){
 				//debugger;  
 			});
@@ -455,21 +417,16 @@ class RCGJira{
 				fncEnd=cbEndProcess;
 			} else {
 				fncEnd=function(vReturn){
-					if (isDefined(vReturn)){
-						self.continueTask([vReturn]);
-					} else {
-						self.continueTask();
-					}
+					return vReturn;
 				};
 			}
-			fncEnd(returnVariable);
+			return fncEnd(returnVariable);
 		});
-		self.continueTask();
 	}
 	getIssueDetails(issueId){
 		var self=this;
 		self.addStep("Getting Issue Details",function(){
-			self.apiCall(   "/rest/api/2/issue/"+issueId,
+			return self.apiCall(   "/rest/api/2/issue/"+issueId,
 					"GET",
 					undefined,
 					undefined,
@@ -477,14 +434,12 @@ class RCGJira{
 		});
 		self.addStep("Processing issue Details",function(objResponse,xhr, statusText, errorThrown){
 			log("Issue Detail for issue:"+issueId);
-			self.continueTask([JSON.parse(objResponse)]);
 		});
-		self.continueTask();
 	}
 	setProperty(issueId,propertyName,propertyValue){
 		var self=this;
 		self.addStep("Setting property",function(){
-			self.apiCall(   "/rest/api/2/issue/"+issueId+"/properties/"+propertyName,
+			return self.apiCall(   "/rest/api/2/issue/"+issueId+"/properties/"+propertyName,
 					"PUT",
 					propertyValue,
 					undefined,
@@ -492,15 +447,13 @@ class RCGJira{
 		});
 		self.addStep("Processing setting property result",function(objResponse,xhr, statusText, errorThrown){
 			log("Property:"+propertyName+" = "+propertyValue+" setted in issue:"+issueId);
-			self.continueTask();
 		});
-		self.continueTask();
 	}
 	
 	getProperty(issueId,propertyName){
 		var self=this;
 		self.addStep("Getting property of issue",function(){
-			self.apiCall(   "/rest/api/2/issue/"+issueId+"/properties/"+propertyName,
+			return self.apiCall(   "/rest/api/2/issue/"+issueId+"/properties/"+propertyName,
 					"GET",
 					undefined,
 					undefined,
@@ -509,18 +462,17 @@ class RCGJira{
 		self.addStep("Processing property of issue",function(sResponse,xhr, statusText, errorThrown){
 			log("Property:"+propertyName+" = "+sResponse+" getted for issue:"+issueId);
 			if (sResponse!=""){
-				self.continueTask([JSON.parse(sResponse)]);
+				return JSON.parse(sResponse);
 			} else {
-				self.continueTask([sResponse,xhr, statusText, errorThrown]);
+				return self.taskResultMultiple(sResponse,xhr, statusText, errorThrown);
 			}
 		});
-		self.continueTask();
 	}
 	
 	addComment(issueId,theComment){
 		var self=this;
 		self.addStep("Adding comment to issue",function(){
-			self.apiCall("/rest/api/2/issue/"+issueId+"/comment",
+			return self.apiCall("/rest/api/2/issue/"+issueId+"/comment",
 					"POST",
 					{"body":theComment},
 					undefined,
@@ -528,10 +480,7 @@ class RCGJira{
 		});
 		self.addStep("Processing result of adding comment",function(objResponse,xhr, statusText, errorThrown){
 			log("Comment:"+theComment+" setted in issue:"+issueId);
-			self.continueTask();
 		});
-		self.continueTask();
-		
 	}
 	addAttachmentObject(issueId,jsObject,sFileName,sComment){
 		var self=this;
@@ -550,7 +499,7 @@ class RCGJira{
         }
 //		self.apiCall=function(sTarget,callType,data,sPage,sResponseType,callback,arrHeaders,useProxy,aditionalOptions){
         self.addStep("Adding attachment to issue",function(){
-    		self.apiCall("/rest/api/2/issue/"+issueId+"/attachments",
+    		return self.apiCall("/rest/api/2/issue/"+issueId+"/attachments",
     				"POST",
     				data,
     				undefined,
@@ -563,55 +512,43 @@ class RCGJira{
         });
 		self.addStep("Processing result of adding attachment",function(objResponse,xhr, statusText, errorThrown){
 			log("attachement setted in issue:"+issueId);
-			self.continueTask();
 		});
-		self.continueTask();
 	}
 	getAttachments(issueId,fileFilterFunction,contentFilterFunction,contentProcessFunction){
 		var self=this;
 		var reportIssue;
 		var arrFiles=[];
         self.addStep("Processing jql to get report issue detail:"+issueId,function(){
-            self.getIssueDetails(issueId);
+            return self.getIssueDetails(issueId);
         });
-        self.addStep("setting issue detail:"+issueId,function(issueDetail){
+        self.addStep("setting issue detail:"+issueId+" and oauth connect",function(issueDetail){
             reportIssue=issueDetail;
-            self.continueTask();
-        });
-        self.addStep("Authorization Call",function(issueDetail){
-        	self.oauthConnect();
+        	return self.oauthConnect();
         });
         self.addStep("Getting all the attachments of the report issue:"+issueId,function(){
             log("Adding... process attachment steps");
-            var inspectAttachment=self.createManagedCallback(function(contentUrl){
+            var inspectAttachment=function(contentUrl){
                 log("Adding steps for inspect:"+contentUrl);
-                self.addStep("Getting Content as Inner Fork:"+contentUrl,function(){
-	                self.addStep("Getting Content of Attachment:"+contentUrl,function(){
-	                   self.apiCall(contentUrl,"GET",undefined,undefined,
-	                                   "application/json",undefined,undefined,{token:true});
-	                });
-	                self.addStep("Evaluating the loaded content for :"+contentUrl,function(response){
-	                   log(response.substring(0,50));
-	                   var bAddAttachment=true;
-	                   if (isDefined(contentFilterFunction)){
-	                	   bAddAttachment=contentFilterFunction(response);
-	                   }
-	                   if (bAddAttachment){
-	                	   var vResult=response;
-	                	   if (isDefined(contentProcessFunction)){
-	                		   vResult=contentProcessFunction(vResult);
-	                	   }
-	                	   arrFiles.push(vResult);
-	                   }
-	                   self.continueTask();
-	                });
-	                self.continueTask();
-    			},0,1,undefined,undefined,undefined,"INNER",undefined
-                //}
-                );
-                
-            });
-            reportIssue.fields.attachment.forEach(function(elem){
+                self.addStep("Getting Content of Attachment:"+contentUrl,function(){
+                   return self.apiCall(contentUrl,"GET",undefined,undefined,
+                                   "application/json",undefined,undefined,{token:true});
+                });
+                self.addStep("Evaluating the loaded content for :"+contentUrl,function(response){
+                   log(response.substring(0,50));
+                   var bAddAttachment=true;
+                   if (isDefined(contentFilterFunction)){
+                	   bAddAttachment=contentFilterFunction(response);
+                   }
+                   if (bAddAttachment){
+                	   var vResult=response;
+                	   if (isDefined(contentProcessFunction)){
+                		   vResult=contentProcessFunction(vResult);
+                	   }
+                	   arrFiles.push(vResult);
+                   }
+                });
+            }
+            self.parallelizeProcess(reportIssue.fields.attachment,function(elem){
                 log(elem.content+" --> mimeType:"+elem.mimeType);
                 var bDoInspect=true;
                 if (isDefined(fileFilterFunction)){
@@ -624,12 +561,10 @@ class RCGJira{
                     inspectAttachment(relativeUrl);
                 }
             });
-            self.continueTask();
         });
         self.addStep("Returning selected attachments",function(){
-        	self.continueTask([{issue:reportIssue,attachments:arrFiles}]);
+        	return self.taskResultMultiple({issue:reportIssue,attachments:arrFiles});
         });
-        self.continueTask();
 	}
 
 }

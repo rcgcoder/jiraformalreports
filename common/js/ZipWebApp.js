@@ -287,7 +287,7 @@ class ZipWebApp{
 	getJQLIssues(jql){
 		var self=this;
         var jira=self.getJira();
-    	jira.getJQLIssues(jql); // it does a popcallback at the end of process....
+    	return jira.getJQLIssues(jql); // it does a popcallback at the end of process....
 	}
 
 	

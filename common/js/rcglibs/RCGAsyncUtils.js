@@ -170,7 +170,7 @@ class RCGAsyncUtils{
 	}
 	processOffline(iIndMin,iIndMax,theFunction,sUnits,callback,callBlock,nSecs,RCGAsyncUtils_inner_Barrier){
 		var offProcesor=new offlineProcesor(iIndMin,iIndMax,theFunction,sUnits,callback,callBlock,nSecs,RCGAsyncUtils_inner_Barrier);
-		setTimeout(function(){
+		setZeroTimeout(function(){
 			offProcesor.nextCycle();
 		});
 	}

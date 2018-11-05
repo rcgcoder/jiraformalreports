@@ -658,7 +658,7 @@ class RCGZippedApp{
 		}
 	}
 	loadRemoteFiles(arrRelativePaths,fncPostProcessFile,theWindow){
-		debugger;
+		//debugger;
 		var self=this;
 		var arrStatus=[];
 		return self.parallelizeProcess(arrRelativePaths.length,function(iFile){

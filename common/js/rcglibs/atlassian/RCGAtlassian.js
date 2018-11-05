@@ -38,10 +38,9 @@ class RCGAtlassian{
 				  log("user name", user.fullName);
 				  self.userId=user.key;
 				  self.userName=user.fullName;
-				  self.continueTask();
 			}));
+			return self.waitForEvent();
 		});
-		self.continueTask();
 	}
 	apiCallOauth(sTargetUrl,data,sPage,sType,callback,arrHeaders){
 		var self=this;
@@ -52,7 +51,7 @@ class RCGAtlassian{
 		xhr.onerror=self.loadError;
 		xhr.onload = self.createManagedCallback(function(e) {
 		  if (xhr.status == 200) {
-			  self.continueTask([xhr.response,xhr,sTargetUrl,arrHeaders]);
+			  return self.taskResultMultiple(xhr.response,xhr,sTargetUrl,arrHeaders);
 		  } else {
 			  self.loadError({target:{src:sUrl}});			  
 		  }
@@ -68,26 +67,29 @@ class RCGAtlassian{
 		}
 		var win;
 		
-		var checkIfToken=self.createManagedCallback(function(){
+		var checkIfToken=function(fncManagedCheckIfTokenCallback){
 			self.addStep("Authorization call",function(){
-				self.apiCallOauth("/sessionToken");
+				return self.apiCallOauth("/sessionToken");
 			});
 			self.addStep("Checking for session access token",function(response,xhr,sUrl,headers) {
 				//debugger;
 				if  ((response==null)||
 					(typeof response==="undefined")||
 					(response.isToken==false)){
-					setTimeout(checkIfToken,1000);
+					setTimeout(fncManagedCheckIfTokenCallback,1000);
+					return self.waitForEvent();
 				} else {
 					log("Oauth Access token:"+response.access);
-					self.continueTask([response.access,response.secret]);
+					return self.taskResultMultiple(response.access,response.secret);
 				}
 			});
-			self.continueTask();
-		});
+		};
 		win = window.open(response.url, '_blank');
 		log("Tab Opened");
-		checkIfToken();
+		self.addStep("Check if Token exists",function(){
+			var fncManagedCheckIfToken=self.createManagedCallback(checkIfToken);
+			checkIfToken(fncManagedCheckIfToken);
+		});
 	}
 
 	oauthConnect(appInfo){
@@ -98,7 +100,7 @@ class RCGAtlassian{
 		}
 		log("AppName ouath connecting:"+appName + " instance:"+self.instance);
 		self.addStep("Querying a OAuth Access Token for "+appName,function(){
-				self.apiCallOauth("/sessions/connect?jiraInstance="+
+				return self.apiCallOauth("/sessions/connect?jiraInstance="+
 						self.instance+
 						(appInfo.subPath!=""?"/":"")+appInfo.subPath+
 						"&callbackServer="+self.proxyPath);
@@ -109,9 +111,7 @@ class RCGAtlassian{
 			appInfo.tokenNeeded=true;
 			appInfo.tokenAccess=accessToken;
 			appInfo.tokenTime=secret;
-			self.continueTask();
 		});
-		self.continueTask();
 	}
 	apiGetFullList(appInfo,sTarget,resultName,callType,data,callback,arrHeaders,bNotReturnAll){
 		var self=this;
@@ -120,19 +120,19 @@ class RCGAtlassian{
 		self.addStep("Calling for "+sTarget,function(){
 			self.addStep("Calling to api "+sTarget,function(){
 				log("Calling API "+sTarget);
-				self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,undefined,undefined,arrHeaders);
+				return self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,undefined,undefined,arrHeaders);
 			});	
 			if (isDefined(callback)){
 				var vResult=[];
 				self.addStep("Calling the user callback",function(response,xhr,sUrl,headers){
 					log("Called API "+sTarget+" processing response");
 					vResult=[response,xhr,sUrl,headers];
-					var fncManagedCallback=self.createManagedCallback(callback);
-					fncManagedCallback(response,xhr,sUrl,headers);
+					var fncManagedCallback=self.createManagedFunction(callback);
+					return fncManagedCallback(response,xhr,sUrl,headers);
 				});
 				self.addStep("Returning Result",function(){
 					log("Returning API "+sTarget+" result");
-					self.continueTask(vResult);
+					return vResult;
 				});
 			}
 			self.addStep("Processing result of call "+sTarget,function(response,xhr,sUrl,headers){
@@ -157,7 +157,7 @@ class RCGAtlassian{
 					arrResults=arrResults.concat(objResp[resultName]);
 				}
 				if (nLast>=nTotal){
-					return self.continueTask([arrResults]);					
+					return arrResults;					
 				} else if (nLast<nTotal){
 					//debugger;
 					var hsListItemsToProcess=newHashMap();
@@ -172,20 +172,19 @@ class RCGAtlassian{
 					}
 					var fncCall=function(callInfo){
 						self.addStep("Doing ["+callInfo.first+","+(callInfo.first+callInfo.nBlockItems)+"]",function(){
-							self.apiCallApp(appInfo,sTarget,callType,data,callInfo.first,callInfo.nBlockItems,undefined,undefined,arrHeaders);
+							return self.apiCallApp(appInfo,sTarget,callType,data,callInfo.first,callInfo.nBlockItems,undefined,undefined,arrHeaders);
 						});
 						if (isDefined(callback)){
 							var vResult=[];
 							self.addStep("Calling the user callback",function(response,xhr,sUrl,headers){
 								vResult=[response,xhr,sUrl,headers];
-								var fncManagedCallback=self.createManagedCallback(callback);
-								fncManagedCallback(response,xhr,sUrl,headers);
+								var fncManagedCallback=self.createManagedFunction(callback);
+								return fncManagedCallback(response,xhr,sUrl,headers);
 							});
 							self.addStep("Return values",function(){
-								self.continueTask(vResult);
+								return vResult;
 							});
 						}
-						self.continueTask();
 					}
 					var fncProcess=function(item,response){
 						if (isUndefined(bNotReturnAll)||(!bNotReturnAll)){
@@ -201,33 +200,29 @@ class RCGAtlassian{
 					}
 					//debugger;
 					log("Parallelize")
-					self.parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,10);
+					return self.parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,10);
 				}
 			});
-			self.continueTask();
 		});
 		if (isUndefined(bNotReturnAll)||(!bNotReturnAll)){
 			self.addStep("Returnig results for "+sTarget,function(){
-				self.continueTask([arrResults]);
+				return arrResults;
 			});
 		}
-		self.continueTask();
 	}
 	authenticate(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders){
 		var self=this;
 		self.addStep("Authenticating....",function(){
 			self.addStep("Discarding Oauth Access Token",function(){
-				self.apiCallOauth("/discardToken");
+				return self.apiCallOauth("/discardToken");
 			});
 			self.addStep("Getting Oauth Access Token",function(){
-				self.oauthConnect(appInfo);
+				return self.oauthConnect(appInfo);
 			});
 			self.addStep("Retrying api call",function(){
-				self.apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders);					
+				return self.apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders);					
 			});
-			self.continueTask();
 		});
-		self.continueTask();
 	}
 	apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders,oCallSecurity,aditionalOptions){
 		var self=this;
@@ -245,7 +240,7 @@ class RCGAtlassian{
 		if ((oSecurity.token)&&(appInfo.tokenAccess=="")){
 			//needs to get a Token
 			self.pushCallback(function(){
-				self.oauthConnect(appInfo);
+				return self.oauthConnect(appInfo);
 			})
 		}
 		//"Doing de API call..."
@@ -258,7 +253,6 @@ class RCGAtlassian{
 					sTokenParam+="&";
 				}
 				sTokenParam+=name+"="+value;
-				
 			}
 		}
 		self.addStep("Doing the API call..."+sTarget,function(){
@@ -284,7 +278,7 @@ class RCGAtlassian{
 				auxHeaders["Authorization"]=oAuthString;
 			}
 			self.addStep("Base API Call "+sTargetUrl,function(){
-				self.apiCallBase(sTargetUrl,auxCallType,data,sResponseType,auxHeaders,appInfo.tokenAccess,oSecurity,aditionalOptions);
+				return self.apiCallBase(sTargetUrl,auxCallType,data,sResponseType,auxHeaders,appInfo.tokenAccess,oSecurity,aditionalOptions);
 			});
 			self.addStep("Processing result and retry if necesary of "+sTargetUrl,function(response,xhr,sUrl,headers){
 				//debugger;
@@ -294,7 +288,7 @@ class RCGAtlassian{
 					log("=========");
 					log("ERROR: xhr is undefined.... " );
 					log("=========");
-					self.continueTask(["",xhr,sUrl,headers]);
+					return self.taskResultMultiple("",xhr,sUrl,headers);
 				} else {
 					log(" --> Bytes:"+response.length);
 					if ((xhr.status == 429)){
@@ -302,34 +296,32 @@ class RCGAtlassian{
 						log("too many request.... have to wait "+(Math.round(millis/10)/100)+" secs");
 						setTimeout(self.createManagedCallback(function(){
 							log("retrying api call");
-							self.apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders);					
-							}),millis);
+							return self.apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders);					
+						}),millis);
+						return self.waitForEvent();
 					} else if (xhr.status == 400){
 						alert(headers);
-						return self.continueTask([response,xhr,sUrl,headers]);
+						return self.taskResultMultiple(response,xhr,sUrl,headers);
 					} else if (xhr.status == 403) { // forbidden
 						if (appInfo.tokenAccess==""){
-							self.authenticate(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders);
+							return self.authenticate(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders);
 						} else {
 							log(xhr.responseText);
-							self.continueTask(["",xhr,sUrl,headers]);
+							return self.taskResultMultiple("",xhr,sUrl,headers);
 						}
 					} else if (xhr.status==500){
 						logError("Error 500 in atlassian server calling to "+sTarget);
 					} else {
-						self.continueTask([response,xhr,sUrl,headers]);
+						return selt.taskResultMultiple(response,xhr,sUrl,headers);
 					}
 				}
 			});
 			if (isDefined(callback)){
 				self.addStep("Calling callback to "+sTargetUrl,function([response,xhr,sUrl,headers]){
-					callback(response,xhr,sUrl,headers);
-					self.continueTask([response,xhr,sUrl,headers]);
+					return callback(response,xhr,sUrl,headers);
 				});
 			}
-			self.continueTask();
 		});
-		self.continueTask();
 	}
 	apiCallBase(sTargetUrl,callType,data,sResponseType,arrHeaders,tokenAccess,oCallSecurity,aditionalOptions){
 		var self=this;
@@ -355,10 +347,10 @@ class RCGAtlassian{
 		var newCallback;//=callback;
 		var newErrorCallback;//=callback;
 		newCallback=self.createManagedCallback(function(responseObj){
-		    self.popCallback([responseObj,self.JiraAPConnection]);
+		    return self.taskResultMultiple(responseObj,self.JiraAPConnection);
 		  });
 		newErrorCallback=self.createManagedCallback(function(xhr, statusText, errorThrown){
-		    self.popCallback(["",xhr, statusText, errorThrown]);
+		    return self.taskResultMultiple("",xhr, statusText, errorThrown);
 		  })
 		var fncAddAditionalOptions=function(options){
 			if (isDefined(aditionalOptions)){
@@ -380,6 +372,7 @@ class RCGAtlassian{
 			}
 			fncAddAditionalOptions(options);
 			self.JiraAPConnection.request(options);
+			return self.waitForEvent();
 		} else {
 			var jqElem=$;
 			
@@ -432,18 +425,18 @@ class RCGAtlassian{
 			    alert(data);
 			});
 			*/
+			return self.waitForEvent();
 		}
 	}
 	renderContent(appInfo,contentToRender){
 		var self=this;
 		self.pushCallback(function(objResponse,xhr, statusText, errorThrown){
 			log("Rendered Content:"+objResponse);
-			self.continueTask();
 		});
 		
 //		apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders){
 
-		self.apiCallApp(appInfo,
+		return self.apiCallApp(appInfo,
 					//"https://rcgcoder.atlassian.net/rest/api/1.0/render",
 				        "https://cantabrana.no-ip.org/jfreports/proxy/rcgcoder.atlassian.net/endproxy/rest/api/1.0/render",
 						"POST",

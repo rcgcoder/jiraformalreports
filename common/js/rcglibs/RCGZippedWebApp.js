@@ -748,20 +748,30 @@ class RCGZippedApp{
 			});
 			self.addStep("Initializing jsbaseengine",function(){
 				var rcgUtilsManager=new RCGUtils();
-				rcgUtilsManager.requireLibs=self.createManagedFunction(function(bMakeGlobals,arrLibs){
-					var auxArrLibs=[];
-					for (var i=0;i<arrLibs.length;i++){
-						auxArrLibs.push(rcgUtilsManager.basePath+arrLibs[i]);
-					}
-					var fncPostProcessFile=function(iFile){
-							var sFile=arrLibs[iFile];
-			    			var className=sFile.split(".")[0];
-							log("Post-Processing "+ iFile+" "+sFile+" className:"+className);
-			    			var auxObj = window[className]; 
-			    			rcgUtilsManager.makeGlobals(bMakeGlobals,auxObj);
-					}
-					return self.loadRemoteFiles(auxArrLibs,fncPostProcessFile);
-				});
+				rcgUtilsManager.requireLibs=function(bMakeGlobals,arrLibs){
+					self.addStep("Requiring all libs",function(){
+						var auxArrLibs=new Array(arrLibs.length);
+						self.addStep("Download parrallelized",function(){
+							return self.parallelizeCalls(arrLibs.length
+								,function(iLib){
+									var sRelativePath=rcgUtilsManager.basePath+arrLibs[i];
+									return loadRemoteFile(sRelativePath);
+								}
+								,function(iLib,objResult,itemKey){
+									auxArrLibs[iLib]=objResult;
+								});
+						});
+						self.addStep("Load lib in order",function(){
+							return self.sequentialProcess(arrLibs.length,function(iLib){
+								var sFile=arrLibs[iFile];
+				    			var className=sFile.split(".")[0];
+								log("Post-Processing "+ iFile+" "+sFile+" className:"+className);
+				    			var auxObj = window[className]; 
+				    			rcgUtilsManager.makeGlobals(bMakeGlobals,auxObj);
+							});
+						});
+					});
+				};
 				rcgUtilsManager.basePath="js/rcglibs/";
 				return rcgUtilsManager.loadUtils(true);
 			});

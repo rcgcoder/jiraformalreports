@@ -1415,6 +1415,10 @@ class RCGTaskManager{
 	extended_waitForEvent(){
 		return new RCGTaskResult(false);
 	}
+	extended_sequentialProcess(hsListItemsToProcess,fncProcess){
+		var self=this;
+		return self.parallelizeCalls(hsListItemsToProcess,undefined,fncProcess,1);
+	}
 	extended_parallelizeProcess(hsListItemsToProcess,fncProcess,maxParallelThreads){
 		var self=this;
 		return self.parallelizeCalls(hsListItemsToProcess,undefined,fncProcess,maxParallelThreads);
@@ -1467,6 +1471,7 @@ class RCGTaskManager{
 		obj.internal_parallelizeCalls=self.internal_parallelizeCalls;
 		obj.parallelizeCalls=self.extended_parallelizeCalls;
 		obj.parallelizeProcess=self.extended_parallelizeProcess;
+		obj.sequentialProcess=self.extended_sequentialProcess;		
 		obj.waitForEvent=self.extended_waitForEvent;
 		obj.taskResultMultiple=self.extended_taskResultMultiple;
 		obj.taskResultJump=self.extended_taskResultJump;

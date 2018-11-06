@@ -432,6 +432,14 @@ class RCGJira{
 					undefined,
 					"application/json");
 		});
+		self.addStep("Processing issue Details",function(objResponse,xhr, statusText, errorThrown){
+			log("Issue Detail for issue:"+issueId);
+			var oResult;
+			if (isDefined(objResponse){
+				var oResult=JSON.parse(objResponse);
+			});
+			return oResult;
+		});
 	}
 	setProperty(issueId,propertyName,propertyValue){
 		var self=this;

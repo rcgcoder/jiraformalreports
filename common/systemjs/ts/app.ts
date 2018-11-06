@@ -63,18 +63,9 @@ class App {
                     return System.webapp.loadRemoteFiles(arrFiles);
                 });
                 self.addStep("Postprocessing systemjs components.... ",function(){
-/*                    var fncAddPostProcessStep=function(i){
-                        self.addStep("PostProcessing..."+i+"/"+System.postProcess.length,function(){
-                            System.postProcess[i]();
-                            self.continueTask();
-                        });
-                    }   
-
-                    self.parallelizeCalls(System.postProcess.length,undefined,fncAddPostProcessStep,5);
-*/                  System.postProcess.forEach(function(postProcessFunction){
-                        postProcessFunction();
-                      //  fncAddPostProcessStep(i);
-                    });
+                    return self.parallelizeProcess(System.postProcess.length,function(iPostFunction){
+                        System.postProcess[iPostFunction]();
+                    },5);
                 });
                 self.addStep("Continue the Systemjs Task ... was blocked on import('app')",function(){
                    self.rTask.continueTask(); 

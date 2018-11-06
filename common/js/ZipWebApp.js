@@ -74,7 +74,6 @@ class ZipWebApp{
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 //			}
 			);
-			if (false) {
 			self.addStep("Getting All field info.... ",function(){
 				var jira=self.getJira();
 				return jira.getFieldsAndSchema();
@@ -82,6 +81,7 @@ class ZipWebApp{
 //			}
 			);
 	
+			if (false) {
 			self.addStep("Getting All Epics  to do a list.... ",function(){
 				var jira=self.getJira();
 				return jira.getAllEpics();

@@ -208,7 +208,7 @@ export class advSelector {
                             return self.getValuesAsync(theDlgSelector);
                         });
                     }),nSeconds);
-                    return waitForEvent();
+                    return self.waitForEvent();
                 }
             });
         }

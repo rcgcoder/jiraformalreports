@@ -435,9 +435,9 @@ class RCGJira{
 		self.addStep("Processing issue Details",function(objResponse,xhr, statusText, errorThrown){
 			log("Issue Detail for issue:"+issueId);
 			var oResult;
-			if (isDefined(objResponse){
-				var oResult=JSON.parse(objResponse);
-			});
+			if (isDefined(objResponse)){
+				oResult=JSON.parse(objResponse);
+			};
 			return oResult;
 		});
 	}

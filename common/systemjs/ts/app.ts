@@ -38,7 +38,6 @@ class App {
     var rTask=System.systemJSTask;
     log("--- initializing class app.ts");
     taskManager.extendObject(self);
-    var fncProcess
     var fncCheckForFinishLoad = function(){
         //debugger;
         var theApp=$("#appMain");
@@ -76,6 +75,9 @@ class App {
                         postProcessFunction();
                       //  fncAddPostProcessStep(i);
                     });
+                });
+                self.addStep("Continue the Systemjs Task ... was blocked on import('app')",function(){
+                   self.rTask.continueTask(); 
                 });
            },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined
            //}

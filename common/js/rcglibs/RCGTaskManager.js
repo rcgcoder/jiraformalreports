@@ -283,7 +283,13 @@ class RCGTask{
 		}
 		return theParent;
 	}
-	
+	continueTask(){
+		var self=this;
+		var prevTask=self.getRunningTask();
+		self.setRunningTask(self);
+		self.getTaskManager().continueTask(aArgs,iJumps);
+		self.setRunningTask(prevTask);
+	}
 
 	getTaskManager(){
 		var self=this; 

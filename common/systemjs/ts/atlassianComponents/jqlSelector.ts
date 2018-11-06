@@ -98,6 +98,7 @@ export class jqlSelector {
             }
             self.internal_issueList=arrIssues;
             self.isRetrievingData=false;
+            theAdvSelector.retrieved(arrIssues);
             return arrIssues;
         });
     }

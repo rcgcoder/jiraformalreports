@@ -22,12 +22,12 @@ class RCGJira{
 			return atlassian.apiGetFullList(self, sTarget, resultName,callType, data, callback,arrHeaders,bNotReturnAll);
 			};
 
-		self.projects=newDynamicObjectFactory([],["InnerId"],[],"Projects");
-		self.fields=newDynamicObjectFactory([],["Type"],[],"Fields");
-		self.issueTypes=newDynamicObjectFactory([],["Description","SubTask","IconUrl"],[],"IssueTypes");
+		self.projects=newDynamicObjectFactory([],["InnerId"],[],"Project");
+		self.fields=newDynamicObjectFactory([],["Type"],[],"Field");
+		self.issueTypes=newDynamicObjectFactory([],["Description","SubTask","IconUrl"],[],"IssueType");
 
-		self.epics=newDynamicObjectFactory([],[],[],"Epics");
-		self.labels=newDynamicObjectFactory([],[],[],"Labels");
+		self.epics=newDynamicObjectFactory([],[],[],"Epic");
+		self.labels=newDynamicObjectFactory([],[],[],"Label");
 		self.users=[];
 		self.filters=[];
 		self.issueLinkTypes=[];

@@ -68,7 +68,7 @@ class ZipWebApp{
 			},0,1,undefined,undefined,undefined,"INNER",undefined
 			//}
 			);
-			if (false) {
+			//if (false) {
 			self.addStep("Getting All Epics  to do a list.... ",function(){
 				var jira=self.getJira();
 				return jira.getAllEpics();
@@ -138,7 +138,7 @@ class ZipWebApp{
 //			}
 			);
 			*/
-			}
+			//}
 			self.addStep("All initilizing parallel tasks launched",function(){
 				log("All initilizing parallel tasks launched");
 			});

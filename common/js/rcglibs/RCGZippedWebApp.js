@@ -759,7 +759,7 @@ class RCGZippedApp{
 							});
 					});
 					self.addStep("Load libs in order",function(){
-						return self.sequentialProcess(arrLibs.length,function(iLib){
+						return self.sequentialProcess(arrLibs.length,function(iFile){
 							debugger;
 							var sFile=arrLibs[iFile];
 			    			var className=sFile.split(".")[0];

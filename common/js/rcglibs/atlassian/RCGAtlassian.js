@@ -62,14 +62,16 @@ class RCGAtlassian{
 	apiOauthSecondStep(response,xhr,sUrl,headers){
 		var self=this;
 		if (response!=null){
-			log("Oauth Jira URL:"+response.url);
+			log("Second Step Oauth Jira URL:"+response.url);
 		} else {
-			log("Oauth Jira ... waiting");
+			log("Second Step Oauth Jira ... waiting");
 		}
-		var win;
+		var win=window.open(response.url, '_blank');
+		log("Tab Opened");
 		
 		var checkIfToken=function(fncManagedCheckIfTokenCallback){
 			self.addStep("Authorization call",function(){
+				log("Call for session token");
 				return self.apiCallOauth("/sessionToken");
 			});
 			self.addStep("Checking for session access token",function(response,xhr,sUrl,headers) {
@@ -77,19 +79,19 @@ class RCGAtlassian{
 				if  ((response==null)||
 					(typeof response==="undefined")||
 					(response.isToken==false)){
+					log("Session Token does not exists... wait 1 seg");
 					setTimeout(fncManagedCheckIfTokenCallback,1000);
 					return self.waitForEvent();
 				} else {
-					log("Oauth Access token:"+response.access);
+					log("Oauth Access token Exists:"+response.access);
 					return self.taskResultMultiple(response.access,response.secret);
 				}
 			});
 		};
-		win = window.open(response.url, '_blank');
-		log("Tab Opened");
 		self.addStep("Check if Token exists",function(){
+			log("Start checking for token exists");
 			var fncManagedCheckIfToken=self.createManagedCallback(checkIfToken);
-			checkIfToken(fncManagedCheckIfToken);
+			return checkIfToken(fncManagedCheckIfToken);
 		});
 	}
 
@@ -101,13 +103,15 @@ class RCGAtlassian{
 		}
 		log("AppName ouath connecting:"+appName + " instance:"+self.instance);
 		self.addStep("Querying a OAuth Access Token for "+appName,function(){
-				return self.apiCallOauth("/sessions/connect?jiraInstance="+
+			log("Oauth first step.... calling for a session token");	
+			return self.apiCallOauth("/sessions/connect?jiraInstance="+
 						self.instance+
 						(appInfo.subPath!=""?"/":"")+appInfo.subPath+
 						"&callbackServer="+self.proxyPath);
 		});
 		self.addStep("Waiting for grant in "+appName,self.apiOauthSecondStep);
 		self.addStep("Setting Access Token for "+appName,function(accessToken,secret){
+			debugger;
 			log("Setting Access Token:"+accessToken+" and Secret:"+secret);
 			appInfo.tokenNeeded=true;
 			appInfo.tokenAccess=accessToken;

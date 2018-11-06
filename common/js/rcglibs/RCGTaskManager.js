@@ -1300,16 +1300,14 @@ class RCGTaskManager{
 					if (isDefined(fncCall)){
 						self.addStep("Petition:"+iPet+" of parallel process ",function(){
 	//						log("Start the "+iPet+" Call of parallel process");
-							var fncManagedCall=self.createManagedFunction(fncCall);
-							return fncManagedCall(item);
+							return fncCall(item);
 	//						log("End of the "+iPet+" Call of parallel process");
 						});
 					}
 					if (isDefined(fncProcess)){
 						self.addStep("Petition:"+iPet+" Processing result and Trying Next Call...",function(objResult){
 	//						log("Start the "+iPet+" Processing of parallel process");
-							var fncManagedProcessCall=self.createManagedFunction(fncProcess);
-							return fncManagedProcessCall(item,objResult,itemKey);
+							return fncProcess(item,objResult,itemKey);
 	//						log("End of the "+iPet+" Processing of parallel process");
 						});
 					} 

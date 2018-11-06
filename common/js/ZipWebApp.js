@@ -176,7 +176,7 @@ class ZipWebApp{
 		});*/		
 	}
 
-	getListIssueTypes(emitter){
+	getListIssueTypes(){
 		var self=this;
 		if (self.getAtlassian().initialized==false){
 			
@@ -187,11 +187,10 @@ class ZipWebApp{
 				 {doFieldName:"Name",resultFieldName:"name"},
 				 {doFieldName:"Description",resultFieldName:"description"}
 				 ]);
-			if (isDefined(emitter)) emitter.retrieved([arrResult]);
 	        return arrResult;
 		}
 	}
-	getListProjects(emitter){
+	getListProjects(){
 		var self=this;
 		if (self.getAtlassian().initialized==false){
 			
@@ -201,11 +200,10 @@ class ZipWebApp{
 				 {doFieldName:"Id",resultFieldName:"key"},
 				 {doFieldName:"Name",resultFieldName:"name"}
 				 ]);
-			if (isDefined(emitter)) emitter.retrieved([arrResult]);
 	        return arrResult;
 		}
 	}
-	getListEpics(emitter){
+	getListEpics(){
 		var self=this;
 		if (self.getAtlassian().initialized==false){
 			
@@ -215,11 +213,10 @@ class ZipWebApp{
 				 {doFieldName:"Id",resultFieldName:"key"},
 				 {doFieldName:"Name",resultFieldName:"name"}
 				 ]);
-			if (isDefined(emitter)) emitter.retrieved([arrResult]);
 	        return arrResult;
 		}
 	}
-	getListFilters(emitter){
+	getListFilters(){
 		var self=this;
 		if (self.getAtlassian().initialized==false){
 			
@@ -230,11 +227,10 @@ class ZipWebApp{
 	            var filter=jira.filters[i];
 	            arrResult.push({key:filter.id,name:filter.name});
 	        }
-			if (isDefined(emitter)) emitter.retrieved([arrResult]);
 	        return arrResult; 
 		}
 	}
-	getListLabels(emitter){
+	getListLabels(){
 		var self=this;
 		if (self.getAtlassian().initialized==false){
 			
@@ -244,11 +240,10 @@ class ZipWebApp{
 				 {doFieldName:"Id",resultFieldName:"key"},
 				 {doFieldName:"Name",resultFieldName:"name"}
 				 ]);
-			if (isDefined(emitter)) emitter.retrieved([arrResult]);
 	        return arrResult;
 		}
 	}
-	getListFields(emitter){
+	getListFields(){
 		var self=this;
 		if (self.getAtlassian().initialized==false){
 			
@@ -258,11 +253,10 @@ class ZipWebApp{
 				 {doFieldName:"Id",resultFieldName:"key"},
 				 {doFieldName:"Name",resultFieldName:"name"}
 				 ]);
-			if (isDefined(emitter)) emitter.retrieved([arrResult]);
 	        return arrResult;
 		}
 	}
-	getIssueLinkTypes(emitter){
+	getIssueLinkTypes(){
 		var self=this;
         var jira=self.getJira();
         var arrLinkTypes=jira.getIssueLinkTypes(); 
@@ -270,7 +264,6 @@ class ZipWebApp{
         for (var i=0;i<arrLinkTypes.length;i++){
         	arrResult.push({key:arrLinkTypes[i],name:arrLinkTypes[i]});
         }
-		if (isDefined(emitter)) emitter.retrieved([arrResult]);
         return arrResult;
     }
 	setIssueLinkTypes(newIssueLinkTypes){
@@ -283,7 +276,7 @@ class ZipWebApp{
         var jira=self.getJira();
         jira.setIssueOtherFields(otherFieldNames); 
 	}
-	getIssueOtherFields(emitter){
+	getIssueOtherFields(){
 		var self=this;
         var jira=self.getJira();
         var arrFields=jira.getIssueOtherFields(); 
@@ -291,7 +284,6 @@ class ZipWebApp{
         for (var i=0;i<arrFields.length;i++){
         	arrResult.push({key:arrFields[i][0],name:arrFields[i][1]});
         }
-		if (isDefined(emitter)) emitter.retrieved([arrResult]);
         return arrResult;
     }
 	getJQLIssues(jql){

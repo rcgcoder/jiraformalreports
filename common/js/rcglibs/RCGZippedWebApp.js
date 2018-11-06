@@ -687,7 +687,7 @@ class RCGZippedApp{
 		self.addStep("Processing files",function(){
 			return self.sequentialProcess(arrRelativePaths.length,function(iFile){
 				var fileStatus=arrStatus[iFile];
-				self.addStep("Processing "+iFile+" file:"+sFile,function(fileStatus){
+				self.addStep("Processing "+iFile+" file:"+fileStatus.path,function(){
 					return self.processFile(fileStatus.path,
 									 fileStatus.content,
 									 fileStatus.type
@@ -695,8 +695,8 @@ class RCGZippedApp{
 									);
 				});
 				if (typeof fncPostProcessFile!=="undefined"){
-					self.addStep("Processed "+iFile+" file:"+sFile,function(){
-						return fncPostProcessFile(iIntFile,theWindow);
+					self.addStep("Processed "+iFile+" file:"+fileStatus.path,function(){
+						return fncPostProcessFile(iFile,theWindow);
 					});
 				}
 			});

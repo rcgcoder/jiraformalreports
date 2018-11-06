@@ -661,38 +661,45 @@ class RCGZippedApp{
 		//debugger;
 		var self=this;
 		var arrStatus=[];
-		return self.parallelizeProcess(arrRelativePaths.length,function(iFile){
-			var iIntFile=iFile;
-			var sFile=arrRelativePaths[iIntFile];
-			log("Downloading file:"+ sFile+ " pos:"+iIntFile);
-			self.addStep("Reading File:"+sFile,function(){
-				return self.loadFileFromStorage(sFile,theWindow);
-			});
-			self.addStep("File:"+sFile+" ¿need to load from network?",function(sRelativePath,fileContent,contentType){
-				if (fileContent!=""){
-//						log("File "+iIntFile+" "+sRelativePath+ " is in Storage");
-					return self.taskResultMultiple(sRelativePath,fileContent,contentType);
-				}
-//					log("File "+iIntFile+" "+sRelativePath+ " is not in Storage... loading from network");
-				return self.loadFileFromNetwork(sRelativePath,fileContent,contentType,theWindow);
-			});
-			self.addStep("File:"+sFile+" fully loaded!",function(sRelativePath,fileContent,contentType){
-//					log("File "+iIntFile+" "+sRelativePath+ " is loaded... updating status");
-				arrStatus[iIntFile]={path:sRelativePath,content:fileContent,type:contentType};
-				return arrStatus[iIntFile];
-			});
-			self.addStep("Processing "+iFile+" file:"+sFile,function(fileStatus){
-				return self.processFile(fileStatus.path,
-								 fileStatus.content,
-								 fileStatus.type
-								 ,theWindow
-								);
-			});
-			if (typeof fncPostProcessFile!=="undefined"){
-				self.addStep("Processed "+iFile+" file:"+sFile,function(){
-					return fncPostProcessFile(iIntFile,theWindow);
+		self.addStep("Getting files",function(){
+			return self.parallelizeProcess(arrRelativePaths.length,function(iFile){
+				var iIntFile=iFile;
+				var sFile=arrRelativePaths[iIntFile];
+				log("Downloading file:"+ sFile+ " pos:"+iIntFile);
+				self.addStep("Reading File:"+sFile,function(){
+					return self.loadFileFromStorage(sFile,theWindow);
 				});
-			}
+				self.addStep("File:"+sFile+" ¿need to load from network?",function(sRelativePath,fileContent,contentType){
+					if (fileContent!=""){
+	//						log("File "+iIntFile+" "+sRelativePath+ " is in Storage");
+						return self.taskResultMultiple(sRelativePath,fileContent,contentType);
+					}
+	//					log("File "+iIntFile+" "+sRelativePath+ " is not in Storage... loading from network");
+					return self.loadFileFromNetwork(sRelativePath,fileContent,contentType,theWindow);
+				});
+				self.addStep("File:"+sFile+" fully loaded!",function(sRelativePath,fileContent,contentType){
+	//					log("File "+iIntFile+" "+sRelativePath+ " is loaded... updating status");
+					arrStatus[iIntFile]={path:sRelativePath,content:fileContent,type:contentType};
+					return arrStatus[iIntFile];
+				});
+			});
+		});
+		self.addStep("Processing files",function(){
+			return self.sequentialProcess(arrRelativePaths.length,function(iFile){
+				fileStatus=arrStatus[iFile];
+				self.addStep("Processing "+iFile+" file:"+sFile,function(fileStatus){
+					return self.processFile(fileStatus.path,
+									 fileStatus.content,
+									 fileStatus.type
+									 ,theWindow
+									);
+				});
+				if (typeof fncPostProcessFile!=="undefined"){
+					self.addStep("Processed "+iFile+" file:"+sFile,function(){
+						return fncPostProcessFile(iIntFile,theWindow);
+					});
+				}
+			});
 		});
 	}
 
@@ -749,18 +756,13 @@ class RCGZippedApp{
 			self.addStep("Initializing jsbaseengine",function(){
 				var rcgUtilsManager=new RCGUtils();
 				rcgUtilsManager.requireLibs=function(bMakeGlobals,arrLibs){
-					self.addStep("Download parrallelized",function(){
-						return self.parallelizeCalls(arrLibs.length
-							,function(iLib){
-								debugger;
-								var sRelativePath=rcgUtilsManager.basePath+arrLibs[iLib];
-								log("Loading RCG lib "+iLib+" "+sRelativePath);
-								return self.loadRemoteFile(sRelativePath);
-							});
-					});
-					self.addStep("Load libs in order",function(){
-						return self.sequentialProcess(arrLibs.length,function(iFile){
-							debugger;
+					var sRelativePaths=[];
+					arrLibs.forEach(function(sPath){
+						var sRelativePath=rcgUtilsManager.basePath+sPath;
+						sRelativePaths.push(sRelativePath);
+					})
+					self.addStep("Download and process parallelized",function(){
+						return self.loadRemoteFiles(sRelativePaths,function(iFile){
 							var sFile=arrLibs[iFile];
 			    			var className=sFile.split(".")[0];
 							log("Post-Processing "+ iFile+" "+sFile+" className:"+className);

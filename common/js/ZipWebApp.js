@@ -51,6 +51,12 @@ class ZipWebApp{
 */						 ]; //test
 			return self.loadRemoteFiles(arrFiles);
 		});
+		self.addStep("Launching Systemjs.... ",function(){
+			var sjs=self.getSystemjs();
+			return sjs.loadEngine();
+		},0,1,undefined,undefined,undefined,"INNER",undefined
+		//}
+		);
 		self.addStep("Setting <initialized=false> Atlassian Engine.... ",function(){
 			var atl=self.getAtlassian();
 			atl.initialized=false;
@@ -62,12 +68,6 @@ class ZipWebApp{
 			},0,1,undefined,undefined,undefined,"GLOBAL",undefined
 //			}
 			);  */
-			self.addStep("Launching Systemjs.... ",function(){
-				var sjs=self.getSystemjs();
-				return sjs.loadEngine();
-			},0,1,undefined,undefined,undefined,"INNER",undefined
-			//}
-			);
 			//if (false) {
 			self.addStep("Getting All Epics  to do a list.... ",function(){
 				var jira=self.getJira();

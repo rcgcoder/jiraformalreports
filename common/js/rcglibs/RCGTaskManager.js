@@ -283,7 +283,7 @@ class RCGTask{
 		}
 		return theParent;
 	}
-	continueTask(){
+	continueTask(aArgs,iJumps){
 		var self=this;
 		var prevTask=self.getRunningTask();
 		self.setRunningTask(self);

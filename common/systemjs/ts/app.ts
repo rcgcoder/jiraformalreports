@@ -64,12 +64,15 @@ class App {
                 });
                 self.addStep("Postprocessing systemjs components.... ",function(){
                     return self.parallelizeProcess(System.postProcess.length,function(iPostFunction){
-                        System.postProcess[iPostFunction]();
+                        log("PostProcess "+iPostFunction);
+                        return System.postProcess[iPostFunction]();
                     },5);
                 });
                 self.addStep("Continue the Systemjs Task ... was blocked on import('app')",function(){
                     debugger;
-                    rTask.continueTask(); 
+                    setZeroTimeout(function(){
+                        rTask.continueTask();
+                    }); 
                 });
            },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined
            //}

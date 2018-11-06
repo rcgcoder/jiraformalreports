@@ -32,7 +32,6 @@ export class jsExecutor {
                 executeFunction([],code);
             });
             mnCall();
-            self.continueTask();
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
         // apply
     }

@@ -59,17 +59,16 @@ export class TabStructure {
  
     onGetBillingRelationships(event){
         log("GettingRelationships");
-        self.continueTask([System.webapp.getListRelations()]);
+        return System.webapp.getListRelations();
     }
     onGetBillingFields(event){
        log("structure fields event.... onGetBillingFields");
-       self.continueTask([System.webapp.getListFields()]);
+       return System.webapp.getListFields();
     }
     onLoadIssuesTest(event){
         var self=this;
         var fork=self.addStep("Testing Load Issues:"+self.name, function(){
             log("Testing end:"+self.name);
-            self.continueTask();
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
 //        self.continueTask();
         

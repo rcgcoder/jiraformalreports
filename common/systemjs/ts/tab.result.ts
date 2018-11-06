@@ -17,16 +17,16 @@ export class TabResult {
     doInNewWindow(){
 //        var fork=System.webapp.addStep("Opening the report in a new tab", function(){
             var report=System.webapp.theReport;
-            report.openResultInNewTab();
+            return report.openResultInNewTab();
 //            System.webapp.continueTask();
  //       },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
     }
     doSaveToFile(){
         var report=System.webapp.theReport;
-        report.saveResultToFile();
+        return report.saveResultToFile();
     }
     doRepeatReport(){
-        System.getAngularObject('tabStructure',true).executeReport();
+        return System.getAngularObject('tabStructure',true).executeReport();
     }
     doCleanBlankLines(){
         var self=this;
@@ -35,7 +35,6 @@ export class TabResult {
             var ifr=document.getElementById("reportResultDiv");
             var contentId=ifr.interactiveContentId;
             modelInteractiveFunctions.cleanContent(contentId);
-            self.continueTask();
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
 
 

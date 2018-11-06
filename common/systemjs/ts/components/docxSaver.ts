@@ -25,9 +25,8 @@ export class docxSaver {
                 var antCommitId=System.webapp.github.commitId;
                 System.webapp.pushCallback(function(){
                    log("commit updated");
-                   self.continueTask();
                 });
-                System.webapp.github.updateLastCommit();
+                return System.webapp.github.updateLastCommit();
             });
             
             self.addStep("Loading docx templater engine.... ",function(){
@@ -36,13 +35,12 @@ export class docxSaver {
                                 "js/rcglibs/RCGDownloadUtils.js",
                                 "js/rcglibs/RCGDocxSaver.js"
                                 ]; //test
-                System.webapp.loadRemoteFiles(arrFiles);
+                return System.webapp.loadRemoteFiles(arrFiles);
             });
             self.addStep("Launching docx saver engine",function(){
                 var vDocx=new RCGDocxSaver(self.getTaskManager(),self.htmlElementId,self.baseUrl,self.fileNameBase);
-                vDocx.process();
+                return vDocx.process();
             });
-            self.continueTask();
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
         // apply
     }

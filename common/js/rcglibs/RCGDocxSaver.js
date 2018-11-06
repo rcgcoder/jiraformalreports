@@ -29,10 +29,8 @@ var RCGDocxSaver=class RCGDocxSaver{ //this kind of definition allows to hot-rel
 												});
 					});
 			uploader.sendText(html);
-			debugger;
-	    	self.continueTask();
+			//return self.waitForEvent(); // not wait.... this will save the file in not stepper thread 
 		    });
-	    self.continueTask();
 	}
 
 }

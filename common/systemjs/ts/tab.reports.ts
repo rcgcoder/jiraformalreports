@@ -71,16 +71,13 @@ export class TabReports {
             oIssue.setTestObject(bigArray); 
         }
         
-        
-        
-        
-        System.webapp.continueTask([bigArray,dynObj]);
+        return self.taskResultMultiple(bigArray,dynObj);
     }
     doMemoryLeaksTest(){
         var theTab=this;
         var self=System.webapp;
         self.addStep("Starting Memory Leak Test",function(){
-            theTab.innerMemoryLeakTest();
+            return theTab.innerMemoryLeakTest();
         });
         var theBigOne;
         var theDynObj;
@@ -96,7 +93,6 @@ export class TabReports {
                         log(str);
                     }
                 }
-                self.continueTask();
             });
             self.addStep("another Step",function(){
                 var innerBig=theBigOne;
@@ -118,11 +114,8 @@ export class TabReports {
                         log(str);
                     }
                 }          
-                self.continueTask();
             });
-            self.continueTask();
         });
-        self.continueTask();
     }
     doUpdateIssuePropertyTest(){
         var self=this;
@@ -137,14 +130,13 @@ export class TabReports {
             System.webapp.addStep("Calling set property",function(){
                 jira.setProperty("PDP-37","RCGTest","A simple value");
             });
- */           System.webapp.addStep("Calling set attachment",function(){
-               jira.addAttachmentObject("PDP-37",{text:"attachmentTest",value:"a value"},"jrfConfig.json");
+ */           
+            System.webapp.addStep("Calling set attachment",function(){
+               return jira.addAttachmentObject("PDP-37",{text:"attachmentTest",value:"a value"},"jrfConfig.json");
             });
             System.webapp.addStep("End of Calling set property",function(){
                 log("property setted... commment added and text rendered ... everything is OK");
-                System.webapp.continueTask();
             });
-            System.webapp.continueTask();
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
 //      self.continueTask();
     }
@@ -174,7 +166,7 @@ export class TabReports {
                 var contentProcess=function(content){
                     return JSON.parse(content);
                 };
-                jira.getAttachments(issueId,fileFilter,contentFilter,contentProcess);
+                return jira.getAttachments(issueId,fileFilter,contentFilter,contentProcess);
             });
             self.addStep("Listing all configs",function(objAttachs){
                reportIssue=objAttachs.issue;
@@ -187,9 +179,7 @@ export class TabReports {
                    log("there is not config files");
                    tabConfig.setConfiguration(reportIssue);
                }
-               self.continueTask();
             });
-            self.continueTask();
        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
    }
 }

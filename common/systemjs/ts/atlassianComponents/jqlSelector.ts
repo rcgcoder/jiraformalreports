@@ -51,12 +51,11 @@ export class jqlSelector {
     setSelectedValues(selectedElems: []) {
         var self=this;
         System.webapp.addStep("Refreshing values from jql",function(){
-            self.refreshResults(); // this adds steps to refresh all results
+            return self.refreshResults(); // this adds steps to refresh all results
         });
         
         System.webapp.addStep("Selecting Items",function(){
-            self.getSelector().setSelectedValues(selectedElems);
-            System.webapp.continueTask();
+            return self.getSelector().setSelectedValues(selectedElems);
         });
     }
     refreshResults(){
@@ -67,7 +66,6 @@ export class jqlSelector {
             self.getSelector().getValuesAsync();
             log("launched get values async:"+self.name);
         },0,1,undefined,undefined,undefined,"INNER",undefined);
-        System.webapp.continueTask();
     }
     onAdvSelectorRetrieveData(theAdvSelector){
         var self=this;
@@ -78,17 +76,17 @@ export class jqlSelector {
             log("Empty JQL is not allowed");
             self.isRetrievingData=false;
             self.internal_issueList=[];
-            return System.webapp.continueTask([self.internal_issueList]);
+            return self.internal_issueList;
         }
         if (self.jql==sJQL){
             log("Same jql:"+sJQL);
             self.isRetrievingData=false;
-            return System.webapp.continueTask([self.internal_issueList]);
+            return self.internal_issueList;
         } 
         log("Diferent jql:"+sJQL);
         self.jql=sJQL;
         System.webapp.addStep("Getting issues from JQL:"+sJQL, function(){
-            System.webapp.getJQLIssues(sJQL);
+            return System.webapp.getJQLIssues(sJQL);
         });
         System.webapp.addStep("Retrieving issues once the search is done",function(issueList){
             log(issueList.length);
@@ -99,8 +97,7 @@ export class jqlSelector {
             }
             self.internal_issueList=arrIssues;
             self.isRetrievingData=false;
-            System.webapp.continueTask([arrIssues]);
+            return arrIssues;
         });
-        System.webapp.continueTask();
     }
 }

@@ -70,7 +70,7 @@ export class atlassianSelector {
             ){
             arrOptions=self.getPropertyValues();
         }
-        System.webapp.continueTask([arrOptions]);
+        return arrOptions;
      }
     reloadItems(){
         var self=this;

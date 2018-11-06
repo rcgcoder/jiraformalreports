@@ -75,13 +75,12 @@ export class TabConfig {
         var content=JSON.stringify(actualConfig);
         self.addStep("Saving configuration...",function(){
             self.addStep("Save to Storage the Config",function(){
-                System.webapp.saveFileToStorage(fileName,content,contentType);
+                return System.webapp.saveFileToStorage(fileName,content,contentType);
             });
             self.addStep("Save to attachment of Issue:"+self.configurationIssue.key,function(){
                 var jira=System.webapp.getJira();
-                jira.addAttachmentObject(self.configurationIssue.key,actualConfig,fileName,"Added new versión of Report Configuration ");
+                return jira.addAttachmentObject(self.configurationIssue.key,actualConfig,fileName,"Added new versión of Report Configuration ");
             });
-            self.continueTask();
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
     }
     getActualReportConfig(){
@@ -452,16 +451,14 @@ export class TabConfig {
         var self=this;
         var fileName="defaultReportConfig.json";
         self.addStep("Loading default config file from Storage",function(){
-            System.webapp.loadFileFromStorage(fileName);
+            return System.webapp.loadFileFromStorage(fileName);
         });
         self.addStep("Applying default config ",function(sRelativePath,content){
             if (content!=""){
                 var dfReport=JSON.parse(content);
                 self.applyConfig(dfReport);
             }
-            self.continueTask();
         });
-        self.continueTask();
     }
     
     onChangeListOfContracts(arrContracts){
@@ -512,43 +509,29 @@ export class TabConfig {
         var jira=System.webapp.getJira();
         var hsAllFields;
         self.addStep("getting the total list of fields.....",function(){
+            debugger;
             self.addStep("Getting all field names from scope issues",function(){
                 var jql=self.getScopeNormalizedJQL();
                 log("Scope Normalized jql:["+jql+"]");
-                jira.getFieldFullList(jql);
+                return jira.getFieldFullList(jql);
             });
+            var hsResultFields=newHashMap();
             self.addStep("Getting all field names of the list",function(hsFields){
                 var intFields=System.getAngularObject('selInterestFields',true);
                 hsAllFields=hsFields;
                 var arrAllFields=intFields.getAllElements();
                 var hsIdentified=newHashMap();
-                var hsResultFields=newHashMap();
                 log("There is "+ hsFields.length()+" fields in all issues");
                 for (var i=0;i<arrAllFields.length;i++){
                     hsIdentified.add(arrAllFields[i].key,arrAllFields[i]);
                 }
-                    
-                var fncProcessNode=System.webapp.createManagedCallback(function(objStep){
-                    var objStepKey=objStep.actualNode.key;
-                    if (!hsIdentified.exists(objStepKey)){
-                        hsResultFields.add(objStepKey,objStepKey);
+                return self.sequentialProcess(hsFields,function(field,objAux,key){
+                    if (!hsIdentified.exists(key)){
+                        hsResultFields.add(key,field);
                     }
                 });
-                var fncProcessEnd=System.webapp.createManagedCallback(function(objStep){
-                    var objStepEnd=objStep;
-                    self.continueTask([hsResultFields]);
-                });
-                var fncBlockPercent=System.webapp.createManagedCallback(function(objStep){
-                    var objStepEnd=objStep;
-                    log("Block Percent");
-                });
-                var fncBlockTime=System.webapp.createManagedCallback(function(objStep){
-                    var objStepEnd=objStep;
-                    log("Block Time");
-                });
-                hsFields.walkAsync("Removing duplicate fields...",fncProcessNode,fncProcessEnd,fncBlockPercent,fncBlockTime);
             });
-            self.addStep("Update selection table",function(hsResultFields){
+            self.addStep("Update selection table",function(){
                 log("After discard identificied there is "+ hsResultFields.length()+"/"+hsAllFields.length()+" fields in all issues");
                 var fieldDefs=System.getAngularObject('manualFieldDefinitions',true);
                 var arrResultElements=[];
@@ -557,10 +540,7 @@ export class TabConfig {
                 }
                 hsResultFields.walk(fncToItem);
                 fieldDefs.setElements(arrResultElements);
-                self.continueTask();
-                    
             });
-            self.continueTask();
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
     }
     onGetFullListOfIssueLinkTypes(){
@@ -571,7 +551,7 @@ export class TabConfig {
             self.addStep("Getting all issue link types of Scope",function(){
                 var jql=self.getScopeNormalizedJQL();
                 log("Scope Normalized jql:["+jql+"]");
-                jira.getIssueLinkFullList(jql);
+                return jira.getIssueLinkFullList(jql);
             });
             self.addStep("Update selection table",function(hsLinkTypes){
                 var selLinkTypes=System.getAngularObject('linkTypesConfiguration',true);
@@ -581,9 +561,7 @@ export class TabConfig {
                 }
                 hsLinkTypes.walk(fncToItem);
                 selLinkTypes.setElements(arrResultElements);
-                self.continueTask();
             });
-            self.continueTask();
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
     }
     getScopeNormalizedJQL(){

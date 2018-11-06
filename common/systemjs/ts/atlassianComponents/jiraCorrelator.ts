@@ -227,7 +227,7 @@ export class jiraCorrelator {
     updateIssueLinkTypes(){
         var self=this;
         var selIssueLinkTypes=System.getAngularObject(self.name+"-childLink",true);
-        selIssueLinkTypes.reloadItems();
+        return selIssueLinkTypes.reloadItems();
     }
     doCancel(){
         

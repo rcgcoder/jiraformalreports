@@ -31,6 +31,7 @@ class App {
 //  constructor() {
   ngOnInit() {
     this.name = 'Angular2';
+    debugger;
     var self=this;
     var taskm=taskManager;
     var rTask=System.systemJSTask;

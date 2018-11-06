@@ -70,6 +70,7 @@ class RCGAtlassian{
 		log("Tab Opened");
 		
 		var checkIfToken=function(fncManagedCheckIfTokenCallback){
+			log("Checking if token exists");
 			self.addStep("Authorization call",function(){
 				log("Call for session token");
 				return self.apiCallOauth("/sessionToken");

@@ -67,11 +67,11 @@ export class TabStructure {
     }
     onLoadIssuesTest(event){
         var self=this;
-        var fork=self.addStep("Testing Load Issues:"+self.name, function(){
+        /*
+        self.addStep("Testing Load Issues:"+self.name, function(){
             log("Testing end:"+self.name);
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
-//        self.continueTask();
-        
+*/
     }
     executeReport(){
         var self=this;
@@ -87,24 +87,25 @@ export class TabStructure {
             var bDontReload=isDefined(window.jrfReport);
             self.addStep("Refresh de Commit Id for update de report class", function(){
                 var antCommitId=System.webapp.github.commitId;
-                System.webapp.pushCallback(function(){
+                self.addStep("Update last Commit info",function(){
+                    return System.webapp.github.updateLastCommit();
+                });
+                self.addStep("Analyze commit id",function(){
                    log("commit updated");
                    if (antCommitId!=System.webapp.github.commitId){
                        bDontReload=false;
                    }
-                   self.continueTask();
                 });
-                System.webapp.github.updateLastCommit();
             });
             self.addStep("Dynamic load de report class", function(){
                 if (bForceReloadFiles) bDontReload=false; 
                 if (bDontReload){
-                    self.continueTask();
+                    return;
                 } else {
                     var arrFiles=[                  
                                  "js/jrfReport.js"
                                  ]; //test
-                    System.webapp.loadRemoteFiles(arrFiles);
+                    return System.webapp.loadRemoteFiles(arrFiles);
                 }
             });
             self.addStep("Executing Report", function(){
@@ -118,21 +119,19 @@ export class TabStructure {
                 }
                 self.report=theReport;
                 System.webapp.theReport=theReport;
-                theReport.execute(bDontReload);
+                debugger;
+                return theReport.execute(bDontReload);
             });
             self.addStep("Save result to file", function(){
                 if (bSaveToFile){
-                    saveDataToFile(self.report.result,"result.html","text/html");
+                    return saveDataToFile(self.report.result,"result.html","text/html");
                 }
-                self.continueTask();
             });
             self.addStep("Save issueList for next run", function(){
                 if (self.report.config.reuseIssues){
                     self.allIssues=self.report.allIssues;
                 }
-                self.continueTask();
             });
-            self.continueTask();
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
     }
     freeMemory(){

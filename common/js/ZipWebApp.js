@@ -68,6 +68,13 @@ class ZipWebApp{
 			},0,1,undefined,undefined,undefined,"GLOBAL",undefined
 //			}
 			);  */
+			self.addStep("Getting All Epics  to do a list.... ",function(){
+				var jira=self.getJira();
+				return jira.getAllEpics();
+			},0,1,undefined,undefined,undefined,"INNER",undefined
+//			}
+			);
+			if (false) {
 			self.addStep("Getting All Project and issuetypes .... ",function(){
 				var jira=self.getJira();
 				return jira.getProjectsAndMetaInfo();
@@ -81,13 +88,6 @@ class ZipWebApp{
 //			}
 			);
 	
-			self.addStep("Getting All Epics  to do a list.... ",function(){
-				var jira=self.getJira();
-				return jira.getAllEpics();
-			},0,1,undefined,undefined,undefined,"INNER",undefined
-//			}
-			);
-			if (false) {
 			self.addStep("Getting All Users to do a list.... ",function(){
 				var jira=self.getJira();
 				return jira.getAllUsers();

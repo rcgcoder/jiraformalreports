@@ -1078,7 +1078,7 @@ class RCGZippedApp{
 
 		self.addStep("Check Finish",function(){
 			log("Ends the run");
-			debugger;
+			//debugger;
 		});
 	}
 	onerror(message) {

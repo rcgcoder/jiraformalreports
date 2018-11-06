@@ -51,13 +51,13 @@ class ZipWebApp{
 */						 ]; //test
 			return self.loadRemoteFiles(arrFiles);
 		});
-/*		self.addStep("Launching Systemjs.... ",function(){
+		self.addStep("Launching Systemjs.... ",function(){
 			var sjs=self.getSystemjs();
 			return sjs.loadEngine();
 		},0,1,undefined,undefined,undefined,"INNER",undefined
 		//}
 		);
-*/		self.addStep("Setting <initialized=false> Atlassian Engine.... ",function(){
+		self.addStep("Setting <initialized=false> Atlassian Engine.... ",function(){
 			var atl=self.getAtlassian();
 			atl.initialized=false;
 		});  

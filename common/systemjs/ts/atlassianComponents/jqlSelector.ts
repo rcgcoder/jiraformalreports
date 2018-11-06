@@ -77,11 +77,13 @@ export class jqlSelector {
             log("Empty JQL is not allowed");
             self.isRetrievingData=false;
             self.internal_issueList=[];
+            theAdvSelector.retrieved(self.internal_issueList);
             return self.internal_issueList;
         }
         if (self.jql==sJQL){
             log("Same jql:"+sJQL);
             self.isRetrievingData=false;
+            theAdvSelector.retrieved(self.internal_issueList);
             return self.internal_issueList;
         } 
         log("Diferent jql:"+sJQL);

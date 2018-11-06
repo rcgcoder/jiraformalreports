@@ -38,57 +38,54 @@ class App {
     var rTask=System.systemJSTask;
     log("--- initializing class app.ts");
     taskManager.extendObject(self);
+    var fncProcessFinishLoad=function(){
+        log("App loaded!... launching systemjs initialization global thread");
+        //debugger;
+        self.addStep("Systemjs components Initializacion",function(){
+            log("Running global systemjs components initialization");
+            self.addStep("Applying AUI and other interface components.... ",function(){
+                var arrFiles=[
+                              "js/libs/flatpickr/flatpickr.css",
+                              "js/libs/flatpickr/flatpickr.js",
+                              "aui/js/aui.js",
+                              "aui/css/aui.css",
+                              "aui/css/aui-experimental.css",
+                              "aui/js/aui-experimental.js",
+                              "aui/js/aui-datepicker.js",
+                              "aui/js/aui-soy.js"
+                           ]; //test
+                return System.webapp.loadRemoteFiles(arrFiles);
+            });
+            self.addStep("Postprocessing systemjs components.... ",function(){
+                return self.parallelizeProcess(System.postProcess.length,function(iPostFunction){
+                    log("PostProcess "+iPostFunction);
+                    return System.postProcess[iPostFunction]();
+                },5);
+            });
+            self.addStep("Continue the Systemjs Task ... was blocked on import('app')",function(){
+                debugger;
+            });
+       //},0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
+       });
+    }
+    self.setRunningTask(rTask);
+    var fncManagedProcessFinishLoad=self.createManagedCallback(fncProcessFinishLoad);
+    self.setRunningTask(prevTask);
+    
     var fncCheckForFinishLoad = function(){
         //debugger;
         var theApp=$("#appMain");
 //        taskm.setRunningTask(rTask);
         log("Checking if Systemjs app is loaded");
         if (theApp.length>0){ 
-            log("App loaded!... launching systemjs initialization global thread");
-            //debugger;
-            self.addStep("Systemjs components Initializacion",function(){
-                
-                log("Running global systemjs components initialization");
-                self.addStep("Applying AUI and other interface components.... ",function(){
-                    var arrFiles=[
-                                  "js/libs/flatpickr/flatpickr.css",
-                                  "js/libs/flatpickr/flatpickr.js",
-                                  "aui/js/aui.js",
-                                  "aui/css/aui.css",
-                                  "aui/css/aui-experimental.css",
-                                  "aui/js/aui-experimental.js",
-                                  "aui/js/aui-datepicker.js",
-                                  "aui/js/aui-soy.js"
-                               ]; //test
-                    return System.webapp.loadRemoteFiles(arrFiles);
-                });
-                self.addStep("Postprocessing systemjs components.... ",function(){
-                    return self.parallelizeProcess(System.postProcess.length,function(iPostFunction){
-                        log("PostProcess "+iPostFunction);
-                        return System.postProcess[iPostFunction]();
-                    },5);
-                });
-                self.addStep("Continue the Systemjs Task ... was blocked on import('app')",function(){
-                    debugger;
-                    setZeroTimeout(function(){
-                        rTask.continueTask();
-                    }); 
-                });
-           //},0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined
-           }
-           );
+            fncManagedProcessFinishLoad();
         } else {
             log("App is not loaded... waiting");
-            setTimeout(fncManagedCheckForFinishLoad,1000);
+            setTimeout(fncCheckForFinishLoad,1000);
         }
     };
-    var prevTask=self.getRunningTask();
-    self.setRunningTask(rTask);
-    var fncManagedCheckForFinishLoad=self.createManagedFunction(fncCheckForFinishLoad);
-    self.setRunningTask(prevTask);
-    fncManagedCheckForFinishLoad();
-    self.waitForEvent();
-   }
+    fncCheckForFinishLoad();
+  }
 }
 
 @NgModule({

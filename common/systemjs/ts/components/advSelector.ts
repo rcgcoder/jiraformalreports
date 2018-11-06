@@ -179,6 +179,7 @@ export class advSelector {
     }
                 
     retrieved(values){
+        debugger;
         System.webapp.continueTask([values]);
     }
     

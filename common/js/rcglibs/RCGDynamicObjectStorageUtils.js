@@ -158,15 +158,14 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		var fncSaveAction=function(dynObj){
 			if (dynObj.isFullyLoaded()&&(!dynObj.stored)){
 				storer.addStep("Saving not stored object:"+dynObj.id,function(){
-					storer.save(dynObj.getId(),self.getStorageObject(dynObj));
+					return storer.save(dynObj.getId(),self.getStorageObject(dynObj));
 				});
 				storer.addStep("Setting stored:"+dynObj.id,function(){
-					dynObj.setStored(true);
-					storer.continueTask();
+					return dynObj.setStored(true);
 				});
 			}
 		}
-		storer.parallelizeProcess(self.factory.list,fncSaveAction,self.concurrentSaveActionsMax);
+		return storer.parallelizeProcess(self.factory.list,fncSaveAction,self.concurrentSaveActionsMax);
 	}
 	saveAllUnlocked(){
 		var self=this;
@@ -185,7 +184,6 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 								+",Total Issues:"+self.factory.list.length()
 								+")"+getMemStatus()
 								+ " Prev Task:"+storer.getRunningTask().forkId);
-				storer.continueTask();
 			});
 			storer.addStep("Remove all inactive Objects ("+countInactives+")",function(){
 				console.log("Save and removing inactive objects ("
@@ -197,11 +195,10 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 					//log("Saving All to Storage:"+inactiveObject.getId());
 					if (inactiveObject.isChanged()){
 						countSaved++;
-						self.saveToStorage(inactiveObject);
+						return self.saveToStorage(inactiveObject);
 					} else {
 						countNotNeedSave++;
 					}
-					storer.continueTask();
 				}
 				var fncUnloadAndRemove=function(inactiveObject){
 					//log("Unload and Remove from inactive objects:"+inactiveObject.getId());
@@ -221,7 +218,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 					}
 	//				storer.continueTask();
 				}
-				storer.parallelizeCalls(self.inactiveObjects,fncSaveCall,fncUnloadAndRemove,self.concurrentSaveActionsMax);
+				return storer.parallelizeCalls(self.inactiveObjects,fncSaveCall,fncUnloadAndRemove,self.concurrentSaveActionsMax);
 			});
 			storer.addStep("Save Inactive objects is Finished",function(){
 				console.log("Saved all inactive objects ("
@@ -233,11 +230,8 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 								+",Total Issues:"+self.factory.list.length()
 								+")"+getMemStatus()
 								+ " Prev Task:"+storer.getRunningTask().forkId);
-				storer.continueTask();
 			});
-			storer.continueTask();
         });
-		storer.continueTask();
 	}
 	isFlushInactivesNeeded(){
 		var self=this;
@@ -274,9 +268,9 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 			storer.addStep("Loading from storage "+self.factory.name +"/"+objId,function(){
 				//log("Loading from storage:"+objId);
 				if (dynObj.isFullyLoaded()){ // prevent a previous load of the object....  
-					storer.continueTask();
+					return dynObj;
 				} else {
-					storer.load(objId);
+					return storer.load(objId);
 				}
 			});
 			storer.addStep("Item Loaded"+self.factory.name +"/"+objId,function(storedObj){
@@ -285,10 +279,10 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 						if (dynObj.loadingSemaphore===""){
 							dynObj.loadingSemaphore=new RCGSemaphore(function(){return (!dynObj.isLoading());});
 						}
-						dynObj.loadingSemaphore.taskArrived(storer.getRunningTask());
+						return dynObj.loadingSemaphore.taskArrived(storer.getRunningTask());
 					});
 					storer.addStep("Return the loaded object",function(){
-						storer.continueTask([dynObj]);
+						return dynObj;
 					});
 				} else if (!dynObj.isFullyLoaded()){ // prevent a previous load of the object....
 					dynObj.loading=true;
@@ -311,7 +305,6 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 									dynObj["set"+attrName+"s"](auxValue);
 								}
 						});
-						storer.continueTask();
 					});
 					storer.addStep("Setting object attributes and return",function(){
 						dynObj.setStored(true);
@@ -323,14 +316,12 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 							}
 						}
 						dynObj.loading=false; // this set the semaphore open
-						storer.continueTask(dynObj);
+						return dynObj;
 					})
 				}
-				storer.continueTask([dynObj]);
+				return dynObj;
 			});
 		}
 		//storer.continueTask(); // not continues because the steps process at the end of the secuence
 	}
-
-
 }

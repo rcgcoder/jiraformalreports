@@ -23,32 +23,28 @@ class RCGConfluence{
 	getAllPages(){
 		var self=this;
 		self.addStep("Getting all confluence pages",function(){
-			self.apiCall("/rest/api/content/search?cql=type=page");
+			return self.apiCall("/rest/api/content/search?cql=type=page");
 		});
 		self.addStep("Processing result of get all confluence pages",function(response,xhr,sUrl,headers){
-			self.continueTask([response]);
+			return response;
 		});
-		self.continueTask();
-		
 	}
 	getContent(contentId){
 		var self=this;
 		self.addStep("Getting content:"+contentId,function(){
-			self.apiCall("/rest/api/content/"+contentId+"?expand=body.storage");
+			return self.apiCall("/rest/api/content/"+contentId+"?expand=body.storage");
 		});
 		self.addStep("Processing result of get content",function(response,xhr,sUrl,headers){
-			self.continueTask([response]);
+			return response;
 		});
-		self.continueTask();
 	}
 	getContentByTitle(contentTitle){
 		var self=this;
 		self.addStep("Stepping Get Content By Title call",function(){
-			self.apiCall("/rest/api/content?title="+contentTitle+"&expand=body.storage");
+			return self.apiCall("/rest/api/content?title="+contentTitle+"&expand=body.storage");
 		});
 		self.addStep("Processing result of get content by title",function(response,xhr,sUrl,headers){
-			self.continueTask([response]);
+			return response;
 		});
-		self.continueTask();
 	}
 }

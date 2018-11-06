@@ -753,6 +753,7 @@ class RCGZippedApp{
 						self.addStep("Download parrallelized",function(){
 							return self.parallelizeCalls(arrLibs.length
 								,function(iLib){
+									debugger;
 									var sRelativePath=rcgUtilsManager.basePath+arrLibs[iLib];
 									log("Loading RCG lib "+iLib+" "+sRelativePath);
 									return self.loadRemoteFile(sRelativePath);

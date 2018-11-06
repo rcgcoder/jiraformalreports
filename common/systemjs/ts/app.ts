@@ -68,7 +68,8 @@ class App {
                     },5);
                 });
                 self.addStep("Continue the Systemjs Task ... was blocked on import('app')",function(){
-                   self.rTask.continueTask(); 
+                    debugger;
+                    rTask.continueTask(); 
                 });
            },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined
            //}

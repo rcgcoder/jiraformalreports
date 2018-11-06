@@ -187,7 +187,7 @@ export class advSelector {
                 log("onRetrieveData to emit:"+self.name);
                 var emitResult=self.onRetrieveData.emit(self);
                 log("onRetrieveData emitted:"+self.name);
-                return System.webapp.waitForEvent();
+                return emitResult;
             });
             System.webapp.addStep("Retrieving options once they are loaded for "+self.name,function(optionList){
                 if (typeof optionList!=="undefined"){

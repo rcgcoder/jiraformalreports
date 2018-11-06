@@ -179,14 +179,14 @@ export class advSelector {
     }
                 
     retrieved(values){
-        debugger;
+//        debugger;
         System.webapp.addStep("Returning the value of Getting Async options for " +self.name, function(){
             return values;
         });
     }
     
     getValuesAsync(theDlgSelector){
-        debugger;
+  //      debugger;
         var self=this;
         log("Running getValuesAsync of "+self.name);
         if (self.isSomeOneObserving()){

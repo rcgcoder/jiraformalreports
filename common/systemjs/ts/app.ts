@@ -31,8 +31,8 @@ class App {
 //  constructor() {
   ngOnInit() {
     this.name = 'Angular2';
-    alert("The app is initializing"):
-    debugger;
+//    alert("The app is initializing"):
+ //   debugger;
     var self=this;
 //    var taskm=taskManager;
     log("--- initializing class app.ts");
@@ -57,12 +57,9 @@ class App {
             });
             self.addStep("Postprocessing systemjs components.... ",function(){
                 return self.parallelizeProcess(System.postProcess.length,function(iPostFunction){
-                    log("PostProcess "+iPostFunction);
+                    //log("PostProcess "+iPostFunction);
                     return System.postProcess[iPostFunction]();
-                },1);
-            });
-            self.addStep("Continue the Systemjs Task ... was blocked on import('app')",function(){
-                debugger;
+                });
             });
        //},0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
        });

@@ -38,6 +38,7 @@ class App {
     var rTask=System.systemJSTask;
     log("--- initializing class app.ts");
     taskManager.extendObject(self);
+    var fncProcess
     var fncCheckForFinishLoad = function(){
         //debugger;
         var theApp=$("#appMain");
@@ -76,8 +77,9 @@ class App {
                       //  fncAddPostProcessStep(i);
                     });
                 });
-           //},0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined
-           });
+           },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined
+           //}
+           );
         } else {
             log("App is not loaded... waiting");
             setTimeout(fncManagedCheckForFinishLoad,1000);

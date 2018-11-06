@@ -100,6 +100,7 @@ class RCGSystemJSManager{
 				System.postProcess.push(fnc);
 			}
 		    System.import('app').catch(console.error.bind(console));
+		    return self.waitForEvent();
 		});
 	}
 }

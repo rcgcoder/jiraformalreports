@@ -338,6 +338,6 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			}
 	    });
 		filesystem.ReadFile(fileName,innerOnLoad,innerOnError);
-		return waitForEvent();
+		return self.waitForEvent();
 	}
 }

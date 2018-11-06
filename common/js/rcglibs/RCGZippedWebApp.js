@@ -754,10 +754,11 @@ class RCGZippedApp{
 							return self.parallelizeCalls(arrLibs.length
 								,function(iLib){
 									var sRelativePath=rcgUtilsManager.basePath+arrLibs[iLib];
+									log("Loading RCG lib "+iLib+" "+sRelativePath);
 									return self.loadRemoteFile(sRelativePath);
 								});
 						});
-						self.addStep("Load lib in order",function(){
+						self.addStep("Load libs in order",function(){
 							return self.sequentialProcess(arrLibs.length,function(iLib){
 								var sFile=arrLibs[iFile];
 				    			var className=sFile.split(".")[0];

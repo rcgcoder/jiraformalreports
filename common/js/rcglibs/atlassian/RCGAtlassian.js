@@ -132,7 +132,7 @@ class RCGAtlassian{
 				});
 				self.addStep("Returning Result",function(){
 					log("Returning API "+sTarget+" result");
-					return vResult;
+					return self.taskResultMultiple(vResult[0],vResult[1],vResult[2],vResult[3]);
 				});
 			}
 			self.addStep("Processing result of call "+sTarget,function(response,xhr,sUrl,headers){

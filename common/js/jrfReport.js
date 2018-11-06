@@ -80,25 +80,21 @@ var jrfReport=class jrfReport {
 		var idReportKey="LastReport";
 		if (isDefined(idReport))idReportKey=idReport;
 		self.addStep("Saving Report...",function(){
-			self.storeManager.save(idReportKey,self);
+			return self.storeManager.save(idReportKey,self);
 		});
-		self.continueTask();
 	}
 	existStored(idReport){
-		debugger;
 		var self=this;
 		var idReportKey="LastReport";
 		if (isDefined(idReport)) idReportKey=idReport;
 		self.addStep("Check if "+idReportKey+" is saved",function(){
-			self.storeManager.exists(idReportKey);
+			return self.storeManager.exists(idReportKey);
 		});
 		self.addStep("update reusing flag",function(bExists){
 			if (!bExists){
 				self.reuseAllIssues=false;
 			}
-			self.continueTask();
 		});
-		self.continueTask();
 	}
 	load(idReport){
 		debugger;
@@ -106,7 +102,7 @@ var jrfReport=class jrfReport {
 		var idReportKey="LastReport";
 		if (isDefined(idReport)) idReportKey=idReport;
 		self.addStep("loading Report from storage... it takes a while",function(auxReport){
-			self.storeManager.load(idReportKey);
+			return self.storeManager.load(idReportKey);
 		});
 		self.addStep("Assigning loaded Values",function(auxReport){
 			self.config=auxReport.config;
@@ -117,9 +113,7 @@ var jrfReport=class jrfReport {
 			attribs.forEach(function(attrName){
 				self[attrName]=auxReport[attrName];
 			});
-			self.continueTask();
 		});
-		self.continueTask();
 	}
 	isReusingIssueList(){
 		var self=this;
@@ -193,13 +187,18 @@ var jrfReport=class jrfReport {
 				+" Async Deep Ini:"+asyncNumber
 				+" Async Deep Act:"+(hashmapFactory.stackAsyncCalls===""?"":hashmapFactory.stackAsyncCalls.length())
 				);
-*/		var auxFncEnd=endFunction;
+*/		var auxFncEnd;
 		if (isUndefined(endFunction)){
 			auxFncEnd=function(objStep){
 				self.continueTask();
 			};
+		} else {
+			auxnFncEnd=function(objStep){
+				var vResult=endFunction(objStep);
+				self.continueTask([vResult]);
+			}
 		}
-		var fncEnd=self.createManagedCallback(function(objStep){
+		var fncEnd=self.createManagedFunction(function(objStep){
 //			logError("Calling custom End function in walk Async");
 			if (stepCounter<theHashMap.length()){
 				alert(stepDesc+" ERROR....calling end of walk before process of all items. Processed:"+stepCounter+" total:"+theHashMap.length() +" started with:"+initialItemNumber);
@@ -214,7 +213,7 @@ var jrfReport=class jrfReport {
 						);
 */			auxFncEnd(objStep);
 		});
-		var fncItem=self.createManagedCallback(function(step){
+		var fncItem=self.createManagedFunction(function(step){
 //			logError("Calling item in walk Async "+stepCounter+"/"+theHashMap.length());
 //			console.log(stepCounter+"/"+nItemsTotal+"  -> "+step.actualNode.key);
 			itemFunction(step.actualNode.value,step.deep,step.actualNode.key);
@@ -226,6 +225,7 @@ var jrfReport=class jrfReport {
 									,fncUpdateStatus
 									,fncUpdateStatus
 									,2);
+		return self.waitForEvent();
 	}
 	loadJSONIssue(jsonIssue){
 		var self=this;
@@ -239,9 +239,9 @@ var jrfReport=class jrfReport {
 	}
 	createNewIssueFromJsonSteps(jsonIssue,bMaintainLocked){
 		var self=this;
-		self.workOnIssueSteps(jsonIssue.key,undefined,bMaintainLocked,function(){
+		return self.workOnIssueSteps(jsonIssue.key,undefined,bMaintainLocked,function(){
 			return self.loadJSONIssue(jsonIssue);
-			});
+		});
 	}
 
 	execute(bDontReloadFiles){
@@ -331,9 +331,7 @@ var jrfReport=class jrfReport {
 								"js/rcglibs/RCGChronoUtils.js",
 								"js/rcglibs/RCGHashMapUtils.js"
 	*/						 ]; //test
-				System.webapp.loadRemoteFiles(arrFiles);
-			} else {
-				System.webapp.continueTask();
+				return System.webapp.loadRemoteFiles(arrFiles);
 			}
 		});
 		self.addStep("Getting Confluence Report Model.... ",function(){
@@ -342,7 +340,7 @@ var jrfReport=class jrfReport {
 	        self.addStep("Getting Content from confluence",function(){
 		        var arrValues=self.config.selReportModel.selected;
 				var contentId=arrValues[0].key;
-				cfc.getContent(contentId);
+				return cfc.getContent(contentId);
 	        });
 			self.addStep("Manipulating Content",function(content){
 				log(content);
@@ -350,10 +348,8 @@ var jrfReport=class jrfReport {
 				var sContent=jsonObj.body.storage.value;
 				var sHtml=self.cleanModel(sContent);
 				self.config.model=sHtml;
-				self.continueTask(); 
 //				var theHtml=$(sHtml);
 			});
-			self.continueTask();
 		});
 		//Initialize Report Model.... with variables, etc
 		self.addStep("Initializing Model",function(){
@@ -466,8 +462,6 @@ var jrfReport=class jrfReport {
 			dateValue=toDateNormalDDMMYYYYHHMMSS(dateValue);
 			theModel.variables.pushVar("worksStartDate",dateValue);
 			//theModel.variables.pushVar("worksInitDate",dateValue);
-			
-		    self.continueTask();
 		});
 
 		self.addStep("Construct Issue Dynamic Object.... ",function(){
@@ -477,10 +471,10 @@ var jrfReport=class jrfReport {
 */			self.allIssues=newIssueFactory(self);
 			self.allIssues.setTaskManager(self.getTaskManager());
 			self.workOnIssueSteps=function(theObjectOrKey,fncWork,bMaintainLocked,fncNotExists){
-				self.allIssues.workOnSteps(theObjectOrKey,fncWork,bMaintainLocked,fncNotExists);
+				return self.allIssues.workOnSteps(theObjectOrKey,fncWork,bMaintainLocked,fncNotExists);
 			}
 			self.workOnListOfIssueSteps=function(listOfKeysOrObjects,fncWork,maxParallelThreads,fncNotExists){
-				self.allIssues.workOnListSteps(listOfKeysOrObjects,fncWork,maxParallelThreads,fncNotExists);
+				return self.allIssues.workOnListSteps(listOfKeysOrObjects,fncWork,maxParallelThreads,fncNotExists);
 			}
 
 			self.updatePrecomputedAccumulators=false;
@@ -528,8 +522,6 @@ var jrfReport=class jrfReport {
 			} else {
 				self.reuseAllIssues=false;
 			}
-
-			self.continueTask();
 		});
 		// first launch all issue retrieve ...
 		self.addStep("Getting All Issues in the Scope.... ",function(){
@@ -537,30 +529,26 @@ var jrfReport=class jrfReport {
 			self.allIssues.changeStorableParams(100,0.10,true);
 			if (self.isReusingIssueList()){
 				self.addStep("check if report exists in storage",function(){
-					self.existStored(); // load all issues
+					return self.existStored(); // load all issues
 				})
 				self.addStep("Loading report...",function(){
 					if (self.isReusingIssueList()){
-						self.load(); // load all issues
+						return self.load(); // load all issues
 					}
 				})
 			} 
 			self.addStep("Loading the Scope",function(){
 				if (self.isReusingIssueList()&&(self.config.jqlScope.jql!="")){
-					self.jira.processJQLIssues(self.config.jqlScope.jql,
+					return self.jira.processJQLIssues(self.config.jqlScope.jql,
 								function(jsonIssue){
-									self.createNewIssueFromJsonSteps(jsonIssue);
+									return self.createNewIssueFromJsonSteps(jsonIssue);
 								},
 								undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
-				} else {
-					self.continueTask();
 				}
 			});
-			self.continueTask();
 		});	
 		self.addStep("Asigning all Issues in the scope.... ",function(){
 			log("All issues in Report:"+ self.allIssues.list.length()+ " issues");
-			self.continueTask();
 		});	
 
 	
@@ -568,7 +556,7 @@ var jrfReport=class jrfReport {
 		self.addStep("Getting root elements.... ",function(){
 			log("Getting root elements");
 			if (self.isReusingIssueList()){
-				return self.continueTask();
+				return;
 			}
 /*			if (self.config.rootsByProject){
 				if (self.config.rootProjects.length>0){
@@ -610,30 +598,23 @@ var jrfReport=class jrfReport {
 								issue=newIssue;
 							}
 							self.rootIssues.add(jsonIssue.key,issue);
-							self.continueTask();
 						});
-//						self.continueTask();
 					}
 					self.addStep("Processing jql to get root issues:"+theJQL,function(){
-						self.jira.processJQLIssues(
+						return self.jira.processJQLIssues(
 										theJQL,
 										fncProcessRootIssue,
 										undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
 					});
-				} else {
-					self.continueTask();
 				}
 			}
-			self.continueTask(); 
 		});
 		
 		var hsKeyWaiting=newHashMap();
 		self.addStep("Processing root elements.... ",function(){
 			debugger;
-			if (self.isReusingIssueList()){
-				return self.continueTask();
-			}
-			if (self.bFinishReport) return self.continueTask();
+			if (self.isReusingIssueList()) return;
+			if (self.bFinishReport) return;
 			//self.treeIssues=newHashMap();
 			var bAlerted=false;
 			var arrLinkTypes=self.config.useIssueLinkTypes;
@@ -726,7 +707,7 @@ var jrfReport=class jrfReport {
 							var issueParent=self.allIssues.getById(eLink);
 							if (key!=""){
 								if (issueParent!=""){
-									self.workOnIssueSteps(issueParent,function(issueParent){
+									return self.workOnIssueSteps(issueParent,function(issueParent){
 										if (!issueParent.existsLinkedIssueKey(key)){
 											issueParent.addLinkedIssueKey(key,key);
 											issueParent.change();
@@ -752,7 +733,7 @@ var jrfReport=class jrfReport {
 				var fncNotExists=function(){
 					return self.loadJSONIssue(jsonIssue);
 				}
-				self.workOnIssueSteps(jsonIssue.key,fncExtractPendingKeys,undefined,fncNotExists);
+				return self.workOnIssueSteps(jsonIssue.key,fncExtractPendingKeys,undefined,fncNotExists);
 			};
 			
 			var nCallsStarted=0;
@@ -767,7 +748,7 @@ var jrfReport=class jrfReport {
 			var nStepsPlaned=0;
 			self.addStep("Extracting pending keys of ("+self.rootIssues.length()+") root issues",function(){
 				//debugger;
-				self.workOnListOfIssueSteps(self.rootIssues,fncExtractPendingKeys);
+				return self.workOnListOfIssueSteps(self.rootIssues,fncExtractPendingKeys);
 			});
 			self.addStep("Getting root base issues",function(){
 				//alert("Extracted pending keys of initial root issues");
@@ -787,7 +768,7 @@ var jrfReport=class jrfReport {
 							self.addStep("Retrieving issues of Group ["+sIssues+"]",function(){
 								nCallsStarted++;
 								//logError(nCallsStarted+" - JQL:"+theJQL);
-								self.jira.processJQLIssues(
+								return self.jira.processJQLIssues(
 										theJQL,
 										self.createManagedCallback(fncProcessChildAndExtract),
 										undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
@@ -796,7 +777,7 @@ var jrfReport=class jrfReport {
 								nRetrievedIssues+=group.length; // the get epics issues call is finished... increase retrieved each epic called in group
 								nStepsPlaned--;
 								nCallsEnded++;
-								fncProcessRestOfPending();
+								return fncProcessRestOfPending();
 								//self.continueTask(); // not needed.... processrestofpending do one
 							});
 						}
@@ -817,70 +798,78 @@ var jrfReport=class jrfReport {
 							self.addStep("Retrieving issues of Epic Group ["+sIssues+"]",function(){
 								nCallsStarted++;
 								//logError(nCallsStarted+" - JQL:"+theJQL);
-								self.jira.processJQLIssues(theJQL,self.createManagedCallback(fncProcessChildAndExtract)
+								return self.jira.processJQLIssues(theJQL,self.createManagedCallback(fncProcessChildAndExtract)
 														    ,undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
 							});
 							self.addStep("Finish Retrieving issues of Epic Group ["+sIssues+"]",function(){
 								nRetrievedEpics+=group.length; // the get epics issues call is finished... increase retrieved each epic called in group
 								nStepsPlaned--;
 								nCallsEnded++;
-								fncProcessRestOfPending();
-								//self.continueTask(); // not needed.... processrestofpending do one
+								return fncProcessRestOfPending();
 							});
 						}
 					}
 				});
 				var fncProcessRestOfPending=self.createManagedCallback(function(){
 					var bSomethingRetrieving=((arrKeyGroups.length>1)||(arrEpicGroups.length>1));
-					while(arrKeyGroups.length>1){
-						var group=arrKeyGroups.shift();
-						fncRetrieveGroup(group);
-					} 
-					while(arrEpicGroups.length>1){
-						var group=arrEpicGroups.shift();
-						fncRetrieveEpicGroup(group);
-					} 
-					if (bSomethingRetrieving) return self.continueTask();
-					if (nStepsPlaned>0)return self.continueTask();
-						// first epics...
-					if ((arrEpicGroups.length==1)&&(arrEpicGroups[0].length>0)){
-						log("Testing to retrieve last epic group")
-						log("Issue Groups:"+arrKeyGroups.length + " First Issue Group:" + arrKeyGroups[0].length);
-						log("Epics Groups:"+arrEpicGroups.length + " First Group Epics:" + arrEpicGroups[0].length);
-						var group=arrEpicGroups[0];
-						arrEpicGroups=[];
-						epicGroup=[];
-						arrEpicGroups.push(epicGroup);
-						grpEpicsLength=0;
-						fncRetrieveEpicGroup(group);
-					} else if ((arrKeyGroups.length==1)&&(arrKeyGroups[0].length>0)){
-						log("Testing to retrieve last issue group")
-						log("Issue Groups:"+arrKeyGroups.length + " First Issue Group:" + arrKeyGroups[0].length);
-						log("Epics Groups:"+arrEpicGroups.length + " First Group Epics:" + arrEpicGroups[0].length);
-						var group=arrKeyGroups[0];
-						arrKeyGroups=[];
-						keyGroup=[];
-						arrKeyGroups.push(keyGroup);
-						grpLength=0;
-						fncRetrieveGroup(group);
-						bSomethingRetrieving=true;
-					}
-					log("Calls"+nCallsEnded+"/"+nCallsStarted
-							+" Procesed "+ nProcessedIssues +"."
-							+" Tot:"+(nDuplicatedIssues+self.allIssues.list.length() )+" Dups:"+nDuplicatedIssues+" + All Stored:"+self.allIssues.list.length() +")" 
-							+" in " +nStepsPlaned +"/"+ nTotalStepsPlaned +" steps."
-							+" Issues: "+ nRetrievedIssues+"/"+nPendingIssues 
-							+" Epics:"+ nRetrievedEpics + "/"+nPendingEpics
-							+" Issues left:"+ arrKeyGroups[0].length
-							+" Epics left:" + arrEpicGroups[0].length );
-					
-					self.continueTask();
-				});				
+					self.addStep("Retrieve groups",function(){
+						var auxKeyGroups=arrKeyGroups;
+						keyGroup=auxKeyGroups.pop();
+						arrKeyGroups=[keyGroup];
+						return self.parallelizeProcess(auxKeyGroups,function(group){
+							return fncRetrieveGroup(group);
+						});
+					})
+					self.addStep("Retrieve epics",function(){
+						var auxEpicGroups=arrEpicGroups;
+						epicGroup=auxEpicGroups.pop();
+						arrEpicGroups=[epicGroup];
+						return self.parallelizeProcess(arrEpicGroups,function(group){
+							return fncRetrieveEpicGroup(group);
+						});
+					});
+					self.addStep("Rest of issues",function(){
+						if (bSomethingRetrieving) return ;
+						if (nStepsPlaned>0)return;
+							// first epics...
+						if ((arrEpicGroups.length==1)&&(arrEpicGroups[0].length>0)){
+							log("Testing to retrieve last epic group")
+							log("Issue Groups:"+arrKeyGroups.length + " First Issue Group:" + arrKeyGroups[0].length);
+							log("Epics Groups:"+arrEpicGroups.length + " First Group Epics:" + arrEpicGroups[0].length);
+							var group=arrEpicGroups[0];
+							arrEpicGroups=[];
+							epicGroup=[];
+							arrEpicGroups.push(epicGroup);
+							grpEpicsLength=0;
+							return fncRetrieveEpicGroup(group);
+						} else if ((arrKeyGroups.length==1)&&(arrKeyGroups[0].length>0)){
+							log("Testing to retrieve last issue group")
+							log("Issue Groups:"+arrKeyGroups.length + " First Issue Group:" + arrKeyGroups[0].length);
+							log("Epics Groups:"+arrEpicGroups.length + " First Group Epics:" + arrEpicGroups[0].length);
+							var group=arrKeyGroups[0];
+							arrKeyGroups=[];
+							keyGroup=[];
+							arrKeyGroups.push(keyGroup);
+							grpLength=0;
+							bSomethingRetrieving=true;
+							return fncRetrieveGroup(group);
+						}
+					});
+					self.addStep("Partial/final retrieving info",function(){
+						log("Calls"+nCallsEnded+"/"+nCallsStarted
+								+" Procesed "+ nProcessedIssues +"."
+								+" Tot:"+(nDuplicatedIssues+self.allIssues.list.length() )+" Dups:"+nDuplicatedIssues+" + All Stored:"+self.allIssues.list.length() +")" 
+								+" in " +nStepsPlaned +"/"+ nTotalStepsPlaned +" steps."
+								+" Issues: "+ nRetrievedIssues+"/"+nPendingIssues 
+								+" Epics:"+ nRetrievedEpics + "/"+nPendingEpics
+								+" Issues left:"+ arrKeyGroups[0].length
+								+" Epics left:" + arrEpicGroups[0].length );
+					});
+				});
 
-				//debugger;
 				nPendingIssues=self.rootIssues.length();
 //				self.rootIssues.walk(fncExtractPendingKeys);
-				fncProcessRestOfPending();
+				return fncProcessRestOfPending();
 			});
 			self.addStep("Finish loading Root Issues",function(){
 /*				self.rootProjects.walk(function(value,iProf,key){
@@ -891,16 +880,12 @@ var jrfReport=class jrfReport {
 				log("Resume Root issues:"+self.rootIssues.length() +
 				    "		Root project:"+self.rootProjects.length()+
 				    "		Issues in scope:"+ self.allIssues.list.length());
-				self.continueTask();
 			});
-			self.continueTask();
 		});
 		
 		// load comments of issues
 		self.addStep("Loading comments of "+ issuesAdded.length()+"issues",function(){
-			if (self.isReusingIssueList()){
-				return self.continueTask();
-			}
+			if (self.isReusingIssueList()) return;
 			var arrKeyGroups=[];
 			var keyGroup=[];
 			arrKeyGroups.push(keyGroup);
@@ -910,23 +895,23 @@ var jrfReport=class jrfReport {
 			var sKeyAux;
 			var hsListComments=newHashMap();
 			self.addStep("Preparing ("+issuesAdded.length()+"/"+self.rootIssues.length()+") issues groups to get comments", function(){
-				self.walkAsync(self.allIssues.list,function (jsonIssue,iDeep,issueKey){
-													if ((keyGroup.length>=maxItemsInGroup)||(grpLength>=maxLettersInGroup)){
-														keyGroup=[];
-														grpLength=0;
-														arrKeyGroups.push(keyGroup);
+				return self.walkAsync(self.allIssues.list
+											,function (jsonIssue,iDeep,issueKey){
+												if ((keyGroup.length>=maxItemsInGroup)||(grpLength>=maxLettersInGroup)){
+													keyGroup=[];
+													grpLength=0;
+													arrKeyGroups.push(keyGroup);
+												}
+												//sKeyAux=element.getKey();
+												grpLength+=issueKey.length;
+												keyGroup.push(issueKey);
+											},function(){
+												arrKeyGroups.forEach(function(group){
+													if (group.length>0){
+														hsListComments.push(group);
 													}
-													//sKeyAux=element.getKey();
-													grpLength+=issueKey.length;
-													keyGroup.push(issueKey);
-												},function(){
-													arrKeyGroups.forEach(function(group){
-														if (group.length>0){
-															hsListComments.push(group);
-														}
-													});
-													self.continueTask();
 												});
+											});
 			});
 			var fncAddComments=function(jsonIssues){
 				var oIssues=JSON.parse(jsonIssues);
@@ -939,7 +924,7 @@ var jrfReport=class jrfReport {
 				var htmlComment;
 				var objComment;
 				var fncProcessEachIssueComments=function(jsonIssue){
-					self.workOnIssueSteps(jsonIssue.key,function(issue){
+					return self.workOnIssueSteps(jsonIssue.key,function(issue){
 						comments=jsonIssue.fields.comment.comments;
 						htmlComments=jsonIssue.renderedFields.comment.comments;
 						for (var i=0;i<comments.length;i++){
@@ -1025,30 +1010,27 @@ var jrfReport=class jrfReport {
 						});
 					});
 				}
-				self.parallelizeProcess(arrIssues,fncProcessEachIssueComments,1);
+				return self.parallelizeProcess(arrIssues,fncProcessEachIssueComments,1);
 			}
 			self.addStep("Getting comments parallelized.", function(){
 				var fncCall=function(group){
 						self.jira.getComments(group,fncAddComments," and comment ~ formal");
 				};
-				self.parallelizeCalls(hsListComments,fncCall);
+				return self.parallelizeCalls(hsListComments,fncCall);
 			});
-			self.continueTask();
 		});
 		
 		// load report model and submodels
 		// Process Model with The Report
 		self.addStep("Parsing Model",function(){
-			self.objModel.process("parse"); // parse....
+			return self.objModel.process("parse"); // parse....
 		});
 			
 		// assing childs and advance childs to root elements
 		self.addStep("Assign Childs and Advance",function(){
 			log("Assing Childs and Advance");
 			debugger;
-			if (self.isReusingIssueList()){
-				return self.continueTask();
-			}
+			if (self.isReusingIssueList()) return;
 			var tm=self.getTaskManager();
 			tm.asyncTimeWasted=0;
 			tm.asyncTaskCallsBlock=5000;
@@ -1060,7 +1042,7 @@ var jrfReport=class jrfReport {
 			var nExcludedIssues=0;
 			
 			self.addStep("Adding retrieved issuest to root list", function(){
-				self.walkAsync(hsKeyWaiting,function(issue,iProf,key){
+				return self.walkAsync(hsKeyWaiting,function(issue,iProf,key){
 					if (!self.rootIssues.exists(key)){
 						self.rootIssues.add(key,issue);
 						countAdded++;
@@ -1070,7 +1052,7 @@ var jrfReport=class jrfReport {
 			self.addStep("Walking througth the roots to set to issuesAdded...",function(){
 				debugger;
 				logError("Added "+countAdded+" "+ ((100*countAdded)/self.rootIssues.length()) +"% to the seletion JQL");
-				self.workOnListOfIssueSteps(self.rootIssues,function(issue){
+				return self.workOnListOfIssueSteps(self.rootIssues,function(issue){
 					var key=issue.getKey();
 					if (issue.isProjectExcluded()/*||(issue.isExcludedByFunction())*/){
 						//debugger;
@@ -1094,7 +1076,7 @@ var jrfReport=class jrfReport {
 				var formulaChild=self.config.billingHierarchy;
 				var formulaAdvance=self.config.advanceHierarchy;
 				if (formulaChild==""){
-					self.continueTask();
+					return;
 				} else {
 					var sFncFormulaChild="var bResult="+formulaChild+"; return bResult;";
 					var sFncFormulaAdv="var bResult="+formulaAdvance+"; return bResult;";
@@ -1197,7 +1179,7 @@ var jrfReport=class jrfReport {
 									relatedChilds.add(relatedIssueKey,relatedIssueKey);
 								}
 							}); 
-							self.workOnListOfIssueSteps(relatedChilds,function(issueChild){
+							return self.workOnListOfIssueSteps(relatedChilds,function(issueChild){
 								if (issueParent.getKey()==issueChild.getKey()){
 									debugger;
 									logError("Child and Parent are the same"+auxKey+" -> "+ issueParent.getKey());
@@ -1215,22 +1197,19 @@ var jrfReport=class jrfReport {
 						//},0,1,undefined,undefined,undefined,"INNER",undefined
 						});
 					}
-					self.workOnListOfIssueSteps(self.childs,fncGetIssueChilds);
+					return self.workOnListOfIssueSteps(self.childs,fncGetIssueChilds);
 				}
 			});
-			self.continueTask();
 		});
 		
 		self.addStep("Final Adjusts to retrieved list of issues",function(){
 			debugger;
-			if (self.isReusingIssueList()){
-				return self.continueTask();
-			}
+			if (self.isReusingIssueList()) return;
 			self.addStep("Analizing child/parent billing cycles and multiple parents",function(){
-				self.workOnListOfIssueSteps(issuesAdded,function(issue){
+				return self.workOnListOfIssueSteps(issuesAdded,function(issue){
 					var issueKey=issue.getKey();
 					self.addStep("Getting root issue from "+issueKey,function(){
-						issue.getChildRootSteps(self);
+						return issue.getChildRootSteps(self);
 					});
 					self.addStep("Checking root issue from "+issueKey,function(rootIssue){
 						if (issueKey!=rootIssue.id){ //using id because the root issue is not fullyloaded
@@ -1240,20 +1219,18 @@ var jrfReport=class jrfReport {
 								issue.change();
 							}
 						}
-						self.continueTask();
 					});
 					self.addStep("Report is Checking the issue "+issue.getKey(),function(){
-						issue.checkChildCycles(self);
-						self.continueTask();
+						return issue.checkChildCycles(self);
 					});
 				});
 			});
 			self.addStep("Creating child relations by issue custom formulas",function(){
-				self.workOnListOfIssueSteps(issuesAdded,function(issueParent){
+				return self.workOnListOfIssueSteps(issuesAdded,function(issueParent){
 					if (issueParent.existsRelationFilter("Child")){
 						debugger;
 						var childRelationFilter=issueParent.getRelationFilterById("Child");
-						self.workOnListOfIssueSteps(issuesAdded,function(issueChild){
+						return self.workOnListOfIssueSteps(issuesAdded,function(issueChild){
 							if (issueChild.getKey()!=issueParent.getKey()){
 								var bResult=childRelationFilter([issueChild]);
 								if (bResult){
@@ -1285,7 +1262,7 @@ var jrfReport=class jrfReport {
 			
 			self.addStep("Identifying issues to exclude...",function(){
 				debugger;
-				self.workOnListOfIssueSteps(issuesAdded,function(issue){
+				return self.workOnListOfIssueSteps(issuesAdded,function(issue){
 		            var txtEndDate=self.objModel.variables.getVar("ReportEndDate"+"_text");
 		            var rptEndDate=self.objModel.variables.getVar("ReportEndDate");
 					var optGetFieldValues=[{key:"ifEmpty",value:0}];
@@ -1329,9 +1306,9 @@ var jrfReport=class jrfReport {
 					};
 				});*/
 				nRootsPrevious=self.childs.length();
-				self.walkAsync(hsRemoveKeys,function(issRemove){
+				return self.parallelizeProcess(hsRemoveKeys,function(issRemove){
 					var issueBase=issRemove.issue;
-					self.workOnIssueSteps(issueBase,function(issue){
+					return self.workOnIssueSteps(issueBase,function(issue){
 						var issueKey=issue.getKey();
 						if (self.childs.exists(issueKey)){
 							self.childs.remove(issueKey);
@@ -1341,7 +1318,7 @@ var jrfReport=class jrfReport {
 						if (isDefined(issRemove.removeFromParent)
 								&&issRemove.removeFromParent
 								&&(issue.countParentsChild()>0)){
-							self.workOnListOfIssueSteps(issue.getListParentsChild(),function(theParent){
+							return self.workOnListOfIssueSteps(issue.getListParentsChild(),function(theParent){
 								theParent.getChilds().remove(issueKey);
 							});
 						}
@@ -1357,21 +1334,17 @@ var jrfReport=class jrfReport {
 					log("The number of keys to remove is different of the effective removed issue count");
 				}
 				loggerFactory.getLogger().enabled=false;
-				self.continueTask();
 			});
-			self.continueTask();
 		});
 		
 		self.addStep("Processing Directives",function(){
 			debugger;
-			if (self.isReusingIssueList()){
-				return self.continueTask();
-			}
+			if (self.isReusingIssueList()) return;
 			var hsVersions=newHashMap();
 			var hsAccumulators=newHashMap();
 			log("Analizing directives");
 			self.addStep("Analizing Directives",function() {
-				self.workOnListOfIssueSteps(issuesAdded,function(issue){
+				return self.workOnListOfIssueSteps(issuesAdded,function(issue){
 					self.objModel.directives.walk(function(hsDirectives,iProof,sDirectiveKey){
 						hsDirectives.walk(function(sValue){
 							log(sDirectiveKey + " directive setted:"+sValue);
@@ -1416,7 +1389,7 @@ var jrfReport=class jrfReport {
 							self.jira.getProperty(issue.id,propKey); //using id.... the issue is not fully loaded
 						};
 						var fncProcess=function(callInfo,objProperty){
-							self.workOnIssueSteps(callInfo.issue,function(issue){
+							return self.workOnIssueSteps(callInfo.issue,function(issue){
 								if (objProperty!=""){
 									log("Start adding properties "+objProperty.key +" to issue:"+issue.getKey() );
 									issue.setPrecomputedPropertyLife(objProperty.key,objProperty.value);
@@ -1424,10 +1397,9 @@ var jrfReport=class jrfReport {
 								}
 							});
 						};
-						self.parallelizeCalls(hsAccumulators,fncCall,fncProcess);
+						return self.parallelizeCalls(hsAccumulators,fncCall,fncProcess);
 					});
 				}
-				self.continueTask();
 			});
 			self.addStep("Processing versions",function(){
 				if (false &&(hsVersions.length()>0)){
@@ -1452,7 +1424,7 @@ var jrfReport=class jrfReport {
 										self.treeIssues.add(issue.key,oIssue);
 									}
 								}
-								self.jira.processJQLIssues("fixVersion in ("+sVersions+")",
+								return self.jira.processJQLIssues("fixVersion in ("+sVersions+")",
 														  fncProcessIssue
 														  ,undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
 							});
@@ -1474,16 +1446,14 @@ var jrfReport=class jrfReport {
 						}
 					});
 				}
-				self.continueTask();
 			});
-			self.continueTask();
 		});
 		self.addStep("Saving Report to reuse",function(){
 			debugger;
 			var self=this;
 			if (self.allIssues.isStorable()){
 				self.addStep("Storing remaining issues in memory...",function(){
-					self.allIssues.saveAllNotStored();
+					return self.allIssues.saveAllNotStored();
 				});
 				self.addStep("Checking if exists issues a) not stored b) locked",function(){
 					self.allIssues.list.walk(function(issue){
@@ -1494,13 +1464,11 @@ var jrfReport=class jrfReport {
 							logError("The issue "+issue.id+" is still locked "+issue.numLocks);
 						}
 					});
-					self.continueTask();
 				});
 				self.addStep("Storing last report...",function(){
-					self.storeManager.save("LastReport",self);
+					return self.storeManager.save("LastReport",self);
 				});
 			}
-			self.continueTask();
 		});
 		// load report model and submodels
 		// Process Model with The Report
@@ -1512,7 +1480,7 @@ var jrfReport=class jrfReport {
 			tm.asyncTaskCallsMaxDeep=auxAsyncCallsMaxDeep;
 			tm.setUpdateStatusDelay(5000);
 			tm.autoFree=true;
-			self.objModel.process("encode"); // hash inner task....
+			return self.objModel.process("encode"); // hash inner task....
 		});
 		
 		self.addStep("¿Saving the precomputed values?",function(sModelProcessedResult){
@@ -1530,15 +1498,14 @@ var jrfReport=class jrfReport {
 					});
 					var jira=System.webapp.getJira();
 					var fncCall=function(issueUpdate){
-						jira.setProperty(issueUpdate.issueKey,issueUpdate.cacheKey,issueUpdate.precompObj);
+						return jira.setProperty(issueUpdate.issueKey,issueUpdate.cacheKey,issueUpdate.precompObj);
 					};
-					self.parallelizeCalls(hsUpdateProps,fncCall);
+					return self.parallelizeCalls(hsUpdateProps,fncCall);
 				});
 			}
 			self.addStep("Returning the model processed result",function(){
-				self.continueTask([sModelProcessedResult]);
+				return sModelProcessedResult;
 			});
-			self.continueTask();
 		});
 		self.addStep("Setting the HTML",function(sModelProcessedResult){
 			var tm=self.getTaskManager();
@@ -1590,7 +1557,6 @@ var jrfReport=class jrfReport {
 */	        
 			var newId=modelInteractiveFunctions.addInteractiveContent({html:sModelProcessedResult});
 			self.pageResultId=newId;
-			self.continueTask();
 		});
 		
 		self.addStep("Storing issue info or Removing all Issues in the scope.... ",function(){
@@ -1613,8 +1579,7 @@ var jrfReport=class jrfReport {
 				issueCache.treeIssues=self.treeIssues;
 				System.webapp.IssueCache=issueCache;
 			}
-*/			self.continueTask();
-		});
+*/		});
 		
 		self.addStep("Finally... launches the page results html.... ",function(){
 			var fncLaunchPages=function(idPage){
@@ -1630,19 +1595,17 @@ var jrfReport=class jrfReport {
 					modelInteractiveFunctions.openInWindow(thePageId,fncCallback,"ReportResult","reportResultDiv");
 				},3000);
 			}
-			fncLaunchPages(self.pageResultId);
-			self.continueTask();
+			return fncLaunchPages(self.pageResultId);
 		});
-		self.continueTask();
 	}
 	openResultInNewTab(){
 		var self=this;
-		modelInteractiveFunctions.openNewWindow(self.pageResultId);
+		return modelInteractiveFunctions.openNewWindow(self.pageResultId);
 	}
 	saveResultToFile(){
 		var self=this;
 		if (isDefined(self.pageResultId)&&(self.pageResultId!="")){
-			modelInteractiveFunctions.saveToFile(self.pageResultId);
+			return modelInteractiveFunctions.saveToFile(self.pageResultId);
 		}
 	}
 }

@@ -80,7 +80,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 										+ "/"+self.factory.list.length()
 										+ ". "+getMemStatus());							  
 						storer.addStep("Saving....",function(){
-							self.saveAllUnlocked();
+							return self.saveAllUnlocked();
 						});
 					} else {
 						console.log("Saving....Some objects are changed and now is not necesary to save all");
@@ -92,12 +92,8 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 								+ ". "+getMemStatus());							  
 						self.savingSemaphore.open();
 						self.isSavingInactives=false;
-						
-						storer.continueTask();
 					});
-					storer.continueTask();
 				});
-				storer.continueTask();
 	        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
 		}
 	}
@@ -133,7 +129,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 			storer.addStep("Saving to storage "+self.factory.name +"/"+dynObj.getId(),function(){
 //				log("Saving to storage:"+dynObj.getId());
 				dynObj.clearChanges();
-				storer.save(dynObj.getId(),self.getStorageObject(dynObj));
+				return storer.save(dynObj.getId(),self.getStorageObject(dynObj));
 			});
 			storer.addStep("Item Saved "+self.factory.name +"/"+dynObj.getId(),function(key){
 //				log("Item Saved:"+dynObj.getId()+" vs "+key);
@@ -141,10 +137,9 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 				if (isUndefined(key)){
 					debugger;
 				}
-				storer.continueTask();
 			});
-		} else {
-			/*log("The object "+dynObj.getId() 
+/*		} else {
+			log("The object "+dynObj.getId() 
 					+" not is locked:"+(!dynObj.isLocked())
 					+" and is changed:"+dynObj.isChanged()
 					+" and is Fully Loaded:"+dynObj.isFullyLoaded());
@@ -155,7 +150,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 	waitFinishSave(){
 		var self=this;
 		var storer=self.storer;
-		self.savingSemaphore.taskArrived(storer.getRunningTask());
+		return self.savingSemaphore.taskArrived(storer.getRunningTask());
 	}
 	saveAllNotStored(){
 		var self=this;

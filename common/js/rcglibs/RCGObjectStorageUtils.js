@@ -115,10 +115,10 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 //			alert("Test:"+baseName);
 //			debugger;
 			if (isDefined(onSave)){
-				onSave(key);
+				return onSave(key);
 			} else {
 				log(baseName + " Continue Task");
-				self.continueTask(key);
+				return key;
 			}
 		});
 		var innerOnError=self.createManagedCallback(function(e){
@@ -127,10 +127,10 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			if (isDefined(onError)){
 				onError(key,e);
 			} else {
-				self.continueTask("Error");
+				return "Error "+e;
 			}
 	    });
-		filesystem.SaveFile(baseName,contentToSave,innerOnSave,innerOnError);
+		return filesystem.SaveFile(baseName,contentToSave,innerOnSave,innerOnError);
 	}
 	save(key,item){
 		var self=this;
@@ -138,7 +138,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		var baseName=self.basePath+"/"+key;
 		self.addStep("Getting info to store from item "+key,function(){
 			var objToSave=self.getStorageObject(item);
-			self.continueTask([objToSave]);
+			return objToSave;
 		});
 		self.addStep("Saving the object "+key,function(objToSave){
 			var jsonToSave=JSON.stringify(objToSave);
@@ -146,7 +146,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			log("Storer save:"+baseName);
 			if (totalLength<(7*1024*1024)){
 	//			log("Internal saveFile called for:"+baseName);
-				self.internal_saveFile(key,baseName,jsonToSave,self.onSave,self.onError);
+				return self.internal_saveFile(key,baseName,jsonToSave,self.onSave,self.onError);
 			} else {
 	//			debugger;
 				var arrParts=[];
@@ -179,24 +179,20 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 												content:contentToSave};
 							var jsonPartToSave=JSON.stringify(objPartToSave);
 	//						log("Part:"+part.partNumber+" Key:"+key+" part:"+part.partName+" length:"+jsonPartToSave.length+" ini:"+part.iniPos+" end:"+part.endPos);
-							self.internal_saveFile(key,part.partName,jsonPartToSave,undefined,self.onError);
+							return self.internal_saveFile(key,part.partName,jsonPartToSave,undefined,self.onError);
 						});
-						self.continueTask();
 					}
 					var fncProcessed=function(part){
 						log("Saved Part:"+part.partNumber+" Key:"+key+" part:"+part.partName+" ini:"+part.iniPos+" end:"+part.endPos);
 					}
 	//				debugger;
-					self.parallelizeCalls(arrParts,fncSavePart,fncProcessed,5);
+					return self.parallelizeCalls(arrParts,fncSavePart,fncProcessed,5);
 				});
 				self.addStep("Everithing Saved",function(){
 					log("Every Thing is Saved for:"+baseName);
-					self.continueTask();
 				});
-				self.continueTask();
 			}
 		});
-		self.continueTask();
 	}
 	processFileObj(objContent,fsKey,filename){
 		debugger;
@@ -276,16 +272,15 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 					var fncProcessed=function(partId,part){
 						arrContents[part.partNumber]=part.content;
 					};
-					self.parallelizeCalls(arrPets,fncLoadPart,fncProcessed,5);
+					return self.parallelizeCalls(arrPets,fncLoadPart,fncProcessed,5);
 				});
 				self.addStep("Creating and parsing JSON of "+objContent.totalParts,function(){
 					var sJSON=arrContents.saToString();
 					var objJson=JSON.parse(sJSON);
-					var objProcessed=self.processFileObj(objJson);
-					self.continueTask([objProcessed]);
+					return self.processFileObj(objJson);
 				});
 				self.addStep("Setting values to Returning Result of "+objContent.totalParts,function(objProcessed){
-					self.continueTask([objProcessed]);
+					return objProcessed;
 				});
 				return undefined;
 			} else {
@@ -306,7 +301,8 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		filesystem.ReadFile(fileName,
 							function(){self.continueTask([true]);},
 							function(){self.continueTask([false]);}
-							);					
+							);
+		return self.waitForEvent();
 	}
 	load(key,fncProcess){
 		var self=this;
@@ -317,32 +313,30 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			
 			self.addStep("Processing content",function(){
 				var objProcessed=self.processFileObj(objContent,key);
-				self.continueTask([objProcessed]);
+				return objProcessed;
 			});
 			self.addStep("Returning result",function(objProcessed){
 				if (isDefined(self.onLoad)){
 					self.addStep("Default Defined process result",function(objProcessed){
-						self.onLoad(key,objProcessed);
-						self.continueTask([objProcessed]);
+						return self.onLoad(key,objProcessed);
 					});
 				} else if (isDefined(fncProcess)){
 					self.addStep("User Defined process result",function(objProcessed){
-						fncProcess(objProcessed,key,fileName);
-						self.continueTask([objProcessed]);
+						return fncProcess(objProcessed,key,fileName);
 					});
 				}
-				self.continueTask([objProcessed]);
+				return objProcessed;
 			});
-			self.continueTask();
 	    });
 		var innerOnError=self.createManagedCallback(function(e){
 			logError("Error Loading Key:"+key+"."+e);
 			if (isDefined(self.onError)){
 				self.onError(key,e);
 			} else {
-				self.continueTask("Error");
+				return "Error "+e;
 			}
 	    });
-		filesystem.ReadFile(fileName,innerOnLoad,innerOnError);					
+		filesystem.ReadFile(fileName,innerOnLoad,innerOnError);
+		return waitForEvent();
 	}
 }

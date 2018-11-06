@@ -89,13 +89,12 @@ class RCGSemaphore{
 	}
 	taskArrived(task){
 		var self=this;
-		if (self.fncIsOpen()){
-			self.taskContinue(task);
-		} else {
+		if (!self.fncIsOpen()){
 			self.taskWaiting.push(task);
 			if ((self.autoWait)&&(!self.isWaiting)){
 				self.waiting(self);
 			}
+			return task.getTaskManager().extended_waitForEvent();
 		}
 	}
 }

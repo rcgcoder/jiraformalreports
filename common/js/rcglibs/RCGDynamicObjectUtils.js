@@ -942,93 +942,93 @@ var factoryObjects=class factoryObjects{
 			return objNew;
 		}
 	processAllAttributes(attrsList,attrsValue,attrsPercs){
-			this.addAttributeList(attrsList);
-			this.addAttribute(attrsValue);
-			this.addAttributeWithPerc(attrsPercs);
-		}
+		this.addAttributeList(attrsList);
+		this.addAttribute(attrsValue);
+		this.addAttributeWithPerc(attrsPercs);
+	}
 	internal_execFunction(sNameFunction){
-				if (typeof this["get"+sNameFunction+"Min"]!=="undefined"){
-					return this["get"+sNameFunction+"Min"]();
-				} else {
-					return "";
-				}
-			}
-	traceItem(obj,iDeep){
-			var sCad=fillCharsLeft(3*iDeep,""," ");
-			log(sCad+obj.id+"-"+obj.name);
-			if (typeof obj.theObject!=="undefined"){
-				obj=obj.theObject;
-			}
-			obj.factory.attrTypes.walk(function(attribute,iDeep){
-				var sCad=fillCharsLeft(3*iDeep,""," ");
-				var attrName=attribute.name;
-				var attrType=attribute.type;
-				
-				if (attrType=="List"){
-					var list=obj["get"+attrName+"s"]();
-					log (sCad+"Attribute:"+attrName+" ["+attrType+"]:"+list.length());
-					list.walk(obj.factory.traceItem,iDeep+1);
-				} else if (attrType=="Reference"){
-					var attrReference=attribute.reference;
-					var vValue=obj["get"+attrName]();
-					var vValueMin=obj.execFunction("get"+attrName+"Min");
-					var vValueMax=obj.execFunction("get"+attrName+"Max");
-					var vValueMargins=obj.execFunction("get"+attrName+"Margins");
-					var vPercValue=obj["get"+attrName+"Perc"]();
-					var vPercValueMin=obj["get"+attrName+"PercMin"]();
-					var vPercValueMax=obj["get"+attrName+"PercMax"]();
-					var vPercValueMargins=obj["get"+attrName+"PercMargins"]();
-					log (sCad+"Attribute:"+attrName+" ["+attrType+"]:"+
-								vValue+ "["+vValueMin+" -> "+vValueMax+"] "+ (vValueMargins*100).toFixed(2)+"%"
-								+" percs:"+(attrReference==""?"":attrReference+" ")+(vPercValue*100).toFixed(2)+"%"
-								+" ["+(vPercValueMin*100).toFixed(2)+"%"
-								+" -> "+(vPercValueMax*100).toFixed(2)+"%] "
-								+ (vPercValueMargins*100).toFixed(2)+"%");
-				} else if (attrType=="Value"){
-					var vValue=obj["get"+attrName]();
-					var vValueMin=obj.execFunction("get"+attrName+"Min");
-					var vValueMax=obj.execFunction("get"+attrName+"Max");
-					var vValueMargins=obj.execFunction("get"+attrName+"Margins");
-					if (typeof vValue.name!=="undefined"){
-						vValue=vValue.id+" - "+vValue.name;
-					}
-					if ((vValue+""+vValueMin+""+vValueMax+""+ vValueMargins)!=""){
-						log (sCad+"Attribute:"+attrName+" ["+attrType+"]:"+
-									vValue+ "["+vValueMin+" -> "+vValueMax+"] "+ (vValueMargins*100).toFixed(2)+"%");
-					}
-				} else {
-					log (sCad+"Attribute:"+attrName+" has no type:"+attrType);
-				}
-			},iDeep+1);
-		}
-	trace(iDeep){
-			var iDeepAux=0;
-			if (typeof iDeep!=="undefined"){
-				iDeepAux=iDeep;
-			}
-			log("walk factory:"+this.name);
-			this.list.walk(this.traceItem,iDeepAux);
-			log("end walk factory:"+this.name);
-		}
-	getCell(row,col){
-			var sCell=excelColRowToA1(col,row);
-			var desired_cell = this[sCell];
-			if (desired_cell){
-				return desired_cell.v;
-			}
+		if (typeof this["get"+sNameFunction+"Min"]!=="undefined"){
+			return this["get"+sNameFunction+"Min"]();
+		} else {
 			return "";
 		}
-	swing(){
-			this.attrTypes.swing();
-			this.list.swing();
-			var me=this;
-			this.attrTypes.walk(function(attribute){
-				if (attribute.type=="List"){
-					me["get"+attribute.name+"s"]().swing();
-				}
-			});
-			
+	}
+	traceItem(obj,iDeep){
+		var sCad=fillCharsLeft(3*iDeep,""," ");
+		log(sCad+obj.id+"-"+obj.name);
+		if (typeof obj.theObject!=="undefined"){
+			obj=obj.theObject;
 		}
+		obj.factory.attrTypes.walk(function(attribute,iDeep){
+			var sCad=fillCharsLeft(3*iDeep,""," ");
+			var attrName=attribute.name;
+			var attrType=attribute.type;
+			
+			if (attrType=="List"){
+				var list=obj["get"+attrName+"s"]();
+				log (sCad+"Attribute:"+attrName+" ["+attrType+"]:"+list.length());
+				list.walk(obj.factory.traceItem,iDeep+1);
+			} else if (attrType=="Reference"){
+				var attrReference=attribute.reference;
+				var vValue=obj["get"+attrName]();
+				var vValueMin=obj.execFunction("get"+attrName+"Min");
+				var vValueMax=obj.execFunction("get"+attrName+"Max");
+				var vValueMargins=obj.execFunction("get"+attrName+"Margins");
+				var vPercValue=obj["get"+attrName+"Perc"]();
+				var vPercValueMin=obj["get"+attrName+"PercMin"]();
+				var vPercValueMax=obj["get"+attrName+"PercMax"]();
+				var vPercValueMargins=obj["get"+attrName+"PercMargins"]();
+				log (sCad+"Attribute:"+attrName+" ["+attrType+"]:"+
+							vValue+ "["+vValueMin+" -> "+vValueMax+"] "+ (vValueMargins*100).toFixed(2)+"%"
+							+" percs:"+(attrReference==""?"":attrReference+" ")+(vPercValue*100).toFixed(2)+"%"
+							+" ["+(vPercValueMin*100).toFixed(2)+"%"
+							+" -> "+(vPercValueMax*100).toFixed(2)+"%] "
+							+ (vPercValueMargins*100).toFixed(2)+"%");
+			} else if (attrType=="Value"){
+				var vValue=obj["get"+attrName]();
+				var vValueMin=obj.execFunction("get"+attrName+"Min");
+				var vValueMax=obj.execFunction("get"+attrName+"Max");
+				var vValueMargins=obj.execFunction("get"+attrName+"Margins");
+				if (typeof vValue.name!=="undefined"){
+					vValue=vValue.id+" - "+vValue.name;
+				}
+				if ((vValue+""+vValueMin+""+vValueMax+""+ vValueMargins)!=""){
+					log (sCad+"Attribute:"+attrName+" ["+attrType+"]:"+
+								vValue+ "["+vValueMin+" -> "+vValueMax+"] "+ (vValueMargins*100).toFixed(2)+"%");
+				}
+			} else {
+				log (sCad+"Attribute:"+attrName+" has no type:"+attrType);
+			}
+		},iDeep+1);
+	}
+	trace(iDeep){
+		var iDeepAux=0;
+		if (typeof iDeep!=="undefined"){
+			iDeepAux=iDeep;
+		}
+		log("walk factory:"+this.name);
+		this.list.walk(this.traceItem,iDeepAux);
+		log("end walk factory:"+this.name);
+	}
+	getCell(row,col){
+		var sCell=excelColRowToA1(col,row);
+		var desired_cell = this[sCell];
+		if (desired_cell){
+			return desired_cell.v;
+		}
+		return "";
+	}
+	swing(){
+		this.attrTypes.swing();
+		this.list.swing();
+		var me=this;
+		this.attrTypes.walk(function(attribute){
+			if (attribute.type=="List"){
+				me["get"+attribute.name+"s"]().swing();
+			}
+		});
+		
+	}
 	isLocked(){
 		return this.numLocks!=0;
 	}
@@ -1055,7 +1055,7 @@ var factoryObjects=class factoryObjects{
 	unlockAndWaitAllSave(){
 		var self=this;
 		self.unlock();
-		self.getFactory().waitForStorageSaveEnd();
+		return self.getFactory().waitForStorageSaveEnd();
 	}
 	change(){
 		this.numChanges++;
@@ -1088,7 +1088,7 @@ var factoryObjects=class factoryObjects{
 	fullLoad(){
 		var self=this;
 		if (self.isStorable()&&(!self.isFullyLoaded())){
-			self.getFactory().storeManager.loadFromStorage(self);
+			return self.getFactory().storeManager.loadFromStorage(self);
 		} else {
 			self.setFullyLoaded();
 			self.lock();
@@ -1176,27 +1176,21 @@ var factoryObjects=class factoryObjects{
 	saveToStorage(){
 		var self=this;
 		if (self.isStorable()){
-			self.factory.storeManager.saveToStorage(self);
+			return self.factory.storeManager.saveToStorage(self);
 		};
 	}
 	waitForStorageSaveEnd(){
 		var self=this;
 		if (self.isStorable()){
-			self.storeManager.waitFinishSave();
-		} else {
-			self.continueTask();
+			return self.storeManager.waitFinishSave();
 		};
 	}
 	saveAllNotStored(){
 		var self=this;
 		if (self.isStorable()){
-			self.storeManager.saveAllNotStored();
-		} else {
-			self.continueTask();
+			return self.storeManager.saveAllNotStored();
 		}
 	}
-
-
 	internal_workOnSteps(theObjectOrKey,fncWork,bMaintainLocked,fncNotExists){
 		var oObj;
 		var self=this;
@@ -1219,7 +1213,7 @@ var factoryObjects=class factoryObjects{
 		} 
 		self.addStep("Wait if is saving",function(){
 			log("Wait if saving...");
-			self.waitForStorageSaveEnd();
+			return self.waitForStorageSaveEnd();
 		});
 		var bExists=true;
 		self.addStep("Full Load storable Object"+key,function(){
@@ -1227,12 +1221,12 @@ var factoryObjects=class factoryObjects{
 				if (isDefined(fncNotExists)){
 					self.addStep("Custom not Exists Function",function(){
 						var rstObj=fncNotExists(key);
-						self.continueTask([rstObj]);
+						return rstObj;
 					});
 					self.addStep("Custom not Exists Function returns Object",function(rstObj){
 						if (isDefined(rstObj)){
 							oObj=rstObj;
-							self.continueTask();
+							return;
 						} else {
 							bExists=false;
 						}
@@ -1243,32 +1237,28 @@ var factoryObjects=class factoryObjects{
 				}
 			} else {
 				self.addStep("full loading the issue",function(){
-					oObj.fullLoad();
-					self.continueTask();
+					return oObj.fullLoad();
 				});
 			}
-			self.continueTask();
 		});
 		if (isDefined(fncWork)){
 			self.addStep("Working",function(){
 				if (bExists){
-					fncWork(oObj);
+					return fncWork(oObj);
 				}
-				self.continueTask();
 			});
 		};
 		if (bUnlock){
 			self.addStep("unlock and wait if necesary....",function(){
-				if (!bExists) return self.continueTask();
+				if (!bExists) return;
 				log("unlock and wait for saving:"+oObj.getKey());
-				oObj.unlockAndWaitAllSave();
+				return oObj.unlockAndWaitAllSave();
 			});
 		}
 		self.addStep("Return issue",function(){
 			log("Return issue:"+oObj.id);
-			self.continueTask([oObj]);
+			return oObj;
 		});
-//		self.continueTask();
 	}
 	
 	internal_workOnListSteps(listOfKeysOrObjects,fncWork,maxParallelThreads,fncNotExists){
@@ -1295,15 +1285,11 @@ var factoryObjects=class factoryObjects{
 				} else if (listType==0){
 					item=listOfKeysOrObjects.findByInd(itemNum);
 				} 
-				self.workOnSteps(item,fncWork,false,fncNotExists);
+				return self.workOnSteps(item,fncWork,false,fncNotExists);
 			}
-			self.parallelizeProcess(numItems,fncProcessIndividualObject,maxParallelThreads);
-		} else {
-			self.continueTask();
+			return self.parallelizeProcess(numItems,fncProcessIndividualObject,maxParallelThreads);
 		}
 	}
-
-
 	
 	toArray(arrFields){ //[{doFieldName:,resultFieldName},{}.{}]
 		// convert the list of objects to an array []

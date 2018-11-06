@@ -117,18 +117,24 @@ var RCGDynamicObject=class RCGDynamicObject{
 var factoryObjects=class factoryObjects{
 	constructor(){
 		var self=this;
-		self.nfactorys=0;
-		self.hsFactoriesGlobal=newHashMap();
-		
+		self.nfactorys=0;		
+		self.hsFactoriesGlobal;
 	}
 	getFactoryGlobal(name){
-		return this.hsFactoriesGlobal.getValue(name);
+		var self=this;
+		if (isUndefined(hsFactoriesGlobal)){
+			return "";
+		}
+		return self.hsFactoriesGlobal.getValue(name);
 	}
 	addfactoryGlobal(factory){
-		if (this.hsFactoriesGlobal.exists(factory.name)){
-			this.hsFactoriesGlobal.remove(factory.name);
+		var self=this;
+		if (isUndefined(self.hsFactoriesGlobal)){
+			self.hsFactoriesGlobal=newHashMap();
+		} else if (self.hsFactoriesGlobal.exists(factory.name)){
+			self.hsFactoriesGlobal.remove(factory.name);
 		}
-		this.hsFactoriesGlobal.add(factory.name,factory);
+		self.hsFactoriesGlobal.add(factory.name,factory);
 	}
 /*		,attrTypes:factoryHashMaps.newHashMap()  // lista de types de Attribute
 		,attributes:factoryHashMaps.newHashMap()  // lista total de attributes del theObject

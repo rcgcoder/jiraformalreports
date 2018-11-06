@@ -49,14 +49,16 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		return "o";
 	}
 	getStorageObject(item){
+		debugger;
 		var self=this;
 		var objToSave={};
 		if (isDefined(item)){
-			objToSave.type=self.getType(item);
+			var saveType=self.getType(item);
+			objToSave.type=saveType;
 			if (self.isBaseType(objToSave.type)){
-				objToSave.value=item;
+				return item;
 			} else if (objToSave.type=="d"){
-				objToSave.value=(""+item);
+				return item;
 			} else if (objToSave.type=="m"){
 				var sFncFormula=""+item.toString();
 				var hash = sha256.create();
@@ -66,40 +68,43 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 					self.functions.add(theHash,item);
 				};
 				objToSave.value=theHash;
+				return objToSave;
 			} else if (objToSave.type=="a"){
 				objToSave.value=[];
 				item.forEach(function(elem){
 					objToSave.value.push(self.getStorageObject(elem));
 				});
+				return objToSave;
 			} else if (objToSave.type=="h"){
 				objToSave.value=[];
 				item.walk(function(elem,deep,key){
 					objToSave.value.push({key:key,value:self.getStorageObject(elem)});
 				});
+				return objToSave;
 			} else if (objToSave.type=="o"){
 				var arrProps=getAllProperties(item);
-				objToSave.atts={};
+				objToSave={};
 				var nProps=arrProps.length;
 				if (nProps>0){
 					arrProps.forEach(function(prop){
-						objToSave.atts[prop]=self.getStorageObject(item[prop]);
+						objToSave[prop]=self.getStorageObject(item[prop]);
 					});
-//				} else {
-//					debugger; 
-//					logError("There is not properties of object");
 				}
+				return objToSave;
 			} else if (objToSave.type=="co"){
 				objToSave.className=item.constructor.name;
 				objToSave.value=item.getStorageObject(self);
+				return objToSave;
 			} else if (objToSave.type=="fo"){
 				objToSave.className=item.constructor.name;
 				objToSave.factoryName=item.getFactory().name;
 				objToSave.value={key:item.getId()};
 				//item.saveToStorage(self);
+				return objToSave;
 			} else if (objToSave.type=="null"){
-				objToSave.value=undefined;
+				return null;
 			} else if (objToSave.type=="undef"){
-				objToSave.value=undefined;
+				return undefined;
 				//item.saveToStorage(self);
 			} 
 		}
@@ -198,18 +203,15 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 	processFileObj(objContent,fsKey,filename){
 		debugger;
 		var self=this;
-		if (self.isBaseType(objContent.type)){ 
-			return objContent.value;
-		} else if (objContent.type=="null"/*"null"*/){
-			return null;
-		} else if (objContent.type=="undef"/*"undef"*/){
-			return undefined;
-		} else if (objContent.type=="d" /* date */){
-			return new Date(objContent.value);
-		} else if (objContent.type=="m" /* method */){
-			var theHash=objContent.value;
-			var theMethod=self.functions.getValue(theHash);
-			return theMethod;
+		if (objContent.type=="o" /*"object"*/){
+			var arrProps=getAllProperties(objContent.atts);
+			var objResult={};
+			arrProps.forEach(function(prop){
+				var oAtt=objContent.atts[prop];
+				var oPartial=self.processFileObj(oAtt);
+				objResult[prop]=oPartial;
+			});
+			return objResult;
 		} else if (objContent.type=="a"/*"array"*/){
 			var objResult=[];
 			objContent.value.forEach(function(elem){
@@ -228,15 +230,6 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			});
 			objResult.autoSwing=true;
 			objResult.swing();
-			return objResult;
-		} else if (objContent.type=="o" /*"object"*/){
-			var arrProps=getAllProperties(objContent.atts);
-			var objResult={};
-			arrProps.forEach(function(prop){
-				var oAtt=objContent.atts[prop];
-				var oPartial=self.processFileObj(oAtt);
-				objResult[prop]=oPartial;
-			});
 			return objResult;
 		} else if (objContent.type=="co" /* custom object */){
 			var objResult=new window[objContent.className]();
@@ -257,6 +250,21 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				dynObj.unlock(); // unlock!
 			}
 			return dynObj;
+		} else if (objContent.type=="m" /* method */){
+			var theHash=objContent.value;
+			var theMethod=self.functions.getValue(theHash);
+			return theMethod;
+		} else if (objContent.type!="p"){
+			return objContent;
+/*		if (self.isBaseType(objContent.type)){ 
+			return objContent.value;
+		} else if (objContent.type=="null" ){
+			return null;
+		} else if (objContent.type=="undef"){
+			return undefined;
+		} else if (objContent.type=="d" ){
+			return new Date(objContent.value);
+*/
 		} else if (objContent.type=="p" /* object part */){
 			if (objContent.partNumber==0){
 				//debugger;

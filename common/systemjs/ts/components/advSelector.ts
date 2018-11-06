@@ -185,7 +185,7 @@ export class advSelector {
         if (self.isSomeOneObserving()){
             System.webapp.addStep("Getting Async options for "+self.name, function(){
                 log("onRetrieveData to emit:"+self.name);
-                self.onRetrieveData.emit(self);
+                var emitResult=self.onRetrieveData.emit(self);
                 log("onRetrieveData emitted:"+self.name);
                 return System.webapp.waitForEvent();
             });

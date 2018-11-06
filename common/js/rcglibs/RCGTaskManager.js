@@ -287,7 +287,7 @@ class RCGTask{
 		var self=this;
 		var prevTask=self.getRunningTask();
 		self.setRunningTask(self);
-		self.getTaskManager().continueTask(aArgs,iJumps);
+		self.getTaskManager().next(aArgs,iJumps);
 		self.setRunningTask(prevTask);
 	}
 

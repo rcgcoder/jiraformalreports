@@ -34,8 +34,7 @@ class App {
     alert("The app is initializing"):
     debugger;
     var self=this;
-    var taskm=taskManager;
-    var rTask=System.systemJSTask;
+//    var taskm=taskManager;
     log("--- initializing class app.ts");
     taskManager.extendObject(self);
     var fncProcessFinishLoad=function(){
@@ -68,6 +67,9 @@ class App {
        //},0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
        });
     }
+
+    var rTask=System.systemJSTask;
+    var prevTask=self.getRunningTask();
     self.setRunningTask(rTask);
     var fncManagedProcessFinishLoad=self.createManagedCallback(fncProcessFinishLoad);
     self.setRunningTask(prevTask);

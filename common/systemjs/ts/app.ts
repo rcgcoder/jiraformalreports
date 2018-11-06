@@ -74,8 +74,8 @@ class App {
                         rTask.continueTask();
                     }); 
                 });
-           },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined
-           //}
+           //},0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined
+           }
            );
         } else {
             log("App is not loaded... waiting");

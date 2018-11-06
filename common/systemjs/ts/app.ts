@@ -58,7 +58,7 @@ class App {
                                   "aui/js/aui-datepicker.js",
                                   "aui/js/aui-soy.js"
                                ]; //test
-                              System.webapp.loadRemoteFiles(arrFiles);
+                    return System.webapp.loadRemoteFiles(arrFiles);
                 });
                 self.addStep("Postprocessing systemjs components.... ",function(){
 /*                    var fncAddPostProcessStep=function(i){
@@ -73,13 +73,9 @@ class App {
                         postProcessFunction();
                       //  fncAddPostProcessStep(i);
                     });
-                    self.continueTask();
                 });
-                self.continueTask();
            //},0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined
-           }
-           );
-            self.continueTask();
+           });
         } else {
             log("App is not loaded... waiting");
             setTimeout(fncManagedCheckForFinishLoad,1000);
@@ -87,9 +83,10 @@ class App {
     };
     var prevTask=self.getRunningTask();
     self.setRunningTask(rTask);
-    var fncManagedCheckForFinishLoad=self.createManagedCallback(fncCheckForFinishLoad);
+    var fncManagedCheckForFinishLoad=self.createManagedFunction(fncCheckForFinishLoad);
     self.setRunningTask(prevTask);
     fncManagedCheckForFinishLoad();
+    self.waitForEvent();
    }
 }
 

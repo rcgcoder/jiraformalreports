@@ -99,8 +99,7 @@ class RCGSystemJSManager{
 			System.addPostProcess=function(fnc){
 				System.postProcess.push(fnc);
 			}
-		    System.import('app')
-		      .catch(console.error.bind(console));
+		    System.import('app').catch(console.error.bind(console));
 		});
 	}
 }

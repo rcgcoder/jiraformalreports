@@ -187,7 +187,7 @@ export class advSelector {
                 log("onRetrieveData to emit:"+self.name);
                 self.onRetrieveData.emit(self);
                 log("onRetrieveData emitted:"+self.name);
-                return self.waitForEvent();
+                return System.webapp.waitForEvent();
             });
             System.webapp.addStep("Retrieving options once they are loaded for "+self.name,function(optionList){
                 if (typeof optionList!=="undefined"){
@@ -209,7 +209,7 @@ export class advSelector {
                             return self.getValuesAsync(theDlgSelector);
                         });
                     }),nSeconds);
-                    return self.waitForEvent();
+                    return System.webapp.waitForEvent();
                 }
             });
         }

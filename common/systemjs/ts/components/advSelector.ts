@@ -179,6 +179,7 @@ export class advSelector {
     }
     
     getValuesAsync(theDlgSelector){
+        debugger;
         var self=this;
         log("Running getValuesAsync of "+self.name);
         if (self.isSomeOneObserving()){
@@ -187,58 +188,55 @@ export class advSelector {
                 self.onRetrieveData.emit(self);
                 log("onRetrieveData emitted:"+self.name);
             });
-            System.webapp.addStep("Retrieving options once they are loaded for "+self.name,
-                function(optionList){
-                    if (typeof optionList!=="undefined"){
-                        log(optionList.length);
-                        var options=[];
-                        for (var i=0;i<optionList.length;i++){
-                            var opt=optionList[i];
-                            options.push({key:opt.key,
-                                          name:opt.name,
-                                          description:opt.description});
-                        }
-                        self.fillOptions(options);
-                        System.webapp.continueTask([optionList]);
-                    } else {
-                        var nSeconds=(Math.random()*2000)+3000;
-                        log("The onRetrieveData function of "+ self.name+" returns undefined.... trying again in "+nSeconds+" millis");
-                        setTimeout(System.webapp.createManagedCallback(function(){
-                            System.webapp.addStep("Getting values of "+ self.name+" again...", function(){
-                                self.getValuesAsync(theDlgSelector);
-                            });
-                            System.webapp.continueTask();
-                        }),nSeconds);
+            System.webapp.addStep("Retrieving options once they are loaded for "+self.name,function(optionList){
+                if (typeof optionList!=="undefined"){
+                    log(optionList.length);
+                    var options=[];
+                    for (var i=0;i<optionList.length;i++){
+                        var opt=optionList[i];
+                        options.push({key:opt.key,
+                                      name:opt.name,
+                                      description:opt.description});
                     }
-                });
+                    self.fillOptions(options);
+                    return optionList;
+                } else {
+                    var nSeconds=(Math.random()*2000)+3000;
+                    log("The onRetrieveData function of "+ self.name+" returns undefined.... trying again in "+nSeconds+" millis");
+                    setTimeout(System.webapp.createManagedCallback(function(){
+                        System.webapp.addStep("Getting values of "+ self.name+" again...", function(){
+                            return self.getValuesAsync(theDlgSelector);
+                        });
+                    }),nSeconds);
+                    return waitForEvent();
+                }
+            });
         }
         System.webapp.addStep("Populating the table of "+self.name,function(optionList){
-                var theSelect=self.getSelect();
-                var nOps=theSelect[0].length; 
-                var arrTable=[];
-                for (var i=0;i<nOps;i++){
-                    var opt=theSelect[0][i];
-                    var key=opt.value;
-                    var elem=self.findElement(key);
-                    if (elem==""){
-                        log("Error.....the "+key+" element is not exists in elements array");
-                    }
-                    var name=elem.name;
-                    var isSelected=opt.selected;
-                    var description=elem.description;
-                    arrTable.push({key:key,name:name,description:description,selected:isSelected});
+            var theSelect=self.getSelect();
+            var nOps=theSelect[0].length; 
+            var arrTable=[];
+            for (var i=0;i<nOps;i++){
+                var opt=theSelect[0][i];
+                var key=opt.value;
+                var elem=self.findElement(key);
+                if (elem==""){
+                    log("Error.....the "+key+" element is not exists in elements array");
                 }
-                if (typeof theDlgSelector!=='undefined'){
-                    theDlgSelector.populateTable(arrTable);
-                    theDlgSelector.endPopulating();
-                }
-                if (!self.initialized){
-                   self.initialized=true;
-                }
-                self.updateSelected();
-                System.webapp.continueTask();
-            });
-        System.webapp.continueTask();
+                var name=elem.name;
+                var isSelected=opt.selected;
+                var description=elem.description;
+                arrTable.push({key:key,name:name,description:description,selected:isSelected});
+            }
+            if (typeof theDlgSelector!=='undefined'){
+                theDlgSelector.populateTable(arrTable);
+                theDlgSelector.endPopulating();
+            }
+            if (!self.initialized){
+               self.initialized=true;
+            }
+            self.updateSelected();
+        });
     }
         
     onRetrieveTableData(theDlgSelector){
@@ -255,8 +253,7 @@ export class advSelector {
                         
         var fork=System.webapp.addStep("Fork Getting values:"+self.name, function(){
             log("processing step Getting Values(get values async):"+self.name);
-            self.getValuesAsync(theDlgSelector);
-            log("launched get values async:"+self.name);
+            return self.getValuesAsync(theDlgSelector);
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",barrierAux);
         //System.webapp.continueTask();
     }

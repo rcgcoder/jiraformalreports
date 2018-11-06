@@ -68,6 +68,7 @@ export class jqlSelector {
         },0,1,undefined,undefined,undefined,"INNER",undefined);
     }
     onAdvSelectorRetrieveData(theAdvSelector){
+        debugger;
         var self=this;
         self.isRetrievingData=true;
         log("Retrieving table data on jqlSelector");

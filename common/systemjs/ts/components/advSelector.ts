@@ -180,7 +180,9 @@ export class advSelector {
                 
     retrieved(values){
         debugger;
-        System.webapp.continueTask([values]);
+        System.webapp.addStep("Returning the value of Getting Async options for " +self.name, function(){
+            return values;
+        });
     }
     
     getValuesAsync(theDlgSelector){
@@ -192,7 +194,7 @@ export class advSelector {
                 log("onRetrieveData to emit:"+self.name);
                 var emitResult=self.onRetrieveData.emit(self);
                 log("onRetrieveData emitted:"+self.name);
-                return System.webapp.waitForEvent();
+                //return System.webapp.waitForEvent();
             });
             System.webapp.addStep("Retrieving options once they are loaded for "+self.name,function(optionList){
                 if (typeof optionList!=="undefined"){

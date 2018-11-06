@@ -122,7 +122,7 @@ var factoryObjects=class factoryObjects{
 	}
 	getFactoryGlobal(name){
 		var self=this;
-		if (typeof hsFactoriesGlobal==="undefined")){
+		if (typeof hsFactoriesGlobal==="undefined"){
 			return "";
 		}
 		return self.hsFactoriesGlobal.getValue(name);

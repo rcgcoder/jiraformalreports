@@ -40,7 +40,7 @@ class App {
     taskManager.extendObject(self);
     var fncProcessFinishLoad=function(){
         log("App loaded!... launching systemjs initialization global thread");
-        //debugger;
+        //debugger; 
         self.addStep("Systemjs components Initializacion",function(){
             log("Running global systemjs components initialization");
             self.addStep("Applying AUI and other interface components.... ",function(){

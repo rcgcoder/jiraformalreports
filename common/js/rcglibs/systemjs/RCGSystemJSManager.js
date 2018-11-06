@@ -32,7 +32,7 @@ class RCGSystemJSManager{
 		        "https://cdn.jsdelivr.net/npm/systemjs@0.19.31/dist/system.js",
 				"systemjs/config.js"
 			 ]; //test
-			self.app.loadRemoteFiles(arrFiles);
+			return self.app.loadRemoteFiles(arrFiles);
 		});
 		var systemJSTask;
 		systemJSTask=self.addStep("Launching systemjs based interface.... it takes a while",function(){
@@ -102,6 +102,5 @@ class RCGSystemJSManager{
 		    System.import('app')
 		      .catch(console.error.bind(console));
 		});
-		self.continueTask();
 	}
 }

@@ -749,24 +749,22 @@ class RCGZippedApp{
 			self.addStep("Initializing jsbaseengine",function(){
 				var rcgUtilsManager=new RCGUtils();
 				rcgUtilsManager.requireLibs=function(bMakeGlobals,arrLibs){
-					self.addStep("Requiring all libs",function(){
-						self.addStep("Download parrallelized",function(){
-							return self.parallelizeCalls(arrLibs.length
-								,function(iLib){
-									debugger;
-									var sRelativePath=rcgUtilsManager.basePath+arrLibs[iLib];
-									log("Loading RCG lib "+iLib+" "+sRelativePath);
-									return self.loadRemoteFile(sRelativePath);
-								});
-						});
-						self.addStep("Load libs in order",function(){
-							return self.sequentialProcess(arrLibs.length,function(iLib){
-								var sFile=arrLibs[iFile];
-				    			var className=sFile.split(".")[0];
-								log("Post-Processing "+ iFile+" "+sFile+" className:"+className);
-				    			var auxObj = window[className]; 
-				    			return rcgUtilsManager.makeGlobals(bMakeGlobals,auxObj);
+					self.addStep("Download parrallelized",function(){
+						return self.parallelizeCalls(arrLibs.length
+							,function(iLib){
+								debugger;
+								var sRelativePath=rcgUtilsManager.basePath+arrLibs[iLib];
+								log("Loading RCG lib "+iLib+" "+sRelativePath);
+								return self.loadRemoteFile(sRelativePath);
 							});
+					});
+					self.addStep("Load libs in order",function(){
+						return self.sequentialProcess(arrLibs.length,function(iLib){
+							var sFile=arrLibs[iFile];
+			    			var className=sFile.split(".")[0];
+							log("Post-Processing "+ iFile+" "+sFile+" className:"+className);
+			    			var auxObj = window[className]; 
+			    			return rcgUtilsManager.makeGlobals(bMakeGlobals,auxObj);
 						});
 					});
 				};

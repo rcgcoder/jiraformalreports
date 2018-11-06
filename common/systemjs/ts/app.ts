@@ -59,7 +59,7 @@ class App {
                 return self.parallelizeProcess(System.postProcess.length,function(iPostFunction){
                     log("PostProcess "+iPostFunction);
                     return System.postProcess[iPostFunction]();
-                },5);
+                },1);
             });
             self.addStep("Continue the Systemjs Task ... was blocked on import('app')",function(){
                 debugger;

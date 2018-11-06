@@ -81,7 +81,8 @@ class RCGAtlassian{
 					(typeof response==="undefined")||
 					(response.isToken==false)){
 					log("Session Token does not exists... wait 1 seg");
-					setTimeout(fncManagedCheckIfTokenCallback,1000);
+					fncManagedCheckIfTokenCallback(fncManagedCheckIfTokenCallback);
+					setTimeout(function(){self.continueTask()},1000);
 					return self.waitForEvent();
 				} else {
 					log("Oauth Access token Exists:"+response.access);
@@ -89,11 +90,7 @@ class RCGAtlassian{
 				}
 			});
 		};
-		self.addStep("Check if Token exists",function(){
-			log("Start checking for token exists");
-			var fncManagedCheckIfToken=self.createManagedCallback(checkIfToken);
-			return checkIfToken(fncManagedCheckIfToken);
-		});
+		return checkIfToken(self.createManagedFunction(checkIfToken));
 	}
 
 	oauthConnect(appInfo){

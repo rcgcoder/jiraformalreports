@@ -432,9 +432,6 @@ class RCGJira{
 					undefined,
 					"application/json");
 		});
-		self.addStep("Processing issue Details",function(objResponse,xhr, statusText, errorThrown){
-			log("Issue Detail for issue:"+issueId);
-		});
 	}
 	setProperty(issueId,propertyName,propertyValue){
 		var self=this;

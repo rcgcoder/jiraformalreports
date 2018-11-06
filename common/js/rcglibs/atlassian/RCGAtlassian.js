@@ -57,6 +57,7 @@ class RCGAtlassian{
 		  }
 		});
 		xhr.send();	
+		return self.waitForEvent();
 	}
 	apiOauthSecondStep(response,xhr,sUrl,headers){
 		var self=this;

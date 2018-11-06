@@ -58,7 +58,7 @@ export class atlassianSelector {
         return true;
     }
 
-    onGetOptions(emisor){
+    onGetOptions(emitter){
         var self=this;
         log("Retrieving table data on atlassianSelector");
         var arrOptions=[];
@@ -70,8 +70,8 @@ export class atlassianSelector {
             ){
             arrOptions=self.getPropertyValues();
         }
-        emisor.retrieved(arrOptions);
-        //return arrOptions;
+        emitter.retrieved(arrOptions);
+        return arrOptions;
      }
     reloadItems(){
         var self=this;

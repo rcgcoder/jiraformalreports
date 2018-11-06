@@ -130,7 +130,8 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				return "Error "+e;
 			}
 	    });
-		return filesystem.SaveFile(baseName,contentToSave,innerOnSave,innerOnError);
+		filesystem.SaveFile(baseName,contentToSave,innerOnSave,innerOnError);
+		return self.waitForEvent();
 	}
 	save(key,item){
 		var self=this;

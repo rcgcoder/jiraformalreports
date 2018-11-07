@@ -22,6 +22,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		return (itemType=="s")||(itemType=="n")||(itemType=="b");
 	}
 	jsonReplacer(key,value){
+		var self=this;
 		if (isMethod(value)) { 
 			var objToSave={rcg_type:"m"};
 			var sFncFormula=""+value.toString();
@@ -68,6 +69,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			
 	}
 	jsonReviver(key,value){
+		var self=this;
 		var objContent=value;
 		var saveType=objContent.rcg_type;
 		if (isUndefined(saveType)){
@@ -178,7 +180,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		self.addStep("Saving the object "+key,function(){
 			var objToSave=item;
 			log("Convert to jason and save item");
-			var jsonToSave=JSON.stringify(objToSave,self.jsonReplacer);
+			var jsonToSave=JSON.stringify(objToSave,function(key,value){self.jsonReplacer(key,value);});
 			var totalLength=jsonToSave.length;
 			log("Storer save:"+baseName);
 			if (totalLength<(7*1024*1024)){

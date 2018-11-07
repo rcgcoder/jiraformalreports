@@ -21,91 +21,51 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 	isBaseType(itemType){
 		return (itemType=="s")||(itemType=="n")||(itemType=="b");
 	}
-	getType(item){
-		if (isNull(item)) return "null";
-		if (isMethod(item))return "m";
-		if (isString(item))return "s";
-		if (isNumber(item))return "n";
-		if (isBoolean(item))return "b";
-		if (isArray(item)) return "a";
-		if (isHashMap(item)) return "h";
-		if (isDate(item)) return "d";
-		if (isObject(item)){
-			if (isDefined(item.getStorageObject)){
-				if (isDefined(item.getFactory)){
-					return "fo";
-				}
-				return "co";
-			} else {
-				return "o";
-			}
-		}
-		if (isUndefined(item)) return "undef";
-		// part is "p"
-		return "o";
-	}
-	getStorageObject(item){
-		debugger;
-		var self=this;
-		if (isUndefined(item)){
-			return undefined;
-		} else {
-			var saveType=self.getType(item);
-			if (saveType=="null"){
-				return null;
-			} else if (saveType=="undef"){
-				return undefined;
-				//item.saveToStorage(self);
-			} else if (self.isBaseType(saveType) || (saveType=="d")){
-				return item;
-			} else if (saveType=="a"){
-				var objToSave=[];
-				item.forEach(function(elem){
-					objToSave.push(self.getStorageObject(elem));
+	jsonReplacer(key,value){
+		if (isMethod(value)) { 
+			var objToSave={rcg_type:"m"};
+			var sFncFormula=""+value.toString();
+			var hash = sha256.create();
+			hash.update(sFncFormula);
+			var theHash=hash.hex();
+			if (!self.functions.exists(theHash)){
+				self.functions.add(theHash,value);
+			};
+			objToSave.value=theHash;
+			return objToSave;
+		} else if (isHashMap(value)) { 
+			var objToSave={rcg_type:"h"};
+			if (value.length()>0){
+				objToSave.value=[];
+				value.walk(function(elem,deep,key){
+					objToSave.value.push({key:key,value:elem});
 				});
-				return objToSave;
-			} else if (saveType=="o"){
-				var arrProps=getAllProperties(item);
-				var objToSave={};
-				var nProps=arrProps.length;
-				if (nProps>0){
-					arrProps.forEach(function(prop){
-						objToSave[prop]=self.getStorageObject(item[prop]);
-					});
-				}
-				return objToSave;
-			} else {
-				var objToSave={};
-				objToSave.rcg_type=saveType;
-				if (saveType=="m"){
-					var sFncFormula=""+item.toString();
-					var hash = sha256.create();
-					hash.update(sFncFormula);
-					var theHash=hash.hex();
-					if (!self.functions.exists(theHash)){
-						self.functions.add(theHash,item);
-					};
-					objToSave.value=theHash;
-				} else if (saveType=="h"){
-					if (item.length()>0){
-						objToSave.value=[];
-						item.walk(function(elem,deep,key){
-							objToSave.value.push({key:key,value:self.getStorageObject(elem)});
-						});
-					}
-				} else if (saveType=="co"){
-					objToSave.className=item.constructor.name;
-					objToSave.value=item.getStorageObject(self);
-				} else if (saveType=="fo"){
-					objToSave.className=item.constructor.name;
-					objToSave.factoryName=item.getFactory().name;
-					objToSave.value={key:item.getId()};
+			}
+			return objToSave;
+		} else if (isDate(value)) { 
+			var objToSave={rcg_type:"d"};
+			objToSave.value=value.getTime();
+			//item.saveToStorage(self);
+			return objToSave;
+		} else if (isObject(value)){
+			if (isDefined(value.getStorageObject)){
+				if (isDefined(value.getFactory)){
+					var objToSave={rcg_type:"fo"};
+					objToSave.className=value.constructor.name;
+					objToSave.factoryName=value.getFactory().name;
+					objToSave.value={key:value.getId()};
 					//item.saveToStorage(self);
+					return objToSave;
+				} else {
+					var objToSave={rcg_type:"co"};
+					objToSave.className=value.constructor.name;
+					objToSave.value=value.getStorageObject(self);
+					return objToSave;
 				}
-				return objToSave;
 			}
 		}
-		return undefined;
+		return value;
+			
 	}
 	processFileObj(objContent,fsKey,filename){
 		debugger;
@@ -236,54 +196,10 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		var self=this;
 		var fileToSave="";
 		var baseName=self.basePath+"/"+key;
-		self.addStep("Getting info to store from item "+key,function(){
-/*			log("Getting the save item "+key);
-			var objToSave=self.getStorageObject(item);
-			log("Prepared objToSave "+key);
-			return objToSave;
-*/			return item;
-		});
-		var fncReplacer=function(key,value){
-			var saveType=self.getType(value);
-			if (saveType=="m"){
-				var objToSave={rcg_type:saveType};
-				var sFncFormula=""+value.toString();
-				var hash = sha256.create();
-				hash.update(sFncFormula);
-				var theHash=hash.hex();
-				if (!self.functions.exists(theHash)){
-					self.functions.add(theHash,value);
-				};
-				objToSave.value=theHash;
-				return objToSave;
-			} else if (saveType=="h"){
-				var objToSave={rcg_type:saveType};
-				if (value.length()>0){
-					objToSave.value=[];
-					value.walk(function(elem,deep,key){
-						objToSave.value.push({key:key,value:elem});
-					});
-				}
-				return objToSave;
-			} else if (saveType=="co"){
-				var objToSave={rcg_type:saveType};
-				objToSave.className=value.constructor.name;
-				objToSave.value=value.getStorageObject(self);
-				return objToSave;
-			} else if (saveType=="fo"){
-				var objToSave={rcg_type:saveType};
-				objToSave.className=value.constructor.name;
-				objToSave.factoryName=value.getFactory().name;
-				objToSave.value={key:value.getId()};
-				//item.saveToStorage(self);
-				return objToSave;
-			}
-			return value;
-				
-		}
-		self.addStep("Saving the object "+key,function(objToSave){
+		self.addStep("Saving the object "+key,function(){
+			var objToSave=item;
 			log("Convert to jason and save item");
-			var jsonToSave=JSON.stringify(objToSave,fncReplacer);
+			var jsonToSave=JSON.stringify(objToSave,self.jsonReplacer);
 			var totalLength=jsonToSave.length;
 			log("Storer save:"+baseName);
 			if (totalLength<(7*1024*1024)){

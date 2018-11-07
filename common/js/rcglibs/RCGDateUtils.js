@@ -1,6 +1,6 @@
 'use strict';
 class RCGDateUtils {
-	isDate(value){
+	isDate(value,bOnlyObject){
 		var vAux=value;
 		if ((isUndefined(vAux))
 			 ||(vAux===null)
@@ -9,18 +9,23 @@ class RCGDateUtils {
 		}
 		if ((typeof value==="object")&&(value.constructor.name=="Date")) return true;
 		if (vAux instanceof Date) return true;
+		if (isDefined(bOnlyObject)&&bOnlyObject) return false;
 		if (isString(value)){
 			if (!isNaN(value)) return false;
 			if (Date.parse(value)>0) return true;
 			//try{vAux=new Date(value);return true;} catch(err){};
-			try{
-				vAux=toDateNormalDDMMYYYYHHMMSS(value);
-				if (!isNaN(vAux.getTime())) return true;
-			} catch(err){};
-			try{
-				vAux=toDateNormalYYYYMMDD(value);
-				if (!isNaN(vAux.getTime())) return true;
-			} catch(err){};
+			if (value.length==19){
+				try{
+					vAux=toDateNormalDDMMYYYYHHMMSS(value);
+					if (!isNaN(vAux.getTime())) return true;
+				} catch(err){};
+			}
+			if (value.length==10){
+				try{
+						vAux=toDateNormalYYYYMMDD(value);
+						if (!isNaN(vAux.getTime())) return true;
+				} catch(err){};
+			}
 		}
 		return false;
 	}

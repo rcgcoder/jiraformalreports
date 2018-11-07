@@ -42,7 +42,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				});
 			}
 			return objToSave;
-		} else if (isDate(value)) { 
+		} else if (isDate(value,true)) { 
 			var objToSave={rcg_type:"d"};
 			objToSave.value=value.getTime();
 			//item.saveToStorage(self);

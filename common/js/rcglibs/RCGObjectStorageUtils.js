@@ -247,34 +247,34 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			var saveType=self.getType(value);
 			if (saveType=="m"){
 				var objToSave={};
-				var sFncFormula=""+item.toString();
+				var sFncFormula=""+value.toString();
 				var hash = sha256.create();
 				hash.update(sFncFormula);
 				var theHash=hash.hex();
 				if (!self.functions.exists(theHash)){
-					self.functions.add(theHash,item);
+					self.functions.add(theHash,value);
 				};
 				objToSave.value=theHash;
 				return objToSave;
 			} else if (saveType=="h"){
 				var objToSave={};
-				if (item.length()>0){
+				if (value.length()>0){
 					objToSave.value=[];
-					item.walk(function(elem,deep,key){
+					value.walk(function(elem,deep,key){
 						objToSave.value.push({key:key,value:elem});
 					});
 				}
 				return objToSave;
 			} else if (saveType=="co"){
 				var objToSave={};
-				objToSave.className=item.constructor.name;
-				objToSave.value=item.getStorageObject(self);
+				objToSave.className=value.constructor.name;
+				objToSave.value=value.getStorageObject(self);
 				return objToSave;
 			} else if (saveType=="fo"){
 				var objToSave={};
-				objToSave.className=item.constructor.name;
-				objToSave.factoryName=item.getFactory().name;
-				objToSave.value={key:item.getId()};
+				objToSave.className=value.constructor.name;
+				objToSave.factoryName=value.getFactory().name;
+				objToSave.value={key:value.getId()};
 				//item.saveToStorage(self);
 				return objToSave;
 			}

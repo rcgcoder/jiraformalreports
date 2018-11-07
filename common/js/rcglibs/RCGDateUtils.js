@@ -13,8 +13,14 @@ class RCGDateUtils {
 			if (!isNaN(value)) return false;
 			if (Date.parse(value)>0) return true;
 			//try{vAux=new Date(value);return true;} catch(err){};
-			try{vAux=toDateNormalDDMMYYYYHHMMSS(value);return true;} catch(err){};
-			try{vAux=toDateNormalYYYYMMDD(value);return true;} catch(err){};
+			try{
+				vAux=toDateNormalDDMMYYYYHHMMSS(value);
+				if (!isNaN(vAux)) return true;
+			} catch(err){};
+			try{
+				vAux=toDateNormalYYYYMMDD(value);
+				if (!isNaN(vAux)) return true;
+			} catch(err){};
 		}
 		return false;
 	}

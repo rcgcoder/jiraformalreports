@@ -250,11 +250,12 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			log("Key:"+key+" loaded."+sContent.length+" bytes");
 			var objContent=JSON.parse(sContent,function(key,value){return self.jsonReviver(key,value);});
 			
-			self.addStep("Processing content",function(){
+/*			self.addStep("Processing content",function(){
 				var objProcessed=self.processFileObj(objContent,key);
 				return objProcessed;
 			});
-			self.addStep("Returning result",function(objProcessed){
+*/			self.addStep("Returning result",function(){
+				var objProcessed=objContent;
 				if (isDefined(self.onLoad)){
 					self.addStep("Default Defined process result",function(objProcessed){
 						return self.onLoad(key,objProcessed);

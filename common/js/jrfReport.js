@@ -754,7 +754,7 @@ var jrfReport=class jrfReport {
 				//alert("Extracted pending keys of initial root issues");
 				log("Getting root base issues");
 				//self.allIssues.changeStorableParams(undefined,undefined,false);
-				var fncRetrieveGroup=self.createManagedCallback(function(group){
+				var fncRetrieveGroup=self.createManagedFunction(function(group){
 					//debugger;
 					if (group.length>0){
 						var sIssues="";
@@ -784,7 +784,7 @@ var jrfReport=class jrfReport {
 					}
 				});
 				
-				var fncRetrieveEpicGroup=self.createManagedCallback(function(group){
+				var fncRetrieveEpicGroup=self.createManagedFunction(function(group){
 					//debugger;
 					if (group.length>0){
 						var sIssues="";
@@ -810,7 +810,7 @@ var jrfReport=class jrfReport {
 						}
 					}
 				});
-				var fncProcessRestOfPending=self.createManagedCallback(function(){
+				var fncProcessRestOfPending=self.createManagedFunction(function(){
 					var bSomethingRetrieving=((arrKeyGroups.length>1)||(arrEpicGroups.length>1));
 					self.addStep("Retrieve groups",function(){
 						var auxKeyGroups=arrKeyGroups;

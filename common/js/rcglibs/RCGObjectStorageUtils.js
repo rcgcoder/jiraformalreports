@@ -51,7 +51,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			return undefined;
 		} else {
 			var saveType=self.getType(item);
-			if (objToSave.type=="null"){
+			if (saveType=="null"){
 				return null;
 			} else if (saveType=="undef"){
 				return undefined;

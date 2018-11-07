@@ -823,7 +823,6 @@ var jrfReport=class jrfReport {
 						}
 					})
 					self.addStep("Retrieve epics",function(){
-						if (bRetrievingGroups) return;
 						var auxEpicGroups=arrEpicGroups;
 						epicGroup=auxEpicGroups.pop();
 						arrEpicGroups=[epicGroup];

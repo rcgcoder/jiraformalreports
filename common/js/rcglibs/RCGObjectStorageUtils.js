@@ -22,7 +22,6 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		return (itemType=="s")||(itemType=="n")||(itemType=="b");
 	}
 	getType(item){
-		if (isUndefined(item)) return "undef";
 		if (isNull(item)) return "null";
 		if (isMethod(item))return "m";
 		if (isString(item))return "s";
@@ -41,6 +40,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				return "o";
 			}
 		}
+		if (isUndefined(item)) return "undef";
 		// part is "p"
 		return "o";
 	}
@@ -237,14 +237,53 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		var fileToSave="";
 		var baseName=self.basePath+"/"+key;
 		self.addStep("Getting info to store from item "+key,function(){
-			log("Getting the save item "+key);
+/*			log("Getting the save item "+key);
 			var objToSave=self.getStorageObject(item);
 			log("Prepared objToSave "+key);
 			return objToSave;
+*/			return item;
 		});
+		var fncReplacer=function(key,value){
+			var saveType=self.getType(value);
+			if (saveType=="m"){
+				var objToSave={};
+				var sFncFormula=""+item.toString();
+				var hash = sha256.create();
+				hash.update(sFncFormula);
+				var theHash=hash.hex();
+				if (!self.functions.exists(theHash)){
+					self.functions.add(theHash,item);
+				};
+				objToSave.value=theHash;
+				return objToSave;
+			} else if (saveType=="h"){
+				var objToSave={};
+				if (item.length()>0){
+					objToSave.value=[];
+					item.walk(function(elem,deep,key){
+						objToSave.value.push({key:key,value:elem});
+					});
+				}
+				return objToSave;
+			} else if (saveType=="co"){
+				var objToSave={};
+				objToSave.className=item.constructor.name;
+				objToSave.value=item.getStorageObject(self);
+				return objToSave;
+			} else if (saveType=="fo"){
+				var objToSave={};
+				objToSave.className=item.constructor.name;
+				objToSave.factoryName=item.getFactory().name;
+				objToSave.value={key:item.getId()};
+				//item.saveToStorage(self);
+				return objToSave;
+			}
+			return value;
+				
+		}
 		self.addStep("Saving the object "+key,function(objToSave){
 			log("Convert to jason and save item");
-			var jsonToSave=JSON.stringify(objToSave);
+			var jsonToSave=JSON.stringify(objToSave,fncReplacer);
 			var totalLength=jsonToSave.length;
 			log("Storer save:"+baseName);
 			if (totalLength<(7*1024*1024)){

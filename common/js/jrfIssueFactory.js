@@ -164,7 +164,7 @@ function newIssueFactory(report){
 		var rootIssue=self;
 		var nParents=self.countParentsChild();
 		if (nParents==0){
-			report.continueTask([rootIssue]);
+			return rootIssue;
 		} else {
 			var hsListParents=self.getListParentsChild();
 			var firstNode=hsListParents.getFirst();
@@ -176,15 +176,14 @@ function newIssueFactory(report){
 					});
 					report.addStep("Assigning to rootIssue",function(rootResult){
 						rootIssue=rootResult;
-						report.continueTask([rootResult]);
+						return rootResult;
 					});
 				});
-				report.continueTask();
+				return;
 			});
 			report.addStep("returning rootIssue",function(){
-				report.continueTask([rootIssue]);
+				return rootIssue;
 			});
-			report.continueTask();
 		}
 	});
 	dynObj.functions.add("getErrorsAsHtml",function(returnTag){
@@ -225,7 +224,7 @@ function newIssueFactory(report){
 					return undefined; // return undefined for not process the item
 				}
 				report.addStep("Getting all ("+arrParentsList.length+") the parents of "+dynAuxKey,function(){
-					report.workOnListOfIssueSteps(arrParentsList,function(dynParent){
+					return report.workOnListOfIssueSteps(arrParentsList,function(dynParent){
 						var dynParentKey=dynParent.getKey();
 						if (hsParents.exists(dynParentKey)){ //if the parent exist in the list......
 							dynAux.addError("The Issue:"+dynAuxKey+" has a cycle child/parent relation with "+dynParentKey+". Removing from relation.");
@@ -246,20 +245,18 @@ function newIssueFactory(report){
 //						report.continueTask();
 				});
 			}
-			var fncAddProcessIssue=report.createManagedCallback(function(inputIssue){
+			var fncAddProcessIssue=report.createManagedFunction(function(inputIssue){
 				report.addStep("Processing Issue",function(){
-					report.workOnIssueSteps(inputIssue,function(issue){
+					return report.workOnIssueSteps(inputIssue,function(issue){
 						fncAddCheckIssueSteps(issue);
 					});
-					report.continueTask();
 				});
 				report.addStep("Checking to add new try",function(){
 					if (!( isUndefined(selectedParent) || 
 						(isDefined(selectedParent)&&(selectedParent.countParentsChild()==0))
 					   ))  {
-						fncAddProcessIssue(selectedParent);
+						return fncAddProcessIssue(selectedParent);
 					}
-					report.continueTask();
 				});
 			});
 			fncAddProcessIssue(self);

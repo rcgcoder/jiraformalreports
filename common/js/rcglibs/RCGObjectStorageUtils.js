@@ -246,7 +246,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		var fncReplacer=function(key,value){
 			var saveType=self.getType(value);
 			if (saveType=="m"){
-				var objToSave={};
+				var objToSave={rcg_type:saveType};
 				var sFncFormula=""+value.toString();
 				var hash = sha256.create();
 				hash.update(sFncFormula);
@@ -257,7 +257,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				objToSave.value=theHash;
 				return objToSave;
 			} else if (saveType=="h"){
-				var objToSave={};
+				var objToSave={rcg_type:saveType};
 				if (value.length()>0){
 					objToSave.value=[];
 					value.walk(function(elem,deep,key){
@@ -266,12 +266,12 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				}
 				return objToSave;
 			} else if (saveType=="co"){
-				var objToSave={};
+				var objToSave={rcg_type:saveType};
 				objToSave.className=value.constructor.name;
 				objToSave.value=value.getStorageObject(self);
 				return objToSave;
 			} else if (saveType=="fo"){
-				var objToSave={};
+				var objToSave={rcg_type:saveType};
 				objToSave.className=value.constructor.name;
 				objToSave.factoryName=value.getFactory().name;
 				objToSave.value={key:value.getId()};

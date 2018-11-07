@@ -59,14 +59,14 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			} else if (self.isBaseType(saveType) || (saveType=="d")){
 				return item;
 			} else if (saveType=="a"){
-				objToSave=[];
+				var objToSave=[];
 				item.forEach(function(elem){
 					objToSave.push(self.getStorageObject(elem));
 				});
 				return objToSave;
 			} else if (saveType=="o"){
 				var arrProps=getAllProperties(item);
-				objToSave={};
+				var objToSave={};
 				var nProps=arrProps.length;
 				if (nProps>0){
 					arrProps.forEach(function(prop){
@@ -75,7 +75,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				}
 				return objToSave;
 			} else {
-				objToSave={};
+				var objToSave={};
 				objToSave.rcg_type=saveType;
 				if (saveType=="m"){
 					var sFncFormula=""+item.toString();
@@ -86,27 +86,23 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 						self.functions.add(theHash,item);
 					};
 					objToSave.value=theHash;
-					return objToSave;
 				} else if (saveType=="h"){
-					objToSave.rcg_type=saveType;
 					if (item.length()>0){
 						objToSave.value=[];
 						item.walk(function(elem,deep,key){
 							objToSave.value.push({key:key,value:self.getStorageObject(elem)});
 						});
 					}
-					return objToSave;
 				} else if (saveType=="co"){
 					objToSave.className=item.constructor.name;
 					objToSave.value=item.getStorageObject(self);
-					return objToSave;
 				} else if (saveType=="fo"){
 					objToSave.className=item.constructor.name;
 					objToSave.factoryName=item.getFactory().name;
 					objToSave.value={key:item.getId()};
 					//item.saveToStorage(self);
-					return objToSave;
 				}
+				return objToSave;
 			}
 		}
 		return undefined;

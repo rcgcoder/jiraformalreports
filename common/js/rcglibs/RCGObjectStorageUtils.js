@@ -115,7 +115,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 	processFileObj(objContent,fsKey,filename){
 		debugger;
 		var self=this;
-		var saveType=objToSave.rcg_type;
+		var saveType=objContent.rcg_type;
 		var objResult=objContent;
 		if (isUndefined(saveType)){
 			if (isArray(objContent)){

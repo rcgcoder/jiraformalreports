@@ -169,7 +169,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 	}
 	saveAllUnlocked(){
 		var self=this;
-		debugger;
+		//debugger;
 		var storer=self.storer;
 		var countInactives=self.countInactiveObjects();
 		var countActives=self.countActiveObjects();

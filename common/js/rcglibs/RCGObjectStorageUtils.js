@@ -68,7 +68,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		return value;
 	}
 	jsonReviver(key,value){
-		debugger;
+		//debugger;
 		var self=this;
 		if (isNull(value)||(isUndefined(value))) return value;
 		var objContent=value;
@@ -96,7 +96,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			objResult.loadFromStorageObject(objContent.value);
 			return objResult;
 		} else if (saveType=="fo" /* object with factory */){
-			debugger;
+			//debugger;
 			var factoryName=objContent.factoryName;
 			var theFactory=baseDynamicObjectFactory.getFactoryGlobal(factoryName);
 			var storedObj=objContent.value;

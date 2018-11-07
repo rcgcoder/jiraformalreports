@@ -76,10 +76,12 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				});
 				return objToSave;
 			} else if (saveType=="h"){
-				objToSave.value=[];
-				item.walk(function(elem,deep,key){
-					objToSave.value.push({key:key,value:self.getStorageObject(elem)});
-				});
+				if (item.length()>0){
+					objToSave.value=[];
+					item.walk(function(elem,deep,key){
+						objToSave.value.push({key:key,value:self.getStorageObject(elem)});
+					});
+				}
 				return objToSave;
 			} else if (saveType=="o"){
 				var arrProps=getAllProperties(item);
@@ -133,15 +135,17 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			return objResult;
 		} else if (saveType=="h"/*"hashmap"*/){
 			var objResult=newHashMap();
-			objResult.autoSwing=false;
-			objContent.value.forEach(function(hsElem){
-				var key=hsElem.key;
-				var hsValue=hsElem.value;
-				var oPartial=self.processFileObj(hsValue);
-				objResult.add(key,oPartial);
-			});
-			objResult.autoSwing=true;
-			objResult.swing();
+			if (isDefined(objContent.value)){
+				objResult.autoSwing=false;
+				objContent.value.forEach(function(hsElem){
+					var key=hsElem.key;
+					var hsValue=hsElem.value;
+					var oPartial=self.processFileObj(hsValue);
+					objResult.add(key,oPartial);
+				});
+				objResult.autoSwing=true;
+				objResult.swing();
+			}
 			return objResult;
 		} else if (saveType=="co" /* custom object */){
 			var objResult=new window[objContent.className]();
@@ -238,10 +242,13 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		var fileToSave="";
 		var baseName=self.basePath+"/"+key;
 		self.addStep("Getting info to store from item "+key,function(){
+			log("Getting the save item");
 			var objToSave=self.getStorageObject(item);
+			log("Getting the save item");
 			return objToSave;
 		});
 		self.addStep("Saving the object "+key,function(objToSave){
+			log("Convert to jason and save item");
 			var jsonToSave=JSON.stringify(objToSave);
 			var totalLength=jsonToSave.length;
 			log("Storer save:"+baseName);

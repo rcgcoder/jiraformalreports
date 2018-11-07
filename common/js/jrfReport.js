@@ -526,7 +526,7 @@ var jrfReport=class jrfReport {
 		// first launch all issue retrieve ...
 		self.addStep("Getting All Issues in the Scope.... ",function(){
 			debugger;
-			self.allIssues.changeStorableParams(100,0.10,true);
+			self.allIssues.changeStorableParams(1000,0.10,true);
 			if (self.isReusingIssueList()){
 				self.addStep("check if report exists in storage",function(){
 					return self.existStored(); // load all issues
@@ -753,6 +753,7 @@ var jrfReport=class jrfReport {
 			self.addStep("Getting root base issues",function(){
 				//alert("Extracted pending keys of initial root issues");
 				log("Getting root base issues");
+				alert("All issues of jql retrieved");
 				//self.allIssues.changeStorableParams(undefined,undefined,false);
 				var fncRetrieveGroup=self.createManagedFunction(function(group){
 					//debugger;

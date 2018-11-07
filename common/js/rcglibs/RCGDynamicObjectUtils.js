@@ -1204,8 +1204,9 @@ var factoryObjects=class factoryObjects{
 			}	
 		}
 		if (isDefined(bMaintainLocked)&&bMaintainLocked) bUnlock=false;
+		
 		oObj=self.getById(key);
-		if (isUndefined(self.continueTask)) { // is not defined
+		if (isUndefined(self.continueTask)) { // is not defined continuetask... the factory not extends from task manager... everything is synchronous
 			if (isDefined(fncNotExists)&&(oObj==="")){
 				var oObj=fncNotExists(key);
 			}

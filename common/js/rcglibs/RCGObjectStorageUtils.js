@@ -54,12 +54,12 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		var objToSave={};
 		if (isDefined(item)){
 			var saveType=self.getType(item);
-			objToSave.type=saveType;
-			if (self.isBaseType(objToSave.type)){
+			objToSave.rcg_type=saveType;
+			if (self.isBaseType(saveType)){
 				return item;
-			} else if (objToSave.type=="d"){
+			} else if (saveType=="d"){
 				return item;
-			} else if (objToSave.type=="m"){
+			} else if (saveType=="m"){
 				var sFncFormula=""+item.toString();
 				var hash = sha256.create();
 				hash.update(sFncFormula);
@@ -69,19 +69,19 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				};
 				objToSave.value=theHash;
 				return objToSave;
-			} else if (objToSave.type=="a"){
-				objToSave.value=[];
+			} else if (saveType=="a"){
+				objToSave=[];
 				item.forEach(function(elem){
 					objToSave.value.push(self.getStorageObject(elem));
 				});
 				return objToSave;
-			} else if (objToSave.type=="h"){
+			} else if (saveType=="h"){
 				objToSave.value=[];
 				item.walk(function(elem,deep,key){
 					objToSave.value.push({key:key,value:self.getStorageObject(elem)});
 				});
 				return objToSave;
-			} else if (objToSave.type=="o"){
+			} else if (saveType=="o"){
 				var arrProps=getAllProperties(item);
 				objToSave={};
 				var nProps=arrProps.length;
@@ -91,11 +91,11 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 					});
 				}
 				return objToSave;
-			} else if (objToSave.type=="co"){
+			} else if (saveType=="co"){
 				objToSave.className=item.constructor.name;
 				objToSave.value=item.getStorageObject(self);
 				return objToSave;
-			} else if (objToSave.type=="fo"){
+			} else if (saveType=="fo"){
 				objToSave.className=item.constructor.name;
 				objToSave.factoryName=item.getFactory().name;
 				objToSave.value={key:item.getId()};
@@ -109,6 +109,100 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			} 
 		}
 		return objToSave;
+	}
+	processFileObj(objContent,fsKey,filename){
+		debugger;
+		var self=this;
+		var saveType=objToSave.rcg_type;
+		if (isUndefined(saveType)){
+			if (isArray(objContent)){
+				var objResult=[];
+				objContent.forEach(function(auxObj){
+					objResult.push(self.processFileObj(auxObj));
+				});
+			} else if (isObject(objContent)){
+				var arrProps=getAllProperties(objContent);
+				var objResult={};
+				arrProps.forEach(function(prop){
+					var oAtt=objContent[prop];
+					var oPartial=self.processFileObj(oAtt);
+					objResult[prop]=oPartial;
+				});
+			} else {
+				objResult=self.processFileObj(objContent);
+			}
+		} else if (saveType=="h"/*"hashmap"*/){
+			var objResult=newHashMap();
+			objResult.autoSwing=false;
+			objContent.value.forEach(function(hsElem){
+				var key=hsElem.key;
+				var hsValue=hsElem.value;
+				var oPartial=self.processFileObj(hsValue);
+				objResult.add(key,oPartial);
+			});
+			objResult.autoSwing=true;
+			objResult.swing();
+		} else if (saveType=="co" /* custom object */){
+			var objResult=new window[objContent.className]();
+			objResult.loadFromStorageObject(objContent.value);
+			return objResult;
+		} else if (saveType=="fo" /* object with factory */){
+			debugger;
+			var factoryName=objContent.factoryName;
+			var theFactory=baseDynamicObjectFactory.getFactoryGlobal(factoryName);
+			var storedObj=objContent.value;
+			var objId=storedObj.key;
+			var dynObj=theFactory.getById(objId);
+			if (dynObj===""){ // if object not exists in factory.... creates one
+				dynObj=theFactory.new(storedObj.name,objId); // the new object is marked as changed and locked
+				dynObj.setFullyUnloaded();
+				dynObj.clearChanges(); // mark as unchanged
+				dynObj.setStored(true);
+				dynObj.unlock(); // unlock!
+			}
+			return dynObj;
+		} else if (saveType=="m" /* method */){
+			var theHash=objContent.value;
+			var theMethod=self.functions.getValue(theHash);
+			return theMethod;
+		} else if (saveType!="p"){
+			return objContent;
+		} else if (saveType=="p" /* object part */){
+			if (objContent.partNumber==0){
+				//debugger;
+				var arrContents=new Array(objContent.totalParts);
+				arrContents[0]=objContent.content;
+				self.addStep("Retrieving other "+(objContent.totalParts-1)+" parts",function(){
+					var arrPets=[];
+					for (var i=1;i<objContent.totalParts;i++){
+						arrPets.push(fsKey+"_part_"+i);
+					}
+					var fncLoadPart=function(part){
+						self.load(part);
+					};
+					var fncProcessed=function(partId,part){
+						arrContents[part.partNumber]=part.content;
+					};
+					return self.parallelizeCalls(arrPets,fncLoadPart,fncProcessed,5);
+				});
+				self.addStep("Creating and parsing JSON of "+objContent.totalParts,function(){
+					var sJSON=arrContents.saToString();
+					var objJson=JSON.parse(sJSON);
+					return self.processFileObj(objJson);
+				});
+				self.addStep("Setting values to Returning Result of "+objContent.totalParts,function(objProcessed){
+					return objProcessed;
+				});
+				return undefined;
+			} else {
+				return objContent;
+			}
+		} else {
+			logError("Other type");
+			debugger;
+		}
+		logError("ERROR... the processFile must never reach this line....");
+//		return objResult;
 	}
 	internal_saveFile(key,baseName,contentToSave,onSave,onError){
 		var self=this;
@@ -199,110 +293,6 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				});
 			}
 		});
-	}
-	processFileObj(objContent,fsKey,filename){
-		debugger;
-		var self=this;
-		if (objContent.type=="o" /*"object"*/){
-			var arrProps=getAllProperties(objContent.atts);
-			var objResult={};
-			arrProps.forEach(function(prop){
-				var oAtt=objContent.atts[prop];
-				var oPartial=self.processFileObj(oAtt);
-				objResult[prop]=oPartial;
-			});
-			return objResult;
-		} else if (objContent.type=="a"/*"array"*/){
-			var objResult=[];
-			objContent.value.forEach(function(elem){
-				var oPartial=self.processFileObj(elem);
-				objResult.push(oPartial);
-			});
-			return objResult;
-		} else if (objContent.type=="h"/*"hashmap"*/){
-			var objResult=newHashMap();
-			objResult.autoSwing=false;
-			objContent.value.forEach(function(hsElem){
-				var key=hsElem.key;
-				var hsValue=hsElem.value;
-				var oPartial=self.processFileObj(hsValue);
-				objResult.add(key,oPartial);
-			});
-			objResult.autoSwing=true;
-			objResult.swing();
-			return objResult;
-		} else if (objContent.type=="co" /* custom object */){
-			var objResult=new window[objContent.className]();
-			objResult.loadFromStorageObject(objContent.value);
-			return objResult;
-		} else if (objContent.type=="fo" /* object with factory */){
-			debugger;
-			var factoryName=objContent.factoryName;
-			var theFactory=baseDynamicObjectFactory.getFactoryGlobal(factoryName);
-			var storedObj=objContent.value;
-			var objId=storedObj.key;
-			var dynObj=theFactory.getById(objId);
-			if (dynObj===""){ // if object not exists in factory.... creates one
-				dynObj=theFactory.new(storedObj.name,objId); // the new object is marked as changed and locked
-				dynObj.setFullyUnloaded();
-				dynObj.clearChanges(); // mark as unchanged
-				dynObj.setStored(true);
-				dynObj.unlock(); // unlock!
-			}
-			return dynObj;
-		} else if (objContent.type=="m" /* method */){
-			var theHash=objContent.value;
-			var theMethod=self.functions.getValue(theHash);
-			return theMethod;
-		} else if (objContent.type!="p"){
-			return objContent;
-/*		if (self.isBaseType(objContent.type)){ 
-			return objContent.value;
-		} else if (objContent.type=="null" ){
-			return null;
-		} else if (objContent.type=="undef"){
-			return undefined;
-		} else if (objContent.type=="d" ){
-			return new Date(objContent.value);
-*/
-		} else if (objContent.type=="p" /* object part */){
-			if (objContent.partNumber==0){
-				//debugger;
-				var arrContents=new Array(objContent.totalParts);
-				arrContents[0]=objContent.content;
-				self.addStep("Retrieving other "+(objContent.totalParts-1)+" parts",function(){
-					var arrPets=[];
-					for (var i=1;i<objContent.totalParts;i++){
-						arrPets.push(fsKey+"_part_"+i);
-					}
-					var fncLoadPart=function(part){
-						self.load(part);
-					};
-					var fncProcessed=function(partId,part){
-						arrContents[part.partNumber]=part.content;
-					};
-					return self.parallelizeCalls(arrPets,fncLoadPart,fncProcessed,5);
-				});
-				self.addStep("Creating and parsing JSON of "+objContent.totalParts,function(){
-					var sJSON=arrContents.saToString();
-					var objJson=JSON.parse(sJSON);
-					return self.processFileObj(objJson);
-				});
-				self.addStep("Setting values to Returning Result of "+objContent.totalParts,function(objProcessed){
-					return objProcessed;
-				});
-				return undefined;
-			} else {
-				return objContent;
-			}
-		} else if (isUndefined(objContent.type)){
-			return (objContent);
-		} else {
-			logError("Other type");
-			debugger;
-		}
-		logError("ERROR... the processFile must never reach this line....");
-//		return objResult;
 	}
 	exists(key){
 		var self=this;

@@ -72,7 +72,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			} else if (saveType=="a"){
 				objToSave=[];
 				item.forEach(function(elem){
-					objToSave.value.push(self.getStorageObject(elem));
+					objToSave.push(self.getStorageObject(elem));
 				});
 				return objToSave;
 			} else if (saveType=="h"){
@@ -114,15 +114,14 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		debugger;
 		var self=this;
 		var saveType=objToSave.rcg_type;
+		var objResult=objContent;
 		if (isUndefined(saveType)){
 			if (isArray(objContent)){
-				var objResult=[];
-				objContent.forEach(function(auxObj){
-					objResult.push(self.processFileObj(auxObj));
+				objContent.forEach(function(auxObj,index){
+					objResult[index]=self.processFileObj(auxObj);
 				});
 			} else if (isObject(objContent)){
 				var arrProps=getAllProperties(objContent);
-				var objResult={};
 				arrProps.forEach(function(prop){
 					var oAtt=objContent[prop];
 					var oPartial=self.processFileObj(oAtt);
@@ -131,6 +130,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			} else {
 				objResult=self.processFileObj(objContent);
 			}
+			return objResult;
 		} else if (saveType=="h"/*"hashmap"*/){
 			var objResult=newHashMap();
 			objResult.autoSwing=false;
@@ -142,6 +142,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			});
 			objResult.autoSwing=true;
 			objResult.swing();
+			return objResult;
 		} else if (saveType=="co" /* custom object */){
 			var objResult=new window[objContent.className]();
 			objResult.loadFromStorageObject(objContent.value);

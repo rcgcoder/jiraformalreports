@@ -60,8 +60,8 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
             	return;
             } else {
 	            self.addStep("Downloading content:"+contentId+" from "+srcUrl,function(){
-	                	cflc.getContent(contentId);
-	                	tag.finalUrl=srcUrl;
+                	tag.finalUrl=srcUrl;
+	                return cflc.getContent(contentId);
 	            });
     			var sTitle="";
                 if (self.titlePostpend!=""){
@@ -76,7 +76,7 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
         				antContent=oContent;
         				sTitle=oContent.title;
         				sTitle+=" - "+self.replaceVars(self.titlePostpend).saToString().trim();
-                    	cflc.getContentByTitle(sTitle);
+                    	return cflc.getContentByTitle(sTitle);
         			});            
         			self.addStep("Processing Confluence search Content:"+contentId+" from "+srcUrl,function(jsonContent){
         				var oContent;

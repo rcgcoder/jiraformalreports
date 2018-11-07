@@ -242,9 +242,9 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		var fileToSave="";
 		var baseName=self.basePath+"/"+key;
 		self.addStep("Getting info to store from item "+key,function(){
-			log("Getting the save item");
+			log("Getting the save item "+key);
 			var objToSave=self.getStorageObject(item);
-			log("Getting the save item");
+			log("Prepared objToSave "+key);
 			return objToSave;
 		});
 		self.addStep("Saving the object "+key,function(objToSave){

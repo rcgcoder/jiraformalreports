@@ -172,7 +172,7 @@ function newIssueFactory(report){
 			report.addStep("getting root from all parents",function(){
 				report.workOnIssueSteps(parentIssue,function(issue){
 					report.addStep("getting root from parent",function(){
-						issue.getChildRootSteps(report);
+						return issue.getChildRootSteps(report);
 					});
 					report.addStep("Assigning to rootIssue",function(rootResult){
 						rootIssue=rootResult;

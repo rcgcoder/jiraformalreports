@@ -26,9 +26,7 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
 		if (self.type.toLowerCase()=="url"){
 			self.addStep("Getting Include Url",function(){
             	if (!self.model.includeCache.exists(srcUrl)){
-            		System.webapp.loadRemoteFile(srcUrl);
-            	} else {
-            		self.continueTask();
+            		return System.webapp.loadRemoteFile(srcUrl);
             	}
 			});			
 			self.addStep("Executing class...."+self.jsClass,function(){
@@ -36,10 +34,9 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
             		self.model.includeCache.add(srcUrl,srcUrl);
             		if (self.jsClass!=""){
 						var jrfPluginClass=new window[self.jsClass](tag,self.model.report,self.model);
-						jrfPluginClass.execute();
+						return jrfPluginClass.execute();
             		}
             	} 
-				self.continueTask();
 			});			
 		} else if (self.type.toLowerCase()=="confluence"){
             var urlParts=srcUrl.split("pages/");
@@ -60,7 +57,7 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
             	hsChilds.walk(function(child,iDeep,key){
             		tag.addChild(child,key);
             	});
-        		self.continueTask();
+            	return;
             } else {
 	            self.addStep("Downloading content:"+contentId+" from "+srcUrl,function(){
 	                	cflc.getContent(contentId);
@@ -95,7 +92,7 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
         				} else {
     	                	tag.finalUrl="url:("+srcUrl+")";
         				}
-    					self.continueTask([oResult]);
+    					return oResult;
         			});
                 }
                 self.addStep("Adding content " + contentId + (self.titlePostpend!=""?" ("+self.titlePostpend+")":"") + " to contents cache",function(jsonContent){
@@ -106,7 +103,7 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
         				oContent=JSON.parse(jsonContent);
     				}
                 	self.model.includeCache.add(theHash,{content:oContent,tag:tag});
-                	self.continueTask([oContent]);
+                	return oContent;
                 });
     			var auxModel;
     			self.addStep("Processing Confluence Content:"+contentId+(sTitle!=""?" ("+sTitle+")":"")+" from "+srcUrl,function(oContent){
@@ -114,7 +111,7 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
     				if (sContentBody=="") alert("Content Body is ''");
     				sContentBody=self.model.report.cleanModel(sContentBody);
 //    				sContentBody=decodeEntities(sContentBody);
-    				self.continueTask([sContentBody]);
+    				return sContentBody;
     			});
                 if (isUndefined(self.subtype)||(self.subtype=="content")||(self.subtype=="")){
         			self.addStep("Processing HTML Model of Confluence Content:"+contentId+" from "+srcUrl,function(sContentHtmlBody){
@@ -124,7 +121,7 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
     					auxModel.directives=self.model.directives;
     					auxModel.filters=self.model.filters;
     					auxModel.includeCache=self.model.includeCache;
-    					auxModel.parse(sContentHtmlBody,tag);
+    					return auxModel.parse(sContentHtmlBody,tag);
     				});
     				self.addStep("Updating Accumulators of Parent Model... avoid multiple process ",function(){
     					auxModel.accumulatorList.walk(function(hsAccum,iDeep,key){
@@ -132,7 +129,6 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
     							self.model.accumulatorList.add(key,hsAccum);
     						};
     					});
-    					self.continueTask();
     				});
                 } else if (self.subtype=="javascript"){
                 	log("Include Javascript");
@@ -152,17 +148,13 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
         				System.webapp.addJavascriptString(sJs);
         				var issExtender=new issueExtender(tag,self.model.report,self.model);
         				issExtender.extendTreeIssues();
-        				self.continueTask();
 
 //        				auxModel=new jrfModel(self.model.report,sContentHtmlBody,self.reportElem);
 //    					auxModel.parse(sContentHtmlBody,tag);
     				});
-                } else {
-                	self.continueTask();
                 }
         	}
 		}
-		self.continueTask();
 	}
 	apply(){
 //		debugger;
@@ -171,14 +163,13 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
 			if (self.model.variables.getVar("withComprobations")){
 				self.addHtml("["+self.tag.finalUrl+"]");
 			}
-			self.processAllChilds();
+			return self.processAllChilds();
 		});
 		self.addStep("Finalizing the jrfInclude",function(){
 			self.addPostHtml();
 			var sContent=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
 			sContent=self.replaceVars(sContent);
 			self.addHtml(sContent);
-			self.continueTask();
 		});
 	}
 

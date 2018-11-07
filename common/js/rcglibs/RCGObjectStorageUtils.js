@@ -66,7 +66,6 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			}
 		}
 		return value;
-			
 	}
 	jsonReviver(key,value){
 		var self=this;
@@ -180,7 +179,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		self.addStep("Saving the object "+key,function(){
 			var objToSave=item;
 			log("Convert to jason and save item");
-			var jsonToSave=JSON.stringify(objToSave,function(key,value){self.jsonReplacer(key,value);});
+			var jsonToSave=JSON.stringify(objToSave,function(key,value){return self.jsonReplacer(key,value);});
 			var totalLength=jsonToSave.length;
 			log("Storer save:"+baseName);
 			if (totalLength<(7*1024*1024)){
@@ -247,7 +246,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		var fileName=(self.basePath+"/"+key);
 		var innerOnLoad=self.createManagedCallback(function(sContent){
 			log("Key:"+key+" loaded."+sContent.length+" bytes");
-			var objContent=JSON.parse(sContent,self.jsonReviver);
+			var objContent=JSON.parse(sContent,function(key,value){return self.jsonReviver(key,value);});
 			
 			self.addStep("Processing content",function(){
 				var objProcessed=self.processFileObj(objContent,key);

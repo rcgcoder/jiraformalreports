@@ -67,41 +67,27 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		return value;
 			
 	}
-	processFileObj(objContent,fsKey,filename){
-		debugger;
-		var self=this;
+	jsonReviver(key,value){
+		var objContent=value;
 		var saveType=objContent.rcg_type;
-		var objResult=objContent;
 		if (isUndefined(saveType)){
-			if (isArray(objContent)){
-				objContent.forEach(function(auxObj,index){
-					objResult[index]=self.processFileObj(auxObj);
-				});
-			} else if (isObject(objContent)){
-				var arrProps=getAllProperties(objContent);
-				arrProps.forEach(function(prop){
-					var oAtt=objContent[prop];
-					var oPartial=self.processFileObj(oAtt);
-					objResult[prop]=oPartial;
-				});
-/*			} else {
-				objResult=self.processFileObj(objContent);
-*/			}
-			return objResult;
-		} else if (saveType=="h"/*"hashmap"*/){
+			return value;
+		}
+		if (saveType=="h"/*"hashmap"*/){
 			var objResult=newHashMap();
 			if (isDefined(objContent.value)){
 				objResult.autoSwing=false;
 				objContent.value.forEach(function(hsElem){
 					var key=hsElem.key;
 					var hsValue=hsElem.value;
-					var oPartial=self.processFileObj(hsValue);
-					objResult.add(key,oPartial);
+					objResult.add(key,hsValue);
 				});
 				objResult.autoSwing=true;
 				objResult.swing();
 			}
 			return objResult;
+		} else if (saveType=="d" /* date */){
+			return new Date(objContent.value);
 		} else if (saveType=="co" /* custom object */){
 			var objResult=new window[objContent.className]();
 			objResult.loadFromStorageObject(objContent.value);
@@ -125,8 +111,6 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			var theHash=objContent.value;
 			var theMethod=self.functions.getValue(theHash);
 			return theMethod;
-		} else if (saveType!="p"){
-			return objContent;
 		} else if (saveType=="p" /* object part */){
 			if (objContent.partNumber==0){
 				//debugger;
@@ -157,12 +141,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			} else {
 				return objContent;
 			}
-		} else {
-			logError("Other type");
-			debugger;
 		}
-		logError("ERROR... the processFile must never reach this line....");
-//		return objResult;
 	}
 	internal_saveFile(key,baseName,contentToSave,onSave,onError){
 		var self=this;
@@ -266,7 +245,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		var fileName=(self.basePath+"/"+key);
 		var innerOnLoad=self.createManagedCallback(function(sContent){
 			log("Key:"+key+" loaded."+sContent.length+" bytes");
-			var objContent=JSON.parse(sContent);
+			var objContent=JSON.parse(sContent,self.jsonReviver);
 			
 			self.addStep("Processing content",function(){
 				var objProcessed=self.processFileObj(objContent,key);

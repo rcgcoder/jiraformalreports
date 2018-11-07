@@ -11,7 +11,8 @@ class RCGDateUtils {
 		if (vAux instanceof Date) return true;
 		if (isString(value)){
 			if (!isNaN(value)) return false;
-			try{vAux=new Date(value);return true;} catch(err){};
+			if (Date.parse(value)>0) return true;
+			//try{vAux=new Date(value);return true;} catch(err){};
 			try{vAux=toDateNormalDDMMYYYYHHMMSS(value);return true;} catch(err){};
 			try{vAux=toDateNormalYYYYMMDD(value);return true;} catch(err){};
 		}

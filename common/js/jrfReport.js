@@ -826,9 +826,9 @@ var jrfReport=class jrfReport {
 						var auxEpicGroups=arrEpicGroups;
 						epicGroup=auxEpicGroups.pop();
 						arrEpicGroups=[epicGroup];
-						if (arrEpicGroups.length>0){
+						if (auxEpicGroups.length>0){
 							bSomethingRetrieving=true;
-							return self.parallelizeProcess(arrEpicGroups,function(group){
+							return self.parallelizeProcess(auxEpicGroups,function(group){
 								return fncRetrieveEpicGroup(group);
 							});
 						}

@@ -193,7 +193,7 @@ var jrfReport=class jrfReport {
 				self.continueTask();
 			};
 		} else {
-			auxnFncEnd=function(objStep){
+			auxFncEnd=function(objStep){
 				var vResult=endFunction(objStep);
 				self.continueTask([vResult]);
 			}

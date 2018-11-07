@@ -344,7 +344,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 	getTokenName(tag){
 		var tagAttrs=tag.getAttributes();
 		if (tag.getTagText().toLowerCase().indexOf("formula")>0){
-//			debugger;
+			debugger;
 			log("Includes Formula");
 		}
 		var sTokenName="jrfNoop";
@@ -404,9 +404,8 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 /*		self.addStep("Returning the html",function(){
 			var sHtmlResult=self.popHtmlBuffer();
 			self.addHtml(sHtmlResult);
-			self.continueTask();
 		});
-*/		self.continueTask();
+*/
 	}
 	encode(parentTag,reportElement){
 		var self=this;
@@ -427,7 +426,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			self.addHtml(sHtml);
 			self.continueTask();
 		});
-*/		self.continueTask();
+*/
 	}
 	parse(html,parentTag){
 		var self=this;
@@ -445,7 +444,6 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 				var sTagRest=oAdvance.text;
 				parentTag.setPostHTML(sTagRest);
 			}
-			self.continueTask();
 		});
 		self.addStep("Processing Model Directives..", function(){
 			self.processDirectiveTags();
@@ -456,7 +454,6 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 		self.addStep("Getting accum properties of leafs", function(){
 			self.preloadAccumPropertiesLeafs();
 		});
-		self.continueTask();
 	}
 	preloadAccumPropertiesLeafs(){
 		var self=this;
@@ -483,7 +480,6 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 				}
 			});
 		});
-		self.continueTask();
 	}
 	processDirectiveTags(){
 		var self=this;
@@ -517,7 +513,6 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 				});
 			}
 		});
-		self.continueTask();
 	}
 	processIncludeTags(){
 		var self=this;
@@ -528,15 +523,14 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 					log("needs preprocess");
 					var auxTagApplier=self.prepareTag(tag);
 					self.addStep("Processing include Tag",function(){
-						auxTagApplier.preload(tag);
+						return auxTagApplier.preload(tag);
 					});
 					self.addStep("Processing auxiliar model returned from preload",function(auxModel){
-						self.continueTask();
+						return;
 					});
 				} else {
 					log("do nothing");
 				}
-				self.continueTask();
 			});
 		});
 		self.tagFactory.list.walk(function(tag){
@@ -544,7 +538,6 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 				fncProcessInclude(tag);
 			}
 		});
-		self.continueTask();
 	}
 	
 	
@@ -572,10 +565,9 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 			self.addStep("Returning result HTML to process caller",function(){
 	//			log(sHtml);
 				var sHtml=self.popHtmlBuffer(htmlBufferIndex);
-				self.continueTask([sHtml]);
+				return sHtml;
 			});
 		}
-		self.continueTask();
 	}
 	addFilter(name,sFilter){
 		var self=this;

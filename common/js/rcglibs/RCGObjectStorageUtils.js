@@ -22,6 +22,8 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		return (itemType=="s")||(itemType=="n")||(itemType=="b");
 	}
 	getType(item){
+		if (isUndefined(item)) return "undef";
+		if (isNull(item)) return "null";
 		if (isMethod(item))return "m";
 		if (isString(item))return "s";
 		if (isNumber(item))return "n";
@@ -39,49 +41,28 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				return "o";
 			}
 		}
-		if (isNull(item)){
-			return "null";
-		}
-		if (isUndefined(item)){
-			return "undef";
-		}
 		// part is "p"
 		return "o";
 	}
 	getStorageObject(item){
 		debugger;
 		var self=this;
-		var objToSave={};
-		if (isDefined(item)){
+		if (isUndefined(item)){
+			return undefined;
+		} else {
 			var saveType=self.getType(item);
-			objToSave.rcg_type=saveType;
-			if (self.isBaseType(saveType)){
+			if (objToSave.type=="null"){
+				return null;
+			} else if (saveType=="undef"){
+				return undefined;
+				//item.saveToStorage(self);
+			} else if (self.isBaseType(saveType) || (saveType=="d")){
 				return item;
-			} else if (saveType=="d"){
-				return item;
-			} else if (saveType=="m"){
-				var sFncFormula=""+item.toString();
-				var hash = sha256.create();
-				hash.update(sFncFormula);
-				var theHash=hash.hex();
-				if (!self.functions.exists(theHash)){
-					self.functions.add(theHash,item);
-				};
-				objToSave.value=theHash;
-				return objToSave;
 			} else if (saveType=="a"){
 				objToSave=[];
 				item.forEach(function(elem){
 					objToSave.push(self.getStorageObject(elem));
 				});
-				return objToSave;
-			} else if (saveType=="h"){
-				if (item.length()>0){
-					objToSave.value=[];
-					item.walk(function(elem,deep,key){
-						objToSave.value.push({key:key,value:self.getStorageObject(elem)});
-					});
-				}
 				return objToSave;
 			} else if (saveType=="o"){
 				var arrProps=getAllProperties(item);
@@ -93,24 +74,42 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 					});
 				}
 				return objToSave;
-			} else if (saveType=="co"){
-				objToSave.className=item.constructor.name;
-				objToSave.value=item.getStorageObject(self);
-				return objToSave;
-			} else if (saveType=="fo"){
-				objToSave.className=item.constructor.name;
-				objToSave.factoryName=item.getFactory().name;
-				objToSave.value={key:item.getId()};
-				//item.saveToStorage(self);
-				return objToSave;
-			} else if (objToSave.type=="null"){
-				return null;
-			} else if (objToSave.type=="undef"){
-				return undefined;
-				//item.saveToStorage(self);
-			} 
+			} else {
+				objToSave={};
+				objToSave.rcg_type=saveType;
+				if (saveType=="m"){
+					var sFncFormula=""+item.toString();
+					var hash = sha256.create();
+					hash.update(sFncFormula);
+					var theHash=hash.hex();
+					if (!self.functions.exists(theHash)){
+						self.functions.add(theHash,item);
+					};
+					objToSave.value=theHash;
+					return objToSave;
+				} else if (saveType=="h"){
+					objToSave.rcg_type=saveType;
+					if (item.length()>0){
+						objToSave.value=[];
+						item.walk(function(elem,deep,key){
+							objToSave.value.push({key:key,value:self.getStorageObject(elem)});
+						});
+					}
+					return objToSave;
+				} else if (saveType=="co"){
+					objToSave.className=item.constructor.name;
+					objToSave.value=item.getStorageObject(self);
+					return objToSave;
+				} else if (saveType=="fo"){
+					objToSave.className=item.constructor.name;
+					objToSave.factoryName=item.getFactory().name;
+					objToSave.value={key:item.getId()};
+					//item.saveToStorage(self);
+					return objToSave;
+				}
+			}
 		}
-		return objToSave;
+		return undefined;
 	}
 	processFileObj(objContent,fsKey,filename){
 		debugger;
@@ -129,9 +128,9 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 					var oPartial=self.processFileObj(oAtt);
 					objResult[prop]=oPartial;
 				});
-			} else {
+/*			} else {
 				objResult=self.processFileObj(objContent);
-			}
+*/			}
 			return objResult;
 		} else if (saveType=="h"/*"hashmap"*/){
 			var objResult=newHashMap();

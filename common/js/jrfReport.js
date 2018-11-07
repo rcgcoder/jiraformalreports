@@ -755,7 +755,7 @@ var jrfReport=class jrfReport {
 				log("Getting root base issues");
 				alert("All issues of jql retrieved");
 				//self.allIssues.changeStorableParams(undefined,undefined,false);
-				var fncRetrieveGroup=self.createManagedFunction(function(group){
+				var fncRetrieveGroup=function(group){
 					//debugger;
 					if (group.length>0){
 						var sIssues="";
@@ -771,21 +771,20 @@ var jrfReport=class jrfReport {
 								//logError(nCallsStarted+" - JQL:"+theJQL);
 								return self.jira.processJQLIssues(
 										theJQL,
-										self.createManagedCallback(fncProcessChildAndExtract),
+										fncProcessChildAndExtract,
 										undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
 							});
 							self.addStep("Finish Retrieving issues of Group ["+sIssues+"]",function(){
 								nRetrievedIssues+=group.length; // the get epics issues call is finished... increase retrieved each epic called in group
 								nStepsPlaned--;
 								nCallsEnded++;
-								return fncProcessRestOfPending();
 								//self.continueTask(); // not needed.... processrestofpending do one
 							});
 						}
 					}
-				});
+				};
 				
-				var fncRetrieveEpicGroup=self.createManagedFunction(function(group){
+				var fncRetrieveEpicGroup=function(group){
 					//debugger;
 					if (group.length>0){
 						var sIssues="";
@@ -799,38 +798,44 @@ var jrfReport=class jrfReport {
 							self.addStep("Retrieving issues of Epic Group ["+sIssues+"]",function(){
 								nCallsStarted++;
 								//logError(nCallsStarted+" - JQL:"+theJQL);
-								return self.jira.processJQLIssues(theJQL,self.createManagedCallback(fncProcessChildAndExtract)
+								return self.jira.processJQLIssues(theJQL,fncProcessChildAndExtract
 														    ,undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
 							});
 							self.addStep("Finish Retrieving issues of Epic Group ["+sIssues+"]",function(){
 								nRetrievedEpics+=group.length; // the get epics issues call is finished... increase retrieved each epic called in group
 								nStepsPlaned--;
 								nCallsEnded++;
-								return fncProcessRestOfPending();
 							});
 						}
 					}
-				});
+				};
 				var fncProcessRestOfPending=self.createManagedFunction(function(){
 					var bSomethingRetrieving=((arrKeyGroups.length>1)||(arrEpicGroups.length>1));
 					self.addStep("Retrieve groups",function(){
 						var auxKeyGroups=arrKeyGroups;
 						keyGroup=auxKeyGroups.pop();
 						arrKeyGroups=[keyGroup];
-						return self.parallelizeProcess(auxKeyGroups,function(group){
-							return fncRetrieveGroup(group);
-						});
+						if (auxKeyGroups.lenght>0){
+							bSomethingRetrieving=true;
+							return self.parallelizeProcess(auxKeyGroups,function(group){
+								return fncRetrieveGroup(group);
+							});
+						}
 					})
 					self.addStep("Retrieve epics",function(){
+						if (bRetrievingGroups) return;
 						var auxEpicGroups=arrEpicGroups;
 						epicGroup=auxEpicGroups.pop();
 						arrEpicGroups=[epicGroup];
-						return self.parallelizeProcess(arrEpicGroups,function(group){
-							return fncRetrieveEpicGroup(group);
-						});
+						if (arrEpicGroups.length>0){
+							bSomethingRetrieving=true;
+							return self.parallelizeProcess(arrEpicGroups,function(group){
+								return fncRetrieveEpicGroup(group);
+							});
+						}
 					});
 					self.addStep("Rest of issues",function(){
-						if (bSomethingRetrieving) return ;
+						if (bSomethingRetrieving) return;
 						if (nStepsPlaned>0)return;
 							// first epics...
 						if ((arrEpicGroups.length==1)&&(arrEpicGroups[0].length>0)){
@@ -865,6 +870,12 @@ var jrfReport=class jrfReport {
 								+" Epics:"+ nRetrievedEpics + "/"+nPendingEpics
 								+" Issues left:"+ arrKeyGroups[0].length
 								+" Epics left:" + arrEpicGroups[0].length );
+					});
+					self.addStep("Adding new processPending if necesary",function(){
+						if ((arrEpicGroups[0].length>0) || (arrKeyGroups[0].length>0)){
+							log("there are issues to retrieve");
+							fncProcessRestOfPending();
+						}
 					});
 				});
 

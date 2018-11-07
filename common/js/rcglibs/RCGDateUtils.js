@@ -15,11 +15,11 @@ class RCGDateUtils {
 			//try{vAux=new Date(value);return true;} catch(err){};
 			try{
 				vAux=toDateNormalDDMMYYYYHHMMSS(value);
-				if (!isNaN(vAux)) return true;
+				if (!isNaN(vAux.getTime())) return true;
 			} catch(err){};
 			try{
 				vAux=toDateNormalYYYYMMDD(value);
-				if (!isNaN(vAux)) return true;
+				if (!isNaN(vAux.getTime())) return true;
 			} catch(err){};
 		}
 		return false;

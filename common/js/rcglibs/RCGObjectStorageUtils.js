@@ -68,7 +68,9 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		return value;
 	}
 	jsonReviver(key,value){
+		debugger;
 		var self=this;
+		if (isNull(value)||(isUndefined(value))) return value;
 		var objContent=value;
 		var saveType=objContent.rcg_type;
 		if (isUndefined(saveType)){

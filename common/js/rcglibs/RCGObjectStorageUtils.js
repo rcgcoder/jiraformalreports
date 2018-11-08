@@ -49,7 +49,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 					if (isDefined(fncProgressCallback)){
 						debugger;
 						nActualIndex++;
-						var nAuxProgress=Math.round(nActualIndex/nMaxItems);
+						var nAuxProgress=Math.round(100*nActualIndex/nMaxItems);
 						if (nAuxProgress!=nActualProgress){
 							nActualProgress=nAuxProgress;
 							fncProgressCallback();
@@ -108,7 +108,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 					if (isDefined(fncProgressCallback)){
 						debugger;
 						nActualIndex++;
-						var nAuxProgress=Math.round(nActualIndex/nMaxItems);
+						var nAuxProgress=Math.round(100*nActualIndex/nMaxItems);
 						if (nAuxProgress!=nActualProgress){
 							nActualProgress=nAuxProgress;
 							fncProgressCallback();

@@ -113,7 +113,6 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				self.addStep("Post Processing Child....."+sKey,function(){
 					var postHtmlBufferIndex=self.pushHtmlBuffer();
 					stackLastProcess.push({tagApplier:tagApplier,htmlBufferIndex:postHtmlBufferIndex});
-					self.continueTask();
 				});
 			} else {
 				self.addStep("Processing Child..."+sKey,function(){
@@ -138,12 +137,9 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				self.addStep("Pusshing the saved rest of html buffer ..."+sKey,function(){
 					var htmlBufferIndex=self.pushHtmlBuffer();
 					self.addHtml(htmlBufferBackup);
-					self.continueTask();
 				});
 			}
-			self.continueTask();
 		});
-		self.continueTask();
 	}
 	changeBrackets(sText){
 		var sResult=replaceAll(sText,"{{{","{ { {");
@@ -179,7 +175,6 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			if (self.model.report.config.htmlDebug) self.addHtml("<!-- END PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
 			self.indInnerContentHtmlBuffer=self.pushHtmlBuffer();
 			self.startApplyToken();
-			self.continueTask();
 		});
 		self.addStep("Encode part...",function(){
 			if (self.ifConditionResult){
@@ -187,20 +182,16 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				self.apply(); // the apply function not returns anything... only writes text to buffer
 				//log(self.topHtmlBuffer(self.indHtmlBuffer-2));
 			}
-			self.continueTask();
 		});
 		self.addStep("Post-Encode part...",function(){
 			//log(self.topHtmlBuffer(self.indHtmlBuffer-2));
 			//debugger;
 			self.endApplyToken();
-			self.continueTask();
 		});
 		self.addStep("PostProcess all token and return...",function(){
 			self.popClosureLevel();
 			self.variables.popVarEnv();
-			self.continueTask();
 		});
-		self.continueTask();
 	}
 	initVariables(sVarsInit,sVarsReuse,defaultValue){
 		var self=this;

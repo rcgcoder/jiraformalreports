@@ -391,13 +391,10 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 				if (iPairClean<nPairs){
 					fncAddStepOuther(pair,fncAddStepOuther);
 				}
-				webapp.continueTask();
 			});
 		};
 		var fncEndLoop=function(fncAddLoopStep){
-			if (iPairClean>=nPairs) {
-				webapp.continueTask();
-			} else {
+			if (iPairClean<nPairs) {
 				fncAddLoopStep();
 			}
 		}
@@ -408,7 +405,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			pairs.forEach(function(pair){
 				fncAddStepOuther(pair,fncAddStepOuther);
 			});
-			webapp.continueTask([sModelAux]);
+			return sModelAux;
 		});
 		webapp.addStep("Removing final <p> </p>... replaced by <br>",function(){
 			debugger;
@@ -438,11 +435,10 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			pairs.forEach(function(pair){
 				fncAddStepOuther(pair,fncAddStepOuther);
 			});
-			webapp.continueTask([sModelAux]);
+			return sModelAux;
 		});
 		webapp.addStep("change content in result window",function(){
 			self.openInWindow(oContent.idContent,oContent.callback,oContent.idIframe,oContent.divId);
-			webapp.continueTask();
 		});
 	}
 }

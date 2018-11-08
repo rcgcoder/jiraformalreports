@@ -15,7 +15,6 @@ var jrfCondition=class jrfCondition extends jrfToken{//this kind of definition a
 				var sContent=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
 				sContent=self.replaceVars(sContent);
 				self.addHtml(sContent);
-				self.continueTask();
 			});
 		}
 	}

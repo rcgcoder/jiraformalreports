@@ -82,7 +82,7 @@ class RCGAtlassian{
 					(response.isToken==false)){
 					log("Session Token does not exists... wait 1 seg");
 					fncManagedCheckIfTokenCallback(fncManagedCheckIfTokenCallback);
-					setTimeout(function(){self.continueTask()},1000);
+					setTimeout(self.createManagedCallback(function(){return;}),1000);
 					return self.waitForEvent();
 				} else {
 					log("Oauth Access token Exists:"+response.access);
@@ -142,7 +142,7 @@ class RCGAtlassian{
 				log("continue processing API "+sTarget+" result");
 				var objResp;
 				if (typeof response==="string"){
-					if (response=="") return self.continueTask([[]]);
+					if (response=="") return [];
 					try {
 						objResp=JSON.parse(response);
 					} catch (e) {

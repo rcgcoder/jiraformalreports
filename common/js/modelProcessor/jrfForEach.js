@@ -130,7 +130,6 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 				self.variables.pushVar("InitTR_Pos",iPosTR);
 				self.model.htmlStack.saReplace(iPosTR,3,'<tr id="'+treeNodeId+'" ');
 			}
-			self.continueTask();
 		});
 		self.addStep("Processing Element in For Each",function(){
 			self.addStep("Processing all Childs elements",function(){
@@ -154,7 +153,6 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 //					self.addHtml("<!-- End Recursive -->");
 					self.reportElem=self.variables.popVar("parentRecursiveElement");
 					self.variables.popVarEnv();
-					self.continueTask();
 				});
 			}
 			self.addStep("Continue...",function(){
@@ -236,9 +234,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 					var sHtml=self.popHtmlBuffer(indLoopContentHtmlBuffer);
 					if (sHtml.saLength()>0) self.addHtml(sHtml.saToString());
 				}
-				self.continueTask();
 			});
-			self.continueTask();
 		});
 	};
 	

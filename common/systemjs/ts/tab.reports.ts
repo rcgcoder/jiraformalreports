@@ -138,7 +138,6 @@ export class TabReports {
                 log("property setted... commment added and text rendered ... everything is OK");
             });
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
-//      self.continueTask();
     }
     
     getSelectedReport(){

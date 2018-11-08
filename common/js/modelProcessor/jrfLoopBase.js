@@ -22,13 +22,11 @@ var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition al
 		var iLoopElemsCount;  
 		self.addStep("Initializing loop base",function(){
 			self.innerApply();
-			self.continueTask();
 		});
 		self.addStep("Start processing the Loop",function(loopElems){
 			self.loopElements=loopElems;
 			iLoopElemsCount=self.loopElements.length();
 			self.loopStart(iLoopElemsCount);
-			self.continueTask();
 		});
 		// processing total elements
 		self.addStep("Processing the Loop",function(){
@@ -42,7 +40,6 @@ var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition al
 					self.addStep("Preparing the process of item "+iLoopIndex ,function(){
 						self.variables.pushVar("LoopElemsCount",iLoopElemsCount);
 						self.variables.pushVar("LoopIndex",iLoopIndex );
-						self.continueTask();
 					});
 					self.addStep("Processing...",function(){
 						if (!bCancelLoop) {
@@ -53,17 +50,17 @@ var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition al
 								self.workOnSteps(loopElem,function(){
 									self.addStep("Processing",function(){
 										var bContinue=self.loopItemProcess(loopElem,iLoopIndex,iLoopElemsCount);
-										self.continueTask([bContinue]);
+										return bContinue;
 									});
 								});
 							} else {
 								self.addStep("Process no Dynamic Object",function(){
 									var bContinue=self.loopItemProcess(loopElem,iLoopIndex,iLoopElemsCount);
-									self.continueTask([bContinue]);
+									return bContinue;
 								});
 							}
 						}
-						self.continueTask([!bCancelLoop]);
+						return !bCancelLoop;
 					});
 					self.addStep("Ending the process of item "+iLoopIndex,function(bContinue){
 						if (isDefined(bContinue)&&(!bContinue)){
@@ -74,15 +71,12 @@ var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition al
 						}
 						self.variables.popVar("LoopIndex");
 						self.variables.popVar("LoopElemsCount");
-						self.continueTask();
 					});
 				});
 			},1);
-//			self.continueTask();
 		});
 		self.addStep("Ending processing the Loop",function(){
 			self.loopEnd(iLoopElemsCount);
-			self.continueTask();
 		});
 	}
 

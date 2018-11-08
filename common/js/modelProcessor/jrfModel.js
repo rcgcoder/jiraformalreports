@@ -424,7 +424,6 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 /*		self.addStep("Returning the html",function(){
 			var sHtml=self.popHtmlBuffer(htmlBufferIndex);
 			self.addHtml(sHtml);
-			self.continueTask();
 		});
 */
 	}

@@ -263,7 +263,6 @@ export class advSelector {
             log("processing step Getting Values(get values async):"+self.name);
             return self.getValuesAsync(theDlgSelector);
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",barrierAux);
-        //System.webapp.continueTask();
     }
     onChangeSelect(event){
         var self=this;

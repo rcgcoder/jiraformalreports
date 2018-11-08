@@ -133,7 +133,7 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 				});
 			}
 		}
-		self.continueTask([hsResults]);
+		return hsResults;
 	}
 	listProcess(listItems,fncProcess,nThreadsMax){
 		var self=this;
@@ -159,7 +159,6 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 			var sWhere="";
 			self.addStep("Pushing variables environment",function(){
 				self.variables.pushVarEnv();
-				self.continueTask();
 			});
 			var iCounter=0;
 			var iSelectedCounter=0;
@@ -184,12 +183,11 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 						}
 						self.variables.pushVar("counter",iCounter);
 						self.variables.pushVar("counter_selected",iSelectedCounter);
-						self.continueTask();
 					});
 					self.addStep("Executing where clause",function(){
 						var bWhereResult=false;
 						bWhereResult=self.replaceVarsAndExecute(sWhere);
-						self.continueTask([bWhereResult]);
+						return bWhereResult;
 					});
 					self.addStep("Processing Result and pop variables",function(bWhereResult){
 						if (bWhereResult){
@@ -204,13 +202,12 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 						if (self.innerVarName!=""){
 							self.variables.popVar(self.innerVarName);
 						}
-						self.continueTask();
 					});
 				});
 			});
 			self.addStep("Poping variables environment and return",function(){
 				self.variables.popVarEnv();
-				self.continueTask([self.hsResult]);
+				return self.hsResult;
 			});
 		} else {
 			self.hsResult=elemsInForEach;
@@ -220,7 +217,6 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 	order(elemsInForEach){
 		var self=this;
 		if (self.orderFormula=="") {
-			self.continueTask([elemsInForEach]);
 			return elemsInForEach;
 		}
 		var hsResult=newHashMap();
@@ -242,18 +238,16 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 			if (isDynamicObject(itemI)){
 				self.addStep("load item "+i,function(){
 					itemI.fullLoad();
-					self.continueTask();
 				});
 			}
 			if (isDynamicObject(itemJ)){
 				self.addStep("load item "+j,function(){
 					itemJ.fullLoad();
-					self.continueTask();
 				});
 			}
 			self.addStep("Compare pair "+i+"/"+j,function(){
 				var vValue=executeFunction([arrElems[i],arrElems[j]],sFncFormula);
-				self.continueTask([vValue]);
+				return vValue;
 			});
 			self.addStep("Unlock and return Result index",function(vValue){
 				if (isDynamicObject(itemI)){
@@ -263,9 +257,9 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 					itemJ.unlock();
 				}
 				if (vValue<=0){
-					self.continueTask(i);
+					return i;
 				} else {
-					self.continueTask(j);
+					return j;
 				}
 			});
 		}
@@ -300,7 +294,6 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 								arrElems[iStart]=arrElems[iEnd];
 								arrElems[iEnd]=vAux;
 							}
-							self.continueTask();
 						});
 					} else {// there are more than 2 items 4 8 16.... now 
 						// identify 2 lists
@@ -357,7 +350,7 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 				arrElems.forEach(function(elem){
 					hsResult.push(elem);
 				});
-				self.continueTask([hsResult]);
+				return hsResult;
 			});
 		});
 	}
@@ -396,24 +389,23 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 		var self=this;
 		var elemsInForEach;
 		self.addStep("Retrieving bulk subset elements",function(){
-			self.getElementsInForEach();
+			return self.getElementsInForEach();
 		});
 		self.addStep("Applying filter",function(elemsRetrieved){
 			elemsInForEach=elemsRetrieved;
 			elemsInForEach=self.filter(elemsInForEach);
-			self.continueTask([elemsInForEach]);
+			return elemsInForEach;
 		});
 		self.addStep("Applying Order",function(elemsFiltered){
 			elemsInForEach=elemsFiltered;
 			elemsInForEach=self.order(elemsInForEach);
-			self.continueTask();
+			return elemsInForEach;
 		});
 		self.addStep("Applying Bounds and Return",function(elemsOrdered){
 			elemsInForEach=elemsOrdered;
 			elemsInForEach=self.bounds(elemsInForEach);
-			self.continueTask([elemsInForEach]);
+			return elemsInForEach;
 		});
-		self.continueTask();
 	}
 	apply(){
 		//		debugger;
@@ -433,7 +425,7 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 				self.variables.pushVar(varName,self.hsRest,-1); //if variable does not exists... it puts in parent block
 				
 			}
-			self.continueTask([elemsInForEach]);
+			return elemsInForEach;
 		});
 	}
 

@@ -54,7 +54,5 @@ class JiraZipWebApp{
 			var jira=self.getJira();
 			jira.getConfluence();
 		});
-		
-		self.continueTask();
 	}
 }

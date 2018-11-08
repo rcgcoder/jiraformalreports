@@ -225,18 +225,8 @@ var jrfReport=class jrfReport {
 				+" Async Deep Ini:"+asyncNumber
 				+" Async Deep Act:"+(hashmapFactory.stackAsyncCalls===""?"":hashmapFactory.stackAsyncCalls.length())
 				);
-*/		var auxFncEnd;
-		if (isUndefined(endFunction)){
-			auxFncEnd=function(objStep){
-				self.continueTask();
-			};
-		} else {
-			auxFncEnd=function(objStep){
-				var vResult=endFunction(objStep);
-				self.continueTask([vResult]);
-			}
-		}
-		var fncEnd=self.createManagedFunction(function(objStep){
+*/
+		var fncEnd=self.createManagedCallback(function(objStep){
 //			logError("Calling custom End function in walk Async");
 			if (stepCounter<theHashMap.length()){
 				alert(stepDesc+" ERROR....calling end of walk before process of all items. Processed:"+stepCounter+" total:"+theHashMap.length() +" started with:"+initialItemNumber);
@@ -249,7 +239,12 @@ var jrfReport=class jrfReport {
 						+" Async Deep Ini:"+asyncNumber
 						+" Async Deep Act:"+(hashmapFactory.stackAsyncCalls===""?"":hashmapFactory.stackAsyncCalls.length())
 						);
-*/			auxFncEnd(objStep);
+*/		
+			if (isUndefined(endFunction)){
+				return objStep;
+			} else {
+				return endFunction(objStep);
+			}
 		});
 		var fncItem=self.createManagedFunction(function(step){
 //			logError("Calling item in walk Async "+stepCounter+"/"+theHashMap.length());
@@ -503,10 +498,7 @@ var jrfReport=class jrfReport {
 		});
 
 		self.addStep("Construct Issue Dynamic Object.... ",function(){
-/*			if (self.isReusingIssueList()){
-				return self.continueTask();
-			}
-*/			self.allIssues=newIssueFactory(self);
+			self.allIssues=newIssueFactory(self);
 			self.allIssues.setTaskManager(self.getTaskManager());
 			self.workOnIssueSteps=function(theObjectOrKey,fncWork,bMaintainLocked,fncNotExists){
 				return self.allIssues.workOnSteps(theObjectOrKey,fncWork,bMaintainLocked,fncNotExists);
@@ -816,7 +808,6 @@ var jrfReport=class jrfReport {
 								nRetrievedIssues+=group.length; // the get epics issues call is finished... increase retrieved each epic called in group
 								nStepsPlaned--;
 								nCallsEnded++;
-								//self.continueTask(); // not needed.... processrestofpending do one
 							});
 						}
 					}
@@ -1242,7 +1233,6 @@ var jrfReport=class jrfReport {
 									if (issueChild.countChilds()>nChildsPrevChild) log("Child/Parent relation "+issueChild.getKey()+" -> "+ auxKey +" added.");
 								}
 							},1);
-							//self.continueTask();
 						//},0,1,undefined,undefined,undefined,"INNER",undefined
 						});
 					}

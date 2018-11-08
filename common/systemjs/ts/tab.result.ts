@@ -18,7 +18,6 @@ export class TabResult {
 //        var fork=System.webapp.addStep("Opening the report in a new tab", function(){
             var report=System.webapp.theReport;
             return report.openResultInNewTab();
-//            System.webapp.continueTask();
  //       },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
     }
     doSaveToFile(){

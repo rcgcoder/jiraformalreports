@@ -108,7 +108,7 @@ class GitHub{
 			  var ghLink=xhr.getResponseHeader("Location");
 			  return self.apiCall(ghLink);
 		  } else if (xhr.status == 200) {
-			  self.continueTask([xhr.response,xhr,sTargetUrl,arrHeaders]);
+			  return self.taskResultMultiple(xhr.response,xhr,sTargetUrl,arrHeaders);
 		  } else {
 			  return self.loadError({target:{src:sUrl}});			  
 		  }

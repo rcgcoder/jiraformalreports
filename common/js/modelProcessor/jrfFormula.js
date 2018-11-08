@@ -74,7 +74,6 @@ var jrfFormula=class jrfFormula extends jrfToken{//this kind of definition allow
 				sValue="";
 			}
 */			self.addHtml(sValue);
-			self.continueTask();
 		});
 	}
 

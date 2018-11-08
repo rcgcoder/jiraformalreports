@@ -129,7 +129,6 @@ class ZipWebApp{
 					var sContent=jsonObj.body.storage.value;
 					var sHtml=he.decode(sContent);
 					self.model=sHtml;
-					self.continueTask();
 //					var theHtml=$(sHtml);
 				});
 //				cfc.getContent("38076419");
@@ -151,7 +150,6 @@ class ZipWebApp{
 		});  
 /*		self.addStep("Loading Systemjs",function(){
 			log("Isolated loading of systemjs");
-			self.continueTask();
 		});
 */
 /*		self.addStep("Trying to render content... needs oauth connect",function(){
@@ -162,7 +160,6 @@ class ZipWebApp{
 			self.addStep("RenderContent",function(){
 				jira.renderContent("*test*");
 			});
-			self.continueTask();
 		});
 	*/	
 		/*

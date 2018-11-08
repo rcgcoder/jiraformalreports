@@ -28,7 +28,6 @@ var jrfField=class jrfField extends jrfToken{//this kind of definition allows to
 				self.addStep("Setting the HTML",function(sModelProcessedResult){
 					self.addHtml(sModelProcessedResult);
 					theModel.variables.popVarEnv();
-					self.continueTask();
 				});
 			} else {
 				self.addHtml(sValue);

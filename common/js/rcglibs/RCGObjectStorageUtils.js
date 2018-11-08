@@ -270,8 +270,8 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		var self=this;
 		var fileName=(self.basePath+"/"+key);
 		filesystem.ReadFile(fileName,
-							function(){self.continueTask([true]);},
-							function(){self.continueTask([false]);}
+							self.createManagedCallback(function(){return true;}),
+							self.createManagedCallback(function(){return false;})
 							);
 		return self.waitForEvent();
 	}

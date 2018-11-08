@@ -242,7 +242,6 @@ function newIssueFactory(report){
 							dynParent.change();
 						}
 					},1,fncNotExists);
-//						report.continueTask();
 				});
 			}
 			var fncAddProcessIssue=report.createManagedFunction(function(inputIssue){

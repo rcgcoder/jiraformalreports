@@ -17,11 +17,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 	}
 	enableAutoSave(){
 		var self=this;
-/*		var storer=self.storer;
-		if (self.withAutoSave) {
-			return storer.continueTask();
-		}
-*/		self.withAutoSave=true;
+		self.withAutoSave=true;
 	}
 	disableAutoSave(){
 		this.withAutoSave=false;
@@ -145,7 +141,6 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 					+" and is Fully Loaded:"+dynObj.isFullyLoaded());
 			*/
 		}
-		//storer.continueTask(); // not continues because the steps process at the end of the secuence
 	}
 	waitFinishSave(){
 		var self=this;
@@ -216,7 +211,6 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 					} else {
 						//log("It´s not in inactive objects:"+inactiveObject.getId());
 					}
-	//				storer.continueTask();
 				}
 				return storer.parallelizeCalls(self.inactiveObjects,fncSaveCall,fncUnloadAndRemove,self.concurrentSaveActionsMax);
 			});
@@ -322,6 +316,5 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 				return dynObj;
 			});
 		}
-		//storer.continueTask(); // not continues because the steps process at the end of the secuence
 	}
 }

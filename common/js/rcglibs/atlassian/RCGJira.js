@@ -331,7 +331,7 @@ class RCGJira{
 		if (isDefined(postJQL))sJQL+=" "+postJQL;
 		var sCacheKey="Comments_"+sJQL;
 		var vCache=self.getFromCache(sCacheKey);
-		if (vCache!="") return self.continueTask([vCache]);
+		if (vCache!="") return vCache;
 
 		self.addStep("Getting All Issues from JQL:["+sJQL+"]", function(){
 			return self.getFullList("/rest/api/2/search?fields=comment&expand=renderedFields&jql="+sJQL,"issues",undefined,undefined,cbBlock);
@@ -409,7 +409,7 @@ class RCGJira{
 /*			self.addStep("Fetching Issues"+" of JQL ["+jqlAux+"]",function(){
 				//debugger;  
 			});
-			self.continueTask();*/
+			*/
 		});
 		self.addStep("Returning Variable"+" of JQL ["+jqlAux+"]",function(){
 			var fncEnd;

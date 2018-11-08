@@ -1166,6 +1166,7 @@ class RCGTaskManager{
 				runningTask.processTaskResult(vResult);
 			}
 			tm.setRunningTask(prevRunningTask);
+			return vResult;
 		}
 		return fncManagedCallback;
 	}

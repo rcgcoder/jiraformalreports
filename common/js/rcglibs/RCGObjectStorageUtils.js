@@ -174,6 +174,15 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		filesystem.SaveFile(baseName,contentToSave,innerOnSave,innerOnError);
 		return self.waitForEvent();
 	}
+	generateJson(objToSave){
+		var jsonToSave=JSON.stringify(objToSave,function(key,value){return self.jsonReplacer(key,value);});
+		return jsonToSave
+	}
+	parseJson(sContent){
+		var objContent=JSON.parse(sContent,function(key,value){return self.jsonReviver(key,value);});
+		return objContent;
+	}
+
 	save(key,item){
 		var self=this;
 		var fileToSave="";
@@ -181,7 +190,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		self.addStep("Saving the object "+key,function(){
 			var objToSave=item;
 			log("Convert to jason and save item");
-			var jsonToSave=JSON.stringify(objToSave,function(key,value){return self.jsonReplacer(key,value);});
+			var jsonToSave=self.generateJson(objToSave);
 			var totalLength=jsonToSave.length;
 			log("Storer save:"+baseName);
 			if (totalLength<(7*1024*1024)){
@@ -248,8 +257,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		var fileName=(self.basePath+"/"+key);
 		var innerOnLoad=self.createManagedCallback(function(sContent){
 			log("Key:"+key+" loaded."+sContent.length+" bytes");
-			var objContent=JSON.parse(sContent,function(key,value){return self.jsonReviver(key,value);});
-			
+			var objContent=self.parseJson(sContent);
 /*			self.addStep("Processing content",function(){
 				var objProcessed=self.processFileObj(objContent,key);
 				return objProcessed;

@@ -30,6 +30,14 @@ var jrfReport=class jrfReport {
 		var self=this;
 		var storer=self.storeManager;
 		var objResult={};
+		var hsFunctionsSrc=newHashMap();
+		storer.functions.walk(function(fncBody,deep,key){
+			var sFncFormula=""+fncBody.toString();
+			hsFunctionsSrc.add(key,sFncFormula);
+		});
+		var objFullResult={};
+		objFullResult.functions=storer.generateJson(hsFunctionsSrc);
+		
 		objResult.config=self.config;
 		objResult.allIssues=self.allIssues.list;
 		objResult.childs=self.childs;
@@ -38,24 +46,35 @@ var jrfReport=class jrfReport {
 		objResult.rootElements=self.rootElements;
 		objResult.rootIssues=self.rootIssues;
 		objResult.rootProjects=self.rootProjects;
-		return objResult;
+		objFullResult.data=storer.generateJson(objResult);
+		return objFullResult;
 	}
 	
-	loadFromStorageObject(storedObj){
+	loadFromStorageObject(storedFullObj){
 		var self=this;
 		var storer=self.storeManager;
 		if ((storer==="")||(isUndefined(storer))){
 			self.storeManager=new RCGObjectStorageManager("Reports",System.webapp.getTaskManager());
 			storer=self.storeManager;
 		}
+		var functionSrcs=storer.parseJson(storedFullObj.functions);
+		functionSrcs.walk(function(fncSrc,deep,key){
+			if (!storer.functions.exists(key)){
+				storer.functions.remove(key);
+			};
+			var fncCompiled=createFunction(fncSrc);
+			storer.add(key,fncCompiled);
+		});
+		
+		var storedObj=storer.parseJson(storedFullObj.data);
 		self.config=storedObj.config;  
 		var attribs=[//"allIssues", // allIssues is the factory... not need to be assigned
 			         "childs","advanceChilds"
 			        ,"treeIssues","rootElements","rootIssues","rootProjects"];
-		var auxIssues=storer.processFileObj(storedObj["allIssues"]);
+		var auxIssues=storedObj["allIssues"];
 		self.hsAllIssues=auxIssues;
 		attribs.walk(function(attrName){
-			var attValue=storer.processFileObj(storedObj[attrName]);
+			var attValue=storedObj[attrName];
 			self[attrName]=attValue;
 		});
 		return self;

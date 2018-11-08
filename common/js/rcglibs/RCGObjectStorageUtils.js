@@ -47,6 +47,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 				value.walk(function(elem,deep,key){
 					objToSave.value.push({key:key,value:elem});
 					if (isDefined(fncProgressCallback)){
+						debugger;
 						nActualIndex++;
 						var nAuxProgress=Math.round(nActualIndex/nMaxItems);
 						if (nAuxProgress!=nActualProgress){
@@ -105,6 +106,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 					var hsValue=hsElem.value;
 					objResult.add(key,hsValue);
 					if (isDefined(fncProgressCallback)){
+						debugger;
 						nActualIndex++;
 						var nAuxProgress=Math.round(nActualIndex/nMaxItems);
 						if (nAuxProgress!=nActualProgress){

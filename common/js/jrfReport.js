@@ -41,8 +41,9 @@ var jrfReport=class jrfReport {
 		var fncProgressCallback= function(){
 			var actTime=(new Date()).getTime();
 			if ((actTime-lastTime)>(3000)){
-				storer.getTaskManager().forceChangeStatus();
+				log("Force update status");
 				lastTime=actTime;
+				storer.getTaskManager().forceChangeStatus();
 			}
 		}
 		
@@ -79,8 +80,9 @@ var jrfReport=class jrfReport {
 		var fncProgressCallback= function(){
 			var actTime=(new Date()).getTime();
 			if ((actTime-lastTime)>(3000)){
-				storer.getTaskManager().forceChangeStatus();
 				lastTime=actTime;
+				log("Force update status");
+				storer.getTaskManager().forceChangeStatus();
 			}
 		}
 		

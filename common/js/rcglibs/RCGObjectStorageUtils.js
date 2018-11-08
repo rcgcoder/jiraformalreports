@@ -41,8 +41,19 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			var objToSave={rcg_type:"h"};
 			if (value.length()>0){
 				objToSave.value=[];
+				var nMaxItems=value.length();
+				var nActualProgress=0;
+				var nActualIndex=0;
 				value.walk(function(elem,deep,key){
 					objToSave.value.push({key:key,value:elem});
+					if (isDefined(fncProgressCallback)){
+						nActualIndex++;
+						var nAuxProgress=Math.round(nActualIndex/nMaxItems);
+						if (nAuxProgress!=nActualProgress){
+							nActualProgress=nAuxProgress;
+							fncProgressCallback();
+						}
+					}
 				});
 			}
 			return objToSave;
@@ -86,10 +97,22 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			var objResult=newHashMap();
 			if (isDefined(objContent.value)){
 				objResult.autoSwing=false;
+				var nMaxItems=objContent.value.length;
+				var nActualProgress=0;
+				var nActualIndex=0;
 				objContent.value.forEach(function(hsElem){
 					var key=hsElem.key;
 					var hsValue=hsElem.value;
 					objResult.add(key,hsValue);
+					if (isDefined(fncProgressCallback)){
+						nActualIndex++;
+						var nAuxProgress=Math.round(nActualIndex/nMaxItems);
+						if (nAuxProgress!=nActualProgress){
+							nActualProgress=nAuxProgress;
+							fncProgressCallback();
+						}
+					}
+					
 				});
 				objResult.autoSwing=true;
 				objResult.swing();

@@ -31,13 +31,13 @@ var jrfReport=class jrfReport {
 		var storer=self.storeManager;
 		var objResult={};
 		objResult.config=self.config;
-		objResult.allIssues=storer.getStorageObject(self.allIssues.list);
-		objResult.childs=storer.getStorageObject(self.childs);
-		objResult.advanceChilds=storer.getStorageObject(self.advanceChilds);
-		objResult.treeIssues=storer.getStorageObject(self.treeIssues);
-		objResult.rootElements=storer.getStorageObject(self.rootElements);
-		objResult.rootIssues=storer.getStorageObject(self.rootIssues);
-		objResult.rootProjects=storer.getStorageObject(self.rootProjects);
+		objResult.allIssues=self.allIssues.list;
+		objResult.childs=self.childs;
+		objResult.advanceChilds=self.advanceChilds;
+		objResult.treeIssues=self.treeIssues;
+		objResult.rootElements=self.rootElements;
+		objResult.rootIssues=self.rootIssues;
+		objResult.rootProjects=self.rootProjects;
 		return objResult;
 	}
 	

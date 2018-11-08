@@ -69,7 +69,7 @@ var jrfReport=class jrfReport {
 		var fncProgressCallback= function(){
 			var actTime=(new Date()).getTime();
 			if ((actTime-lastTime)>(3000)){
-				self.getTaskManager().forceChangeStatus();
+				storer.getTaskManager().forceChangeStatus();
 				lastTime=actTime;
 			}
 		}

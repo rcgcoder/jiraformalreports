@@ -97,27 +97,19 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		if (saveType=="h"/*"hashmap"*/){
 			var objResult=newHashMap();
 			if (isDefined(objContent.value)){
-				objResult.autoSwing=false;
-				var nMaxItems=objContent.value.length;
-				var nActualProgress=0;
-				var nActualIndex=0;
-				objContent.value.forEach(function(hsElem){
-					var key=hsElem.key;
-					var hsValue=hsElem.value;
-					objResult.add(key,hsValue);
-					if (isDefined(fncProgressCallback)){
-						debugger;
-						nActualIndex++;
-						var nAuxProgress=Math.round(100*nActualIndex/nMaxItems);
-						if (nAuxProgress!=nActualProgress){
-							nActualProgress=nAuxProgress;
-							fncProgressCallback();
-						}
-					}
-					
+				self.addStep("PostProcessing the asignment of array items to a hashmap",function(){
+					objResult.autoSwing=false;
+					var nMaxItems=objContent.value.length;
+					var nActualProgress=0;
+					var nActualIndex=0;
+					self.sequentialProcess(objContent.value,function(hsElem){
+						var key=hsElem.key;
+						var hsValue=hsElem.value;
+						objResult.add(key,hsValue);
+					});
+					objResult.autoSwing=true;
+					objResult.swing();
 				});
-				objResult.autoSwing=true;
-				objResult.swing();
 			}
 			return objResult;
 		} else if (saveType=="d" /* date */){
@@ -207,13 +199,25 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 	}
 	generateJson(objToSave,fncProgressCallback){
 		var self=this;
-		var jsonToSave=JSON.stringify(objToSave,function(key,value){return self.jsonReplacer(key,value,fncProgressCallback);});
-		return jsonToSave
+		var fncReplacer=function(key,value){
+			return self.jsonReplacer(key,value,fncProgressCallback);
+		};
+		var jsonToSave=JSON.stringify(objToSave,fncReplacer);
+		return jsonToSave;
 	}
 	parseJson(sContent,fncProgressCallback){
 		var self=this;
-		var objContent=JSON.parse(sContent,function(key,value){return self.jsonReviver(key,value,fncProgressCallback);});
-		return objContent;
+		var objContent;
+		self.addStep("Parse Json. First Step",function(){
+			var fncReviver=self.createManagedFunction(function(key,value){
+				return self.jsonReviver(key,value,fncProgressCallback);
+			});
+			objContent=JSON.parse(sContent,fncReviver);
+			return objContent;
+		});
+		self.addStep("Parse Json. Returning result object.",function(){
+			return objContent; 
+		});
 	}
 
 	save(key,item){
@@ -290,12 +294,14 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		var fileName=(self.basePath+"/"+key);
 		var innerOnLoad=self.createManagedCallback(function(sContent){
 			log("Key:"+key+" loaded."+sContent.length+" bytes");
-			var objContent=self.parseJson(sContent);
+			self.addStep("Parsing JSON",function(){
+				return self.parseJson(sContent);
+			})
 /*			self.addStep("Processing content",function(){
 				var objProcessed=self.processFileObj(objContent,key);
 				return objProcessed;
 			});
-*/			self.addStep("Returning result",function(){
+*/			self.addStep("Returning result",function(objContent){
 				var objProcessed=objContent;
 				if (isDefined(self.onLoad)){
 					self.addStep("Default Defined process result",function(objProcessed){

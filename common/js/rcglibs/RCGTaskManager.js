@@ -1387,7 +1387,7 @@ class RCGTaskManager{
 					});
 					self.addStep("New Iteration",function(){
 						if (iterationBlockCounter<20){
-							fncManagedLoop();
+							fncManagedLoop(fncManagedLoop);
 						}
 						return true;
 					});
@@ -1403,7 +1403,7 @@ class RCGTaskManager{
 			});
 			self.addStep("Adding loop block step",function(bContinue){
 				if (bContinue){
-					fncLoopBlock();
+					fncLoopBlock(fncLoopBlock);
 				}
 			});
 		}

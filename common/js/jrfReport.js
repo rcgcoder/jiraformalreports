@@ -36,7 +36,17 @@ var jrfReport=class jrfReport {
 			hsFunctionsSrc.add(key,sFncFormula);
 		});
 		var objFullResult={};
-		objFullResult.functions=storer.generateJson(hsFunctionsSrc);
+		
+		var lastTime=(new Date()).getTime();
+		var fncProgressCallback= function(){
+			var actTime=(new Date()).getTime();
+			if ((actTime-lastTime)>(3000)){
+				storer.getTaskManager().forceChangeStatus();
+				lastTime=actTime;
+			}
+		}
+		
+		objFullResult.functions=storer.generateJson(hsFunctionsSrc,fncProgressCallback);
 		
 		objResult.config=self.config;
 		objResult.allIssues=self.allIssues.list;
@@ -46,7 +56,7 @@ var jrfReport=class jrfReport {
 		objResult.rootElements=self.rootElements;
 		objResult.rootIssues=self.rootIssues;
 		objResult.rootProjects=self.rootProjects;
-		objFullResult.data=storer.generateJson(objResult);
+		objFullResult.data=storer.generateJson(objResult,fncProgressCallback);
 		return objFullResult;
 	}
 	

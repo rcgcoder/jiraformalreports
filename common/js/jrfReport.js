@@ -65,8 +65,16 @@ var jrfReport=class jrfReport {
 			var fncCompiled=createFunction(fncSrc);
 			storer.add(key,fncCompiled);
 		});
+		var lastTime=(new Date()).getTime();
+		var fncProgressCallback= function(){
+			var actTime=(new Date()).getTime();
+			if ((actTime-lastTime)>(3000)){
+				self.getTaskManager().forceChangeStatus();
+				lastTime=actTime;
+			}
+		}
 		
-		var storedObj=storer.parseJson(storedFullObj.data);
+		var storedObj=storer.parseJson(storedFullObj.data,fncProgressCallback);
 		self.config=storedObj.config;  
 		var attribs=[//"allIssues", // allIssues is the factory... not need to be assigned
 			         "childs","advanceChilds"

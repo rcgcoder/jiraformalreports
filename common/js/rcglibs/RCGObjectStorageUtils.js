@@ -21,8 +21,11 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 	isBaseType(itemType){
 		return (itemType=="s")||(itemType=="n")||(itemType=="b");
 	}
-	jsonReplacer(key,value){
+	jsonReplacer(key,value,fncProgressCallback){
 		var self=this;
+		if (isDefined(fncProgressCallback)){
+			fncProgressCallback();
+		}
 		if (isMethod(value)) { 
 			var objToSave={rcg_type:"m"};
 			var sFncFormula=""+value.toString();
@@ -67,9 +70,12 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		}
 		return value;
 	}
-	jsonReviver(key,value){
+	jsonReviver(key,value,fncProgressCallback){
 		//debugger;
 		var self=this;
+		if (isDefined(fncProgressCallback)){
+			fncProgressCallback();
+		}
 		if (isNull(value)||(isUndefined(value))) return value;
 		var objContent=value;
 		var saveType=objContent.rcg_type;
@@ -174,14 +180,14 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		filesystem.SaveFile(baseName,contentToSave,innerOnSave,innerOnError);
 		return self.waitForEvent();
 	}
-	generateJson(objToSave){
+	generateJson(objToSave,fncProgressCallback){
 		var self=this;
-		var jsonToSave=JSON.stringify(objToSave,function(key,value){return self.jsonReplacer(key,value);});
+		var jsonToSave=JSON.stringify(objToSave,function(key,value){return self.jsonReplacer(key,value,fncProgressCallback);});
 		return jsonToSave
 	}
-	parseJson(sContent){
+	parseJson(sContent,fncProgressCallback){
 		var self=this;
-		var objContent=JSON.parse(sContent,function(key,value){return self.jsonReviver(key,value);});
+		var objContent=JSON.parse(sContent,function(key,value){return self.jsonReviver(key,value,fncProgressCallback);});
 		return objContent;
 	}
 

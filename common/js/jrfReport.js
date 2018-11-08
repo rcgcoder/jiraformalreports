@@ -68,36 +68,44 @@ var jrfReport=class jrfReport {
 			self.storeManager=new RCGObjectStorageManager("Reports",System.webapp.getTaskManager());
 			storer=self.storeManager;
 		}
-		var functionSrcs=storer.parseJson(storedFullObj.functions);
-		functionSrcs.walk(function(fncSrc,deep,key){
-			if (!storer.functions.exists(key)){
-				storer.functions.remove(key);
-			};
-			var fncCompiled=createFunction(fncSrc);
-			storer.add(key,fncCompiled);
+	
+		storer.addStep("Parsing Functions",function(){
+			return storer.parseJson(storedFullObj.functions);
 		});
-		var lastTime=(new Date()).getTime();
-		var fncProgressCallback= function(){
-			var actTime=(new Date()).getTime();
-			if ((actTime-lastTime)>(3000)){
-				lastTime=actTime;
-				log("Force update status");
-				storer.getTaskManager().forceChangeStatus();
+		storer.addStep("Generating Functions",function(functionSrcs){
+			storer.sequentialProcess(functionSrcs,function(fncSrc,deep,key){
+				if (!storer.functions.exists(key)){
+					storer.functions.remove(key);
+				};
+				var fncCompiled=createFunction(fncSrc);
+				storer.functions.add(key,fncCompiled);
+			});
+		});
+		storer.addStep("Parsing Project Data",function(){
+			var lastTime=(new Date()).getTime();
+			var fncProgressCallback= function(){
+				var actTime=(new Date()).getTime();
+				if ((actTime-lastTime)>(3000)){
+					lastTime=actTime;
+					log("Force update status");
+					storer.getTaskManager().forceChangeStatus();
+				}
 			}
-		}
-		
-		var storedObj=storer.parseJson(storedFullObj.data,fncProgressCallback);
-		self.config=storedObj.config;  
-		var attribs=[//"allIssues", // allIssues is the factory... not need to be assigned
-			         "childs","advanceChilds"
-			        ,"treeIssues","rootElements","rootIssues","rootProjects"];
-		var auxIssues=storedObj["allIssues"];
-		self.hsAllIssues=auxIssues;
-		attribs.forEach(function(attrName){
-			var attValue=storedObj[attrName];
-			self[attrName]=attValue;
+			return storer.parseJson(storedFullObj.data,fncProgressCallback);
 		});
-		return self;
+		storer.addStep("Procesing the stored readed info",function(storedObj){
+			self.config=storedObj.config;  
+			var attribs=[//"allIssues", // allIssues is the factory... not need to be assigned
+				         "childs","advanceChilds"
+				        ,"treeIssues","rootElements","rootIssues","rootProjects"];
+			var auxIssues=storedObj["allIssues"];
+			self.hsAllIssues=auxIssues;
+			attribs.forEach(function(attrName){
+				var attValue=storedObj[attrName];
+				self[attrName]=attValue;
+			});
+			return self;
+		});
 	}
 
 	adjustAccumItem(accumType,accumValue,issue,fieldName,atDatetime,notAdjust){

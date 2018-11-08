@@ -695,6 +695,7 @@ class RCGTaskManager{
 		self.onChangeStatus=callback;
 	}
 	forceChangeStatus(){
+		self=this;
 		if ((typeof self.onChangeStatus!=="undefined") && (self.onChangeStatus!="")){
 			self.onChangeStatus();
 		}

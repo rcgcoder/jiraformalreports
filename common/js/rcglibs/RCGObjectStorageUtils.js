@@ -79,7 +79,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		if (saveType=="h"/*"hashmap"*/){
 			var objResult=newHashMap();
 			if (isDefined(objContent.value)){
-				self.addStep("PostProcessing the asignment of array items to a hashmap",function(){
+				var fncAssignerFunction=function(){
 					objResult.autoSwing=false;
 					self.sequentialProcess(objContent.value,function(hsElem){
 						var key=hsElem.key;
@@ -88,7 +88,14 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 					});
 					objResult.autoSwing=true;
 					objResult.swing();
-				});
+				}
+				if (objContent.value>100){ // if there are a lot of items in the array..... run the assignment in a step after 
+					self.addStep("PostProcessing the assignment of array items to a hashmap",function(){
+						fncAssignerFunction();
+					});
+				} else { // if there are not too much items.... assign them on the fly
+					fncAssignerFunction();
+				}
 			}
 			return objResult;
 		} else if (saveType=="d" /* date */){

@@ -82,16 +82,7 @@ var jrfReport=class jrfReport {
 			});
 		});
 		storer.addStep("Parsing Project Data",function(){
-			var lastTime=(new Date()).getTime();
-			var fncProgressCallback= function(){
-				var actTime=(new Date()).getTime();
-				if ((actTime-lastTime)>(3000)){
-					lastTime=actTime;
-					log("Force update status");
-					storer.getTaskManager().forceChangeStatus();
-				}
-			}
-			return storer.parseJson(storedFullObj.data,fncProgressCallback);
+			return storer.parseJson(storedFullObj.data);
 		});
 		storer.addStep("Procesing the stored readed info",function(storedObj){
 			self.config=storedObj.config;  

@@ -21,11 +21,8 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 	isBaseType(itemType){
 		return (itemType=="s")||(itemType=="n")||(itemType=="b");
 	}
-	jsonReplacer(key,value,fncProgressCallback){
+	jsonReplacer(key,value){
 		var self=this;
-		if (isDefined(fncProgressCallback)){
-			fncProgressCallback();
-		}
 		if (isMethod(value)) { 
 			var objToSave={rcg_type:"m"};
 			var sFncFormula=""+value.toString();
@@ -41,20 +38,8 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			var objToSave={rcg_type:"h"};
 			if (value.length()>0){
 				objToSave.value=[];
-				var nMaxItems=value.length();
-				var nActualProgress=0;
-				var nActualIndex=0;
 				value.walk(function(elem,deep,key){
 					objToSave.value.push({key:key,value:elem});
-					if (isDefined(fncProgressCallback)){
-						debugger;
-						nActualIndex++;
-						var nAuxProgress=Math.round(100*nActualIndex/nMaxItems);
-						if (nAuxProgress!=nActualProgress){
-							nActualProgress=nAuxProgress;
-							fncProgressCallback();
-						}
-					}
 				});
 			}
 			return objToSave;
@@ -82,12 +67,9 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		}
 		return value;
 	}
-	jsonReviver(key,value,fncProgressCallback){
+	jsonReviver(key,value){
 		//debugger;
 		var self=this;
-		if (isDefined(fncProgressCallback)){
-			fncProgressCallback();
-		}
 		if (isNull(value)||(isUndefined(value))) return value;
 		var objContent=value;
 		var saveType=objContent.rcg_type;
@@ -99,9 +81,6 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			if (isDefined(objContent.value)){
 				self.addStep("PostProcessing the asignment of array items to a hashmap",function(){
 					objResult.autoSwing=false;
-					var nMaxItems=objContent.value.length;
-					var nActualProgress=0;
-					var nActualIndex=0;
 					self.sequentialProcess(objContent.value,function(hsElem){
 						var key=hsElem.key;
 						var hsValue=hsElem.value;
@@ -200,17 +179,17 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 	generateJson(objToSave,fncProgressCallback){
 		var self=this;
 		var fncReplacer=function(key,value){
-			return self.jsonReplacer(key,value,fncProgressCallback);
+			return self.jsonReplacer(key,value);
 		};
 		var jsonToSave=JSON.stringify(objToSave,fncReplacer);
 		return jsonToSave;
 	}
-	parseJson(sContent,fncProgressCallback){
+	parseJson(sContent){
 		var self=this;
 		var objContent;
 		self.addStep("Parse Json. First Step",function(){
 			var fncReviver=self.createManagedFunction(function(key,value){
-				return self.jsonReviver(key,value,fncProgressCallback);
+				return self.jsonReviver(key,value);
 			});
 			objContent=JSON.parse(sContent,fncReviver);
 			return objContent;

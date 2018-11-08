@@ -73,7 +73,7 @@ var jrfReport=class jrfReport {
 			        ,"treeIssues","rootElements","rootIssues","rootProjects"];
 		var auxIssues=storedObj["allIssues"];
 		self.hsAllIssues=auxIssues;
-		attribs.walk(function(attrName){
+		attribs.forEach(function(attrName){
 			var attValue=storedObj[attrName];
 			self[attrName]=attValue;
 		});

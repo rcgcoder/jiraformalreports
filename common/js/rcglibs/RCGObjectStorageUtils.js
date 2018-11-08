@@ -175,10 +175,12 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		return self.waitForEvent();
 	}
 	generateJson(objToSave){
+		var self=this;
 		var jsonToSave=JSON.stringify(objToSave,function(key,value){return self.jsonReplacer(key,value);});
 		return jsonToSave
 	}
 	parseJson(sContent){
+		var self=this;
 		var objContent=JSON.parse(sContent,function(key,value){return self.jsonReviver(key,value);});
 		return objContent;
 	}

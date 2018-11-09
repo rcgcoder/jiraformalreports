@@ -271,6 +271,11 @@ var factoryObjects=class factoryObjects{
 					){
 					bWithoutMinMaxMargins=false;
 				}
+				if (vDataType=="Boolean"){
+					bWithoutMinMaxMargins=false;
+					this["set"+vNameAttribute](false);  // initialized at false
+				}
+
 				if (!bWithoutMinMaxMargins){
 					this.internal_addIndividualAttr(vNameAttribute+"Min");
 					this.internal_addIndividualAttr(vNameAttribute+"Max");

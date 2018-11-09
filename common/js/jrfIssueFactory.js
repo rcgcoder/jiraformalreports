@@ -28,9 +28,10 @@ function newIssueFactory(report){
 			 {name:"EpicChild",description:"List of issues with epic link equals to this issue key",type:"object"},
 			 {name:"RelationFilter",description:"List of custom functions to set relations to this issue key",type:"object"},
 			 {name:"Error",description:"List of errors detected in the process of Issue",type:"object"},
+			 {name:"StackAsyncFieldValue",description:"Stack that Indicates when fieldvalue can run steps",type:"Boolean"},
 			]
 			,
-			allFieldDefinitions.concat(["JiraObject","IssueUrl","Changelog"])
+			allFieldDefinitions.concat("JiraObject","IssueUrl","Changelog")
 			,
 			[]
 			,
@@ -159,20 +160,21 @@ function newIssueFactory(report){
 //		log("Error getting correct id of Field:"+sFieldName);
 		return sFieldName;
 	});
-	dynObj.functions.add("getChildRootSteps",function(report){
+	dynObj.functions.add("getChildRootSteps",function(){
 		var self=this;
 		var rootIssue=self;
 		var nParents=self.countParentsChild();
 		if (nParents==0){
 			return rootIssue;
 		} else {
+			var report=self.getReport();
 			var hsListParents=self.getListParentsChild();
 			var firstNode=hsListParents.getFirst();
 			var parentIssue=firstNode.value;
 			report.addStep("getting root from all parents",function(){
 				report.workOnIssueSteps(parentIssue,function(issue){
 					report.addStep("getting root from parent",function(){
-						return issue.getChildRootSteps(report);
+						return issue.getChildRootSteps();
 					});
 					report.addStep("Assigning to rootIssue",function(rootResult){
 						rootIssue=rootResult;
@@ -186,6 +188,38 @@ function newIssueFactory(report){
 			});
 		}
 	});
+	dynObj.functions.add("processHierarchy",function(fncAction){
+		var self=this;
+		var rootIssue=self;
+		var nParents=self.countParentsChild();
+		if (nParents==0){
+			return rootIssue;
+		} else {
+			var report=self.getReport();
+			var hsListParents=self.getListParentsChild();
+			var firstNode=hsListParents.getFirst();
+			var parentIssue=firstNode.value;
+			report.addStep("getting root from all parents",function(){
+				report.workOnIssueSteps(parentIssue,function(issue){
+					report.addStep("Executing the action",function(){
+						return fncAction(issue);
+					});
+					report.addStep("getting root from parent",function(){
+						return issue.getChildRootSteps();
+					});
+					report.addStep("Assigning to rootIssue",function(rootResult){
+						rootIssue=rootResult;
+						return rootResult;
+					});
+				});
+				return;
+			});
+			report.addStep("returning rootIssue",function(){
+				return rootIssue;
+			});
+		}
+	});
+
 	dynObj.functions.add("getErrorsAsHtml",function(returnTag){
 		var self=this;
 		var sResult="";
@@ -199,12 +233,13 @@ function newIssueFactory(report){
 		return sResult;
 	});
 
-	dynObj.functions.add("checkChildCycles",function(report){
+	dynObj.functions.add("checkChildCycles",function(){
 		var self=this;
 		var hsParents=newHashMap();
 		var dynAux=self;
 		var selectedParent;
 		if (dynAux.countParentsChild()>0){
+			var report=self.getReport();
 			var fncAddCheckIssueSteps=function(dynAux){
 				var dynAuxKey=dynAux.getKey();
 				hsParents.add(dynAuxKey,dynAux);  // adding this issue to the list of parents
@@ -271,6 +306,37 @@ function newIssueFactory(report){
 		sFieldName=self.getExistentFieldId(sFieldName);
 		var fncAux=self["get"+sFieldName];
 		return (isDefined(fncAux));
+	});
+	dynObj.functions.add("throwAsyncException",function(method,arrParams){
+		var self=this;
+		throw {type:"AsyncFieldException",obj:self,method:method,params:arrParams};
+	});
+	dynObj.functions.add("pushAsyncFieldValue",function(newValue){
+		var self=this;
+		self.getStackAsyncFieldValues().push(newValue);
+	});
+	dynObj.functions.add("popAsyncFieldValue",function(newValue){
+		var self=this;
+		return self.getStackAsyncFieldValues().pop();
+	});
+	dynObj.functions.add("getAsyncFieldValue",function(newValue){
+		var self=this;
+		self.getStackAsyncFieldValues().top();
+	});
+
+	dynObj.functions.add("fieldValueAsync",function(theFieldName,bRendered,dateTime,inOtherParams){
+		var self=this;
+		var report=getReport();
+		var bAsyncFieldBackup;
+		var vResult;
+		report.addStep("Setting async and retrieve value",function(){
+			self.pushAsyncFieldValue(true);
+			return self.fieldValue(theFieldName,bRendered,dateTime,inOtherParams);
+		});
+		self.addStep("Setting async and retrieve value",function(vResult){
+			self.popAsyncFieldValue();
+			return vResult;
+		});
 	});
 	
 	dynObj.functions.add("fieldValue",function(theFieldName,bRendered,dateTime,inOtherParams){
@@ -435,6 +501,7 @@ function newIssueFactory(report){
 	
 	dynObj.functions.add("fieldAccum",function(theFieldName,hierarchyType,dateTime,inOtherParams,bSetProperty,notAdjust,fncItemCustomCalc){
 		var self=this;
+
 		var bPrecomputed=false;
 		//debugger;
 		var app=System.webapp;
@@ -453,7 +520,7 @@ function newIssueFactory(report){
 		var bExistsCacheKey=accumCache.exists(cacheKey);
 		if (bExistsCacheKey){
 			keyValuesCache=accumCache.getValue(cacheKey);
-			//debugger;
+			//debugger;a
 			if (keyValuesCache.exists(cacheTimeKey)){
 				var vResultFromCache=keyValuesCache.getValue(cacheTimeKey);
 				return vResultFromCache; 
@@ -463,31 +530,47 @@ function newIssueFactory(report){
 			accumCache.add(cacheKey,keyValuesCache);
 		}
 		var allChilds=self["get"+childType]();
+		report=self.getReport();
 		if (allChilds.length()>0){
-			allChilds.walk(function(child){
-				childValue=child.fieldAccum(theFieldName,childType,dateTime,inOtherParams,bSetProperty,notAdjust,fncItemCustomCalc);
-				if (isString(childValue)||isArray(childValue)){
-					accumValue+=parseFloat(childValue.saToString().trim());
-				} else {
-					accumValue+=childValue;
+			report.addStep("Getting "+theFieldName+" of the childs",function(){
+		    	if (!self.getAsyncFieldValue()){
+		    		self.throwAsyncException(self.fieldAccum,[theFieldName,hierarchyType,dateTime,inOtherParams,bSetProperty,notAdjust,fncItemCustomCalc]);
+		    	}
+        		report.workOnListSteps(allChilds,function(child){
+        			report.addStep("get the field accum",function(){
+            			child.pushAsyncFieldValue(true);
+        				return child.fieldAccum(theFieldName,childType,dateTime,inOtherParams,bSetProperty,notAdjust,fncItemCustomCalc);
+        			});
+        			report.addStep("get the field accum",function(childValue){
+	    				if (isString(childValue)||isArray(childValue)){
+	    					accumValue+=parseFloat(childValue.saToString().trim());
+	    				} else {
+	    					accumValue+=childValue;
+	    				}
+            			child.popAsyncFieldValue();
+        			});
+        		});
+			} else {
+				// let´s find if field have a precomputed value
+				var childValue="";
+				var precompValue=self.getPrecomputedPropertyValue(cacheKey,dateTime);
+				if (precompValue!=""){
+					bPrecomputed=true;
+					childValue=precompValue;
 				}
-			});
-		} else {
-			// let´s find if field have a precomputed value
-			var childValue="";
-			var precompValue=self.getPrecomputedPropertyValue(cacheKey,dateTime);
-			if (precompValue!=""){
-				bPrecomputed=true;
-				childValue=precompValue;
+				if (childValue==""){ // if precomputed==""..... there is not precomputed value
+					try {
+						childValue=self.fieldValue(theFieldName,false,dateTime,inOtherParams);
+					} catch (e){
+						
+					}
+				}
+				if (childValue==""){
+					childValue=0;
+				}
+				accumValue=childValue;
 			}
-			if (childValue==""){ // if precomputed==""..... there is not precomputed value
-				childValue=self.fieldValue(theFieldName,false,dateTime,inOtherParams);
-			}
-			if (childValue==""){
-				childValue=0;
-			}
-			accumValue=childValue;
-		}
+		});
 		if (isDefined(fncItemCustomCalc)){
 			log("Isssue"+self.getKey()+". Calling item custom calc function with value:"+accumValue);
 			accumValue=fncItemCustomCalc(accumValue);
@@ -946,6 +1029,7 @@ function newIssueFactory(report){
 		}
 		return sResult;
 	});
+	
 
 	
 	return dynObj;

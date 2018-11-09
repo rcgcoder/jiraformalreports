@@ -556,7 +556,7 @@ var jrfReport=class jrfReport {
 		// first launch all issue retrieve ...
 		self.addStep("Getting All Issues in the Scope.... ",function(){
 			//debugger;
-			self.allIssues.changeStorableParams(100,0.10,true);
+			self.allIssues.changeStorableParams(20000,0.10,true);
 			if (self.isReusingIssueList()){
 				self.addStep("check if report exists in storage",function(){
 					return self.existStored(); // load all issues

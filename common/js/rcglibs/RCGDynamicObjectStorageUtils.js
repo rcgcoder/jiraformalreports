@@ -282,7 +282,10 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 					dynObj.loading=true;
 					var theFactory=self.factory;
 					//log("Loaded from storage:"+theFactory.name +"/"+objId);
-					storer.addStep("Setting attributes",function(){
+					storer.addStep("Setting Functions and attributes",function(){
+						theFactory.functions.walk(function(value,deep,key){
+							dynObj[key]=value;
+						});
 						theFactory.attrTypes.walk(function(value,deep,key){
 								var attrName=key;
 								var attrType=value.type;

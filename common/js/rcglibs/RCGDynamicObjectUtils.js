@@ -1114,6 +1114,9 @@ var factoryObjects=class factoryObjects{
 					self["set"+attrName+"s"](undefined);
 				}
 			});
+			theFactory.functions.walk(function(value,deep,key){
+				self[key]=undefined;
+			});
 		}
 		self.setFullyUnloaded();
 	}

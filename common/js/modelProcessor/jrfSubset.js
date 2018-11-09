@@ -408,7 +408,7 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 		});
 	}
 	apply(){
-		//		debugger;
+		debugger;
 		var self=this;
 		self.addStep("Getting elements for subset.", function(){
 			self.getElementsInSubset();

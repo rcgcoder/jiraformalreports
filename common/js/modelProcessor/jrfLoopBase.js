@@ -17,6 +17,7 @@ var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition al
 		super.apply();
 	}
 	apply(){
+		debugger;
 		var self=this;
 		//debugger;
 		var iLoopElemsCount;  
@@ -47,7 +48,7 @@ var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition al
 								self.initVariables(self.innerVarName,undefined,loopElem);
 							}
 							if (isDynamicObject(loopElem)){
-								self.workOnSteps(loopElem,function(){
+								loopElem.getFactory().workOnSteps(loopElem,function(){
 									self.addStep("Processing",function(){
 										var bContinue=self.loopItemProcess(loopElem,iLoopIndex,iLoopElemsCount);
 										return bContinue;

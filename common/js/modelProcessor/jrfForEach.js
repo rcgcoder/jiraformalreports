@@ -254,7 +254,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		} else if (self.type=="array"){
 			newParent=self.reportElem;
 		}
-		self.model.getReport().workOnIssueSteps(eachElem,function(){
+		self.model.report.workOnIssueSteps(eachElem,function(){
 			self.internal_ProcessLoopItem(eachElem,bExpandAllRows,eachElem,index,loopLength);
 		});
 		return true; //allways continue

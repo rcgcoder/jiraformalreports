@@ -135,7 +135,7 @@ var jrfReport=class jrfReport {
 		});
 	}
 	load(idReport){
-		debugger;
+//		debugger;
 		var self=this;
 		var idReportKey="LastReport";
 		if (isDefined(idReport)) idReportKey=idReport;
@@ -555,7 +555,7 @@ var jrfReport=class jrfReport {
 		});
 		// first launch all issue retrieve ...
 		self.addStep("Getting All Issues in the Scope.... ",function(){
-			debugger;
+			//debugger;
 			self.allIssues.changeStorableParams(100,0.10,true);
 			if (self.isReusingIssueList()){
 				self.addStep("check if report exists in storage",function(){
@@ -600,7 +600,7 @@ var jrfReport=class jrfReport {
 					self.bFinishReport=true;
 				}
 			}
-*/			debugger;
+*/			//debugger;
 			if (self.config.rootsByJQL){
 				var theJQL="";
 				if (self.config.rootIssues.values.length>0){
@@ -642,7 +642,7 @@ var jrfReport=class jrfReport {
 		
 		var hsKeyWaiting=newHashMap();
 		self.addStep("Processing root elements.... ",function(){
-			debugger;
+			//debugger;
 			if (self.isReusingIssueList()) return;
 			if (self.bFinishReport) return;
 			//self.treeIssues=newHashMap();
@@ -916,7 +916,7 @@ var jrfReport=class jrfReport {
 					log("Root Project: "+key);
 				});
 				
-*/				debugger;
+*/				//debugger;
 				log("Resume Root issues:"+self.rootIssues.length() +
 				    "		Root project:"+self.rootProjects.length()+
 				    "		Issues in scope:"+ self.allIssues.list.length());
@@ -1069,7 +1069,7 @@ var jrfReport=class jrfReport {
 		// assing childs and advance childs to root elements
 		self.addStep("Assign Childs and Advance",function(){
 			log("Assing Childs and Advance");
-			debugger;
+			//debugger;
 			if (self.isReusingIssueList()) return;
 			var tm=self.getTaskManager();
 			tm.asyncTimeWasted=0;
@@ -1090,7 +1090,7 @@ var jrfReport=class jrfReport {
 				});
 			});
 			self.addStep("Walking througth the roots to set to issuesAdded...",function(){
-				debugger;
+				//debugger;
 				logError("Added "+countAdded+" "+ ((100*countAdded)/self.rootIssues.length()) +"% to the seletion JQL");
 				return self.workOnListOfIssueSteps(self.rootIssues,function(issue){
 					var key=issue.getKey();
@@ -1108,7 +1108,7 @@ var jrfReport=class jrfReport {
 				});
 			});
 			self.addStep("Finding Childs",function(){
-				debugger;
+				//debugger;
 				log("Finding Childs");
 				if (nExcludedIssues>0){
 					log("Excluded "+nExcludedIssues+" root issues after apply project exclude list filter");
@@ -1221,7 +1221,7 @@ var jrfReport=class jrfReport {
 							}); 
 							return self.workOnListOfIssueSteps(relatedChilds,function(issueChild){
 								if (issueParent.getKey()==issueChild.getKey()){
-									debugger;
+									//debugger;
 									logError("Child and Parent are the same"+auxKey+" -> "+ issueParent.getKey());
 									log(issueParent.getRelatedIssuesByFunction());
 								} else {
@@ -1242,7 +1242,7 @@ var jrfReport=class jrfReport {
 		});
 		
 		self.addStep("Final Adjusts to retrieved list of issues",function(){
-			debugger;
+			//debugger;
 			if (self.isReusingIssueList()) return;
 			self.addStep("Analizing child/parent billing cycles and multiple parents",function(){
 				return self.workOnListOfIssueSteps(issuesAdded,function(issue){
@@ -1267,7 +1267,7 @@ var jrfReport=class jrfReport {
 			self.addStep("Creating child relations by issue custom formulas",function(){
 				return self.workOnListOfIssueSteps(issuesAdded,function(issueParent){
 					if (issueParent.existsRelationFilter("Child")){
-						debugger;
+						//debugger;
 						var childRelationFilter=issueParent.getRelationFilterById("Child");
 						return self.workOnListOfIssueSteps(issuesAdded,function(issueChild){
 							if (issueChild.getKey()!=issueParent.getKey()){
@@ -1286,7 +1286,7 @@ var jrfReport=class jrfReport {
 			});
 			var removeCounter=0;
 			var hsRemoveKeys=newHashMap();
-			debugger;
+			//debugger;
 			var bAdvancedWorks=self.objModel.variables.getVar("withAdvancedWorks");
 			var txtIniDate;
 			var dtIniDate;
@@ -1300,7 +1300,7 @@ var jrfReport=class jrfReport {
 			
 			
 			self.addStep("Identifying issues to exclude...",function(){
-				debugger;
+				//debugger;
 				return self.workOnListOfIssueSteps(issuesAdded,function(issue){
 		            var txtEndDate=self.objModel.variables.getVar("ReportEndDate"+"_text");
 		            var rptEndDate=self.objModel.variables.getVar("ReportEndDate");
@@ -1377,7 +1377,7 @@ var jrfReport=class jrfReport {
 		});
 		
 		self.addStep("Processing Directives",function(){
-			debugger;
+			//debugger;
 			if (self.isReusingIssueList()) return;
 			var hsVersions=newHashMap();
 			var hsAccumulators=newHashMap();
@@ -1488,7 +1488,7 @@ var jrfReport=class jrfReport {
 			});
 		});
 		self.addStep("Saving Report to reuse",function(){
-			debugger;
+			//debugger;
 			var self=this;
 			if (self.allIssues.isStorable()){
 				self.addStep("Storing remaining issues in memory...",function(){

@@ -323,6 +323,8 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		var faseActual=self.fieldValue("Fase",false,atDatetime);
 		var faseDesarrollo=faseActual;
 		var timeoriginalestimate=self.fieldValue("timeoriginalestimate",false,atDatetime);
+		var timeestimate=0;
+		var timespent=0;
 
 		//dynObj.functions.add("fieldAccumChilds",function(theFieldName,datetime,inOtherParams,notAdjust,bSetProperty,fncItemCustomCalc){
 		if (self.getKey()=="BENT-411"){
@@ -336,8 +338,6 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 				}
 			});
 		})
-		var timeestimate=0;
-		var timespent=0;
 
 		report.addStep("Accumulating timestimate value of childs",function(){
 			return self.fieldAccumChilds("timeestimate",atDatetime);
@@ -345,13 +345,22 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 
 		report.addStep("Accumulating timespent value of childs",function(resultTimeestimate){
 			timeestimate=resultTimeestimate;
-
 			if (self.fieldValue("project.key")!="OT"){
-				timeoriginalestimate=self.getReport().adjustAccumItem("Childs",timeoriginalestimate,self,"timeoriginalestimate",atDatetime);
-				timeestimate=self.getReport().adjustAccumItem("Childs",timeestimate,self,"timeestimate",atDatetime);
-				return self.fieldAccumChilds("timespent",atDatetime);
+				self.addStepMayRetry("Adjusting timeoriginalestimate",function(){
+					var auxTimeoriginalestimate=self.getReport().adjustAccumItem("Childs",timeoriginalestimate,self,"timeoriginalestimate",atDatetime);
+					var auxTimeestimate=self.getReport().adjustAccumItem("Childs",timeestimate,self,"timeestimate",atDatetime);
+					var auxTimespent=self.fieldAccumChilds("timespent",atDatetime);
+					return report.taskResultMultiple(auxTimeoriginalestimate,auxTimeestimate,auxTimespent);
+				});
+				report.addStep("setting values",function(toe,te,ts){
+					timeoriginalestimate=toe;
+					timeestimate=te;
+					timespent=ts;
+				});
 			} else {
-				return self.fieldValue("timespent",false,atDatetime);
+				self.callWithRetry(function(){
+					timespent=self.fieldValue("timespent",false,atDatetime);
+				});
 			}
 		});
 		report.addStep("Doing billing snapshot calculus and return",function(resultTimespent){

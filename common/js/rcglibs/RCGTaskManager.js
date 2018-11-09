@@ -1,10 +1,14 @@
 
 class RCGTaskResult{
-	constructor(bContinue,nJumps,p0,p1,p2,p3,p4,p5,p6,p7,p8,p9){
+	constructor(bContinue,nJumps,bStepsAdded,p0,p1,p2,p3,p4,p5,p6,p7,p8,p9){
 		var self=this;
 		self.continueTask=bContinue;
 		self.arrParams;
 		self.jump=nJumps;
+		self.stepsAdded=false;
+		if ((typeof bStepsAdded!=="undefined")&&bStepsAdded){
+			self.stepsAdded=true;
+		}
 		self.withParams=false;
 		var arrParams=new Array(10);
 		arrParams[0]=p0;
@@ -1413,10 +1417,13 @@ class RCGTaskManager{
 		});
 	}
 	extended_taskResultJump(nJumps,p0,p1,p2,p3,p4,p5,p6,p7,p8,p9){
-		return new RCGTaskResult(true,nJumps,p0,p1,p2,p3,p4,p5,p6,p7,p8,p9);
+		return new RCGTaskResult(true,nJumps,false,p0,p1,p2,p3,p4,p5,p6,p7,p8,p9);
 	}
 	extended_taskResultMultiple(p0,p1,p2,p3,p4,p5,p6,p7,p8,p9){
-		return new RCGTaskResult(true,undefined,p0,p1,p2,p3,p4,p5,p6,p7,p8,p9);
+		return new RCGTaskResult(true,undefined,false,p0,p1,p2,p3,p4,p5,p6,p7,p8,p9);
+	}
+	extended_taskResultNeedsStep(p0,p1,p2,p3,p4,p5,p6,p7,p8,p9){
+		return new RCGTaskResult(true,undefined,true,p0,p1,p2,p3,p4,p5,p6,p7,p8,p9);
 	}
 	extended_waitForEvent(){
 		return new RCGTaskResult(false);
@@ -1480,6 +1487,7 @@ class RCGTaskManager{
 		obj.sequentialProcess=self.extended_sequentialProcess;		
 		obj.waitForEvent=self.extended_waitForEvent;
 		obj.taskResultMultiple=self.extended_taskResultMultiple;
+		obj.taskResultNeedsStep=self.extended_taskResultNeedsStep;
 		obj.taskResultJump=self.extended_taskResultJump;
 		obj.loopProcess=self.extended_loopProcess;
 

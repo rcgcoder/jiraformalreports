@@ -311,6 +311,76 @@ function newIssueFactory(report){
 		var self=this;
 		throw {type:"AsyncFieldException",obj:self,method:method,params:arrParams};
 	});
+    dynObj.functions.add("callWithRetry",function(fncCall){
+        var bException=false;
+        var stackErrors=[];
+        var vResult;
+        var fncControlledCall=function(auxCall){
+            bException=false;
+            try {
+                vResult=auxCall();
+            } catch (except) {
+                if (except.type!="AsyncFieldException"){
+                    throw except;
+                } else {
+                    bException=true;
+                    except["call"]=auxCall;
+                    stackErrors.push(except);
+                } 
+            }
+        };
+        fncControlledCall(fncCall);
+        if (stackErrors.length==0){
+            return vResult;
+        } else {
+            // some fields need get async
+            var fncRetryFunction=function(){
+                var theExcept=stackErrors[stackErrors.length-1];
+                report.addStep("Trying to get value asynchronously",function(){
+                    theExcept.obj.pushAsyncFieldValue(true);
+                    fncControlledCall(function(){
+                        theExcept.method.apply(theExcept.obj,theExcept.params);
+                    });
+                });
+                report.addStep("Checking error or not",function(){
+                   theExcept.obj.popAsyncFieldValue();
+                   var vResult;
+                   if (!bException){ // retrying the exception generator function 
+                       stackErrors.pop();
+                       vResult=fncControlledCall(theExcept.call);
+                   }
+                   if (stackErrors.length>0){
+                	   fncRetryFunction();
+                   } else {
+                       return vResult;
+                   }
+                });
+            }
+            fncRetryFunction();
+            return report.taskResultNeedsStep();
+        }
+    });
+    dynObj.functions.add("executeAsStep",function(bAsStep,fncCall){
+        var self=this;
+        if (isDefined(bAsStep)||(!bAsStep)){
+            return fncCall();
+        } else {
+            return self.getReport().addStep("Executing as Step",fncCall);
+        }
+    });
+    dynObj.functions.add("executeAsStepMayRetry",function(bAsStep,fncCall){
+        var self=this;
+        return self.executeAsStep(bAsStep,function(){
+           return self.callWithRetry(fncCall);
+        });
+    });
+    dynObj.functions.add("addStepMayRetry",function(sDescription,fncCall){
+        var self=this;
+        return self.getReport().addStep(sDescription,function(){
+            return self.callWithRetry(fncCall);
+        });
+    });
+
 	dynObj.functions.add("pushAsyncFieldValue",function(newValue){
 		var self=this;
 		self.getStackAsyncFieldValues().push(newValue);
@@ -333,7 +403,7 @@ function newIssueFactory(report){
 			self.pushAsyncFieldValue(true);
 			return self.fieldValue(theFieldName,bRendered,dateTime,inOtherParams);
 		});
-		self.addStep("Setting async and retrieve value",function(vResult){
+		report.addStep("Setting async and retrieve value",function(vResult){
 			self.popAsyncFieldValue();
 			return vResult;
 		});
@@ -501,7 +571,7 @@ function newIssueFactory(report){
 	
 	dynObj.functions.add("fieldAccum",function(theFieldName,hierarchyType,dateTime,inOtherParams,bSetProperty,notAdjust,fncItemCustomCalc){
 		var self=this;
-
+		
 		var bPrecomputed=false;
 		//debugger;
 		var app=System.webapp;
@@ -528,129 +598,141 @@ function newIssueFactory(report){
 		} else {
 			keyValuesCache=newHashMap();
 			accumCache.add(cacheKey,keyValuesCache);
-		}
+		} 
 		var allChilds=self["get"+childType]();
 		report=self.getReport();
-		if (allChilds.length()>0){
-			report.addStep("Getting "+theFieldName+" of the childs",function(){
-		    	if (!self.getAsyncFieldValue()){
-		    		self.throwAsyncException(self.fieldAccum,[theFieldName,hierarchyType,dateTime,inOtherParams,bSetProperty,notAdjust,fncItemCustomCalc]);
-		    	}
-        		report.workOnListSteps(allChilds,function(child){
-        			report.addStep("get the field accum",function(){
-            			child.pushAsyncFieldValue(true);
-        				return child.fieldAccum(theFieldName,childType,dateTime,inOtherParams,bSetProperty,notAdjust,fncItemCustomCalc);
-        			});
-        			report.addStep("get the field accum",function(childValue){
-	    				if (isString(childValue)||isArray(childValue)){
-	    					accumValue+=parseFloat(childValue.saToString().trim());
-	    				} else {
-	    					accumValue+=childValue;
-	    				}
-            			child.popAsyncFieldValue();
-        			});
-        		});
-			} else {
-				// let´s find if field have a precomputed value
-				var childValue="";
-				var precompValue=self.getPrecomputedPropertyValue(cacheKey,dateTime);
-				if (precompValue!=""){
-					bPrecomputed=true;
-					childValue=precompValue;
-				}
-				if (childValue==""){ // if precomputed==""..... there is not precomputed value
-					try {
-						childValue=self.fieldValue(theFieldName,false,dateTime,inOtherParams);
-					} catch (e){
-						
-					}
-				}
-				if (childValue==""){
-					childValue=0;
-				}
-				accumValue=childValue;
-			}
+		var bUseStepping=false;
+        if (allChilds.length()>0){
+            if (!self.getAsyncFieldValue()){
+                self.throwAsyncException(self.fieldAccum,[theFieldName,hierarchyType,dateTime,inOtherParams,bSetProperty,notAdjust,fncItemCustomCalc]);
+            }
+            bUseStepping=true;
+            report.addStep("Getting "+theFieldName+" of the childs",function(){
+                report.workOnListSteps(allChilds,function(child){
+                    report.addStep("Calling field Accum",function(){
+                        self.callWithRetry(function(){
+                            return child.fieldAccum(theFieldName,childType,dateTime,inOtherParams,bSetProperty,notAdjust,fncItemCustomCalc);
+                        });
+                    });
+                    report.addStep("get the field accum",function(childValue){
+                        if (isString(childValue)||isArray(childValue)){
+                            accumValue+=parseFloat(childValue.saToString().trim());
+                        } else {
+                            accumValue+=childValue;
+                        }
+                    });
+                });
+            });
+        } else {
+            var vResult=self.callWithRetry(function(){
+                // let´s find if field have a precomputed value
+                var childValue="";
+                var precompValue=self.getPrecomputedPropertyValue(cacheKey,dateTime);
+                if (precompValue!=""){
+                    bPrecomputed=true;
+                    childValue=precompValue;
+                }
+                if (childValue==""){ // if precomputed==""..... there is not precomputed value
+                    childValue=self.fieldValue(theFieldName,false,dateTime,inOtherParams);
+                }
+                if (childValue==""){
+                    childValue=0;
+                }
+                accumValue=childValue;
+            });
+            if ((isTaskResult(vResult))&&(vResult.stepsAdded)){
+                bUseStepping=true;
+            }
+        }
+        return report.executeAsStepMayRetry(bUseStepping,function(){
+        	var auxAcumValue=accumValue;
+            if (isDefined(fncItemCustomCalc)){
+                log("Isssue"+self.getKey()+". Calling item custom calc function with value:"+accumValue);
+                accumValue=fncItemCustomCalc(accumValue);
+                log("Isssue"+self.getKey()+ " item custom calc function returns value:"+accumValue);
+            } else {
+                log("Isssue"+self.getKey()+ " returns value:"+accumValue);
+            }
+            var auxNotAdjust=(isDefined(notAdjust)&&notAdjust); // not adjust uses only if TRUE is received
+            if ((!bPrecomputed)&&(!auxNotAdjust)) {
+                accumValue=self.getReport().adjustAccumItem(childType,accumValue,self,theFieldName,dateTime,auxNotAdjust);
+            }
+            /*****
+             * attention... is false..... disabled precomputed 
+             */
+            if (false) {
+            if ((allChilds.length()>0)
+                &&(!bPrecomputed)
+                &&(self.getReport().updatePrecomputedAccumulators)
+                &&(isUndefined(bSetProperty) || (isDefined(bSetProperty)&&(bSetProperty)))
+                ){
+                var hsMixedLife=self.mixIssuesFieldLife(allChilds,theFieldName,childType,auxNotAdjust);
+                var arrChanges=[];
+                var precompObj={lastSave:new Date(),
+                                numChilds:allChilds.length(),
+                                childsKeys:[],
+                                changes:arrChanges};
+                hsMixedLife.walk(function(value,iDeep,dateKey){
+                    arrChanges.push([dateKey,"",value]);
+                });
+                allChilds.walk(function(theChild){
+                    precompObj.childsKeys.push(theChild.getKey());
+                });
+                arrChanges.sort(function(a,b){
+                    if (a[0]>b[0]) return -1;
+                    if (a[0]<b[0]) return 1;
+                    return 0;
+                });
+                for (var i=0;i<arrChanges.length-1;i++){
+                    arrChanges[i][1]=arrChanges[i+1][2];
+                }
+                var antPrecomp=self.getPrecomputedPropertyById(cacheKey);
+                var bEqualsPrecomps=true;
+                var antChanges=antPrecomp.changes;
+                var actChanges=arrChanges;
+                if (antPrecomp==""){
+                    bEqualsPrecomps=false;
+                } else if (antChanges.length!=actChanges.length){
+                    bEqualsPrecomps=false;
+                } else {
+                    var antChange;
+                    var actChange;
+                    var antValue;
+                    var actValue;
+                    for (var i=0;(bEqualsPrecomps&&(i<antChanges.length));i++){
+                        antChange=antChanges[i];
+                        actChange=actChanges[i];
+                        for (var j=0;(bEqualsPrecomps&&j<antChange.length);j++){
+                            antValue=antChange[j];
+                            actValue=actChange[j];
+                            if (typeof antValue !== typeof actValue){
+                                bEqualsPrecomps=false;
+                            } else if (isDate(antValue)){
+                                bEqualsPrecomps=(antValue.getTime()==actValue.getTime());
+                            } else {
+                                bEqualsPrecomps=(antValue==actValue);
+                            }
+                        }
+                    }
+                }
+                if (!bEqualsPrecomps){
+                    self.setPrecomputedPropertyLife(cacheKey,precompObj);
+                    self.setSavePrecomputedProperty(cacheKey,precompObj); //store the need of update the precomputed property
+    /*
+     * The global threads crash when taskmanager does not breaks (settimeout) in each step 
+     *                  
+                        System.webapp.addStep("Saving life of :"+cacheKey+" of issue "+ self.getKey() +" value:"+JSON.stringify(precompObj) ,function(){
+                        var jira=System.webapp.getJira();
+                        jira.setProperty(self.getKey(),cacheKey,precompObj);
+                    },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
+    */          }
+            }
+            }
+            //      accumCache.add(cacheKey,accumValue);
+            keyValuesCache.add(cacheTimeKey,auxAcumValue);
+            self.change();
+            return auxAcumValue;
 		});
-		if (isDefined(fncItemCustomCalc)){
-			log("Isssue"+self.getKey()+". Calling item custom calc function with value:"+accumValue);
-			accumValue=fncItemCustomCalc(accumValue);
-			log("Isssue"+self.getKey()+ " item custom calc function returns value:"+accumValue);
-		} else {
-			log("Isssue"+self.getKey()+ " returns value:"+accumValue);
-		}
-		var auxNotAdjust=(isDefined(notAdjust)&&notAdjust); // not adjust uses only if TRUE is received
-		if ((!bPrecomputed)&&(!auxNotAdjust)) {
-			accumValue=self.getReport().adjustAccumItem(childType,accumValue,self,theFieldName,dateTime,auxNotAdjust);
-		}
-//		accumCache.add(cacheKey,accumValue);
-		keyValuesCache.add(cacheTimeKey,accumValue);
-		if ((allChilds.length()>0)
-			&&(!bPrecomputed)
-			&&(self.getReport().updatePrecomputedAccumulators)
-			&&(isUndefined(bSetProperty) || (isDefined(bSetProperty)&&(bSetProperty)))
-			){
-			var hsMixedLife=self.mixIssuesFieldLife(allChilds,theFieldName,childType,auxNotAdjust);
-			var arrChanges=[];
-			var precompObj={lastSave:new Date(),
-							numChilds:allChilds.length(),
-							childsKeys:[],
-							changes:arrChanges};
-			hsMixedLife.walk(function(value,iDeep,dateKey){
-				arrChanges.push([dateKey,"",value]);
-			});
-			allChilds.walk(function(theChild){
-				precompObj.childsKeys.push(theChild.getKey());
-			});
-			arrChanges.sort(function(a,b){
-				if (a[0]>b[0]) return -1;
-				if (a[0]<b[0]) return 1;
-				return 0;
-			});
-			for (var i=0;i<arrChanges.length-1;i++){
-				arrChanges[i][1]=arrChanges[i+1][2];
-			}
-			var antPrecomp=self.getPrecomputedPropertyById(cacheKey);
-			var bEqualsPrecomps=true;
-			var antChanges=antPrecomp.changes;
-			var actChanges=arrChanges;
-			if (antPrecomp==""){
-				bEqualsPrecomps=false;
-			} else if (antChanges.length!=actChanges.length){
-				bEqualsPrecomps=false;
-			} else {
-				var antChange;
-				var actChange;
-				var antValue;
-				var actValue;
-				for (var i=0;(bEqualsPrecomps&&(i<antChanges.length));i++){
-					antChange=antChanges[i];
-					actChange=actChanges[i];
-					for (var j=0;(bEqualsPrecomps&&j<antChange.length);j++){
-						antValue=antChange[j];
-						actValue=actChange[j];
-						if (typeof antValue !== typeof actValue){
-							bEqualsPrecomps=false;
-						} else if (isDate(antValue)){
-							bEqualsPrecomps=(antValue.getTime()==actValue.getTime());
-						} else {
-							bEqualsPrecomps=(antValue==actValue);
-						}
-					}
-				}
-			}
-			if (!bEqualsPrecomps){
-				self.setPrecomputedPropertyLife(cacheKey,precompObj);
-				self.setSavePrecomputedProperty(cacheKey,precompObj); //store the need of update the precomputed property
-/*
- * The global threads crash when taskmanager does not breaks (settimeout) in each step 
- * 					
-  					System.webapp.addStep("Saving life of :"+cacheKey+" of issue "+ self.getKey() +" value:"+JSON.stringify(precompObj) ,function(){
-					var jira=System.webapp.getJira();
-					jira.setProperty(self.getKey(),cacheKey,precompObj);
-		        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
-*/			}
-		}
-		return accumValue;
 	});
 	
 	dynObj.functions.add("linkValue",function(sLinkName){

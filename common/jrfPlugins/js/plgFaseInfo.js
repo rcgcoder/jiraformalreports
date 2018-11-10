@@ -165,7 +165,7 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
     		});
 	    	var arrHistory=[];
     		report.addStep("Processing Dates and return result",function(){
-        		report.workOnListSteps(hsChilds,function(issue){
+        		self.getFactory().workOnListSteps(hsChilds,function(issue){
         			hsDates.walk(function(status,iDeep,tsChange){
 		        		var issFase=issue.fieldValue("Fase",false,status.date);
 		        		if (isDefined(issFase)&&(issFase!=="")&&(issFase>=0)){

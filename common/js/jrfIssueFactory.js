@@ -539,7 +539,7 @@ function newIssueFactory(report){
             }
             bUseStepping=true;
             report.addStep("Getting "+theFieldName+" of the childs",function(){
-                report.workOnListSteps(allChilds,function(child){
+                self.getFactory().workOnListSteps(allChilds,function(child){
                     report.addStep("Calling field Accum",function(){
                         report.callWithRetry(function(){
                             return child.fieldAccum(theFieldName,childType,dateTime,inOtherParams,bSetProperty,notAdjust,fncItemCustomCalc);

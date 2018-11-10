@@ -67,7 +67,7 @@ var getBillingFieldListRecursive=function (sPropertyPath,obj){
 		var propPath=sPropertyPath+(sPropertyPath===""?"":".")+propName;
 		var propValue=obj[propName];
 		if (isDefined(propValue)&&(typeof propValue==="object")){
-			arrAux=self.getBillingFieldListRecursive(propPath,propValue);
+			arrAux=getBillingFieldListRecursive(propPath,propValue);
 			arrAux.forEach(function(auxPropPath){
 				arrResults.push(auxPropPath);
 			});

@@ -322,8 +322,8 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 									arrElems[iAux]=workList[iAux];
 									iAux++;
 								}
-								nL1==0;
-								nL2==0;
+								nL1=0;
+								nL2=0;
 							} else {
 								self.addStep("Comparing Items",function(){
 									fncSelectItem(iL1,iL2);

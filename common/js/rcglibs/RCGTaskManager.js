@@ -1496,7 +1496,7 @@ class RCGTaskManager{
 	
 	extended_addStepMayRetry(sDescription,fncCall){
         var self=this;
-        return self.getReport().addStep(sDescription,function(){
+        return self.addStep(sDescription,function(){
             return self.callWithRetry(fncCall);
         });
     }

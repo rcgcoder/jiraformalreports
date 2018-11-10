@@ -334,7 +334,7 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 										iWork++;
 										iL1++;
 										nL1--;
-									} else if (indexSelected==iL1){
+									} else if (indexSelected==iL2){
 										workList[iWork]=arrElems[iL2];
 										iWork++;
 										iL2++;

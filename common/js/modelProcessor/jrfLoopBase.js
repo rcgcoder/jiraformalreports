@@ -2,6 +2,7 @@ var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition al
 	loadOwnProperties(){
 		super.loadOwnProperties();
 		var self=this;
+		self.stackLoopElements=[];
 		self.loopElements;
 	}
 	loopStart(){
@@ -25,6 +26,7 @@ var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition al
 			self.innerApply();
 		});
 		self.addStep("Start processing the Loop",function(loopElems){
+			self.stackLoopElements.push(self.loopElements);
 			self.loopElements=loopElems;
 			iLoopElemsCount=self.loopElements.length();
 			self.loopStart(iLoopElemsCount);
@@ -78,6 +80,7 @@ var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition al
 		});
 		self.addStep("Ending processing the Loop",function(){
 			self.loopEnd(iLoopElemsCount);
+			self.loopElements=self.stackLoopElements.pop();
 		});
 	}
 

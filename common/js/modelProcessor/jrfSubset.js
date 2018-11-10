@@ -184,7 +184,7 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 						self.variables.pushVar("counter",iCounter);
 						self.variables.pushVar("counter_selected",iSelectedCounter);
 					});
-					self.addStep("Executing where clause",function(){
+					self.addStepMayRetry("Executing where clause",function(){
 						var bWhereResult=false;
 						bWhereResult=self.replaceVarsAndExecute(sWhere);
 						return bWhereResult;

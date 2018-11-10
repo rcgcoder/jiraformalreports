@@ -1428,6 +1428,78 @@ class RCGTaskManager{
 	extended_waitForEvent(){
 		return new RCGTaskResult(false);
 	}
+	extended_callWithRetry(fncCall){
+	    var bException=false;
+	    var stackErrors=[];
+	    var vResult;
+	    var fncControlledCall=function(auxCall){
+	        bException=false;
+	        try {
+	            vResult=auxCall();
+	        } catch (except) {
+	            if (except.type!="AsyncFieldException"){
+	                throw except;
+	            } else {
+	                bException=true;
+	                except["call"]=auxCall;
+	                stackErrors.push(except);
+	            } 
+	        }
+	    };
+	    fncControlledCall(fncCall);
+	    if (stackErrors.length==0){
+	        return vResult;
+	    } else {
+	        // some fields need get async
+	        var fncRetryFunction=function(){
+	            var theExcept=stackErrors[stackErrors.length-1];
+	            self.addStep("Trying to get value asynchronously",function(){
+	                theExcept.obj.pushAsyncFieldValue(true);
+	                fncControlledCall(function(){
+	                    theExcept.method.apply(theExcept.obj,theExcept.params);
+	                });
+	            });
+	            self.addStep("Checking error or not",function(){
+	               theExcept.obj.popAsyncFieldValue();
+	               var vResult;
+	               if (!bException){ // retrying the exception generator function 
+	                   stackErrors.pop();
+	                   vResult=fncControlledCall(theExcept.call);
+	               }
+	               if (stackErrors.length>0){
+	            	   fncRetryFunction();
+	               } else {
+	                   return vResult;
+	               }
+	            });
+	        }
+        }
+        fncRetryFunction();
+        return self.taskResultNeedsStep();
+     }
+
+    extended_executeAsStep(bAsStep,fncCall){
+        var self=this;
+        if (isDefined(bAsStep)||(!bAsStep)){
+            return fncCall();
+        } else {
+            return self.addStep("Executing as Step",fncCall);
+        }
+    }
+	
+    extended_executeAsStepMayRetry(bAsStep,fncCall){
+        var self=this;
+        return self.executeAsStep(bAsStep,function(){
+           return self.callWithRetry(fncCall);
+        });
+    }
+	
+	extended_addStepMayRetry(sDescription,fncCall){
+        var self=this;
+        return self.getReport().addStep(sDescription,function(){
+            return self.callWithRetry(fncCall);
+        });
+    }
 	extended_sequentialProcess(hsListItemsToProcess,fncProcess){
 		var self=this;
 		return self.parallelizeCalls(hsListItemsToProcess,undefined,fncProcess,1);
@@ -1490,6 +1562,10 @@ class RCGTaskManager{
 		obj.taskResultNeedsStep=self.extended_taskResultNeedsStep;
 		obj.taskResultJump=self.extended_taskResultJump;
 		obj.loopProcess=self.extended_loopProcess;
+		obj.executeAsStep=self.extended_executeAsStep;
+		obj.callWithRetry=self.extended_callWithRetry;
+		obj.executeAsStepMayRetry=self.extended_executeAsStepMayRetry;
+		obj.addStepMayRetry=self.extended_addStepMayRetry;
 
 	}
 	killTasks(){

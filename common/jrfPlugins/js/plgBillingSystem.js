@@ -346,7 +346,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		report.addStep("Accumulating timespent value of childs",function(resultTimeestimate){
 			timeestimate=resultTimeestimate;
 			if (self.fieldValue("project.key")!="OT"){
-				self.addStepMayRetry("Adjusting timeoriginalestimate",function(){
+				report.addStepMayRetry("Adjusting timeoriginalestimate",function(){
 					var auxTimeoriginalestimate=self.getReport().adjustAccumItem("Childs",timeoriginalestimate,self,"timeoriginalestimate",atDatetime);
 					var auxTimeestimate=self.getReport().adjustAccumItem("Childs",timeestimate,self,"timeestimate",atDatetime);
 					var auxTimespent=self.fieldAccumChilds("timespent",atDatetime);
@@ -358,7 +358,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 					timespent=ts;
 				});
 			} else {
-				self.callWithRetry(function(){
+				self.getReport().callWithRetry(function(){
 					timespent=self.fieldValue("timespent",false,atDatetime);
 				});
 			}

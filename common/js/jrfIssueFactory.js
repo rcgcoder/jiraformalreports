@@ -311,75 +311,6 @@ function newIssueFactory(report){
 		var self=this;
 		throw {type:"AsyncFieldException",obj:self,method:method,params:arrParams};
 	});
-    dynObj.functions.add("callWithRetry",function(fncCall){
-        var bException=false;
-        var stackErrors=[];
-        var vResult;
-        var fncControlledCall=function(auxCall){
-            bException=false;
-            try {
-                vResult=auxCall();
-            } catch (except) {
-                if (except.type!="AsyncFieldException"){
-                    throw except;
-                } else {
-                    bException=true;
-                    except["call"]=auxCall;
-                    stackErrors.push(except);
-                } 
-            }
-        };
-        fncControlledCall(fncCall);
-        if (stackErrors.length==0){
-            return vResult;
-        } else {
-            // some fields need get async
-            var fncRetryFunction=function(){
-                var theExcept=stackErrors[stackErrors.length-1];
-                report.addStep("Trying to get value asynchronously",function(){
-                    theExcept.obj.pushAsyncFieldValue(true);
-                    fncControlledCall(function(){
-                        theExcept.method.apply(theExcept.obj,theExcept.params);
-                    });
-                });
-                report.addStep("Checking error or not",function(){
-                   theExcept.obj.popAsyncFieldValue();
-                   var vResult;
-                   if (!bException){ // retrying the exception generator function 
-                       stackErrors.pop();
-                       vResult=fncControlledCall(theExcept.call);
-                   }
-                   if (stackErrors.length>0){
-                	   fncRetryFunction();
-                   } else {
-                       return vResult;
-                   }
-                });
-            }
-            fncRetryFunction();
-            return report.taskResultNeedsStep();
-        }
-    });
-    dynObj.functions.add("executeAsStep",function(bAsStep,fncCall){
-        var self=this;
-        if (isDefined(bAsStep)||(!bAsStep)){
-            return fncCall();
-        } else {
-            return self.getReport().addStep("Executing as Step",fncCall);
-        }
-    });
-    dynObj.functions.add("executeAsStepMayRetry",function(bAsStep,fncCall){
-        var self=this;
-        return self.executeAsStep(bAsStep,function(){
-           return self.callWithRetry(fncCall);
-        });
-    });
-    dynObj.functions.add("addStepMayRetry",function(sDescription,fncCall){
-        var self=this;
-        return self.getReport().addStep(sDescription,function(){
-            return self.callWithRetry(fncCall);
-        });
-    });
 
 	dynObj.functions.add("pushAsyncFieldValue",function(newValue){
 		var self=this;
@@ -610,7 +541,7 @@ function newIssueFactory(report){
             report.addStep("Getting "+theFieldName+" of the childs",function(){
                 report.workOnListSteps(allChilds,function(child){
                     report.addStep("Calling field Accum",function(){
-                        self.callWithRetry(function(){
+                        report.callWithRetry(function(){
                             return child.fieldAccum(theFieldName,childType,dateTime,inOtherParams,bSetProperty,notAdjust,fncItemCustomCalc);
                         });
                     });
@@ -624,7 +555,7 @@ function newIssueFactory(report){
                 });
             });
         } else {
-            var vResult=self.callWithRetry(function(){
+            var vResult=report.callWithRetry(function(){
                 // let´s find if field have a precomputed value
                 var childValue="";
                 var precompValue=self.getPrecomputedPropertyValue(cacheKey,dateTime);

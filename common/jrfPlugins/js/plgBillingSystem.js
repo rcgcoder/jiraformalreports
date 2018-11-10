@@ -310,9 +310,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     initializeBilling(atDatetime,hourCost,minFacturableFase){
     	debugger;
     	var self=this;
-    	if (!self.getAsyncFieldValue()){
-    		self.throwAsyncException(self.initializeBilling,[atDatetime,hourCost,minFacturableFase]);
-    	}
+    	self.forceAsyncFieldValues(self.initializeBilling,[atDatetime,hourCost,minFacturableFase]);
     	var report=self.getReport();
 /*    	var fechaFacturacion=self.fieldValue("Fecha de facturación",false,atDatetime);
     	if (fechaFacturacion!==""){
@@ -451,9 +449,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     getBillingSnapShot(atDatetime,hourCost,minFacturableFase){
     	var self=this;
     	//debugger;
-    	if (!self.getAsyncFieldValue()){
-    		self.throwAsyncException(self.getBillingSnapShot,[atDatetime,hourCost,minFacturableFase]);
-    	}
+    	self.forceAsyncFieldValues(self.getBillingSnapShot,[atDatetime,hourCost,minFacturableFase]);
     	var report=self.getReport();
     	report.addStep("Initialize Billing",function(){
         	return self.initializeBilling(atDatetime,hourCost,minFacturableFase);
@@ -547,9 +543,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     	var self=this;
     	//debugger;
     	if (self.getKey()=="BENT-411") debugger;
-    	if (!self.getAsyncFieldValue()){
-    		self.throwAsyncException(self.getBillingLife,[otherParams,theDatetime]);
-    	}
+    	self.forceAsyncFieldValues(self.getBillingLife,[otherParams,theDatetime]);
     	var report=self.getReport();
 		var sComentarios=[];
 		var sErrores=[];

@@ -325,6 +325,20 @@ function newIssueFactory(report){
 		var self=this;
 		return self.getStackAsyncFieldValues().top();
 	});
+    dynObj.functions.add("forceAsyncFieldValues",function(fncFunctionReference,arrParams,vAuxResult){
+        var self=this;
+        if (isDefined(vAuxResult)){
+            if (isTaskResult(vAuxResult)&&vAuxResult.stepsAdded){
+                if (!self.getAsyncFieldValue()){
+                    return self.throwAsyncException(fncFunctionReference,arrParams);
+                }
+                return true;
+            }
+        } else if (!self.getAsyncFieldValue()){
+            return self.throwAsyncException(fncFunctionReference,arrParams);
+        } 
+        return false;
+    });
 
 	dynObj.functions.add("fieldValueAsync",function(theFieldName,bRendered,dateTime,inOtherParams){
 		var self=this;
@@ -535,9 +549,7 @@ function newIssueFactory(report){
 		report=self.getReport();
 		var bUseStepping=false;
         if (allChilds.length()>0){
-            if (!self.getAsyncFieldValue()){
-                self.throwAsyncException(self.fieldAccum,[theFieldName,hierarchyType,dateTime,inOtherParams,bSetProperty,notAdjust,fncItemCustomCalc]);
-            }
+            self.forceAsyncFieldValues(self.fieldAccum,[theFieldName,hierarchyType,dateTime,inOtherParams,bSetProperty,notAdjust,fncItemCustomCalc]);
             bUseStepping=true;
             report.addStep("Getting "+theFieldName+" of the childs",function(){
                 self.getFactory().workOnListSteps(allChilds,function(child){
@@ -978,56 +990,70 @@ function newIssueFactory(report){
 		var self=this;
 		var dateCreated=new Date(self.fieldValue("created"));
 		var sDateTime="unknown";
+        var vUseSteps=false;
 		if (isDefined(dateTime)) sDateTime=dateTime.getTime()+"";
-		var hsFieldLife=self.getFieldLife(sFieldName,dateTime,otherParams);
-		if (hsFieldLife.exists(sDateTime)){
-			return hsFieldLife.getValue(sDateTime);
-		}
-		var arrLife=hsFieldLife.getValue("life");
-		if (arrLife.length>0){
-			var firstChange=arrLife[arrLife.length-1][0];
-			if (firstChange<dateCreated){
-				dateCreated=firstChange;
-			}
-		} 
-		if (dateCreated>dateTime) {
-			if (isDefined(otherParams) && isDefined(otherParams.ifEmpty)){
-				return otherParams.ifEmpty;
-			}
-			return "";
-		}
-		var auxVal=	self.fieldValue(sFieldName,false,undefined,otherParams); // getting actual Value
-		var history;
-		var bLocated=false;
-		for (var i=0;(i<arrLife.length) &&(!bLocated);i++){		
-			history=arrLife[i];
-			try {
-				var vTest=(history[0].getTime()<=dateTime.getTime());
-			}catch(err) {
-			    debugger;
-			}
-/*			log(sFieldName+" Life evaluating. Actual Value:" +JSON.stringify(auxVal)+ 
-					" Type:"+ history[3] + 
-					" Date:"+ history[0] + 
-					" From:"+(history[1]!=null?JSON.stringify(history[1]):"null") + 
-					" To:"+(history[2]!=null?JSON.stringify(history[2]):"null") );
-*/			if ((i==0)&&(history[3]=="adjust")){
-				auxVal=history[2];
-				if (history[0].getTime()<=dateTime.getTime()){
-					bLocated=true;
-				}
-			} else if (history[0].getTime()<=dateTime.getTime()){ // if next is <= that the date.... finish
-				auxVal=history[2];
-				bLocated=true;
-			} else {
-				auxVal=history[1];
-			}
-		}
-		if ((auxVal==null)||(isUndefined(auxVal))){
-			auxVal="";
-		}
-		hsFieldLife.add(sDateTime,auxVal);
-		return auxVal;
+		var hsFieldLife;
+		var vResult=self.getReport().callWithRetry(function(){
+	        hsFieldLife=self.getFieldLife(sFieldName,dateTime,otherParams);
+		});
+		vUseSteps=self.forceAsyncFieldValues(self.getFieldValueAtDateTime,[sFieldName,dateTime,otherParams],vResult);
+		self.getReport().executeAsStep(vUseSteps,function(){
+    		if (hsFieldLife.exists(sDateTime)){
+    			return hsFieldLife.getValue(sDateTime);
+    		}
+    		var arrLife=hsFieldLife.getValue("life");
+    		if (arrLife.length>0){
+    			var firstChange=arrLife[arrLife.length-1][0];
+    			if (firstChange<dateCreated){
+    				dateCreated=firstChange;
+    			}
+    		} 
+    		if (dateCreated>dateTime) {
+    			if (isDefined(otherParams) && isDefined(otherParams.ifEmpty)){
+    				return otherParams.ifEmpty;
+    			}
+    			return "";
+    		}
+    		
+    		var auxVal;
+    	    var vResult=self.getReport().callWithRetry(function(){
+    	    	auxVal=	self.fieldValue(sFieldName,false,undefined,otherParams); // getting actual Value
+    	    });
+            vUseSteps=vUseSteps||self.forceAsyncFieldValues(self.getFieldValueAtDateTime,[sFieldName,dateTime,otherParams],vResult);
+            self.getReport().executeAsStep(vUseSteps,function(){
+                var history;
+        		var bLocated=false;
+        		for (var i=0;(i<arrLife.length) &&(!bLocated);i++){		
+        			history=arrLife[i];
+        			try {
+        				var vTest=(history[0].getTime()<=dateTime.getTime());
+        			}catch(err) {
+        			    debugger;
+        			}
+        /*			log(sFieldName+" Life evaluating. Actual Value:" +JSON.stringify(auxVal)+ 
+        					" Type:"+ history[3] + 
+        					" Date:"+ history[0] + 
+        					" From:"+(history[1]!=null?JSON.stringify(history[1]):"null") + 
+        					" To:"+(history[2]!=null?JSON.stringify(history[2]):"null") );
+        */			if ((i==0)&&(history[3]=="adjust")){
+        				auxVal=history[2];
+        				if (history[0].getTime()<=dateTime.getTime()){
+        					bLocated=true;
+        				}
+        			} else if (history[0].getTime()<=dateTime.getTime()){ // if next is <= that the date.... finish
+        				auxVal=history[2];
+        				bLocated=true;
+        			} else {
+        				auxVal=history[1];
+        			}
+        		}
+        		if ((auxVal==null)||(isUndefined(auxVal))){
+        			auxVal="";
+        		}
+        		hsFieldLife.add(sDateTime,auxVal);
+        		return auxVal;
+            });
+		});
 	});
 	dynObj.functions.add("getVersionsLinks",function(){
 		var self=this;

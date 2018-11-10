@@ -140,61 +140,59 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
     		}
     		return objResult;
     	}
-    	if (!self.getAsyncFieldValue()){
-    		self.throwAsyncException(self.getChildsCounterLife);
-    	} else {
-    		var report=self.getReport();
-    		report.addStep("Getting life of childs",function(){
-        		report.workOnListSteps(hsChilds,function(issue){
-    				issue.pushAsyncFieldValue(true);
-    	    		var tsCreate;
-    	    		var tsChangeStatus;
-    	    		var hsFieldLife=issue.getFieldLife("Fase");
-    	    		var arrHistory=hsFieldLife.getValue("life");
-    	    		arrHistory.forEach(function(status){// 0: datetime of change, 1:previous value, 2:new value
-    	    			var dtIssueChange=dateAdd(onlyDate(status[0]),"day",1);
-    	    			var iFaseAnt=status[1];
-    	    			var iFaseAct=status[2];
-    	    			var tsIssueChange=dtIssueChange.getTime()+"";
-    	    			if (!hsDates.exists(tsIssueChange)){
-    	    				hsDates.add(tsIssueChange,fncNewHistory(dtIssueChange));
-    	    			}
-    	    		});
-    	    		issue.popAsyncFieldValue();
-    	    	});
+    	self.force
+    	self.forceAsyncFieldValues(self.getChildsCounterLife);
+		var report=self.getReport();
+		report.addStep("Getting life of childs",function(){
+    		report.workOnListSteps(hsChilds,function(issue){
+				issue.pushAsyncFieldValue(true);
+	    		var tsCreate;
+	    		var tsChangeStatus;
+	    		var hsFieldLife=issue.getFieldLife("Fase");
+	    		var arrHistory=hsFieldLife.getValue("life");
+	    		arrHistory.forEach(function(status){// 0: datetime of change, 1:previous value, 2:new value
+	    			var dtIssueChange=dateAdd(onlyDate(status[0]),"day",1);
+	    			var iFaseAnt=status[1];
+	    			var iFaseAct=status[2];
+	    			var tsIssueChange=dtIssueChange.getTime()+"";
+	    			if (!hsDates.exists(tsIssueChange)){
+	    				hsDates.add(tsIssueChange,fncNewHistory(dtIssueChange));
+	    			}
+	    		});
+	    		issue.popAsyncFieldValue();
+	    	});
+		});
+    	var arrHistory=[];
+		report.addStep("Processing Dates and return result",function(){
+    		self.getFactory().workOnListSteps(hsChilds,function(issue){
+    			hsDates.walk(function(status,iDeep,tsChange){
+	        		var issFase=issue.fieldValue("Fase",false,status.date);
+	        		if (isDefined(issFase)&&(issFase!=="")&&(issFase>=0)){
+	        			var faseName=self.getFaseName(undefined,issFase);
+	        			status.actual[faseName]++;
+	        			status.actual.total++;
+	        		}
+		    	});
     		});
-	    	var arrHistory=[];
-    		report.addStep("Processing Dates and return result",function(){
-        		self.getFactory().workOnListSteps(hsChilds,function(issue){
-        			hsDates.walk(function(status,iDeep,tsChange){
-		        		var issFase=issue.fieldValue("Fase",false,status.date);
-		        		if (isDefined(issFase)&&(issFase!=="")&&(issFase>=0)){
-		        			var faseName=self.getFaseName(undefined,issFase);
-		        			status.actual[faseName]++;
-		        			status.actual.total++;
-		        		}
-			    	});
-        		});
-        		report.addStep("Sorting result",function(){
-        			hsDates.walk(function(status,iDeep,tsChange){
-			        	if (status.actual.total>0){
-			        		arrHistory.push([status.date,status.previous,status.actual]);
-			        	}
-        			});
-			    	arrHistory.sort(function(a,b){
-			    		var aTime=a[0].getTime();
-			    		var bTime=b[0].getTime();
-			    		if (aTime<bTime) return 1;
-			    		if (aTime>bTime) return -1;
-			    		return 0;
-			    	});
-				   	for (var i=0;i<(arrHistory.length-1);i++){
-				   		arrHistory[i][1]=arrHistory[i+1][2];
-				   	}
-				   	return arrHistory;
-        		});
+    		report.addStep("Sorting result",function(){
+    			hsDates.walk(function(status,iDeep,tsChange){
+		        	if (status.actual.total>0){
+		        		arrHistory.push([status.date,status.previous,status.actual]);
+		        	}
+    			});
+		    	arrHistory.sort(function(a,b){
+		    		var aTime=a[0].getTime();
+		    		var bTime=b[0].getTime();
+		    		if (aTime<bTime) return 1;
+		    		if (aTime>bTime) return -1;
+		    		return 0;
+		    	});
+			   	for (var i=0;i<(arrHistory.length-1);i++){
+			   		arrHistory[i][1]=arrHistory[i+1][2];
+			   	}
+			   	return arrHistory;
     		});
-    	}
+		});
     };
     
     execute(){

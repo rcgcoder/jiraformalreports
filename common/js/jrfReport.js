@@ -1513,6 +1513,7 @@ var jrfReport=class jrfReport {
 		// Process Model with The Report
 		self.addStep("Processing Model",function(){
 			debugger;
+			loggerFactory.getLogger().enabled=true;
 			var tm=self.getTaskManager();
 			tm.asyncTimeWasted=0;
 			tm.asyncTaskCallsBlock=5000;

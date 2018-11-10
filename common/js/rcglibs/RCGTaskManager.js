@@ -1472,7 +1472,7 @@ class RCGTaskManager{
 	               if (!bException){ // retrying the exception generator function 
 	                   stackErrors.pop();
 		               log("Exception processing. Execute again the call synchronously "+theExcept.obj.id);
-	                   vResult=fncControlledCall(theExcept.call);
+	                   fncControlledCall(theExcept.call);
 	               }
 	               if (stackErrors.length>0){
 		               log("Exception processing. Error again "+theExcept.obj.id);

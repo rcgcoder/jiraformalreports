@@ -783,7 +783,7 @@ var jrfReport=class jrfReport {
 			self.addStep("Getting root base issues",function(){
 				//alert("Extracted pending keys of initial root issues");
 				log("Getting root base issues");
-				alert("All issues of jql retrieved");
+				//alert("All issues of jql retrieved");
 				//self.allIssues.changeStorableParams(undefined,undefined,false);
 				var fncRetrieveGroup=function(group){
 					//debugger;

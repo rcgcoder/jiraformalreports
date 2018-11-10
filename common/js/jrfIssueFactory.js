@@ -309,6 +309,7 @@ function newIssueFactory(report){
 	});
 	dynObj.functions.add("throwAsyncException",function(method,arrParams){
 		var self=this;
+		log("issue "+self.id+"throws exception some field needs stepping calc");
 		throw {type:"AsyncFieldException",obj:self,method:method,params:arrParams};
 	});
 

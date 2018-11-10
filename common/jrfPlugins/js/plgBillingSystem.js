@@ -308,6 +308,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     	return oResult;
     }
     initializeBilling(atDatetime,hourCost,minFacturableFase){
+    	debugger;
     	var self=this;
     	if (!self.getAsyncFieldValue()){
     		self.throwAsyncException(self.initializeBilling,[atDatetime,hourCost,minFacturableFase]);

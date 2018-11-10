@@ -1468,7 +1468,6 @@ class RCGTaskManager{
 	            self.addStep("Checking error or not",function(){
 	               log("Exception processing. Step for return to synch processing of method for "+theExcept.obj.id);
 	               theExcept.obj.popAsyncFieldValue();
-	               var vResult;
 	               if (!bException){ // retrying the exception generator function 
 	                   stackErrors.pop();
 		               log("Exception processing. Execute again the call synchronously "+theExcept.obj.id);

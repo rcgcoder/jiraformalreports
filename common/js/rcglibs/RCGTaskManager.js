@@ -1442,7 +1442,7 @@ class RCGTaskManager{
 	            if (except.type!="AsyncFieldException"){
 	                throw except;
 	            } else {
-	            	log("Exception throws by "+except.obj.id+"catched!");
+	            	log("Exception throws by "+except.obj.id+" catched!");
 	                bException=true;
 	                except["call"]=auxCall;
 	                stackErrors.push(except);
@@ -1456,22 +1456,29 @@ class RCGTaskManager{
 	        // some fields need get async
 	        var fncRetryFunction=function(){
 	            var theExcept=stackErrors[stackErrors.length-1];
+            	log("Exception processing. Adding steps for the "+theExcept.obj.id+" problem");
 	            self.addStep("Trying to get value asynchronously",function(){
+	            	log("Exception processing. Step for calling async the method of "+theExcept.obj.id);
 	                theExcept.obj.pushAsyncFieldValue(true);
 	                fncControlledCall(function(){
+		            	log("Exception processing. Calling async the method of "+theExcept.obj.id);
 	                    theExcept.method.apply(theExcept.obj,theExcept.params);
 	                });
 	            });
 	            self.addStep("Checking error or not",function(){
+	               log("Exception processing. Step for return to synch processing of method for "+theExcept.obj.id);
 	               theExcept.obj.popAsyncFieldValue();
 	               var vResult;
 	               if (!bException){ // retrying the exception generator function 
 	                   stackErrors.pop();
+		               log("Exception processing. Execute again the call synchronously "+theExcept.obj.id);
 	                   vResult=fncControlledCall(theExcept.call);
 	               }
 	               if (stackErrors.length>0){
+		               log("Exception processing. Error again "+theExcept.obj.id);
 	            	   fncRetryFunction();
 	               } else {
+		               log("Exception processing. No Error return result for "+theExcept.obj.id);
 	                   return vResult;
 	               }
 	            });

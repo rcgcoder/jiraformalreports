@@ -1442,7 +1442,7 @@ class RCGTaskManager{
 	            if (except.type!="AsyncFieldException"){
 	                throw except;
 	            } else {
-	            	log("Exception throws by "+except[obj].id+"catched!");
+	            	log("Exception throws by "+except.obj.id+"catched!");
 	                bException=true;
 	                except["call"]=auxCall;
 	                stackErrors.push(except);

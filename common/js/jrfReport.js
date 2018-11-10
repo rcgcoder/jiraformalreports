@@ -556,7 +556,7 @@ var jrfReport=class jrfReport {
 		// first launch all issue retrieve ...
 		self.addStep("Getting All Issues in the Scope.... ",function(){
 			//debugger;
-			self.allIssues.changeStorableParams(20000,0.10,true);
+			self.allIssues.changeStorableParams(100,0.10,true);
 			if (self.isReusingIssueList()){
 				self.addStep("check if report exists in storage",function(){
 					return self.existStored(); // load all issues
@@ -1333,7 +1333,7 @@ var jrfReport=class jrfReport {
 			var nRemoves=0;
 			var nRootsPrevious=0;
 			self.addStep("Removing identified issues",function(){
-				loggerFactory.getLogger().enabled=true;
+//				loggerFactory.getLogger().enabled=true;
 				log("Items to remove:"+removeCounter);
 				log("Items in hsRemoveKeys:"+hsRemoveKeys.length());
 				//debugger;
@@ -1365,14 +1365,14 @@ var jrfReport=class jrfReport {
 				});
 			});
 			self.addStep("Removing identified issues Finished",function(){
-				loggerFactory.getLogger().enabled=false;
+//				loggerFactory.getLogger().enabled=false;
 				var nRootsFinal=self.childs.length();
 				if ((hsRemoveKeys.length()!=nRemoves)
 					||((nRootsPrevious-nRemoves)!=nRootsFinal)
 					){
 					log("The number of keys to remove is different of the effective removed issue count");
 				}
-				loggerFactory.getLogger().enabled=false;
+//				loggerFactory.getLogger().enabled=false;
 			});
 		});
 		

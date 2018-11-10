@@ -1429,6 +1429,7 @@ class RCGTaskManager{
 		return new RCGTaskResult(false);
 	}
 	extended_callWithRetry(fncCall){
+        var self=this;
 	    var bException=false;
 	    var stackErrors=[];
 	    var vResult;

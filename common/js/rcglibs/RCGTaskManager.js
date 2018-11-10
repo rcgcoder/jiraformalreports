@@ -352,7 +352,7 @@ class RCGTask{
 			self.initTime=Date.now();
 			theTaskManager.setRunningTask(theTask);
 			theTaskManager.asyncTimeWasted+=(self.initTime-tCallCalled);
-			if (theTask.description!=""){
+			if ((self.logCalls)&&(theTask.description!="")){
 				log("Calling method of task: "+theTask.description);
 			}
 			if ((typeof theMethod==="undefined")||(theMethod=="")){
@@ -640,6 +640,7 @@ class RCGTaskManager{
 			self.description=description;
 		}
 //		self.windows=[window];
+		self.logCalls=false;
 		self.globalForks=[]; // list of pseudothreaded global tasks
 		self.innerForks=[];   // list of pseudothreaded inner forks (forks in a subtask)
 		self.previousTaskExecuted="";

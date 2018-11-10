@@ -281,7 +281,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 		var innerOnLoad=self.createManagedCallback(function(sContent){
 			log("Key:"+key+" loaded."+sContent.length+" bytes");
 			self.addStep("Parsing JSON",function(){
-				debugger;
+//				debugger;
 				return self.parseJson(sContent);
 			})
 /*			self.addStep("Processing content",function(){

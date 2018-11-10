@@ -322,7 +322,7 @@ function newIssueFactory(report){
 	});
 	dynObj.functions.add("getAsyncFieldValue",function(newValue){
 		var self=this;
-		self.getStackAsyncFieldValues().top();
+		return self.getStackAsyncFieldValues().top();
 	});
 
 	dynObj.functions.add("fieldValueAsync",function(theFieldName,bRendered,dateTime,inOtherParams){

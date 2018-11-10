@@ -352,10 +352,10 @@ class RCGTask{
 			self.initTime=Date.now();
 			theTaskManager.setRunningTask(theTask);
 			theTaskManager.asyncTimeWasted+=(self.initTime-tCallCalled);
-/*			if (theTask.description!=""){
+			if (theTask.description!=""){
 				log("Calling method of task: "+theTask.description);
 			}
-*/			if ((typeof theMethod==="undefined")||(theMethod=="")){
+			if ((typeof theMethod==="undefined")||(theMethod=="")){
 				debugger;
 			}
 			

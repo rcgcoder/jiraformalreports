@@ -1,4 +1,13 @@
-
+class RCGTaskException{
+	constructor(exceptionName,obj,method,task){
+		var self=this;
+		self.exception=exceptionName;
+		self.object=obj;
+		self.method=method;
+		self.task=task;
+		self.call="";
+	}
+}
 class RCGTaskResult{
 	constructor(bContinue,nJumps,bStepsAdded,p0,p1,p2,p3,p4,p5,p6,p7,p8,p9){
 		var self=this;
@@ -33,6 +42,13 @@ class RCGTaskResult{
 		}
 	}
 }
+function isTaskException(vVar){
+	var theType=typeof vVar;
+	if (theType==="undefined") return false;
+	if (theType!=="object") return false;
+	return (vVar.constructor.name ==="RCGTaskException");
+}
+
 function isTaskResult(vVar){
 	var theType=typeof vVar;
 	if (theType==="undefined") return false;
@@ -1449,83 +1465,89 @@ class RCGTaskManager{
 	extended_waitForEvent(){
 		return new RCGTaskResult(false);
 	}
+	extended_callWithCatch(exceptionName,fncCall){
+    	var controlTask=self.getRunningTask();
+        bException=false;
+        try {
+            return auxCall();
+        } catch (except) {
+            if (!isTaskException(except)){
+                throw except;
+            } else {
+            	debugger;
+            	log("Exception throws by "+except.obj.id+" in task "+ except.step.taskId +" catched!");
+            	var exTask=except.step;
+    			var controlId=controlTask.taskId;
+            	if (exTask.taskId!=controlId){
+            		// different tasks..... have to manage the clear of all steps from control to rt
+            		if (exTask.forkId==controlId){
+            			// same fork... a substep generates the exception... 
+            			// remove the parent task until control.....
+            			while (exTask.taskId!=controlId){
+            				exTask=exTask.done(true,true); // done returns the parent
+            			}
+            			self.setRunningTask(controlTask);
+            		} else {
+            			// diferent forks..... this is problem full situation
+            			logError("Diferent forks throws the exception");
+            		}
+            	} else {
+            		log("Same Task Id throws the exception");
+            		//same taskId... is a exception in the inner auxCall code.... No problem... 
+            	}
+                except.call=auxCall;
+                return except;
+            } 
+        }
+	}
 	extended_callWithRetry(exceptionName,fncCall){
         var self=this;
 	    var bException=false;
 	    var stackErrors=[];
 	    var vResult;
 	    var fncControlledCall=function(auxCall){
-	    	var controlTask=self.getRunningTask();
-	        bException=false;
-	        try {
-	            vResult=auxCall();
-	        } catch (except) {
-	            if (except.type!=exceptionName){
-	                throw except;
-	            } else {
-	            	debugger;
-	            	log("Exception throws by "+except.obj.id+" in task "+ except.step.taskId +" catched!");
-	            	var exTask=except.step;
-        			var controlId=controlTask.taskId;
-	            	if (exTask.taskId!=controlId){
-	            		// different tasks..... have to manage the clear of all steps from control to rt
-	            		if (exTask.forkId==controlId){
-	            			// same fork... a substep generates the exception... 
-	            			// remove the parent task until control.....
-	            			while (exTask.taskId!=controlId){
-	            				exTask=exTask.done(true,true); // done returns the parent
-	            			}
-	            			self.setRunningTask(controlTask);
-	            		} else {
-	            			// diferent forks..... this is problem full situation
-	            			logError("Diferent forks throws the exception");
-	            		}
-	            	} else {
-	            		log("Same Task Id throws the exception");
-	            		//same taskId... is a exception in the inner auxCall code.... No problem... 
-	            	}
-	                bException=true;
-	                except["call"]=auxCall;
-	                stackErrors.push(except);
-	            } 
-	        }
+	    	var callResult=self.callWithCatch(exceptionName,auxCall);
+            if (!isTaskException(callResult)){
+            	return callResult;
+            } else {
+            	stackErrors.push(callResult);
+            }
 	    };
 	    fncControlledCall(fncCall);
 	    if (stackErrors.length==0){
 	        return vResult;
-	    } else {
-	        // some fields need get async
-	        var fncRetryFunction=function(){
-	            var theExcept=stackErrors[stackErrors.length-1];
-            	log("Exception processing. Adding steps for the "+theExcept.obj.id+" problem");
-	            self.addStep("Trying to get value asynchronously",function(){
-	            	log("Exception processing. Step for calling async the method of "+theExcept.obj.id);
-	                theExcept.obj.pushAsyncFieldValue(true);
-	                fncControlledCall(function(){
-		            	log("Exception processing. Calling async the method of "+theExcept.obj.id);
-	                    theExcept.method.apply(theExcept.obj,theExcept.params);
-	                });
-	            });
-	            self.addStep("Checking error or not",function(){
-	               log("Exception processing. Step for return to synch processing of method for "+theExcept.obj.id);
-	               theExcept.obj.popAsyncFieldValue();
-	               if (!bException){ // retrying the exception generator function 
-	                   stackErrors.pop();
-		               log("Exception processing. Execute again the call synchronously "+theExcept.obj.id);
-	                   fncControlledCall(theExcept.call);
-	               }
-	               if (stackErrors.length>0){
-		               log("Exception processing. Error again "+theExcept.obj.id);
-	            	   fncRetryFunction();
-	               } else {
-		               log("Exception processing. No Error return result for "+theExcept.obj.id);
-	                   return vResult;
-	               }
-	            });
-	        }
+	    }
+        // some fields need get async
+        var fncRetryFunction=function(){
+            var theExcept=stackErrors[stackErrors.length-1];
+        	log("Exception processing. Adding steps for the "+theExcept.obj.id+" problem");
+            self.addStep("Trying to get value asynchronously",function(){
+            	log("Exception processing. Step for calling async the method of "+theExcept.obj.id);
+                theExcept.obj.pushAsyncFieldValue(true);
+                fncControlledCall(function(){
+	            	log("Exception processing. Calling async the method of "+theExcept.obj.id);
+                    theExcept.method.apply(theExcept.obj,theExcept.params);
+                });
+            });
+            self.addStep("Checking error or not",function(){
+               log("Exception processing. Step for return to synch processing of method for "+theExcept.obj.id);
+               theExcept.obj.popAsyncFieldValue();
+               if (!bException){ // retrying the exception generator function 
+                   stackErrors.pop();
+	               log("Exception processing. Execute again the call synchronously "+theExcept.obj.id);
+                   fncControlledCall(theExcept.call);
+               }
+               if (stackErrors.length>0){
+	               log("Exception processing. Error again "+theExcept.obj.id);
+            	   fncRetryFunction();
+               } else {
+	               log("Exception processing. No Error return result for "+theExcept.obj.id);
+                   return vResult;
+               }
+            });
+            return self.taskResultNeedsStep();
         }
-        fncRetryFunction();
-        return self.taskResultNeedsStep();
+        return fncRetryFunction();
      }
 
     extended_executeAsStep(bAsStep,fncCall){
@@ -1658,6 +1680,7 @@ class RCGTaskManager{
 		obj.loopProcess=self.extended_loopProcess;
 		obj.executeAsStep=self.extended_executeAsStep;
 		obj.callWithRetry=self.extended_callWithRetry;
+		obj.callWithCatch=self.extended_callWithCatch;
 		obj.executeAsStepMayRetry=self.extended_executeAsStepMayRetry;
 		obj.addStepMayRetry=self.extended_addStepMayRetry;
 

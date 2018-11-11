@@ -344,7 +344,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		report.addStep("Accumulating timespent value of childs",function(resultTimeestimate){
 			timeestimate=resultTimeestimate;
 			if (self.fieldValue("project.key")!="OT"){
-				report.addStepMayRetry("Adjusting timeoriginalestimate","AsyncFieldException",function(){
+				report.addStep("Adjusting timeoriginalestimate",function(){
 					var auxTimeoriginalestimate=self.getReport().adjustAccumItem("Childs",timeoriginalestimate,self,"timeoriginalestimate",atDatetime);
 					var auxTimeestimate=self.getReport().adjustAccumItem("Childs",timeestimate,self,"timeestimate",atDatetime);
 					var auxTimespent=self.fieldAccumChilds("timespent",atDatetime);
@@ -356,7 +356,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 					timespent=ts;
 				});
 			} else {
-				self.getReport().callWithRetry(function(){
+				report.addStep("timespent from no childs",function(){
 					timespent=self.fieldValue("timespent",false,atDatetime);
 					return timespent;
 				});
@@ -542,7 +542,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     	var self=this;
     	//debugger;
     	if (self.getKey()=="BENT-411") debugger;
-    	//self.forceAsyncFieldValues(self.getBillingLife,[otherParams,theDatetime]);
+    	self.forceAsyncFieldValues(self.getBillingLife,[otherParams,theDatetime]);
     	var report=self.getReport();
 		var sComentarios=[];
 		var sErrores=[];
@@ -968,6 +968,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		   	}
 		    return arrResults;
 		});
+		return report.taskResultNeedsStep();
     }
     getBillingCacheKeyPostText(atDatetime,otherParams){
 		var configName=otherParams.getValue("config");

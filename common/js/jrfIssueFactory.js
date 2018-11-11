@@ -310,7 +310,7 @@ function newIssueFactory(report){
 	dynObj.functions.add("throwAsyncException",function(method,arrParams){
 		var self=this;
 		log("issue "+self.id+"throws exception some field needs stepping calc");
-		throw {type:"AsyncFieldException",obj:self,method:method,params:arrParams,step:self.getReport().getRunningTask()};
+		throw new RCGTaskException("AsyncFieldException",self,method,arrParams,self.getReport().getRunningTask());
 	});
 
 	dynObj.functions.add("pushAsyncFieldValue",function(newValue){
@@ -940,16 +940,24 @@ function newIssueFactory(report){
 		var arrResult=[];
 		var report=self.getReport();
 		var vUseSteps=false;
+		var vResult;
 		if (isDefined(self["get"+theFieldName+"Life"])){
             //try to get the value at report time .....
-            var vResult=self["get"+theFieldName+"Life"](otherParams,atDatetime);
-            vUseSteps=(report.getRunningTask().steps.length>0);
-            if (!vUseSteps){
-                arrResult=vResult;
-            } else {
-                self.getReport().addStep("Assign step result as arrresult",function(auxResult){
+		    vResult=report.callWithCatch("AsyncFieldException",function(){
+	            return self["get"+theFieldName+"Life"](otherParams,atDatetime);
+		    });
+		    if (isTaskResult(vResult)){
+                vUseSteps=true;
+                self.pushAsyncFieldValue(true);
+                self["get"+theFieldName+"Life"](otherParams,atDatetime);
+                report.addStep("setting the result and change the Async Status",function(auxResult){
+                    self.popAsyncFieldValue();
                     arrResult=auxResult;
                 });
+		    } else if (isTaskException(vResult)){
+                self.throwAsyncException(self.getFieldLife,[theFieldName,atDatetime,otherParams]);
+            } else {
+                arrResult=vResult;
             }
 		} else {
 			var sChangeDate;
@@ -1005,21 +1013,36 @@ function newIssueFactory(report){
     		self.change();
     		return hsItemFieldsCache;
         });
+        if (vUseSteps){
+            self.addStep("Throw a exception to recall synchronously",function(){
+                self.throwAsyncException(self.getFieldLife,[theFieldName,atDatetime,otherParams]);
+            });
+        }
 	});
 	dynObj.functions.add("getFieldValueAtDateTime",function(sFieldName,dateTime,otherParams){
 		var self=this; 
+        var report=self.getReport();
+        var reportDateTime=self.getReport().reportDateTime;
 		var dateCreated=new Date(self.fieldValue("created"));
 		var sDateTime="unknown";
         var vUseSteps=false;
         var vResult;
-        var report=self.getReport();
 		if (isDefined(dateTime)) sDateTime=dateTime.getTime()+"";
-		var hsFieldLife=self.getFieldLife(sFieldName,dateTime,otherParams);
-		vUseSteps=(report.getRunningTask().steps.length>0);
-		if (vUseSteps){
-		    report.addStep("Assing step result to hsFieldLife",function(auxResult){
-		        hsFieldLife=auxResult;
-		    });
+		
+		var hsFieldLife;
+		
+		var vResult=report.callWithCatch("AsyncFieldException",function(){
+	        return self.getFieldLife(sFieldName,dateTime,otherParams);
+		});
+		if (isTaskResult(vResult)&&vResult.stepsAdded){
+            vUseSteps=true;
+            report.addStep("Assing step result to hsFieldLife",function(auxResult){
+                hsFieldLife=auxResult;
+            });
+		} else if (isTaskException(vResult)) {
+		    return self.throwAsyncException(self.getFieldValueAtDateTime,[sFieldName,dateTime,otherParams]);
+		} else {
+            hsFieldLife=vResult;
 		}
 		report.executeAsStep(vUseSteps,function(){
     		if (hsFieldLife.exists(sDateTime)){
@@ -1040,21 +1063,31 @@ function newIssueFactory(report){
     		}
     		
     		var auxVal; // value for actual situation.... or the situation at report time
-    		var reportDateTime=self.getReport().reportDateTime;
     		
     		//try to get the value at report time .....
             report.executeAsStep(vUseSteps,function(){
                 debugger;
+                self.pushAsyncFieldValue(vUseSteps);
         		if (reportDateTime.getTime()!=dateTime.getTime()){ // if is processing the report time.... have to get the actual value
-                    auxVal=self.getFieldValueAtDateTime(sFieldName,reportDateTime,otherParams); 
+        	        var vResult=report.callWithCatch("AsyncFieldException",function(){
+        	            return self.getFieldValueAtDateTime(sFieldName,reportDateTime,otherParams); 
+        	        });
         		} else {
-                    auxVal=self.fieldValue(sFieldName,false,undefined,otherParams); // getting actual Value
+                    var vResult=report.callWithCatch("AsyncFieldException",function(){
+                        return self.fieldValue(sFieldName,false,undefined,otherParams); // getting actual Value
+                    });
         		}
-                vUseSteps=(report.getRunningTask().steps.length>0);
-                if (vUseSteps){
+                if (isTaskResult(vResult)){
+                    vUseSteps=true; 
                     report.addStep("Setting auxVal value",function(auxResult){
+                        self.popAsyncFieldValue();
                         auxVal=auxResult;
                     });
+                } else if (isTaskException(vResult)) {
+                    return self.throwAsyncException(self.getFieldValueAtDateTime,[sFieldName,dateTime,otherParams]);
+                } else {
+                    auxVal=vResult;
+                    self.popAsyncFieldValue();
                 }
             });
     		
@@ -1096,9 +1129,15 @@ function newIssueFactory(report){
         			auxVal="";
         		}
         		hsFieldLife.add(sDateTime,auxVal);
+        		self.change();
         		return auxVal;
             });
 		});
+        if (vUseSteps){
+            self.addStep("Throw a exception to recall synchronously",function(){
+                self.throwAsyncException(self.getFieldValueAtDateTime,[theFieldName,atDatetime,otherParams]);
+            });
+        }
 	});
 	dynObj.functions.add("getVersionsLinks",function(){
 		var self=this;

@@ -937,7 +937,7 @@ function newIssueFactory(report){
 		if (isDefined(self["get"+theFieldName+"Life"])){
             //try to get the value at report time .....
             var vResult=self["get"+theFieldName+"Life"](otherParams,atDatetime);
-            vUseSteps=self.forceAsyncFieldValues(self.getFieldValueAtDateTime,[sFieldName,dateTime,otherParams],vResult);
+            vUseSteps=self.forceAsyncFieldValues(self.getFieldLife,[sFieldName,atDatetime,otherParams],vResult);
             if (!vUseSteps){ 
                 arrResult=vResult; 
             }
@@ -992,6 +992,7 @@ function newIssueFactory(report){
     		hsItemFieldsCache=newHashMap();
     		hsItemFieldsCache.add("life",arrResult);
     		hsFieldLifesCaches.add(sCacheKey,hsItemFieldsCache);
+    		self.change();
     		return hsItemFieldsCache;
         });
 	});

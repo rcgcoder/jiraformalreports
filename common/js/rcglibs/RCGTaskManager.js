@@ -1457,14 +1457,16 @@ class RCGTaskManager{
 	            			// same fork... a substep generates the exception... 
 	            			// remove the parent task until control.....
 	            			while (rt.parent.taskId!=controlId){
-	            				rt=rtparent;
+	            				rt=rt.parent;
 	            				rt.done(true);
 	            			}
 	            			self.setRunningTask(controlTask);
 	            		} else {
 	            			// diferent forks..... this is problem full situation
+	            			logError("Diferent forks throws the exception");
 	            		}
 	            	} else {
+	            		log("Same Task Id throws the exception");
 	            		//same taskId... is a exception in the inner auxCall code.... No problem... 
 	            	}
 	                bException=true;

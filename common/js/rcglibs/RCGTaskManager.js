@@ -157,6 +157,7 @@ class RCGBarrier{
 class RCGTask{
 	constructor(taskManager,description,progressMin,progressMax,totalWeight,methodWeight){
 		var self=this;
+		self.taskId=self.newId();
 		self.description="";
 		self.method="";
 		self.isCallBack=false;
@@ -197,6 +198,10 @@ class RCGTask{
 		if (typeof methodWeight!=="undefined"){
 			self.methodWeight=methodWeight;
 		}
+	}
+	newId(){
+		var newId="tsk-"+(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
+		return newId;
 	}
 	killTasks(){
 		var self=this;
@@ -1435,6 +1440,7 @@ class RCGTaskManager{
 	    var stackErrors=[];
 	    var vResult;
 	    var fncControlledCall=function(auxCall){
+	    	var controlTask=self.getRunningTask();
 	        bException=false;
 	        try {
 	            vResult=auxCall();
@@ -1442,7 +1448,25 @@ class RCGTaskManager{
 	            if (except.type!="AsyncFieldException"){
 	                throw except;
 	            } else {
-	            	log("Exception throws by "+except.obj.id+" catched!");
+	            	log("Exception throws by "+except.obj.id+" in task "+ except.step.taskId +" catched!");
+	            	rt=except.step;
+        			var controlId=controlTask.taskId;
+	            	if (rt.taskId!=controlId){
+	            		// different tasks..... have to manage the clear of all steps from control to rt
+	            		if (rt.forkId==controlId){
+	            			// same fork... a substep generates the exception... 
+	            			// remove the parent task until control.....
+	            			while (rt.parent.taskId!=controlId){
+	            				rt=rtparent;
+	            				rt.done(true);
+	            			}
+	            			self.setRunningTask(controlTask);
+	            		} else {
+	            			// diferent forks..... this is problem full situation
+	            		}
+	            	} else {
+	            		//same taskId... is a exception in the inner auxCall code.... No problem... 
+	            	}
 	                bException=true;
 	                except["call"]=auxCall;
 	                stackErrors.push(except);

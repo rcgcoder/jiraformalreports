@@ -945,10 +945,12 @@ function newIssueFactory(report){
 		if (isDefined(self["get"+theFieldName+"Life"])){
             //try to get the value at report time .....
             var vResult=self["get"+theFieldName+"Life"](otherParams,atDatetime);
-            vUseSteps=self.forceAsyncFieldValues(self.getFieldLife,[sFieldName,atDatetime,otherParams],vResult);
-            if (!vUseSteps){ 
+            if (isTaskResult(vResult)&&(vResult.stepsAdded)){
+                vUseSteps=true;
+            } else {
                 arrResult=vResult; 
             }
+            //vUseSteps=self.forceAsyncFieldValues(self.getFieldLife,[sFieldName,atDatetime,otherParams],vResult);
 		} else {
 			var sChangeDate;
 //			var issueBase=self.getJiraObject();
@@ -1003,6 +1005,9 @@ function newIssueFactory(report){
     		self.change();
     		return hsItemFieldsCache;
         });
+        if (vUseSteps){
+            return self.getReport().taskResultNeedsStep();
+        }
 	});
 	dynObj.functions.add("getFieldValueAtDateTime",function(sFieldName,dateTime,otherParams){
 		var self=this; 
@@ -1093,6 +1098,9 @@ function newIssueFactory(report){
         		return auxVal;
             });
 		});
+	    if (vUseSteps){
+            return self.getReport().taskResultNeedsStep();
+        }
 	});
 	dynObj.functions.add("getVersionsLinks",function(){
 		var self=this;

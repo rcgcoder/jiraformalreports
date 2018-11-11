@@ -1026,7 +1026,7 @@ function newIssueFactory(report){
             self.getReport().executeAsStep(vUseSteps,function(){
                 var history;
         		var bLocated=false;
-        		var refDatetime=dateTime.getTime();
+        		var refDateTime=dateTime.getTime();
         		for (var i=0;(i<arrLife.length) &&(!bLocated);i++){		
         			history=arrLife[i];
                     var auxDatetime=history[0];

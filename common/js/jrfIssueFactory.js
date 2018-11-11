@@ -1004,12 +1004,12 @@ function newIssueFactory(report){
         var vResult;
 		if (isDefined(dateTime)) sDateTime=dateTime.getTime()+"";
 		var hsFieldLife;
-//		var vResult=self.getReport().callWithRetry("AsyncFieldException",function(){
+		var vResult=self.getReport().callWithRetry("AsyncFieldException",function(){
 	        hsFieldLife=self.getFieldLife(sFieldName,dateTime,otherParams);
-//	        return hsFieldLife;
-//		});
-//		vUseSteps=self.forceAsyncFieldValues(self.getFieldValueAtDateTime,[sFieldName,dateTime,otherParams]);
-//		return self.getReport().executeAsStep(vUseSteps,function(){
+	        return hsFieldLife;
+		});
+        vUseSteps=self.forceAsyncFieldValues(self.getFieldValueAtDateTime,[sFieldName,dateTime,otherParams],vResult);
+		return self.getReport().executeAsStep(vUseSteps,function(){
     		if (hsFieldLife.exists(sDateTime)){
     			return hsFieldLife.getValue(sDateTime);
     		}
@@ -1040,7 +1040,7 @@ function newIssueFactory(report){
         		}
         		return auxVal;
         	});
-            vUseSteps=self.forceAsyncFieldValues(self.getFieldValueAtDateTime,[sFieldName,dateTime,otherParams],vResult);
+            vUseSteps=vUseSteps||self.forceAsyncFieldValues(self.getFieldValueAtDateTime,[sFieldName,dateTime,otherParams],vResult);
             self.getReport().executeAsStep(vUseSteps,function(){
                 var history;
         		var bLocated=false; 

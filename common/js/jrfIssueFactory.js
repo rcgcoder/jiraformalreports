@@ -1005,7 +1005,7 @@ function newIssueFactory(report){
         });
 	});
 	dynObj.functions.add("getFieldValueAtDateTime",function(sFieldName,dateTime,otherParams){
-		var self=this;
+		var self=this; 
 		var dateCreated=new Date(self.fieldValue("created"));
 		var sDateTime="unknown";
         var vUseSteps=false;

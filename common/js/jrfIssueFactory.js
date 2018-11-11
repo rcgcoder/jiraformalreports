@@ -554,11 +554,11 @@ function newIssueFactory(report){
             report.addStep("Getting "+theFieldName+" of the childs",function(){
                 self.getFactory().workOnListSteps(allChilds,function(child){
                     report.addStep("Calling field Accum",function(){
-                        report.callWithRetry("AsyncFieldException",function(){
-                            return child.fieldAccum(theFieldName,childType,dateTime,inOtherParams,bSetProperty,notAdjust,fncItemCustomCalc);
-                        });
+                        child.pushAsyncFieldValue(true);
+                        return child.fieldAccum(theFieldName,childType,dateTime,inOtherParams,bSetProperty,notAdjust,fncItemCustomCalc);
                     });
                     report.addStep("get the field accum",function(childValue){
+                        child.popAsyncFieldValue();
                         if (isString(childValue)||isArray(childValue)){
                             accumValue+=parseFloat(childValue.saToString().trim());
                         } else {

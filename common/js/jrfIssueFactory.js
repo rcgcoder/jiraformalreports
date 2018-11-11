@@ -1024,7 +1024,7 @@ function newIssueFactory(report){
     		//try to get the value at report time .....
             vResult=self.getReport().callWithRetry(false,function(){
                 debugger;
-        		if (reportDateTime.getTime()!=dateTime){ // if is processing the report time.... have to get the actual value
+        		if (reportDateTime.getTime()!=dateTime.getTime()){ // if is processing the report time.... have to get the actual value
                     auxVal=self.getFieldValueAtDateTime(sFieldName,reportDateTime,otherParams); 
         		} else {
                     auxVal=self.fieldValue(sFieldName,false,undefined,otherParams); // getting actual Value

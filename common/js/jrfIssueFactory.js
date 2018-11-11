@@ -1081,7 +1081,7 @@ function newIssueFactory(report){
         		hsFieldLife.add(sDateTime,auxVal);
         		return auxVal;
             });
-//		});
+		});
 	});
 	dynObj.functions.add("getVersionsLinks",function(){
 		var self=this;

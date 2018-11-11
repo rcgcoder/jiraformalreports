@@ -176,7 +176,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			self.indInnerContentHtmlBuffer=self.pushHtmlBuffer();
 			self.startApplyToken();
 		});
-		self.addStep("Encode part...",function(){
+		self.addStep("Encode part... "+self.tokenName+" with params:"+self.tag.getTagText(),function(){
 			if (self.ifConditionResult){
 				//log(self.topHtmlBuffer(self.indHtmlBuffer-2));
 				log("Applying tag:"+ self.tag.getTagText());

@@ -359,6 +359,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 			} else {
 				self.getReport().callWithRetry(function(){
 					timespent=self.fieldValue("timespent",false,atDatetime);
+					return timespent;
 				});
 			}
 		});

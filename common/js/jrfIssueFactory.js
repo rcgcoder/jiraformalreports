@@ -583,6 +583,7 @@ function newIssueFactory(report){
                     childValue=0;
                 }
                 accumValue=childValue;
+                return accumValue
             });
             if ((isTaskResult(vResult))&&(vResult.stepsAdded)){
                 bUseStepping=true;
@@ -995,6 +996,7 @@ function newIssueFactory(report){
 		var hsFieldLife;
 		var vResult=self.getReport().callWithRetry(function(){
 	        hsFieldLife=self.getFieldLife(sFieldName,dateTime,otherParams);
+	        return hsFieldLife;
 		});
 		vUseSteps=self.forceAsyncFieldValues(self.getFieldValueAtDateTime,[sFieldName,dateTime,otherParams],vResult);
 		self.getReport().executeAsStep(vUseSteps,function(){
@@ -1018,6 +1020,7 @@ function newIssueFactory(report){
     		var auxVal;
     	    var vResult=self.getReport().callWithRetry(function(){
     	    	auxVal=	self.fieldValue(sFieldName,false,undefined,otherParams); // getting actual Value
+    	    	return auxVal;
     	    });
             vUseSteps=vUseSteps||self.forceAsyncFieldValues(self.getFieldValueAtDateTime,[sFieldName,dateTime,otherParams],vResult);
             self.getReport().executeAsStep(vUseSteps,function(){

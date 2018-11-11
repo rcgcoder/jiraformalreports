@@ -397,7 +397,6 @@ function newIssueFactory(report){
 				}
 */			}
 		}
-		vUseSteps=(report.getRunningTask.steps.length);
         return report.executeAsStep(vUseSteps,function(){        
     		if (bDefined){
     			if (typeof fieldValue==="object"){

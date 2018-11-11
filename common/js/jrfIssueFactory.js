@@ -994,12 +994,12 @@ function newIssueFactory(report){
         var vUseSteps=false;
 		if (isDefined(dateTime)) sDateTime=dateTime.getTime()+"";
 		var hsFieldLife;
-		var vResult=self.getReport().callWithRetry("AsyncFieldException",function(){
+//		var vResult=self.getReport().callWithRetry("AsyncFieldException",function(){
 	        hsFieldLife=self.getFieldLife(sFieldName,dateTime,otherParams);
-	        return hsFieldLife;
-		});
-		vUseSteps=self.forceAsyncFieldValues(self.getFieldValueAtDateTime,[sFieldName,dateTime,otherParams],vResult);
-		return self.getReport().executeAsStep(vUseSteps,function(){
+//	        return hsFieldLife;
+//		});
+//		vUseSteps=self.forceAsyncFieldValues(self.getFieldValueAtDateTime,[sFieldName,dateTime,otherParams]);
+//		return self.getReport().executeAsStep(vUseSteps,function(){
     		if (hsFieldLife.exists(sDateTime)){
     			return hsFieldLife.getValue(sDateTime);
     		}
@@ -1022,7 +1022,7 @@ function newIssueFactory(report){
     	    	auxVal=	self.fieldValue(sFieldName,false,undefined,otherParams); // getting actual Value
     	    	return auxVal;
     	    });
-            vUseSteps=vUseSteps||self.forceAsyncFieldValues(self.getFieldValueAtDateTime,[sFieldName,dateTime,otherParams],vResult);
+            vUseSteps=self.forceAsyncFieldValues(self.getFieldValueAtDateTime,[sFieldName,dateTime,otherParams],vResult);
             self.getReport().executeAsStep(vUseSteps,function(){
                 var history;
         		var bLocated=false; 
@@ -1063,7 +1063,7 @@ function newIssueFactory(report){
         		hsFieldLife.add(sDateTime,auxVal);
         		return auxVal;
             });
-		});
+//		});
 	});
 	dynObj.functions.add("getVersionsLinks",function(){
 		var self=this;

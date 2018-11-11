@@ -933,8 +933,14 @@ function newIssueFactory(report){
 			return hsItemFieldsCache;
 		}
 		var arrResult=[];
+		var vResult=false;
 		if (isDefined(self["get"+theFieldName+"Life"])){
-			arrResult=self["get"+theFieldName+"Life"](otherParams,atDatetime);
+            //try to get the value at report time .....
+            vResult=self.getReport().callWithRetry(false,function(){
+                arrResult=self["get"+theFieldName+"Life"](otherParams,atDatetime);
+                return arrResult;
+            });
+            vUseSteps=self.forceAsyncFieldValues(self.getFieldValueAtDateTime,[sFieldName,dateTime,otherParams],vResult);
 		} else {
 			var sChangeDate;
 //			var issueBase=self.getJiraObject();
@@ -974,18 +980,20 @@ function newIssueFactory(report){
 				});
 			}
 		}
-		arrResult.sort(function(a,b){ " ordered from actual to the past"
-			if (a[0]<b[0]) return 1;
-			if (a[0]>b[0]) return -1;
-			return 0
-		});
-		for (var i=0;i<arrResult.length-1;i++){
-			arrResult[i][1]=arrResult[i+1][2];
-		}
-		hsItemFieldsCache=newHashMap();
-		hsItemFieldsCache.add("life",arrResult);
-		hsFieldLifesCaches.add(sCacheKey,hsItemFieldsCache);
-		return hsItemFieldsCache;
+        self.getReport().executeAsStep(vUseSteps,function(){
+    		arrResult.sort(function(a,b){ " ordered from actual to the past"
+    			if (a[0]<b[0]) return 1;
+    			if (a[0]>b[0]) return -1;
+    			return 0
+    		});
+    		for (var i=0;i<arrResult.length-1;i++){
+    			arrResult[i][1]=arrResult[i+1][2];
+    		}
+    		hsItemFieldsCache=newHashMap();
+    		hsItemFieldsCache.add("life",arrResult);
+    		hsFieldLifesCaches.add(sCacheKey,hsItemFieldsCache);
+    		return hsItemFieldsCache;
+        });
 	});
 	dynObj.functions.add("getFieldValueAtDateTime",function(sFieldName,dateTime,otherParams){
 		var self=this;

@@ -557,7 +557,7 @@ function newIssueFactory(report){
                         report.callWithRetry(function(){
                             return child.fieldAccum(theFieldName,childType,dateTime,inOtherParams,bSetProperty,notAdjust,fncItemCustomCalc);
                         });
-                    }); 
+                    });
                     report.addStep("get the field accum",function(childValue){
                         if (isString(childValue)||isArray(childValue)){
                             accumValue+=parseFloat(childValue.saToString().trim());

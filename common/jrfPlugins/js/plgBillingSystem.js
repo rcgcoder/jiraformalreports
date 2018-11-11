@@ -450,7 +450,6 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     getBillingSnapShot(atDatetime,hourCost,minFacturableFase){
     	var self=this;
     	//debugger;
-    	self.forceAsyncFieldValues(self.getBillingSnapShot,[atDatetime,hourCost,minFacturableFase]);
     	var report=self.getReport();
     	report.addStep("Initialize Billing",function(){
         	return self.initializeBilling(atDatetime,hourCost,minFacturableFase);

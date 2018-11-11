@@ -15,7 +15,7 @@ var jrfField=class jrfField extends jrfToken{//this kind of definition allows to
 			log("There is not function.... in reportElem:it appears to be a jrfReport element");
 		} else {
 			log("There is function fieldValue.... in reportElem:"+self.reportElem.getKey());
-			self.executeAsStepMayRetry(false,function(){
+			self.executeAsStepMayRetry(false,"AsyncFieldException",function(){
 				sValue=self.reportElem.fieldValue(self.fieldName,true,self.datetime,self.otherParams);
 				if (isString(sValue)&&(sValue.indexOf("&lt;jrf")>=0)){// if there is jrf tokens in the description
 					var sHtml=decodeEntities(sValue);

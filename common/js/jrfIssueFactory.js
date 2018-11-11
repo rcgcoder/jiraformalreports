@@ -554,7 +554,7 @@ function newIssueFactory(report){
             report.addStep("Getting "+theFieldName+" of the childs",function(){
                 self.getFactory().workOnListSteps(allChilds,function(child){
                     report.addStep("Calling field Accum",function(){
-                        report.callWithRetry(function(){
+                        report.callWithRetry("AsyncFieldException",function(){
                             return child.fieldAccum(theFieldName,childType,dateTime,inOtherParams,bSetProperty,notAdjust,fncItemCustomCalc);
                         });
                     });
@@ -568,7 +568,7 @@ function newIssueFactory(report){
                 });
             });
         } else {
-            var vResult=report.callWithRetry(function(){
+            var vResult=report.callWithRetry("AsyncFieldException",function(){
                 // let´s find if field have a precomputed value
                 var childValue="";
                 var precompValue=self.getPrecomputedPropertyValue(cacheKey,dateTime);
@@ -589,7 +589,7 @@ function newIssueFactory(report){
                 bUseStepping=true;
             }
         }
-        return report.executeAsStepMayRetry(bUseStepping,function(){
+        return report.executeAsStepMayRetry(bUseStepping,"AsyncFieldException",function(){
         	var auxAcumValue=accumValue;
             if (isDefined(fncItemCustomCalc)){
                 log("Isssue"+self.getKey()+". Calling item custom calc function with value:"+accumValue);
@@ -994,7 +994,7 @@ function newIssueFactory(report){
         var vUseSteps=false;
 		if (isDefined(dateTime)) sDateTime=dateTime.getTime()+"";
 		var hsFieldLife;
-		var vResult=self.getReport().callWithRetry(function(){
+		var vResult=self.getReport().callWithRetry("AsyncFieldException",function(){
 	        hsFieldLife=self.getFieldLife(sFieldName,dateTime,otherParams);
 	        return hsFieldLife;
 		});
@@ -1018,7 +1018,7 @@ function newIssueFactory(report){
     		}
     		
     		var auxVal;
-    	    var vResult=self.getReport().callWithRetry(function(){
+    	    var vResult=self.getReport().callWithRetry("AsyncFieldException",function(){
     	    	auxVal=	self.fieldValue(sFieldName,false,undefined,otherParams); // getting actual Value
     	    	return auxVal;
     	    });

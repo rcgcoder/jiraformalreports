@@ -278,8 +278,25 @@ class RCGTask{
 		}
 		self.getTaskManager().changeStatus();
 	}
-	done(bFreeMemory){
+	done(bFreeMemory,doneChildsAndInnerForks){
 		var self=this;
+		if (doneChildsAndInnerForks){
+			self.steps.forEach(function(subStep){
+				if (!subStep.isDone){
+					subStep.done(bFreeMemory,doneChildsAndInnerForks);
+				}
+			});
+			self.innerForks.forEach(function(subStep){
+				if (!subStep.isDone){
+					subStep.done(bFreeMemory,doneChildsAndInnerForks);
+				}
+			});
+			self.globalForks.forEach(function(subStep){
+				if (!subStep.isDone){
+					subStep.done(bFreeMemory,doneChildsAndInnerForks);
+				}
+			});
+		}
 		self.isDone=true;
 		self.finishTime=(new Date()).getTime();
 		self.changeStatus();
@@ -1434,7 +1451,7 @@ class RCGTaskManager{
 	extended_waitForEvent(){
 		return new RCGTaskResult(false);
 	}
-	extended_callWithRetry(fncCall){
+	extended_callWithRetry(exceptionName,fncCall){
         var self=this;
 	    var bException=false;
 	    var stackErrors=[];
@@ -1445,7 +1462,7 @@ class RCGTaskManager{
 	        try {
 	            vResult=auxCall();
 	        } catch (except) {
-	            if (except.type!="AsyncFieldException"){
+	            if (except.type!=exceptionName){
 	                throw except;
 	            } else {
 	            	log("Exception throws by "+except.obj.id+" in task "+ except.step.taskId +" catched!");
@@ -1456,9 +1473,10 @@ class RCGTaskManager{
 	            		if (rt.forkId==controlId){
 	            			// same fork... a substep generates the exception... 
 	            			// remove the parent task until control.....
-	            			while (rt.parent.taskId!=controlId){
+	            			var theParent=rt.parent;
+	            			while (theParent.taskId!=controlId){
 	            				rt=rt.parent;
-	            				rt.done(true);
+	            				theParent=rt.done(true,true);
 	            			}
 	            			self.setRunningTask(controlTask);
 	            		} else {
@@ -1522,17 +1540,17 @@ class RCGTaskManager{
         }
     }
 	
-    extended_executeAsStepMayRetry(bAsStep,fncCall){
+    extended_executeAsStepMayRetry(bAsStep,exceptionName,fncCall){
         var self=this;
         return self.executeAsStep(bAsStep,function(){
-           return self.callWithRetry(fncCall);
+           return self.callWithRetry(exceptionName,fncCall);
         });
     }
 	
-	extended_addStepMayRetry(sDescription,fncCall){
+	extended_addStepMayRetry(sDescription,exceptionName,fncCall){
         var self=this;
         return self.addStep(sDescription,function(){
-            return self.callWithRetry(fncCall);
+            return self.callWithRetry(exceptionName,fncCall);
         });
     }
 	extended_sequentialProcess(hsListItemsToProcess,fncProcess){

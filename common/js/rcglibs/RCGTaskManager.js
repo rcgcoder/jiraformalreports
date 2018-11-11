@@ -1524,25 +1524,64 @@ class RCGTaskManager{
 		var bckAutoFree;
 		var bckTaskCallsBlock;
 		var bckTaskCallsMaxDeep;
-		self.addStep("Change autofree and taskCallsblock", function(){
-			log("Change autofree");
-			bckAutoFree=tm.autoFree;
-			bckTaskCallsBlock=tm.asyncTaskCallsBlock;
-			bckTaskCallsMaxDeep=tm.asyncTaskCallsMaxDeep;
-//			tm.autoFree=false;
-			tm.asyncTaskCallsBlock=0;
-			tm.asyncTaskCallsMaxDeep=0;
-		});
-		self.addStep("Call parallelized pseudoThreaded",function(){
-			log("Call internal parallelized..");
-			return self.internal_parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads);
-		});
-		self.addStep("Restore AutoFree and CallsBlock params",function(){
-			log("Restore autofree and callsblock..");
-//			tm.autoFree=bckAutoFree;
-			tm.asyncTaskCallsBlock=bckTaskCallsBlock;
-			tm.asyncTaskCallsMaxDeep=bckTaskCallsMaxDeep;
-		});
+		var nTotalCalls=0;
+		if (Array.isArray(hsListItemsToProcess)){
+			nTotalCalls=hsListItemsToProcess.length;
+		} else if (isNumber(hsListItemsToProcess)){
+			nTotalCalls=hsListItemsToProcess;
+		} else {
+			nTotalCalls=hsListItemsToProcess.length();
+		}
+		if (nTotalCalls==0){
+			return;
+		} else if (nTotalCalls==1){
+			var iPet=0;
+			var item;
+			var itemKey;
+			if (Array.isArray(hsListItemsToProcess)){
+				item=hsListItemsToProcess[0];
+			} else if (isNumber(hsListItemsToProcess)){
+				item=0;
+			} else {
+				var nodAux=hsListItemsToProcess.getFirst();
+				item=nodAux.value;
+				itemKey=nodAux.key;
+			}
+			if (isDefined(fncCall)){
+				self.addStep("Petition:"+iPet+" of parallel process (only one item in list)",function(){
+//						log("Start the "+iPet+" Call of parallel process");
+					return fncCall(item);
+//						log("End of the "+iPet+" Call of parallel process");
+				});
+			}
+			if (isDefined(fncProcess)){
+				self.addStep("Petition:"+iPet+" Processing result and Trying Next Call... (only one item in list)",function(objResult){
+//						log("Start the "+iPet+" Processing of parallel process");
+					return fncProcess(item,objResult,itemKey);
+//						log("End of the "+iPet+" Processing of parallel process");
+				});
+			} 
+		} else {
+			self.addStep("Change autofree and taskCallsblock", function(){
+				log("Change autofree");
+				bckAutoFree=tm.autoFree;
+				bckTaskCallsBlock=tm.asyncTaskCallsBlock;
+				bckTaskCallsMaxDeep=tm.asyncTaskCallsMaxDeep;
+	//			tm.autoFree=false;
+				tm.asyncTaskCallsBlock=0;
+				tm.asyncTaskCallsMaxDeep=0;
+			});
+			self.addStep("Call parallelized pseudoThreaded",function(){
+				log("Call internal parallelized..");
+				return self.internal_parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads);
+			});
+			self.addStep("Restore AutoFree and CallsBlock params",function(){
+				log("Restore autofree and callsblock..");
+	//			tm.autoFree=bckAutoFree;
+				tm.asyncTaskCallsBlock=bckTaskCallsBlock;
+				tm.asyncTaskCallsMaxDeep=bckTaskCallsMaxDeep;
+			});
+		}
 	}
 	
 	extendObject(obj){

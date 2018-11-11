@@ -1025,7 +1025,7 @@ function newIssueFactory(report){
             vUseSteps=vUseSteps||self.forceAsyncFieldValues(self.getFieldValueAtDateTime,[sFieldName,dateTime,otherParams],vResult);
             self.getReport().executeAsStep(vUseSteps,function(){
                 var history;
-        		var bLocated=false;
+        		var bLocated=false; 
         		var refDateTime=dateTime.getTime();
         		for (var i=0;(i<arrLife.length) &&(!bLocated);i++){		
         			history=arrLife[i];

@@ -992,6 +992,7 @@ function newIssueFactory(report){
 		var dateCreated=new Date(self.fieldValue("created"));
 		var sDateTime="unknown";
         var vUseSteps=false;
+        var vResult;
 		if (isDefined(dateTime)) sDateTime=dateTime.getTime()+"";
 		var hsFieldLife;
 //		var vResult=self.getReport().callWithRetry("AsyncFieldException",function(){
@@ -1017,11 +1018,18 @@ function newIssueFactory(report){
     			return "";
     		}
     		
-    		var auxVal;
-    	    var vResult=self.getReport().callWithRetry("AsyncFieldException",function(){
-    	    	auxVal=	self.fieldValue(sFieldName,false,undefined,otherParams); // getting actual Value
-    	    	return auxVal;
-    	    });
+    		var auxVal; // value for actual situation.... or the situation at report time
+    		var reportDateTime=self.reportDateTime;
+    		
+    		//try to get the value at report time .....
+            vResult=self.getReport().callWithRetry(false,function(){
+        		if (reportDateTime.getTime()!=dateTime){ // if is processing the report time.... have to get the actual value
+                    auxVal=self.getFieldValueAtDateTime(sFieldName,reportDateTime,otherParams); 
+        		} else {
+                    auxVal=self.fieldValue(sFieldName,false,undefined,otherParams); // getting actual Value
+        		}
+        		return auxVal;
+        	});
             vUseSteps=self.forceAsyncFieldValues(self.getFieldValueAtDateTime,[sFieldName,dateTime,otherParams],vResult);
             self.getReport().executeAsStep(vUseSteps,function(){
                 var history;

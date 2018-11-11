@@ -18,7 +18,7 @@ var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition al
 		super.apply();
 	}
 	apply(){
-		debugger;
+		//debugger;
 		var self=this;
 		//debugger;
 		var iLoopElemsCount;  

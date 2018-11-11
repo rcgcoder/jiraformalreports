@@ -377,47 +377,55 @@ function newIssueFactory(report){
 		}
 		var bDefined=false;
 		var fieldValue="";
-		if (isDefined(dateTime)&&(dateTime!="")){
-			bDefined=true;
-			fieldValue=self.getFieldValueAtDateTime(sFieldName,dateTime,otherParams);
-		} else {
-			var fncAux=self["get"+sFieldName];
-			if (isDefined(fncAux)){
-				bDefined=true;
-				fieldValue=self["get"+sFieldName](otherParams);
-/*			} else {
-				var jiraObj=self.getJiraObject();
-				var jsonFields=jiraObj.fields;
-				var jsonField=jsonFields[sFieldName];
-				if (isDefined(jsonField)&&(jsonField!=null)){
-					fieldValue=jsonField;
-					bDefined=true;
-				}
-*/			}
-		}
-		if (bDefined){
-			if (typeof fieldValue==="object"){
-				var auxValue=fieldValue;
-				if (bGetAttribute){
-					var bFoundAllPath=true;
-					for (var i=1;(bFoundAllPath && (i<arrFieldNames.length));i++){
-						var fieldName=arrFieldNames[i].trim();
-						if (isDefined(auxValue[fieldName])){
-							auxValue=auxValue[fieldName];
-						} else {
-							bFoundAllPath=false;
-						}
-					}
-					if (bFoundAllPath) return auxValue;
-				}
-				if (isDefined(auxValue.value)) return auxValue.value;
-				if (isDefined(auxValue.name)) return auxValue.name;
-				if (isDefined(auxValue.key)) return auxValue.key;
-				if (isDefined(auxValue.id)) return auxValue.id;
-			}
-			return fieldValue;
-		}
-		return "Undefined getter for fieldName:["+sFieldName+"]";
+		var vUseSteps=false;
+		var report=self.getReport();
+        var vResult=report.callWithRetry("AsyncFieldException",function(){
+    		if (isDefined(dateTime)&&(dateTime!="")){
+    			bDefined=true;
+            	fieldValue=self.getFieldValueAtDateTime(sFieldName,dateTime,otherParams);
+            	return fieldValue;
+    		} else {
+    			var fncAux=self["get"+sFieldName];
+    			if (isDefined(fncAux)){
+    				bDefined=true;
+    				fieldValue=self["get"+sFieldName](otherParams);
+    /*			} else {
+    				var jiraObj=self.getJiraObject();
+    				var jsonFields=jiraObj.fields;
+    				var jsonField=jsonFields[sFieldName];
+    				if (isDefined(jsonField)&&(jsonField!=null)){
+    					fieldValue=jsonField;
+    					bDefined=true;
+    				}
+    */			}
+    		}
+            vUseSteps=self.forceAsyncFieldValues(self.fieldValue,[theFieldName,bRendered,dateTime,inOtherParams],vResult);
+        });
+        return report.executeAsStep(vUseSteps,function(){        
+    		if (bDefined){
+    			if (typeof fieldValue==="object"){
+    				var auxValue=fieldValue;
+    				if (bGetAttribute){
+    					var bFoundAllPath=true;
+    					for (var i=1;(bFoundAllPath && (i<arrFieldNames.length));i++){
+    						var fieldName=arrFieldNames[i].trim();
+    						if (isDefined(auxValue[fieldName])){
+    							auxValue=auxValue[fieldName];
+    						} else {
+    							bFoundAllPath=false;
+    						}
+    					}
+    					if (bFoundAllPath) return auxValue;
+    				}
+    				if (isDefined(auxValue.value)) return auxValue.value;
+    				if (isDefined(auxValue.name)) return auxValue.name;
+    				if (isDefined(auxValue.key)) return auxValue.key;
+    				if (isDefined(auxValue.id)) return auxValue.id;
+    			}
+    			return fieldValue;
+    		}
+    	    return "Undefined getter for fieldName:["+sFieldName+"]";
+       });
 	});
 	dynObj.functions.add("fieldAccumChilds",function(theFieldName,datetime,inOtherParams,notAdjust,bSetProperty,fncItemCustomCalc){
 		var self=this;

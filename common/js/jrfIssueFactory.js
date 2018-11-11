@@ -939,7 +939,7 @@ function newIssueFactory(report){
             var vResult=self["get"+theFieldName+"Life"](otherParams,atDatetime);
             vUseSteps=self.forceAsyncFieldValues(self.getFieldValueAtDateTime,[sFieldName,dateTime,otherParams],vResult);
             if (!vUseSteps){
-                arrResult=vResult;
+                arrResult=vResult; 
             }
 		} else {
 			var sChangeDate;

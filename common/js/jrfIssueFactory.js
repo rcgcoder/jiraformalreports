@@ -1029,7 +1029,11 @@ function newIssueFactory(report){
         		for (var i=0;(i<arrLife.length) &&(!bLocated);i++){		
         			history=arrLife[i];
         			try {
-        				var vTest=(history[0].getTime()<=dateTime.getTime());
+        			    var auxDate=history[0];
+        			    if (isString(auxDate)){
+        			        auxDate=new Date(auxDate);
+        			    }
+        				var vTest=(auxDate.getTime()<=dateTime.getTime());
         			}catch(err) {
         			    debugger;
         			}

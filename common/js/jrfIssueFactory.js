@@ -1016,7 +1016,10 @@ function newIssueFactory(report){
 	        hsFieldLife=self.getFieldLife(sFieldName,dateTime,otherParams);
 	        return hsFieldLife;
 		});
-        vUseSteps=self.forceAsyncFieldValues(self.getFieldValueAtDateTime,[sFieldName,dateTime,otherParams],vResult);
+		if (isTaskReport(vResult)&&(vResult.stepsAdded)){
+		    vUseSteps=true;
+		}
+//        vUseSteps=self.forceAsyncFieldValues(self.getFieldValueAtDateTime,[sFieldName,dateTime,otherParams],vResult);
 		return self.getReport().executeAsStep(vUseSteps,function(){
     		if (hsFieldLife.exists(sDateTime)){
     			return hsFieldLife.getValue(sDateTime);

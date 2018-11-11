@@ -999,7 +999,7 @@ function newIssueFactory(report){
 	        return hsFieldLife;
 		});
 		vUseSteps=self.forceAsyncFieldValues(self.getFieldValueAtDateTime,[sFieldName,dateTime,otherParams],vResult);
-		self.getReport().executeAsStep(vUseSteps,function(){
+		return self.getReport().executeAsStep(vUseSteps,function(){
     		if (hsFieldLife.exists(sDateTime)){
     			return hsFieldLife.getValue(sDateTime);
     		}

@@ -1032,7 +1032,7 @@ function newIssueFactory(report){
         			    var auxDate=history[0];
         			    if (isString(auxDate)){
         			        auxDate=new Date(auxDate);
-        			    }
+        			    } 
         				var vTest=(auxDate.getTime()<=dateTime.getTime());
         			}catch(err) {
         			    debugger;

@@ -565,7 +565,7 @@ function newIssueFactory(report){
                             accumValue+=childValue;
                         }
                     });
-                });
+                },1);
             });
         } else {
             var vResult=report.callWithRetry("AsyncFieldException",function(){

@@ -1469,7 +1469,7 @@ class RCGTaskManager{
     	var self=this;
 		var controlTask=self.getRunningTask();
         try {
-            return auxCall();
+            return fncCall();
         } catch (except) {
             if (!isTaskException(except)){
                 throw except;
@@ -1495,7 +1495,7 @@ class RCGTaskManager{
             		log("Same Task Id throws the exception");
             		//same taskId... is a exception in the inner auxCall code.... No problem... 
             	}
-                except.call=auxCall;
+                except.call=fncCall;
                 return except;
             } 
         }

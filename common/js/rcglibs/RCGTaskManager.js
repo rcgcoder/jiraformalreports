@@ -1273,9 +1273,6 @@ class RCGTaskManager{
 	}
 	internal_parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads){
 		var self=this;
-		if (isUndefined(fncCall)&&isUndefined(fncProcess)) return self.continueTask();
-		var maxThreads=10;
-		if (isDefined(maxParallelThreads)) maxThreads=maxParallelThreads; 
 		var nTotalCalls=0;
 		var nActualCall=0;
 		var arrListItems;
@@ -1560,9 +1557,14 @@ class RCGTaskManager{
 		var self=this;
 		return self.parallelizeCalls(hsListItemsToProcess,undefined,fncProcess,maxParallelThreads);
 	}
-	extended_parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads){
+	extended_parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,nMaxParallelThreads){
 		//debugger;
 		var self=this;
+		if (isUndefined(fncCall)&&isUndefined(fncProcess)) return self.continueTask();
+		var maxParallelThreads=10
+		if (isDefined(nMaxParallelThreads)){
+			maxParallelThreads=nMaxParallelThreads;
+		}
 		var tm=self.getTaskManager();
 		var bckAutoFree;
 		var bckTaskCallsBlock;
@@ -1591,7 +1593,7 @@ class RCGTaskManager{
 				itemKey=nodAux.key;
 			}
 			if (isDefined(fncCall)){
-				self.addStep("Petition:"+iPet+" of parallel process (only one item in list)",function(){
+				self.addStep("Petition:"+iPet+" of parallel process (one by one )",function(){
 //						log("Start the "+iPet+" Call of parallel process");
 					return fncCall(item);
 //						log("End of the "+iPet+" Call of parallel process");

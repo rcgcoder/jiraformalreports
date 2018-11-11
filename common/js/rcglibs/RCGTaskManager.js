@@ -1465,18 +1465,17 @@ class RCGTaskManager{
 	            if (except.type!=exceptionName){
 	                throw except;
 	            } else {
+	            	debugger;
 	            	log("Exception throws by "+except.obj.id+" in task "+ except.step.taskId +" catched!");
-	            	rt=except.step;
+	            	var exTask=except.step;
         			var controlId=controlTask.taskId;
-	            	if (rt.taskId!=controlId){
+	            	if (exTask.taskId!=controlId){
 	            		// different tasks..... have to manage the clear of all steps from control to rt
-	            		if (rt.forkId==controlId){
+	            		if (exTask.forkId==controlId){
 	            			// same fork... a substep generates the exception... 
 	            			// remove the parent task until control.....
-	            			var theParent=rt.parent;
-	            			while (theParent.taskId!=controlId){
-	            				rt=rt.parent;
-	            				theParent=rt.done(true,true);
+	            			while (exTask.taskId!=controlId){
+	            				exTask=exTask.done(true,true); // done returns the parent
 	            			}
 	            			self.setRunningTask(controlTask);
 	            		} else {

@@ -970,6 +970,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		   	}
 		    return arrResults;
 		});
+		return report.taskResultNeedsStep();
     }
     getBillingCacheKeyPostText(atDatetime,otherParams){
 		var configName=otherParams.getValue("config");

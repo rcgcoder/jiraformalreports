@@ -936,11 +936,11 @@ function newIssueFactory(report){
 		var vUseSteps=false;
 		if (isDefined(self["get"+theFieldName+"Life"])){
             //try to get the value at report time .....
-            var vResult=self.getReport().callWithRetry(false,function(){
-                arrResult=self["get"+theFieldName+"Life"](otherParams,atDatetime);
-                return arrResult;
-            });
+            var vResult=self["get"+theFieldName+"Life"](otherParams,atDatetime);
             vUseSteps=self.forceAsyncFieldValues(self.getFieldValueAtDateTime,[sFieldName,dateTime,otherParams],vResult);
+            if (!vUseSteps){
+                arrResult=vResult;
+            }
 		} else {
 			var sChangeDate;
 //			var issueBase=self.getJiraObject();

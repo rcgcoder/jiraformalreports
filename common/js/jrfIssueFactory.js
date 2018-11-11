@@ -1026,14 +1026,17 @@ function newIssueFactory(report){
             self.getReport().executeAsStep(vUseSteps,function(){
                 var history;
         		var bLocated=false;
+        		var refDatetime=dateTime.getTime();
         		for (var i=0;(i<arrLife.length) &&(!bLocated);i++){		
         			history=arrLife[i];
+                    var auxDatetime=history[0];
         			try {
-        			    var auxDate=history[0];
-        			    if (isString(auxDate)){
-        			        auxDate=new Date(auxDate);
-        			    }  
-        				var vTest=(auxDate.getTime()<=dateTime.getTime());
+                        if (isString(auxDatetime)){
+                            auxDatetime=new Date(auxDatetime);
+                            history[0]=auxDatetime;
+                        }  
+                        auxDatetime=auxDatetime.getTime();
+        				var vTest=(auxDate<=refDateTime);
         			}catch(err) {
         			    debugger;
         			}
@@ -1044,10 +1047,10 @@ function newIssueFactory(report){
         					" To:"+(history[2]!=null?JSON.stringify(history[2]):"null") );
         */			if ((i==0)&&(history[3]=="adjust")){
         				auxVal=history[2];
-        				if (history[0].getTime()<=dateTime.getTime()){
+        				if (auxDate<=refDateTime){
         					bLocated=true;
         				}
-        			} else if (history[0].getTime()<=dateTime.getTime()){ // if next is <= that the date.... finish
+        			} else if (auxDate<=refDateTime){ // if next is <= that the date.... finish
         				auxVal=history[2];
         				bLocated=true;
         			} else {

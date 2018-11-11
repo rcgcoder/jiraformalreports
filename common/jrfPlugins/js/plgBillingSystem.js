@@ -310,7 +310,6 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     initializeBilling(atDatetime,hourCost,minFacturableFase){
     	debugger;
     	var self=this;
-    	self.forceAsyncFieldValues(self.initializeBilling,[atDatetime,hourCost,minFacturableFase]);
     	var report=self.getReport();
 /*    	var fechaFacturacion=self.fieldValue("Fecha de facturación",false,atDatetime);
     	if (fechaFacturacion!==""){
@@ -969,7 +968,6 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		   	}
 		    return arrResults;
 		});
-		return report.taskResultNeedsStep();
     }
     getBillingCacheKeyPostText(atDatetime,otherParams){
 		var configName=otherParams.getValue("config");

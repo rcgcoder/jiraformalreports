@@ -379,28 +379,25 @@ function newIssueFactory(report){
 		var fieldValue="";
 		var vUseSteps=false;
 		var report=self.getReport();
-        var vResult=report.callWithRetry("AsyncFieldException",function(){
-    		if (isDefined(dateTime)&&(dateTime!="")){
-    			bDefined=true;
-            	fieldValue=self.getFieldValueAtDateTime(sFieldName,dateTime,otherParams);
-    		} else {
-    			var fncAux=self["get"+sFieldName];
-    			if (isDefined(fncAux)){
-    				bDefined=true;
-    				fieldValue=self["get"+sFieldName](otherParams);
-    /*			} else {
-    				var jiraObj=self.getJiraObject();
-    				var jsonFields=jiraObj.fields;
-    				var jsonField=jsonFields[sFieldName];
-    				if (isDefined(jsonField)&&(jsonField!=null)){
-    					fieldValue=jsonField;
-    					bDefined=true;
-    				}
-    */			}
-    		}
-            return fieldValue;
-        });
-        vUseSteps=self.forceAsyncFieldValues(self.fieldValue,[theFieldName,bRendered,dateTime,inOtherParams],vResult);
+		if (isDefined(dateTime)&&(dateTime!="")){
+			bDefined=true;
+        	fieldValue=self.getFieldValueAtDateTime(sFieldName,dateTime,otherParams);
+		} else {
+			var fncAux=self["get"+sFieldName];
+			if (isDefined(fncAux)){
+				bDefined=true;
+				fieldValue=self["get"+sFieldName](otherParams);
+/*			} else {
+				var jiraObj=self.getJiraObject();
+				var jsonFields=jiraObj.fields;
+				var jsonField=jsonFields[sFieldName];
+				if (isDefined(jsonField)&&(jsonField!=null)){
+					fieldValue=jsonField;
+					bDefined=true;
+				}
+*/			}
+		}
+		vUseSteps=(report.getRunningTask.steps.length);
         return report.executeAsStep(vUseSteps,function(){        
     		if (bDefined){
     			if (typeof fieldValue==="object"){
@@ -941,16 +938,19 @@ function newIssueFactory(report){
 			return hsItemFieldsCache;
 		}
 		var arrResult=[];
+		var report=self.getReport();
 		var vUseSteps=false;
 		if (isDefined(self["get"+theFieldName+"Life"])){
             //try to get the value at report time .....
             var vResult=self["get"+theFieldName+"Life"](otherParams,atDatetime);
-            if (isTaskResult(vResult)&&(vResult.stepsAdded)){
-                vUseSteps=true;
+            vUseSteps=(report.getRunningTask().steps.length>0);
+            if (!vUseSteps){
+                arrResult=vResult;
             } else {
-                arrResult=vResult; 
+                self.getReport().addStep("Assign step result as arrresult",function(auxResult){
+                    arrResult=auxResult;
+                });
             }
-            //vUseSteps=self.forceAsyncFieldValues(self.getFieldLife,[sFieldName,atDatetime,otherParams],vResult);
 		} else {
 			var sChangeDate;
 //			var issueBase=self.getJiraObject();
@@ -1005,9 +1005,6 @@ function newIssueFactory(report){
     		self.change();
     		return hsItemFieldsCache;
         });
-        if (vUseSteps){
-            return self.getReport().taskResultNeedsStep();
-        }
 	});
 	dynObj.functions.add("getFieldValueAtDateTime",function(sFieldName,dateTime,otherParams){
 		var self=this; 
@@ -1015,17 +1012,16 @@ function newIssueFactory(report){
 		var sDateTime="unknown";
         var vUseSteps=false;
         var vResult;
+        var report=self.getReport();
 		if (isDefined(dateTime)) sDateTime=dateTime.getTime()+"";
-		var hsFieldLife;
-		var vResult=self.getReport().callWithRetry("AsyncFieldException",function(){
-	        hsFieldLife=self.getFieldLife(sFieldName,dateTime,otherParams);
-	        return hsFieldLife;
-		});
-		if (isTaskResult(vResult)&&(vResult.stepsAdded)){
-		    vUseSteps=true;
+		var hsFieldLife=self.getFieldLife(sFieldName,dateTime,otherParams);
+		vUseSteps=(report.getRunningTask().steps.length>0);
+		if (vUseSteps){
+		    report.addStep("Assing step result to hsFieldLife",function(auxResult){
+		        hsFieldLife=auxResult;
+		    });
 		}
-//        vUseSteps=self.forceAsyncFieldValues(self.getFieldValueAtDateTime,[sFieldName,dateTime,otherParams],vResult);
-		return self.getReport().executeAsStep(vUseSteps,function(){
+		report.executeAsStep(vUseSteps,function(){
     		if (hsFieldLife.exists(sDateTime)){
     			return hsFieldLife.getValue(sDateTime);
     		}
@@ -1047,17 +1043,22 @@ function newIssueFactory(report){
     		var reportDateTime=self.getReport().reportDateTime;
     		
     		//try to get the value at report time .....
-            vResult=self.getReport().callWithRetry(false,function(){
+            report.executeAsStep(vUseSteps,function(){
                 debugger;
         		if (reportDateTime.getTime()!=dateTime.getTime()){ // if is processing the report time.... have to get the actual value
                     auxVal=self.getFieldValueAtDateTime(sFieldName,reportDateTime,otherParams); 
         		} else {
                     auxVal=self.fieldValue(sFieldName,false,undefined,otherParams); // getting actual Value
         		}
-        		return auxVal;
-        	});
-            vUseSteps=vUseSteps||self.forceAsyncFieldValues(self.getFieldValueAtDateTime,[sFieldName,dateTime,otherParams],vResult);
-            self.getReport().executeAsStep(vUseSteps,function(){
+                vUseSteps=(report.getRunningTask().steps.length>0);
+                if (vUseSteps){
+                    report.addStep("Setting auxVal value",function(auxResult){
+                        auxVal=auxResult;
+                    });
+                }
+            });
+    		
+            report.executeAsStep(vUseSteps,function(){
                 var history; 
         		var bLocated=false;
         		var refDateTime=dateTime.getTime();
@@ -1098,9 +1099,6 @@ function newIssueFactory(report){
         		return auxVal;
             });
 		});
-	    if (vUseSteps){
-            return self.getReport().taskResultNeedsStep();
-        }
 	});
 	dynObj.functions.add("getVersionsLinks",function(){
 		var self=this;

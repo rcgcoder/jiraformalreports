@@ -383,7 +383,6 @@ function newIssueFactory(report){
     		if (isDefined(dateTime)&&(dateTime!="")){
     			bDefined=true;
             	fieldValue=self.getFieldValueAtDateTime(sFieldName,dateTime,otherParams);
-            	return fieldValue;
     		} else {
     			var fncAux=self["get"+sFieldName];
     			if (isDefined(fncAux)){
@@ -399,8 +398,9 @@ function newIssueFactory(report){
     				}
     */			}
     		}
-            vUseSteps=self.forceAsyncFieldValues(self.fieldValue,[theFieldName,bRendered,dateTime,inOtherParams],vResult);
+            return fieldValue;
         });
+        vUseSteps=self.forceAsyncFieldValues(self.fieldValue,[theFieldName,bRendered,dateTime,inOtherParams],vResult);
         return report.executeAsStep(vUseSteps,function(){        
     		if (bDefined){
     			if (typeof fieldValue==="object"){

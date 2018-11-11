@@ -933,10 +933,10 @@ function newIssueFactory(report){
 			return hsItemFieldsCache;
 		}
 		var arrResult=[];
-		var vResult=false;
+		var vUseSteps=false;
 		if (isDefined(self["get"+theFieldName+"Life"])){
             //try to get the value at report time .....
-            vResult=self.getReport().callWithRetry(false,function(){
+            var vResult=self.getReport().callWithRetry(false,function(){
                 arrResult=self["get"+theFieldName+"Life"](otherParams,atDatetime);
                 return arrResult;
             });

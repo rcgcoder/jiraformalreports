@@ -544,7 +544,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     	var self=this;
     	//debugger;
     	if (self.getKey()=="BENT-411") debugger;
-    	self.forceAsyncFieldValues(self.getBillingLife,[otherParams,theDatetime]);
+    	//self.forceAsyncFieldValues(self.getBillingLife,[otherParams,theDatetime]);
     	var report=self.getReport();
 		var sComentarios=[];
 		var sErrores=[];

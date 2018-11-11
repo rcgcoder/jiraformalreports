@@ -1043,7 +1043,7 @@ function newIssueFactory(report){
 		} else {
             hsFieldLife=vResult;
 		}
-		report.executeAsStep(vUseSteps,function(){
+		vResult=report.executeAsStep(vUseSteps,function(){
     		if (hsFieldLife.exists(sDateTime)){
     			return hsFieldLife.getValue(sDateTime);
     		}
@@ -1090,7 +1090,7 @@ function newIssueFactory(report){
                 }
             });
     		
-            report.executeAsStep(vUseSteps,function(){
+            vResult=report.executeAsStep(vUseSteps,function(){
                 var history; 
         		var bLocated=false;
         		var refDateTime=dateTime.getTime();
@@ -1131,11 +1131,14 @@ function newIssueFactory(report){
         		self.change();
         		return auxVal;
             });
+            return vResult;
 		});
         if (vUseSteps){
             self.addStep("Throw a exception to recall synchronously",function(){
                 self.throwAsyncException(self.getFieldValueAtDateTime,[theFieldName,atDatetime,otherParams]);
             });
+        } else {
+            return vResult;
         }
 	});
 	dynObj.functions.add("getVersionsLinks",function(){

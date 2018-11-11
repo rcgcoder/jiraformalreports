@@ -1036,7 +1036,7 @@ function newIssueFactory(report){
                             history[0]=auxDatetime;
                         }  
                         auxDatetime=auxDatetime.getTime();
-        				var vTest=(auxDate<=refDateTime);
+        				var vTest=(auxDatetime<=refDateTime);
         			}catch(err) {
         			    debugger;
         			}
@@ -1047,10 +1047,10 @@ function newIssueFactory(report){
         					" To:"+(history[2]!=null?JSON.stringify(history[2]):"null") );
         */			if ((i==0)&&(history[3]=="adjust")){
         				auxVal=history[2];
-        				if (auxDate<=refDateTime){
+        				if (auxDatetime<=refDateTime){
         					bLocated=true;
         				}
-        			} else if (auxDate<=refDateTime){ // if next is <= that the date.... finish
+        			} else if (auxDatetime<=refDateTime){ // if next is <= that the date.... finish
         				auxVal=history[2];
         				bLocated=true;
         			} else {

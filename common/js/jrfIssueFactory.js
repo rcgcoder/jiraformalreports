@@ -1016,7 +1016,7 @@ function newIssueFactory(report){
 	        hsFieldLife=self.getFieldLife(sFieldName,dateTime,otherParams);
 	        return hsFieldLife;
 		});
-		if (isTaskReport(vResult)&&(vResult.stepsAdded)){
+		if (isTaskResult(vResult)&&(vResult.stepsAdded)){
 		    vUseSteps=true;
 		}
 //        vUseSteps=self.forceAsyncFieldValues(self.getFieldValueAtDateTime,[sFieldName,dateTime,otherParams],vResult);

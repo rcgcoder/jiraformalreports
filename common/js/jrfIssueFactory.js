@@ -1019,10 +1019,11 @@ function newIssueFactory(report){
     		}
     		
     		var auxVal; // value for actual situation.... or the situation at report time
-    		var reportDateTime=self.reportDateTime;
+    		var reportDateTime=self.getReport().reportDateTime;
     		
     		//try to get the value at report time .....
             vResult=self.getReport().callWithRetry(false,function(){
+                debugger;
         		if (reportDateTime.getTime()!=dateTime){ // if is processing the report time.... have to get the actual value
                     auxVal=self.getFieldValueAtDateTime(sFieldName,reportDateTime,otherParams); 
         		} else {

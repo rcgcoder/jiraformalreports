@@ -1468,7 +1468,6 @@ class RCGTaskManager{
 	extended_callWithCatch(exceptionName,fncCall){
     	var self=this;
 		var controlTask=self.getRunningTask();
-        bException=false;
         try {
             return auxCall();
         } catch (except) {

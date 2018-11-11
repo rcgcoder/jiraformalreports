@@ -210,17 +210,19 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
              return self.getFaseName(status);
          };
          var fncGetFaseLife=function(){
+        	 var self=this;
+        	 var report=self.getReport();
         	 var arrResults=[];
-        	 //debugger;
+        	 debugger;
              var hsStatus=this.getFieldLife("status.name");
              var bUseSteps=false;
              if (isTaskResult(hsStatus)){
             	 bUseSteps=true;
-            	 self.addStep("Assigning the result of getFieldLife",function(auxValue){
+            	 report.addStep("Assigning the result of getFieldLife",function(auxValue){
                 	 hsStatus=auxValue;
             	 });
              }
-             self.getReport().executeAsStep(bUseSteps,function(){
+             report.executeAsStep(bUseSteps,function(){
                  var arrStatuses=hsStatus.getValue("life");
                  arrStatuses.forEach(function(status){
                 	 arrResults.push([status[0],self.getFaseOf(status[1]),self.getFaseOf(status[2]),"system"]);

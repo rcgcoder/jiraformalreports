@@ -1273,6 +1273,7 @@ class RCGTaskManager{
 	}
 	internal_parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads){
 		var self=this;
+		var maxThreads=maxParallelThreads;
 		var nTotalCalls=0;
 		var nActualCall=0;
 		var arrListItems;

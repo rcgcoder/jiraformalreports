@@ -997,7 +997,7 @@ function newIssueFactory(report){
 				});
 			}
 		}
-        self.getReport().executeAsStep(vUseSteps,function(){
+        vResult=self.getReport().executeAsStep(vUseSteps,function(){
     		arrResult.sort(function(a,b){ " ordered from actual to the past"
     			if (a[0]<b[0]) return 1;
     			if (a[0]>b[0]) return -1;
@@ -1016,6 +1016,8 @@ function newIssueFactory(report){
             self.addStep("Throw a exception to recall synchronously",function(){
                 self.throwAsyncException(self.getFieldLife,[theFieldName,atDatetime,otherParams]);
             });
+        } else {
+            return vResult;
         }
 	});
 	dynObj.functions.add("getFieldValueAtDateTime",function(sFieldName,dateTime,otherParams){

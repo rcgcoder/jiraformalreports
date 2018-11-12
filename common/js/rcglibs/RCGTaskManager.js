@@ -1,9 +1,10 @@
 class RCGTaskException{
-	constructor(exceptionName,obj,method,task){
+	constructor(exceptionName,obj,method,params,task){
 		var self=this;
 		self.exception=exceptionName;
 		self.object=obj;
 		self.method=method;
+		self.params=params;
 		self.task=task;
 		self.call="";
 	}
@@ -1475,8 +1476,9 @@ class RCGTaskManager{
                 throw except;
             } else {
             	debugger;
-            	log("Exception throws by "+except.obj.id+" in task "+ except.step.taskId +" catched!");
-            	var exTask=except.step;
+            	log("Exception throws by "+except.object.id+" in task "
+            					+ except.task.taskId +" catched!");
+            	var exTask=except.task;
     			var controlId=controlTask.taskId;
             	if (exTask.taskId!=controlId){
             		// different tasks..... have to manage the clear of all steps from control to rt
@@ -1520,28 +1522,28 @@ class RCGTaskManager{
         // some fields need get async
         var fncRetryFunction=function(){
             var theExcept=stackErrors[stackErrors.length-1];
-        	log("Exception processing. Adding steps for the "+theExcept.obj.id+" problem");
+        	log("Exception processing. Adding steps for the "+theExcept.object.id+" problem");
             self.addStep("Trying to get value asynchronously",function(){
-            	log("Exception processing. Step for calling async the method of "+theExcept.obj.id);
-                theExcept.obj.pushAsyncFieldValue(true);
+            	log("Exception processing. Step for calling async the method of "+theExcept.object.id);
+                theExcept.object.pushAsyncFieldValue(true);
                 fncControlledCall(function(){
-	            	log("Exception processing. Calling async the method of "+theExcept.obj.id);
-                    theExcept.method.apply(theExcept.obj,theExcept.params);
+	            	log("Exception processing. Calling async the method of "+theExcept.object.id);
+                    theExcept.method.apply(theExcept.object,theExcept.params);
                 });
             });
             self.addStep("Checking error or not",function(){
-               log("Exception processing. Step for return to synch processing of method for "+theExcept.obj.id);
-               theExcept.obj.popAsyncFieldValue();
+               log("Exception processing. Step for return to synch processing of method for "+theExcept.object.id);
+               theExcept.object.popAsyncFieldValue();
                if (!bException){ // retrying the exception generator function 
                    stackErrors.pop();
-	               log("Exception processing. Execute again the call synchronously "+theExcept.obj.id);
+	               log("Exception processing. Execute again the call synchronously "+theExcept.object.id);
                    fncControlledCall(theExcept.call);
                }
                if (stackErrors.length>0){
-	               log("Exception processing. Error again "+theExcept.obj.id);
+	               log("Exception processing. Error again "+theExcept.object.id);
             	   fncRetryFunction();
                } else {
-	               log("Exception processing. No Error return result for "+theExcept.obj.id);
+	               log("Exception processing. No Error return result for "+theExcept.object.id);
                    return vResult;
                }
             });

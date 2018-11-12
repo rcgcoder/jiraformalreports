@@ -186,7 +186,7 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 					});
 					self.addStepMayRetry("Executing where clause","AsyncFieldException",function(){
 						debugger;
-						bWhereResult=self.replaceVarsAndExecute(sWhere);
+						var bWhereResult=self.replaceVarsAndExecute(sWhere);
 						return bWhereResult;
 					});
 					self.addStep("Processing Result and pop variables",function(bWhereResult){

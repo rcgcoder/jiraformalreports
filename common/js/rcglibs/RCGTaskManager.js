@@ -1554,7 +1554,7 @@ class RCGTaskManager{
 
     extended_executeAsStep(bAsStep,fncCall){
         var self=this;
-        if (isDefined(bAsStep)||(!bAsStep)){
+        if (isDefined(bAsStep)&&(!bAsStep)){
             return fncCall();
         } else {
             return self.addStep("Executing as Step",fncCall);

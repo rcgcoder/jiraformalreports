@@ -936,6 +936,9 @@ function newIssueFactory(report){
 			hsItemFieldsCache=hsFieldLifesCaches.getValue(sCacheKey);
 			return hsItemFieldsCache;
 		}
+        if (theFieldName=="Billing"){
+            debugger;
+        }
 		var arrResult=[];
 		var report=self.getReport();
 		var vUseSteps=false;

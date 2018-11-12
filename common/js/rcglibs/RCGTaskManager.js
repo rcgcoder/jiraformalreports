@@ -1557,7 +1557,8 @@ class RCGTaskManager{
         if (isDefined(bAsStep)&&(!bAsStep)){
             return fncCall();
         } else {
-            return self.addStep("Executing as Step",fncCall);
+            self.addStep("Executing as Step",fncCall);
+            return self.taskResultNeedsStep();
         }
     }
 	

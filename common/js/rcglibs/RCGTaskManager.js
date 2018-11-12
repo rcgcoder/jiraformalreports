@@ -1513,7 +1513,7 @@ class RCGTaskManager{
             	stackErrors.push(callResult);
             }
 	    };
-	    fncControlledCall(fncCall);
+	    vResult=fncControlledCall(fncCall);
 	    if (stackErrors.length==0){
 	        return vResult;
 	    }

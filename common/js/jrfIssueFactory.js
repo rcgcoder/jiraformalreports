@@ -997,7 +997,7 @@ function newIssueFactory(report){
 				});
 			}
 		}
-        vResult=self.getReport().executeAsStep(vUseSteps,function(){
+        vResult=report.executeAsStep(vUseSteps,function(){
     		arrResult.sort(function(a,b){ " ordered from actual to the past"
     			if (a[0]<b[0]) return 1;
     			if (a[0]>b[0]) return -1;
@@ -1012,8 +1012,8 @@ function newIssueFactory(report){
     		self.change();
     		return hsItemFieldsCache;
         });
-        if (vUseSteps){
-            self.addStep("Throw a exception to recall synchronously",function(){
+        if (vUseSteps&&(!self.getAsyncFieldValue())){
+            report.addStep("Throw a exception to recall synchronously",function(){
                 self.throwAsyncException(self.getFieldLife,[theFieldName,atDatetime,otherParams]);
             });
         } else {
@@ -1135,8 +1135,8 @@ function newIssueFactory(report){
             });
             return vResult;
 		});
-        if (vUseSteps){
-            self.addStep("Throw a exception to recall synchronously",function(){
+        if (vUseSteps&&(!self.getAsyncFieldValue())){
+            report.addStep("Throw a exception to recall synchronously",function(){
                 self.throwAsyncException(self.getFieldValueAtDateTime,[theFieldName,atDatetime,otherParams]);
             });
         } else {

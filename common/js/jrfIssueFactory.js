@@ -936,6 +936,7 @@ function newIssueFactory(report){
 			hsItemFieldsCache=hsFieldLifesCaches.getValue(sCacheKey);
 			return hsItemFieldsCache;
 		}
+        var wasAsync=self.getAsyncFieldValue();
         if (theFieldName=="Billing"){
             debugger;
         }
@@ -950,10 +951,7 @@ function newIssueFactory(report){
 		    });
 		    if (isTaskResult(vResult)){
                 vUseSteps=true;
-                self.pushAsyncFieldValue(true);
-                self["get"+theFieldName+"Life"](otherParams,atDatetime);
                 report.addStep("setting the result and change the Async Status",function(auxResult){
-                    self.popAsyncFieldValue();
                     arrResult=auxResult;
                 });
 		    } else if (isTaskException(vResult)){

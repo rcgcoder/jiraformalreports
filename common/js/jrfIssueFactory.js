@@ -1029,8 +1029,7 @@ function newIssueFactory(report){
         var reportDateTime=self.getReport().reportDateTime;
 		var dateCreated=new Date(self.fieldValue("created"));
 		var sDateTime="unknown";
-        var vUseSteps=false;
-        var vResult;
+        var vUseSteps=self.getAsyncFieldValue();
 		if (isDefined(dateTime)) sDateTime=dateTime.getTime()+"";
 		
 		var hsFieldLife;
@@ -1038,7 +1037,7 @@ function newIssueFactory(report){
 		var vResult=report.callWithCatch("AsyncFieldException",function(){
 	        return self.getFieldLife(sFieldName,dateTime,otherParams);
 		});
-		if (isTaskResult(vResult)&&vResult.stepsAdded){
+		if ((vUseSteps)||(isTaskResult(vResult)&&vResult.stepsAdded)){
             vUseSteps=true;
             report.addStep("Assing step result to hsFieldLife",function(auxResult){
                 hsFieldLife=auxResult;
@@ -1072,12 +1071,13 @@ function newIssueFactory(report){
             report.executeAsStep(vUseSteps,function(){
                 debugger;
                 self.pushAsyncFieldValue(vUseSteps);
+                var vResult;
         		if (reportDateTime.getTime()!=dateTime.getTime()){ // if is processing the report time.... have to get the actual value
-        	        var vResult=report.callWithCatch("AsyncFieldException",function(){
+        		    vResult=report.callWithCatch("AsyncFieldException",function(){
         	            return self.getFieldValueAtDateTime(sFieldName,reportDateTime,otherParams); 
         	        });
         		} else {
-                    var vResult=report.callWithCatch("AsyncFieldException",function(){
+                    vResult=report.callWithCatch("AsyncFieldException",function(){
                         return self.fieldValue(sFieldName,false,undefined,otherParams); // getting actual Value
                     });
         		}

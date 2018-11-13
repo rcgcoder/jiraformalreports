@@ -187,9 +187,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 		self.addStep("Post-Encode part...",function(){
 			//log(self.topHtmlBuffer(self.indHtmlBuffer-2));
 			//debugger;
-			self.callWithRetry("AsyncFieldException",function(){
-				self.endApplyToken();
-			});
+			self.endApplyToken();
 
 		});
 		self.addStep("PostProcess all token and return...",function(){
@@ -426,42 +424,29 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	endApplyToken(){
 		var self=this;
 		var sAux="";
+		var bUseSteps=false;
 		if (self.ifConditionResult){
 			if (self.autoAddPostHtml){
 				self.indPostContentHtmlBuffer=self.pushHtmlBuffer();
 				self.addPostHtml();
 			}
-//			var sContentDebug=self.topHtmlBuffer(self.indInnerContentHtmlBuffer).saToString();
-//			if (self.postProcess==""){
-				var sContent=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
-				sContent=self.replaceVars(sContent,undefined,true);
-				self.addHtml(sContent);
-/*			} else if (self.postProcess=="false"){
-//				debugger;
-				if (self.tag.countParentsChild()>0){
-					var hsParents=self.tag.getListParentsChild();
-					var fncChangePostProcess=function(theParentTag){
-						theParentTag.token.postProcess="false";
-						if (theParentTag.countParentsChild()>0){
-							var hsParentsAux=theParentTag.getListParentsChild();
-							hsParentsAux.walk(fncChangePostProcess);
-						}
-					}
-					hsParents.walk(fncChangePostProcess);
-				}
+			var sContent=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
+			sContent=self.replaceVars(sContent,undefined,true);
+			if (isTaskResult(sContent)){
+				bUseSteps=true;
 			}
-			*/
-//			loggerFactory.getLogger().enabled=false;
-			var sValAux=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
-			//self.indTokenHtmlBuffer=self.pushHtmlBuffer();
-
-			sValAux=self.applyInFormat(sValAux);
-			sValAux=self.applySetVars(sValAux);
-			sValAux=self.applyPushVars(sValAux);
-			sValAux=self.applyOutFormat(sValAux);
-//			sAux=self.popHtmlBuffer();
-//			self.addHtml(sAux);
-			self.addHtml(sValAux);		
+			self.executeAsStep(bUseSteps,function(auxContent){
+				self.addHtml(sContent);
+				var sValAux=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
+	
+				sValAux=self.applyInFormat(sValAux);
+				sValAux=self.applySetVars(sValAux);
+				sValAux=self.applyPushVars(sValAux);
+				sValAux=self.applyOutFormat(sValAux);
+	//			sAux=self.popHtmlBuffer();
+	//			self.addHtml(sAux);
+				self.addHtml(sValAux);		
+			}
 //		} else {
 //			sAux=self.popHtmlBuffer();
 //			self.addHtml(sAux);
@@ -729,63 +714,68 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	replaceVarsAndExecute(sText){
 		//debugger;
 		var self=this;
-		var otherParams=self.newReplaceParams();
-//		var sFncBody=self.replaceVars(sText,otherParams);
-		var vValue=self.getStringReplacedScript(sText,otherParams);// executeFunction(otherParams.vValues,sFncBody,self.model.functionCache);
-		return vValue;
+		return self.callWithRetry("AsyncFieldException",function(){
+			var otherParams=self.newReplaceParams();
+	//		var sFncBody=self.replaceVars(sText,otherParams);
+			var vValue=self.getStringReplacedScript(sText,otherParams);// executeFunction(otherParams.vValues,sFncBody,self.model.functionCache);
+			return vValue;
+		});
 	}
 	replaceVars(sText,inOtherParams,bReplaceVars){
 		var self=this;
-//		var sTextToLog=sText.saRemoveInnerHtmlTags().saTrim().saToString();
-		//if (sTextToLog=="{{ AST_HHAccumFaseImplementacion }} + {{  AST_HHDespliegue }}"){
-			//debugger;
-		//}
-//		log("Replace Vars of:"+sTextToLog);
-	//	debugger;
-		var iReplaced=0;
-		var otherParams=self.newReplaceParams(inOtherParams);
-		if (isDefined(bReplaceVars)){
-			otherParams.bReplaceVars=bReplaceVars;
-		}
-		var sResult=sText;
-		if (sResult.saExists("{{{")){
-			//debugger;
-			var bAntReplaceVars=otherParams.bReplaceVars;
-			var bAntInExecution=otherParams.bInExecution;
-			otherParams.bReplaceVars=false;
-			otherParams.bInExecution=true;
-			sResult=self.replaceVarsComplexArray(sResult,"{{{","}}}",otherParams,self.getStringReplacedScript);
-			otherParams.bReplaceVars=bAntReplaceVars;
-			otherParams.bInExecution=bAntInExecution;
-			
-//			sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + sResult.saToString();
-//			log("Fase 0 Replaced {{{ }}} result:"+sTextToLog);
-		}
-//		log(sResult);
-//		log("now let´s replace {{  "+sResult+"  }}");
-		if (sResult.saExists("{{")){
-			//debugger; 
-/*			var bReplaceAnt=
-			if (isUndefined(inOtherParams)){
-				otherParams.bReplaceVars=true;
+		return self.callWithRetry("AsyncFieldException",function(){
+	
+	//		var sTextToLog=sText.saRemoveInnerHtmlTags().saTrim().saToString();
+			//if (sTextToLog=="{{ AST_HHAccumFaseImplementacion }} + {{  AST_HHDespliegue }}"){
+				//debugger;
+			//}
+	//		log("Replace Vars of:"+sTextToLog);
+		//	debugger;
+			var iReplaced=0;
+			var otherParams=self.newReplaceParams(inOtherParams);
+			if (isDefined(bReplaceVars)){
+				otherParams.bReplaceVars=bReplaceVars;
 			}
-*/			sResult=self.replaceVarsComplexArray(sResult,"{{","}}",otherParams,self.getStringReplaced);
-/*			if (oSimple.values.length>0){
-				vValue=executeFunction(oSimple.values,vValue,self.model.functionCache);
+			var sResult=sText;
+			if (sResult.saExists("{{{")){
+				//debugger;
+				var bAntReplaceVars=otherParams.bReplaceVars;
+				var bAntInExecution=otherParams.bInExecution;
+				otherParams.bReplaceVars=false;
+				otherParams.bInExecution=true;
+				sResult=self.replaceVarsComplexArray(sResult,"{{{","}}}",otherParams,self.getStringReplacedScript);
+				otherParams.bReplaceVars=bAntReplaceVars;
+				otherParams.bInExecution=bAntInExecution;
+				
+	//			sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + sResult.saToString();
+	//			log("Fase 0 Replaced {{{ }}} result:"+sTextToLog);
 			}
-			var vAux=vValue;
-			if (isString(vAux)||isArray(vAux)){
-				vAux=vAux.saRemoveInnerHtmlTags().saTrim().saToString();
-				vValue=vAux;
-			} else if (isObject(vAux)) {
-				vAux="Object of type:"+vValue.constructor.name;	
+	//		log(sResult);
+	//		log("now let´s replace {{  "+sResult+"  }}");
+			if (sResult.saExists("{{")){
+				//debugger; 
+	/*			var bReplaceAnt=
+				if (isUndefined(inOtherParams)){
+					otherParams.bReplaceVars=true;
+				}
+	*/			sResult=self.replaceVarsComplexArray(sResult,"{{","}}",otherParams,self.getStringReplaced);
+	/*			if (oSimple.values.length>0){
+					vValue=executeFunction(oSimple.values,vValue,self.model.functionCache);
+				}
+				var vAux=vValue;
+				if (isString(vAux)||isArray(vAux)){
+					vAux=vAux.saRemoveInnerHtmlTags().saTrim().saToString();
+					vValue=vAux;
+				} else if (isObject(vAux)) {
+					vAux="Object of type:"+vValue.constructor.name;	
+				}
+				sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + vAux;
+	*/			
+	//			sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + sResult.saToString();
+	//			log("Fase 2  {{ }} Final Result:"+sTextToLog);
 			}
-			sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + vAux;
-*/			
-//			sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + sResult.saToString();
-//			log("Fase 2  {{ }} Final Result:"+sTextToLog);
-		}
-		return sResult;
+			return sResult;
+		};
 	}
 	getStringReplacedScript(sText,otherParams){ //sText is {{{ sText }}} may have {{ }} items
 		var arrInnerText;

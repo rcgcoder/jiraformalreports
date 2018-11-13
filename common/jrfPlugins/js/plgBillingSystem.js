@@ -338,7 +338,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		})
 
 		report.addStep("Accumulating timestimate value of childs",function(){
-			alert("Accumulating timestimate");
+//			alert("Accumulating timestimate");
 			debugger;
 			return self.fieldAccumChilds("timeestimate",atDatetime);
 		});

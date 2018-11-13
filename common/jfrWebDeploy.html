@@ -176,9 +176,9 @@
 			 getLastCommit(sRepo,function(sCommitId,tCommitDate){
 				 commitId=sCommitId;
 				 commitDate=tCommitDate;	
-				 var sUrlBU=rootPath+"/"+sRepo+"/"+commitId+"/common/"+sRCGBaseUtils;
-				 var sUrlCM=rootPath+"/"+sRepo+"/"+commitId+"/common/"+sRCGTaskManager;
-				 var sUrlJs=rootPath+"/"+sRepo+"/"+commitId+"/common/"+sRCGZipWebAppClass;
+				 var sUrlBU=rootPath +"/"/*+sRepo+"/"+commitId+"/common/"*/+sRCGBaseUtils;
+				 var sUrlCM=rootPath +"/"/*+sRepo+"/"+commitId+"/common/"*/+sRCGTaskManager;
+				 var sUrlJs=rootPath +"/"/*+sRepo+"/"+commitId+"/common/"*/+sRCGZipWebAppClass;
 				 getJavaScriptFile(sUrlBU,function(jsContent){
 					 loadJavaScriptFile(jsContent,function(){
 						 getJavaScriptFile(sUrlCM,function(jsContent){

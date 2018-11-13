@@ -1035,7 +1035,7 @@ function newIssueFactory(report){
 		var vResult=report.callWithCatch("AsyncFieldException",function(){
 	        return self.getFieldLife(sFieldName,dateTime,otherParams);
 		});
-		if ((vUseSteps)||(isTaskResult(vResult)&&vResult.stepsAdded)){
+		if ((isTaskResult(vResult)&&vResult.stepsAdded)){
             vUseSteps=true;
             report.addStep("Assing step result to hsFieldLife",function(auxResult){
                 hsFieldLife=auxResult;

@@ -1027,7 +1027,7 @@ function newIssueFactory(report){
         var reportDateTime=self.getReport().reportDateTime;
 		var dateCreated=new Date(self.fieldValue("created"));
 		var sDateTime="unknown";
-        var vUseSteps=self.getAsyncFieldValue();
+        var vUseSteps=false; //self.getAsyncFieldValue();
 		if (isDefined(dateTime)) sDateTime=dateTime.getTime()+"";
 		
 		var hsFieldLife;

@@ -358,6 +358,9 @@ function newIssueFactory(report){
 	dynObj.functions.add("fieldValue",function(theFieldName,bRendered,dateTime,inOtherParams){
 		var self=this;
 		var bGetAttribute=false;
+		if (theFieldName=="Billing.calculos.inTimespents.avance"){
+		    debugger;
+		}
 		var sFieldName=theFieldName.trim();
 		var arrFieldNames=sFieldName.split(".");
 		if (arrFieldNames.length>1){

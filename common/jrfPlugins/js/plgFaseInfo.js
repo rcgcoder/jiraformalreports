@@ -150,7 +150,11 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
 	    		var hsFieldLife=issue.getFieldLife("Fase");
 	    		var arrHistory=hsFieldLife.getValue("life");
 	    		arrHistory.forEach(function(status){// 0: datetime of change, 1:previous value, 2:new value
-	    			var dtIssueChange=dateAdd(onlyDate(status[0]),"day",1);
+	    			var dtAux=status[0];
+	    			if (isString(dtAux)){
+	    				dtAux=new Date(dtAux);
+	    			}
+	    			var dtIssueChange=dateAdd(onlyDate(dtAux),"day",1);
 	    			var iFaseAnt=status[1];
 	    			var iFaseAct=status[2];
 	    			var tsIssueChange=dtIssueChange.getTime()+"";

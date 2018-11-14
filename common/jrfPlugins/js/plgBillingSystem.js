@@ -350,13 +350,13 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 					var auxTimeoriginalestimate=self.getReport().adjustAccumItem("Childs",timeoriginalestimate,self,"timeoriginalestimate",atDatetime);
 					var auxTimeestimate=self.getReport().adjustAccumItem("Childs",timeestimate,self,"timeestimate",atDatetime);
 					var auxTimespent=self.fieldAccumChilds("timespent",atDatetime);
-					return report.taskResultMultiple(auxTimeoriginalestimate,auxTimeestimate,auxTimespent);
-				});
-				report.addStep("setting values",function(toe,te,ts){
-					timeoriginalestimate=toe;
-					timeestimate=te;
-					timespent=ts;
-					return timespent;
+					if (isTaskResult(auxTimespent)){
+						report.addStep("setting values",function(resultTimespent){
+							timeoriginalestimate=auxTimeoriginalestimate;
+							timeestimate=auxTimeestimate;
+							timespent=resultTimespent;
+						});
+					}
 				});
 			} else {
 				/*report.addStep("timespent from no childs",function(){
@@ -368,8 +368,8 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 				return timespent;
 			}
 		});
-		report.addStep("Doing billing snapshot calculus and return",function(resultTimespent){
-			timespent=resultTimespent;
+		report.addStep("Doing billing snapshot calculus and return",function(){
+//			timespent=resultTimespent;
 			if (timeoriginalestimate==="") timeoriginalestimate=0; else timeoriginalestimate=parseFloat(timeoriginalestimate);
 			if (timeestimate==="") timeestimate=0; else timeestimate=parseFloat(timeestimate);
 			if (timespent==="") timespent=0; else timespent=parseFloat(timespent);

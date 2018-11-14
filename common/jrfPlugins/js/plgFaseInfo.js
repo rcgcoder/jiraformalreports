@@ -140,7 +140,6 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
     		}
     		return objResult;
     	}
-    	self.force
     	self.forceAsyncFieldValues(self.getChildsCounterLife);
 		var report=self.getReport();
 		report.addStep("Getting life of childs",function(){
@@ -193,6 +192,7 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
 			   	return arrHistory;
     		});
 		});
+		return report.taskResultNeedsStep();
     };
     
     execute(){

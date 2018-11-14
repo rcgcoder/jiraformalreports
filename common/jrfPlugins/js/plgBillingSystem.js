@@ -356,12 +356,16 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 					timeoriginalestimate=toe;
 					timeestimate=te;
 					timespent=ts;
+					return timespent;
 				});
 			} else {
-				report.addStep("timespent from no childs",function(){
+				/*report.addStep("timespent from no childs",function(){
 					timespent=self.fieldValue("timespent",false,atDatetime);
 					return timespent;
 				});
+				*/
+				timespent=self.fieldValue("timespent",false,atDatetime);
+				return timespent;
 			}
 		});
 		report.addStep("Doing billing snapshot calculus and return",function(resultTimespent){

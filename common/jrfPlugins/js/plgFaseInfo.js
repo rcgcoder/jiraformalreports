@@ -143,7 +143,7 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
     	self.forceAsyncFieldValues(self.getChildsCounterLife);
 		var report=self.getReport();
 		report.addStep("Getting life of childs",function(){
-    		report.workOnListSteps(hsChilds,function(issue){
+    		self.getFactory().workOnListSteps(hsChilds,function(issue){
 				issue.pushAsyncFieldValue(true);
 	    		var tsCreate;
 	    		var tsChangeStatus;

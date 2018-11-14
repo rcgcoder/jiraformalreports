@@ -137,8 +137,11 @@
 			 }
 
 			 var githubCode=getUrlParameter("code");
-//			 var rootPath="https://cdn.rawgit.com";
+			 var bWithGitHub=true;
 			 var rootPath="https://cantabrana.no-ip.org/jfreports/src";
+			 if (bWithGitHub){
+				 rootPath="https://cdn.rawgit.com";
+			 }
 //			 var rootPath="https://cantabrana.no-ip.org/jfreports/proxy/raw.githubusercontent.com/endproxy";
 			 var proxyPath="https://cantabrana.no-ip.org/jfreports";
 			 var sRepo="rcgcoder/jiraformalreports";
@@ -155,7 +158,9 @@
 					//zipApp.localStorageMaxSize=200*1024*1024;
 					 zipApp.proxyPath=proxyPath;
 					 zipApp.rootPath=rootPath;
-	//				 zipApp.useGitHub(sRepo,"master");
+					 if (bWithGitHub){
+						 zipApp.useGitHub(sRepo,"master");
+					 }
 					 zipApp.prependPath="common";
 					 zipApp.isCloud=isCloud;
 					 zipApp.urlBase=urlInstance;
@@ -175,10 +180,14 @@
 			 }
 			 getLastCommit(sRepo,function(sCommitId,tCommitDate){
 				 commitId=sCommitId;
-				 commitDate=tCommitDate;	
-				 var sUrlBU=rootPath +/*"/"+sRepo+"/"+commitId+*/"/common/"+sRCGBaseUtils;
-				 var sUrlCM=rootPath +/*"/"+sRepo+"/"+commitId+*/"/common/"+sRCGTaskManager;
-				 var sUrlJs=rootPath +/*"/"+sRepo+"/"+commitId+*/"/common/"+sRCGZipWebAppClass;
+				 commitDate=tCommitDate;
+				 var sUrlBasePath="";
+				 if (bWithGitHub){
+					 sUrlBasePath="/"+sRepo+"/"+commitId; 
+				 }
+				 var sUrlBU=rootPath +sUrlBasePath+"/common/"+sRCGBaseUtils;
+				 var sUrlCM=rootPath +sUrlBasePath+"/common/"+sRCGTaskManager;
+				 var sUrlJs=rootPath +sUrlBasePath+"/common/"+sRCGZipWebAppClass;
 				 getJavaScriptFile(sUrlBU,function(jsContent){
 					 loadJavaScriptFile(jsContent,function(){
 						 getJavaScriptFile(sUrlCM,function(jsContent){

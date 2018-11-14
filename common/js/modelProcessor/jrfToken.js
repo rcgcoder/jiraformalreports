@@ -446,62 +446,63 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	//			sAux=self.popHtmlBuffer();
 	//			self.addHtml(sAux);
 				self.addHtml(sValAux);		
-			}
+			});
 //		} else {
 //			sAux=self.popHtmlBuffer();
 //			self.addHtml(sAux);
 		}
-		if (self.visibility!=""){
-			var visiType=self.replaceVars(self.visibility,undefined,true);
-			visiType=visiType.saToString().split("=");
-			var visiParams="";
-			if (visiType.length>1){
-				visiParams=visiType[1].split(":");
-			}
-			visiType=visiType[0].toLowerCase();
-			if (visiType=="hidden"){
-				var sHtml=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
-				//self.indTokenHtmlBuffer=self.pushHtmlBuffer();
-				//sHtml=self.replaceVars(sHtml);
-				self.addHtml("");
-			} else if ((visiType=="hideable")
-					||(visiType=="openwindow")){
-				//debugger;
-				var sHtml=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
-				//self.indTokenHtmlBuffer=self.pushHtmlBuffer();
-				//sHtml=self.replaceVars(sHtml);
-				var newId=modelInteractiveFunctions.addInteractiveContent(sHtml);
-				var capHidden="Show";
-				var capShowed="Hide";
-				if (visiParams!=""){
-					capHidden=visiParams[0];
-					if (visiParams.length==2){
-						capShowed=visiParams[1];
-					} else {
-						capShowed="Hide "+capHidden;
+		self.executeAsStep(bUseSteps,function(){
+			if (self.visibility!=""){
+				var visiType=self.replaceVars(self.visibility,undefined,true);
+				visiType=visiType.saToString().split("=");
+				var visiParams="";
+				if (visiType.length>1){
+					visiParams=visiType[1].split(":");
+				}
+				visiType=visiType[0].toLowerCase();
+				if (visiType=="hidden"){
+					var sHtml=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
+					//self.indTokenHtmlBuffer=self.pushHtmlBuffer();
+					//sHtml=self.replaceVars(sHtml);
+					self.addHtml("");
+				} else if ((visiType=="hideable")
+						||(visiType=="openwindow")){
+					//debugger;
+					var sHtml=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
+					//self.indTokenHtmlBuffer=self.pushHtmlBuffer();
+					//sHtml=self.replaceVars(sHtml);
+					var newId=modelInteractiveFunctions.addInteractiveContent(sHtml);
+					var capHidden="Show";
+					var capShowed="Hide";
+					if (visiParams!=""){
+						capHidden=visiParams[0];
+						if (visiParams.length==2){
+							capShowed=visiParams[1];
+						} else {
+							capShowed="Hide "+capHidden;
+						}
+					}
+					var btnId="btn"+(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
+					var theEvent="modelInteractiveFunctions.elemShowHide('"+newId+"',window,'"+btnId+"','"+capHidden+"','"+capShowed+"')";
+					var withDiv=true;
+					if (visiType=="openwindow"){
+						theEvent="modelInteractiveFunctions.openNewWindow('"+newId+"',window,'"+btnId+"','"+capHidden+"','"+capShowed+"')";
+						withDiv=false;
+					} 
+					if (self.model.report.config.interactiveResult){
+						self.addHtml('<button id="'+btnId+'" onclick="'+theEvent+'">'+capHidden+'</button>');
+						if (withDiv){
+							self.addHtml('<div id="'+newId+'" style="display: none"></div>');
+						}
 					}
 				}
-				var btnId="btn"+(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
-				var theEvent="modelInteractiveFunctions.elemShowHide('"+newId+"',window,'"+btnId+"','"+capHidden+"','"+capShowed+"')";
-				var withDiv=true;
-				if (visiType=="openwindow"){
-					theEvent="modelInteractiveFunctions.openNewWindow('"+newId+"',window,'"+btnId+"','"+capHidden+"','"+capShowed+"')";
-					withDiv=false;
-				} 
-				if (self.model.report.config.interactiveResult){
-					self.addHtml('<button id="'+btnId+'" onclick="'+theEvent+'">'+capHidden+'</button>');
-					if (withDiv){
-						self.addHtml('<div id="'+newId+'" style="display: none"></div>');
-					}
-				}
 			}
-		}
-		if (self.consolidateHtml){
-			var sHtml=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
-			sHtml=sHtml.saToString();
-			if (sHtml!="") self.addHtml(sHtml);
-		}
-
+			if (self.consolidateHtml){
+				var sHtml=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
+				sHtml=sHtml.saToString();
+				if (sHtml!="") self.addHtml(sHtml);
+			}
+		});
 	}
 	addPostHtml(){
 		var self=this;
@@ -775,7 +776,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 	//			log("Fase 2  {{ }} Final Result:"+sTextToLog);
 			}
 			return sResult;
-		};
+		});
 	}
 	getStringReplacedScript(sText,otherParams){ //sText is {{{ sText }}} may have {{ }} items
 		var arrInnerText;

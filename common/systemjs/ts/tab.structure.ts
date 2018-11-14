@@ -85,18 +85,20 @@ export class TabStructure {
 
         self.addStep("Updating and processing report...", function(){
             var bDontReload=isDefined(window.jrfReport);
-            self.addStep("Refresh de Commit Id for update de report class", function(){
-                var antCommitId=System.webapp.github.commitId;
-                self.addStep("Update last Commit info",function(){
-                    return System.webapp.github.updateLastCommit();
+            if (System.webapp.github!=""){
+                self.addStep("Refresh de Commit Id for update de report class", function(){
+                    var antCommitId=System.webapp.github.commitId;
+                    self.addStep("Update last Commit info",function(){
+                        return System.webapp.github.updateLastCommit();
+                    });
+                    self.addStep("Analyze commit id",function(){
+                       log("commit updated");
+                       if (antCommitId!=System.webapp.github.commitId){
+                           bDontReload=false;
+                       }
+                    });
                 });
-                self.addStep("Analyze commit id",function(){
-                   log("commit updated");
-                   if (antCommitId!=System.webapp.github.commitId){
-                       bDontReload=false;
-                   }
-                });
-            });
+            }
             self.addStep("Dynamic load de report class", function(){
                 if (bForceReloadFiles) bDontReload=false; 
                 if (bDontReload){

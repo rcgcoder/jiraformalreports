@@ -358,6 +358,9 @@ function newIssueFactory(report){
 	dynObj.functions.add("fieldValue",function(theFieldName,bRendered,dateTime,inOtherParams){
 		var self=this;
 		var bGetAttribute=false;
+		if ((self.id=="PAEGA2-116")&&(theFieldName=="timespent")){
+		    debugger;
+		}
 		if (theFieldName=="Billing.calculos.inTimespents.avance"){
 		    debugger;
 		}

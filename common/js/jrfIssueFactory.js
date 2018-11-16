@@ -171,21 +171,27 @@ function newIssueFactory(report){
 			var hsListParents=self.getListParentsChild();
 			var firstNode=hsListParents.getFirst();
 			var parentIssue=firstNode.value;
-			report.addStep("getting root from all parents",function(){
-				report.workOnIssueSteps(parentIssue,function(issue){
-					report.addStep("getting root from parent",function(){
-						return issue.getChildRootSteps();
-					});
-					report.addStep("Assigning to rootIssue",function(rootResult){
-						rootIssue=rootResult;
-						return rootResult;
-					});
-				});
-				return;
-			});
-			report.addStep("returning rootIssue",function(){
-				return rootIssue;
-			});
+			if (true ||(nParents==1)){
+                report.workOnIssueSteps(parentIssue,function(issue){
+                    return issue.getChildRootSteps();
+                });
+			} else {
+    			report.addStep("getting root from all parents",function(){
+    				report.workOnIssueSteps(parentIssue,function(issue){
+    					report.addStep("getting root from parent",function(){
+    						return issue.getChildRootSteps();
+    					});
+    					report.addStep("Assigning to rootIssue",function(rootResult){
+    						rootIssue=rootResult;
+    						return rootResult;
+    					});
+    				});
+    				return;
+    			});
+    			report.addStep("returning rootIssue",function(){
+    				return rootIssue;
+    			});
+			}
 		}
 	});
 	dynObj.functions.add("processHierarchy",function(fncAction){

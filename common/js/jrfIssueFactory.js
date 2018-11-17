@@ -205,21 +205,27 @@ function newIssueFactory(report){
 			var hsListParents=self.getListParentsChild();
 			var firstNode=hsListParents.getFirst();
 			var parentIssue=firstNode.value;
-			report.addStep("getting root from all parents",function(){
-				report.workOnIssueSteps(parentIssue,function(issue){
-					report.addStep("Executing the action",function(){
-						return fncAction(issue);
-					});
-					report.addStep("getting root from parent",function(){
-						return issue.getChildRootSteps();
-					});
-					report.addStep("Assigning to rootIssue",function(rootResult){
-						rootIssue=rootResult;
-						return rootResult;
-					});
-				});
-				return;
-			});
+			report.loopProcess(
+			    function(){
+			        return parentIssue!="";
+			    },function(){
+	                report.workOnIssueSteps(parentIssue,function(issue){
+	                    report.addStep("Executing the action",function(){
+	                        return fncAction(issue);
+	                    });
+	                    report.addStep("getting root from parent",function(){
+	                        hsListParents=issue.getListParentsChild();
+	                        if (hsListParents.length()>0){
+    	                        firstNode=hsListParents.getFirst();
+    	                        parentIssue=firstNode.value;
+	                        } else {
+	                            parentIssue="";
+                                rootIssue=issue;
+	                        }
+	                    });
+	                });
+			    }
+			);
 			report.addStep("returning rootIssue",function(){
 				return rootIssue;
 			});

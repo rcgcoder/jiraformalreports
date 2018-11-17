@@ -1245,24 +1245,56 @@ var jrfReport=class jrfReport {
 			//debugger;
 			if (self.isReusingIssueList()) return;
 			self.addStep("Analizing child/parent billing cycles and multiple parents",function(){
+				var fncAdjustParents=function(issue,hsIssuePath){
+					var issueKey=issue.getKey();
+					var hsRemoveParents=newHashMap();
+					var sError="";
+					var hsIssueParents=issue.getListParentsChild();
+					hsIssueParents.walk(function(issueParent){
+						var parentKey=issueParent.id; // the parent maybe unload
+						if (!issuesAdded.exists(parentKey)){ //using id because the root issue is not fullyloaded
+							sError="The "+issueKey+" root issue: "+ parentKey+" does not exists in process issues list. Maybe an error";
+							logError(sError);
+							hsRemoveParents.add({issue:issue,parent:issueParent,error:sError});
+						} else if (hsIssuePath.exists(parentKey)){
+							sError="The Issue:"+issueKey+" has a cycle child/parent relation with "+parentKey+". Removing the relation.";
+							hsRemoveParents.add({issue:issue,parent:issueParent,error:sError});
+						} 
+					});
+					hsRemoveParents.walk(function(parentRemove){
+						hsIssueParents.remove(parentRemove.parent.id);
+						issue.addError(parentRemove.error);
+						issue.change();
+					});
+					var nParents=hsIssueParents.length();
+					while (nParents>1){
+						var issueParent=hsIssueParents.getLast().value;
+						sError="The Issue:"+issueKey+" has more than one parent. Removing the relation with:"+parentKey;
+						hsRemoveParents.add({issue:issue,parent:issueParent,error:sError});
+						hsIssueParents.remove(parentRemove.parent.id);
+						issue.addError(parentRemove.error);
+						issue.change();
+						nParents=hsIssueParents.length();
+					}
+					if (hsRemoveParents.length()>0){
+						self.sequentialProcess(hsRemoveParents,function(parentRemove){
+							return self.workOnIssueSteps(parentRemove.parent,function(issueParent){
+								issueParent.getChilds().remove(issue.id);
+								issueParent.addError(parentRemove.error);
+								issueParent.change();
+							});
+						});
+					}
+				}
 				return self.workOnListOfIssueSteps(issuesAdded,function(issue){
 					var issueKey=issue.getKey();
-					self.addStep("Getting root issue from "+issueKey,function(){
-						return issue.getChildRootSteps(self);
+					var hsIssuesPath=newHashMap();
+					if (issue.countParentsChild()==0) return;
+					hsIssuesPath.add(issue.getKey(),issue);
+					issue.processHierarchy(function(issue){
+						fncAdjustParents(issue,hsIssuesPath);
 					});
-					self.addStep("Checking root issue from "+issueKey,function(rootIssue){
-						if (issueKey!=rootIssue.id){ //using id because the root issue is not fullyloaded
-							if (!issuesAdded.exists(rootIssue.id)){ //using id because the root issue is not fullyloaded
-								logError("The "+issueKey+" root issue: "+ rootIssue.id+" does not exists in process issues list. Maybe an error");
-								issue.getListParentsChild().remove(rootIssue.id);
-								issue.change();
-							}
-						}
-					});
-					self.addStep("Report is Checking the issue "+issue.getKey(),function(){
-						return issue.checkChildCycles(self);
-					});
-				});
+				},1);
 			});
 			self.addStep("Creating child relations by issue custom formulas",function(){
 				return self.workOnListOfIssueSteps(issuesAdded,function(issueParent){
@@ -1282,7 +1314,7 @@ var jrfReport=class jrfReport {
 							}
 						});
 					}
-				});
+				},1);
 			});
 			var removeCounter=0;
 			var hsRemoveKeys=newHashMap();

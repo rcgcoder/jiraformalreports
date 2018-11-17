@@ -1254,7 +1254,6 @@ var jrfReport=class jrfReport {
 						var parentKey=issueParent.id; // the parent maybe unload
 						if (!issuesAdded.exists(parentKey)){ //using id because the root issue is not fullyloaded
 							sError="The "+issueKey+" root issue: "+ parentKey+" does not exists in process issues list. Maybe an error";
-							logError(sError);
 							hsRemoveParents.add(parentKey,{issue:issue,parent:issueParent,error:sError});
 						} else if (hsIssuePath.exists(parentKey)){
 							sError="The Issue:"+issueKey+" has a cycle child/parent relation with "+parentKey+". Removing the relation.";
@@ -1287,6 +1286,7 @@ var jrfReport=class jrfReport {
 								if (issueParent.getChilds().exists(issue.id)){
 									issueParent.getChilds().remove(issue.id);
 								}
+								logError(parentRemove.error);
 								issueParent.addError(parentRemove.error);
 								issueParent.change();
 							});

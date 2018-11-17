@@ -1044,7 +1044,7 @@ function newIssueFactory(report){
         var report=self.getReport();
         var reportDateTime=self.getReport().reportDateTime;
 		var dateCreated=new Date(self.fieldValue("created"));
-		var sDateTime="unknown";
+		var sDateTime="now";
         var vUseSteps=false; //self.getAsyncFieldValue();
 		if (isDefined(dateTime)) sDateTime=dateTime.getTime()+"";
 		
@@ -1063,6 +1063,7 @@ function newIssueFactory(report){
 		} else {
             hsFieldLife=vResult;
 		}
+        var auxVal; // value for actual situation.... or the situation at report time
 		vResult=report.executeAsStep(vUseSteps,function(){
     		if (hsFieldLife.exists(sDateTime)){
     			return hsFieldLife.getValue(sDateTime);
@@ -1076,12 +1077,14 @@ function newIssueFactory(report){
     		} 
     		if (dateCreated>dateTime) {
     			if (isDefined(otherParams) && isDefined(otherParams.ifEmpty)){
-    				return otherParams.ifEmpty;
+    				auxVal=otherParams.ifEmpty;
     			}
-    			return "";
+    			auxVal="";
+                hsFieldLife.add(sDateTime,auxVal);
+                self.change();
+                return auxVal;
     		}
     		
-    		var auxVal; // value for actual situation.... or the situation at report time
     		
     		//try to get the value at report time .....
             report.executeAsStep(vUseSteps,function(){

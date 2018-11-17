@@ -404,12 +404,12 @@ var factoryObjects=class factoryObjects{
 				}
 
 				this.attributes.add("list_"+vNameAttribute+"s",function(){return newHashMap();});
+				this.attributes.add("listParents_"+vNameAttribute+"s",function(){return newHashMap();});
+				this.functions.add("getListParents"+vNameAttribute,function(){
+					return this["listParents_"+vNameAttribute+"s"];
+				});
 				this.functions.add("countParents"+vNameAttribute,function(){
-					if (typeof this["listParents_"+vNameAttribute]==="undefined"){
-						return 0;
-					} else {
-						return this["getListParents"+vNameAttribute]().length();
-					}
+					return this["getListParents"+vNameAttribute]().length();
 				});
 				this.functions.add("add"+vNameAttribute,function(objVal,key){
 					var auxId=key;
@@ -417,15 +417,8 @@ var factoryObjects=class factoryObjects{
 						auxId=objVal.id;
 					}
 					this["list_"+vNameAttribute+"s"].add(auxId,objVal);
-					if (typeof objVal=="object"){
-						if (typeof objVal["listParents_"+vNameAttribute] === "undefined"){ //name de la factory
-							objVal["listParents_"+vNameAttribute]=newHashMap();
-							objVal["getListParents"+vNameAttribute]=function(){
-								return this["listParents_"+vNameAttribute];
-							}
-						}
-						var nodAux=objVal["getListParents"+vNameAttribute]().find(this.id);
-						if (nodAux==""){
+					if ((typeof objVal=="object")&&(typeof objVal.id!==undefined)){
+						if (!objVal["getListParents"+vNameAttribute]().exists(this.id)){
 							objVal["getListParents"+vNameAttribute]().add(this.id,this);
 						}
 					}

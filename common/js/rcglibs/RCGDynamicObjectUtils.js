@@ -417,7 +417,16 @@ var factoryObjects=class factoryObjects{
 						auxId=objVal.id;
 					}
 					this["list_"+vNameAttribute+"s"].add(auxId,objVal);
-					if ((typeof objVal=="object")&&(typeof objVal["getListParents"+vNameAttribute]!=="undefined")){
+					if (typeof objVal=="object"){
+						if (typeof objVal["getListParents"+vNameAttribute]!=="undefined")){
+							objVal["listParents_"+vNameAttribute+"s"]=newHashMap();
+							objVal["getListParents"+vNameAttribute]=function(){
+								return this["listParents_"+vNameAttribute+"s"];
+							};
+							objVal["countParents"+vNameAttribute]=function(){
+								return this["getListParents"+vNameAttribute]().length();
+							};
+						}
 						if (!objVal["getListParents"+vNameAttribute]().exists(this.id)){
 							objVal["getListParents"+vNameAttribute]().add(this.id,this);
 						}

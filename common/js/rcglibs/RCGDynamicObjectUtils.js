@@ -417,7 +417,7 @@ var factoryObjects=class factoryObjects{
 						auxId=objVal.id;
 					}
 					this["list_"+vNameAttribute+"s"].add(auxId,objVal);
-					if ((typeof objVal=="object")&&(typeof objVal["getListParents"+vNameAttribute]!==undefined)){
+					if ((typeof objVal=="object")&&(typeof objVal["getListParents"+vNameAttribute]!=="undefined")){
 						if (!objVal["getListParents"+vNameAttribute]().exists(this.id)){
 							objVal["getListParents"+vNameAttribute]().add(this.id,this);
 						}

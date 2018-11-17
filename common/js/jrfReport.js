@@ -1255,31 +1255,38 @@ var jrfReport=class jrfReport {
 						if (!issuesAdded.exists(parentKey)){ //using id because the root issue is not fullyloaded
 							sError="The "+issueKey+" root issue: "+ parentKey+" does not exists in process issues list. Maybe an error";
 							logError(sError);
-							hsRemoveParents.add({issue:issue,parent:issueParent,error:sError});
+							hsRemoveParents.add(parentKey,{issue:issue,parent:issueParent,error:sError});
 						} else if (hsIssuePath.exists(parentKey)){
 							sError="The Issue:"+issueKey+" has a cycle child/parent relation with "+parentKey+". Removing the relation.";
-							hsRemoveParents.add({issue:issue,parent:issueParent,error:sError});
+							hsRemoveParents.add(parentKey,{issue:issue,parent:issueParent,error:sError});
 						} 
 					});
-					hsRemoveParents.walk(function(parentRemove){
-						hsIssueParents.remove(parentRemove.parent.id);
+					hsRemoveParents.walk(function(parentRemove,iDeep,parentKey){
+						if (hsIssueParents.exists(parentKey)){
+							hsIssueParents.remove(parentKey);
+						}
 						issue.addError(parentRemove.error);
 						issue.change();
 					});
 					var nParents=hsIssueParents.length();
 					while (nParents>1){
 						var issueParent=hsIssueParents.getLast().value;
+						var parentKey=issueParent.id; // the parent maybe unload
 						sError="The Issue:"+issueKey+" has more than one parent. Removing the relation with:"+parentKey;
-						hsRemoveParents.add({issue:issue,parent:issueParent,error:sError});
-						hsIssueParents.remove(parentRemove.parent.id);
-						issue.addError(parentRemove.error);
+						hsRemoveParents.add(parentKey,{issue:issue,parent:issueParent,error:sError});
+						if (hsIssueParents.exists(parentKey)){
+							hsIssueParents.remove(parentKey);
+						}
+						issue.addError(sError);
 						issue.change();
 						nParents=hsIssueParents.length();
 					}
 					if (hsRemoveParents.length()>0){
 						self.sequentialProcess(hsRemoveParents,function(parentRemove){
 							return self.workOnIssueSteps(parentRemove.parent,function(issueParent){
-								issueParent.getChilds().remove(issue.id);
+								if (issueParent.getChilds().exists(issue.id)){
+									issueParent.getChilds().remove(issue.id);
+								}
 								issueParent.addError(parentRemove.error);
 								issueParent.change();
 							});

@@ -1041,7 +1041,7 @@ function newIssueFactory(report){
 	});
 	dynObj.functions.add("getFieldValueAtDateTime",function(sFieldName,dateTime,otherParams){
 		var self=this; 
-        if (((self.id=="PAEGA2-116")||(self.id=="PAEGA2-117"))&&(theFieldName=="timespent")){
+        if (((self.id=="PAEGA2-116")||(self.id=="PAEGA2-117"))&&(sFieldName=="timespent")){
             debugger;
         }
         var report=self.getReport();

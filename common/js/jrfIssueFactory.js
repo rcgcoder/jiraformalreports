@@ -1041,6 +1041,9 @@ function newIssueFactory(report){
 	});
 	dynObj.functions.add("getFieldValueAtDateTime",function(sFieldName,dateTime,otherParams){
 		var self=this; 
+        if ((self.id=="PAEGA2-116")&&(theFieldName=="timespent")){
+            debugger;
+        }
         var report=self.getReport();
         var reportDateTime=self.getReport().reportDateTime;
 		var dateCreated=new Date(self.fieldValue("created"));

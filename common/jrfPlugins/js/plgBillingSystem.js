@@ -356,7 +356,10 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 							timeestimate=auxTimeestimate;
 							timespent=resultTimespent;
 						});
+					} else {
+						timespent=auxTimespent;
 					}
+					return timespent;
 				});
 			} else {
 				/*report.addStep("timespent from no childs",function(){

@@ -370,7 +370,7 @@ function newIssueFactory(report){
 	dynObj.functions.add("fieldValue",function(theFieldName,bRendered,dateTime,inOtherParams){
 		var self=this;
 		var bGetAttribute=false;
-		if ((self.id=="PAEGA2-116")&&(theFieldName=="timespent")){
+		if (((self.id=="SNT-519")||(self.id=="SNT-520"))&&(theFieldName=="timespent")){
 		    debugger;
 		}
 		if (theFieldName=="Billing.calculos.inTimespents.avance"){
@@ -1041,7 +1041,7 @@ function newIssueFactory(report){
 	});
 	dynObj.functions.add("getFieldValueAtDateTime",function(sFieldName,dateTime,otherParams){
 		var self=this; 
-        if (((self.id=="PAEGA2-116")||(self.id=="PAEGA2-117"))&&(sFieldName=="timespent")){
+        if (((self.id=="SNT-519")||(self.id=="SNT-520"))&&(sFieldName=="timespent")){
             debugger;
         }
         var report=self.getReport();

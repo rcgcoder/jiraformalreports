@@ -1701,6 +1701,7 @@ var jrfReport=class jrfReport {
 	    self.rootIssues.clear();
 	    self.rootProjects.clear();
 		self.objModel.functionCache.clear();
+		self.objModel=undefined;
 		modelInteractiveFunctions.freeMemory();
 	}
 

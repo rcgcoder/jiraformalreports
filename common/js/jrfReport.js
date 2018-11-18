@@ -639,7 +639,7 @@ var jrfReport=class jrfReport {
 				}
 			}
 		});
-		
+		return;
 		var hsKeyWaiting=newHashMap();
 		self.addStep("Processing root elements.... ",function(){
 			//debugger;

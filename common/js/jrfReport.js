@@ -1552,7 +1552,7 @@ var jrfReport=class jrfReport {
 		// Process Model with The Report
 		self.addStep("Processing Model",function(){
 			debugger;
-			self.getTaskManager().logCalls=false;
+if (false){			self.getTaskManager().logCalls=false;
 			loggerFactory.getLogger().enabled=false;
 			var tm=self.getTaskManager();
 			tm.asyncTimeWasted=0;
@@ -1561,7 +1561,7 @@ var jrfReport=class jrfReport {
 			tm.setUpdateStatusDelay(5000);
 			tm.autoFree=true;
 			return self.objModel.process("encode"); // hash inner task....
-		});
+}		});
 		
 		self.addStep("¿Saving the precomputed values?",function(sModelProcessedResult){
 			if (self.config.ResetLeafPrecomputations){

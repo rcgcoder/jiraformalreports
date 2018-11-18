@@ -4,6 +4,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		self.interactiveContents=newHashMap();
 	}
 	freeMemory(){
+		var self=this;
 		self.interactiveContents.clear();
 		self.interactiveContents=undefined;
 	}

@@ -1697,7 +1697,7 @@ var jrfReport=class jrfReport {
 		var self=this;
 		var prevSize=0;
 		var postSize=0;
-		if (isDefined(self.storeManager)){
+		if (isDefined(self.storeManager)&&(self.storeManager!=="")){
 			var json=self.storeManager.generateJson(obj);
 			prevSize=json.length;
 		}
@@ -1708,7 +1708,7 @@ var jrfReport=class jrfReport {
 		} else if (isDefined(freeFnc)) {
 			freeFnc(obj);
 		}
-		if (isDefined(self.storeManager)){
+		if (isDefined(self.storeManager)&&(self.storeManager!=="")){
 			var json=self.storeManager.generateJson(obj);
 			postSize=json.length;
 		}

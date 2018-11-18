@@ -1731,6 +1731,7 @@ var jrfReport=class jrfReport {
 	        self.freeObject("self.rootElements",self.rootElements);
 	        self.freeObject("self.rootIssues",self.rootIssues);
 	        self.freeObject("self.rootProjects",self.rootProjects);
+	        self.freeObject("self.treeIssues",self.treeIssues);
 	        self.freeObject("self.objModel.functionCache",self.objModel.functionCache);
 	        self.freeObject("modelInteractiveFunctions",modelInteractiveFunctions,function(){
 	        	modelInteractiveFunctions.freeMemory();

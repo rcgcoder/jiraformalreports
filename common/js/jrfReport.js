@@ -1693,7 +1693,7 @@ var jrfReport=class jrfReport {
 		}
 	}
 	freeObject(name,obj,freeFnc){
-		if (isUndefined(obj)) return;
+		if (isUndefined(obj)||(obj==="")) return;
 		var self=this;
 		var prevSize=0;
 		var postSize=0;

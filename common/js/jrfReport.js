@@ -1551,8 +1551,9 @@ var jrfReport=class jrfReport {
 		// load report model and submodels
 		// Process Model with The Report
 		self.addStep("Processing Model",function(){
+			if (false){
 			debugger;
-if (false){			self.getTaskManager().logCalls=false;
+			self.getTaskManager().logCalls=false;
 			loggerFactory.getLogger().enabled=false;
 			var tm=self.getTaskManager();
 			tm.asyncTimeWasted=0;
@@ -1561,8 +1562,10 @@ if (false){			self.getTaskManager().logCalls=false;
 			tm.setUpdateStatusDelay(5000);
 			tm.autoFree=true;
 			return self.objModel.process("encode"); // hash inner task....
-}		});
-		
+			} else {
+				return "";
+			}
+		});
 		self.addStep("¿Saving the precomputed values?",function(sModelProcessedResult){
 			if (self.config.ResetLeafPrecomputations){
 				self.addStep("Saving the precomputed values", function(){

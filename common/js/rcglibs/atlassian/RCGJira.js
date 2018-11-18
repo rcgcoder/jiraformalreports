@@ -5,10 +5,10 @@ class RCGJira{
 		self.subPath="";
 		self.tokenAccess="";
 		self.tokenTime=0;
-		self.withCache=false;
+/*		self.withCache=false;
 		self.issuesCache=newHashMap();
 		self.jqlCache=newHashMap();
-		taskManager.extendObject(self);
+*/		taskManager.extendObject(self);
 		self.renderContent=function(sContent){
 			return atlassian.renderContent(self,sContent);
 			};
@@ -329,37 +329,37 @@ class RCGJira{
 		});
 		sJQL="issue in ("+sJQL+")";
 		if (isDefined(postJQL))sJQL+=" "+postJQL;
-		var sCacheKey="Comments_"+sJQL;
+/*		var sCacheKey="Comments_"+sJQL;
 		var vCache=self.getFromCache(sCacheKey);
 		if (vCache!="") return vCache;
-
+*/
 		self.addStep("Getting All Issues from JQL:["+sJQL+"]", function(){
 			return self.getFullList("/rest/api/2/search?fields=comment&expand=renderedFields&jql="+sJQL,"issues",undefined,undefined,cbBlock);
 		});
-		self.addStep("Returning all Issues from JQL:["+sJQL+"]", function(response,xhr,sUrl,headers){
+/*		self.addStep("Returning all Issues from JQL:["+sJQL+"]", function(response,xhr,sUrl,headers){
 			//self.addToCache(sCacheKey,response);
 			log("Comments getted");
 		});
-	}
+*/	}
 	getJQLIssues(jql,cbBlock,bNotReturnAll){
 		var self=this;
-		var sCacheKey="issues_"+jql;
+/*		var sCacheKey="issues_"+jql;
 		var vCache=self.getFromCache(sCacheKey);
 		if (vCache!="") return vCache;
-		self.addStep("Getting All Issues from JQL", function(){
+*/		self.addStep("Getting All Issues from JQL", function(){
 			//debugger;
 			return self.getFullList("/rest/api/2/search?jql="+jql+"&expand=renderedFields,changelog"
 							,"issues",undefined,undefined,cbBlock
 							,undefined,bNotReturnAll);
 		});
-		if (isUndefined(bNotReturnAll)||(!bNotReturnAll)){
+/*		if (isUndefined(bNotReturnAll)||(!bNotReturnAll)){
 			self.addStep("Returning all Issues from JQL", function(response,xhr,sUrl,headers){
 				//debugger;
 				//self.addToCache(sCacheKey,response);
 				return response;
 			});
 		}
-	}
+*/	}
 	processJQLIssues(jql,fncProcessIssue,returnVariable,cbEndProcess,cbDownloadBlock,cbProcessBlock,bNotReturnAll){
 		//debugger;
 		var self=this;

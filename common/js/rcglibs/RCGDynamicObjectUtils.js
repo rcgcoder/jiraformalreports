@@ -19,7 +19,7 @@ var RCGDynamicObject=class RCGDynamicObject{
 		var self=this;
 		var factory=theFactory;
 		self.factory=factory;
-		self.isDynamicObject=true;
+		self.isDynamicFactory=true;
 		self.parentFactorys=[];
 		self.parentFactorys.push(factory);
 		self.extend=factory.extend;

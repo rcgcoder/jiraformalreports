@@ -1688,22 +1688,39 @@ var jrfReport=class jrfReport {
 			return modelInteractiveFunctions.saveToFile(self.pageResultId);
 		}
 	}
+	freeObject(name,obj,freeFnc){
+		var self=this;
+		var prevSize=memorySizeOfObject(obj);
+		if (isHashMap(obj)){
+			obj.clear();
+		} else if (isDynamicFactory(obj)){
+			obj.list.clear();
+		} else if (isDefined(freeFnc)) {
+			freeFnc(obj);
+		}
+		var postSize=memorySizeOfObject(obj);
+		log("Freeing "+name+" before size:"+ prevSize+" after size:"+postSize+ " freed bytes:"+(postSize-prevSize));
+	}
 	freeMemory(){
 		var self=this;
 		//clean the destination html.... to save memory when run more than one intents
         var jqResult=$("#ReportResult");
         jqResult.html("");
-        self.allIssues.storeManager.freeMemory();
-		self.allIssues.list.clear();
-	    self.childs.clear();
-	    self.advanceChilds.clear();
-	    self.rootElements.clear();
-	    self.rootIssues.clear();
-	    self.rootProjects.clear();
-		self.objModel.functionCache.clear();
-		self.objModel=undefined;
-		modelInteractiveFunctions.freeMemory();
+        self.freeObject("Report",self,function(){
+	        self.freeObject("self.allIssues.storeManager",self.allIssues.storeManager,function(){
+	            self.allIssues.storeManager.freeMemory();
+	        });
+	        self.freeObject("self.allIssues",self.allIssues);
+	        self.freeObject("self.childs",self.childs);
+	        self.freeObject("self.advanceChilds",self.advanceChilds);
+	        self.freeObject("self.rootElements",self.rootElements);
+	        self.freeObject("self.rootIssues",self.rootIssues);
+	        self.freeObject("self.rootProjects",self.rootProjects);
+	        self.freeObject("self.objModel.functionCache",self.objModel.functionCache);
+	        self.freeObject("modelInteractiveFunctions",modelInteractiveFunctions,function(){
+	        	modelInteractiveFunctions.freeMemory();
+	        });
+			self.objModel=undefined;
+        });
 	}
-
-
 }

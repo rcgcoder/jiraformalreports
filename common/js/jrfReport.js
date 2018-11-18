@@ -1563,7 +1563,7 @@ var jrfReport=class jrfReport {
 			tm.autoFree=true;
 			return self.objModel.process("encode"); // hash inner task....
 			} else {
-				return "";
+				return [""];
 			}
 		});
 		self.addStep("¿Saving the precomputed values?",function(sModelProcessedResult){

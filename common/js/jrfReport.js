@@ -1690,6 +1690,9 @@ var jrfReport=class jrfReport {
 	}
 	freeMemory(){
 		var self=this;
+		//clean the destination html.... to save memory when run more than one intents
+        var jqResult=$("#ReportResult");
+        jqResult.html("");
 		self.allIssues.list.clear();
 	    self.childs.clear();
 	    self.advanceChilds.clear();

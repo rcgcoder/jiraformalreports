@@ -619,7 +619,6 @@ var jrfReport=class jrfReport {
 				}
 				if (!self.bFinishReport){
 					var fncProcessRootIssue=function(jsonIssue){
-						return;
 						var issue=self.allIssues.getById(jsonIssue.key);
 						if (issue==""){
 							self.createNewIssueFromJsonSteps(jsonIssue);

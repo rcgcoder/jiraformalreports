@@ -141,7 +141,7 @@ export class TabStructure {
         var self=this;
         var jqResult=$("#ReportResult");
         jqResult.html("");
-        if (isDefined(self.report)){
+        if (isDefined(self.report)&&(self.report!=="")){
             self.report.freeMemory();
             self.report="";
         }

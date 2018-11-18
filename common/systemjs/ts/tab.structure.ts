@@ -139,8 +139,9 @@ export class TabStructure {
     }
     freeMemory(){
         var self=this;
-        var jqResult=$("#ReportResult");
-        jqResult.html("");
+        var frame = document.getElementById("ReportResult"),
+        frameDoc = frame.contentDocument || frame.contentWindow.document;
+        frameDoc.documentElement.innerHTML = "";
         if (isDefined(self.report)&&(self.report!=="")){
             self.report.freeMemory();
             self.report="";

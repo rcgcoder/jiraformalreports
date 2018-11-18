@@ -115,9 +115,13 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 			var attrName=key;
 			var attrType=value.type;
 			if (attrType=="Value"){
-				objResult[attrName]=dynObj["get"+attrName]();
+				if (isDefined(dynObj["get"+attrName])){
+					objResult[attrName]=dynObj["get"+attrName]();
+				}
 			} else if(attrType=="List") {
-				objResult[attrName]=dynObj["get"+attrName+"s"]();
+				if (isDefined(dynObj["get"+attrName]+"s")){
+					objResult[attrName]=dynObj["get"+attrName+"s"]();
+				}
 			} 
 /*			var attrName=key;
 			var attrType=value.type;

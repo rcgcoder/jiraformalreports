@@ -262,14 +262,15 @@ var jrfReport=class jrfReport {
 	}
 	loadJSONIssue(jsonIssue){
 		var self=this;
-/*		var oIssue=self.allIssues.new(jsonIssue.fields.summary,jsonIssue.key);
+		debugger;
+		var oIssue=self.allIssues.new(jsonIssue.fields.summary,jsonIssue.key);
 		oIssue.setJiraObject(jsonIssue);
 		oIssue.updateInfo();
 		oIssue.setJiraObject("");
 		oIssue.setKey(jsonIssue.key);
 		//oIssue.unlock(); // dont Unlock.... loaded for use
 		return oIssue;
-*/	}
+	}
 	createNewIssueFromJsonSteps(jsonIssue,bMaintainLocked){
 		var self=this;
 		return self.workOnIssueSteps(jsonIssue.key,undefined,bMaintainLocked,function(){

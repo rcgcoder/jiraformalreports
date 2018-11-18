@@ -1693,9 +1693,14 @@ var jrfReport=class jrfReport {
 		}
 	}
 	freeObject(name,obj,freeFnc){
+		if (isUndefined(obj)) return;
 		var self=this;
-		var json=self.storeManager.generateJson(obj);
-		var prevSize=json.length;
+		var prevSize=0;
+		var postSize=0;
+		if (isDefined(self.storeManager)){
+			var json=self.storeManager.generateJson(obj);
+			prevSize=json.length;
+		}
 		if (isHashMap(obj)){
 			obj.clear();
 		} else if (isDynamicFactory(obj)){
@@ -1703,8 +1708,10 @@ var jrfReport=class jrfReport {
 		} else if (isDefined(freeFnc)) {
 			freeFnc(obj);
 		}
-		var json=self.storeManager.generateJson(obj);
-		var postSize=json.length;
+		if (isDefined(self.storeManager)){
+			var json=self.storeManager.generateJson(obj);
+			postSize=json.length;
+		}
 		log("Freeing "+name+" before size:"+ prevSize+" after size:"+postSize+ " freed bytes:"+(postSize-prevSize));
 	}
 	freeMemory(){

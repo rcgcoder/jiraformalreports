@@ -1640,7 +1640,7 @@ var jrfReport=class jrfReport {
 		});
 		
 		self.addStep("Storing issue info or Removing all Issues in the scope.... ",function(){
-			self.allIssues.list.clear();
+/*			self.allIssues.list.clear();
 			log("Report uses "+ self.allIssues.list.length()+ " issues");
 			self.childs=newHashMap();
 			self.advanceChilds=newHashMap();
@@ -1648,6 +1648,7 @@ var jrfReport=class jrfReport {
 			self.rootElements=newHashMap();
 			self.rootIssues=newHashMap();
 			self.rootProjects=newHashMap();
+*/
 /*			} else {
 				var issueCache={}
 				issueCache.allIssues=self.allIssues; 

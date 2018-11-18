@@ -15,6 +15,19 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 //		self.lastAutoSavePeriod=1000;
 		self.autoSaveSemaphore=new RCGSemaphore(function(){return (self.needsAutoSave());});
 	}
+	freeMemory(){
+		var self=this;
+		log("Freeing Dynamic Storage Object "+
+				" Active:"+self.activeObjects.length()+
+				" Inactive Changed:"+self.inactiveObjects.length()+
+				" Inactive Unchanged:"+self.inactiveUnchangedObjects.length()+
+				" Semaphored Tasks:"+self.savingSemaphore.taskWaiting.length
+				);
+		self.activeObjects.clear();
+		self.inactiveObjects.clear();
+		self.inactiveUnchangedObjects.clear();
+		self.savingSemaphore.taskWaiting.length=0;
+	}
 	enableAutoSave(){
 		var self=this;
 		self.withAutoSave=true;

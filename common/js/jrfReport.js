@@ -1693,6 +1693,7 @@ var jrfReport=class jrfReport {
 		//clean the destination html.... to save memory when run more than one intents
         var jqResult=$("#ReportResult");
         jqResult.html("");
+        self.allIssues.storeManager.freeMemory();
 		self.allIssues.list.clear();
 	    self.childs.clear();
 	    self.advanceChilds.clear();

@@ -1690,7 +1690,7 @@ var jrfReport=class jrfReport {
 	}
 	freeObject(name,obj,freeFnc){
 		var self=this;
-		var json=generateJson(obj);
+		var json=self.storeManager.generateJson(obj);
 		var prevSize=json.length;
 		if (isHashMap(obj)){
 			obj.clear();
@@ -1699,7 +1699,7 @@ var jrfReport=class jrfReport {
 		} else if (isDefined(freeFnc)) {
 			freeFnc(obj);
 		}
-		var json=generateJson(obj);
+		var json=self.storeManager.generateJson(obj);
 		var postSize=json.length;
 		log("Freeing "+name+" before size:"+ prevSize+" after size:"+postSize+ " freed bytes:"+(postSize-prevSize));
 	}

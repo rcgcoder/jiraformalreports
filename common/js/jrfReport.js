@@ -1712,7 +1712,8 @@ var jrfReport=class jrfReport {
 	        self.freeObject("self.allIssues.storeManager",self.allIssues.storeManager,function(){
 	            self.allIssues.storeManager.freeMemory();
 	        });
-	        self.freeObject("self.allIssues",self.allIssues);
+	        //self.freeObject("self.allIssues",self.allIssues);
+	        self.allIssues.list.clear();
 	        self.freeObject("self.childs",self.childs);
 	        self.freeObject("self.advanceChilds",self.advanceChilds);
 	        self.freeObject("self.rootElements",self.rootElements);

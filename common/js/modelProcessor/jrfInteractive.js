@@ -3,6 +3,10 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		var self=this;
 		self.interactiveContents=newHashMap();
 	}
+	freeMemory(){
+		self.interactiveContents.clear();
+		self.interactiveContents=undefined;
+	}
 	newInteractiveId(){
 		var newId=(new Date()).getTime()+"-"+Math.round(Math.random()*1000);
 		return newId;

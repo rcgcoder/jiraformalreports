@@ -8,7 +8,7 @@ export class TabStructure {
     @Input() footer: string = 'this is footer';
     @Input() name: string = 'tabStructure';
     report: object;
-    allIssues: object;
+//    allIssues: object;
     ngOnInit() {
         var self=this;
         System.addPostProcess(function(){
@@ -115,10 +115,11 @@ export class TabStructure {
                 var auxObj=System.getAngularObject('selInterestFields',true);
                 theConfig["allFields"]=auxObj.getAllElements();
                 var theReport=new jrfReport(theConfig);
-                if (theConfig.reuseIssues){ 
+/*                if (theConfig.reuseIssues){ 
                     theReport.allIssues=self.allIssues;
                     theReport.reuseAllIssues=true;
                 }
+*/
                 self.report=theReport;
                 System.webapp.theReport=theReport;
                 debugger;
@@ -129,32 +130,20 @@ export class TabStructure {
                     return saveDataToFile(self.report.result,"result.html","text/html");
                 }
             });
-            self.addStep("Save issueList for next run", function(){
+/*            self.addStep("Save issueList for next run", function(){
                 if (self.report.config.reuseIssues){
                     self.allIssues=self.report.allIssues;
                 }
             });
-        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
+*/        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
     }
     freeMemory(){
         var self=this;
         var jqResult=$("#ReportResult");
         jqResult.html("");
         if (isDefined(self.report)){
-            if (!self.report.isReusingIssueList()){
-                self.report.allIssues=undefined; // unassing allIssues.... to free memory
-                self.report.childs.clear();
-                self.report.advanceChilds.clear();
-                self.report.rootElements.clear();
-                self.report.rootIssues.clear();
-                self.report.rootProjects.clear();
-            }
-            self.report.rootIssues.clear();
-            self.report=undefined;
-            
-        }
-        if (isDefined(self.allIssues)){
-            self.allIssues=undefined;
+            self.report.freeMemory();
+            self.report="";
         }
         if (isDefined(window.gc)){
             window.gc();

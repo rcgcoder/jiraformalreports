@@ -1688,4 +1688,17 @@ var jrfReport=class jrfReport {
 			return modelInteractiveFunctions.saveToFile(self.pageResultId);
 		}
 	}
+	freeMemory(){
+		var self=this;
+		self.allIssues.list.clear();
+	    self.childs.clear();
+	    self.advanceChilds.clear();
+	    self.rootElements.clear();
+	    self.rootIssues.clear();
+	    self.rootProjects.clear();
+		self.objModel.functionCache.clear();
+		modelInteractiveFunctions.freeMemory();
+	}
+
+
 }

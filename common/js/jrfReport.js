@@ -580,7 +580,6 @@ var jrfReport=class jrfReport {
 		self.addStep("Asigning all Issues in the scope.... ",function(){
 			log("All issues in Report:"+ self.allIssues.list.length()+ " issues");
 		});	
-		return;
 
 	
 		// get root elements.... issues and/or projects
@@ -620,6 +619,7 @@ var jrfReport=class jrfReport {
 				}
 				if (!self.bFinishReport){
 					var fncProcessRootIssue=function(jsonIssue){
+						return;
 						var issue=self.allIssues.getById(jsonIssue.key);
 						if (issue==""){
 							self.createNewIssueFromJsonSteps(jsonIssue);
@@ -640,6 +640,7 @@ var jrfReport=class jrfReport {
 				}
 			}
 		});
+		return;
 		var hsKeyWaiting=newHashMap();
 		self.addStep("Processing root elements.... ",function(){
 			//debugger;

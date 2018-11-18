@@ -25,26 +25,17 @@ class RCGConfluence{
 		self.addStep("Getting all confluence pages",function(){
 			return self.apiCall("/rest/api/content/search?cql=type=page");
 		});
-		self.addStep("Processing result of get all confluence pages",function(response,xhr,sUrl,headers){
-			return response;
-		});
 	}
 	getContent(contentId){
 		var self=this;
 		self.addStep("Getting content:"+contentId,function(){
 			return self.apiCall("/rest/api/content/"+contentId+"?expand=body.storage");
 		});
-		self.addStep("Processing result of get content",function(response,xhr,sUrl,headers){
-			return response;
-		});
 	}
 	getContentByTitle(contentTitle){
 		var self=this;
 		self.addStep("Stepping Get Content By Title call",function(){
 			return self.apiCall("/rest/api/content?title="+contentTitle+"&expand=body.storage");
-		});
-		self.addStep("Processing result of get content by title",function(response,xhr,sUrl,headers){
-			return response;
 		});
 	}
 }

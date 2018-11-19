@@ -418,6 +418,9 @@ var factoryObjects=class factoryObjects{
 				this.functions.add("getListParents"+vNameAttribute,function(){
 					return this["listParents_"+vNameAttribute+"s"];
 				});
+				this.functions.add("setListParents"+vNameAttribute,function(parentsHashMap){
+					this["listParents_"+vNameAttribute+"s"]=parentsHashMap;
+				});
 				this.functions.add("countParents"+vNameAttribute,function(){
 					return this["getListParents"+vNameAttribute]().length();
 				});

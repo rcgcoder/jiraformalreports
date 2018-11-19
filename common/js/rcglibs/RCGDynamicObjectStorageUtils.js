@@ -119,8 +119,18 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 					objResult[attrName]=dynObj["get"+attrName]();
 				}
 			} else if(attrType=="List") {
+				var compObj={};
+				var bWithCompObj=false;
 				if (isDefined(dynObj["get"+attrName+"s"])){
-					objResult[attrName]=dynObj["get"+attrName+"s"]();
+					compObj["list"]=dynObj["get"+attrName+"s"]();
+					bWithCompObj=true;
+				}
+				if (isDefined(dynObj["getListParents"+attrName+"s"])){
+					compObj["parents"]=dynObj["getListParents"+attrName+"s"]();
+					bWithCompObj=true;
+				}
+				if (bWithCompObj){
+					objResult[attrName]=compObj;
 				}
 			} 
 /*			var attrName=key;
@@ -316,7 +326,14 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 								if (attrType=="Value"){
 									dynObj["set"+attrName](auxValue);
 								} else if(attrType=="List") {
-									dynObj["set"+attrName+"s"](auxValue);
+									var compObj=auxValue;
+									if (isDefined(compObj.list)){
+										dynObj["set"+attrName+"s"](auxValue.list);
+									}
+									if (isDefined(compObj.parents)){
+										dynObj["setListParents"+attrName](auxValue.parents);
+									}
+									
 								}
 						});
 					});

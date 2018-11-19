@@ -125,8 +125,8 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 					compObj["list"]=dynObj["get"+attrName+"s"]();
 					bWithCompObj=true;
 				}
-				if (isDefined(dynObj["getListParents"+attrName+"s"])){
-					compObj["parents"]=dynObj["getListParents"+attrName+"s"]();
+				if (isDefined(dynObj["getListParents"+attrName])){
+					compObj["parents"]=dynObj["getListParents"+attrName]();
 					bWithCompObj=true;
 				}
 				if (bWithCompObj){

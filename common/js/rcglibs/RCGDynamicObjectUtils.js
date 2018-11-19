@@ -253,6 +253,15 @@ var factoryObjects=class factoryObjects{
 					this["attr_"+vNameAttributeDetail]=valAttr;
 				});
 		}
+	removeAttribute(vNameAttribute){
+		var self=this;
+		if (isDefined(self["attr_"+vNameAttribute])) delete self["attr_"+vNameAttribute];
+		if (isDefined(self["attr_"+vNameAttribute+"Min"])) delete self["attr_"+vNameAttribute+"Min"];
+		if (isDefined(self["attr_"+vNameAttribute+"Max"])) delete self["attr_"+vNameAttribute+"Max"];
+		if (isDefined(self["attr_"+vNameAttribute+"Margins"])) delete self["attr_"+vNameAttribute+"Margins"];
+		if (isDefined(self["list_"+vNameAttribute+"s"])) delete self["list_"+vNameAttribute+"s"];
+		if (isDefined(self["listParents_"+vNameAttribute+"s"])) delete self["listParents_"+vNameAttribute+"s"];
+	}
 		
 	addAttribute(vNameAttribute,vDescription,vDataType){
 			if (typeof vNameAttribute==="undefined") return;
@@ -1100,12 +1109,7 @@ var factoryObjects=class factoryObjects{
 			var auxValue;
 			theFactory.attrTypes.walk(function(value,deep,key){
 				var attrName=key;
-				var attrType=value.type;
-				if (attrType=="Value"){
-					self["set"+attrName](undefined);
-				} else if(attrType=="List") {
-					self["set"+attrName+"s"](undefined);
-				}
+				self.removeAttribute(attrName);
 			});
 			theFactory.functions.walk(function(value,deep,key){
 				delete self[key];//=undefined;

@@ -1108,7 +1108,7 @@ var factoryObjects=class factoryObjects{
 				}
 			});
 			theFactory.functions.walk(function(value,deep,key){
-				self[key]=undefined;
+				delete self[key];//=undefined;
 			});
 		}
 		self.setFullyUnloaded();

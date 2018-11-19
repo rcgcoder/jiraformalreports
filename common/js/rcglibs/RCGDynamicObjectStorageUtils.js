@@ -329,9 +329,13 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 									var compObj=auxValue;
 									if (isDefined(compObj.list)){
 										dynObj["set"+attrName+"s"](auxValue.list);
+									} else {
+										dynObj["set"+attrName+"s"](newHashMap());
 									}
 									if (isDefined(compObj.parents)){
 										dynObj["setListParents"+attrName](auxValue.parents);
+									} else {
+										dynObj["setListParents"+attrName](newHashMap());
 									}
 									
 								}

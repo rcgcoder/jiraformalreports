@@ -1095,7 +1095,7 @@ var factoryObjects=class factoryObjects{
 	fullUnload(){
 //		debugger;
 		var self=this;
-		if (self.isStorable()&&(!self.isFullyLoaded())){
+		if (self.isStorable()&&(self.isFullyLoaded())){
 			var theFactory=self.factory;
 			var auxValue;
 			theFactory.attrTypes.walk(function(value,deep,key){

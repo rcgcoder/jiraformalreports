@@ -143,7 +143,7 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 					fncProcess(item,0,item.id);
 				});
 			} else {
-				fncProcess(item,0,itemKey);
+				fncProcess(srcItem,0,itemKey);
 			}
 		},nThreadsMax);
 	}

@@ -1551,7 +1551,7 @@ var jrfReport=class jrfReport {
 		// load report model and submodels
 		// Process Model with The Report
 		self.addStep("Processing Model",function(){
-			if (false){
+			if (true){
 			debugger;
 			self.getTaskManager().logCalls=false;
 			loggerFactory.getLogger().enabled=false;

@@ -226,9 +226,11 @@ function isDefined(variable){
 	return (typeof variable!=="undefined");
 }
 function isDynamicObject(variable){
-	return (isDefined(variable.factory)&&(variable.factory.isDynamicObject));
+	if (isUndefined(variable)) return false;
+	return (isDynamicFactory(variable.factory));
 }
 function isDynamicFactory(variable){
+	if (isUndefined(variable)) return false;
 	return (isDefined(variable.isDynamicFactory)&&variable.isDynamicFactory);
 }
 function isNull(variable){

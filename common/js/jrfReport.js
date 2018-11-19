@@ -1720,6 +1720,7 @@ var jrfReport=class jrfReport {
 		//clean the destination html.... to save memory when run more than one intents
         var jqResult=$("#ReportResult");
         jqResult.html("");
+        self.addStep("Freeing all info in report",function(){
         self.addStep("Saving All Unlocked",function(){
         	self.allIssues.storeManager.saveAllUnlocked();
         });
@@ -1747,6 +1748,7 @@ var jrfReport=class jrfReport {
 				self.objModel=undefined;
 	        });
         });
+	},0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
         
 	}
 }

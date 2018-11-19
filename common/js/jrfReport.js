@@ -1724,8 +1724,6 @@ var jrfReport=class jrfReport {
 	        self.freeObject("self.allIssues.storeManager",self.allIssues.storeManager,function(){
 	            self.allIssues.storeManager.freeMemory();
 	        });
-	        //self.freeObject("self.allIssues",self.allIssues);
-	        self.allIssues.list.clear();
 	        self.freeObject("self.childs",self.childs);
 	        self.freeObject("self.advanceChilds",self.advanceChilds);
 	        self.freeObject("self.rootElements",self.rootElements);
@@ -1735,6 +1733,12 @@ var jrfReport=class jrfReport {
 	        self.freeObject("self.objModel.functionCache",self.objModel.functionCache);
 	        self.freeObject("modelInteractiveFunctions",modelInteractiveFunctions,function(){
 	        	modelInteractiveFunctions.freeMemory();
+	        });
+	        self.freeObject("self.allIssues.list",self.allIssues.list,function(){
+	            self.allIssues.list.walk(function(issue){
+	            	issue.freeMemory();
+	            });
+		        self.allIssues.list.clear();
 	        });
 			self.objModel=undefined;
         });

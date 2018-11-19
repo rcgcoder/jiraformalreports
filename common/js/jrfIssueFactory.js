@@ -113,6 +113,28 @@ function newIssueFactory(report){
 		}
 		return [];
 	});
+	dynObj.functions.add("freeMemory",function(){
+	    var self=this;
+	    var fncFreeSubIssues=function (propName,issue){
+    	    if (isDefined(self["get"+propName+"s"])){
+    	        self["get"+propName+"s"]().walk(function(auxIssue){
+    	            if (isDefined(auxIssue.freeMemory)){
+    	                auxIssue.freeMemory(); 
+    	            }
+    	            if (isDefined(auxIssue["getListParents"+propName])){
+    	                auxIssue["getListParents"+propName]().remove(issue.id);
+    	            }
+    	        });
+    	        self["get"+propName+"s"]().clear();
+    	    }
+            if (isDefined(self["getListParents"+propName])){
+                self["getListParents"+propName]().clear();
+            }
+	    }
+	    fncFreeSubIssues("Child");
+	    fncFreeSubIssues("AdvanceChild");
+        fncFreeSubIssues("EpicChild");
+	});
 
 	dynObj.functions.add("getReport",function(){
 		return theReport;

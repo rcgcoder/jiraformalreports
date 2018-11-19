@@ -580,6 +580,7 @@ var jrfReport=class jrfReport {
 		});	
 		self.addStep("Asigning all Issues in the scope.... ",function(){
 			log("All issues in Report:"+ self.allIssues.list.length()+ " issues");
+			self.allIssues.logStats();
 		});	
 
 	
@@ -643,6 +644,7 @@ var jrfReport=class jrfReport {
 		var hsKeyWaiting=newHashMap();
 		self.addStep("Processing root elements.... ",function(){
 			//debugger;
+			self.allIssues.logStats();
 			if (self.isReusingIssueList()) return;
 			if (self.bFinishReport) return;
 			//self.treeIssues=newHashMap();
@@ -917,6 +919,7 @@ var jrfReport=class jrfReport {
 				});
 				
 */				//debugger;
+				self.allIssues.logStats();
 				log("Resume Root issues:"+self.rootIssues.length() +
 				    "		Root project:"+self.rootProjects.length()+
 				    "		Issues in scope:"+ self.allIssues.list.length());
@@ -925,6 +928,7 @@ var jrfReport=class jrfReport {
 		
 		// load comments of issues
 		self.addStep("Loading comments of "+ issuesAdded.length()+"issues",function(){
+			self.allIssues.logStats();
 			if (self.isReusingIssueList()) return;
 			var arrKeyGroups=[];
 			var keyGroup=[];
@@ -1063,11 +1067,13 @@ var jrfReport=class jrfReport {
 		// load report model and submodels
 		// Process Model with The Report
 		self.addStep("Parsing Model",function(){
+			self.allIssues.logStats();
 			return self.objModel.process("parse"); // parse....
 		});
 			
 		// assing childs and advance childs to root elements
 		self.addStep("Assign Childs and Advance",function(){
+			self.allIssues.logStats();
 			log("Assing Childs and Advance");
 			//debugger;
 			if (self.isReusingIssueList()) return;
@@ -1243,6 +1249,7 @@ var jrfReport=class jrfReport {
 		
 		self.addStep("Final Adjusts to retrieved list of issues",function(){
 			//debugger;
+			self.allIssues.logStats();
 			if (self.isReusingIssueList()) return;
 			self.addStep("Analizing child/parent billing cycles and multiple parents",function(){
 				var fncAdjustParents=function(issue,hsIssuePath){
@@ -1417,6 +1424,7 @@ var jrfReport=class jrfReport {
 		
 		self.addStep("Processing Directives",function(){
 			//debugger;
+			self.allIssues.logStats();
 			if (self.isReusingIssueList()) return;
 			var hsVersions=newHashMap();
 			var hsAccumulators=newHashMap();
@@ -1528,7 +1536,7 @@ var jrfReport=class jrfReport {
 		});
 		self.addStep("Saving Report to reuse",function(){
 			//debugger;
-			var self=this;
+			self.allIssues.logStats();
 			if (self.allIssues.isStorable()){
 				self.addStep("Storing remaining issues in memory...",function(){
 					return self.allIssues.saveAllNotStored();
@@ -1553,6 +1561,7 @@ var jrfReport=class jrfReport {
 		self.addStep("Processing Model",function(){
 			if (true){
 			debugger;
+			self.allIssues.logStats();
 			self.getTaskManager().logCalls=false;
 			loggerFactory.getLogger().enabled=false;
 			var tm=self.getTaskManager();
@@ -1587,10 +1596,12 @@ var jrfReport=class jrfReport {
 				});
 			}
 			self.addStep("Returning the model processed result",function(){
+				self.allIssues.logStats();
 				return sModelProcessedResult;
 			});
 		});
 		self.addStep("Setting the HTML",function(sModelProcessedResult){
+			self.allIssues.logStats();
 			var tm=self.getTaskManager();
 			tm.autoFree=false;
 			tm.asyncTaskCallsBlock=0;

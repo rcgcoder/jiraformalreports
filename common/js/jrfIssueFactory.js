@@ -38,6 +38,16 @@ function newIssueFactory(report){
 			//undefined
 			"Issue",true
 			);
+	dynObj.logStats=function(){
+	    var self=this;
+	    var nFullLoaded=0,nLocked=0;
+	    self.list.walk(function(issue){
+	        if (issue.isFullyLoaded()){ nFullLoaded++};
+	        if (issue.isLocked()){nLocked++};
+	    });
+	    log("Factory List items:"+self.list.length() +" fullLoaded items:"+nFullLoaded+" locked items:"+nLocked);
+        debugger;
+	}
 	dynObj.hsExcludedProjects=newHashMap();	
 	dynObj.addExcludedProject=function(prjKey){
 		var self=this;

@@ -1720,27 +1720,33 @@ var jrfReport=class jrfReport {
 		//clean the destination html.... to save memory when run more than one intents
         var jqResult=$("#ReportResult");
         jqResult.html("");
-        self.freeObject("Report",self,function(){
-	        self.freeObject("self.allIssues.storeManager",self.allIssues.storeManager,function(){
-	            self.allIssues.storeManager.freeMemory();
-	        });
-	        self.freeObject("self.childs",self.childs);
-	        self.freeObject("self.advanceChilds",self.advanceChilds);
-	        self.freeObject("self.rootElements",self.rootElements);
-	        self.freeObject("self.rootIssues",self.rootIssues);
-	        self.freeObject("self.rootProjects",self.rootProjects);
-	        self.freeObject("self.treeIssues",self.treeIssues);
-	        self.freeObject("self.objModel.functionCache",self.objModel.functionCache);
-	        self.freeObject("modelInteractiveFunctions",modelInteractiveFunctions,function(){
-	        	modelInteractiveFunctions.freeMemory();
-	        });
-	        self.freeObject("self.allIssues.list",self.allIssues.list,function(){
-	            self.allIssues.list.walk(function(issue){
-	            	issue.freeMemory();
-	            });
-		        self.allIssues.list.clear();
-	        });
-			self.objModel=undefined;
+        self.addStep("Saving All Unlocked",function(){
+        	self.allIssues.storeManager.saveAllUnlocked();
         });
+        self.addStep("Freeing all data",function(){
+	        self.freeObject("Report",self,function(){
+		        self.freeObject("self.allIssues.storeManager",self.allIssues.storeManager,function(){
+		            self.allIssues.storeManager.freeMemory();
+		        });
+		        self.freeObject("self.childs",self.childs);
+		        self.freeObject("self.advanceChilds",self.advanceChilds);
+		        self.freeObject("self.rootElements",self.rootElements);
+		        self.freeObject("self.rootIssues",self.rootIssues);
+		        self.freeObject("self.rootProjects",self.rootProjects);
+		        self.freeObject("self.treeIssues",self.treeIssues);
+		        self.freeObject("self.objModel.functionCache",self.objModel.functionCache);
+		        self.freeObject("modelInteractiveFunctions",modelInteractiveFunctions,function(){
+		        	modelInteractiveFunctions.freeMemory();
+		        });
+		        self.freeObject("self.allIssues.list",self.allIssues.list,function(){
+		            self.allIssues.list.walk(function(issue){
+		            	issue.freeMemory();
+		            });
+			        self.allIssues.list.clear();
+		        });
+				self.objModel=undefined;
+	        });
+        });
+        
 	}
 }

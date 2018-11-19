@@ -43,6 +43,7 @@ var RCGDynamicObject=class RCGDynamicObject{
 		self.internal_getName=factory.internal_getName;
 		self.getNewId=factory.getNewId;
 		self.internal_addIndividualAttr=factory.internal_addIndividualAttr;
+		self.internal_removeAttribute=factory.internal_removeAttribute;
 		self.addAttribute=factory.addAttribute;
 		self.addAttributeList=factory.addAttributeList;			
 		self.addAttributeWithPerc=factory.addAttributeWithPerc;		
@@ -253,7 +254,7 @@ var factoryObjects=class factoryObjects{
 					this["attr_"+vNameAttributeDetail]=valAttr;
 				});
 		}
-	removeAttribute(vNameAttribute){
+	internal_removeAttribute(vNameAttribute){
 		var self=this;
 		if (isDefined(self["attr_"+vNameAttribute])) delete self["attr_"+vNameAttribute];
 		if (isDefined(self["attr_"+vNameAttribute+"Min"])) delete self["attr_"+vNameAttribute+"Min"];
@@ -920,7 +921,7 @@ var factoryObjects=class factoryObjects{
 			newObj.setFullyUnloaded=this.setFullyUnloaded;
 			newObj.fullLoad=this.fullLoad;
 			newObj.fullUnload=this.fullUnload;
-
+			newObj.removeAttribute=this.internal_removeAttribute;
 			this.updateAttributesFunctions(newObj);
 			
 			this.list.add(newObj.id,newObj);

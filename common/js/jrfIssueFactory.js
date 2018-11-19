@@ -36,7 +36,7 @@ function newIssueFactory(report){
 			[]
 			,
 			//undefined
-			"Issue",false//true
+			"Issue",true
 			);
 	dynObj.hsExcludedProjects=newHashMap();	
 	dynObj.addExcludedProject=function(prjKey){

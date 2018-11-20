@@ -285,8 +285,8 @@ var jrfReport=class jrfReport {
 		var tm=self.getTaskManager();
 		tm.getStackTraceLinesTime=0;
 		tm.asyncTimeWasted=0;
-		tm.asyncTaskCallsBlock=0;
-		tm.asyncTaskCallsMaxDeep=0;
+		tm.asyncTaskCallsBlock=5000;
+		tm.asyncTaskCallsMaxDeep=100;
 		tm.setUpdateStatusDelay(2000);
 		loggerFactory.getLogger().enabled=self.config.logDebug;
 		loggerFactory.getLogger().setAlertOnError(self.config.AlertErrors);
@@ -389,8 +389,8 @@ var jrfReport=class jrfReport {
 		self.addStep("Initializing Model",function(){
 			var tm=self.getTaskManager();
 			tm.asyncTimeWasted=0;
-			tm.asyncTaskCallsBlock=0;
-			tm.asyncTaskCallsMaxDeep=0;
+			tm.asyncTaskCallsBlock=asyncTaskCallsBlock;
+			tm.asyncTaskCallsMaxDeep=100;
 			tm.setUpdateStatusDelay(2000);
 			var theModel=new jrfModel(self);
 			self.objModel=theModel;
@@ -1604,8 +1604,8 @@ var jrfReport=class jrfReport {
 			self.allIssues.logStats();
 			var tm=self.getTaskManager();
 			tm.autoFree=false;
-			tm.asyncTaskCallsBlock=0;
-			tm.asyncTaskCallsMaxDeep=0;
+			tm.asyncTaskCallsBlock=asyncTaskCallsBlock;
+			tm.asyncTaskCallsMaxDeep=100;
 			tm.setUpdateStatusDelay(2000);
 //	        sModelProcessedResult=sModelProcessedResult.saToString();
 //	        jqResult.html(sModelProcessedResult);

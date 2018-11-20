@@ -415,7 +415,11 @@ class RCGTask{
 			}
 		}
 		self.changeStatus();
-		if (theTaskManager.asyncTaskCalls) {
+	    var bBrotherAsync=(theTaskManager.syncBrotherCalls
+	            &&
+				(self.previousTaskExecuted!=="")
+				&&(self.previousTaskExecuted.parent!=self.parent));
+		if (theTaskManager.asyncTaskCalls||bBrotherAsync) {
 			var dtNow=Date.now();
 			var contRunningTime=dtNow-theTaskManager.lastTimeout;
 			var nStackSize=0;
@@ -424,14 +428,14 @@ class RCGTask{
 				theTaskManager.getStackTraceLinesTime+=(Date.now()-dtNow);
 			}
 */			nStackSize=theTaskManager.asyncTaskCallActDeep;
-			if ((theTaskManager.asyncTaskCallsBlock==0)
-					//||(theTaskManager.lastTimeout==0)
-					||
-					(theTaskManager.asyncTaskCallsMaxDeep
-						<=nStackSize//theTaskManager.asyncTaskCallActDeep
-						)
-					||(contRunningTime>theTaskManager.asyncTaskCallsBlock)
-				){
+		    var bAutoAsync=(theTaskManager.asyncTaskCallsBlock==0)
+								//||(theTaskManager.lastTimeout==0)
+								||
+								(theTaskManager.asyncTaskCallsMaxDeep
+									<=nStackSize//theTaskManager.asyncTaskCallActDeep
+									)
+								||(contRunningTime>theTaskManager.asyncTaskCallsBlock);
+			if (bAutoAsync){
 				theTaskManager.timeoutsCalled++;
 				theTaskManager.asyncTaskCallActDeep=0;
 /*				log("Continuous running time:"+contRunningTime
@@ -686,6 +690,7 @@ class RCGTaskManager{
 		self.runningTask="";
 		self.onChangeStatus="";
 		//self.extendObject(obj);
+		self.syncBrotherCalls=true;
 		self.asyncTaskCalls=true;
 		self.asyncTaskCallsDelay=0;
 		self.asyncTaskCallsBlock=0;  // do not use.... it breaks always

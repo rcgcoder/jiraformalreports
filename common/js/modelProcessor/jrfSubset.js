@@ -246,7 +246,13 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 				});
 			}
 			self.addStep("Compare pair "+i+"/"+j,function(){
-				var vValue=executeFunction([arrElems[i],arrElems[j]],sFncFormula);
+				if (arrElems[i].id!=itemI.id){
+					throw "The item " + i + " is changed during comparison "+itemI.id+" --> "+ arrElems[i].id;
+				}
+				if (arrElems[j].id!=itemJ.id){
+					throw "The item " + i + " is changed during comparison "+itemJ.id+" --> "+ arrElems[j].id;
+				}
+				var vValue=executeFunction([itemI,itemJ],sFncFormula);
 				return vValue;
 			});
 			self.addStep("Unlock and return Result index",function(vValue){

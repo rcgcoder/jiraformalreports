@@ -415,11 +415,7 @@ class RCGTask{
 			}
 		}
 		self.changeStatus();
-	    var bBrotherAsync=(theTaskManager.syncBrotherCalls
-	            &&
-				(self.previousTaskExecuted!=="")
-				&&(self.previousTaskExecuted.parent!=self.parent));
-		if (theTaskManager.asyncTaskCalls||bBrotherAsync) {
+		if (theTaskManager.asyncTaskCalls) {
 			var dtNow=Date.now();
 			var contRunningTime=dtNow-theTaskManager.lastTimeout;
 			var nStackSize=0;
@@ -428,14 +424,21 @@ class RCGTask{
 				theTaskManager.getStackTraceLinesTime+=(Date.now()-dtNow);
 			}
 */			nStackSize=theTaskManager.asyncTaskCallActDeep;
-		    var bAutoAsync=(theTaskManager.asyncTaskCallsBlock==0)
+		    var bForceAsync=(theTaskManager.asyncTaskCallsBlock==0)
 								//||(theTaskManager.lastTimeout==0)
 								||
 								(theTaskManager.asyncTaskCallsMaxDeep
 									<=nStackSize//theTaskManager.asyncTaskCallActDeep
 									)
 								||(contRunningTime>theTaskManager.asyncTaskCallsBlock);
-			if (bAutoAsync){
+		    if (!bForceAsync){
+		    	bForceAsync=theTaskManager.syncBrotherCalls
+            			&&(typeof self.previousTaskExecuted!=="undefined")
+            			&&(self.previousTaskExecuted!=="")
+            			&&(self.previousTaskExecuted.parent!=self.parent);
+		    	
+		    }
+			if (bForceAsync){
 				theTaskManager.timeoutsCalled++;
 				theTaskManager.asyncTaskCallActDeep=0;
 /*				log("Continuous running time:"+contRunningTime

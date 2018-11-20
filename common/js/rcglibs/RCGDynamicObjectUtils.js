@@ -1098,10 +1098,10 @@ var factoryObjects=class factoryObjects{
 	}
 	fullLoad(){
 		var self=this;
-		self.lock();
 		if (self.isStorable()&&(!self.isFullyLoaded())){
 			return self.getFactory().storeManager.loadFromStorage(self);
 		} else {
+			self.lock();
 			self.setFullyLoaded();
 		}
 	}

@@ -351,7 +351,7 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 						});
 					}
 				},10);
-			});
+			},1);
 			self.addStep("Preparing and Returnin the result of sort",function(){
 				arrElems.forEach(function(elem){
 					hsResult.push(elem);

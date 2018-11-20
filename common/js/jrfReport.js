@@ -280,7 +280,8 @@ var jrfReport=class jrfReport {
 
 	execute(bDontReloadFiles){
 		var self=this;
-		var auxAsyncCallsMaxDeep=0;
+		var auxAsyncCallsMaxDeep=100;
+		var auxAsyncTaskCallsBlock=3000;
 		var dontReturnAllIssuesRetrieved=true;
 		var tm=self.getTaskManager();
 		tm.getStackTraceLinesTime=0;
@@ -389,8 +390,8 @@ var jrfReport=class jrfReport {
 		self.addStep("Initializing Model",function(){
 			var tm=self.getTaskManager();
 			tm.asyncTimeWasted=0;
-			tm.asyncTaskCallsBlock=asyncTaskCallsBlock;
-			tm.asyncTaskCallsMaxDeep=100;
+			tm.asyncTaskCallsBlock=auxAsyncTaskCallsBlock;
+			tm.asyncTaskCallsMaxDeep=auxAsyncTaskCallsMaxDeep;
 			tm.setUpdateStatusDelay(2000);
 			var theModel=new jrfModel(self);
 			self.objModel=theModel;
@@ -1079,7 +1080,7 @@ var jrfReport=class jrfReport {
 			if (self.isReusingIssueList()) return;
 			var tm=self.getTaskManager();
 			tm.asyncTimeWasted=0;
-			tm.asyncTaskCallsBlock=5000;
+			tm.asyncTaskCallsBlock=auxAsyncTaskCallsBlock;
 			tm.asyncTaskCallsMaxDeep=auxAsyncCallsMaxDeep;
 			tm.setUpdateStatusDelay(2000);
 			var arrLinkTypes=self.config.useIssueLinkTypes;
@@ -1566,7 +1567,7 @@ var jrfReport=class jrfReport {
 			loggerFactory.getLogger().enabled=false;
 			var tm=self.getTaskManager();
 			tm.asyncTimeWasted=0;
-			tm.asyncTaskCallsBlock=5000;
+			tm.asyncTaskCallsBlock=auxAsyncTaskCallsBlock;
 			tm.asyncTaskCallsMaxDeep=auxAsyncCallsMaxDeep;
 			tm.setUpdateStatusDelay(5000);
 			tm.autoFree=true;

@@ -203,7 +203,7 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 							self.variables.popVar(self.innerVarName);
 						}
 					});
-				});
+				},1);
 			});
 			self.addStep("Poping variables environment and return",function(){
 				self.variables.popVarEnv();

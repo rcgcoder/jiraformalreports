@@ -45,8 +45,8 @@ function newIssueFactory(report){
 	        if (issue.isFullyLoaded()){ nFullLoaded++};
 	        if (issue.isLocked()){nLocked++};
 	    });
-	    log("Factory List items:"+self.list.length() +" fullLoaded items:"+nFullLoaded+" locked items:"+nLocked);
-        debugger;
+	    logError("Factory List items:"+self.list.length() +" fullLoaded items:"+nFullLoaded+" locked items:"+nLocked);
+//        debugger;
 	}
 	dynObj.hsExcludedProjects=newHashMap();	
 	dynObj.addExcludedProject=function(prjKey){

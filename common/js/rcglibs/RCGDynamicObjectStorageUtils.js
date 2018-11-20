@@ -263,7 +263,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 			var i=0;
 			if (self.inactiveUnchangedObjects.length()>0){
 				self.inactiveUnchangedObjects.walk(function(dynObj){
-					if (dybObj.isFullyLoaded()){
+					if (dynObj.isFullyLoaded()){
 						dynObj.fullUnload();
 					}
 				})

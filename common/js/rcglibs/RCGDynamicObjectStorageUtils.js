@@ -261,9 +261,10 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		var nTotalPeak=(self.cacheItemsMax*self.peakMax);
 		if ((self.cacheItemsMax<nTotalItems)&&(self.countInactiveObjects()>nTotalPeak)){
 			var i=0;
-			if (self.countInactiveUnchangedObjects()>0){
-				self.inactiveUnchangedObjects.clear();
+			while (self.countInactiveUnchangedObjects()>0){
+				self.inactiveUnchangedObjects.getFirst().value.fullUnload();
 			}
+			self.inactiveUnchangedObjects.clear();
 			var nTotalItemsAnt=nTotalItems;
 			nTotalItems=self.countInactiveObjects()+self.countActiveObjects();
 			var bNeedsSave=((self.cacheItemsMax<nTotalItems)&&(self.countInactiveObjects()>nTotalPeak));

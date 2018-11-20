@@ -1605,8 +1605,8 @@ var jrfReport=class jrfReport {
 			self.allIssues.logStats();
 			var tm=self.getTaskManager();
 			tm.autoFree=false;
-			tm.asyncTaskCallsBlock=asyncTaskCallsBlock;
-			tm.asyncTaskCallsMaxDeep=100;
+			tm.asyncTaskCallsBlock=auxAsyncTaskCallsBlock;
+			tm.asyncTaskCallsMaxDeep=auxAsyncTaskCallsMaxDeep;
 			tm.setUpdateStatusDelay(2000);
 //	        sModelProcessedResult=sModelProcessedResult.saToString();
 //	        jqResult.html(sModelProcessedResult);

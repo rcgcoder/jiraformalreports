@@ -368,7 +368,7 @@ var jrfReport=class jrfReport {
 								"js/modelProcessor/jrfStatistics.js",
 								"js/modelProcessor/jrfDirective.js",
 								"js/modelProcessor/jrfInclude.js",
-								"https://unpkg.com/xlsx/dist/shim.min.js"
+								"js/libs/xlsx.core.min.js"
 //								"https://unpkg.com/xlsx/dist/xlsx.full.min.js"
 //								"https://unpkg.com/blob.js@1.0.1/Blob.js",
 //								"https://unpkg.com/file-saver@1.3.3/FileSaver.js"

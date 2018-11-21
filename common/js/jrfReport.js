@@ -367,7 +367,11 @@ var jrfReport=class jrfReport {
 								"js/modelProcessor/jrfForEach.js",
 								"js/modelProcessor/jrfStatistics.js",
 								"js/modelProcessor/jrfDirective.js",
-								"js/modelProcessor/jrfInclude.js"
+								"js/modelProcessor/jrfInclude.js",
+								"https://unpkg.com/xlsx/dist/shim.min.js",
+								"https://unpkg.com/xlsx/dist/xlsx.full.min.js",
+								"https://unpkg.com/blob.js@1.0.1/Blob.js",
+								"https://unpkg.com/file-saver@1.3.3/FileSaver.js"
 	/*							"js/rcglibs/RCGLogUtils.js",
 								"js/rcglibs/RCGChronoUtils.js",
 								"js/rcglibs/RCGHashMapUtils.js"
@@ -381,7 +385,16 @@ var jrfReport=class jrfReport {
 			});
 			self.addStep("Process XLSX",function(sRelativePath,content,contentType,theWindow){
 				debugger;
-				log("Processing content");
+				  var workbook = XLSX.read(content, {
+			        type: 'binary'
+			      });
+
+			      workbook.SheetNames.forEach(function(sheetName) {
+			        // Here is your object
+			        var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+			        var json_object = JSON.stringify(XL_row_object);
+			        console.log(json_object);
+			      });
 			});
 		});
 		self.addStep("Getting Confluence Report Model.... ",function(){

@@ -397,7 +397,7 @@ var jrfReport=class jrfReport {
 				var nWithData=0;
 				var sRange=sht["!ref"];
 				for (var row in sht) {
-					if (isArray[row]&&row[0]=="!"){
+					if (isString(row)&&row[0]=="!"){
 						log("control cell:"+row);
 					} else {
 						var bEmpty=true;

@@ -37,7 +37,7 @@ var RCGExcelProcessor=class RCGExcelProcessor{ //this kind of definition allows 
 		}
 		return "";
 	}
-	excelA1ToRowCol(cellRef){
+	internal_excelA1ToRowCol(cellRef){
 		var self=this;
 		var sCellRef=cellRef;
 		var objResult={iRow:0,iCol:0};

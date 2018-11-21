@@ -1,7 +1,7 @@
 var RCGExcelProcessor=class RCGExcelProcessor{ //this kind of definition allows to hot-reload
 	constructor(chararrayExcelContent){
 		var self=this;
-		self.workbook=XLSX.read(content);
+		self.workbook=XLSX.read(chararrayExcelContent);
 		self.sheets=newHashMap();
 	    self.workbook.sheetNames.forEach(function(sheetName) {
 	        // Here is your object

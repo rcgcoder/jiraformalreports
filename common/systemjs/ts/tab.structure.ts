@@ -77,8 +77,6 @@ export class TabStructure {
         var self=this;
         var auxObj=$('#toggle_ForceReloadFiles');
         var bForceReloadFiles=(auxObj.attr("checked")=="checked");
-        var auxObj=$('#toggle_ForceReloadFiles');
-        var bForceReloadFiles=(auxObj.attr("checked")=="checked");
         auxObj=$('#toggle_SaveResult');
         var bSaveToFile=(auxObj.attr("checked")=="checked");
 
@@ -115,11 +113,6 @@ export class TabStructure {
                 var auxObj=System.getAngularObject('selInterestFields',true);
                 theConfig["allFields"]=auxObj.getAllElements();
                 var theReport=new jrfReport(theConfig);
-/*                if (theConfig.reuseIssues){ 
-                    theReport.allIssues=self.allIssues;
-                    theReport.reuseAllIssues=true;
-                }
-*/
                 self.report=theReport;
                 System.webapp.theReport=theReport;
                 debugger;

@@ -97,6 +97,8 @@ export class TabConfig {
         dfReport["comment"]="";
         auxObj=$('#toggle_ReuseLoadedIssues');
         dfReport["reuseIssues"]=(auxObj.attr("checked")=="checked");
+        auxObj=$('#toggle_ReuseReport');
+        dfReport["reuseReport"]=(auxObj.attr("checked")=="checked");
         auxObj=$('#toggle_DebugLogs');
         dfReport["logDebug"]=(auxObj.attr("checked")=="checked");
         auxObj=$('#toggle_HTMLDebugLogs');
@@ -264,6 +266,9 @@ export class TabConfig {
 
         auxObj=$('#toggle_ReuseLoadedIssues');
         if(isDefined(config.reuseIssues)&&config.reuseIssues)auxObj.attr("checked","checked");
+        auxObj=$('#toggle_ReuseReport');
+        if(isDefined(config.reuseReport)&&config.reuseReport)auxObj.attr("checked","checked");
+        
         auxObj=$('#toggle_RootsByJQL');
         if(isDefined(config.rootsByJQL)&&config.rootsByJQL)auxObj.attr("checked","checked");
 

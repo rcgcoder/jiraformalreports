@@ -3,10 +3,10 @@ var RCGExcelProcessor=class RCGExcelProcessor{ //this kind of definition allows 
 		var self=this;
 		self.workbook=XLSX.read(chararrayExcelContent);
 		self.sheets=newHashMap();
-	    self.workbook.sheetNames.forEach(function(sheetName) {
+	    self.workbook.SheetNames.forEach(function(sheetName) {
 	        // Here is your object
-    		workbook.Sheets[sheetName].getCell=self.internal_getCell;
-	        self.sheets.add(sheetName,workbook.Sheets[sheetName]);
+	    	self.workbook.Sheets[sheetName].getCell=self.internal_getCell;
+	        self.sheets.add(sheetName,self.workbook.Sheets[sheetName]);
 	    });
 	}
 	excelColRowToA1(c,r){

@@ -395,6 +395,28 @@ var jrfReport=class jrfReport {
 				var iRows=0;
 				var nEmpties=0;
 				var nWithData=0;
+				var sRange=sht["!ref"];
+				var rngParts=sRange.split(":");
+				var iRow=A1
+				var iCol=BZ1332
+				var iColMin=0;
+			    var iRowMin=0;
+				var iColMax=0;
+			    var iRowMax=0;
+			    var sAux="";
+			    var cAux=rngParts[1].pop();
+			    var iAux=parseInt(cAux);
+			    while ((iAux>=0)&&(iAux<10)){
+			    	iRowMin=(iRowMin*10)+iAux;
+				    cAux=rngParts[0].pop();
+				    iAux=parseInt(cAux);
+			    }
+			    while (rngPars[0])
+			    
+			    	
+				
+				
+po				var i=
 				for (var row in sht) {
 					var bEmpty=true;
 					for (var col in row) {

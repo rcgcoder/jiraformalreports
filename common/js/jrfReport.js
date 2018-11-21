@@ -389,6 +389,28 @@ var jrfReport=class jrfReport {
 				var xlsObj=new RCGExcelProcessor(content);
 				var sht=xlsObj.sheets.getFirst().value;
 				log(sht.getCell(0,0)+" "+sht.getCell(1,1));
+				return xlsObj;
+			});
+			self.addStep("Process xlsObject",function(xlsObj){
+				var iRows=0;
+				var nEmpties=0;
+				var nWithData=0;
+				for (var row in worksheet) {
+					var bEmpty=true;
+					for (var col in row) {
+						var value=worksheet[row][col];
+						if (value!==""){
+							bEmpty=false;
+						}
+					}
+					if (bEmpty){
+						nEmpties++;
+					} else {
+						nWithData++;
+					}
+					iRows++;
+				}
+				log ("rows:"+iRows+" with data:"+nWithData+" empty:"+nEmpties);
 			});
 		});
 		self.addStep("Getting Confluence Report Model.... ",function(){

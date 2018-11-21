@@ -6,6 +6,7 @@ var RCGExcelProcessor=class RCGExcelProcessor{ //this kind of definition allows 
 		self.sheets=newHashMap();
 	    self.workbook.SheetNames.forEach(function(sheetName) {
 	        // Here is your object
+	    	self.workbook.Sheets[sheetName].charA=self.charA;
 	    	self.workbook.Sheets[sheetName].excelA1ToColRow=self.internal_excelA1ToColRow;
 	    	self.workbook.Sheets[sheetName].excelColRowToA1=self.internal_excelColRowToA1;
 	    	self.workbook.Sheets[sheetName].getCell=self.internal_getCell;

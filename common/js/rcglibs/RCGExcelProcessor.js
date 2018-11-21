@@ -41,12 +41,15 @@ var RCGExcelProcessor=class RCGExcelProcessor{ //this kind of definition allows 
 		var self=this;
 		var sCellRef=cellRef;
 		var objResult={iRow:0,iCol:0};
-		var auxChar=sCellRef.pop();
+
+		var auxChar=sCellRef[sCellRef.length-1];
+		sCellRef= sCellRef.slice(0, -1);
 		var iChar=parseInt(auxChar);
 		var jAcum=0;
 		while ((iChar>=0)&&(iChar<10)){
 			jAcum=jAcum*10+iChar;
-			auxChar=sCellRef.pop();
+			auxChar=sCellRef[sCellRef.length-1];
+			sCellRef= sCellRef.slice(0, -1);
 			iChar=parseInt(auxChar);
 		}
 		objResult.iCol=(jAcum-1);

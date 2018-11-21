@@ -652,8 +652,14 @@ var jrfReport=class jrfReport {
 		self.addStep("Processing root elements.... ",function(){
 			//debugger;
 			self.allIssues.logStats();
-			if (self.isReusingIssueList()||self.isReusingReport()) return;
+			if (self.isReusingReport()) return;
 			if (self.bFinishReport) return;
+			if (self.isReusingIssueList()){
+				self.rootIssues.walk(function(issue){
+					self.childs.add(issue.getId(),issue);
+				});
+				return;
+			}
 			//self.treeIssues=newHashMap();
 			var bAlerted=false;
 			var arrLinkTypes=self.config.useIssueLinkTypes;

@@ -389,16 +389,16 @@ var jrfReport=class jrfReport {
 				var xlsObj=new RCGExcelProcessor(content);
 				var sht=xlsObj.sheets.getFirst().value;
 				log(sht.getCell(0,0)+" "+sht.getCell(1,1));
-				return xlsObj;
+				return sht;
 			});
-			self.addStep("Process xlsObject",function(xlsObj){
+			self.addStep("Process xlsObject",function(sht){
 				var iRows=0;
 				var nEmpties=0;
 				var nWithData=0;
-				for (var row in worksheet) {
+				for (var row in sht) {
 					var bEmpty=true;
 					for (var col in row) {
-						var value=worksheet[row][col];
+						var value=sht[row][col];
 						if (value!==""){
 							bEmpty=false;
 						}

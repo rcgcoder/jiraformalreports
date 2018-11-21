@@ -375,6 +375,15 @@ var jrfReport=class jrfReport {
 				return System.webapp.loadRemoteFiles(arrFiles);
 			}
 		});
+		self.addStep("Getting check XLSX",function(){
+			self.addStep("Download XLSX",function(){
+				return System.webapp.loadFileFromNetwork("/docx/paraexportajson.xlsx");
+			});
+			self.addStep("Process XLSX",function(sRelativePath,content,contentType,theWindow){
+				debugger;
+				log("Processing content");
+			});
+		});
 		self.addStep("Getting Confluence Report Model.... ",function(){
 	        var cfc=System.webapp.getConfluence();
 			//cfc.getAllPages();

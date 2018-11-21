@@ -385,15 +385,7 @@ var jrfReport=class jrfReport {
 			});
 			self.addStep("Process XLSX",function(sRelativePath,content,contentType,theWindow){
 				debugger;
-				
-				  var data = new Uint8Array(content);
-				  var arr = new Array();
-				  for(var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
-				  var bstr = arr.join("");
-				  var workbook = XLSX.read(content, {
-			        type: 'binary'
-			      });
-
+				  var workbook = XLSX.read(content);
 			      workbook.SheetNames.forEach(function(sheetName) {
 			        // Here is your object
 			        var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);

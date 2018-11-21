@@ -396,6 +396,7 @@ var jrfReport=class jrfReport {
 				var nEmpties=0;
 				var nWithData=0;
 				var sRange=sht["!ref"];
+				var dRange=safe_decode_range(sRange);
 				for (var row in sht) {
 					if (isArray[row]&&row[0]=="!"){
 						log("control cell:"+row);

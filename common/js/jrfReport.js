@@ -401,7 +401,7 @@ var jrfReport=class jrfReport {
 				for (i=sht.bounds.minCell.iRow;i<=sht.bounds.maxCell.iRow;i++){
 					bEmpty=true;
 					for (j=sht.bounds.minCell.iCol;j<=sht.bounds.maxCell.iCol;j++){
-						var vValue=sht.getCell(i,j);
+						var vValue=sht.getCell(i,j).trim();
 						if (!(isUndefined(vValue)||(vValue==""))){
 							bEmpty=false;
 						}

@@ -1525,7 +1525,7 @@ var jrfReport=class jrfReport {
 								xlsIssue.removeReason=objRemove.reason;
 							}
 						},function processShell(itemKey,item,fncInternal){
-							item.factory.workOnIssueSteps(itemKey,function(issue){
+							item.factory.workOnSteps(itemKey,function(issue){
 					    		fncInternal(itemKey,issue);
 					    	});
 			            },function getIssue(itemKey,objItem){

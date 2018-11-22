@@ -65,7 +65,7 @@ var RCGExcelProcessor=class RCGExcelProcessor{ //this kind of definition allows 
 			sCellRef= sCellRef.slice(0, -1);
 			iChar=parseInt(auxChar);
 		}
-		objResult.iCol=(parseInt(jAcum)-1);
+		objResult.iRow=(parseInt(jAcum)-1);
 		var iAcum="";
 		sCellRef=sCellRef+auxChar;
 		while (sCellRef.length>0){
@@ -75,7 +75,7 @@ var RCGExcelProcessor=class RCGExcelProcessor{ //this kind of definition allows 
 			iChar=auxChar.charCodeAt(0)-self.charA;
 			iAcum=iChar+iAcum;
 		}
-		objResult.iRow=iAcum;
+		objResult.iCol=iAcum;
 		return objResult;
 	}
 

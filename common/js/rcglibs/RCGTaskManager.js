@@ -1615,7 +1615,7 @@ class RCGTaskManager{
                     hsSubItems=itemProcess[hierarchyType];
                 }
                 
-                self.factory.sequentialProcess(hsSubItems,function(subItem,notUsed,subKey){
+                self.sequentialProcess(hsSubItems,function(subItem,notUsed,subKey){
                     if ((!hsProcessedItems.exists(subKey))&&(!hsWorkList.exists(subKey))){
                         var newItem=subItem;
                         var bUseSteps=false;
@@ -1625,7 +1625,7 @@ class RCGTaskManager{
                                 bUseSteps=true;
                             }
                         }
-                        self.factory.executeAsStep(bUseSteps,function(resultNewItem){
+                        self.executeAsStep(bUseSteps,function(resultNewItem){
                             if (isDefined(resultNewItem)){
                                 newItem=resultNewItem;
                             }

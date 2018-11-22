@@ -1514,29 +1514,25 @@ var jrfReport=class jrfReport {
 						}
 					});
 				});
-				var hsRemovedChilds=newHashMap();
-				self.loopProcess(function(){
-					return hsIndirectRemovedChilds.length()>0;
-				},function(){
-					var objRemove=hsIndirectRemovedChilds.getFirst().value;
-					var issRemove=objRemove.issue;
-					var issueKey=issRemove.id;
-					hsIndirectRemovedChilds.remove(issueKey);
-					hsRemovedChilds.add(issueKey,objRemove);
-					var bWhereRemoved=false;
-					if (self.xlsIssues.exists(issueKey)){
-						bWhereRemoved=self.xlsIssues.getValue(issueKey).removed;
-						var xlsIssue=self.xlsIssues.getValue(issueKey);
-						xlsIssue.removed=true;
-						xlsIssue.removeReason=objRemove.reason;
-					}
-					return self.workOnIssueSteps(issueKey,function(issue){
-						issue.getChilds().walk(function(issChild){
-							if ((!hsRemovedChilds.exists(issChild.id))&&(!hsIndirectRemovedChilds.exists(issChild.id))){
-								hsIndirectRemovedChilds.add(issChild.id,{issue:issChild,reason:objRemove.reason+"parent: issueKey"});
+				self.addStep("Analizing removes versus XLS",function(){
+					self.processTree(hsIndirectRemovedChilds,"Child"
+						,function processIssue(issueKey,issue){
+							if (self.xlsIssues.exists(issueKey)){
+								bWhereRemoved=self.xlsIssues.getValue(issueKey).removed;
+								var xlsIssue=self.xlsIssues.getValue(issueKey);
+								xlsIssue.removed=true;
+								xlsIssue.removeReason=objRemove.reason;
 							}
-						});
-					});
+						},function processShell(itemKey,item,fncInternal){
+							item.factory.workOnIssueSteps(itemKey,function(issue){
+					    		fncInternal(itemKey,issue);
+					    	});
+			            },function getIssue(itemKey,objItem){
+			            	return objItem.issue;
+			            },function newSubitem(childKey,issChild,parentKey){
+							return {issue:issChild,reason:objRemove.reason+". Parent: "+parentKey};
+						}
+					);
 				});
 			});
 			self.addStep("Removing identified issues Finished",function(){

@@ -568,6 +568,54 @@ function newIssueFactory(report){
 		});
 		return hsMixLife;
 	})
+	dynObj.functions.add("processTree",function(hsInitialList,hierarchyType,fncProcess,fncGetItem,fncAddItem){
+	    var self=this;
+	    var hsWorkList=newHashMap();
+	    hsInitialList.walk(function(item,iDeep,key){
+	        hsWorkList.add(key,item);
+	    });
+        var hsProcessedItems=newHashMap();
+        self.factory.loopProcess(function(){
+            return hsWorkList.length()>0;
+        },function(){
+            var objToProcess=hsWorkList.getFirst().value;
+            var itemKey=hsWorkList.getFirst().key;
+            var itemProcess=objToProcess;
+            if (isDefined(fncGetItem)){
+                itemProcess=fncGetItem(itemKey,objToProcess);
+            }
+            hsWorkList.remove(itemKey);
+            hsProcessedItems.add(itemKey,objRemove);
+            self.factory.workOnIssueSteps(itemKey,function(issue){
+                fncProcess(itemKey,itemProcess);
+                var hsSubItems;
+                if (isDefined(itemProcess["get"+hierarchyType+"s"])){
+                    hsSubItems=itemProcess["get"+hierarchyType+"s"]();
+                } else {
+                    hsSubItems=itemProcess[hierarchyType];
+                }
+                
+                self.factory.sequentialProcess(hsSubItems,function(subItem,notUsed,subKey){
+                    if ((!hsProcessedItems.exists(subKey))&&(!hsWorkList.exists(subKey))){
+                        var newItem=subItem;
+                        var bUseSteps=false;
+                        if (isDefined(fncAddItem)){
+                            newItem=fncAddItem(subKey,subItem,itemKey);
+                            if (isTaskResult(newItem)){
+                                bUseSteps=true;
+                            }
+                        }
+                        self.factory.executeAsStep(bUseSteps,function(resultNewItem){
+                            if (isDefined(resultNewItem)){
+                                newItem=resultNewItem;
+                            };
+                            hsWorkList.add(subKey,newItem);
+                        });
+                    }
+                });
+            });
+        });
+	});
 	
 	dynObj.functions.add("fieldAccum",function(theFieldName,hierarchyType,dateTime,inOtherParams,bSetProperty,notAdjust,fncItemCustomCalc){
 		var self=this;

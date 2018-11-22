@@ -1739,7 +1739,8 @@ class RCGTaskManager{
 		obj.internal_parallelizeCalls=self.internal_parallelizeCalls;
 		obj.parallelizeCalls=self.extended_parallelizeCalls;
 		obj.parallelizeProcess=self.extended_parallelizeProcess;
-		obj.sequentialProcess=self.extended_sequentialProcess;		
+		obj.sequentialProcess=self.extended_sequentialProcess;
+		obj.treeProcess=self.extended_treeProcess;
 		obj.waitForEvent=self.extended_waitForEvent;
 		obj.taskResultMultiple=self.extended_taskResultMultiple;
 		obj.taskResultNeedsStep=self.extended_taskResultNeedsStep;

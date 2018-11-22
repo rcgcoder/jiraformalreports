@@ -1516,7 +1516,7 @@ var jrfReport=class jrfReport {
 				});
 				self.addStep("Analizing removes versus XLS",function(){
 					debugger;
-					self.processTree(hsIndirectRemovedChilds,"Child"
+					self.treeProcess(hsIndirectRemovedChilds,"Child"
 						,function processIssue(issueKey,issue){
 							if (self.xlsIssues.exists(issueKey)){
 								bWhereRemoved=self.xlsIssues.getValue(issueKey).removed;

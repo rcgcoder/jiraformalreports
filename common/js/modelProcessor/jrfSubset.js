@@ -230,6 +230,7 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 			`+sFormulaBody+`;
 			`;
 		var arrElems=elemsInForEach.toArray();
+		var totalLength=arrElems.length;
 		var workList=new Array(arrElems.length);
 
 		var fncSelectItem=function(i,j){
@@ -271,7 +272,6 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 		}
 		self.addStep("Another Way to do a merge sort",function(){
 			// preparing the cycles
-			var totalLength=arrElems.length;
 			var blockWidths=[];
 			var auxWidth=2;
 			while (auxWidth<totalLength){
@@ -352,10 +352,15 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 					}
 				},10);
 			},1);
-			self.addStep("Preparing and Returnin the result of sort",function(){
+			self.addStep("Preparing and Returning the result of sort",function(){
+				var elemCounter=0;
 				arrElems.forEach(function(elem){
 					hsResult.push(elem);
+					elemCounter++;
 				});
+				if (elemCounter!=totalLength){
+					logError("Error in Sort.... the number of elements differs initial:"+totalLength+" final:"+elemCounter);
+				}
 				return hsResult;
 			});
 		});

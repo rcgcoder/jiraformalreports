@@ -1159,7 +1159,11 @@ var jrfReport=class jrfReport {
 			log("Verifying excel issues");
 			self.xlsIssues.walk(function(auxIssue,deep,key){
 				if (!auxIssue.loaded){
-					log("Excel Issue:"+key+" has not been downloaded");
+					var sExcelDetail="";
+					for (var i=13;i<19;i++){
+						sExcelDetail+=" Col["+i+"]:"+auxIssue.data[i];
+					}
+					log("Excel Issue:"+key+" has not been downloaded. Excel Detail:"+sExcelDetail);
 				}
 			});
 			log("Assing Childs and Advance");

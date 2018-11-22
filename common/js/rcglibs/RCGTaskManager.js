@@ -1605,7 +1605,7 @@ class RCGTaskManager{
                 itemProcess=fncGetItem(itemKey,objToProcess);
             }
             hsWorkList.remove(itemKey);
-            hsProcessedItems.add(itemKey,objRemove);
+            hsProcessedItems.add(itemKey,itemProcess);
             var fncInternalProcess=function(itemKey,itemProcess){
                 fncProcess(itemKey,itemProcess);
                 var hsSubItems;

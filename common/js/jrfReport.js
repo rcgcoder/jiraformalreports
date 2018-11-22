@@ -382,7 +382,7 @@ var jrfReport=class jrfReport {
 		});
 		self.addStep("Getting check XLSX",function(){
 			self.addStep("Download XLSX",function(){
-				return System.webapp.loadFileFromNetwork("docx/jrfExportTable (45).xlsx");
+				return System.webapp.loadFileFromNetwork("docx/paraexportarajson.xlsx");
 			});
 			self.addStep("Process XLSX",function(sRelativePath,content,contentType,theWindow){
 				debugger;

@@ -280,6 +280,9 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 			}
 			self.parallelizeProcess(blockWidths,function(blockWidth){
 				var nBlocks=Math.floor(totalLength/blockWidth);
+				if ((nBlocks*blockWidth)<totalLength){
+					nBlocks++;
+				}
 				self.parallelizeProcess(nBlocks,function(initIndex){
 					var iStart=initIndex*blockWidth; //0           4         16
  					var iEnd=iStart+(blockWidth-1);  //3=0+4-1     7=4+4-1   23=16+8-1

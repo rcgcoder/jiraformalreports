@@ -276,7 +276,7 @@ var jrfReport=class jrfReport {
 			oIssue.fullLoad();
 		}
 		if (self.xlsIssues.exists(oIssue.id)){
-			self.xlsIssues.loaded=true;
+			self.xlsIssues.getValue(oIssue.id).loaded=true;
 		}
 		//oIssue.unlock(); // dont Unlock.... loaded for use
 		return oIssue;
@@ -431,7 +431,7 @@ var jrfReport=class jrfReport {
 									}
 									issData.push(vValue);
 								}
-								xlsIssues.add(idIssue,issData);								
+								xlsIssues.add(idIssue,{data:issData,loaded:false});								
 							}
 						}
 					} else {
@@ -1158,7 +1158,7 @@ var jrfReport=class jrfReport {
 			debugger;
 			log("Verifying excel issues");
 			self.xlsIssues.walk(function(auxIssue,deep,key){
-				if (isUndefined(auxIssue.loaded)){
+				if (!auxIssue.loaded){
 					log("Excel Issue:"+key+" has not been downloaded");
 				}
 			});

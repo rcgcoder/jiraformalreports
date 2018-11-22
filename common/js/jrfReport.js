@@ -1548,7 +1548,7 @@ var jrfReport=class jrfReport {
 						for (var i=13;i<19;i++){
 							sExcelDetail+=" Col["+i+"]:"+auxIssue.data[i];
 						}
-						log("Excel Issue:"+key+" has been removed. Excel Detail:"+sExcelDetail);
+						log("Excel Issue:"+key+" has been removed. Reason:"+auxIssue.removeReason+ ". Excel Detail:"+sExcelDetail);
 					}
 				});
 

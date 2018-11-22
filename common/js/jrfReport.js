@@ -431,7 +431,7 @@ var jrfReport=class jrfReport {
 									}
 									issData.push(vValue);
 								}
-								xlsIssues.add(idIssue,{data:issData,loaded:false,removed:false});								
+								xlsIssues.add(idIssue,{data:issData,loaded:false,removed:false,removeReason:""});								
 							}
 						}
 					} else {
@@ -1453,16 +1453,16 @@ var jrfReport=class jrfReport {
 				            );
 					if (issue.isExcludedByFunction()){
 						removeCounter++;
-						hsRemoveKeys.add(issue.getKey(),{issue:issue,removeFromParent:true});
+						hsRemoveKeys.add(issue.getKey(),{issue:issue,removeFromParent:true,fullRemove:true,reason:"Excluded by Function"});
 					} else if (self.config.removeChildIssuesFromRootList && (issue.countParentsChild()>0)){
 						removeCounter++;
-						hsRemoveKeys.add(issue.getKey(),{issue:issue});
+						hsRemoveKeys.add(issue.getKey(),{issue:issue,fullRemove:false,reason:"Is child of another issue"});
 					} else if (self.config.removeNotCreatedIssues && ((faseAtEndReport<0)||(faseAtEndReport===""))){
 						removeCounter++;
-						hsRemoveKeys.add(issue.getKey(),{issue:issue,removeFromParent:true});
+						hsRemoveKeys.add(issue.getKey(),{issue:issue,removeFromParent:true,fullRemove:true,reason:"Not Created at End Report"});
 					} else if (self.config.removeClosedBefore && (faseAtIniReport>=4)){
 						removeCounter++;
-						hsRemoveKeys.add(issue.getKey(),{issue:issue,removeFromParent:true});
+						hsRemoveKeys.add(issue.getKey(),{issue:issue,fullRemove:true,removeFromParent:true,reason:"Closed at Init Report"});
 					}
 				});
 			});
@@ -1483,15 +1483,25 @@ var jrfReport=class jrfReport {
 					};
 				});*/
 				nRootsPrevious=self.childs.length();
-				return self.parallelizeProcess(hsRemoveKeys,function(issRemove){
+				var hsIndirectRemovedChilds=newHashMap();
+				self.parallelizeProcess(hsRemoveKeys,function(issRemove){
 					var issueBase=issRemove.issue;
 					return self.workOnIssueSteps(issueBase,function(issue){
 						var issueKey=issue.getKey();
 						if (self.childs.exists(issueKey)){
 							self.childs.remove(issueKey);
 							//issuesAdded.remove(issueKey);
-							if (self.xlsIssues.exists(issueKey)){
-								self.xlsIssues.getValue(issueKey).removed=true;
+							if (issRemove.fullRemove){
+								if (self.xlsIssues.exists(issueKey)){
+									var xlsIssue=self.xlsIssues.getValue(issueKey);
+									xlsIssue.removed=true;
+									xlsIssue.removeReason=issRemove.reason;
+								}
+								issue.getChilds().walk(function(issChild){
+									if (!hsIndirectRemovedChilds.exists(issChild.id)){
+										hsIndirectRemovedChilds.add(issChild.id,{issue:issChild,reason:"Parent "+issueKey +" was removed."+issRemove.reason});
+									}
+								});
 							}
 							nRemoves++;
 						}
@@ -1502,6 +1512,30 @@ var jrfReport=class jrfReport {
 								theParent.getChilds().remove(issueKey);
 							});
 						}
+					});
+				});
+				var hsRemovedChilds=newHashMap();
+				self.loopProcess(function(){
+					return hsIndirectRemovedChilds.length()>0;
+				},function(){
+					var objRemove=hsIndirectRemovedChilds.getFirst().value;
+					var issRemove=objRemove.issue;
+					var issueKey=issRemove.id;
+					hsIndirectRemovedChilds.remove(issueKey);
+					hsRemovedChilds.add(issueKey,objRemove);
+					var bWhereRemoved=false;
+					if (self.xlsIssues.exists(issueKey)){
+						bWhereRemoved=self.xlsIssues.getValue(issueKey).removed;
+						var xlsIssue=self.xlsIssues.getValue(issueKey);
+						xlsIssue.removed=true;
+						xlsIssue.removeReason=objRemove.reason;
+					}
+					return self.workOnIssueSteps(issueKey,function(issue){
+						issue.getChilds().walk(function(issChild){
+							if ((!hsRemovedChilds.exists(issChild.id))&&(!hsIndirectRemovedChilds.exists(issChild.id))){
+								hsIndirectRemovedChilds.add(issChild.id,{issue:issChild,reason:objRemove.reason+"parent: issueKey"});
+							}
+						});
 					});
 				});
 			});

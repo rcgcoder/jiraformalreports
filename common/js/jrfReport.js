@@ -392,6 +392,7 @@ var jrfReport=class jrfReport {
 				return sht;
 			});
 			self.addStep("Process xlsObject",function(sht){
+				var xlsIssues=newHashMap();
 				var iRows=0;
 				var nEmpties=0;
 				var nWithData=0;
@@ -411,12 +412,30 @@ var jrfReport=class jrfReport {
 					}
 					if (!bEmpty){
 						nWithData++;
+						if (i>=4){
+							var vValue=sht.getCell(i,4);
+							if (isString(vValue)){
+								vValue=vValue.trim();
+							}
+							if (!(isUndefined(vValue)||(vValue==""))){
+								var idIssue=vValue;
+								var issData=[];
+								for (j=sht.bounds.minCell.iCol;j<=sht.bounds.maxCell.iCol;j++){
+									var vValue=sht.getCell(i,j);
+									if (isString(vValue)){
+										vValue=vValue.trim();
+									}
+									issData.push(vValue);
+								}
+								xlsIssues.add(idIssue,issData);								
+							}
+						}
 					} else {
 						nEmpties++;
 					}
 					iRows++;
 				}
-				log("Number of rows:"+iRows+" with data:"+nWithData+" empty:"+nEmpties);
+				log("Number of rows:"+iRows+" with data:"+nWithData+" empty:"+nEmpties+" issues:"+xlsIssues.length());
 			});
 		});
 		self.addStep("Getting Confluence Report Model.... ",function(){

@@ -1155,6 +1155,7 @@ var jrfReport=class jrfReport {
 		// assing childs and advance childs to root elements
 		self.addStep("Assign Childs and Advance",function(){
 			self.allIssues.logStats();
+			debugger;
 			log("Verifying excel issues");
 			self.xlsIssues.walk(function(auxIssue,deep,key){
 				if (isUndefined(auxIssue.loaded)){

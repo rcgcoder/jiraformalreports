@@ -395,21 +395,25 @@ var jrfReport=class jrfReport {
 				var iRows=0;
 				var nEmpties=0;
 				var nWithData=0;
-				var sRange=sht["!ref"];
-				var arrRange=sRange.split(":");
-				var rngIni=arrRange[0];
-				var rngEnd=arrRange[1];
-				var iniRow=0;
-				var iniCol=0;
-				var endRow=0;
-				var endCol=0;
-				var iniCoords=sht.excelA1ToColRow(rngIni);
-				var endCoords=sht.excelA1ToColRow(rngEnd);
-				iniRow=iniCoords.iRow;
-				iniCol=iniCoords.iCol;
-				endRow=endCoords.iRow;
-				iniRow=endCoords.iCol;
-				
+				var bEmpty=false;
+				var i=0;
+				var j=0;
+				for (i=sht.bounds.minCell.iRow;i<=sht.bounds.maxCell.iRow;i++){
+					bEmpty=true;
+					for (j=sht.bounds.minCell.iCol;j<=sht.bounds.maxCell.iCol;j++){
+						var vValue=sht.getCell(i,j);
+						if (!(isUndefined(vValue)||(vValue==""))){
+							bEmpty=false;
+						}
+					}
+					if (!bEmpty){
+						nWithData++;
+					} else {
+						nEmpties++;
+					}
+					iRows++;
+				}
+				log("Number of rows:"+iRows+" with data:"+nWithData+" empty:"+nEmpties);
 			});
 		});
 		self.addStep("Getting Confluence Report Model.... ",function(){

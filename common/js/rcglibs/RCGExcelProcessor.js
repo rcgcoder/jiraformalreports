@@ -6,11 +6,23 @@ var RCGExcelProcessor=class RCGExcelProcessor{ //this kind of definition allows 
 		self.sheets=newHashMap();
 	    self.workbook.SheetNames.forEach(function(sheetName) {
 	        // Here is your object
-	    	self.workbook.Sheets[sheetName].charA=self.charA;
-	    	self.workbook.Sheets[sheetName].excelA1ToColRow=self.internal_excelA1ToColRow;
-	    	self.workbook.Sheets[sheetName].excelColRowToA1=self.internal_excelColRowToA1;
-	    	self.workbook.Sheets[sheetName].getCell=self.internal_getCell;
-	        self.sheets.add(sheetName,self.workbook.Sheets[sheetName]);
+	    	var sht=self.workbook.Sheets[sheetName];
+	    	sht.charA=self.charA;
+	    	sht.excelA1ToColRow=self.internal_excelA1ToColRow;
+	    	sht.excelColRowToA1=self.internal_excelColRowToA1;
+	    	sht.getCell=self.internal_getCell;
+			var sRange=sht["!ref"];
+			var arrRange=sRange.split(":");
+			var rngIni=arrRange[0];
+			var rngEnd=arrRange[1];
+			var iniRow=0;
+			var iniCol=0;
+			var endRow=0;
+			var endCol=0;
+			var iniCoords=sht.excelA1ToColRow(rngIni);
+			var endCoords=sht.excelA1ToColRow(rngEnd);
+			sht.bounds={minCell:iniCoords,maxCell:endCoords};
+	        self.sheets.add(sheetName,sht);
 	    });
 	}
 	internal_excelColRowToA1(c,r){

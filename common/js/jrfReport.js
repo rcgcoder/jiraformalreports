@@ -1515,6 +1515,7 @@ var jrfReport=class jrfReport {
 					});
 				});
 				self.addStep("Analizing removes versus XLS",function(){
+					debugger;
 					self.processTree(hsIndirectRemovedChilds,"Child"
 						,function processIssue(issueKey,issue){
 							if (self.xlsIssues.exists(issueKey)){

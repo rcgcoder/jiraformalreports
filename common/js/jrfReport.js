@@ -431,7 +431,7 @@ var jrfReport=class jrfReport {
 									}
 									issData.push(vValue);
 								}
-								xlsIssues.add(idIssue,{data:issData,loaded:false});								
+								xlsIssues.add(idIssue,{data:issData,loaded:false,removed:false});								
 							}
 						}
 					} else {
@@ -1489,7 +1489,10 @@ var jrfReport=class jrfReport {
 						var issueKey=issue.getKey();
 						if (self.childs.exists(issueKey)){
 							self.childs.remove(issueKey);
-							issuesAdded.remove(issueKey);
+							//issuesAdded.remove(issueKey);
+							if (self.xlsIssues.exists(issueKey)){
+								self.xlsIssues.getValue(issueKey).removed=true;
+							}
 							nRemoves++;
 						}
 						if (isDefined(issRemove.removeFromParent)
@@ -1503,6 +1506,18 @@ var jrfReport=class jrfReport {
 				});
 			});
 			self.addStep("Removing identified issues Finished",function(){
+				debugger;
+				log("Verifying excel issues");
+				self.xlsIssues.walk(function(auxIssue,deep,key){
+					if (auxIssue.removed){
+						var sExcelDetail="";
+						for (var i=13;i<19;i++){
+							sExcelDetail+=" Col["+i+"]:"+auxIssue.data[i];
+						}
+						log("Excel Issue:"+key+" has been removed. Excel Detail:"+sExcelDetail);
+					}
+				});
+
 //				loggerFactory.getLogger().enabled=false;
 				var nRootsFinal=self.childs.length();
 				if ((hsRemoveKeys.length()!=nRemoves)

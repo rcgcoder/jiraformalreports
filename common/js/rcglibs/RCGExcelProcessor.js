@@ -46,25 +46,22 @@ var RCGExcelProcessor=class RCGExcelProcessor{ //this kind of definition allows 
 		var auxChar=sCellRef[sCellRef.length-1];
 		sCellRef= sCellRef.slice(0, -1);
 		var iChar=parseInt(auxChar);
-		var jAcum=0;
+		var jAcum="";
 		while ((iChar>=0)&&(iChar<10)){
-			jAcum=jAcum*10+iChar;
+			jAcum=iChar+jAcum;
 			auxChar=sCellRef[sCellRef.length-1];
 			sCellRef= sCellRef.slice(0, -1);
 			iChar=parseInt(auxChar);
 		}
-		objResult.iCol=(jAcum-1);
-		var iAcum=0;
-		var nLetters=sCellRef.length+1;
-		while (nLetters>0){
+		objResult.iCol=(parseInt(jAcum)-1);
+		var iAcum="";
+		sCellRef=sCellRef+auxChar;
+		while (sCellRef.length>0){
 			iAcum=iAcum*26;
+			auxChar=sCellRef[0];
+			sCellRef= sCellRef.slice(0, 1);
 			iChar=auxChar.charCodeAt(0)-self.charA;
-			iAcum+=iChar;
-			if (sCellRef.length>0){
-				auxChar=sCellRef[sCellRef.length-1];
-				sCellRef= sCellRef.slice(0, -1);
-			}
-			nLetters--;
+			iAcum=iChar+iAcum;
 		}
 		objResult.iRow=iAcum;
 		return objResult;

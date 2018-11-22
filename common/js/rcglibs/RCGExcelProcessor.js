@@ -59,7 +59,7 @@ var RCGExcelProcessor=class RCGExcelProcessor{ //this kind of definition allows 
 		while (sCellRef.length>0){
 			iAcum=iAcum*26;
 			auxChar=sCellRef[0];
-			sCellRef= sCellRef.slice(0, 1);
+			sCellRef= sCellRef.slice(1,sCellRef.length);
 			iChar=auxChar.charCodeAt(0)-self.charA;
 			iAcum=iChar+iAcum;
 		}

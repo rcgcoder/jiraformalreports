@@ -6,6 +6,7 @@ var jrfReport=class jrfReport {
 			self.allIssues;
 			self.config=theConfig;
 			self.config.model=System.webapp.model;
+			self.xlsIssues=newHashMap();
 			self.objModel;
 			self.childs=newHashMap();
 			self.advanceChilds=newHashMap();
@@ -274,6 +275,9 @@ var jrfReport=class jrfReport {
 			oIssue.numLocks=0;
 			oIssue.fullLoad();
 		}
+		if (self.xlsIssues.exists(oIssue.id)){
+			self.xlsIssues.loaded=true;
+		}
 		//oIssue.unlock(); // dont Unlock.... loaded for use
 		return oIssue;
 	}
@@ -436,6 +440,7 @@ var jrfReport=class jrfReport {
 					iRows++;
 				}
 				log("Number of rows:"+iRows+" with data:"+nWithData+" empty:"+nEmpties+" issues:"+xlsIssues.length());
+				self.xlsIssues=xlsIssues;
 			});
 		});
 		self.addStep("Getting Confluence Report Model.... ",function(){
@@ -1150,6 +1155,12 @@ var jrfReport=class jrfReport {
 		// assing childs and advance childs to root elements
 		self.addStep("Assign Childs and Advance",function(){
 			self.allIssues.logStats();
+			log("Verifying excel issues");
+			self.xlsIssues.walk(function(auxIssue,deep,key){
+				if (isUndefined(auxIssue.loaded)){
+					log("Excel Issue:"+key+" has not been downloaded");
+				}
+			});
 			log("Assing Childs and Advance");
 			//debugger;
 			if (self.isReusingIssueList()||self.isReusingReport()) return;

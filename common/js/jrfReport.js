@@ -1519,9 +1519,14 @@ var jrfReport=class jrfReport {
 					self.treeProcess(hsIndirectRemovedChilds,"Child"
 						,function processIssue(issueKey,issue){
 							if (self.xlsIssues.exists(issueKey)){
+								var bWhereRemoved=self.xlsIssues.getValue(issueKey).removed;
 								var xlsIssue=self.xlsIssues.getValue(issueKey);
 								xlsIssue.removed=true;
-								xlsIssue.removeReason=objRemove.reason;
+								if (bWhereRemoved){
+									xlsIssue.removeReason+=". Removed Twice!. "+objRemove.reason;
+								} else {
+									xlsIssue.removeReason=objRemove.reason;
+								}
 							}
 						},function processShell(itemKey,item,fncInternal){
 							item.factory.workOnSteps(itemKey,function(issue){

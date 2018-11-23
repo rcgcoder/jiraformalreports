@@ -275,22 +275,21 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 			var blockWidths=[];
 			var auxWidth=2;
 			var fncPrepareDivisions=function(iStart,iEnd,arrParts){
-				if (iStart==iEnd){
-					// do nothing return arrParts;
-				} else if ((iEnd-iStart)==1){
-					arrParts.push({i:iStart,j:iEnd});
-				} else {
-					arrParts.push({i:iStart,j:iEnd});
-					var iMedA=iStart+Math.floor((iEnd-iStart)/2);
-					var iMedB=iMedA+1
-					if ((iMedA-iStart)>1) {
-						fncPrepareDivisions(iStart,iMedA,blockWidths);
-					}
-					if ((iEnd-iMedB)>1){
-						fncPrepareDivisions(iMedB,iEnd,blockWidths);
-					}
+				var iMedA=iStart+Math.floor((iEnd-iStart)/2);
+				var iMedB=iMedA+1;
+				if ((iMedA-iStart)>1) {
+					fncPrepareDivisions(iStart,iMedA,blockWidths);
+				} else if ((iMedA-iStart)==1) {
+					arrParts.push({i:iStart,j:iMedA});
 				}
-				return arrParts;
+				if ((iEnd-iMedB)>1){
+					fncPrepareDivisions(iMedB,iEnd,blockWidths);
+				} else if ((iEnd-iMedB)==1) {
+					arrParts.push({i:iMedB,j:iEnd});
+				}
+				if (iStart!=iEnd){
+					arrParts.push({i:iStart,j:iEnd});
+				}
 			}
 			fncPrepareDivisions(0,totalLength-1,blockWidths);
 			
@@ -328,18 +327,14 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 					}
 					self.loopProcess(fncContinue,function(){
 						if ((nL1==0)||(nL2==0)) {
-							if (nL2==0){
-								var iAux=iWork;
-								while(iAux<=jL2){
-									arrElems[iAux]=arrElems[iL1];
-									iAux++;
-									iL1++;
+							if (nL2==0){  // 7  3
+								var nMoves=(jL1-iL1)+1; // move the rest of L1... to L2
+								for (var iAux=0;iAux<nMoves;iAux++){
+									arrElems[jL2-iAux]=arrElems[jL1-iAux];
 								}
 							}
-							var iAux=iStart;
-							while(iAux<iWork){
+							for (var iAux=iStart;iAux<iWork;iAux++){
 								arrElems[iAux]=workList[iAux];
-								iAux++;
 							}
 							nL1=0;
 							nL2=0;

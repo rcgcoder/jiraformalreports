@@ -353,7 +353,7 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 							}
 						});
 					}
-				},10);
+				},1);
 			},1);
 			self.addStep("Preparing and Returning the result of sort",function(){
 				var elemCounter=0;

@@ -323,7 +323,7 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 				} else {// there are more than 2 items 4 8 16.... now 
 					// identify 2 lists
 					var iL1=iStart;  // bw = 4   0, 0+2-1  , 4 4+2-1  8 8+4-1 891011
-					var jL1=iStart+(blockWidth/2)-1;
+					var jL1=iStart+Math.floor((iEnd-iStart)/2);
 					var iL2=jL1+1; 
 					var jL2=iEnd;
 					var nL1=(jL1-iL1)+1;

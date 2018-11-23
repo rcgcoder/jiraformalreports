@@ -1530,8 +1530,8 @@ var jrfReport=class jrfReport {
 					    	});
 			            },function getIssue(itemKey,objItem){
 			            	return objItem.issue;
-			            },function newSubitem(childKey,issChild,parentKey){
-							return {issue:issChild,reason:objRemove.reason+". Parent: "+parentKey};
+			            },function newSubitem(childKey,issChild,parentKey,parentIssue,parentObjProcess){
+							return {issue:issChild,reason:parentObjProcess.reason+". Parent: "+parentKey};
 						}
 					);
 				});

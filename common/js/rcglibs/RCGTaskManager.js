@@ -1620,7 +1620,7 @@ class RCGTaskManager{
                         var newItem=subItem;
                         var bUseSteps=false;
                         if (isDefined(fncAddItem)){
-                            newItem=fncAddItem(subKey,subItem,itemKey);
+                            newItem=fncAddItem(subKey,subItem,itemKey,itemProcess,objToProcess);
                             if (isTaskResult(newItem)){
                                 bUseSteps=true;
                             }

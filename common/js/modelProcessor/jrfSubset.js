@@ -280,15 +280,9 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 				} else if ((iEnd-iStart)==1){
 					arrParts.push({i:iStart,j:iEnd});
 				} else {
+					arrParts.push({i:iStart,j:iEnd});
 					var iMedA=iStart+Math.floor((iEnd-iStart)/2);
 					var iMedB=iMedA+1
-					if ((iMedA-iStart)>=1) {
-						arrParts.push({i:iStart,j:iMedA});
-					}
-					if ((iEnd-iMedB)>=1) {
-						arrParts.push({i:iMedB,j:iEnd});
-					}
-
 					if ((iMedA-iStart)>1) {
 						fncPrepareDivisions(iStart,iMedA,blockWidths);
 					}

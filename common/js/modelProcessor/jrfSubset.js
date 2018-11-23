@@ -274,7 +274,7 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 			// preparing the cycles
 			var blockWidthsGroups=newHashMap();
 			var auxWidth=2;
-			var fncPrepareDivisions=function(iStart,iEnd,hsPartGroups){
+			var fncPrepareDivisions=function(iStart,iEnd,blockWidths){
 				var wBase=iEnd-iStart;
 				var iMedA=iStart+Math.floor((iEnd-iStart)/2);
 				var iMedB=iMedA+1;
@@ -288,24 +288,24 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 				if (wBaseA>1) {
 					fncPrepareDivisions(iStart,iMedA,blockWidths);
 				} else if (wBaseA==1) {
-					if (!hsPartGroups.exists(sBaseA)){
-						hsPartGroups.add(sBaseA,[]);
+					if (!blockWidths.exists(sBaseA)){
+						blockWidths.add(sBaseA,[]);
 					}
-					hsPartGroups.geValue(sBaseA).push({i:iStart,j:iMedA});
+					blockWidths.geValue(sBaseA).push({i:iStart,j:iMedA});
 				}
 				if (wBaseB>1){
 					fncPrepareDivisions(iMedB,iEnd,blockWidths);
 				} else if (wBaseB==1) {
-					if (!hsPartGroups.exists(sBaseB)){
-						hsPartGroups.add(sBaseB,[]);
+					if (!blockWidths.exists(sBaseB)){
+						blockWidths.add(sBaseB,[]);
 					}
-					hsPartGroups.geValue(sBaseB).push({i:iMedB,j:iEnd});
+					blockWidths.geValue(sBaseB).push({i:iMedB,j:iEnd});
 				}
 				if (wBase>0){
-					if (!hsPartGroups.exists(sBase)){
-						hsPartGroups.add(sBase,[]);
+					if (!blockWidths.exists(sBase)){
+						blockWidths.add(sBase,[]);
 					}
-					hsPartGroups.geValue(sBase).push({i:iStart,j:iEnd});
+					blockWidths.geValue(sBase).push({i:iStart,j:iEnd});
 				}
 			}
 			fncPrepareDivisions(0,totalLength-1,blockWidthsGroups);

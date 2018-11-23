@@ -320,7 +320,7 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 							if ((nL1==0)||(nL2==0)) {
 								if (nL2==0){
 									var iAux=iWork;
-									while(iAux<jL2){
+									while(iAux<=jL2){
 										arrElems[iAux]=arrElems[iL1];
 										iAux++;
 										iL1++;

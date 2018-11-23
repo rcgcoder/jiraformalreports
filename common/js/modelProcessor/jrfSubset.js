@@ -293,9 +293,8 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 			}
 			fncPrepareDivisions(0,totalLength-1,blockWidths);
 			
-			self.parallelizeProcess(blockWidths.length,function(reverse_blockIndex){
-				var realIndex=(blockWidths.length-1)-reverse_blockIndex;
-				var block=blockWidths[realIndex];
+			self.parallelizeProcess(blockWidths.length,function(blockIndex){
+				var block=blockWidths[blockIndex];
 				var iStart=block.i; //0           4         16
 				var iEnd=block.j;  //3=0+4-1     7=4+4-1   23=16+8-1
 				var nItems=(iEnd-iStart);

@@ -272,92 +272,111 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 		}
 		self.addStep("Another Way to do a merge sort",function(){
 			// preparing the cycles
-			var blockWidths=[];
+			var blockWidthsGroups=newHashMap();
 			var auxWidth=2;
-			var fncPrepareDivisions=function(iStart,iEnd,arrParts){
+			var fncPrepareDivisions=function(iStart,iEnd,hsPartGroups){
+				var wBase=iEnd-iStart;
 				var iMedA=iStart+Math.floor((iEnd-iStart)/2);
 				var iMedB=iMedA+1;
-				if ((iMedA-iStart)>1) {
+				var wBaseA=(iMedA-iStart);
+				var wBaseB=(iEnd-iMedB);
+
+				var sBase=""+wBase;
+				var sBaseA=""+wBaseA;
+				var sBaseB=""+wBaseB;
+
+				if (wBaseA>1) {
 					fncPrepareDivisions(iStart,iMedA,blockWidths);
-				} else if ((iMedA-iStart)==1) {
-					arrParts.push({i:iStart,j:iMedA});
+				} else if (wBaseA==1) {
+					if (!hsPartGroups.exists(sBaseA)){
+						hsPartGroups.add(sBaseA,[]);
+					}
+					hsPartGroups.geValue(sBaseA).push({i:iStart,j:iMedA});
 				}
-				if ((iEnd-iMedB)>1){
+				if (wBaseB>1){
 					fncPrepareDivisions(iMedB,iEnd,blockWidths);
-				} else if ((iEnd-iMedB)==1) {
-					arrParts.push({i:iMedB,j:iEnd});
+				} else if (wBaseB==1) {
+					if (!hsPartGroups.exists(sBaseB)){
+						hsPartGroups.add(sBaseB,[]);
+					}
+					hsPartGroups.geValue(sBaseB).push({i:iMedB,j:iEnd});
 				}
-				if (iStart!=iEnd){
-					arrParts.push({i:iStart,j:iEnd});
+				if (wBase>0){
+					if (!hsPartGroups.exists(sBase)){
+						hsPartGroups.add(sBase,[]);
+					}
+					hsPartGroups.geValue(sBase).push({i:iStart,j:iEnd});
 				}
 			}
-			fncPrepareDivisions(0,totalLength-1,blockWidths);
+			fncPrepareDivisions(0,totalLength-1,blockWidthsGroups);
 			
-			self.parallelizeProcess(blockWidths.length,function(blockIndex){
-				var block=blockWidths[blockIndex];
-				var iStart=block.i; //0           4         16
-				var iEnd=block.j;  //3=0+4-1     7=4+4-1   23=16+8-1
-				var nItems=(iEnd-iStart);
-				if (nItems<=0){
-					log("nothing to do.... only one item or none")
-				} else if ((iEnd-iStart)==1){ // iEnd and iStart are index to process example elems[0] and elems[1]
-					log("only compare 2 items");
-					self.addStep("Comparing Items",function(){
-						fncSelectItem(iStart,iEnd);
-					});
-					self.addStep("Comparing Items result",function(indexSelected){
-						if (indexSelected==iEnd){
-							var vAux=arrElems[iStart];
-							arrElems[iStart]=arrElems[iEnd];
-							arrElems[iEnd]=vAux;
+			self.sequentialProcess(blockWidthsGroups,function(blockWidths){
+				self.parallelizeProcess(blockWidths.length,function(blockIndex){
+					var block=blockWidths[blockIndex];
+					var iStart=block.i; //0           4         16
+					var iEnd=block.j;  //3=0+4-1     7=4+4-1   23=16+8-1
+					var nItems=(iEnd-iStart);
+					if (nItems<=0){
+						log("nothing to do.... only one item or none")
+					} else if ((iEnd-iStart)==1){ // iEnd and iStart are index to process example elems[0] and elems[1]
+						log("only compare 2 items");
+						self.addStep("Comparing Items",function(){
+							fncSelectItem(iStart,iEnd);
+						});
+						self.addStep("Comparing Items result",function(indexSelected){
+							if (indexSelected==iEnd){
+								var vAux=arrElems[iStart];
+								arrElems[iStart]=arrElems[iEnd];
+								arrElems[iEnd]=vAux;
+							}
+						});
+					} else {// there are more than 2 items 4 8 16.... now 
+						// identify 2 lists
+						var iL1=iStart;  // bw = 4   0, 0+2-1  , 4 4+2-1  8 8+4-1 891011
+						var jL1=iStart+Math.floor((iEnd-iStart)/2);
+						var iL2=jL1+1; 
+						var jL2=iEnd;
+						var nL1=(jL1-iL1)+1;
+						var nL2=(jL2-iL2)+1;
+						var iWork=iL1;
+						var fncContinue=function(){
+							return (nL1>0)||(nL2>0);
 						}
-					});
-				} else {// there are more than 2 items 4 8 16.... now 
-					// identify 2 lists
-					var iL1=iStart;  // bw = 4   0, 0+2-1  , 4 4+2-1  8 8+4-1 891011
-					var jL1=iStart+Math.floor((iEnd-iStart)/2);
-					var iL2=jL1+1; 
-					var jL2=iEnd;
-					var nL1=(jL1-iL1)+1;
-					var nL2=(jL2-iL2)+1;
-					var iWork=iL1;
-					var fncContinue=function(){
-						return (nL1>0)||(nL2>0);
+						self.loopProcess(fncContinue,function(){
+							if ((nL1==0)||(nL2==0)) {
+								if (nL2==0){  // 7  3
+									var nMoves=(jL1-iL1)+1; // move the rest of L1... to L2
+									for (var iAux=0;iAux<nMoves;iAux++){
+										arrElems[jL2-iAux]=arrElems[jL1-iAux];
+									}
+								}
+								for (var iAux=iStart;iAux<iWork;iAux++){
+									arrElems[iAux]=workList[iAux];
+								}
+								nL1=0;
+								nL2=0;
+							} else {
+								self.addStep("Comparing Items",function(){
+									fncSelectItem(iL1,iL2);
+								});
+								self.addStep("Comparing Items result",function(indexSelected){
+									if (indexSelected==iL1){
+										workList[iWork]=arrElems[iL1];
+										iWork++;
+										iL1++;
+										nL1--;
+									} else if (indexSelected==iL2){
+										workList[iWork]=arrElems[iL2];
+										iWork++;
+										iL2++;
+										nL2--;
+									}
+								});
+							}
+						});
 					}
-					self.loopProcess(fncContinue,function(){
-						if ((nL1==0)||(nL2==0)) {
-							if (nL2==0){  // 7  3
-								var nMoves=(jL1-iL1)+1; // move the rest of L1... to L2
-								for (var iAux=0;iAux<nMoves;iAux++){
-									arrElems[jL2-iAux]=arrElems[jL1-iAux];
-								}
-							}
-							for (var iAux=iStart;iAux<iWork;iAux++){
-								arrElems[iAux]=workList[iAux];
-							}
-							nL1=0;
-							nL2=0;
-						} else {
-							self.addStep("Comparing Items",function(){
-								fncSelectItem(iL1,iL2);
-							});
-							self.addStep("Comparing Items result",function(indexSelected){
-								if (indexSelected==iL1){
-									workList[iWork]=arrElems[iL1];
-									iWork++;
-									iL1++;
-									nL1--;
-								} else if (indexSelected==iL2){
-									workList[iWork]=arrElems[iL2];
-									iWork++;
-									iL2++;
-									nL2--;
-								}
-							});
-						}
-					});
-				}
-			},1);
+				},10);
+			})
 			self.addStep("Preparing and Returning the result of sort",function(){
 				var elemCounter=0;
 				arrElems.forEach(function(elem){

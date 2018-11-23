@@ -683,6 +683,8 @@ function newIssueFactory(report){
                 }
                 if (childValue==""){
                     childValue=0;
+                } else if (isString(childValue)){
+                    childValue=parseFloat(childValue.trim());
                 }
                 accumValue=childValue;
                 return accumValue

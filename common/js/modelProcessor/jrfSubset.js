@@ -274,86 +274,95 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 			// preparing the cycles
 			var blockWidths=[];
 			var auxWidth=2;
-			while (auxWidth<totalLength){
-				blockWidths.push(auxWidth);
-				auxWidth*=2;
-			}
-			self.parallelizeProcess(blockWidths,function(blockWidth){
-				var nBlocks=Math.floor(totalLength/blockWidth);
-				if ((nBlocks*blockWidth)<totalLength){
-					nBlocks++;
+			var fncPrepareDivisions=function(iStart,iEnd,arrParts){
+				if (iStart==iEnd){
+					// do nothing return arrParts;
+				} else if ((iEnd-iStart)==1){
+					arrParts.push({i:iStart,j:iEnd});
+				} else {
+					var iMed=iStart+Math.floor((iEnd-iStart)/2);
+					arrParts.push({i:iStart,j:iMed});
+					arrParts.push({i:iMed+1,j:iEnd});
+					if ((iMed-iStart)>1) {
+						fncPrepareDivisions(iStart,iMed,blockWidths);
+					}
+					if ((iEnd-(iMed+1))>1){
+						fncPrepareDivisions(iMed+1,iEnd,blockWidths);
+					}
 				}
-				self.parallelizeProcess(nBlocks,function(initIndex){
-					var iStart=initIndex*blockWidth; //0           4         16
- 					var iEnd=iStart+(blockWidth-1);  //3=0+4-1     7=4+4-1   23=16+8-1
-					if ((iEnd+1)>totalLength){
-						iEnd=(totalLength-1);
-					}
-					var nItems=(iEnd-iStart);
-					if (nItems<=0){
-						log("nothing to do.... only one item or none")
-					} else if ((iEnd-iStart)==1){ // iEnd and iStart are index to process example elems[0] and elems[1]
-						log("only compare 2 items");
-						self.addStep("Comparing Items",function(){
-							fncSelectItem(iStart,iEnd);
-						});
-						self.addStep("Comparing Items result",function(indexSelected){
-							if (indexSelected==iEnd){
-								var vAux=arrElems[iStart];
-								arrElems[iStart]=arrElems[iEnd];
-								arrElems[iEnd]=vAux;
-							}
-						});
-					} else {// there are more than 2 items 4 8 16.... now 
-						// identify 2 lists
-						var iL1=iStart;  // bw = 4   0, 0+2-1  , 4 4+2-1  8 8+4-1 891011
-						var jL1=iStart+(blockWidth/2)-1;
-						var iL2=jL1+1; 
-						var jL2=iEnd;
-						var nL1=(jL1-iL1)+1;
-						var nL2=(jL2-iL2)+1;
-						var iWork=iL1;
-						var fncContinue=function(){
-							return (nL1>0)||(nL2>0);
+				return arrParts;
+			}
+			fncPrepareDivisions(0,totalLength-1,blockWidths);
+			
+			self.parallelizeProcess(blockWidths.length,function(reverse_blockIndex){
+				var realIndex=(blockWidths.length-1)-reverse_blockIndex;
+				var block=blockWidths[realIndex];
+				var iStart=block.i; //0           4         16
+				var iEnd=block.j;  //3=0+4-1     7=4+4-1   23=16+8-1
+				var nItems=(iEnd-iStart);
+				if (nItems<=0){
+					log("nothing to do.... only one item or none")
+				} else if ((iEnd-iStart)==1){ // iEnd and iStart are index to process example elems[0] and elems[1]
+					log("only compare 2 items");
+					self.addStep("Comparing Items",function(){
+						fncSelectItem(iStart,iEnd);
+					});
+					self.addStep("Comparing Items result",function(indexSelected){
+						if (indexSelected==iEnd){
+							var vAux=arrElems[iStart];
+							arrElems[iStart]=arrElems[iEnd];
+							arrElems[iEnd]=vAux;
 						}
-						self.loopProcess(fncContinue,function(){
-							if ((nL1==0)||(nL2==0)) {
-								if (nL2==0){
-									var iAux=iWork;
-									while(iAux<=jL2){
-										arrElems[iAux]=arrElems[iL1];
-										iAux++;
-										iL1++;
-									}
-								}
-								var iAux=iStart;
-								while(iAux<iWork){
-									arrElems[iAux]=workList[iAux];
-									iAux++;
-								}
-								nL1=0;
-								nL2=0;
-							} else {
-								self.addStep("Comparing Items",function(){
-									fncSelectItem(iL1,iL2);
-								});
-								self.addStep("Comparing Items result",function(indexSelected){
-									if (indexSelected==iL1){
-										workList[iWork]=arrElems[iL1];
-										iWork++;
-										iL1++;
-										nL1--;
-									} else if (indexSelected==iL2){
-										workList[iWork]=arrElems[iL2];
-										iWork++;
-										iL2++;
-										nL2--;
-									}
-								});
-							}
-						});
+					});
+				} else {// there are more than 2 items 4 8 16.... now 
+					// identify 2 lists
+					var iL1=iStart;  // bw = 4   0, 0+2-1  , 4 4+2-1  8 8+4-1 891011
+					var jL1=iStart+(blockWidth/2)-1;
+					var iL2=jL1+1; 
+					var jL2=iEnd;
+					var nL1=(jL1-iL1)+1;
+					var nL2=(jL2-iL2)+1;
+					var iWork=iL1;
+					var fncContinue=function(){
+						return (nL1>0)||(nL2>0);
 					}
-				},1);
+					self.loopProcess(fncContinue,function(){
+						if ((nL1==0)||(nL2==0)) {
+							if (nL2==0){
+								var iAux=iWork;
+								while(iAux<=jL2){
+									arrElems[iAux]=arrElems[iL1];
+									iAux++;
+									iL1++;
+								}
+							}
+							var iAux=iStart;
+							while(iAux<iWork){
+								arrElems[iAux]=workList[iAux];
+								iAux++;
+							}
+							nL1=0;
+							nL2=0;
+						} else {
+							self.addStep("Comparing Items",function(){
+								fncSelectItem(iL1,iL2);
+							});
+							self.addStep("Comparing Items result",function(indexSelected){
+								if (indexSelected==iL1){
+									workList[iWork]=arrElems[iL1];
+									iWork++;
+									iL1++;
+									nL1--;
+								} else if (indexSelected==iL2){
+									workList[iWork]=arrElems[iL2];
+									iWork++;
+									iL2++;
+									nL2--;
+								}
+							});
+						}
+					});
+				}
 			},1);
 			self.addStep("Preparing and Returning the result of sort",function(){
 				var elemCounter=0;

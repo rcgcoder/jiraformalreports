@@ -291,7 +291,7 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 					if (!blockWidths.exists(sBaseA)){
 						blockWidths.add(sBaseA,[]);
 					}
-					blockWidths.geValue(sBaseA).push({i:iStart,j:iMedA});
+					blockWidths.getValue(sBaseA).push({i:iStart,j:iMedA});
 				}
 				if (wBaseB>1){
 					fncPrepareDivisions(iMedB,iEnd,blockWidths);
@@ -299,13 +299,13 @@ var jrfSubset=class jrfSubset extends jrfToken{//this kind of definition allows 
 					if (!blockWidths.exists(sBaseB)){
 						blockWidths.add(sBaseB,[]);
 					}
-					blockWidths.geValue(sBaseB).push({i:iMedB,j:iEnd});
+					blockWidths.getValue(sBaseB).push({i:iMedB,j:iEnd});
 				}
 				if (wBase>0){
 					if (!blockWidths.exists(sBase)){
 						blockWidths.add(sBase,[]);
 					}
-					blockWidths.geValue(sBase).push({i:iStart,j:iEnd});
+					blockWidths.getValue(sBase).push({i:iStart,j:iEnd});
 				}
 			}
 			fncPrepareDivisions(0,totalLength-1,blockWidthsGroups);

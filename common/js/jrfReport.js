@@ -1519,7 +1519,6 @@ var jrfReport=class jrfReport {
 					self.treeProcess(hsIndirectRemovedChilds,"Child"
 						,function processIssue(issueKey,issue){
 							if (self.xlsIssues.exists(issueKey)){
-								bWhereRemoved=self.xlsIssues.getValue(issueKey).removed;
 								var xlsIssue=self.xlsIssues.getValue(issueKey);
 								xlsIssue.removed=true;
 								xlsIssue.removeReason=objRemove.reason;

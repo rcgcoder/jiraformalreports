@@ -1607,7 +1607,7 @@ class RCGTaskManager{
             hsWorkList.remove(itemKey);
             hsProcessedItems.add(itemKey,itemProcess);
             var fncInternalProcess=function(itemKey,itemProcess){
-                fncProcess(itemKey,itemProcess);
+                fncProcess(itemKey,itemProcess,objToProcess);
                 var hsSubItems;
                 if (isDefined(itemProcess["get"+hierarchyType+"s"])){
                     hsSubItems=itemProcess["get"+hierarchyType+"s"]();

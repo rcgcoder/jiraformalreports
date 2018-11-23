@@ -1517,15 +1517,15 @@ var jrfReport=class jrfReport {
 				self.addStep("Analizing removes versus XLS",function(){
 					debugger;
 					self.treeProcess(hsIndirectRemovedChilds,"Child"
-						,function processIssue(issueKey,issue){
+						,function processIssue(issueKey,issue,objProcess){
 							if (self.xlsIssues.exists(issueKey)){
 								var bWhereRemoved=self.xlsIssues.getValue(issueKey).removed;
 								var xlsIssue=self.xlsIssues.getValue(issueKey);
 								xlsIssue.removed=true;
 								if (bWhereRemoved){
-									xlsIssue.removeReason+=". Removed Twice!. "+objRemove.reason;
+									xlsIssue.removeReason+=". Removed Twice!. "+objProcess.reason;
 								} else {
-									xlsIssue.removeReason=objRemove.reason;
+									xlsIssue.removeReason=objProcess.reason;
 								}
 							}
 						},function processShell(itemKey,item,fncInternal){

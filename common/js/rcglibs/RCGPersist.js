@@ -96,7 +96,19 @@ function InitializeFileSystem(initCallBack,quota){
 		if (lastLogAccum>0){
 			var percChange=accum/lastLogAccum;
 			if (percChange>1.1){
-				var sLog="Persistence. Chars readed:"+filesystem.stats.readedChars+ " Chars writed:"+filesystem.stats.writedChars;
+				var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB','PB'];
+				var fncToSize=function(iValue){
+					var iValAux=iValue;
+					var vRef=1024;
+					var iSize=0;
+					while (iValAux>vRef){
+						iValAux=(iValAux/1024);
+						iSize++;
+					}
+					return iValAux.toFixed(2) + " " + sizes[iSize];
+				}
+				var iValue
+				var sLog="Persistence. Chars readed:"+fncToSize(filesystem.stats.readedChars)+ " Chars writed:"+fncToSize(filesystem.stats.writedChars);
 				if (typeof logError==="undefined"){
 					console.log(sLog);
 				} else {

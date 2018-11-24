@@ -195,7 +195,7 @@ function newIssueFactory(report){
     dynObj.functions.add("getChildRoot",function(){
         var self=this;
         var vRoot=self.getRoot();
-        if (vRoot===""){
+        if (vRoot!==""){
            return vRoot;
         } 
         return self.getChildRootSteps();

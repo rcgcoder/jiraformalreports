@@ -83,6 +83,24 @@ function InitializeFileSystem(initCallBack,quota){
 		var newName=replaceAll(filename,"/","_DIR_");
 		this.fs.root.getFile(newName, {create: false}, cbExists,cbNotExists);
 	}
+	filesystem.stats={readedChars:0,writedChars:0,lastLogAccum:0};
+	filesystem.updateStats=function(charsReaded,charsWrited){
+		if (charsReaded>0){
+			filesystem.stats.readedChars+=charsReaded;
+		}
+		if (charsWrited>0){
+			filesystem.stats.writedChars+=charsWrited;
+		}
+		var accum=filesystem.stats.readedChars+filesystem.stats.writedChars;
+		var lastLogAccum=filesystem.stats.lastLogAccum;
+		if (lastLogAccum>0){
+			var percChange=accum/lastLogAccum;
+			if (percChange>1.1){
+				logError("Persistence. Chars readed:"+filesystem.stats.readedChars+ " Chars writed:"+filesystem.stats.writedChars);
+				filesystem.stats.lastLogAccum=accum;
+			}
+		}
+	}
 	filesystem.ReadFile=function(filename,cbExistsAndLoaded,cbNotExists){
 		var newName=replaceAll(filename,"/","_DIR_");
 		filesystem.error_callback=cbNotExists;
@@ -144,6 +162,7 @@ function InitializeFileSystem(initCallBack,quota){
 									});
 							} else {
 								//console.log("File not compressed:"+reader.content.length);
+								filesystem.updateStats(reader.content.length,0);
 								cbExistsAndLoaded(reader.content);
 							}
 						}
@@ -220,6 +239,7 @@ function InitializeFileSystem(initCallBack,quota){
 												});
 								} else {
 									//console.log("Writting "+newName+"...");
+									filesystem.updateStats(0,theString.length);
 									theBlob = new Blob([theString], {type: "text/plain"});
 									DatContent.write(theBlob);
 								}

@@ -96,7 +96,12 @@ function InitializeFileSystem(initCallBack,quota){
 		if (lastLogAccum>0){
 			var percChange=accum/lastLogAccum;
 			if (percChange>1.1){
-				logError("Persistence. Chars readed:"+filesystem.stats.readedChars+ " Chars writed:"+filesystem.stats.writedChars);
+				var sLog="Persistence. Chars readed:"+filesystem.stats.readedChars+ " Chars writed:"+filesystem.stats.writedChars;
+				if (typeof logError==="undefined"){
+					console.log(sLog);
+				} else {
+					logError(sLog);
+				}
 				filesystem.stats.lastLogAccum=accum;
 			}
 		} else {

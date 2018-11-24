@@ -31,7 +31,7 @@ function newIssueFactory(report){
 			 {name:"StackAsyncFieldValue",description:"Stack that Indicates when fieldvalue can run steps",type:"Boolean"},
 			]
 			,
-			allFieldDefinitions.concat("JiraObject","IssueUrl","Changelog")
+			allFieldDefinitions.concat("JiraObject","IssueUrl","Changelog","Root")
 			,
 			[]
 			,
@@ -192,38 +192,32 @@ function newIssueFactory(report){
 //		log("Error getting correct id of Field:"+sFieldName);
 		return sFieldName;
 	});
+    dynObj.functions.add("getChildRoot",function(){
+        var self=this;
+        var vRoot=self.getRoot();
+        if (vRoot===""){
+           return vRoot;
+        } 
+        return self.getChildRootSteps();
+    });
+
 	dynObj.functions.add("getChildRootSteps",function(){
 		var self=this;
 		var rootIssue=self;
 		var nParents=self.countParentsChild();
 		if (nParents==0){
+		    self.setRoot(rootIssue);
 			return rootIssue;
 		} else {
-			var report=self.getReport();
-			var hsListParents=self.getListParentsChild();
-			var firstNode=hsListParents.getFirst();
-			var parentIssue=firstNode.value;
-			if (true ||(nParents==1)){
-                report.workOnIssueSteps(parentIssue,function(issue){
-                    return issue.getChildRootSteps();
-                });
-			} else {
-    			report.addStep("getting root from all parents",function(){
-    				report.workOnIssueSteps(parentIssue,function(issue){
-    					report.addStep("getting root from parent",function(){
-    						return issue.getChildRootSteps();
-    					});
-    					report.addStep("Assigning to rootIssue",function(rootResult){
-    						rootIssue=rootResult;
-    						return rootResult;
-    					});
-    				});
-    				return;
-    			});
-    			report.addStep("returning rootIssue",function(){
-    				return rootIssue;
-    			});
-			}
+            self.forceAsyncFieldValues(self.getChildRootSteps,[]);
+            var report=self.getReport();
+            self.processHierarchy(function(parent){
+            	rootIssue=parent;
+            });
+			report.addStep("returning rootIssue",function(){
+	            self.setRoot(rootIssue);
+				return rootIssue;
+			});
 		}
 	});
 	dynObj.functions.add("processHierarchy",function(fncAction){
@@ -1023,6 +1017,7 @@ function newIssueFactory(report){
 			})
 		});
 	});
+	
 	dynObj.functions.add("getFieldLife",function(theFieldName,atDatetime,otherParams){
 		var self=this;
 		var sFieldName=theFieldName;

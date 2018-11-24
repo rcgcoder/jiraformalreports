@@ -99,6 +99,8 @@ function InitializeFileSystem(initCallBack,quota){
 				logError("Persistence. Chars readed:"+filesystem.stats.readedChars+ " Chars writed:"+filesystem.stats.writedChars);
 				filesystem.stats.lastLogAccum=accum;
 			}
+		} else {
+			filesystem.stats.lastLogAccum=accum;
 		}
 	}
 	filesystem.ReadFile=function(filename,cbExistsAndLoaded,cbNotExists){

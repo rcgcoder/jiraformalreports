@@ -350,10 +350,10 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 					var auxTimeoriginalestimate=self.getReport().adjustAccumItem("Childs",timeoriginalestimate,self,"timeoriginalestimate",atDatetime);
 					var auxTimeestimate=self.getReport().adjustAccumItem("Childs",timeestimate,self,"timeestimate",atDatetime);
 					var auxTimespent=self.fieldAccumChilds("timespent",atDatetime);
+					timeoriginalestimate=auxTimeoriginalestimate;
+					timeestimate=auxTimeestimate;
 					if (isTaskResult(auxTimespent)){
 						report.addStep("setting values",function(resultTimespent){
-							timeoriginalestimate=auxTimeoriginalestimate;
-							timeestimate=auxTimeestimate;
 							timespent=resultTimespent;
 						});
 					} else {

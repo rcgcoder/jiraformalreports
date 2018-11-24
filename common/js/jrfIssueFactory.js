@@ -778,9 +778,9 @@ function newIssueFactory(report){
             }
             }
             //      accumCache.add(cacheKey,accumValue);
-            keyValuesCache.add(cacheTimeKey,auxAcumValue);
+            keyValuesCache.add(cacheTimeKey,accumValue);
             self.change();
-            return auxAcumValue;
+            return accumValue;
 		});
 	});
 	

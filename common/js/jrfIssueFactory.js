@@ -194,6 +194,7 @@ function newIssueFactory(report){
 	});
     dynObj.functions.add("getChildRoot",function(){
         var self=this;
+        debugger;
         var vRoot=self.getRoot();
         if (vRoot!==""){
            return vRoot;

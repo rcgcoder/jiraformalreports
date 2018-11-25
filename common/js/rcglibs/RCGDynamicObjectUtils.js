@@ -91,7 +91,8 @@ var RCGDynamicObject=class RCGDynamicObject{
 		}
 		self.workOnSteps=factory.internal_workOnSteps;
 		self.workOnListSteps=factory.internal_workOnListSteps;
-	
+		self.object_workOn=factory.internal_object_workOn;
+
 		
 		self.configFromExcel=factory.configFromExcel;
 		self.loadFromExcel=factory.loadFromExcel;
@@ -924,6 +925,8 @@ var factoryObjects=class factoryObjects{
 			newObj.setFullyUnloaded=this.setFullyUnloaded;
 			newObj.fullLoad=this.fullLoad;
 			newObj.fullUnload=this.fullUnload;
+			newObj.workOn=this.object_workOn;
+
 			newObj.removeAttribute=this.internal_removeAttribute;
 			this.updateAttributesFunctions(newObj);
 			
@@ -1201,6 +1204,11 @@ var factoryObjects=class factoryObjects{
 			return self.storeManager.saveAllNotStored();
 		}
 	}
+    internal_object_workOn(fncWork){
+        var self=this;
+        return self.factory.workOnSteps(self,fncWork,false,false);
+    };
+
 	internal_workOnSteps(theObjectOrKey,fncWork,bMaintainLocked,fncNotExists){
 		var oObj;
 		var self=this;

@@ -394,6 +394,7 @@ function newIssueFactory(report){
 		});
 	});
 	
+	
 	dynObj.functions.add("fieldValue",function(theFieldName,bRendered,dateTime,inOtherParams){
 		var self=this;
 		var bGetAttribute=false;

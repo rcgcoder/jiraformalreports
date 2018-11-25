@@ -741,6 +741,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				otherParams.bReplaceVars=bReplaceVars;
 			}
 			var sResult=sText;
+			var bUseSteps=false;
 			if (sResult.saExists("{{{")){
 				//debugger;
 				var bAntReplaceVars=otherParams.bReplaceVars;
@@ -750,34 +751,39 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				sResult=self.replaceVarsComplexArray(sResult,"{{{","}}}",otherParams,self.getStringReplacedScript);
 				otherParams.bReplaceVars=bAntReplaceVars;
 				otherParams.bInExecution=bAntInExecution;
-				
+				if (isTaskResult(sResult)){
+					bUseSteps=true;
+				}
 	//			sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + sResult.saToString();
 	//			log("Fase 0 Replaced {{{ }}} result:"+sTextToLog);
 			}
 	//		log(sResult);
 	//		log("now let´s replace {{  "+sResult+"  }}");
-			if (sResult.saExists("{{")){
-				//debugger; 
-	/*			var bReplaceAnt=
-				if (isUndefined(inOtherParams)){
-					otherParams.bReplaceVars=true;
+			var sResult=self.executeAsStep(bUseSteps,function(auxContent){
+				if (sResult.saExists("{{")){
+					//debugger; 
+		/*			var bReplaceAnt=
+					if (isUndefined(inOtherParams)){
+						otherParams.bReplaceVars=true;
+					}
+		*/			sResult=self.replaceVarsComplexArray(sResult,"{{","}}",otherParams,self.getStringReplaced);
+		/*			if (oSimple.values.length>0){
+						vValue=executeFunction(oSimple.values,vValue,self.model.functionCache);
+					}
+					var vAux=vValue;
+					if (isString(vAux)||isArray(vAux)){
+						vAux=vAux.saRemoveInnerHtmlTags().saTrim().saToString();
+						vValue=vAux;
+					} else if (isObject(vAux)) {
+						vAux="Object of type:"+vValue.constructor.name;	
+					}
+					sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + vAux;
+		*/			
+		//			sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + sResult.saToString();
+		//			log("Fase 2  {{ }} Final Result:"+sTextToLog);
 				}
-	*/			sResult=self.replaceVarsComplexArray(sResult,"{{","}}",otherParams,self.getStringReplaced);
-	/*			if (oSimple.values.length>0){
-					vValue=executeFunction(oSimple.values,vValue,self.model.functionCache);
-				}
-				var vAux=vValue;
-				if (isString(vAux)||isArray(vAux)){
-					vAux=vAux.saRemoveInnerHtmlTags().saTrim().saToString();
-					vValue=vAux;
-				} else if (isObject(vAux)) {
-					vAux="Object of type:"+vValue.constructor.name;	
-				}
-				sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + vAux;
-	*/			
-	//			sTextToLog=sTextToLog.substring(0,15)+"..." + " -> " + sResult.saToString();
-	//			log("Fase 2  {{ }} Final Result:"+sTextToLog);
-			}
+				return sResult;
+			});
 			return sResult;
 		});
 	}

@@ -83,13 +83,15 @@ function InitializeFileSystem(initCallBack,quota){
 		var newName=replaceAll(filename,"/","_DIR_");
 		this.fs.root.getFile(newName, {create: false}, cbExists,cbNotExists);
 	}
-	filesystem.stats={readedChars:0,writedChars:0,lastLogAccum:0};
+	filesystem.stats={reads:0,writes:0,readedChars:0,writedChars:0,lastLogAccum:0};
 	filesystem.updateStats=function(charsReaded,charsWrited){
 		if (charsReaded>0){
 			filesystem.stats.readedChars+=charsReaded;
+			filesystem.stats.reads++;
 		}
 		if (charsWrited>0){
 			filesystem.stats.writedChars+=charsWrited;
+			filesystem.stats.writes++;
 		}
 		var accum=filesystem.stats.readedChars+filesystem.stats.writedChars;
 		var lastLogAccum=filesystem.stats.lastLogAccum;
@@ -108,7 +110,10 @@ function InitializeFileSystem(initCallBack,quota){
 					return iValAux.toFixed(2) + " " + sizes[iSize];
 				}
 				var iValue
-				var sLog="Persistence. Chars readed:"+fncToSize(filesystem.stats.readedChars)+ " Chars writed:"+fncToSize(filesystem.stats.writedChars);
+				var sLog="Persistence. Chars readed ("+filesystem.stats.reads+"):"
+								+fncToSize(filesystem.stats.readedChars)
+								+ " Chars writed("+filesystem.stats.writes+"):"
+								+fncToSize(filesystem.stats.writedChars);
 				if (typeof logError==="undefined"){
 					console.log(sLog);
 				} else {

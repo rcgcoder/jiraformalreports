@@ -436,6 +436,9 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				bUseSteps=true;
 			}
 			self.executeAsStep(bUseSteps,function(auxContent){
+				if (bUseSteps){
+					sContent=auxContent;
+				} 
 				self.addHtml(sContent);
 				var sValAux=self.popHtmlBuffer(self.indInnerContentHtmlBuffer);
 	

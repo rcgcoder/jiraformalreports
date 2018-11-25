@@ -361,6 +361,7 @@ function newIssueFactory(report){
 	});
 	dynObj.functions.add("getAsyncFieldValue",function(newValue){
 		var self=this;
+		if (self.getStackAsyncFieldValues().length()==0) return false;
 		return self.getStackAsyncFieldValues().top();
 	});
     dynObj.functions.add("forceAsyncFieldValues",function(fncFunctionReference,arrParams,vAuxResult){

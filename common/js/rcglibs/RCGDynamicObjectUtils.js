@@ -1207,10 +1207,10 @@ var factoryObjects=class factoryObjects{
     internal_object_workOn(fncWork){
         var self=this;
         debugger;
-        return self.factory.workOnSteps(self,fncWork,false,false);
+        return self.factory.workOnSteps(self,fncWork,false,false,true);
     };
 
-	internal_workOnSteps(theObjectOrKey,fncWork,bMaintainLocked,fncNotExists){
+	internal_workOnSteps(theObjectOrKey,fncWork,bMaintainLocked,fncNotExists,bReturnFunctionResult){
 		var oObj;
 		var self=this;
 		var bUnlock=true;
@@ -1229,7 +1229,12 @@ var factoryObjects=class factoryObjects{
 			if (isDefined(fncNotExists)&&(oObj==="")){
 				var oObj=fncNotExists(key);
 			}
-			return fncWork(oObj);
+			var fncResult=fncWork(oObj);
+			if (isDefined(bReturnFunctionResult)||bReturnFunctionResult){
+				return fncResult;
+			} else {
+				return oObj;
+			}
 		} 
 		self.addStep("Wait if is saving",function(){
 			log("Wait if saving...");
@@ -1261,6 +1266,7 @@ var factoryObjects=class factoryObjects{
 				});
 			}
 		});
+		var fncResult;
 		if (isDefined(fncWork)){
 			self.addStep("Working",function(){
 				if (bExists){
@@ -1269,15 +1275,24 @@ var factoryObjects=class factoryObjects{
 			});
 		};
 		if (bUnlock){
-			self.addStep("unlock and wait if necesary....",function(){
+			self.addStep("unlock and wait if necesary....",function(auxResult){
+				fncResult=auxResult;
 				if (!bExists) return;
 				log("unlock and wait for saving:"+oObj.getKey());
 				return oObj.unlockAndWaitAllSave();
 			});
 		}
-		self.addStep("Return issue",function(){
+		self.addStep("Return issue",function(auxResult){
+			var theResult=fncResult;
+			if (!bUnlock){
+				theResult=auxResult;
+			}
 			log("Return issue:"+oObj.id);
-			return oObj;
+			if (isDefined(bReturnFunctionResult)||bReturnFunctionResult){
+				return fncResult;
+			} else {
+				return oObj;
+			}
 		});
 		return self.taskResultNeedsStep();
 	}

@@ -1482,10 +1482,7 @@ class RCGTaskManager{
         } catch (except) {
             if (!isTaskException(except)){
             	debugger;
-            	var vDebugRepeat=false;
-            	if (vDebugRepeat) {
-            		return fncCall();
-            	}
+            	return fncCall();
                 throw except;
             } else {
             	debugger;

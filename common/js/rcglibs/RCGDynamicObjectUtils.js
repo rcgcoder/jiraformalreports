@@ -1289,7 +1289,7 @@ var factoryObjects=class factoryObjects{
 			}
 			log("Return issue:"+oObj.id);
 			if (isDefined(bReturnFunctionResult)||bReturnFunctionResult){
-				return fncResult;
+				return theResult;
 			} else {
 				return oObj;
 			}

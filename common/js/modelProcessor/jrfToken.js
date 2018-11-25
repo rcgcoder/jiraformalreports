@@ -759,7 +759,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			}
 	//		log(sResult);
 	//		log("now let´s replace {{  "+sResult+"  }}");
-			var sResult=self.executeAsStep(bUseSteps,function(auxContent){
+			sResult=self.executeAsStep(bUseSteps,function(auxContent){
 				if (sResult.saExists("{{")){
 					//debugger; 
 		/*			var bReplaceAnt=

@@ -1,6 +1,8 @@
 var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 	constructor(theFactory){
 		var self=this;
+		self.timeReading=0;
+		self.timeWritting=0;
 		self.isSavingInactives=false;
 		self.savingSemaphore=new RCGSemaphore(function(){return (!self.isSavingInactives);});
 		self.concurrentSaveActionsMax=5;
@@ -80,6 +82,8 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		if (self.needsAutoSave()){
 			log("key:"+key+" launch autosaving");
 			self.isSavingInactives=true;
+			var timeWritting=(new Date()).getTime();
+
 			storer.addStep("Dynamic "+self.factory.name+" AutoSave", function(){
 				storer.addStep("Autosaving",function(){
 					//debugger;
@@ -95,12 +99,18 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 						console.log("Saving....Some objects are changed and now is not necesary to save all");
 					}
 					storer.addStep("Saved....",function(){
+						var tNow=(new Date()).getTime();
+						var tDiff=(tNow-timeWritting)/1000;
+						self.timeWritting+=tDiff;
 						console.log("Saved... freeing the semaphore.. actual situation "+self.countInactiveObjects()
 								+" of "+self.countActiveObjects()
 								+ "/"+self.factory.list.length()
-								+ ". "+getMemStatus());							  
+								+ ". "
+								+ "T. Reading:"+self.timeReading.toFixed(2)+" s"+" T. Writting:"+self.timeWritting.toFixed(2)+" s. "
+								+getMemStatus());							  
 						self.savingSemaphore.open();
 						self.isSavingInactives=false;
+
 					});
 				});
 	        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
@@ -291,6 +301,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 */		if (dynObj.isFullyLoaded()){
 			return dynObj;
 		} else {
+			var tInitLoading=(new Date()).getTime();
 			storer.addStep("Loading from storage "+self.factory.name +"/"+objId,function(){
 				//log("Loading from storage:"+objId);
 				if (dynObj.isFullyLoaded()){ // prevent a previous load of the object....  
@@ -355,6 +366,9 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 								dynObj.loadingSemaphore.open();
 							}
 						}
+						var tNow=(new Date()).getTime();
+						var tDiff=(tNow-tInitLoading)/1000;
+						self.timeReading+=tDiff;
 						dynObj.loading=false; // this set the semaphore open
 						return dynObj;
 					})

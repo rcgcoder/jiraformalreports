@@ -1278,6 +1278,7 @@ var factoryObjects=class factoryObjects{
 			log("Return issue:"+oObj.id);
 			return oObj;
 		});
+		return self.taskResultNeedsStep();
 	}
 	
 	internal_workOnListSteps(listOfKeysOrObjects,fncWork,maxParallelThreads,fncNotExists){

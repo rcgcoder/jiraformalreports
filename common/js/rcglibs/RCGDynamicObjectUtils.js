@@ -1206,6 +1206,7 @@ var factoryObjects=class factoryObjects{
 	}
     internal_object_workOn(fncWork){
         var self=this;
+        debugger;
         return self.factory.workOnSteps(self,fncWork,false,false);
     };
 

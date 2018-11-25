@@ -1481,6 +1481,11 @@ class RCGTaskManager{
             return fncCall();
         } catch (except) {
             if (!isTaskException(except)){
+            	debugger;
+            	var vDebugRepeat=false;
+            	if (vDebugRepeat) {
+            		return fncCall();
+            	}
                 throw except;
             } else {
             	debugger;

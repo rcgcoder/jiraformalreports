@@ -401,10 +401,10 @@ function newIssueFactory(report){
 		var bGetAttribute=false;
 		/*if (((self.id=="SNT-519")||(self.id=="SNT-520"))&&(theFieldName=="timespent")){
 		    debugger;
-		}
-		if (theFieldName=="Billing.calculos.inTimespents.avance"){
-		    debugger;
 		}*/
+		if (theFieldName=="ChildsCounter.total"){
+		    debugger;
+		}
 		var sFieldName=theFieldName.trim();
 		var arrFieldNames=sFieldName.split(".");
 		if (arrFieldNames.length>1){

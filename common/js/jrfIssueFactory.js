@@ -398,12 +398,12 @@ function newIssueFactory(report){
 	dynObj.functions.add("fieldValue",function(theFieldName,bRendered,dateTime,inOtherParams){
 		var self=this;
 		var bGetAttribute=false;
-		if (((self.id=="SNT-519")||(self.id=="SNT-520"))&&(theFieldName=="timespent")){
+		/*if (((self.id=="SNT-519")||(self.id=="SNT-520"))&&(theFieldName=="timespent")){
 		    debugger;
 		}
 		if (theFieldName=="Billing.calculos.inTimespents.avance"){
 		    debugger;
-		}
+		}*/
 		var sFieldName=theFieldName.trim();
 		var arrFieldNames=sFieldName.split(".");
 		if (arrFieldNames.length>1){
@@ -1034,9 +1034,9 @@ function newIssueFactory(report){
 			return hsItemFieldsCache;
 		}
         var wasAsync=self.getAsyncFieldValue();
-        if (theFieldName=="Billing"){
+        /*if (theFieldName=="Billing"){
             debugger;
-        }
+        }*/
 		var arrResult=[];
 		var report=self.getReport();
 		var vUseSteps=false;
@@ -1120,9 +1120,9 @@ function newIssueFactory(report){
 	});
 	dynObj.functions.add("getFieldValueAtDateTime",function(sFieldName,dateTime,otherParams){
 		var self=this; 
-        if (((self.id=="SNT-519")||(self.id=="SNT-520"))&&(sFieldName=="timespent")){
+        /*if (((self.id=="SNT-519")||(self.id=="SNT-520"))&&(sFieldName=="timespent")){
             debugger;
-        }
+        }*/
         var report=self.getReport();
         var reportDateTime=self.getReport().reportDateTime;
 		var dateCreated=new Date(self.fieldValue("created"));
@@ -1170,7 +1170,7 @@ function newIssueFactory(report){
     		
     		//try to get the value at report time .....
             report.executeAsStep(vUseSteps,function(){
-                debugger;
+                //debugger;
                 self.pushAsyncFieldValue(vUseSteps);
                 var vResult;
         		if (reportDateTime.getTime()!=dateTime.getTime()){ // if is processing the report time.... have to get the actual value

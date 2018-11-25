@@ -262,7 +262,7 @@ var jrfReport=class jrfReport {
 	}
 	loadJSONIssue(jsonIssue){
 		var self=this;
-		debugger;
+		//debugger;
 		var oIssue=self.allIssues.new(jsonIssue.fields.summary,jsonIssue.key);
 		if (!self.isReusingIssueList()){
 			oIssue.setJiraObject(jsonIssue);
@@ -270,7 +270,7 @@ var jrfReport=class jrfReport {
 			oIssue.setJiraObject("");
 			oIssue.setKey(jsonIssue.key);
 		} else {
-			debugger;
+			//debugger;
 			oIssue.loaded=false;
 			oIssue.numLocks=0;
 			oIssue.fullLoad();
@@ -389,7 +389,7 @@ var jrfReport=class jrfReport {
 				return System.webapp.loadFileFromNetwork("docx/paraexportarajson.xlsx");
 			});
 			self.addStep("Process XLSX",function(sRelativePath,content,contentType,theWindow){
-				debugger;
+				//debugger;
 				var xlsObj=new RCGExcelProcessor(content);
 				var sht=xlsObj.sheets.getFirst().value;
 				log(sht.getCell(0,0)+" "+sht.getCell(1,1));
@@ -789,7 +789,7 @@ var jrfReport=class jrfReport {
 				log("Issue "+key+"("+nProcessedIssues+") issues:"+nRetrievedIssues+"/" +nPendingIssues+ " Epics :"+nRetrievedEpics+"/"+nPendingEpics);
 				var issue=self.allIssues.getById(key);
 				if (issue==""){
-					debugger;
+					//debugger;
 					issue=self.loadJSONIssue(inputIssue);
 				} else {
 					nDuplicatedIssues++;					
@@ -1155,7 +1155,7 @@ var jrfReport=class jrfReport {
 		// assing childs and advance childs to root elements
 		self.addStep("Assign Childs and Advance",function(){
 			self.allIssues.logStats();
-			debugger;
+			//debugger;
 			log("Verifying excel issues");
 			self.xlsIssues.walk(function(auxIssue,deep,key){
 				if (!auxIssue.loaded){
@@ -1515,7 +1515,7 @@ var jrfReport=class jrfReport {
 					});
 				});
 				self.addStep("Analizing removes versus XLS",function(){
-					debugger;
+					//debugger;
 					self.treeProcess(hsIndirectRemovedChilds,"Child"
 						,function processIssue(issueKey,issue,objProcess){
 							if (self.xlsIssues.exists(issueKey)){
@@ -1541,7 +1541,7 @@ var jrfReport=class jrfReport {
 				});
 			});
 			self.addStep("Removing identified issues Finished",function(){
-				debugger;
+				//debugger;
 				log("Verifying excel issues");
 				self.xlsIssues.walk(function(auxIssue,deep,key){
 					if (auxIssue.removed){
@@ -1703,7 +1703,7 @@ var jrfReport=class jrfReport {
 		// Process Model with The Report
 		self.addStep("Processing Model",function(){
 			if (true){
-			debugger;
+			//debugger;
 			self.allIssues.logStats();
 			self.getTaskManager().logCalls=false;
 			loggerFactory.getLogger().enabled=false;

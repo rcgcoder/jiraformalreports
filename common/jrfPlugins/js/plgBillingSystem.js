@@ -308,7 +308,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     	return oResult;
     }
     initializeBilling(atDatetime,hourCost,minFacturableFase){
-    	debugger;
+    	//debugger;
     	var self=this;
     	var report=self.getReport();
 /*    	var fechaFacturacion=self.fieldValue("Fecha de facturación",false,atDatetime);
@@ -325,9 +325,9 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		var timespent=0;
 
 		//dynObj.functions.add("fieldAccumChilds",function(theFieldName,datetime,inOtherParams,notAdjust,bSetProperty,fncItemCustomCalc){
-		if (self.getKey()=="BENT-411"){
+		/*if (self.getKey()=="BENT-411"){
 			debugger;
-		}
+		}*/
 		report.addStep("Adjusting Phase in hierarchy",function(){
 			return self.processHierarchy(function(parentIssue){
 				var auxFaseActual=parentIssue.fieldValue("Fase",false,atDatetime);
@@ -339,7 +339,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 
 		report.addStep("Accumulating timestimate value of childs",function(){
 //			alert("Accumulating timestimate");
-			debugger;
+			//debugger;
 			return self.fieldAccumChilds("timeestimate",atDatetime);
 		});
 
@@ -541,7 +541,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     getBilling(otherParams){
     	// initialize and load the importes structure
     	var self=this;
-    	debugger;
+    	//debugger;
     	var hslifeCaches=self.getFieldLife("Billing",self.getReport().reportDateTime,otherParams);
     	var life=hslifeCaches.getValue("life");
     	var last=life[0][2]; // último snapshot
@@ -550,7 +550,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     getBillingLife(otherParams,theDatetime){
     	var self=this;
     	//debugger;
-    	if (self.getKey()=="BENT-411") debugger;
+    	//if (self.getKey()=="BENT-411") debugger;
     	self.forceAsyncFieldValues(self.getBillingLife,[otherParams,theDatetime]);
     	var report=self.getReport();
 		var sComentarios=[];

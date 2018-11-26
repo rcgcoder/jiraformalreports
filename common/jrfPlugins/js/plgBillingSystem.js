@@ -328,6 +328,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		/*if (self.getKey()=="BENT-411"){
 			debugger;
 		}*/
+		/*
 		report.addStep("Adjusting Phase in hierarchy",function(){
 			return self.processHierarchy(function(parentIssue){
 				var auxFaseActual=parentIssue.fieldValue("Fase",false,atDatetime);
@@ -336,6 +337,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 				}
 			});
 		})
+		*/
 
 		report.addStep("Accumulating timestimate value of childs",function(){
 //			alert("Accumulating timestimate");

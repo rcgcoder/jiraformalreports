@@ -632,7 +632,13 @@ var jrfReport=class jrfReport {
 		// first launch all issue retrieve ...
 		self.addStep("Getting All Issues in the Scope.... ",function(){
 			//debugger;
-			self.allIssues.changeStorableParams(500,0.10,true);
+			var vMaxIssuesInMemory=self.objModel.variables.getVar("MaxIssuesInMemory");
+			if (vMaxIssuesInMemory===""){
+				vMaxIssuesInMemory=500;
+			} else {
+				vMaxIssuesInMemory=parseInt(vMaxIssuesInMemory);
+			}
+			self.allIssues.changeStorableParams(vMaxIssuesInMemory,0.10,true);
 			if (self.isReusingReport()){
 				self.addStep("check if report exists in storage",function(){
 					return self.existStored(); // load all issues

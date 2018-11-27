@@ -321,6 +321,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		var faseActual=self.fieldValue("Fase",false,atDatetime);
 		var faseDesarrollo=faseActual;
 		var timeoriginalestimate=self.fieldValue("timeoriginalestimate",false,atDatetime);
+		if (timeoriginalestimate==="")timeoriginalestimate=0;
 		var timeestimate=0;
 		var timespent=0;
 
@@ -370,6 +371,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 				});
 				*/
 				timespent=self.fieldValue("timespent",false,atDatetime);
+				if (timespent==="") timespent=0;
 				return timespent;
 			}
 		});

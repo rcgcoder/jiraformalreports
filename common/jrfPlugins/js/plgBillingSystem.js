@@ -310,7 +310,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     initializeBilling(atDatetime,hourCost,minFacturableFase){
     	//debugger;
     	var self=this;
-    	if (self.id=="BENT-447") {
+    	if (self.id=="PAEGA2-144") {
     		debugger;
     	}
     	var report=self.getReport();

@@ -462,6 +462,9 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 	    	return objImportes;
 		});
     }
+    getBillingNotExistsValues(){
+    	return newBillingObject();
+    }
     getBillingSnapShot(atDatetime,hourCost,minFacturableFase){
     	var self=this;
     	//debugger;
@@ -1025,6 +1028,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
                  issue.getBillingCacheKeyPostText=selfPlg.getBillingCacheKeyPostText;
                  issue.getBillingSnapShot=selfPlg.getBillingSnapShot;
                  issue.getBillingLifeDates=selfPlg.getBillingLifeDates;
+                 issue.getBillingNotExistsValues=selfPlg.getBillingNotExistsValues;
          });
     }
 

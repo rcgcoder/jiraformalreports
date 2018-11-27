@@ -1068,6 +1068,7 @@ var jrfReport=class jrfReport {
 						// applying "Jira Formal Report Adjusts"
 						var sTokenAdjustComment="Jira Formal Report Adjusts";
 						var hsReportAdjusts=issue.getCommentsStartsWith(sTokenAdjustComment);
+						debugger;s
 						hsReportAdjusts.walk(function(oAdjustComment){
 							issue.change();
 							//debugger;

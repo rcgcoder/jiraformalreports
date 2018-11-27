@@ -1162,7 +1162,6 @@ function newIssueFactory(report){
     			if (isDefined(otherParams) && isDefined(otherParams.ifEmpty)){
     				auxVal=otherParams.ifEmpty;
     			} else if (isDefined(self["get"+sFieldName+"NotExistsValues"])){
-    				debugger;
     				auxVal=self["get"+sFieldName+"NotExistsValues"]();
     			} else {
         			auxVal="";

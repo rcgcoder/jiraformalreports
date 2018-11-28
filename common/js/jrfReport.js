@@ -743,6 +743,7 @@ var jrfReport=class jrfReport {
 			var maxItemsInGroup=100;
 			var maxLettersInGroup=2000;
 			var grpLength=0;
+			var addedToGroup=0;
 			var fncAddToGroup=function(issueKey){
 				if (isDefined(issueKey)&&(issueKey!="")){
 					if ((keyGroup.length>=maxItemsInGroup)
@@ -757,6 +758,7 @@ var jrfReport=class jrfReport {
 					grpLength+=issueKey.length;
 					keyGroup.push(issueKey);
 					nPendingIssues++;
+					addedToGroup++;
 				} else {
 					debugger;
 				}
@@ -933,9 +935,10 @@ var jrfReport=class jrfReport {
 				var fncProcessRestOfPending=self.createManagedFunction(function(){
 					var bSomethingRetrieving=((arrKeyGroups.length>1)||(arrEpicGroups.length>1));
 					self.addStep("Retrieve groups",function(){
-						var auxKeyGroups=arrKeyGroups;
-						keyGroup=auxKeyGroups.pop();
-						arrKeyGroups=[keyGroup];
+						var auxKeyGroups=[];
+						while (arrKeyGroups.length>1){
+						     auxKeyGroups.push(arrKeyGroups.shift());
+						}
 						if (auxKeyGroups.lenght>0){
 							bSomethingRetrieving=true;
 							return self.parallelizeProcess(auxKeyGroups,function(group){

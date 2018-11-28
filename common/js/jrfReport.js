@@ -939,7 +939,7 @@ var jrfReport=class jrfReport {
 						while (arrKeyGroups.length>1){
 						     auxKeyGroups.push(arrKeyGroups.shift());
 						}
-						if (auxKeyGroups.lenght>0){
+						if (auxKeyGroups.length>0){
 							bSomethingRetrieving=true;
 							return self.parallelizeProcess(auxKeyGroups,function(group){
 								return fncRetrieveGroup(group);

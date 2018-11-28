@@ -1458,6 +1458,9 @@ var jrfReport=class jrfReport {
 				            ,dtIniDate
 				            ,optGetFieldValues
 				            );
+					if (issue.id=="PFI-867"){
+						debugger;
+					}
 					if (issue.isExcludedByFunction()){
 						removeCounter++;
 						hsRemoveKeys.add(issue.getKey(),{issue:issue,removeFromParent:true,fullRemove:true,reason:"Excluded by Function"});

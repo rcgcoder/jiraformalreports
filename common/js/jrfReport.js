@@ -947,9 +947,10 @@ var jrfReport=class jrfReport {
 						}
 					})
 					self.addStep("Retrieve epics",function(){
-						var auxEpicGroups=arrEpicGroups;
-						epicGroup=auxEpicGroups.pop();
-						arrEpicGroups=[epicGroup];
+						var auxEpicGroups=[];
+						while (arrEpicGroups.length>1){
+							auxEpicGroups.push(arrEpicGroups.shift());
+						}
 						if (auxEpicGroups.length>0){
 							bSomethingRetrieving=true;
 							return self.parallelizeProcess(auxEpicGroups,function(group){

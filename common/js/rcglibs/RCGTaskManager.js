@@ -904,7 +904,7 @@ class RCGTaskManager{
 			fork.barrier.add(fork);
 		}
 		if (!fork.isGlobalFork){ // the Global Forks does not use inner barrier
-			self.innerForks.push(fork);
+			//self.innerForks.push(fork);
 			var innerBarrier;
 			if (runningTask.barrier==""){
 				var fncBarrierOpen=function(){
@@ -929,6 +929,7 @@ class RCGTaskManager{
 	
 	searchForFork(forkId){
 		var self=this;
+		debugger;
 		for (var i=0;i<self.globalForks.length;i++){
 			if (self.globalForks[i].forkId==forkId){
 				return self.globalForks[i];

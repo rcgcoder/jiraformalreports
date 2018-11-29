@@ -1196,8 +1196,12 @@ var jrfReport=class jrfReport {
 			self.addStep("Adding retrieved issuest to root list", function(){
 				return self.walkAsync(hsKeyWaiting,function(issue,iProf,key){
 					if (!self.rootIssues.exists(key)){
-						self.rootIssues.add(key,issue);
-						countAdded++;
+						issue.workOn(function(wIssue){
+							if (!wIssue.isProjectExcluded()){
+								self.rootIssues.add(key,wIssue);
+								countAdded++;
+							}
+						});
 					}
 				});
 			});

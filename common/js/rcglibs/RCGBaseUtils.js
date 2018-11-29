@@ -8,6 +8,10 @@ if (typeof require!=="undefined"){
 function isInNodeJS(){
 	return bInNodeJS;
 }
+function doDebugger(){
+	debugger;
+	return true;
+}
 
 //Only add setZeroTimeout to the window object, and hide everything
 //else in a closure.

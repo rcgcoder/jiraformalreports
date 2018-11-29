@@ -1195,17 +1195,12 @@ var jrfReport=class jrfReport {
 			
 			self.addStep("Adding retrieved issuest to root list", function(){
 				debugger;
-				return self.walkAsync(hsKeyWaiting,function(issue,iProf,key){
+				return self.workOnListOfIssueSteps(hsKeyWaiting,function(issue,iProf,key){
+					debugger;
 					if (!self.rootIssues.exists(key)){
-						if (isString(issue)){
-							log("The Issue has not been retrieved.... surely the project is excluded");
-						} else {
-							issue.workOn(function(wIssue){
-								if (!wIssue.isProjectExcluded()){
-									self.rootIssues.add(key,wIssue);
-									countAdded++;
-								}
-							});
+						if (!wIssue.isProjectExcluded()){
+							self.rootIssues.add(key,wIssue);
+							countAdded++;
 						}
 					}
 				});

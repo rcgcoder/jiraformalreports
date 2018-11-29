@@ -784,7 +784,7 @@ var jrfReport=class jrfReport {
 			}
 			
 			var fncExtractPendingKeys=function(inputIssue){
-				if ((inputIssue.id=="PFI-867")||(inputIssue.id=="PFI-858")){
+				if (inputIssue.id=="BENT-56"){
 					debugger;
 				}
 				nProcessedIssues++;

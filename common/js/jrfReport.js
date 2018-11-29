@@ -1339,10 +1339,10 @@ var jrfReport=class jrfReport {
 							return self.workOnListOfIssueSteps(relatedChilds,function(issueChild){
 								if (issueParent.getKey()==issueChild.getKey()){
 									//debugger;
-									logError("Child and Parent are the same "+auxKey+" -> "+ issueParent.getKey());
+									logError("Child and Parent are the same "+auxKey+" -> "+ issueChild.getKey());
 									log(issueParent.getRelatedIssuesByFunction());
-								} else 	if (issue.isProjectExcluded()){
-									logError("Related issues is excluded "+auxKey+" -> "+ issueParent.getKey());
+								} else 	if (issueChild.isProjectExcluded()){
+									logError("Related issues is excluded "+auxKey+" -> "+ issueChild.getKey());
 								} else {
 									var nChildsPrevParent=issueParent.countChilds();
 									var nChildsPrevChild=issueChild.countChilds();

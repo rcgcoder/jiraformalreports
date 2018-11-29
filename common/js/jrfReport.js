@@ -1194,6 +1194,7 @@ var jrfReport=class jrfReport {
 			var nExcludedIssues=0;
 			
 			self.addStep("Adding retrieved issuest to root list", function(){
+				debugger;
 				return self.walkAsync(hsKeyWaiting,function(issue,iProf,key){
 					if (!self.rootIssues.exists(key)){
 						if (isString(issue)){

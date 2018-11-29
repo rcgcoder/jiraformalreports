@@ -1195,11 +1195,12 @@ var jrfReport=class jrfReport {
 			
 			self.addStep("Adding retrieved issuest to root list", function(){
 				debugger;
-				return self.workOnListOfIssueSteps(hsKeyWaiting,function(issue,iProf,key){
+				return self.workOnListOfIssueSteps(hsKeyWaiting,function(issue){
 					debugger;
+					var key=issue.getKey();
 					if (!self.rootIssues.exists(key)){
-						if (!wIssue.isProjectExcluded()){
-							self.rootIssues.add(key,wIssue);
+						if (!issue.isProjectExcluded()){
+							self.rootIssues.add(key,issue);
 							countAdded++;
 						}
 					}

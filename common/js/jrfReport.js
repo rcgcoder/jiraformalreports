@@ -1081,7 +1081,7 @@ var jrfReport=class jrfReport {
 							//debugger;
 							var sCommentBody=oAdjustComment.body;
 							var sAux=sCommentBody.substring(sTokenAdjustComment.length+1,sCommentBody.length);
-							var oAdjusts=JSON.parse(sAux.saReplaceAll("\t","").saReplaceAll("\n","")); // may be a object (single change) or an array (multiple changes)
+							var oAdjusts=JSON.parse(sAux.saReplaceAll("\t","").saReplaceAll("\n","").saReplaceAll("\r","").saToString()); // may be a object (single change) or an array (multiple changes)
 							if (!Array.isArray(oAdjusts)){ // if only one change
 								oAdjusts=[oAdjusts]; // create as array
 							}

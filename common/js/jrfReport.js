@@ -1196,12 +1196,16 @@ var jrfReport=class jrfReport {
 			self.addStep("Adding retrieved issuest to root list", function(){
 				return self.walkAsync(hsKeyWaiting,function(issue,iProf,key){
 					if (!self.rootIssues.exists(key)){
-						issue.workOn(function(wIssue){
-							if (!wIssue.isProjectExcluded()){
-								self.rootIssues.add(key,wIssue);
-								countAdded++;
-							}
-						});
+						if (isString(issue)){
+							log("The Issue has not been retrieved.... surely the project is excluded");
+						} else {
+							issue.workOn(function(wIssue){
+								if (!wIssue.isProjectExcluded()){
+									self.rootIssues.add(key,wIssue);
+									countAdded++;
+								}
+							});
+						}
 					}
 				});
 			});

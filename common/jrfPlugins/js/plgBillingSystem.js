@@ -610,7 +610,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 			var importePendiente=0;
 			var workedPercent=0;
 			var bNoExiste=false;
-			arrSnapshots.forEach(function(snapshot){
+			arrSnapshots.forEach(function(snapshot){  // cada snapshot tiene una fecha..... si aso
 				hourCost=snapshot.source.hourCost;
 				minFacturableFase=snapshot.source.minFacturableFase;
 				actFase=snapshot.source.faseActual;
@@ -800,14 +800,14 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 						
 						var workRemaining=workTotal-workDefined;
 						if (workRemaining<0){
-							sErrores.saAppend("\n ¡¡¡ ERROR !!! "+sSnapshotDate+` - El trabajo restante es negativo. Se establece a 0
+/*							sErrores.saAppend("\n ¡¡¡ ERROR !!! "+sSnapshotDate+` - El trabajo restante es negativo. Se establece a 0
 											Trabajo Aprobado:`+snapshot.calculos.inTimespents.aprobado+`
 											Trabajo Pendiente:`+snapshot.calculos.inTimespents.pendiente+`
 											Resto Trabajo definido:`+workDefined+`
 											Trabajo definido Total:`+snapshot.calculos.inTimespents.resto+`
 											Trabajo Total:`+workTotal+ "(TOE:"+snapshot.source.timeoriginalestimate
 												+",TE"+snapshot.source.timeestimate+",TS:"+snapshot.source.timespent+")");
-							workRemaining=0;
+*/							workRemaining=0;
 						}
 						var workAux=0;
 						var workAuxImporte=0;

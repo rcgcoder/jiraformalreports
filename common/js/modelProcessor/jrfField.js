@@ -9,6 +9,9 @@ var jrfField=class jrfField extends jrfToken{//this kind of definition allows to
 	}
 	apply(){
 		var self=this;
+		if (self.format=="rendered"){
+			debugger;
+		}
 		var bRendered=(self.format=="jiramarkup");
 		var sValue;
 		if (!isDefined(self.reportElem.fieldValue)){

@@ -706,7 +706,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 					var arrFaseUndefined=[];
 					// segunda parte .... antFase -- 6 ... para incorporar las nuevas fases trabajadas
 					var bDefinedImporte=true;
-					for (var nFase=antFase;(nFase<5)&&bDefinedImporte;nFase++){
+					for (var nFase=(antFase+1);(nFase<5)&&bDefinedImporte;nFase++){
 						fieldFaseName=self.getFieldFaseBillingName(nFase);
 						if (snapshot.importesdefinidos.importesReales[fieldFaseName]){
 							actFaseImporte=snapshot.importesReales[fieldFaseName];

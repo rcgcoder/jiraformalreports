@@ -11,7 +11,7 @@ var jrfField=class jrfField extends jrfToken{//this kind of definition allows to
 		var self=this;
 		var sRenderedPostText="";
 		if (self.format=="rendered"){
-			sRenderedPostText="_rendered":
+			sRenderedPostText="_rendered";
 			debugger;
 		}
 		var bRendered=(self.format=="jiramarkup");

@@ -638,6 +638,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 				snapshot.calculos.inTimespents.avance=0;
 				snapshot.calculos.inTimespents.total=0;
 				snapshot.calculos.comentarios="";
+				debugger;
 				if (bNoExiste){
 					// no existia
 				} else if ((previousDate==="")||(antFase<minFacturableFase)){// is the first or the first facturable

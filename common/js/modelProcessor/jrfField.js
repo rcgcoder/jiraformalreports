@@ -9,7 +9,9 @@ var jrfField=class jrfField extends jrfToken{//this kind of definition allows to
 	}
 	apply(){
 		var self=this;
+		var sRenderedPostText="";
 		if (self.format=="rendered"){
+			sRenderedPostText="_rendered":
 			debugger;
 		}
 		var bRendered=(self.format=="jiramarkup");
@@ -22,7 +24,7 @@ var jrfField=class jrfField extends jrfToken{//this kind of definition allows to
 				/*if (self.fieldName=="Billing.calculos.comentarios"){
 					debugger;
 				}*/
-				sValue=self.reportElem.fieldValue(self.fieldName,true,self.datetime,self.otherParams);
+				sValue=self.reportElem.fieldValue(self.fieldName+sRenderedPostText,true,self.datetime,self.otherParams);
 				if (isString(sValue)&&(sValue.indexOf("&lt;jrf")>=0)){// if there is jrf tokens in the description
 					var sHtml=decodeEntities(sValue);
 					var theModel;

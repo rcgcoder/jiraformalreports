@@ -8,11 +8,13 @@ function newIssueFactory(report){
 		allFieldDefinitions.push({name:element.key,description:element.name});
 		hsFieldNames.add(element.name,element.key); // to do a reverse search
 		hsFieldNames.add(element.key,element.name); // to do a reverse search
+		allFieldDefinitions.push({name:element.key+"_rendered",description:"Rendered content of "+ element.name});
 	});
 	theReport.config.useOtherFields.forEach(function(element){
 		allFieldDefinitions.push({name:element.key,description:element.name});
 		hsFieldNames.add(element.name,element.key); // to do a reverse search
 		hsFieldNames.add(element.key,element.name); // to do a reverse search
+		allFieldDefinitions.push({name:element.key+"_rendered",description:"Rendered content of "+ element.name});
 	});
 	var dynObj=newDynamicObjectFactory( 
 			[{name:"Child",description:"SubIssues for Billing",type:"object"},
@@ -989,15 +991,30 @@ function newIssueFactory(report){
 		self.setChangelog(jiraObject.changelog);
 		self.setIssueUrl(jiraObject.self);
 		var issueFields=jiraObject.fields;
+		var renderedFields=jiraObject.renderedFields;
 		var useFields=theReport.config.useFields;
 		var useOtherFields=theReport.config.useOtherFields;
 		var useLinks=theReport.config.useIssueLinkTypes;
-		useFields.forEach(function(element){
-			self.setAttributeValueByName(element.key,issueFields[element.key]);
-		});
-		useOtherFields.forEach(function(element){
-			self.setAttributeValueByName(element.key,issueFields[element.key]);
-		});
+		var fncAddAttr=function(element){
+			var vValue=issueFields[element.key];
+			var vRendered=vValue;
+			if (isString(vValue)){
+				vRendered=renderedFields[element.key];
+				if (isDefined(vRendered)
+					&&(!isNull(vRendered))
+					&&(!isObject(vRendered))
+					&&(isString(vRendered))
+					){
+					log("value rendered");
+				} else {
+					vRendered=vValue;
+				}
+			}
+			self.setAttributeValueByName(element.key,vValue);
+			self.setAttributeValueByName(element.key+"_rendered",vRendered);
+		}
+		useFields.forEach(fncAddAttr);
+		useOtherFields.forEach(fncAddAttr);
 		var issueLinks=issueFields.issuelinks;
 		var typeLink;
 		var directionName;

@@ -444,7 +444,16 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		});
 		webapp.addStep("change content in result window",function(){
 			self.openInWindow(oContent.idContent,oContent.callback,oContent.idIframe,oContent.divId);
-		});
+        });
+        webapp.addStep("Retrieving images and replace html elements with the content",function(){
+            var ifr=document.getElementById(oContent.idIframe);
+            var ifrDoc=ifr.contentDocument;
+		    var arrImages=($ifrDoc).find("img");
+            debugger;
+        });
+		webapp.addStep("change content in result window",function(){
+			self.openInWindow(oContent.idContent,oContent.callback,oContent.idIframe,oContent.divId);
+        });
 	}
 }
 

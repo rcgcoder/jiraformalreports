@@ -484,7 +484,9 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
                     log (xhr);
                     log(sUrl);
                     log(headers);
-                    var b = new Blob([arrBytes], {type: 'application/octet-stream'});
+//                    var b = new Blob([arrBytes], {type: 'application/octet-stream'});
+                    var b = new Blob([arrBytes], {type: 'image/jpeg'});
+
                     webapp.addStep("Creating dataUrl",function(){
                         var reader = new FileReader();
                         var fncContinue=webapp.createManagedCallback(function(){

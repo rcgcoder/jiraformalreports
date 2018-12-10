@@ -322,7 +322,20 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		jqNotVisibles.remove(); 
 //		$(iFrameDocument.body).find("td").not(":visible").remove(); 
 //		$(iFrameDocument.body).find("th").not(":visible").remove(); 
-	}
+    }
+    toDataURL(url, callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function() {
+            var reader = new FileReader();
+            reader.onloadend = function() {
+            callback(reader.result);
+            }
+            reader.readAsDataURL(xhr.response);
+        };
+        xhr.open('GET', url);
+        xhr.responseType = 'blob';
+        xhr.send();
+    }
 	cleanContent(oContent){
         var self=this;
 	    var intContent=self.getInteractiveContent(oContent.idContent);
@@ -448,11 +461,22 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
         webapp.addStep("Retrieving images and replace html elements with the content",function(){
             var ifr=document.getElementById(oContent.idIframe);
             var ifrDoc=ifr.contentDocument;
-		    var arrImages=($ifrDoc).find("img");
+            var arrImages=$(ifrDoc).find("img");
             debugger;
-        });
-		webapp.addStep("change content in result window",function(){
-			self.openInWindow(oContent.idContent,oContent.callback,oContent.idIframe,oContent.divId);
+            webapp.parallelizeProcess(arrImages.length,function(indImage){
+                var srcImage=arrImages[indImage];
+                var jgImgChange=$(srcImage);
+                var sImgUrl=jgImgChange.attr("src");
+                log("Imagen:"+sImgUrl);
+                webapp.addStep("Retrieving image:"+sImgUrl,function(){
+                    self.toDataURL(sImgUrl,function(sDataUrl){
+                        webapp.continueTask([sDataUrl]);
+                    });
+                });
+                webapp.addStep("Processing image:"+sImgUrl,function(sDataUrl){
+                    jqImgChange.attr("src",sDataUrl);
+                });
+            });
         });
 	}
 }

@@ -1768,6 +1768,7 @@ var jrfReport=class jrfReport {
 				return sModelProcessedResult;
 			});
         });
+        /*
 		self.addStep("Replacing all img tags to img crossorigin=Anonymous",function(sModelProcessedResult){
             debugger;
             var strTgt="<img ";
@@ -1796,7 +1797,7 @@ var jrfReport=class jrfReport {
             
             return saAux;
         });
-
+*/
 		self.addStep("Setting the HTML",function(sModelProcessedResult){
 			self.allIssues.logStats();
 			var tm=self.getTaskManager();

@@ -266,7 +266,6 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		if (self.config.NewWindow){
 			self.openResultInNewTab();
         }*/
-        return System.webapp.waitForEvent();
 	}
 	getResultFromBrowser(idIframe){
 		var ifr=document.getElementById(idIframe);

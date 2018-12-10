@@ -1871,9 +1871,9 @@ var jrfReport=class jrfReport {
 						});
 					});*/
 				});
-				setTimeout(function(){
+				setTimeout(self.createManagedFunction(function(){
 					modelInteractiveFunctions.openInWindow(thePageId,fncCallback,"ReportResult","reportResultDiv");
-                },3000);
+                }),3000);
                 return self.waitForEvent();
 			}
 			return fncLaunchPages(self.pageResultId);

@@ -458,24 +458,42 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		webapp.addStep("change content in result window",function(){
 			self.openInWindow(oContent.idContent,oContent.callback,oContent.idIframe,oContent.divId);
         });
-        webapp.addStep("Retrieving images and replace html elements with the content",function(){
+        webapp.addStep("Converting image urls to imagedata",function(){
             var ifr=document.getElementById(oContent.idIframe);
             var ifrDoc=ifr.contentDocument;
             var arrImages=$(ifrDoc).find("img");
+            var imgCaches=newHashMap();
             debugger;
-            webapp.parallelizeProcess(arrImages.length,function(indImage){
-                var srcImage=arrImages[indImage];
-                var jgImgChange=$(srcImage);
-                var sImgUrl=jgImgChange.attr("src");
-                log("Imagen:"+sImgUrl);
-                webapp.addStep("Retrieving image:"+sImgUrl,function(){
-                    self.toDataURL(sImgUrl,function(sDataUrl){
-                        webapp.continueTask([sDataUrl]);
-                    });
-                    return webapp.waitForEvent();
+            webapp.addStep("getting images data url",function(){
+                webapp.parallelizeProcess(arrImages.length,function(indImage){
+                    var theImg=arrImages[indImage];
+                    var jqImgChange=$(theImg);
+                    var sImgUrl=jqImgChange.attr("src");
+                    if (!imgCaches.exists(sImgUrl)){
+                        var objCache={indexes:[],content:""};
+                        imgCaches.add(sImgUrl,objCache);
+                        var canvas = document.createElement('canvas');
+                        canvas.width = theImg.naturalWidth; // or 'width' if you want a special/scaled size
+                        canvas.height = theImg.naturalHeight; // or 'height' if you want a special/scaled size
+                        canvas.getContext('2d').drawImage(theImg, 0, 0);
+                        var dataUrl=canvas.toDataURL('image/png');
+                        jqImgChange.attr("src",dataUrl);
+                        objCache.content=dataUrl;
+                    } else {
+                        var objCache=imgCaches.getValue(sImgUrl);
+                        objCache.indexes.push(indImage);
+                    }
                 });
-                webapp.addStep("Processing image:"+sImgUrl,function(sDataUrl){
-                    jqImgChange.attr("src",sDataUrl);
+            });
+            webapp.addStep("Setting dataurls",function(){
+                webapp.parallelizeProcess(imgCaches,function(imgCache){
+                    var arrIndexes=imgCache.indexes;
+                    webapp.sequentialProcess(arrIndexes,function(imgIndex){
+                        var theImg=arrImages[imgIndex];
+                        var jqImgChange=$(theImg);
+                        var dataUrl=imgCache.content;
+                        jqImgChange.attr("src",dataUrl);
+                    });
                 });
             });
         });

@@ -265,7 +265,8 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 /*		self.result=sModelProcessedResult;
 		if (self.config.NewWindow){
 			self.openResultInNewTab();
-		}*/
+        }*/
+        return self.waitForEvent();
 	}
 	getResultFromBrowser(idIframe){
 		var ifr=document.getElementById(idIframe);
@@ -448,7 +449,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
         });
 		webapp.addStep("change content in result window",function(){
             intContent.html=sModelAux;
-			self.openInWindow(oContent.idContent,oContent.callback,oContent.idIframe,oContent.divId);
+			return self.openInWindow(oContent.idContent,oContent.callback,oContent.idIframe,oContent.divId);
         });
         webapp.addStep("Converting image urls to imagedata",function(){
             var ifr=document.getElementById(oContent.idIframe);

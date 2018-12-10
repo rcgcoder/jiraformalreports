@@ -1863,16 +1863,18 @@ var jrfReport=class jrfReport {
 		self.addStep("Finally... launches the page results html.... ",function(){
 			var fncLaunchPages=function(idPage){
 				var thePageId=idPage;
-				var fncCallback=function(){
+				var fncCallback=self.createManagedCallback(function(){
+                    log("Loading callback called");
 /*					setTimeout(function(){
 						modelInteractiveFunctions.openInWindow(thePageId,function(){
 							alert("Page Loaded");
 						});
 					});*/
-				}
+				});
 				setTimeout(function(){
 					modelInteractiveFunctions.openInWindow(thePageId,fncCallback,"ReportResult","reportResultDiv");
-				},3000);
+                },3000);
+                return self.waitForEvent();
 			}
 			return fncLaunchPages(self.pageResultId);
 		});

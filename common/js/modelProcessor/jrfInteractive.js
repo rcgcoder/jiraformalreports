@@ -448,7 +448,8 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
         });
 		webapp.addStep("change content in result window",function(){
             intContent.html=sModelAux;
-			return self.openInWindow(oContent.idContent,oContent.callback,oContent.idIframe,oContent.divId);
+            self.openInWindow(oContent.idContent,oContent.callback,oContent.idIframe,oContent.divId);
+            return webapp.waitForEvent();
         });
         webapp.addStep("Converting image urls to imagedata",function(){
             var ifr=document.getElementById(oContent.idIframe);

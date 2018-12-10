@@ -477,21 +477,39 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
                 }
 				var fncProcess=function(indImage,sResponse){
                     if (!isString(sResponse)) return;
-                    var arrBytes=[];
-                    for (var i=0;i<sResponse.length;i++){
-                        arrBytes.push(sResponse.charCodeAt(i));
+                    var theImg=arrImages[indImage];
+                    var jqImgChange=$(theImg);
+                    var sImgUrl=jqImgChange.attr("src");
+                    var bIsJpg=false;
+                    var bIsPng=false;
+                    var bIsSVG=false;
+                    if ((sImgUrl.indexOf("jpg")>=0)
+                        ||(sImgUrl.indexOf("jpeg")>=0)){
+                        bIsJpg=true;
+                    } else if (sImgUrl.indexOf("jpg")>=0){
+                        bIsPng=true;
+                    } else {
+                        bIsSVG=true;
                     }
-                    var b = new Blob([arrBytes], {type: 'application/octet-stream'});
-                    webapp.addStep("Creating dataUrl",function(){
-                        var reader = new FileReader();
-                        var fncContinue=webapp.createManagedCallback(function(){
-                            debugger;
-                            return reader.result;
+                    if (!bIsSVG){
+                        var arrBytes=[];
+                        for (var i=0;i<sResponse.length;i++){
+                            arrBytes.push(sResponse.charCodeAt(i));
+                        }
+                        var b = new Blob([arrBytes], {type: 'application/octet-stream'});
+                        webapp.addStep("Creating dataUrl",function(){
+                            var reader = new FileReader();
+                            var fncContinue=webapp.createManagedCallback(function(){
+                                debugger;
+                                return reader.result;
+                            });
+                            reader.onloadend = fncContinue;
+                            reader.readAsDataURL(b);
+                            return webapp.waitForEvent();
                         });
-                        reader.onloadend = fncContinue;
-                        reader.readAsDataURL(b);
-                        return webapp.waitForEvent();
-                    });
+                    } else {
+                        log(sResponse);
+                    }
                     webapp.addStep("Assigning to image",function(dataUrl){
                         var theImg=arrImages[indImage];
                         var jqImgChange=$(theImg);

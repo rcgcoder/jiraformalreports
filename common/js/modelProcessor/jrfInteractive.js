@@ -486,7 +486,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
                     if ((sImgUrl.indexOf("jpg")>=0)
                         ||(sImgUrl.indexOf("jpeg")>=0)){
                         bIsJpg=true;
-                    } else if (sImgUrl.indexOf("jpg")>=0){
+                    } else if (sImgUrl.indexOf("png")>=0){
                         bIsPng=true;
                     } else {
                         bIsSVG=true;
@@ -507,17 +507,19 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
                             reader.readAsDataURL(b);
                             return webapp.waitForEvent();
                         });
+                        webapp.addStep("Assigning to image",function(dataUrl){
+                            var theImg=arrImages[indImage];
+                            var jqImgChange=$(theImg);
+                            var sImgUrl=jqImgChange.attr("src");
+                            jqImgChange.attr("src",dataUrl);
+                            var objCache=imgCaches.getValue(sImgUrl);
+                            objCache.content=dataUrl;
+                        });
                     } else {
                         log(sResponse);
+                        var prevId=jqImgChange.attr('id');
+                        jqImgChange.replaceWith( $('<div/>').append(sResponse).find('svg:first').attr('id',prevId) );
                     }
-                    webapp.addStep("Assigning to image",function(dataUrl){
-                        var theImg=arrImages[indImage];
-                        var jqImgChange=$(theImg);
-                        var sImgUrl=jqImgChange.attr("src");
-                        jqImgChange.attr("src",dataUrl);
-                        var objCache=imgCaches.getValue(sImgUrl);
-                        objCache.content=dataUrl;
-                    });
 				}
 				return webapp.parallelizeCalls(arrImages.length,fncGetImageCall,fncProcess,1);
             });

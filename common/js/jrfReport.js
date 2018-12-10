@@ -373,7 +373,8 @@ var jrfReport=class jrfReport {
 								"js/modelProcessor/jrfDirective.js",
 								"js/modelProcessor/jrfInclude.js",
 								"js/libs/xlsx.core.min.js",
-								"js/rcglibs/RCGExcelProcessor.js"
+								"js/rcglibs/RCGExcelProcessor.js",
+								"js/libs/html2canvas.min.js"
 //								"https://unpkg.com/xlsx/dist/xlsx.full.min.js"
 //								"https://unpkg.com/blob.js@1.0.1/Blob.js",
 //								"https://unpkg.com/file-saver@1.3.3/FileSaver.js"

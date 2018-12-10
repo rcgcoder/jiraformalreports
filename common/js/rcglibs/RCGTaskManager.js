@@ -1364,9 +1364,9 @@ class RCGTaskManager{
 						});
 					}
 					if (isDefined(fncProcess)){
-						self.addStep("Petition:"+iPet+" Processing result and Trying Next Call...",function(objResult){
+						self.addStep("Petition:"+iPet+" Processing result and Trying Next Call...",function(objResult,xhr,sUrl,headers){
 	//						log("Start the "+iPet+" Processing of parallel process");
-							return fncProcess(item,objResult,itemKey);
+							return fncProcess(item,objResult,itemKey,xhr,sUrl,headers);
 	//						log("End of the "+iPet+" Processing of parallel process");
 						});
 					} 

@@ -475,13 +475,15 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
                         return objCache;
                     }
                 }
-				var fncProcess=function(indImage,sResponse){
+				var fncProcess=function(indImage,sResponse,itemKey,xhr,sUrl,headers){
                     if (!isString(sResponse)) return;
                     var arrBytes=[];
                     for (var i=0;i<sResponse.length;i++){
                         arrBytes.push(sResponse.charCodeAt(i));
                     }
-                
+                    log (xhr);
+                    log(sUrl);
+                    log(headers);
                     var b = new Blob([arrBytes], {type: 'application/octet-stream'});
                     webapp.addStep("Creating dataUrl",function(){
                         var reader = new FileReader();

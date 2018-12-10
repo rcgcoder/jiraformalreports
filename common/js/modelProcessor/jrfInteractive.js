@@ -466,7 +466,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
             var imgCaches=newHashMap();
             debugger;
             webapp.addStep("getting images data url",function(){
-                webapp.parallelizeProcess(arrImages.length,function(indImage){
+                return webapp.parallelizeProcess(arrImages.length,function(indImage){
                     var theImg=arrImages[indImage];
                     var jqImgChange=$(theImg);
                     var sImgUrl=jqImgChange.attr("src");
@@ -501,9 +501,9 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
                 });
             });
             webapp.addStep("Setting dataurls",function(){
-                webapp.parallelizeProcess(imgCaches,function(imgCache){
+                return webapp.parallelizeProcess(imgCaches,function(imgCache){
                     var arrIndexes=imgCache.indexes;
-                    webapp.sequentialProcess(arrIndexes,function(imgIndex){
+                    return webapp.sequentialProcess(arrIndexes,function(imgIndex){
                         var theImg=arrImages[imgIndex];
                         var jqImgChange=$(theImg);
                         var dataUrl=imgCache.content;

@@ -472,6 +472,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
                     self.toDataURL(sImgUrl,function(sDataUrl){
                         webapp.continueTask([sDataUrl]);
                     });
+                    return webapp.waitForEvent();
                 });
                 webapp.addStep("Processing image:"+sImgUrl,function(sDataUrl){
                     jqImgChange.attr("src",sDataUrl);

@@ -386,7 +386,9 @@ class RCGAtlassian{
 					'oauth_token="' +tokenAccess+'",'+
 					'oauth_version="'+"1.0"+'"';
 			log("OAUT STRING:"+oAuthString);
-			sTargetUrl="/jfreports/proxy/"+"rcgcoder.atlassian.net"+"/endproxy"+sTargetUrl;
+//			sTargetUrl="/jfreports/ANTproxy/"+"paega2.atlassian.net"+"/endproxy"+sTargetUrl;
+            var arrTgt=sTargetUrl.split("://");
+			sTargetUrl="/jfreports/NEWproxy/"+arrTgt[1];
 			var options = {
 				url: sTargetUrl,
 				method: newType,

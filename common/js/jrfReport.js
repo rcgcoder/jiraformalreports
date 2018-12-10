@@ -1771,7 +1771,7 @@ var jrfReport=class jrfReport {
 		self.addStep("Replacing all img tags to img crossorigin=Anonymous",function(sModelProcessedResult){
             debugger;
             var strTgt="<img ";
-            var sReplace='<img crossorigin="Anonymous" ';
+            var sReplace='<img crossorigin="anonymous" ';
             var saAux=sModelProcessedResult;
             var iPosAnt=0;
             var iPos=saAux.saFindPos(strTgt,false,0);
@@ -1783,7 +1783,7 @@ var jrfReport=class jrfReport {
             }
 
             var strTgt="<jira-attachment-thumbnail ";
-            var sReplace='<jira-attachment-thumbnail crossorigin="Anonymous" ';
+            var sReplace='<jira-attachment-thumbnail crossorigin="anonymous" ';
             var saAux=sModelProcessedResult;
             var iPosAnt=0;
             var iPos=saAux.saFindPos(strTgt,false,0);

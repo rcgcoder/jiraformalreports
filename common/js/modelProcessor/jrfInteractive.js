@@ -479,7 +479,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
                         
                             var b = new Blob([arrBytes], {type: 'application/octet-stream'});
                             var reader = new FileReader();
-                            reader.onloadend = webapp.createManagedCallback(function() {
+                            reader.onloadend = webapp.createManagedFunction(function() {
                                 return reader.result;
                             });
                             reader.readAsDataURL(b);

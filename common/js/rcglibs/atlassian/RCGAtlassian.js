@@ -385,9 +385,6 @@ class RCGAtlassian{
 			var oAuthString= ' OAuth oauth_consumer_key="'+"OauthKey"+'",'+
 					'oauth_token="' +tokenAccess+'",'+
 					'oauth_version="'+"1.0"+'"';
-			var oAuthString= ' OAuth oauth_consumer_key='+"OauthKey"+','+
-					'oauth_token=' +tokenAccess+','+
-					'oauth_version='+"1.0"+'';
 			log("OAUT STRING:"+oAuthString);
 //			sTargetUrl="/jfreports/ANTproxy/"+"paega2.atlassian.net"+"/endproxy"+sTargetUrl;
 			sTargetUrl="/jfreports/proxy/"+"paega2.atlassian.net"+"/endproxy"+"/secure/thumbnail/41486/screenshot-1.png";

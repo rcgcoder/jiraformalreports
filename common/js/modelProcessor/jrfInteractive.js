@@ -461,41 +461,48 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
             var imgCaches=newHashMap();
             debugger;
             webapp.addStep("getting images data url",function(){
-                return webapp.parallelizeProcess(arrImages.length,function(indImage){
+				var fncGetImageCall=function(indImage){
                     var theImg=arrImages[indImage];
                     var jqImgChange=$(theImg);
                     var sImgUrl=jqImgChange.attr("src");
                     if (!imgCaches.exists(sImgUrl)){
                         var objCache={indexes:[],content:""};
                         imgCaches.add(sImgUrl,objCache);
-                        webapp.addStep("Calling "+sImgUrl,function(){
-                            return webapp.getJira().apiCall(sImgUrl);
-                        });
-                        webapp.addStep("processing",function(sResponse,xhr,sUrl,headers){
-                            var arrBytes=[];
-                            for (var i=0;i<sResponse.length;i++){
-                                arrBytes.push(sResponse.charCodeAt(i));
-                            }
-                        
-                            var b = new Blob([arrBytes], {type: 'application/octet-stream'});
-                            var reader = new FileReader();
-                            var fncContinue=webapp.createManagedCallback(function(){
-                                debugger;
-                                return reader.result;
-                            });
-                            reader.onloadend = fncContinue;
-                            reader.readAsDataURL(b);
-                            return webapp.waitForEvent();
-                        });
-                        webapp.addStep("Assigning to image",function(dataUrl){
-                            jqImgChange.attr("src",dataUrl);
-                            objCache.content=dataUrl;
-                        });
+                        return webapp.getJira().apiCall(sImgUrl);
                     } else {
                         var objCache=imgCaches.getValue(sImgUrl);
                         objCache.indexes.push(indImage);
+                        return objCache;
                     }
-                });
+                }
+				var fncProcess=function(indImage,sResponse){
+                    if (isObject(indImage)) return;
+                    var arrBytes=[];
+                    for (var i=0;i<sResponse.length;i++){
+                        arrBytes.push(sResponse.charCodeAt(i));
+                    }
+                
+                    var b = new Blob([arrBytes], {type: 'application/octet-stream'});
+                    webapp.addStep("Creating dataUrl",function(){
+                        var reader = new FileReader();
+                        var fncContinue=webapp.createManagedCallback(function(){
+                            debugger;
+                            return reader.result;
+                        });
+                        reader.onloadend = fncContinue;
+                        reader.readAsDataURL(b);
+                        return webapp.waitForEvent();
+                    });
+                    webapp.addStep("Assigning to image",function(dataUrl){
+                        var theImg=arrImages[indImage];
+                        var jqImgChange=$(theImg);
+                        var sImgUrl=jqImgChange.attr("src");
+                        jqImgChange.attr("src",dataUrl);
+                        var objCache=imgCaches.getValue(sImgUrl);
+                        objCache.content=dataUrl;
+                    });
+				}
+				return webapp.parallelizeCalls(arrImages.length,fncGetImageCall,fncProcess,1);
             });
             webapp.addStep("Setting dataurls",function(){
                 return webapp.parallelizeProcess(imgCaches,function(imgCache){

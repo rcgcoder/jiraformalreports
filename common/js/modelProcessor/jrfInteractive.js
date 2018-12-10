@@ -470,20 +470,25 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
                     var theImg=arrImages[indImage];
                     var jqImgChange=$(theImg);
                     var sImgUrl=jqImgChange.attr("src");
-                    if (!imgCaches.exists(sImgUrl)){
-                        var objCache={indexes:[],content:""};
-                        imgCaches.add(sImgUrl,objCache);
-                        var canvas = document.createElement('canvas');
-                        canvas.width = theImg.naturalWidth; // or 'width' if you want a special/scaled size
-                        canvas.height = theImg.naturalHeight; // or 'height' if you want a special/scaled size
-                        canvas.getContext('2d').drawImage(theImg, 0, 0);
-                        var dataUrl=canvas.toDataURL('image/png');
-                        jqImgChange.attr("src",dataUrl);
-                        objCache.content=dataUrl;
-                    } else {
-                        var objCache=imgCaches.getValue(sImgUrl);
-                        objCache.indexes.push(indImage);
-                    }
+                    webapp.addStep("Calling "+sImgUrl,function(){
+                        return webapp.apiCall(sImgUrl);
+                    });
+                    webapp.addStep("processing",function(){
+                        if (!imgCaches.exists(sImgUrl)){
+                            var objCache={indexes:[],content:""};
+                            imgCaches.add(sImgUrl,objCache);
+                            var canvas = document.createElement('canvas');
+                            canvas.width = theImg.naturalWidth; // or 'width' if you want a special/scaled size
+                            canvas.height = theImg.naturalHeight; // or 'height' if you want a special/scaled size
+                            canvas.getContext('2d').drawImage(theImg, 0, 0);
+                            var dataUrl=canvas.toDataURL('image/png');
+                            jqImgChange.attr("src",dataUrl);
+                            objCache.content=dataUrl;
+                        } else {
+                            var objCache=imgCaches.getValue(sImgUrl);
+                            objCache.indexes.push(indImage);
+                        }
+                    });
                 });
             });
             webapp.addStep("Setting dataurls",function(){

@@ -468,28 +468,20 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
                     if (!imgCaches.exists(sImgUrl)){
                         var objCache={indexes:[],content:""};
                         imgCaches.add(sImgUrl,objCache);
-                        return webapp.getJira().apiCall(sImgUrl,undefined,undefined,undefined,"blob");
+                        return webapp.getJira().apiCall(sImgUrl);
                     } else {
                         var objCache=imgCaches.getValue(sImgUrl);
                         objCache.indexes.push(indImage);
                         return objCache;
                     }
                 }
-				var fncProcess=function(indImage,sResponse,itemKey,xhr,sUrl,headers){
-                    debugger;
-/*                    if (!isString(sResponse)) return;
+				var fncProcess=function(indImage,sResponse){
+                    if (!isString(sResponse)) return;
                     var arrBytes=[];
                     for (var i=0;i<sResponse.length;i++){
                         arrBytes.push(sResponse.charCodeAt(i));
                     }
-                    log (xhr);
-                    log(sUrl);
-                    log(headers);
-//                    var b = new Blob([arrBytes], {type: 'application/octet-stream'});
-                    var b = new Blob([arrBytes], {type: 'image/jpeg'});
-*/
-                    var b=sResponse;
-                    if (!(b instanceof Blob)) return;
+                    var b = new Blob([arrBytes], {type: 'application/octet-stream'});
                     webapp.addStep("Creating dataUrl",function(){
                         var reader = new FileReader();
                         var fncContinue=webapp.createManagedCallback(function(){

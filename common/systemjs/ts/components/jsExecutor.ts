@@ -28,10 +28,12 @@ export class jsExecutor {
                  `;
         self.addStep("Executing text area code.... ",function(){
             log("executing the code:"+code);
-            var mnCall=self.createManagedCallback(function(){
+            return executeFunction([],code);
+/*            var mnCall=self.createManagedCallback(function(){
                 executeFunction([],code);
             });
-            mnCall();
+            return mnCall();
+        */
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
         // apply
     }

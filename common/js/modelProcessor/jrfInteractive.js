@@ -454,7 +454,23 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 				fncAddStepOuther(pair,fncAddStepOuther);
 			});
 			return sModelAux;
-		});
+        });
+		webapp.addStep("Replacing all img tags to img crossorigin=Anonymous",function(sModelAux){
+            debugger;
+            var strTgt="<img ";
+            var sReplace='<img crossorigin="Anonymous" ';
+            iPos=sModeAux.saFindPos(strTgt,false,0);
+            var saAux=sModelAux;
+            var iPosAnt=0;
+		    while ((iPos>=0)&&(iPos>=iPosAnt)){
+                saAux=saAux.saReplace(iPos,strTgt.length,sReplace);
+                iPos+=sReplace.length;
+                iPosAnt=iPos;
+                iPos=sModeAux.saFindPos(strTgt,false,iPos);
+            }
+            sModelAux=saAux;
+            return sModelAux;
+        });
 		webapp.addStep("change content in result window",function(){
 			self.openInWindow(oContent.idContent,oContent.callback,oContent.idIframe,oContent.divId);
         });

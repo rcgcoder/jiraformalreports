@@ -231,7 +231,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	    			adjustIframeWidth(theIframe)});
 	    	} else {
 	    		log("Horizontal Scroll is not viewing. end of width adjust");
-				if (isDefined(callback))callback();
+				if (isDefined(callback)) callback();
 	    	}
 	    };        
 	    var ifr=document.getElementById(iFrameId);
@@ -266,7 +266,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		if (self.config.NewWindow){
 			self.openResultInNewTab();
         }*/
-        return self.waitForEvent();
+        return webapp.waitForEvent();
 	}
 	getResultFromBrowser(idIframe){
 		var ifr=document.getElementById(idIframe);

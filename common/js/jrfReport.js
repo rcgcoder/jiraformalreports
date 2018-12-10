@@ -1767,7 +1767,23 @@ var jrfReport=class jrfReport {
 				self.allIssues.logStats();
 				return sModelProcessedResult;
 			});
-		});
+        });
+		self.addStep("Replacing all img tags to img crossorigin=Anonymous",function(sModelProcessedResult){
+            debugger;
+            var strTgt="<img ";
+            var sReplace='<img crossorigin="Anonymous" ';
+            var saAux=sModelProcessedResult;
+            var iPosAnt=0;
+            var iPos=saAux.saFindPos(strTgt,false,0);
+		    while ((iPos>=0)&&(iPos>=iPosAnt)){
+                saAux=saAux.saReplace(iPos,strTgt.length,sReplace);
+                iPos+=sReplace.length;
+                iPosAnt=iPos;
+                iPos=saAux.saFindPos(strTgt,false,iPos);
+            }
+            return saAux;
+        });
+
 		self.addStep("Setting the HTML",function(sModelProcessedResult){
 			self.allIssues.logStats();
 			var tm=self.getTaskManager();

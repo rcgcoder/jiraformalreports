@@ -455,24 +455,8 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			});
 			return sModelAux;
         });
-		webapp.addStep("Replacing all img tags to img crossorigin=Anonymous",function(){
-            debugger;
-            var strTgt="<img ";
-            var sReplace='<img crossorigin="Anonymous" ';
-            var saAux=sModelAux;
-            var iPosAnt=0;
-            var iPos=saAux.saFindPos(strTgt,false,0);
-		    while ((iPos>=0)&&(iPos>=iPosAnt)){
-                saAux=saAux.saReplace(iPos,strTgt.length,sReplace);
-                iPos+=sReplace.length;
-                iPosAnt=iPos;
-                iPos=saAux.saFindPos(strTgt,false,iPos);
-            }
-            sModelAux=saAux;
-            return sModelAux;
-        });
 		webapp.addStep("change content in result window",function(){
-//            intContent.html=sModelAux;
+            intContent.html=sModelAux;
 			self.openInWindow(oContent.idContent,oContent.callback,oContent.idIframe,oContent.divId);
         });
 /*        webapp.addStep("Converting image urls to imagedata",function(){

@@ -469,7 +469,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
                         var objCache={indexes:[],content:""};
                         imgCaches.add(sImgUrl,objCache);
                         return webapp.getJira().apiCall("/secure/thumbnail/41486/screenshot-1.png?_r=1544484317890","GET",undefined,undefined,
-                                   "image/png",undefined,undefined,{token:true});
+                                   "image/png",undefined,undefined,{proxy:true});
 
                     } else {
                         var objCache=imgCaches.getValue(sImgUrl);

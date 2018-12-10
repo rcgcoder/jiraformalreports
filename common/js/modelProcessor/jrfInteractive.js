@@ -459,14 +459,14 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
             debugger;
             var strTgt="<img ";
             var sReplace='<img crossorigin="Anonymous" ';
-            iPos=sModeAux.saFindPos(strTgt,false,0);
             var saAux=sModelAux;
             var iPosAnt=0;
+            var iPos=saAux.saFindPos(strTgt,false,0);
 		    while ((iPos>=0)&&(iPos>=iPosAnt)){
                 saAux=saAux.saReplace(iPos,strTgt.length,sReplace);
                 iPos+=sReplace.length;
                 iPosAnt=iPos;
-                iPos=sModeAux.saFindPos(strTgt,false,iPos);
+                iPos=saAux.saFindPos(strTgt,false,iPos);
             }
             sModelAux=saAux;
             return sModelAux;

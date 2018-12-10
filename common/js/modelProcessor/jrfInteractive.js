@@ -394,35 +394,27 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 					,["<div></div>","",0]
 				];
 		var iPairClean=0;
-		var nPairs=pairs.length;
-		var fncAddStepInner=function(pair,fncAddStepOuther){
-			webapp.addStep("Removing pair ["+ pair[0]+"] -> ["+pair[1]+"]"+" time:"+pair[2],function(){
-				var sTgt=pair[0];
-				var sRpl=pair[1];
-				pair[2]++;
-				if (sModelAux.saExists(sTgt)){
-					sModelAux=sModelAux.saReplaceAll(sTgt,sRpl,true);
-					iPairClean=0;
-				} else {
-					iPairClean++;
-				}
-				if (iPairClean<nPairs){
-					fncAddStepOuther(pair,fncAddStepOuther);
-				}
-			});
-		};
-		var fncEndLoop=function(fncAddLoopStep){
-			if (iPairClean<nPairs) {
-				fncAddLoopStep();
-			}
-		}
-		webapp.addStep("Removing empty lines of HTML....",function(){
+        var nPairs=pairs.length;
+        
+        var fncReplacePair=function(iPair){
+            var pair=pairs[iPair];
+            var sTgt=pair[0];
+            var sRpl=pair[1];
+            pair[2]++;
+            if (sModelAux.saExists(sTgt)){
+                sModelAux=sModelAux.saReplaceAll(sTgt,sRpl,true);
+                iPairClean=0;
+            } else {
+                iPairClean++;
+            }
+        }
+        webapp.addStep("Removing empty lines of HTML....",function(){
 			iPairClean=0;
 			nPairs=pairs.length;
-			var fncAddStepOuther=webapp.createManagedCallback(fncAddStepInner);
-			pairs.forEach(function(pair){
-				fncAddStepOuther(pair,fncAddStepOuther);
-			});
+            //var fncAddStepOuther=webapp.createManagedCallback(fncAddStepInner);
+            webapp.sequentialProcess(pairs.length,function(iPair){
+                fncReplacePair(iPair);
+            });
 			return sModelAux;
 		});
 		webapp.addStep("Removing final <p> </p>... replaced by <br>",function(){
@@ -448,11 +440,10 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			fncIsolatedHtmlTag("<td>","</td>");
 			fncIsolatedHtmlTag("<table>","</table>");
 			iPairClean=0;
-			nPairs=pairs.length;
-			var fncAddStepOuther=webapp.createManagedCallback(fncAddStepInner);
-			pairs.forEach(function(pair){
-				fncAddStepOuther(pair,fncAddStepOuther);
-			});
+            nPairs=pairs.length;
+            webapp.sequentialProcess(pairs.length,function(iPair){
+                fncReplacePair(iPair);
+            });
 			return sModelAux;
         });
 		webapp.addStep("change content in result window",function(){

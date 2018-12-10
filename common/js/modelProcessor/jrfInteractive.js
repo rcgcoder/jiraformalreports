@@ -477,11 +477,16 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
                             return webapp.getJira().apiCall(sImgUrl);
                         });
                         webapp.addStep("processing",function(sResponse,xhr,sUrl,headers){
+                            var arrBytes=[];
+                            for (var i=0;i<sResponse.length;i++){
+                                arrBytes.push(sResponse.charCodeAt(i));
+                            }
+                            var b = new Blob([arrBytes], {type: 'application/octet-stream'});
                             var reader = new FileReader();
                             reader.onloadend = function() {
                                 webapp.continueTask([reader.result]);
                             }
-                            reader.readAsDataURL(xhr.response);
+                            reader.readAsDataURL(b);
                             return webapp.waitForEvent();
                         });
                         webapp.addStep("Assigning to image",function(dataUrl){

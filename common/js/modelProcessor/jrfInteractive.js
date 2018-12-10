@@ -472,6 +472,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
             return sModelAux;
         });
 		webapp.addStep("change content in result window",function(){
+            intContent.html=sModelAux;
 			self.openInWindow(oContent.idContent,oContent.callback,oContent.idIframe,oContent.divId);
         });
         webapp.addStep("Converting image urls to imagedata",function(){

@@ -481,11 +481,12 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
                             for (var i=0;i<sResponse.length;i++){
                                 arrBytes.push(sResponse.charCodeAt(i));
                             }
+                        
                             var b = new Blob([arrBytes], {type: 'application/octet-stream'});
                             var reader = new FileReader();
-                            reader.onloadend = function() {
+                            reader.onloadend = webapp.createManagedCallback(function() {
                                 webapp.continueTask([reader.result]);
-                            }
+                            });
                             reader.readAsDataURL(b);
                             return webapp.waitForEvent();
                         });

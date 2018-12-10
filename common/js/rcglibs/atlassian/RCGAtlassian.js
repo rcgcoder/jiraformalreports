@@ -382,9 +382,9 @@ class RCGAtlassian{
 			log("Cookie:"+document.cookie);
 			document.cookie = "atlassian.xsrf.token" + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 			log("Cookie:"+document.cookie);
-			var oAuthString= ' OAuth oauth_consumer_key="'+"OauthKey"+'",'+
-					'oauth_token="' +tokenAccess+'",'+
-					'oauth_version="'+"1.0"+'"';
+			var oAuthString= ' OAuth oauth_consumer_key=OauthKey,'+
+					'oauth_token=' +tokenAccess+','+
+					'oauth_version='+"1.0"+'';
 			log("OAUT STRING:"+oAuthString);
 //			sTargetUrl="/jfreports/ANTproxy/"+"paega2.atlassian.net"+"/endproxy"+sTargetUrl;
             var arrTgt=sTargetUrl.split("://");

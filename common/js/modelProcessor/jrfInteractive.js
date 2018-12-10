@@ -475,7 +475,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
             intContent.html=sModelAux;
 			self.openInWindow(oContent.idContent,oContent.callback,oContent.idIframe,oContent.divId);
         });
-        webapp.addStep("Converting image urls to imagedata",function(){
+/*        webapp.addStep("Converting image urls to imagedata",function(){
             var ifr=document.getElementById(oContent.idIframe);
             var ifrDoc=ifr.contentDocument;
             var arrImages=$(ifrDoc).find("img");
@@ -514,6 +514,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
                 });
             });
         });
+        */
 	}
 }
 

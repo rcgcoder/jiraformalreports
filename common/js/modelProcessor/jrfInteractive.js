@@ -470,25 +470,28 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
                     var theImg=arrImages[indImage];
                     var jqImgChange=$(theImg);
                     var sImgUrl=jqImgChange.attr("src");
-                    webapp.addStep("Calling "+sImgUrl,function(){
-                        return webapp.apiCall(sImgUrl);
-                    });
-                    webapp.addStep("processing",function(){
-                        if (!imgCaches.exists(sImgUrl)){
-                            var objCache={indexes:[],content:""};
-                            imgCaches.add(sImgUrl,objCache);
-                            var canvas = document.createElement('canvas');
-                            canvas.width = theImg.naturalWidth; // or 'width' if you want a special/scaled size
-                            canvas.height = theImg.naturalHeight; // or 'height' if you want a special/scaled size
-                            canvas.getContext('2d').drawImage(theImg, 0, 0);
-                            var dataUrl=canvas.toDataURL('image/png');
+                    if (!imgCaches.exists(sImgUrl)){
+                        var objCache={indexes:[],content:""};
+                        imgCaches.add(sImgUrl,objCache);
+                        webapp.addStep("Calling "+sImgUrl,function(){
+                            return webapp.getJira().apiCall(sImgUrl);
+                        });
+                        webapp.addStep("processing",function(sResponse,xhr,sUrl,headers){
+                            var reader = new FileReader();
+                            reader.onloadend = function() {
+                                webapp.continueTask([reader.result]);
+                            }
+                            reader.readAsDataURL(xhr.response);
+                            return webapp.waitForEvent();
+                        });
+                        webapp.addStep("Assigning to image",function(dataUrl){
                             jqImgChange.attr("src",dataUrl);
                             objCache.content=dataUrl;
-                        } else {
-                            var objCache=imgCaches.getValue(sImgUrl);
-                            objCache.indexes.push(indImage);
-                        }
-                    });
+                        });
+                    } else {
+                        var objCache=imgCaches.getValue(sImgUrl);
+                        objCache.indexes.push(indImage);
+                    }
                 });
             });
             webapp.addStep("Setting dataurls",function(){

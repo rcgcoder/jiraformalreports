@@ -476,7 +476,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
                     }
                 }
 				var fncProcess=function(indImage,sResponse){
-                    if (isObject(indImage)) return;
+                    if (!isString(sResponse)) return;
                     var arrBytes=[];
                     for (var i=0;i<sResponse.length;i++){
                         arrBytes.push(sResponse.charCodeAt(i));

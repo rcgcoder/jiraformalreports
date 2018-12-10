@@ -455,7 +455,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			});
 			return sModelAux;
         });
-		webapp.addStep("Replacing all img tags to img crossorigin=Anonymous",function(sModelAux){
+		webapp.addStep("Replacing all img tags to img crossorigin=Anonymous",function(){
             debugger;
             var strTgt="<img ";
             var sReplace='<img crossorigin="Anonymous" ';

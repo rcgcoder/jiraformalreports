@@ -461,83 +461,21 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
             var imgCaches=newHashMap();
             debugger;
             webapp.addStep("getting images data url",function(){
-				var fncGetImageCall=function(indImage){
-                    var theImg=arrImages[indImage];
+                arrImages.forEach(function(theImg){
                     var jqImgChange=$(theImg);
                     var sImgUrl=jqImgChange.attr("src");
-                    if (!imgCaches.exists(sImgUrl)){
-                        var objCache={indexes:[],content:""};
-                        imgCaches.add(sImgUrl,objCache);
-                        return webapp.getJira().apiCall(sImgUrl,"GET",undefined,undefined,
-                                   "arraybuffer",undefined,undefined,{proxy:true});
-
+                    var sTargetUrl=sImgUrl;
+                    var arrParts=sTargetUrl.split("://");
+                    if (arrParts.length>1){
+                        sTargetUrl=arrParts[1];
                     } else {
-                        var objCache=imgCaches.getValue(sImgUrl);
-                        objCache.indexes.push(indImage);
-                        return objCache;
+                        sTargetUrl=arrParts[0];
                     }
-                }
-				var fncProcess=function(indImage,sResponse){
-                    if (!isString(sResponse)) return;
-                    var theImg=arrImages[indImage];
-                    var jqImgChange=$(theImg);
-                    var sImgUrl=jqImgChange.attr("src");
-                    var bIsJpg=false;
-                    var bIsPng=false;
-                    var bIsSVG=false;
-                    if ((sImgUrl.indexOf("jpg")>=0)
-                        ||(sImgUrl.indexOf("jpeg")>=0)){
-                        bIsJpg=true;
-                    } else if (sImgUrl.indexOf("png")>=0){
-                        bIsPng=true;
-                    } else {
-                        bIsSVG=true;
-                    }
-                    if (!bIsSVG){
-                        var arrBytes=[];
-                        for (var i=0;i<sResponse.length;i++){
-                            arrBytes.push(sResponse.charCodeAt(i));
-                        }
-                        var b = new Blob([arrBytes], {type: 'application/octet-stream'});
-                        webapp.addStep("Creating dataUrl",function(){
-                            var reader = new FileReader();
-                            var fncContinue=webapp.createManagedCallback(function(){
-                                debugger;
-                                return reader.result;
-                            });
-                            reader.onloadend = fncContinue;
-                            reader.readAsDataURL(b);
-                            return webapp.waitForEvent();
-                        });
-                        webapp.addStep("Assigning to image",function(dataUrl){
-                            var theImg=arrImages[indImage];
-                            var jqImgChange=$(theImg);
-                            var sImgUrl=jqImgChange.attr("src");
-                            jqImgChange.attr("src",dataUrl);
-                            var objCache=imgCaches.getValue(sImgUrl);
-                            objCache.content=dataUrl;
-                        });
-                    } else {
-                        log(sResponse);
-                        var prevId=jqImgChange.attr('id');
-                        jqImgChange.replaceWith( $('<div/>').append(sResponse).find('svg:first').attr('id',prevId) );
-                    }
-				}
-				return webapp.parallelizeCalls(arrImages.length,fncGetImageCall,fncProcess,1);
-            });
-            webapp.addStep("Setting dataurls",function(){
-                return webapp.parallelizeProcess(imgCaches,function(imgCache){
-                    var arrIndexes=imgCache.indexes;
-                    return webapp.sequentialProcess(arrIndexes,function(imgIndex){
-                        var theImg=arrImages[imgIndex];
-                        var jqImgChange=$(theImg);
-                        var dataUrl=imgCache.content;
-                        jqImgChange.attr("src",dataUrl);
-                    });
+                    sTargetUrl="/jfreports/NEWproxy/"+sTargetUrl;
+                    jqImgChange.attr("src",sTargetUrl);
                 });
             });
         });
-        
 	}
 }
 

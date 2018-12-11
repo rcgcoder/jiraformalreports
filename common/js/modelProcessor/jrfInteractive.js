@@ -462,7 +462,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
             debugger;
             webapp.addStep("getting images data url",function(){
                 for (var i=0;i<arrImages.length;i++){
-                    theImg=arrImages[i];
+                    var theImg=arrImages[i];
                     var jqImgChange=$(theImg);
                     var sImgUrl=jqImgChange.attr("src");
                     var sTargetUrl=sImgUrl;

@@ -461,8 +461,26 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
             var imgCaches=newHashMap();
             var nLoaded=0;
             debugger;
+            var fncGetDataUri=function (url, callback) {
+                var image = new Image();
+                image.crossOrigin = "Anonymous";
+                image.onload = function () {
+                    var canvas = document.createElement('canvas');
+                    canvas.width = this.naturalWidth; // or 'width' if you want a special/scaled size
+                    canvas.height = this.naturalHeight; // or 'height' if you want a special/scaled size
+
+                    canvas.getContext('2d').drawImage(this, 0, 0);
+
+                    // Get raw image data
+                     // callback(canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg);base64,/, ''));
+                                        
+                    // ... or get as Data URI
+                    callback(canvas.toDataURL('image/png'));
+                };
+                image.src = url;
+            }
             var replaceWithDataURI=function(jqImgChange,url){
-                getDataUri(url, function(dataUri) {
+                fncGetDataUri(url, function(dataUri) {
                     jqImgChange.attr("src",dataUri);
                     nLoaded++;
                     if (nLoaded>=arrImages.length) {
@@ -470,6 +488,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
                     }
                 });
             }
+
             webapp.addStep("getting images data url",function(){
                 for (var i=0;i<arrImages.length;i++){
                     var theImg=arrImages[i];

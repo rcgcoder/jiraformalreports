@@ -399,7 +399,7 @@ class RCGAtlassian{
 				url: sTargetUrl,
 				method: newType,
 				headers: {
-					'Content-Type': newResponseType,
+//					'Content-Type': newResponseType,
 					'Authorization':oAuthString
 					//'Authorization':"Bearer "+oauthAccessToken+"",
 					/*						'access_token': oauthAccessToken
@@ -408,7 +408,7 @@ class RCGAtlassian{
 					*/					  
 					},
 				data: newData,
-				dataType: newResponseType,
+//				dataType: newResponseType,
 			    success: newCallback,
 			    error: newErrorCallback
 			};

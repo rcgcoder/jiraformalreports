@@ -388,7 +388,13 @@ class RCGAtlassian{
 			log("OAUT STRING:"+oAuthString);
 //			sTargetUrl="/jfreports/ANTproxy/"+"paega2.atlassian.net"+"/endproxy"+sTargetUrl+"?_r=1544484317890";
 //			sTargetUrl="/jfreports/proxy/"+"paega2.atlassian.net"+"/endproxy"+sTargetUrl;
-			sTargetUrl="/jfreports/NEWproxy/"+"paega2.atlassian.net"+sTargetUrl;
+            var arrParts=sTargetUrl.split("://");
+            if (arrParts.length>1){
+                sTargetUrl=arrParts[1];
+            } else {
+                sTargetUrl=arrParts[0];
+            }
+			sTargetUrl="/jfreports/NEWproxy/"+sTargetUrl;
 	        var options = {
 				url: sTargetUrl,
 				method: newType,

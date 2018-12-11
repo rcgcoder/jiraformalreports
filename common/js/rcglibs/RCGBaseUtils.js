@@ -458,6 +458,7 @@ if (isInNodeJS()) { // the global parameters has to be created explicity
 
 function getDataUri(url, callback) {
     var image = new Image();
+    image.crossOrigin = "Anonymous";
     image.onload = function () {
         var canvas = document.createElement('canvas');
         canvas.width = this.naturalWidth; // or 'width' if you want a special/scaled size

@@ -459,7 +459,17 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
             var ifrDoc=ifr.contentDocument;
             var arrImages=$(ifrDoc).find("img");
             var imgCaches=newHashMap();
+            var nLoaded=0;
             debugger;
+            var replaceWithDataURI=function(jqImgChange,url){
+                getDataUri(sTargetUrl, function(dataUri) {
+                    jqImgChange.attr("src",sTargetUrl);
+                    nLoaded++;
+                    if (nLoaded>=arrImages.length) {
+                        webapp.continueTask();
+                    }
+                });
+            }
             webapp.addStep("getting images data url",function(){
                 for (var i=0;i<arrImages.length;i++){
                     var theImg=arrImages[i];
@@ -473,9 +483,16 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
                         sTargetUrl=arrParts[0];
                     }
                     sTargetUrl="https://cantabrana.no-ip.org/jfreports/NEWproxy/"+sTargetUrl;
-                    jqImgChange.attr("src",sTargetUrl);
+                    var fncReplaceUrl=webapp.createManagedFunction(replaceWithDataURI);
+                    fncReplaceUrl(jqImgChange,sTargetUrl);
                 };
+                return webapp.waitForEvent();
             });
+            webapp.addStep("Finished image processing",function(){
+                log("Replaced all images");
+            });
+
+
         });
 	}
 }

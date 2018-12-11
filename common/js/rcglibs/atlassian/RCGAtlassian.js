@@ -399,7 +399,7 @@ class RCGAtlassian{
 				url: sTargetUrl,
 				method: newType,
 				headers: {
-					'Content-Type': 'application/json',
+					'Content-Type': newResponseType,
 					'Authorization':oAuthString
 					//'Authorization':"Bearer "+oauthAccessToken+"",
 					/*						'access_token': oauthAccessToken

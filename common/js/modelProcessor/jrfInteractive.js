@@ -461,7 +461,8 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
             var imgCaches=newHashMap();
             debugger;
             webapp.addStep("getting images data url",function(){
-                arrImages.forEach(function(theImg){
+                for (var i=0;i<arrImages.length;i++){
+                    theImg=arrImages[i];
                     var jqImgChange=$(theImg);
                     var sImgUrl=jqImgChange.attr("src");
                     var sTargetUrl=sImgUrl;
@@ -473,7 +474,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
                     }
                     sTargetUrl="/jfreports/NEWproxy/"+sTargetUrl;
                     jqImgChange.attr("src",sTargetUrl);
-                });
+                };
             });
         });
 	}

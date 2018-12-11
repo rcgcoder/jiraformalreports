@@ -462,8 +462,8 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
             var nLoaded=0;
             debugger;
             var replaceWithDataURI=function(jqImgChange,url){
-                getDataUri(sTargetUrl, function(dataUri) {
-                    jqImgChange.attr("src",sTargetUrl);
+                getDataUri(url, function(dataUri) {
+                    jqImgChange.attr("src",dataUri);
                     nLoaded++;
                     if (nLoaded>=arrImages.length) {
                         webapp.continueTask();

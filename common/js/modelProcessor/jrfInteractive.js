@@ -482,6 +482,12 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
                     } else {
                         sTargetUrl=arrParts[0];
                     }
+                    if (sTargetUrl.indexOf("?")>=0){
+                        sTargetUrl+="&token"+webapp.getJira().tokenAccess;
+                    } else {
+                        sTargetUrl+="?token"+webapp.getJira().tokenAccess;
+
+                    }
                     sTargetUrl="https://cantabrana.no-ip.org/jfreports/NEWproxy/"+sTargetUrl;
                     var fncReplaceUrl=webapp.createManagedFunction(replaceWithDataURI);
                     fncReplaceUrl(jqImgChange,sTargetUrl);

@@ -466,7 +466,7 @@ function getDataUri(url, callback) {
         canvas.getContext('2d').drawImage(this, 0, 0);
 
         // Get raw image data
-        callback(canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg);base64,/, ''));
+//        callback(canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg);base64,/, ''));
 
         // ... or get as Data URI
         callback(canvas.toDataURL('image/png'));

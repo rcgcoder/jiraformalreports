@@ -472,7 +472,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
                     } else {
                         sTargetUrl=arrParts[0];
                     }
-                    sTargetUrl="/jfreports/NEWproxy/"+sTargetUrl;
+                    sTargetUrl="https://cantabrana.no-ip.org/jfreports/NEWproxy/"+sTargetUrl;
                     jqImgChange.attr("src",sTargetUrl);
                 };
             });

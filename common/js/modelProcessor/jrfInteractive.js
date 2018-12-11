@@ -468,8 +468,8 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
                     if (!imgCaches.exists(sImgUrl)){
                         var objCache={indexes:[],content:""};
                         imgCaches.add(sImgUrl,objCache);
-                        return webapp.getJira().apiCall("/secure/thumbnail/41486/screenshot-1.png","GET",undefined,undefined,
-                                   "arraybuffer",undefined,undefined,{proxy:true});
+                        return webapp.getJira().apiCall(sImgUrl,"POST",undefined,undefined,
+                                   "arraybuffer",undefined,undefined,{token:true});
 
                     } else {
                         var objCache=imgCaches.getValue(sImgUrl);

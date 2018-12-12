@@ -221,7 +221,7 @@ var jrfReport=class jrfReport {
                 result.push(arrParts[1]);
             }
         });
-        return result.saToString();
+        return result.saToString()
         
 	}
 	walkAsync(theHashMap,itemFunction,endFunction){

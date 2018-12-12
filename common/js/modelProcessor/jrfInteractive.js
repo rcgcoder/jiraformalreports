@@ -342,7 +342,16 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	    
 		var ifr=document.getElementById(oContent.idIframe);
 		var ifrDoc=ifr.contentDocument;
-		self.removeHiddenElements(ifrDoc);
+        self.removeHiddenElements(ifrDoc);
+        var arrPs=$(ifrDoc).find("p");
+        for (var i=0;i< arrPs.length;i++){
+            var theP=arrPs[i];
+            var attributes=theP.getAttributeNames();
+            var jqP = $(theP);
+            attributes.forEach(function(sAttName) {
+                jqP.removeAttr(sAttName);
+            });
+        };
 		
 		var sModelAux=self.getResultFromBrowser("ReportResult");
         intContent.html=sModelAux;

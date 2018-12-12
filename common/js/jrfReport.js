@@ -161,7 +161,7 @@ var jrfReport=class jrfReport {
 		var self=this;
 		return self.config.reuseReport;
 	}
-	cleanModel(sContent){
+	cleanModel(sContent,contentId){
 		//debugger;
 		sContent=replaceAll(sContent,"&lt;jRf","&lt;JRF",true);
 		sContent=replaceAll(sContent,"jrF&gt;","JRF&gt;",true);
@@ -202,8 +202,26 @@ var jrfReport=class jrfReport {
 				sHtml=sHtml.saReplace(iPos,strTgt.length,"");
 				iPos=sHtml.saFindPos(strTgt,false,iPos);
 			}*/
-		});
-		return sHtml.saToString();
+        });
+        var arrImages=sHtml.saToString().split("<ac:image>");
+        sHtml=[];
+        arrImages.forEach(function(sCad){
+            var arrParts=sCad.split("</ac:image>");
+            if (arrParts.length==1){
+                sHtml.push(arrParts[0]);
+            } else if (arrParts.length==2){
+                var sAttachedImage=arrParts[0];
+                var arrImgParts=sAttachedImage.split('filename="');
+                arrImgParts=arrImgParts[1].split('"');
+                var sFileName=arrImgParts[0];
+                var sUrl="https://paega2.atlassian.net/wiki/download/attachments/"+contentId+"/"+sFileName;
+                var sHtml='<img src="'+sUrl+'" >';
+                sHtml.push(sHtml);
+                sHtml.push(arrParts[1]);
+            }
+        });
+        return sHtml.saToString();
+        
 	}
 	walkAsync(theHashMap,itemFunction,endFunction){
 		var self=this;

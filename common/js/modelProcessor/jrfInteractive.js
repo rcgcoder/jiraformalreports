@@ -481,13 +481,13 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
                     image.src = url;
                 }
                 var replaceWithDataURI=function(jqImgChange,url){
-                    fncGetDataUri(url, function(dataUri) {
+                    fncGetDataUri(url, webapp.createManagedFunction(function(dataUri) {
                         jqImgChange.attr("src",dataUri);
                         nLoaded++;
                         if (nLoaded>=arrImages.length) {
                             webapp.continueTask();
                         }
-                    });
+                    }));
                 }
 
                 webapp.addStep("getting images data url",function(){
@@ -509,8 +509,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 
                         }
                         sTargetUrl="https://cantabrana.no-ip.org/jfreports/NEWproxy/"+sTargetUrl;
-                        var fncReplaceUrl=webapp.createManagedFunction(replaceWithDataURI);
-                        fncReplaceUrl(jqImgChange,sTargetUrl);
+                        replaceWithDataURI(jqImgChange,sTargetUrl);
                     };
                     return webapp.waitForEvent();
                 });

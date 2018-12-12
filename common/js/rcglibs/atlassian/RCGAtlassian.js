@@ -76,7 +76,7 @@ class RCGAtlassian{
 			log("Checking if token exists");
 			self.addStep("Authorization call",function(){
 				log("Call for session token");
-				return self.apiCallOauth("/sessionToken");
+				return self.apiCallOauth("/sessionToken?baseToken="+baseToken);
 			});
 			self.addStep("Checking for session access token",function(response,xhr,sUrl,headers) {
 				//debugger;

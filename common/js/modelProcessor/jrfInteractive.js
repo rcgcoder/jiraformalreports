@@ -461,63 +461,63 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
             var imgCaches=newHashMap();
             var nLoaded=0;
             debugger;
-            var fncGetDataUri=function (url, callback) {
-                var image = new Image();
-                image.crossOrigin = "Anonymous";
-                image.onload = function () {
-                    var canvas = document.createElement('canvas');
-                    canvas.width = this.naturalWidth; // or 'width' if you want a special/scaled size
-                    canvas.height = this.naturalHeight; // or 'height' if you want a special/scaled size
+            if (arrImages.length>0){
+                var fncGetDataUri=function (url, callback) {
+                    var image = new Image();
+                    image.crossOrigin = "Anonymous";
+                    image.onload = function () {
+                        var canvas = document.createElement('canvas');
+                        canvas.width = this.naturalWidth; // or 'width' if you want a special/scaled size
+                        canvas.height = this.naturalHeight; // or 'height' if you want a special/scaled size
 
-                    canvas.getContext('2d').drawImage(this, 0, 0);
+                        canvas.getContext('2d').drawImage(this, 0, 0);
 
-                    // Get raw image data
-                     // callback(canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg);base64,/, ''));
-                                        
-                    // ... or get as Data URI
-                    callback(canvas.toDataURL('image/png'));
-                };
-                image.src = url;
-            }
-            var replaceWithDataURI=function(jqImgChange,url){
-                fncGetDataUri(url, function(dataUri) {
-                    jqImgChange.attr("src",dataUri);
-                    nLoaded++;
-                    if (nLoaded>=arrImages.length) {
-                        webapp.continueTask();
-                    }
+                        // Get raw image data
+                        // callback(canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg);base64,/, ''));
+                                            
+                        // ... or get as Data URI
+                        callback(canvas.toDataURL('image/png'));
+                    };
+                    image.src = url;
+                }
+                var replaceWithDataURI=function(jqImgChange,url){
+                    fncGetDataUri(url, function(dataUri) {
+                        jqImgChange.attr("src",dataUri);
+                        nLoaded++;
+                        if (nLoaded>=arrImages.length) {
+                            webapp.continueTask();
+                        }
+                    });
+                }
+
+                webapp.addStep("getting images data url",function(){
+                    for (var i=0;i<arrImages.length;i++){
+                        var theImg=arrImages[i];
+                        var jqImgChange=$(theImg);
+                        var sImgUrl=jqImgChange.attr("src");
+                        var sTargetUrl=sImgUrl;
+                        var arrParts=sTargetUrl.split("://");
+                        if (arrParts.length>1){
+                            sTargetUrl=arrParts[1];
+                        } else {
+                            sTargetUrl=arrParts[0];
+                        }
+                        if (sTargetUrl.indexOf("?")>=0){
+                            sTargetUrl+="&token"+webapp.getJira().tokenAccess;
+                        } else {
+                            sTargetUrl+="?token"+webapp.getJira().tokenAccess;
+
+                        }
+                        sTargetUrl="https://cantabrana.no-ip.org/jfreports/NEWproxy/"+sTargetUrl;
+                        var fncReplaceUrl=webapp.createManagedFunction(replaceWithDataURI);
+                        fncReplaceUrl(jqImgChange,sTargetUrl);
+                    };
+                    return webapp.waitForEvent();
+                });
+                webapp.addStep("Finished image processing",function(){
+                    log("Replaced all images");
                 });
             }
-
-            webapp.addStep("getting images data url",function(){
-                for (var i=0;i<arrImages.length;i++){
-                    var theImg=arrImages[i];
-                    var jqImgChange=$(theImg);
-                    var sImgUrl=jqImgChange.attr("src");
-                    var sTargetUrl=sImgUrl;
-                    var arrParts=sTargetUrl.split("://");
-                    if (arrParts.length>1){
-                        sTargetUrl=arrParts[1];
-                    } else {
-                        sTargetUrl=arrParts[0];
-                    }
-                    if (sTargetUrl.indexOf("?")>=0){
-                        sTargetUrl+="&token"+webapp.getJira().tokenAccess;
-                    } else {
-                        sTargetUrl+="?token"+webapp.getJira().tokenAccess;
-
-                    }
-                    sTargetUrl="https://cantabrana.no-ip.org/jfreports/NEWproxy/"+sTargetUrl;
-                    var fncReplaceUrl=webapp.createManagedFunction(replaceWithDataURI);
-                    fncReplaceUrl(jqImgChange,sTargetUrl);
-                };
-                return webapp.waitForEvent();
-            });
-            webapp.addStep("Finished image processing",function(){
-                log("Replaced all images");
-            });
-
-
         });
 	}
 }

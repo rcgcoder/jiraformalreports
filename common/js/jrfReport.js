@@ -205,23 +205,23 @@ var jrfReport=class jrfReport {
         });
         debugger;
         var arrImages=sHtml.saToString().split("<ac:image>");
-        sHtml=[];
+        var result=[];
         arrImages.forEach(function(sCad){
             var arrParts=sCad.split("</ac:image>");
             if (arrParts.length==1){
-                sHtml.push(arrParts[0]);
+                result.push(arrParts[0]);
             } else if (arrParts.length==2){
                 var sAttachedImage=arrParts[0];
                 var arrImgParts=sAttachedImage.split('filename="');
                 arrImgParts=arrImgParts[1].split('"');
                 var sFileName=arrImgParts[0];
                 var sUrl="https://paega2.atlassian.net/wiki/download/attachments/"+contentId+"/"+sFileName;
-                var sHtml='<img src="'+sUrl+'" >';
-                sHtml.push(sHtml);
-                sHtml.push(arrParts[1]);
+                var sImgHtml='<img src="'+sUrl+'" >';
+                result.push(sImgHtml);
+                result.push(arrParts[1]);
             }
         });
-        return sHtml.saToString();
+        return result.saToString();
         
 	}
 	walkAsync(theHashMap,itemFunction,endFunction){

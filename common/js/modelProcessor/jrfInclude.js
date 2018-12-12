@@ -108,8 +108,9 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
     			var auxModel;
     			self.addStep("Processing Confluence Content:"+contentId+(sTitle!=""?" ("+sTitle+")":"")+" from "+srcUrl,function(oContent){
     				var sContentBody=oContent.body.storage.value;
+                    var finalContentId=oContent.id;
     				if (sContentBody=="") alert("Content Body is ''");
-    				sContentBody=self.model.report.cleanModel(sContentBody,contentId);
+    				sContentBody=self.model.report.cleanModel(sContentBody,finalContentId);
 //    				sContentBody=decodeEntities(sContentBody);
     				return sContentBody;
     			});

@@ -385,7 +385,7 @@ var jrfReport=class jrfReport {
 				return System.webapp.loadRemoteFiles(arrFiles);
 			}
 		});
-		self.addStep("Getting check XLSX",function(){
+/*		self.addStep("Getting check XLSX",function(){
 			self.addStep("Download XLSX",function(){
 				return System.webapp.loadFileFromNetwork("docx/paraexportarajson.xlsx");
 			});
@@ -444,7 +444,7 @@ var jrfReport=class jrfReport {
 				self.xlsIssues=xlsIssues;
 			});
 		});
-		self.addStep("Getting Confluence Report Model.... ",function(){
+*/		self.addStep("Getting Confluence Report Model.... ",function(){
 	        var cfc=System.webapp.getConfluence();
 			//cfc.getAllPages();
 	        self.addStep("Getting Content from confluence",function(){

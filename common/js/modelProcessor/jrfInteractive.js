@@ -456,6 +456,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			return sModelAux;
         });
 		webapp.addStep("change content in result window",function(){
+            sModelAux=sModelAux.saReplaceAll("<br>","</p>",true);
             intContent.html=sModelAux;
             self.openInWindow(oContent.idContent,webapp.createManagedCallback(function(){
                                     debugger;

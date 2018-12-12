@@ -60,8 +60,11 @@ class RCGAtlassian{
 		return self.waitForEvent();
 	}
 	apiOauthSecondStep(response,xhr,sUrl,headers){
-		var self=this;
+        var self=this;
+        var baseToken="";
 		if (response!=null){
+            var arrUrlParts=response.url.split("oauth_token=");
+            baseToken=arrUrlParts[1];
 			log("Second Step Oauth Jira URL:"+response.url);
 		} else {
 			log("Second Step Oauth Jira ... waiting");
@@ -86,7 +89,7 @@ class RCGAtlassian{
 					return self.waitForEvent();
 				} else {
 					log("Oauth Access token Exists:"+response.access);
-					return self.taskResultMultiple(response.access,response.secret);
+					return self.taskResultMultiple(response.access,response.secret,baseToken);
 				}
 			});
 		};
@@ -108,11 +111,12 @@ class RCGAtlassian{
 						"&callbackServer="+self.proxyPath);
 		});
 		self.addStep("Waiting for grant in "+appName,self.apiOauthSecondStep);
-		self.addStep("Setting Access Token for "+appName,function(accessToken,secret){
+		self.addStep("Setting Access Token for "+appName,function(accessToken,secret,baseToken){
 			debugger;
-			log("Setting Access Token:"+accessToken+" and Secret:"+secret);
+			log("Setting Access Token:"+accessToken+" and Secret:"+secret+" with base Token:"+baseToken);
 			appInfo.tokenNeeded=true;
-			appInfo.tokenAccess=accessToken;
+            appInfo.tokenAccess=accessToken;
+            appInfo.tokenBase=baseToken;
 			appInfo.tokenTime=secret;
 		});
 	}

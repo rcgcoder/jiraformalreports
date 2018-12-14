@@ -687,7 +687,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 						sValue=replaceAll(sValue,",",".");
 						sValue=sValue.saToString();
 						if ($.isNumeric(sValue)){
-							sValue=Math.round(parseFloat(sValue),nDigits);
+							sValue=math.round(parseFloat(sValue),nDigits);
 //						} else {
 //							
 						}						

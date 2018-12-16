@@ -845,7 +845,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
                 if (estAct==0){
                     var impEst=snapshot.importesEstimados.Total;
                     if (impEst==0){
-                        estAct=calculos.inTimespents.total;
+                        estAct=snapshot.calculos.inTimespents.total;
                     } else {
                         estAct=(impEst/hourCost)*3600;
                     }

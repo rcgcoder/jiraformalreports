@@ -835,8 +835,8 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
                 // calc de advance percent...
                 snapshot.calculos.advancePercent=0;
                 var percAcum=0;
-                debugger;
                 for (var i=0;i<=snapshot.calculos.faseActual;i++){
+                    debugger;
                     fieldFaseName=self.getFieldFaseBillingName(i);
                     var percAux=snapshot.importesEstimadosPercs[fieldFaseName];
                     percAcum+=percAux;

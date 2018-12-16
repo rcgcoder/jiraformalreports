@@ -539,7 +539,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 						}
 					}
 				}
-				for (var nFase=1;nFase<6;nFase++){
+				for (var nFase=1;nFase<5;nFase++){
 					fieldFaseName=self.getFieldFaseBillingName(nFase);
 					vPorc=objImportes.importesReales[fieldFaseName];
 					objImportes.importesReales[fieldFaseName]=totalReal*vPorc;

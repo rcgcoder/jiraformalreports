@@ -843,27 +843,41 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
                     var percAux=snapshot.importesEstimadosPercs[fieldFaseName];
                     percAcum+=percAux;
                 }
-                var estAct=snapshot.calculos.inTimespents.estimadoActual;
-                if (estAct==0){
-                    var impEst=snapshot.importesEstimados.Total;
-                    if (impEst==0){
-                        estAct=snapshot.calculos.inTimespents.total;
-                    } else {
-                        estAct=(impEst/hourCost)*3600;
+                var nextPercent=0;
+                var nextFase=snapshot.calculos.faseActual+1;
+                if (nextFase>4){
+                    snapshot.calculos.advancePercent=1;
+                } else {
+                    fieldFaseName=self.getFieldFaseBillingName(nextFase);
+                    nextPercent=snapshot.importesEstimadosPercs[fieldFaseName];
+                    var estAct=snapshot.calculos.inTimespents.estimadoActual;
+                    if (estAct==0){
+                        var impEst=snapshot.importesEstimados.Total;
+                        if (impEst==0){
+                            estAct=snapshot.calculos.inTimespents.total;
+                        } else {
+                            estAct=(impEst/hourCost)*3600;
+                        }
                     }
+                    var advAct=snapshot.source.timespent;
+                    var advAcum=estAct*percAcum;
+                    var nextEstimated=estAct*nextPercent;
+                    var percRest=1-percAcum;
+                    var advRest=estAct*percRest;
+                    var workDone=advAct-advAcum;
+                    var advPercAux=0;
+                    if (nextEstimated>0){
+                        if (workDone>nextEstimated){
+                            advPercAux=nextPercent-0.01;
+                        } else {
+                            advPercAux=(workDone/nextEstimated)*nextPercent;
+                        }
+                    } else {
+                        nextPercent=0;
+                    }
+                    percAcum+=advPercAux;
+                    snapshot.calculos.advancePercent=percAcum;
                 }
-                var advAct=snapshot.source.timespent;
-                var advAcum=estAct*percAcum;
-                var percRest=1-percAcum;
-                var advRest=estAct*percRest;
-                var workDone=advAct-advAcum;
-                var advWork=advRest-workDone;
-                var advPercAux=0;
-                if (advRest>0){
-                    advPercAux=(advWork/advRest)*percRest;
-                }
-                percAcum+=advPercAux;
-                snapshot.calculos.advancePercent=percAcum;
 				antSnapshot=snapshot;
 				antFase=actFase;
 				previousDate=snapshot.source.atDatetime;

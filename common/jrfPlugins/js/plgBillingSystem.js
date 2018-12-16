@@ -857,7 +857,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
                 var percRest=1-percAcum;
                 var advRest=estAct*percRest;
                 var workDone=advAct-advAcum;
-                var advWork=advAct-workDone;
+                var advWork=advRest-workDone;
                 var advPercAux=0;
                 if (advRest>0){
                     advPercAux=(advWork/advRest)*percRest;

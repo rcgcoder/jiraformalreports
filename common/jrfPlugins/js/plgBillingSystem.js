@@ -841,8 +841,11 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
                     var percAux=snapshot.importesEstimadosPercs[fieldFaseName];
                     percAcum+=percAux;
                 }
-                var estAct=snapshot.calculos.inTimespents.estimadoActual;
-                var advAct=snapshot.calculos.inTimespents.avance;
+                var estAct=snapshot.source.timeestimate;
+                if (estAct==0){
+                    estAct=snapshot.source.timeoriginalestimate;
+                }
+                var advAct=snapshot.source.timespent;
                 var advAcum=estAct*percAcum;
                 var percRest=1-percAcum;
                 var advRest=estAct*percRest;

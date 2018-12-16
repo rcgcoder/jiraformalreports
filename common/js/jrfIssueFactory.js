@@ -708,6 +708,7 @@ function newIssueFactory(report){
             /*****
              * attention... is false..... disabled precomputed 
              */
+            
             if (false) {
             if ((allChilds.length()>0)
                 &&(!bPrecomputed)

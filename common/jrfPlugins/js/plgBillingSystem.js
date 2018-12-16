@@ -52,7 +52,8 @@ var newBillingObject=function (){
 								  			,totalEnFacturas:0
 								  			,avance:0,estimadoActual:0},
 							  noFacturable:{importe:0,timespent:0,avance:{importe:0,timespent:0}},
-							  workedPercent:0,
+                              workedPercent:0,
+                              advancePercent:0,
 							  bModificacionAlcance:false,
 							  comentarios:"",
 							  errores:""};
@@ -830,7 +831,28 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 							snapshot.calculos.total+=workAuxImporte;
 						}
 					}
-				}
+                }
+                // calc de advance percent...
+                snapshot.calculos.advancePercent=0;
+                var percAcum=0;
+                for (var i=0;i<=snapshot.calculos.faseActual;i++){
+                    fieldFaseName=self.getFieldFaseBillingName(i);
+                    var percAux=snapshot.importesEstimadosPercs[fieldFaseName];
+                    percAcum+=percAux;
+                }
+                var estAct=snapshot.calculos.inTimespents.estimadoActual;
+                var advAct=snapshot.calculos.inTimespents.avance;
+                var advAcum=estAct*percAcum;
+                var percRest=1-percAcum;
+                var advRest=estAct*percRest;
+                var workDone=advAct-advAcum;
+                var advWork=advAct-workDone;
+                var advPercAux=0;
+                if (advRest>0){
+                    advPercAux=(advWork/advRest)*percRest;
+                }
+                percAcum+=advPercAux;
+                snapshot.calculos.advancePercent=percAcum;
 				antSnapshot=snapshot;
 				antFase=actFase;
 				previousDate=snapshot.source.atDatetime;

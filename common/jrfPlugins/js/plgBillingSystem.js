@@ -518,6 +518,8 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 					objImportes.importesEstimados[fieldFaseName]=totalEstimado*vPorc;
 					objImportes.importesEstimadosPercs[fieldFaseName]=vPorc;
 				}
+			    objImportes.importesEstimados[self.getFieldFaseBillingName(5)]=totalEstimado;
+			    objImportes.importesEstimadosPercs[self.getFieldFaseBillingName(5)]=1;
 			}
 			if ((acumFasesReal.toFixed(1)==1)||(acumFasesReal.toFixed(1)==0)){
 				if ((objImportes.importesReales.Total.toFixed(1)==1)

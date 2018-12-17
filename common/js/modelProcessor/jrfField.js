@@ -12,7 +12,7 @@ var jrfField=class jrfField extends jrfToken{//this kind of definition allows to
 		var sRenderedPostText="";
 		if (self.format=="rendered"){
 			sRenderedPostText="_rendered";
-			debugger;
+			//debugger;
 		}
 		var bRendered=(self.format=="jiramarkup");
 		var sValue;
@@ -24,10 +24,8 @@ var jrfField=class jrfField extends jrfToken{//this kind of definition allows to
             var fieldName=self.fieldName;
             if (fieldName.indexOf("{{")>=0){
                 debugger;
-                bAsStep=true;
-                var otherParams=self.newReplaceParams();
-                fiedName=self.getStringReplacedScript(fieldName,otherParams);
             }
+            fieldName=self.replaceVars(fieldName);
 
 			self.executeAsStepMayRetry(bAsStep,"AsyncFieldException",function(){
 				/*if (self.fieldName=="Billing.calculos.comentarios"){

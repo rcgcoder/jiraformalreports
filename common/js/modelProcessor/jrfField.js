@@ -2,10 +2,10 @@ var jrfField=class jrfField extends jrfToken{//this kind of definition allows to
 	loadOwnProperties(){
 		var self=this;
 		self.fieldName=self.getAttrVal("field",self.reportElem,false);
-/*		if (self.fieldName.trim().toLowerCase()=="status.name"){
+		if (self.fieldName.trim().toLowerCase()=="status.name"){
 			//debugger;
 		}
-*/		self.format=self.getAttrVal("inFormat");
+		self.format=self.getAttrVal("inFormat");
 	}
 	apply(){
 		var self=this;

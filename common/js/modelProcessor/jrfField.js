@@ -23,6 +23,7 @@ var jrfField=class jrfField extends jrfToken{//this kind of definition allows to
             var bAsStep=false;
             var fieldName=self.fieldName;
             if (fieldName.indexOf("{{")>=0){
+                debugger;
                 bAsStep=true;
                 fiedName=self.getStringReplacedScript(sContent);
             }

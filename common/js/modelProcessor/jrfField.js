@@ -25,7 +25,7 @@ var jrfField=class jrfField extends jrfToken{//this kind of definition allows to
             if (fieldName.indexOf("{{")>=0){
                 debugger;
             }
-            fieldName=self.replaceVars(fieldName);
+            fieldName=self.replaceVars(fieldName).saToString();
 
 			self.executeAsStepMayRetry(bAsStep,"AsyncFieldException",function(){
 				/*if (self.fieldName=="Billing.calculos.comentarios"){

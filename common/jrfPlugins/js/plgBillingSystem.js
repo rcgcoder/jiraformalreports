@@ -1,14 +1,14 @@
+function fncNewDesgloseImportes(vTotal,vIdent,vAprob,vDis,vImp,vDesp){
+    var desgloseImportes={"Total":(isDefined(vTotal)?vTotal:0)
+                            ,"Identificado":(isDefined(vIdent)?vIdent:0)
+                            ,"Aprobado":(isDefined(vAprob)?vAprob:0)
+                            ,"Disenado":(isDefined(vDis)?vDis:0)
+                            ,"Implementado":(isDefined(vImp)?vImp:0)
+                            ,"Desplegado":(isDefined(vDesp)?vDesp:0)
+                            };
+    return desgloseImportes;
+}
 var newBillingObject=function (){
-	    var fncNewDesgloseImportes=function(vTotal,vIdent,vAprob,vDis,vImp,vDesp){
-	    	var desgloseImportes={"Total":(isDefined(vTotal)?vTotal:0)
-	    						  ,"Identificado":(isDefined(vIdent)?vIdent:0)
-	    						  ,"Aprobado":(isDefined(vAprob)?vAprob:0)
-	    						  ,"Disenado":(isDefined(vDis)?vDis:0)
-	    						  ,"Implementado":(isDefined(vImp)?vImp:0)
-	    						  ,"Desplegado":(isDefined(vDesp)?vDesp:0)
-	    						  };
-	    	return desgloseImportes;
-	    }
     	var objImportes={};
     	objImportes.source={
 				  timeoriginalestimate:"",
@@ -34,6 +34,7 @@ var newBillingObject=function (){
 				  acumFasesEstimado:0,
 				  acumFasesReal:0
 				};
+    	objImportes.childFases=fncNewDesgloseImportes();
     	objImportes.importesEstimadosPercs=fncNewDesgloseImportes(1,0,0,0.1,0.8,0.1);
 		objImportes.importesPorcentajeRef=fncNewDesgloseImportes(1,0,0,0.1,0.8,0.1);
 		objImportes.importesEstimados=fncNewDesgloseImportes();
@@ -350,6 +351,18 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 			return self.fieldAccumChilds("timeestimate",atDatetime);
 		});
 
+        var accumChildFases=fncNewDesgloseImportes();
+        report.addStep("Getting child fase statistics",function(){
+            //counting fases
+            return report.workOnListOfIssueSteps(self.getChilds(),function(issue){
+                for (var i=0;i<issue.getFase();i++){
+                    var faseName=self.getFieldFaseBillingName(i);
+                    accumChildFases[faseName]++;
+                }
+                accumChildFases.total++;
+            },1);
+        });
+            
 		report.addStep("Accumulating timespent value of childs",function(resultTimeestimate){
 			timeestimate=resultTimeestimate;
 			if (self.fieldValue("project.key")!="OT"){
@@ -365,7 +378,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 						});
 					} else {
 						timespent=auxTimespent;
-					}
+                    }
 					return timespent;
 				});
 			} else {
@@ -389,7 +402,8 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 				if (timeoriginalestimate==0)timeoriginalestimate=timespent; 
 			}
 	    	var objImportes=newBillingObject();
-	    	objImportes.source.timeoriginalestimate=timeoriginalestimate;
+            objImportes.childFases=accumChildFases;
+            objImportes.source.timeoriginalestimate=timeoriginalestimate;
 	    	objImportes.source.timeestimate=timeestimate;
 	    	objImportes.source.timespent=timespent;
 	    	objImportes.bIncrementadaEstimacion=(timeoriginalestimate<timeestimate);

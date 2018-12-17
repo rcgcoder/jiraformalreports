@@ -357,7 +357,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
             return report.workOnListOfIssueSteps(self.getChilds(),function(issue){
                 var faseName=self.getFieldFaseBillingName(5);
                 accumChildFases[faseName]++;
-                for (var i=0;i<issue.getFase();i++){
+                for (var i=0;i<=issue.getFase();i++){
                     faseName=self.getFieldFaseBillingName(i);
                     accumChildFases[faseName]++;
                 }

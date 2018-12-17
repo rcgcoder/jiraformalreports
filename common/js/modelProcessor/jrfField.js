@@ -1,7 +1,7 @@
 var jrfField=class jrfField extends jrfToken{//this kind of definition allows to hot-reload
 	loadOwnProperties(){
 		var self=this;
-		self.fieldName=self.getAttrVal("field");
+		self.fieldName=self.getAttrVal("field",self.reportElem,false);
 /*		if (self.fieldName.trim().toLowerCase()=="status.name"){
 			//debugger;
 		}

@@ -904,6 +904,27 @@ function newIssueFactory(report){
 		}
 		return htmlText;
 	});
+	dynObj.functions.add("fieldValueToTextDate",function(theFieldName,bRendered,dateTime,inOtherParams){
+		var self=this;
+		var value=self.fieldValue(theFieldName,bRendered,dateTime,inOtherParams);
+		if (value===""){
+			value=new Date();
+		} else {
+			value=toDateNormalYYYYMMDD(value);
+		}
+		return formatDate(value,3);
+	});
+	dynObj.functions.add("fieldValueToTextDateTime",function(theFieldName,bRendered,dateTime,inOtherParams){
+		var self=this;
+		var value=self.fieldValue(theFieldName,bRendered,dateTime,inOtherParams);
+		if (value===""){
+			value=new Date();
+		} else {
+			value=toDateNormalYYYYMMDD(value);
+		}
+		return formatDate(value,4);
+	});
+	
 	dynObj.functions.add("getHtmlAllComments",function(bRemoveClosureParagraph){
 		var self=this;
 		var htmlText="";

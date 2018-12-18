@@ -21,17 +21,19 @@ var jrfField=class jrfField extends jrfToken{//this kind of definition allows to
 		} else {
             log("There is function fieldValue.... in reportElem:"+self.reportElem.getKey());
             var bAsStep=false;
-            var fieldName=self.fieldName;
+            var sFieldName=self.fieldName;
             /*if (fieldName.indexOf("{{")>=0){
                 //debugger;
             }*/
-            fieldName=self.replaceVars(fieldName).saToString();
+            sFieldName=self.replaceVars(sFieldName).saToString();
 
 			self.executeAsStepMayRetry(bAsStep,"AsyncFieldException",function(){
 				/*if (self.fieldName=="Billing.calculos.comentarios"){
 					//debugger;
-				}*/
-				sValue=self.reportElem.fieldValue(fieldName+sRenderedPostText,true,self.datetime,self.otherParams);
+                }*/
+                sFieldName=self.getExistentFieldId(sFieldName);
+                sFieldName+=sRenderedPostText;
+				sValue=self.reportElem.fieldValue(sFieldName,true,self.datetime,self.otherParams);
 				if (isString(sValue)&&(sValue.indexOf("&lt;jrf")>=0)){// if there is jrf tokens in the description
 					var sHtml=decodeEntities(sValue);
 					var theModel;

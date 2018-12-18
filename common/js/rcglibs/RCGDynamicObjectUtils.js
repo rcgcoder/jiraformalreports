@@ -42,6 +42,7 @@ var RCGDynamicObject=class RCGDynamicObject{
 		self.internal_getId=factory.internal_getId;
 		self.internal_getName=factory.internal_getName;
         self.getNewId=factory.getNewId;
+        self.existsAttribute=factory.existsAttribute;
         self.appendAttribute=factory.appendAttribute;
 		self.internal_addIndividualAttr=factory.internal_addIndividualAttr;
 		self.internal_removeAttribute=factory.internal_removeAttribute;
@@ -245,6 +246,11 @@ var factoryObjects=class factoryObjects{
 			var result=auxMathData.code.eval(scope);
 			return result;
 		}
+    existsAttribute(vNameAttribute){
+        var self=this;
+        var attName="attr_"+vNameAttribute;
+        return self.attributes.exists(attName);
+    }
     appendAttribute(vNameAttribute){
         var self=this;
         self.internal_addIndividualAttr(vNameAttribute);

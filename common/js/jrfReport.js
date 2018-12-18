@@ -1123,7 +1123,7 @@ var jrfReport=class jrfReport {
 									var sField=arrFieldPath[0];
 									debugger;
                                     var sField=issue.getExistentFieldId(sField);
-                                    if (!issue.getFactory().attributes.exists(sField)){
+                                    if (!issue.getFactory().existsAttribute(sField)){
                                         var theFactory=issue.getFactory();
                                         theFactory.appendAttribute(sField);
                                     }

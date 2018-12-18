@@ -37,6 +37,7 @@ var jrfField=class jrfField extends jrfToken{//this kind of definition allows to
                 }
                 var bEmptyValue=false;
                 if (self.ifEmpty!=""){
+                    sFieldName=self.reportElem.getExistentFieldId(sFieldName);
                     if (!self.reportElem.factory.existsAttribute(sFieldName)){
                         sValue="";
                         bEmptyValue=true;

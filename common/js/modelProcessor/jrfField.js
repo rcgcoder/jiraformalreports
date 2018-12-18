@@ -31,7 +31,7 @@ var jrfField=class jrfField extends jrfToken{//this kind of definition allows to
 				/*if (self.fieldName=="Billing.calculos.comentarios"){
 					//debugger;
                 }*/
-                sFieldName=self.getExistentFieldId(sFieldName);
+                sFieldName=self.reportElem.getExistentFieldId(sFieldName);
                 sFieldName+=sRenderedPostText;
 				sValue=self.reportElem.fieldValue(sFieldName,true,self.datetime,self.otherParams);
 				if (isString(sValue)&&(sValue.indexOf("&lt;jrf")>=0)){// if there is jrf tokens in the description

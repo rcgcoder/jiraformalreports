@@ -35,7 +35,14 @@ var jrfField=class jrfField extends jrfToken{//this kind of definition allows to
                     sFieldName=self.reportElem.getExistentFieldId(sFieldName);
                     sFieldName+=sRenderedPostText;
                 }
-				sValue=self.reportElem.fieldValue(sFieldName,true,self.datetime,self.otherParams);
+                var bEmptyValue=false;
+                if (self.ifEmpty!=""){
+                    if (!self.reportElem.factory.existsAttribute(sFieldName)){
+                        sValue="";
+                        bEmptyValue=true;
+                    }
+                }
+                if (!bEmptyValue) sValue=self.reportElem.fieldValue(sFieldName,true,self.datetime,self.otherParams);
 				if (isString(sValue)&&(sValue.indexOf("&lt;jrf")>=0)){// if there is jrf tokens in the description
 					var sHtml=decodeEntities(sValue);
 					var theModel;

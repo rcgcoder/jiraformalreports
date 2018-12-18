@@ -35,16 +35,16 @@ class RCGDateUtils {
 		if (sDate instanceof Date) return sDate;
 		var sAuxDate=replaceAll(sDate," ","");//.split(" ");
 		var arrDate=sAuxDate.split("/");
-		var sAuxTime=arrDate[2].substring(4,arrDate[2].length);
+		var sAuxTime=arrDate[2].substring(4,arrDate[2].length).trim();
 		arrDate[2]=arrDate[2].substring(0,4);
-		var arrTime=sAuxTime.split(":");
 		
 	    var curr_date= parseInt(arrDate[0]);
 	    var curr_month = parseInt(arrDate[1])-1;
 	    var curr_year = parseInt(arrDate[2]);
 	    var curr_hr= 0;
 	    var curr_min = 0;
-	    var curr_sc= 0;
+        var curr_sc= 0;
+		var arrTime=sAuxTime.split(":");
 		if (arrTime[0]!=""){
 			curr_hr= parseInt(arrTime[0]);
 		}
@@ -132,7 +132,7 @@ class RCGDateUtils {
 	dateDiff(date1,date2,units){
 		var diffMillis=date1.getTime()-date2.getTime();
 		var ret = diffMillis;   
-		switch(interval.toLowerCase()) {
+		switch(units.toLowerCase()) {
 		    case 'week'   :  ret = (diffMillis/(1000*60*60*24*7));  break;
 		    case 'day'    :  ret = (diffMillis/(1000*60*60*24));  break;
 		    case 'hour'   :  ret = (diffMillis/(1000*60*60));  break;

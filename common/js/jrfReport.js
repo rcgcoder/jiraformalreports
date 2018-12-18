@@ -203,7 +203,7 @@ var jrfReport=class jrfReport {
 				iPos=sHtml.saFindPos(strTgt,false,iPos);
 			}*/
         });
-        debugger;
+        //debugger;
         var arrImages=sHtml.saToString().split("<ac:image>");
         var result=[];
         arrImages.forEach(function(sCad){

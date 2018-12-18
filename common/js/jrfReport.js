@@ -1122,7 +1122,11 @@ var jrfReport=class jrfReport {
 									var arrFieldPath=fieldName.split(".");
 									var sField=arrFieldPath[0];
 									debugger;
-									var sField=issue.getExistentFieldId(sField);
+                                    var sField=issue.getExistentFieldId(sField);
+                                    if (!issue.getFactory().attributes.exists(sField)){
+                                        var theFactory=issue.getFactory();
+                                        theFactory.appendAttribute(sField);
+                                    }
 									if (!isLifeChange){
 										if (!isDefined(issue["set"+sField])){//the field is in the "field interest list"
 											log("Only can adjust interested fields... the field:"+sField + " is not in the list");

@@ -244,7 +244,20 @@ var factoryObjects=class factoryObjects{
 			var result=auxMathData.code.eval(scope);
 			return result;
 		}
-
+    appendAttribute(vNameAttribute){
+        var self=this;
+        self.internal_addIndividualAttr(vNameAttribute);
+        var fncGetName="get"+vNameAttribute;
+        var fncSetName="set"+vNameAttribute;
+        var fncGetter=self.functions.getValue(fncGetName);
+        var fncSetter=self.functions.getValue(fncSetName);
+        self.list.walk(function(dynObj){
+            if (dynObj.isFullyLoaded()){
+                dynObj[fncGetName]=fncGetter;
+                dynObj[fncSetName]=fncSetter;
+            }
+        });
+    }
 	internal_addIndividualAttr(vNameAttributeDetail){
 			this.attributes.add("attr_"+vNameAttributeDetail,function(){return "";});
 			this.functions.add("get"+vNameAttributeDetail,function(){

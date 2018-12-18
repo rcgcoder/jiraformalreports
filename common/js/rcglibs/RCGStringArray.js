@@ -401,7 +401,7 @@ Array.prototype.saReplaceAll=function(strTgt,sReplace,repeat){
 		while (iPos>=0){
 /*			if (iPosControl!=iPos){
 				logError("The target position are different");
-				debugger;
+				//debugger;
 			}
 			sControl1=sControl.substring(iPosControl-3,iPosControl+strTgt.length+6);
 			sControl=sControl.substring(0,iPosControl)+sReplace+sControl.substring(iPosControl+strTgt.length,sControl.length);
@@ -411,11 +411,11 @@ Array.prototype.saReplaceAll=function(strTgt,sReplace,repeat){
 /*			sControl4=saAux.saSubstring(iPos-3,iPos+sReplace.length+6);
 			if (sControl1!=sControl3.saToString()){
 				logError("The control of initial are differents");
-				debugger;
+				//debugger;
 			}
 			if (sControl2!=sControl4.saToString()){
 				logError("The control of results are differents");
-				debugger;
+				//debugger;
 			}
 */			bReplaced=true;
 			var iPosAnt=iPos;
@@ -426,7 +426,7 @@ Array.prototype.saReplaceAll=function(strTgt,sReplace,repeat){
 				iPos=iPosAnt;
 				iPosControl=sControl.indexOf(strTgt,iPos);
 				iPos=saAux.saFindPos(strTgt,false,iPos);
-				debugger;
+				//debugger;
 			}
 		*/
 		}		

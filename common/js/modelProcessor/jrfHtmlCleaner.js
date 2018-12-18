@@ -63,7 +63,7 @@ var jrfHtmlCleaner=class jrfHtmlCleaner{ //this kind of definition allows to hot
 		if (childs.length==0){
 			var sContent=jqElem.text();
 			/*if (sContent.indexOf("apt=7")>=0){
-				debugger;
+				//debugger;
 			}*/
 			status.nOpens+=self.occurrences(sContent,keyStart,false);
 			status.nCloses+=self.occurrences(sContent,keyStop,false);

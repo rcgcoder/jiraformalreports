@@ -312,10 +312,10 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     initializeBilling(atDatetime,hourCost,minFacturableFase){
     	//debugger;
     	var self=this;
-    	if (self.id=="PAEGA2-144") {
-    		debugger;
+/*    	if (self.id=="PAEGA2-144") {
+    		//debugger;
     	}
-    	var report=self.getReport();
+*/    	var report=self.getReport();
 /*    	var fechaFacturacion=self.fieldValue("Fecha de facturación",false,atDatetime);
     	if (fechaFacturacion!==""){
     		logError(self.getKey()+" fecha de facturacion:"+fechaFacturacion);
@@ -332,7 +332,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 
 		//dynObj.functions.add("fieldAccumChilds",function(theFieldName,datetime,inOtherParams,notAdjust,bSetProperty,fncItemCustomCalc){
 		/*if (self.getKey()=="BENT-411"){
-			debugger;
+			//debugger;
 		}*/
 		/*
 		report.addStep("Adjusting Phase in hierarchy",function(){
@@ -656,7 +656,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 				snapshot.calculos.inTimespents.avance=0;
 				snapshot.calculos.inTimespents.total=0;
 				snapshot.calculos.comentarios="";
-				debugger;
+				//debugger;
 				if (bNoExiste){
 					// no existia
 				} else if ((previousDate==="")||(antFase<minFacturableFase)){// is the first or the first facturable
@@ -853,7 +853,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
                 snapshot.calculos.advancePercent=0;
                 var percAcum=0;
                 for (var i=0;i<=snapshot.calculos.faseActual;i++){
-                    debugger;  
+                    //debugger;  
                     fieldFaseName=self.getFieldFaseBillingName(i);
                     var percAux=snapshot.importesEstimadosPercs[fieldFaseName];
                     percAcum+=percAux;

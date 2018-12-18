@@ -22,14 +22,14 @@ var jrfField=class jrfField extends jrfToken{//this kind of definition allows to
             log("There is function fieldValue.... in reportElem:"+self.reportElem.getKey());
             var bAsStep=false;
             var fieldName=self.fieldName;
-            if (fieldName.indexOf("{{")>=0){
-                debugger;
-            }
+            /*if (fieldName.indexOf("{{")>=0){
+                //debugger;
+            }*/
             fieldName=self.replaceVars(fieldName).saToString();
 
 			self.executeAsStepMayRetry(bAsStep,"AsyncFieldException",function(){
 				/*if (self.fieldName=="Billing.calculos.comentarios"){
-					debugger;
+					//debugger;
 				}*/
 				sValue=self.reportElem.fieldValue(fieldName+sRenderedPostText,true,self.datetime,self.otherParams);
 				if (isString(sValue)&&(sValue.indexOf("&lt;jrf")>=0)){// if there is jrf tokens in the description

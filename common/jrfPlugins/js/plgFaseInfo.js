@@ -109,7 +109,7 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
      }
  	getChildsCounter(otherParams){
     	var self=this;
-    	debugger;
+    	//debugger;
     	var hslifeCaches=self.getFieldLife("ChildsCounter",self.getReport().reportDateTime,otherParams);
     	var life=hslifeCaches.getValue("life");
     	if (life.length==0) {
@@ -207,7 +207,7 @@ var plgFaseInfo=class plgFaseInfo{//this kind of definition allows to hot-reload
          };
          var fncGetFaseName=function(otherParams,faseIndex){
         	 /*if (this.getKey()=="CDM-14"){
-        		 debugger;
+        		 //debugger;
         	 }*/
              var status=faseIndex;
              if (isUndefined(status)) status=this.fieldValue("Fase",false,undefined,otherParams);

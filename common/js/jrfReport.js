@@ -780,7 +780,7 @@ var jrfReport=class jrfReport {
 					nPendingIssues++;
 					addedToGroup++;
 				} else {
-					debugger;
+					//debugger;
 				}
 			}
 			var hsEpics=newHashMap();
@@ -804,9 +804,9 @@ var jrfReport=class jrfReport {
 			}
 			
 			var fncExtractPendingKeys=function(inputIssue){
-				if (inputIssue.id=="BENT-56"){
-					debugger;
-				}
+				/*if (inputIssue.id=="BENT-56"){
+					//debugger;
+                }*/
 				nProcessedIssues++;
 				var key="";
 				if (isDefined(inputIssue.key)){
@@ -1095,7 +1095,7 @@ var jrfReport=class jrfReport {
 						// applying "Jira Formal Report Adjusts"
 						var sTokenAdjustComment="Jira Formal Report Adjusts";
 						var hsReportAdjusts=issue.getCommentsStartsWith(sTokenAdjustComment);
-						debugger;
+						//debugger;
 						hsReportAdjusts.walk(function(oAdjustComment){
 							issue.change();
 							//debugger;
@@ -1121,7 +1121,7 @@ var jrfReport=class jrfReport {
 									fieldValue=oAdjust.newValue; // may be a simple value (16000) or complex ( {name:"the new name",id:14,...})
 									var arrFieldPath=fieldName.split(".");
 									var sField=arrFieldPath[0];
-									debugger;
+									//debugger;
                                     var sField=issue.getExistentFieldId(sField);
                                     if (!issue.getFactory().existsAttribute(sField)){
                                         var theFactory=issue.getFactory();
@@ -1218,9 +1218,9 @@ var jrfReport=class jrfReport {
 			var nExcludedIssues=0;
 			
 			self.addStep("Adding retrieved issuest to root list", function(){
-				debugger;
+				//debugger;
 				return self.workOnListOfIssueSteps(hsKeyWaiting,function(issue){
-					debugger;
+					//debugger;
 					var key=issue.getKey();
 					if (!self.rootIssues.exists(key)){
 						if (!issue.isProjectExcluded()){
@@ -1341,7 +1341,7 @@ var jrfReport=class jrfReport {
 						if (isDefined(issueParent.getKey)){
 							auxKey="Issue:"+issueParent.getKey();
 						} else {
-							debugger;
+							//debugger;
 							logError("The parent has not key... maybe an error?");
 						}
 						self.addStep("Getting childs for " + auxKey + "....",function(){
@@ -1496,9 +1496,9 @@ var jrfReport=class jrfReport {
 				            ,dtIniDate
 				            ,optGetFieldValues
 				            );
-					if (issue.id=="PFI-867"){
-						debugger;
-					}
+					/*if (issue.id=="PFI-867"){
+						//debugger;
+                    }*/
 					if (issue.isExcludedByFunction()){
 						removeCounter++;
 						hsRemoveKeys.add(issue.getKey(),{issue:issue,removeFromParent:true,fullRemove:true,reason:"Excluded by Function"});

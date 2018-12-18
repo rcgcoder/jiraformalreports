@@ -112,7 +112,7 @@ class RCGAtlassian{
 		});
 		self.addStep("Waiting for grant in "+appName,self.apiOauthSecondStep);
 		self.addStep("Setting Access Token for "+appName,function(accessToken,secret,baseToken){
-			debugger;
+			//debugger;
 			log("Setting Access Token:"+accessToken+" and Secret:"+secret+" with base Token:"+baseToken);
 			appInfo.tokenNeeded=true;
             appInfo.tokenAccess=accessToken;

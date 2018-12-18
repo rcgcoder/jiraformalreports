@@ -278,7 +278,7 @@ var jrfModel=class jrfModel{ //this kind of definition allows to hot-reload
 
 			sTagText=arrJRFs[auxIndex];
 			/*if (sTagText.indexOf("apt=7")>=0){
-				debugger;
+				//debugger;
 			}*/
 			log("JRF tag index:"+auxIndex);
 			log("Row text:"+sTagText);

@@ -186,7 +186,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 	}
 	
 	openInWindow(idContent,callback,iFrameId,divShellId){
-		debugger;
+		//debugger;
 		var self=this;
 		if (isUndefined(iFrameId)||iFrameId==""){
 			self.openNewWindow(idContent);
@@ -427,7 +427,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			return sModelAux;
 		});
 		webapp.addStep("Removing final <p> </p>... replaced by <br>",function(){
-			debugger;
+			//debugger;
 			var fncIsolatedHtmlTag=function(sTagOpen,sTagClose){
 				pairs.unshift(["<br>"+sTagOpen,sTagOpen,0]);
 				pairs.unshift([sTagOpen+"<br>",sTagOpen,0]);
@@ -459,7 +459,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
             sModelAux=sModelAux.saReplaceAll("<br>","</p>",true);
             intContent.html=sModelAux;
             self.openInWindow(oContent.idContent,webapp.createManagedCallback(function(){
-                                    debugger;
+                                    //debugger;
                                     log("The loading is ENDED... continue next step?");                
                                     }) ,oContent.idIframe,oContent.divId);
             return webapp.waitForEvent();
@@ -470,7 +470,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
             var arrImages=$(ifrDoc).find("img");
             var imgCaches=newHashMap();
             var nLoaded=0;
-            debugger;
+            //debugger;
             if (arrImages.length>0){
                 var fncGetDataUri=function (url, callback) {
                     var image = new Image();

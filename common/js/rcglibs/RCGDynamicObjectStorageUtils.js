@@ -167,9 +167,9 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 			storer.addStep("Item Saved "+self.factory.name +"/"+dynObj.getId(),function(key){
 //				log("Item Saved:"+dynObj.getId()+" vs "+key);
 				dynObj.setStored(true);
-				if (isUndefined(key)){
-					debugger;
-				}
+				/*if (isUndefined(key)){
+					//debugger;
+				}*/
 			});
 /*		} else {
 			log("The object "+dynObj.getId() 

@@ -12,6 +12,10 @@ function doDebugger(){
 	debugger;
 	return true;
 }
+function doDebuggerWhen(fncFunction,valueToReturn){
+    if (fncFunction()) debugger;
+    return valueToReturn;
+}
 
 //Only add setZeroTimeout to the window object, and hide everything
 //else in a closure.

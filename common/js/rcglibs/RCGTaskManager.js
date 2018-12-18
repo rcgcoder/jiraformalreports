@@ -395,7 +395,8 @@ class RCGTask{
 				log("Calling method of task: "+theTask.description);
 			}
 			if ((typeof theMethod==="undefined")||(theMethod=="")){
-				debugger;
+                logError("Calling a undefined method!");
+				//debugger;
 			}
 			
 			var vApplyResult=theMethod.apply(context,newArgs);
@@ -929,7 +930,7 @@ class RCGTaskManager{
 	
 	searchForFork(forkId){
 		var self=this;
-		debugger;
+		//debugger;
 		for (var i=0;i<self.globalForks.length;i++){
 			if (self.globalForks[i].forkId==forkId){
 				return self.globalForks[i];
@@ -1482,11 +1483,11 @@ class RCGTaskManager{
             return fncCall();
         } catch (except) {
             if (!isTaskException(except)){
-            	debugger;
+            	//debugger;
             	return fncCall();
                 throw except;
             } else {
-            	debugger;
+            	//debugger;
             	log("Exception throws by "+except.object.id+" in task "
             					+ except.task.taskId +" catched!");
             	var exTask=except.task;

@@ -79,7 +79,7 @@ var jrfForEach=class jrfForEach extends jrfLoopBase{//this kind of definition al
 		}		
 		self.addStep("Start processing Element in For Each",function(){
 			/*if ((self.subType=="row")||(self.subType=="subrow")){
-				debugger;
+				//debugger;
 			}*/
 			self.variables.pushVar("LoopElemsCount",loopLength);
 			self.variables.pushVar("LoopIndex",index);

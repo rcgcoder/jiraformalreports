@@ -196,7 +196,7 @@ function newIssueFactory(report){
 	});
     dynObj.functions.add("getChildRoot",function(){
         var self=this;
-        debugger;
+        //debugger;
         var vRoot=self.getRoot();
         if (vRoot!==""){
            return vRoot;
@@ -402,11 +402,11 @@ function newIssueFactory(report){
 		var self=this;
 		var bGetAttribute=false;
 		/*if (((self.id=="SNT-519")||(self.id=="SNT-520"))&&(theFieldName=="timespent")){
-		    debugger;
+		    //debugger;
 		}*/
-		if (theFieldName=="ChildsCounter.total"){
-		    debugger;
-		}
+		/*if (theFieldName=="ChildsCounter.total"){
+		    //debugger;
+		}*/
 		var sFieldName=theFieldName.trim();
 		var arrFieldNames=sFieldName.split(".");
 		if (arrFieldNames.length>1){
@@ -637,7 +637,7 @@ function newIssueFactory(report){
 		var bExistsCacheKey=accumCache.exists(cacheKey);
 		if (bExistsCacheKey){
 			keyValuesCache=accumCache.getValue(cacheKey);
-			//debugger;a
+			//debugger;
 			if (keyValuesCache.exists(cacheTimeKey)){
 				var vResultFromCache=keyValuesCache.getValue(cacheTimeKey);
 				return vResultFromCache; 
@@ -1075,7 +1075,7 @@ function newIssueFactory(report){
 		}
         var wasAsync=self.getAsyncFieldValue();
         /*if (theFieldName=="Billing"){
-            debugger;
+            //debugger;
         }*/
 		var arrResult=[];
 		var report=self.getReport();
@@ -1161,7 +1161,7 @@ function newIssueFactory(report){
 	dynObj.functions.add("getFieldValueAtDateTime",function(sFieldName,dateTime,otherParams){
 		var self=this; 
         /*if (((self.id=="SNT-519")||(self.id=="SNT-520"))&&(sFieldName=="timespent")){
-            debugger;
+            //debugger;
         }*/
         var report=self.getReport();
         var reportDateTime=self.getReport().reportDateTime;
@@ -1254,7 +1254,8 @@ function newIssueFactory(report){
                         auxDatetime=auxDatetime.getTime();
         				var vTest=(auxDatetime<=refDateTime);
         			}catch(err) {
-        			    debugger;
+        				logError("Some error in getting date:"+err);
+        			    //debugger;
         			}
         /*			log(sFieldName+" Life evaluating. Actual Value:" +JSON.stringify(auxVal)+ 
         					" Type:"+ history[3] + 

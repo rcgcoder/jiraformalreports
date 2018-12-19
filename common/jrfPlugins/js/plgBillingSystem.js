@@ -366,7 +366,8 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
         });
             
 		report.addStep("Accumulating timespent value of childs",function(resultTimeestimate){
-			timeestimate=resultTimeestimate;
+            debugger;
+            timeestimate=resultTimeestimate;
 			if (self.fieldValue("project.key")!="OT"){
 				report.addStep("Adjusting timeoriginalestimate",function(){
 					var auxTimeoriginalestimate=self.getReport().adjustAccumItem("Childs",timeoriginalestimate,self,"timeoriginalestimate",atDatetime);

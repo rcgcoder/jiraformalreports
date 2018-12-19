@@ -563,6 +563,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 					objImportes.importesReales[fieldFaseName]=totalReal*vPorc;
 				}
             }
+            debugger;
             if ((objImportes.source.timeoriginalestimate!=0) &&
                 (objImportes.source.timeoriginalestimate!="")){
                 objImportes.calculos.estimadoOriginal=((objImportes.source.timeoriginalestimate)/3600)*objImportes.hourCost;

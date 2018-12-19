@@ -345,13 +345,6 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 			});
 		})
 		*/
-
-		report.addStep("Accumulating timestimate value of childs",function(){
-//			alert("Accumulating timestimate");
-			//debugger;
-			return self.fieldAccumChilds("timeestimate",atDatetime);
-		});
-
         var accumChildFases=fncNewDesgloseImportes();
         report.addStep("Getting child fase statistics",function(){
             //counting fases
@@ -364,10 +357,17 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
                 }
             },1);
         });
+
+		report.addStep("Accumulating timestimate value of childs",function(){
+//			alert("Accumulating timestimate");
+			//debugger;
+			return self.fieldAccumChilds("timeestimate",atDatetime);
+		});
+
             
 		report.addStep("Accumulating timespent value of childs",function(resultTimeestimate){
             debugger;
-            timeestimate=resultTimeestimate;
+            timeestimate=0;
 			if (self.fieldValue("project.key")!="OT"){
 				report.addStep("Adjusting timeoriginalestimate",function(){
 					var auxTimeoriginalestimate=self.getReport().adjustAccumItem("Childs",timeoriginalestimate,self,"timeoriginalestimate",atDatetime);

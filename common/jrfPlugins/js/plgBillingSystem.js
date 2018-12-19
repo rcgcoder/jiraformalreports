@@ -566,13 +566,13 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
             debugger;
             if ((objImportes.source.timeoriginalestimate!=0) &&
                 (objImportes.source.timeoriginalestimate!="")){
-                objImportes.calculos.estimadoOriginal=((objImportes.source.timeoriginalestimate)/3600)*objImportes.hourCost;
+                objImportes.calculos.estimadoOriginal=((objImportes.source.timeoriginalestimate)/3600)*objImportes.source.hourCost;
             } else if (objImportes.importesEstimados.Total!=0){
                 objImportes.calculos.estimadoOriginal=objImportes.importesEstimados.Total;
             } else {
                 objImportes.calculos.estimadoOriginal=objImportes.importesReales.Total;
             }
-            objImportes.calculos.inTimespents.estimadoOriginal=(3600*objImportes.calculos.estimadoOriginal/objImportes.hourCost);
+            objImportes.calculos.inTimespents.estimadoOriginal=(3600*objImportes.calculos.estimadoOriginal/objImportes.source.hourCost);
 			return objImportes;
     	});
     }

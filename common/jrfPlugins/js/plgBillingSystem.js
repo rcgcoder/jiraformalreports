@@ -42,7 +42,7 @@ var newBillingObject=function (){
 		objImportes.importesdefinidos={importesEstimados:fncNewDesgloseImportes(false,false,false,false,false,false),
 							  importesReales:fncNewDesgloseImportes(false,false,false,false,false,false)};
 		objImportes.calculos={aprobado:0,pendiente:0,resto:0,total:0
-							  ,totalEnFacturas:0,avance:0,estimadoActual:0,
+							  ,totalEnFacturas:0,avance:0,estimadoActual:0,estimadoOriginal:0,
 							  fases:{aprobado:fncNewDesgloseImportes(),
 									pendiente:fncNewDesgloseImportes(),
 									resto:fncNewDesgloseImportes()
@@ -50,7 +50,8 @@ var newBillingObject=function (){
 							  faseActual:0,
 							  faseAnterior:0,
 							  inTimespents:{aprobado:0,pendiente:0,resto:0,total:0
-								  			,totalEnFacturas:0
+                                              ,totalEnFacturas:0
+                                              ,estimadoOriginal:0
 								  			,avance:0,estimadoActual:0},
 							  noFacturable:{importe:0,timespent:0,avance:{importe:0,timespent:0}},
                               workedPercent:0,
@@ -561,7 +562,16 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 					vPorc=objImportes.importesReales[fieldFaseName];
 					objImportes.importesReales[fieldFaseName]=totalReal*vPorc;
 				}
-			}
+            }
+            if ((objImportes.source.timeoriginalestimate!=0) &&
+                (objImportes.source.timeoriginalestimate!="")){
+                objImportes.calculos.estimadoOriginal=((objImportes.source.timeoriginalestimate)/3600)*objImportes.hourCost;
+            } else if (objImportes.importesEstimados.Total!=0){
+                objImportes.calculos.estimadoOriginal=objImportes.importesEstimados.Total;
+            } else {
+                objImportes.calculos.estimadoOriginal=objImportes.importesReales.Total;
+            }
+            objImportes.calculos.inTimespents.estimadoOriginal=(3600*objImportes.calculos.estimadoOriginal/objImportes.hourCost);
 			return objImportes;
     	});
     }
@@ -1078,6 +1088,7 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		var sKey=configName;
 		return sKey;
     }
+
     
     execute(){
          var selfPlg=this;

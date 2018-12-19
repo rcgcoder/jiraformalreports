@@ -384,6 +384,8 @@ function newIssueFactory(report){
 
 	dynObj.functions.add("fieldValueAsync",function(theFieldName,bRendered,dateTime,inOtherParams){
 		var self=this;
+		
+		
 		var report=getReport();
 		var bAsyncFieldBackup;
 		var vResult;

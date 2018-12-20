@@ -40,7 +40,11 @@ var jrfField=class jrfField extends jrfToken{//this kind of definition allows to
                     var arrNameParts=sFieldName.split(".");
                     var auxFieldName=arrNameParts[0];
                     auxFieldName=self.reportElem.getExistentFieldId(auxFieldName);
-                    if (!self.reportElem.factory.existsAttribute(auxFieldName)){
+                    if (!(
+                        self.reportElem.factory.existsAttribute(auxFieldName)
+                        ||
+                        isDefined(self.reportElem["get"+auxFieldName])
+                        )){
                         sValue="";
                         bEmptyValue=true;
                     }

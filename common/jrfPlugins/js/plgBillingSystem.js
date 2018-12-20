@@ -477,18 +477,6 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 					objImportes.source.acumFasesReal+=impReal;
 				}
 			}
-            debugger;
-            if ((objImportes.source.timeoriginalestimate!=0) &&
-                (objImportes.source.timeoriginalestimate!="")){
-                objImportes.calculos.estimadoOriginal=((objImportes.source.timeoriginalestimate)/3600)*objImportes.source.hourCost;
-            } else if (objImportes.calculos.estimadoActual){ 
-                objImportes.calculos.estimadoOriginal=((objImportes.source.estimadoActual)/3600)*objImportes.source.hourCost;
-            } else if (objImportes.source.timespent!=0){
-                objImportes.calculos.estimadoOriginal=((objImportes.source.timespent)/3600)*objImportes.source.hourCost;
-            } else {
-                objImportes.calculos.estimadoOriginal=objImportes.importesReales.Total;
-            }
-            objImportes.calculos.inTimespents.estimadoOriginal=(3600*objImportes.calculos.estimadoOriginal/objImportes.source.hourCost);
 	    	return objImportes;
 		});
     }
@@ -1051,7 +1039,22 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 		   		snapshot.calculos.inTimespents.avance=avance;
 		   		snapshot.calculos.avance=avanceImporte;
 		   		snapshot.calculos.inTimespents.estimadoActual=tsEstimadoActual;
-		   		snapshot.calculos.estimadoActual=impEstimadoActual;
+                snapshot.calculos.estimadoActual=impEstimadoActual;
+                   
+
+                debugger;
+                if ((snapshot.source.timeoriginalestimate!=0) &&
+                    (snapshot.source.timeoriginalestimate!="")){
+                    snapshot.calculos.estimadoOriginal=((snapshot.source.timeoriginalestimate)/3600)*snapshot.source.hourCost;
+                } else if (snapshot.calculos.estimadoActual!=0){ 
+                    snapshot.calculos.estimadoOriginal=snapshot.calculos.estimadoActual;
+                } else if (snapshot.source.timespent!=0){
+                    snapshot.calculos.estimadoOriginal=((snapshot.source.timespent)/3600)*snapshot.source.hourCost;
+                } else {
+                    snapshot.calculos.estimadoOriginal=snapshot.importesReales.Total;
+                }
+                snapshot.calculos.inTimespents.estimadoOriginal=(3600*snapshot.calculos.estimadoOriginal/snapshot.source.hourCost);
+
 		      	arrResults.push([snapshot.source.atDatetime,"",snapshot]);
 		   	});
 		   	arrResults.sort(function(a,b){

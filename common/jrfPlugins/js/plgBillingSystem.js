@@ -477,6 +477,18 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 					objImportes.source.acumFasesReal+=impReal;
 				}
 			}
+            debugger;
+            if ((objImportes.source.timeoriginalestimate!=0) &&
+                (objImportes.source.timeoriginalestimate!="")){
+                objImportes.calculos.estimadoOriginal=((objImportes.source.timeoriginalestimate)/3600)*objImportes.source.hourCost;
+            } else if (objImportes.calculos.estimadoActual){ 
+                objImportes.calculos.estimadoOriginal=((objImportes.source.estimadoActual)/3600)*objImportes.source.hourCost;
+            } else if (objImportes.source.timespent!=0){
+                objImportes.calculos.estimadoOriginal=((objImportes.source.timespent)/3600)*objImportes.source.hourCost;
+            } else {
+                objImportes.calculos.estimadoOriginal=objImportes.importesReales.Total;
+            }
+            objImportes.calculos.inTimespents.estimadoOriginal=(3600*objImportes.calculos.estimadoOriginal/objImportes.source.hourCost);
 	    	return objImportes;
 		});
     }
@@ -564,18 +576,6 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
 					objImportes.importesReales[fieldFaseName]=totalReal*vPorc;
 				}
             }
-            debugger;
-            if ((objImportes.source.timeoriginalestimate!=0) &&
-                (objImportes.source.timeoriginalestimate!="")){
-                objImportes.calculos.estimadoOriginal=((objImportes.source.timeoriginalestimate)/3600)*objImportes.source.hourCost;
-            } else if (objImportes.calculos.estimadoActual){ 
-                objImportes.calculos.estimadoOriginal=((objImportes.source.estimadoActual)/3600)*objImportes.source.hourCost;
-            } else if (objImportes.source.timespent!=0){
-                objImportes.calculos.estimadoOriginal=((objImportes.source.timespent)/3600)*objImportes.source.hourCost;
-            } else {
-                objImportes.calculos.estimadoOriginal=objImportes.importesReales.Total;
-            }
-            objImportes.calculos.inTimespents.estimadoOriginal=(3600*objImportes.calculos.estimadoOriginal/objImportes.source.hourCost);
 			return objImportes;
     	});
     }

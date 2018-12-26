@@ -42,7 +42,7 @@ class RCGJira{
             self.getFullList("/rest/agile/1.0/board","values");
         });
         self.addStep("Processing all boards",function(hsBoards){
-            alert(hsBoards);
+         //   alert(hsBoards);
         })
 
     }

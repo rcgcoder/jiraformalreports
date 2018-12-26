@@ -67,7 +67,11 @@ class ZipWebApp{
 				jira.getAllIssues();
 			},0,1,undefined,undefined,undefined,"GLOBAL",undefined
 //			}
-			);  */
+            );  */
+            self.addStep("Test Getting all boards",function(){
+                var jira=self.getJira();
+                jira.getAllBoards();
+            });
 			//if (false) {
 			self.addStep("Getting All Epics  to do a list.... ",function(){
 				var jira=self.getJira();

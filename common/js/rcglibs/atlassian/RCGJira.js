@@ -28,11 +28,24 @@ class RCGJira{
 
 		self.epics=newDynamicObjectFactory([],[],[],"Epic");
 		self.labels=newDynamicObjectFactory([],[],[],"Label");
+        self.boards=newDynamicObjectFactory([],[],[],"Board");
+		self.sprints=newDynamicObjectFactory([],[],[],"Sprint");
+
 		self.users=[];
 		self.filters=[];
 		self.issueLinkTypes=[];
 		self.issueOtherFields=[];
-	}
+    }
+    getAllBoards(){
+        var self=this;
+        self.addStep("Getting all boards",function(){
+            self.getFullList("/rest/agile/1.0/board","values");
+        });
+        self.addStep("Processing all boards",function(hsBoards){
+            alert(hsBoards);
+        })
+
+    }
 	getFields(){
 		log("Getting fields");
 		return this.fields;

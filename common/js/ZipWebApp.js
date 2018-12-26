@@ -69,6 +69,7 @@ class ZipWebApp{
 //			}
             );  */
             self.addStep("Test Getting all boards",function(){
+                debugger;
                 var jira=self.getJira();
                 jira.getAllBoards();
             });

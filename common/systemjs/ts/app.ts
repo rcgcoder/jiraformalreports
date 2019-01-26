@@ -60,7 +60,7 @@ class App {
                 return System.webapp.loadRemoteFiles(arrFiles);
             });
             self.addStep("Postprocessing systemjs components.... ",function(){
-            	log("Oauth is loadded?"+OAuth);
+ /*           	log("Oauth is loadded?"+OAuth);
     			log("Initialize ends.. ");
     			var consumer=new OAuth(
     					  "jiraInstance"+"/plugins/servlet/oauth/request-token",
@@ -76,7 +76,7 @@ class App {
     			alert("Hast aqui");
     			debugger;
     			consumer.get("url", "oauth_token", "oauth_token_secret", "content_type",  "callback");
-                return self.parallelizeProcess(System.postProcess.length,function(iPostFunction){
+   */             return self.parallelizeProcess(System.postProcess.length,function(iPostFunction){
                     //log("PostProcess "+iPostFunction);
                     return System.postProcess[iPostFunction]();
                 });

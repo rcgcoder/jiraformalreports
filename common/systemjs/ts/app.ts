@@ -73,6 +73,8 @@ class App {
     					  null,
     					  "privateKeyData");
     			URL=new Url();
+    			alert("Hast aqui");
+    			debugger;
     			consumer.get("url", "oauth_token", "oauth_token_secret", "content_type",  "callback");
                 return self.parallelizeProcess(System.postProcess.length,function(iPostFunction){
                     //log("PostProcess "+iPostFunction);

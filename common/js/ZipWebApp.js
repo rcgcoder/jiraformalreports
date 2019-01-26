@@ -151,7 +151,7 @@ class ZipWebApp{
 		});
 		self.addStep("Setting <initialized> Atlassian Engine.... ",function(){
 			//debugger;
-			log("Initialize ends");
+			log("Initialize ends.. OAUTH:"+OAuth);
 			var atl=self.getAtlassian();
 			atl.initialized=true;
 		});  

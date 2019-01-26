@@ -42,7 +42,7 @@ class ZipWebApp{
 							"js/rcglibs/atlassian/RCGAtlassian.js",
 							"js/rcglibs/atlassian/RCGConfluence.js",
 							"js/rcglibs/atlassian/RCGJira.js",
-							"js/libs/aouth/sha1.js",
+							"js/libs/oauth/sha1.js",
 							"js/libs/he.js",
 							"js/libs/ace/src-noconflict/ace.js"
 							

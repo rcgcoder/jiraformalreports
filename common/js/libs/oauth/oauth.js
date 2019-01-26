@@ -1,12 +1,12 @@
 //import * as crypto from "crypto";
 
-var crypto= require('crypto'),
+/*var crypto= require('crypto'),
     sha1= HMACSHA1,
     http= require('http'),
     https= require('https'),
     URL= require('url'),
     querystring= require('querystring'); 
-
+*/
 exports.OAuth= function(requestUrl, accessUrl, consumerKey, consumerSecret, version, authorize_callback, signatureMethod, nonceSize, privateKey, customHeaders) {
   this._requestUrl= requestUrl;
   this._accessUrl= accessUrl;

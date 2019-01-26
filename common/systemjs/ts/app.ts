@@ -3,7 +3,7 @@ import {Component, NgModule, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/cor
 import {BrowserModule} from '@angular/platform-browser';
 import {punycode} from 'punycode';
 import {Url} from 'Url';
-import {crypto} from 'crypto';
+//import {crypto} from 'crypto';
 //import {querystring} from 'querystring';
 import {Tabs} from './tabs';
 import {Tab} from './tab';
@@ -54,8 +54,8 @@ class App {
                               "aui/css/aui-experimental.css",
                               "aui/js/aui-experimental.js",
                               "aui/js/aui-datepicker.js",
-                              "aui/js/aui-soy.js",
-                              "js/libs/oauth/oauth.js"
+                              "aui/js/aui-soy.js"
+                            //  "js/libs/oauth/oauth.js"
                            ]; //test
                 return System.webapp.loadRemoteFiles(arrFiles);
             });

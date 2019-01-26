@@ -1,3 +1,5 @@
+import * as crypto from "crypto";
+
 var crypto= require('crypto'),
     sha1= HMACSHA1,
     http= require('http'),

@@ -1,6 +1,7 @@
 //our root app component
 import {Component, NgModule, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
+import {URL} from 'url';
 import {crypto} from 'crypto';
 import {querystring} from 'querystring';
 import {Tabs} from './tabs';

@@ -4,7 +4,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {punycode} from 'punycode';
 import {Url} from 'Url';
 import {crypto} from 'crypto';
-import {querystring} from 'querystring';
+//import {querystring} from 'querystring';
 import {Tabs} from './tabs';
 import {Tab} from './tab';
 import {TabReports} from './tab.reports';

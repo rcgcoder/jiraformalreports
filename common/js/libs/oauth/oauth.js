@@ -7,7 +7,7 @@
     URL= require('url'),
     querystring= require('querystring'); 
 */
-exports.OAuth= function(requestUrl, accessUrl, consumerKey, consumerSecret, version, authorize_callback, signatureMethod, nonceSize, privateKey, customHeaders) {
+var OAuth= function(requestUrl, accessUrl, consumerKey, consumerSecret, version, authorize_callback, signatureMethod, nonceSize, privateKey, customHeaders) {
   this._requestUrl= requestUrl;
   this._accessUrl= accessUrl;
   this._consumerKey= consumerKey;
@@ -30,11 +30,11 @@ exports.OAuth= function(requestUrl, accessUrl, consumerKey, consumerSecret, vers
                                    "User-Agent" : "Node authentication"}
 };
 
-exports.OAuth.prototype._getTimestamp= function() {
+OAuth.prototype._getTimestamp= function() {
   return Math.floor( (new Date()).getTime() / 1000 );
 }
 
-exports.OAuth.prototype._encodeData= function(toEncode){
+OAuth.prototype._encodeData= function(toEncode){
  if( toEncode == null || toEncode == "" ) return ""
  else {
     var result= encodeURIComponent(toEncode);
@@ -47,19 +47,19 @@ exports.OAuth.prototype._encodeData= function(toEncode){
  }
 }
 
-exports.OAuth.prototype._decodeData= function(toDecode) {
+OAuth.prototype._decodeData= function(toDecode) {
   if( toDecode != null ) {
     toDecode = toDecode.replace(/\+/g, " ");
   }
   return decodeURIComponent( toDecode);
 }
 
-exports.OAuth.prototype._getSignature= function(method, url, parameters, tokenSecret) {
+OAuth.prototype._getSignature= function(method, url, parameters, tokenSecret) {
   var signatureBase= this._createSignatureBase(method, url, parameters);
   return this._createSignature( signatureBase, tokenSecret );
 }
 
-exports.OAuth.prototype._normalizeUrl= function(url) {
+OAuth.prototype._normalizeUrl= function(url) {
   var parsedUrl= URL.parse(url, true)
    var port ="";
    if( parsedUrl.port ) { 
@@ -75,7 +75,7 @@ exports.OAuth.prototype._normalizeUrl= function(url) {
 }
 
 // Is the parameter considered an OAuth parameter
-exports.OAuth.prototype._isParameterNameAnOAuthParameter= function(parameter) {
+OAuth.prototype._isParameterNameAnOAuthParameter= function(parameter) {
   var m = parameter.match('^oauth_');
   if( m && ( m[0] === "oauth_" ) ) {
     return true;
@@ -86,7 +86,7 @@ exports.OAuth.prototype._isParameterNameAnOAuthParameter= function(parameter) {
 };
 
 // build the OAuth request authorization header
-exports.OAuth.prototype._buildAuthorizationHeaders= function(orderedParameters) {
+OAuth.prototype._buildAuthorizationHeaders= function(orderedParameters) {
   var authHeader="OAuth ";
   for( var i= 0 ; i < orderedParameters.length; i++) {
      // Whilst the all the parameters should be included within the signature, only the oauth_ arguments
@@ -101,7 +101,7 @@ exports.OAuth.prototype._buildAuthorizationHeaders= function(orderedParameters) 
 
 // Takes an object literal that represents the arguments, and returns an array
 // of argument/value pairs.
-exports.OAuth.prototype._makeArrayOfArgumentsHash= function(argumentsHash) {
+OAuth.prototype._makeArrayOfArgumentsHash= function(argumentsHash) {
   var argument_pairs= [];
   for(var key in argumentsHash ) {
        var value= argumentsHash[key];
@@ -118,7 +118,7 @@ exports.OAuth.prototype._makeArrayOfArgumentsHash= function(argumentsHash) {
 } 
 
 // Sorts the encoded key value pairs by encoded name, then encoded value
-exports.OAuth.prototype._sortRequestParams= function(argument_pairs) {
+OAuth.prototype._sortRequestParams= function(argument_pairs) {
   // Sort by name, then value.
   argument_pairs.sort(function(a,b) {
       if ( a[0]== b[0] )  {
@@ -130,7 +130,7 @@ exports.OAuth.prototype._sortRequestParams= function(argument_pairs) {
   return argument_pairs;
 }
 
-exports.OAuth.prototype._normaliseRequestParams= function(arguments) {
+OAuth.prototype._normaliseRequestParams= function(arguments) {
   var argument_pairs= this._makeArrayOfArgumentsHash(arguments);
   // First encode them #3.4.1.3.2 .1
   for(var i=0;i<argument_pairs.length;i++) {
@@ -152,13 +152,13 @@ exports.OAuth.prototype._normaliseRequestParams= function(arguments) {
   return args;
 }
 
-exports.OAuth.prototype._createSignatureBase= function(method, url, parameters) {
+OAuth.prototype._createSignatureBase= function(method, url, parameters) {
   url= this._encodeData( this._normalizeUrl(url) ); 
   parameters= this._encodeData( parameters );
   return method.toUpperCase() + "&" + url + "&" + parameters;
 }
 
-exports.OAuth.prototype._createSignature= function(signatureBase, tokenSecret) {
+OAuth.prototype._createSignature= function(signatureBase, tokenSecret) {
    if( tokenSecret === undefined ) var tokenSecret= "";
    else tokenSecret= this._encodeData( tokenSecret ); 
    // consumerSecret is already encoded
@@ -182,13 +182,13 @@ exports.OAuth.prototype._createSignature= function(signatureBase, tokenSecret) {
    }
    return hash;    
 }
-exports.OAuth.prototype.NONCE_CHARS= ['a','b','c','d','e','f','g','h','i','j','k','l','m','n',
+OAuth.prototype.NONCE_CHARS= ['a','b','c','d','e','f','g','h','i','j','k','l','m','n',
               'o','p','q','r','s','t','u','v','w','x','y','z','A','B',
               'C','D','E','F','G','H','I','J','K','L','M','N','O','P',
               'Q','R','S','T','U','V','W','X','Y','Z','0','1','2','3',
               '4','5','6','7','8','9'];
 
-exports.OAuth.prototype._getNonce= function(nonceSize) {
+OAuth.prototype._getNonce= function(nonceSize) {
    var result = [];
    var chars= this.NONCE_CHARS;
    var char_pos;
@@ -201,7 +201,7 @@ exports.OAuth.prototype._getNonce= function(nonceSize) {
    return result.join('');
 }
 
-exports.OAuth.prototype._createClient= function( port, hostname, method, path, headers, sslEnabled ) {
+OAuth.prototype._createClient= function( port, hostname, method, path, headers, sslEnabled ) {
   var options = {
     host: hostname,
     port: port,
@@ -218,7 +218,7 @@ exports.OAuth.prototype._createClient= function( port, hostname, method, path, h
   return httpModel.request(options);     
 }
 
-exports.OAuth.prototype._prepareParameters= function( oauth_token, oauth_token_secret, method, url, extra_params ) {
+OAuth.prototype._prepareParameters= function( oauth_token, oauth_token_secret, method, url, extra_params ) {
   var oauthParameters= {
       "oauth_timestamp":        this._getTimestamp(),
       "oauth_nonce":            this._getNonce(this._nonceSize),
@@ -259,7 +259,7 @@ exports.OAuth.prototype._prepareParameters= function( oauth_token, oauth_token_s
   return orderedParameters;
 }
 
-exports.OAuth.prototype._performSecureRequest= function( oauth_token, oauth_token_secret, method, url, extra_params, post_body, post_content_type,  callback ) {
+OAuth.prototype._performSecureRequest= function( oauth_token, oauth_token_secret, method, url, extra_params, post_body, post_content_type,  callback ) {
   var orderedParameters= this._prepareParameters(oauth_token, oauth_token_secret, method, url, extra_params);
 
   if( !post_content_type ) {
@@ -346,7 +346,7 @@ exports.OAuth.prototype._performSecureRequest= function( oauth_token, oauth_toke
   return;
 }
 
-exports.OAuth.prototype.getOAuthAccessToken= function(oauth_token, oauth_token_secret, oauth_verifier,  callback) {
+OAuth.prototype.getOAuthAccessToken= function(oauth_token, oauth_token_secret, oauth_verifier,  callback) {
   var extraParams= {};
   if( typeof oauth_verifier == "function" ) {
     callback= oauth_verifier;
@@ -368,19 +368,19 @@ exports.OAuth.prototype.getOAuthAccessToken= function(oauth_token, oauth_token_s
 }
 
 // Deprecated
-exports.OAuth.prototype.getProtectedResource= function(url, method, oauth_token, oauth_token_secret, callback) {
+OAuth.prototype.getProtectedResource= function(url, method, oauth_token, oauth_token_secret, callback) {
   this._performSecureRequest( oauth_token, oauth_token_secret, method, url, null, "", null, callback );
 }
 
-exports.OAuth.prototype.delete= function(url, oauth_token, oauth_token_secret, callback) {
+OAuth.prototype.delete= function(url, oauth_token, oauth_token_secret, callback) {
   return this._performSecureRequest( oauth_token, oauth_token_secret, "DELETE", url, null, "", null, callback );
 }
 
-exports.OAuth.prototype.get= function(url, oauth_token, oauth_token_secret, content_type,  callback) {
+OAuth.prototype.get= function(url, oauth_token, oauth_token_secret, content_type,  callback) {
   return this._performSecureRequest( oauth_token, oauth_token_secret, "GET", url, null, "", content_type, callback );
 }
 
-exports.OAuth.prototype._putOrPost= function(method, url, oauth_token, oauth_token_secret, post_body, post_content_type, callback) {
+OAuth.prototype._putOrPost= function(method, url, oauth_token, oauth_token_secret, post_body, post_content_type, callback) {
   var extra_params= null;
   if( typeof post_content_type == "function" ) {
     callback= post_content_type;
@@ -395,15 +395,15 @@ exports.OAuth.prototype._putOrPost= function(method, url, oauth_token, oauth_tok
 }
  
 
-exports.OAuth.prototype.put= function(url, oauth_token, oauth_token_secret, post_body, post_content_type, callback) {
+OAuth.prototype.put= function(url, oauth_token, oauth_token_secret, post_body, post_content_type, callback) {
   return this._putOrPost("PUT", url, oauth_token, oauth_token_secret, post_body, post_content_type, callback);
 }
 
-exports.OAuth.prototype.post= function(url, oauth_token, oauth_token_secret, post_body, post_content_type, callback) {
+OAuth.prototype.post= function(url, oauth_token, oauth_token_secret, post_body, post_content_type, callback) {
   return this._putOrPost("POST", url, oauth_token, oauth_token_secret, post_body, post_content_type, callback);
 }
 
-exports.OAuth.prototype.getOAuthRequestToken= function(extraParams, callback) {
+OAuth.prototype.getOAuthRequestToken= function(extraParams, callback) {
   if( typeof extraParams == "function" ){
     callback = extraParams;
     extraParams = {};
@@ -427,7 +427,7 @@ exports.OAuth.prototype.getOAuthRequestToken= function(extraParams, callback) {
   });
 }
 
-exports.OAuth.prototype.signUrl= function(url, oauth_token, oauth_token_secret, method) {
+OAuth.prototype.signUrl= function(url, oauth_token, oauth_token_secret, method) {
 
   if( method === undefined ) {
     var method= "GET";
@@ -445,7 +445,7 @@ exports.OAuth.prototype.signUrl= function(url, oauth_token, oauth_token_secret, 
   return parsedUrl.protocol + "//"+ parsedUrl.host + parsedUrl.pathname + "?" + query;
 };
 
-exports.OAuth.prototype.authHeader= function(url, oauth_token, oauth_token_secret, method) {
+OAuth.prototype.authHeader= function(url, oauth_token, oauth_token_secret, method) {
   if( method === undefined ) {
     var method= "GET";
   }

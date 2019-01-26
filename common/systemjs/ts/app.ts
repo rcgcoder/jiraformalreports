@@ -58,6 +58,7 @@ class App {
                 return System.webapp.loadRemoteFiles(arrFiles);
             });
             self.addStep("Postprocessing systemjs components.... ",function(){
+            	log("Oauth is loadded?"+OAuth);
                 return self.parallelizeProcess(System.postProcess.length,function(iPostFunction){
                     //log("PostProcess "+iPostFunction);
                     return System.postProcess[iPostFunction]();

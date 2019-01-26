@@ -7,7 +7,7 @@
     URL= require('url'),
     querystring= require('querystring'); 
 */
-var OAuth= function(requestUrl, accessUrl, consumerKey, consumerSecret, version, authorize_callback, signatureMethod, nonceSize, privateKey, customHeaders) {
+OAuth= function(requestUrl, accessUrl, consumerKey, consumerSecret, version, authorize_callback, signatureMethod, nonceSize, privateKey, customHeaders) {
   this._requestUrl= requestUrl;
   this._accessUrl= accessUrl;
   this._consumerKey= consumerKey;

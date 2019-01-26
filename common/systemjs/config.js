@@ -33,6 +33,7 @@ System.config({
     'rxjs': 'npm:rxjs@5.5',
     'odt': 'npm:odt@1.1.0',
     'querystring':'npm:querystring@0.2.0',
+    'crypto':'npm:crypto@1.0.1',
     'typescript': 'npm:typescript@2.0.2/lib/typescript.js'
     
 //    'typescript': 'npm:typescript@2.8.3/lib/typescript.js'

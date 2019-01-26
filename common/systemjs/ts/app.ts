@@ -1,6 +1,7 @@
 //our root app component
 import {Component, NgModule, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
+import {punycode} from 'punycode';
 import {Url} from 'Url';
 import {crypto} from 'crypto';
 import {querystring} from 'querystring';

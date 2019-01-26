@@ -60,6 +60,9 @@ class App {
                 return System.webapp.loadRemoteFiles(arrFiles);
             });
             self.addStep("Postprocessing systemjs components.... ",function(){
+    			URL=new Url();
+    			log ("URL is loaded?"+ URL);
+
  /*           	log("Oauth is loadded?"+OAuth);
     			log("Initialize ends.. ");
     			var consumer=new OAuth(
@@ -72,7 +75,6 @@ class App {
     					  "RSA-SHA1",
     					  null,
     					  "privateKeyData");
-    			URL=new Url();
     			alert("Hast aqui");
     			debugger;
     			consumer.get("url", "oauth_token", "oauth_token_secret", "content_type",  "callback");

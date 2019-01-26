@@ -152,8 +152,16 @@ class ZipWebApp{
 		self.addStep("Setting <initialized> Atlassian Engine.... ",function(){
 			debugger;
 			log("Initialize ends.. ");
-			var oauth=new OAuth();
-			var aux=oauth.get();
+			var consumer=new OAuth(
+					  "jiraInstance"+"/plugins/servlet/oauth/request-token",
+					  "jiraInstance"+"/plugins/servlet/oauth/access-token",
+					  'config["consumerKey"]',
+					  "",
+					  "1",
+					  "callbackServer"+"/oauth/sessions/callback",
+					  "RSA-SHA1",
+					  null,
+					  "privateKeyData");
 			var atl=self.getAtlassian();
 			atl.initialized=true;
 		});  

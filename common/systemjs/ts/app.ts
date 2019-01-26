@@ -44,7 +44,7 @@ class App {
         self.addStep("Systemjs components Initializacion",function(){
             log("Running global systemjs components initialization");
             self.addStep("Applying AUI and other interface components.... ",function(){
-                var arrFiles=[
+            	var arrFiles=[
                               "js/libs/flatpickr/flatpickr.css",
                               "js/libs/flatpickr/flatpickr.js",
                               "aui/js/aui.js",
@@ -52,7 +52,8 @@ class App {
                               "aui/css/aui-experimental.css",
                               "aui/js/aui-experimental.js",
                               "aui/js/aui-datepicker.js",
-                              "aui/js/aui-soy.js"
+                              "aui/js/aui-soy.js",
+                              "js/libs/oauth/oauth.js"
                            ]; //test
                 return System.webapp.loadRemoteFiles(arrFiles);
             });

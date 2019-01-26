@@ -32,11 +32,11 @@ System.config({
     '@angular/router/testing': 'npm:@angular/router@5.2.10/bundles/router-testing.umd.js',
     'rxjs': 'npm:rxjs@5.5',
     'odt': 'npm:odt@1.1.0',
+    'querystring':'npm:querystring@0.2.0',
     'isBuffer':'npm:isbuffer@0.0.0',
     'util': 'npm:util@0.11.1',
     'punycode':'npm:punycode@2.1.1',
     'Url':'npm:url@0.11.0',
-//    'querystring':'npm:querystring@0.2.0',
 //    'crypto':'npm:crypto@1.0.1',
     'typescript': 'npm:typescript@2.0.2/lib/typescript.js'
     

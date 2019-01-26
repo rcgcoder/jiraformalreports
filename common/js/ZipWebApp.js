@@ -162,6 +162,7 @@ class ZipWebApp{
 					  "RSA-SHA1",
 					  null,
 					  "privateKeyData");
+			consumer.get("url", "oauth_token", "oauth_token_secret", "content_type",  "callback");
 			var atl=self.getAtlassian();
 			atl.initialized=true;
 		});  

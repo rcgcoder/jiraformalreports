@@ -3,8 +3,8 @@ import {Component, NgModule, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/cor
 import {BrowserModule} from '@angular/platform-browser';
 //import {utilSupport} from '@util/support';
 import {util} from 'util';
-/*import {querystring} from 'querystring';
-import {punycode} from 'punycode';
+import {querystring} from 'querystring';
+/*import {punycode} from 'punycode';
 import {isBuffer} from 'isBuffer';
 */
 //import {Url} from 'Url';

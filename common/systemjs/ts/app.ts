@@ -2,7 +2,7 @@
 import {Component, NgModule, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 //import {utilSupport} from '@util/support';
-//import {util} from 'util';
+import {util} from 'util';
 /*import {querystring} from 'querystring';
 import {punycode} from 'punycode';
 import {isBuffer} from 'isBuffer';

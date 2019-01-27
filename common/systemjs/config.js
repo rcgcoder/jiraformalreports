@@ -33,11 +33,11 @@ System.config({
     'rxjs': 'npm:rxjs@5.5',
     'odt': 'npm:odt@1.1.0',
    // 'isBuffer':'npm:isbuffer@0.0.0',
-    '@util/support':'npm@util@0.11.1/support',
     'util': 'npm:util@0.11.1/util.js',
     'punycode':'npm:punycode@1.4.1',
     'url':'npm:url@0.11.0',
 //    'crypto':'npm:crypto@1.0.1',
+    'oauth':'npm:oauth@0.9.15',
     'querystring':'npm:querystring@0.2.0',
     'typescript': 'npm:typescript@2.0.2/lib/typescript.js'
     

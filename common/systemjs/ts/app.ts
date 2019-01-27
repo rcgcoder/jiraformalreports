@@ -1,14 +1,14 @@
 //our root app component
 import {Component, NgModule, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {utilupport} from '@util/support';
-import {util} from 'util';
-import {querystring} from 'querystring';
+//import {util} from 'util';
+//import {querystring} from 'querystring';
 /*import {punycode} from 'punycode';
 import {isBuffer} from 'isBuffer';
 */
-import {url} from 'url';
+//import {url} from 'url';
 //import {crypto} from 'crypto';
+import {oauth} from 'oauth';
 import {Tabs} from './tabs';
 import {Tab} from './tab';
 import {TabReports} from './tab.reports';
@@ -64,8 +64,7 @@ class App {
                 return System.webapp.loadRemoteFiles(arrFiles);
             });
             self.addStep("Postprocessing systemjs components.... ",function(){
-    		    URL= require('url');
-    			log ("URL is loaded?"+ URL);
+    			log ("is loaded?"+ oauth);
 
  /*           	log("Oauth is loadded?"+OAuth);
     			log("Initialize ends.. ");

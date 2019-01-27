@@ -38,7 +38,7 @@ System.config({
    // 'url':'npm:url@0.11.0',
 //    'crypto':'npm:crypto@1.0.1',
     'oauth':'js/libs/oauth/oauth.js',
-    'querystring':'npm:querystring@0.2.0',
+//    'querystring':'npm:querystring@0.2.0',
     'typescript': 'npm:typescript@2.0.2/lib/typescript.js'
     
 //    'typescript': 'npm:typescript@2.8.3/lib/typescript.js'

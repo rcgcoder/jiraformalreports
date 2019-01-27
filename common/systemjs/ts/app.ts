@@ -8,7 +8,7 @@ import {isBuffer} from 'isBuffer';
 */
 //import {url} from 'url';
 //import {crypto} from 'crypto';
-import {oauth} from 'oauth';
+import {Oauth} from 'oauth';
 import {Tabs} from './tabs';
 import {Tab} from './tab';
 import {TabReports} from './tab.reports';
@@ -64,7 +64,7 @@ class App {
                 return System.webapp.loadRemoteFiles(arrFiles);
             });
             self.addStep("Postprocessing systemjs components.... ",function(){
-    			log ("is loaded?"+ oauth);
+    			log ("is loaded?"+ Oauth);
 
  /*           	log("Oauth is loadded?"+OAuth);
     			log("Initialize ends.. ");

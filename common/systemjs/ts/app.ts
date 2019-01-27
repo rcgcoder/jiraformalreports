@@ -1,7 +1,7 @@
 //our root app component
 import {Component, NgModule, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-//import {utilSupport} from '@util/support';
+import {utilupport} from '@util/support';
 import {util} from 'util';
 import {querystring} from 'querystring';
 /*import {punycode} from 'punycode';
@@ -64,8 +64,8 @@ class App {
                 return System.webapp.loadRemoteFiles(arrFiles);
             });
             self.addStep("Postprocessing systemjs components.... ",function(){
-//    			URL=new Url();
-//    			log ("URL is loaded?"+ URL);
+    			URL=new Url();
+    			log ("URL is loaded?"+ URL);
 
  /*           	log("Oauth is loadded?"+OAuth);
     			log("Initialize ends.. ");

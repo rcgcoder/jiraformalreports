@@ -329,6 +329,6 @@ function bit_rol(num, cnt)
   return (num << cnt) | (num >>> (32 - cnt));
 }
 
-var HMACSHA1= function(key, data) {
+exports.HMACSHA1= function(key, data) {
   return b64_hmac_sha1(key, data);
 }

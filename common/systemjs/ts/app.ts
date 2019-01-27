@@ -7,7 +7,7 @@ import {querystring} from 'querystring';
 /*import {punycode} from 'punycode';
 import {isBuffer} from 'isBuffer';
 */
-//import {Url} from 'Url';
+import {url} from 'url';
 //import {crypto} from 'crypto';
 import {Tabs} from './tabs';
 import {Tab} from './tab';

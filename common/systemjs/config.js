@@ -36,7 +36,7 @@ System.config({
     '@util/support':'npm@util@0.11.1/support',
     'util': 'npm:util@0.11.1/util.js',
     'punycode':'npm:punycode@1.4.1',
-    'Url':'npm:url@0.11.0',
+    'url':'npm:url@0.11.0',
 //    'crypto':'npm:crypto@1.0.1',
     'querystring':'npm:querystring@0.2.0',
     'typescript': 'npm:typescript@2.0.2/lib/typescript.js'

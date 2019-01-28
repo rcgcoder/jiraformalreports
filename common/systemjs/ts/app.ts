@@ -9,7 +9,7 @@ import {isBuffer} from 'isBuffer';
 */
 //import {crypto} from 'crypto';
 //import {sha1} from 'sha1';
-//import {OAuth} from 'oauth';
+import {OAuth} from 'oauth';
 import {Tabs} from './tabs';
 import {Tab} from './tab';
 import {TabReports} from './tab.reports';

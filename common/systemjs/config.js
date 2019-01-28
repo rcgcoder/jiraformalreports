@@ -48,10 +48,20 @@ System.config({
   },
   //packages defines our app package
   packages: {
-  	defaultJSExtensions: true,
     app: {
       main: './main.ts',
       defaultExtension: 'ts'
+    },
+    rxjs: {
+      defaultExtension: 'js'
+    },
+    oauth: {
+    	main: './index.js',
+    	defaultExtension: 'js'
+    },
+    util: {
+    	main: './util.min.js' ,
+    	defaultExtension: 'js' 
     }
   }
 });

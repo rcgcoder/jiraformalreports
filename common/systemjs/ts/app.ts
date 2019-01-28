@@ -8,7 +8,7 @@ import {isBuffer} from 'isBuffer';
 */
 //import {url} from 'url';
 //import {crypto} from 'crypto';
-import {sha1} from 'sha1';
+//import {sha1} from 'sha1';
 import {OAuth} from 'oauth';
 import {Tabs} from './tabs';
 import {Tab} from './tab';

@@ -8,6 +8,7 @@ import {isBuffer} from 'isBuffer';
 */
 //import {url} from 'url';
 //import {crypto} from 'crypto';
+import {oauth} from 'oauth-js/lib/oauth.js';
 import {Oauth} from 'oauth-js';
 import {Tabs} from './tabs';
 import {Tab} from './tab';

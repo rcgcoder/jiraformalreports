@@ -60,7 +60,7 @@ System.config({
     	defaultExtension: 'js'
     },
     util: {
-    	main: './util.min.js',
+    	main: './util.js',
     	defaultExtension: 'js' 
     }
   }

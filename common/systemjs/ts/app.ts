@@ -1,12 +1,12 @@
 //our root app component
 import {Component, NgModule, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-//import {util} from 'util';
-//import {querystring} from 'querystring';
+import {util} from 'util';
+import {url} from 'url';
+/*//import {querystring} from 'querystring';
 /*import {punycode} from 'punycode';
 import {isBuffer} from 'isBuffer';
 */
-//import {url} from 'url';
 //import {crypto} from 'crypto';
 //import {sha1} from 'sha1';
 import {OAuth} from 'oauth';

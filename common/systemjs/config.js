@@ -59,5 +59,8 @@ System.config({
     	main: './index.js',
     	defaultExtension: 'js'
     }
+    util: {
+    	defaultExtension: 'js'
+    }
   }
 });

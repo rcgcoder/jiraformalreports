@@ -42,7 +42,7 @@ System.config({
     'oauth':'npm:oauth-js@0.9.9',
 //    'npm:oauth-js@0.9.9/lib/sha1':'npm:oauth-js@0.9.9/lib/sha1.js',
     
-//    'querystring':'npm:querystring@0.2.0',
+    'querystring':'npm:querystring@0.2.0',
     'typescript': 'npm:typescript@2.0.2/lib/typescript.js'
     
 //    'typescript': 'npm:typescript@2.8.3/lib/typescript.js'
@@ -66,6 +66,9 @@ System.config({
     },
     url: {
     	main: './url.js',
+    	defaultExtension: 'js'
+    },
+    querystring: {
     	defaultExtension: 'js'
     }
   }

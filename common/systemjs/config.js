@@ -37,7 +37,7 @@ System.config({
    // 'punycode':'npm:punycode@1.4.1',
    // 'url':'npm:url@0.11.0',
 //    'crypto':'npm:crypto@1.0.1',
-    'oauth':'npm:oauth-js@0.9.9',
+    'oauth':'npm:oauth-js@0.9.9/index.min.js',
 //    'querystring':'npm:querystring@0.2.0',
     'typescript': 'npm:typescript@2.0.2/lib/typescript.js'
     

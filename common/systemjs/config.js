@@ -33,7 +33,7 @@ System.config({
     'rxjs': 'npm:rxjs@5.5',
     'odt': 'npm:odt@1.1.0',
    // 'isBuffer':'npm:isbuffer@0.0.0',
-   // 'util': 'npm:util@0.11.1/util.js',
+    'util': 'npm:util@0.11.1',
    // 'punycode':'npm:punycode@1.4.1',
     'url':'npm:url@0.11.0',
 //    'crypto':'npm:crypto@1.0.1',
@@ -60,6 +60,7 @@ System.config({
     	defaultExtension: 'js'
     },
     util: {
+    	main: './util.min.js',
     	defaultExtension: 'js'
     }
   }

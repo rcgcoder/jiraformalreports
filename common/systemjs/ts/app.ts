@@ -65,7 +65,8 @@ class App {
                 return System.webapp.loadRemoteFiles(arrFiles);
             });
             self.addStep("Postprocessing systemjs components.... ",function(){
-    			log ("is loaded?"+ OAuth);
+            	alert("Its Loaded?");
+            	log ("is loaded?"+ OAuth);
 
  /*           	log("Oauth is loadded?"+OAuth);
     			log("Initialize ends.. ");

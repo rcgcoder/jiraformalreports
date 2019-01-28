@@ -36,7 +36,7 @@ System.config({
    // 'util': 'npm:util@0.11.1/util.js',
    // 'punycode':'npm:punycode@1.4.1',
    // 'url':'npm:url@0.11.0',
-//    'crypto':'npm:crypto@1.0.1',
+    'crypto':'npm:crypto@1.0.1',
 //    'oauth-js':'npm:oauth-js@0.9.9',
     'oauth':'npm:oauth-js@0.9.9',
 //    'npm:oauth-js@0.9.9/lib/sha1':'npm:oauth-js@0.9.9/lib/sha1.js',

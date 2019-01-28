@@ -118,7 +118,7 @@ class App {
   schemas: [
             CUSTOM_ELEMENTS_SCHEMA
         ],
-  imports: [ BrowserModule,OAuth],
+  imports: [ BrowserModule,OAuth,url],
   declarations: [   App, 
                     Tabs, 
                     Tab, 

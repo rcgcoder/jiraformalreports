@@ -58,7 +58,7 @@ System.config({
     oauth: {
     	main: './index.js',
     	defaultExtension: 'js'
-    }
+    },
     util: {
     	defaultExtension: 'js'
     }

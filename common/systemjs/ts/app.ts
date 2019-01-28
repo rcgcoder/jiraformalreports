@@ -9,7 +9,7 @@ import {isBuffer} from 'isBuffer';
 //import {url} from 'url';
 //import {crypto} from 'crypto';
 import {OauthJS} from 'oauth-js';
-//import {oauth} from 'oauth-js/lib/oauth.js';
+import {oauth} from 'oauth';
 import {Tabs} from './tabs';
 import {Tab} from './tab';
 import {TabReports} from './tab.reports';

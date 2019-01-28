@@ -62,6 +62,10 @@ System.config({
     util: {
     	main: './util.js',
     	defaultExtension: 'js' 
+    },
+    url: {
+    	main: './url.js',
+    	defaultExtension: 'js'
     }
   }
 });

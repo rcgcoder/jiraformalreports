@@ -39,7 +39,7 @@ System.config({
     'url':'js/libs/node-libs/url',
 //    'crypto':'npm:crypto@1.0.1',
 //    'oauth-js':'npm:oauth-js@0.9.9',
-//    'oauth':'npm:oauth-js@0.9.9',
+    'oauth':'npm:oauth-js@0.9.9',
 //    'npm:oauth-js@0.9.9/lib/sha1':'npm:oauth-js@0.9.9/lib/sha1.js',
     
 //    'querystring':'npm:querystring@0.2.0',

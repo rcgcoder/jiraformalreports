@@ -35,6 +35,7 @@ System.config({
    // 'isBuffer':'npm:isbuffer@0.0.0',
 //    'util': 'npm:util@0.11.1' ,
    // 'punycode':'npm:punycode@1.4.1',
+   // 'url':'js/libs/node-libs/url',
     'url':'npm:url@0.11.0',
 //    'crypto':'npm:crypto@1.0.1',
 //    'oauth-js':'npm:oauth-js@0.9.9',
@@ -59,11 +60,11 @@ System.config({
     	main: './index.js',
     	defaultExtension: 'js'
     },
-    util: {
+/*    util: {
     	main: './util.js',
     	defaultExtension: 'js' 
     },
-    url: {
+*/    url: {
     	main: './url.js',
     	defaultExtension: 'js'
     }

@@ -54,6 +54,9 @@ System.config({
     },
     rxjs: {
       defaultExtension: 'js'
+    },
+    oauth: {
+    	defaultExtension: 'js'
     }
   }
 });

@@ -69,6 +69,7 @@ System.config({
     	defaultExtension: 'js'
     },
     querystring: {
+    	main: './index.js',
     	defaultExtension: 'js'
     }
   }

@@ -54,6 +54,7 @@ System.config({
     ,'buffer':'js/libs/node-libs/internal'
     ,'dns':'js/libs/node-libs/internal'
     ,'cluster':'js/libs/node-libs/internal'
+    ,'https':'js/libs/node-libs/internal'
     
 //    'typescript': 'npm:typescript@2.8.3/lib/typescript.js'
   },
@@ -83,6 +84,7 @@ System.config({
     	defaultExtension: 'js'
     },
     http: {main: './http.js',defaultExtension: 'js'}
+    ,https: {main: './https.js',defaultExtension: 'js'}
     ,_http_agent: {main: './_http_agent.js',defaultExtension: 'js'}
     ,net: {main: './net.js',defaultExtension: 'js'}
     ,events: {main: './events.js',defaultExtension: 'js'}

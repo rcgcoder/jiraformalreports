@@ -38,6 +38,7 @@ System.config({
    // 'url':'js/libs/node-libs/url',
     'url':'js/libs/node-libs/url',
     'http':'js/libs/node-libs/internal',
+    '_http_agent':'js/libs/node-libs/internal',
 //    'crypto':'npm:crypto@1.0.1',
 //    'oauth-js':'npm:oauth-js@0.9.9',
     'oauth':'npm:oauth-js@0.9.9',

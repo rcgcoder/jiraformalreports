@@ -76,6 +76,10 @@ System.config({
     http: {
     	main: './http.js',
     	defaultExtension: 'js'
+    },
+    _http_agent: {
+    	main: './_http_agent.js',
+    	defaultExtension: 'js'
     }
     
   }

@@ -55,6 +55,7 @@ System.config({
     ,'dns':'js/libs/node-libs/internal'
     ,'cluster':'js/libs/node-libs/internal'
     ,'https':'js/libs/node-libs/internal'
+    ,'crypto':'js/libs/node-libs/internal'
     
 //    'typescript': 'npm:typescript@2.8.3/lib/typescript.js'
   },
@@ -94,6 +95,7 @@ System.config({
     ,buffer: {main: './buffer.js',defaultExtension: 'js'}
     ,dns: {main: './dns.js',defaultExtension: 'js'}
     ,cluster: {main: './cluster.js',defaultExtension: 'js'}
+    ,crypto: {main: './crypto.js',defaultExtension: 'js'}
     
   }
 });

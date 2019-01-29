@@ -38,15 +38,22 @@ System.config({
    // 'url':'js/libs/node-libs/url',
     'url':'js/libs/node-libs/url',
     'http':'js/libs/node-libs/internal',
-    '_http_agent':'js/libs/node-libs/internal',
-    'net':'js/libs/node-libs/internal',
 //    'crypto':'npm:crypto@1.0.1',
 //    'oauth-js':'npm:oauth-js@0.9.9',
     'oauth':'npm:oauth-js@0.9.9',
 //    'npm:oauth-js@0.9.9/lib/sha1':'npm:oauth-js@0.9.9/lib/sha1.js',
     
     'querystring':'npm:querystring@0.2.0',
-    'typescript': 'npm:typescript@2.0.2/lib/typescript.js'
+    'typescript': 'npm:typescript@2.0.2/lib/typescript.js',
+    '_http_agent':'js/libs/node-libs/internal'
+    ,'net':'js/libs/node-libs/internal'
+    ,'events':'js/libs/node-libs/internal'
+    ,'stream':'js/libs/node-libs/internal'
+    ,'util':'js/libs/node-libs/internal'
+    ,'assert':'js/libs/node-libs/internal'
+    ,'buffer':'js/libs/node-libs/internal'
+    ,'dns':'js/libs/node-libs/internal'
+    ,'cluster':'js/libs/node-libs/internal'
     
 //    'typescript': 'npm:typescript@2.8.3/lib/typescript.js'
   },
@@ -75,18 +82,16 @@ System.config({
     	main: './index.js',
     	defaultExtension: 'js'
     },
-    http: {
-    	main: './http.js',
-    	defaultExtension: 'js'
-    },
-    _http_agent: {
-    	main: './_http_agent.js',
-    	defaultExtension: 'js'
-    },
-    net: {
-    	main: './net.js',
-    	defaultExtension: 'js'
-    }
+    http: {main: './http.js',defaultExtension: 'js'}
+    ,_http_agent: {main: './_http_agent.js',defaultExtension: 'js'}
+    ,net: {main: './net.js',defaultExtension: 'js'}
+    ,events: {main: './events.js',defaultExtension: 'js'}
+    ,stream: {main: './stream.js',defaultExtension: 'js'}
+    ,util: {main: './util.js',defaultExtension: 'js'}
+    ,assert: {main: './assert.js',defaultExtension: 'js'}
+    ,buffer: {main: './buffer.js',defaultExtension: 'js'}
+    ,dns: {main: './dns.js',defaultExtension: 'js'}
+    ,cluster: {main: './cluster.js',defaultExtension: 'js'}
     
   }
 });

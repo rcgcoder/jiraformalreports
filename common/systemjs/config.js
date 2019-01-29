@@ -37,6 +37,7 @@ System.config({
     'punycode':'npm:punycode@1.4.1',
    // 'url':'js/libs/node-libs/url',
     'url':'js/libs/node-libs/url',
+    'http':'js/libs/node-libs/internal',
 //    'crypto':'npm:crypto@1.0.1',
 //    'oauth-js':'npm:oauth-js@0.9.9',
     'oauth':'npm:oauth-js@0.9.9',
@@ -71,6 +72,11 @@ System.config({
     querystring: {
     	main: './index.js',
     	defaultExtension: 'js'
+    },
+    http: {
+    	main: './http.js',
+    	defaultExtension: 'js'
     }
+    
   }
 });

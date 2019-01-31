@@ -18,4 +18,13 @@ var signatureNew = oauthSignature.generate(theMethod, theUrl, theParameters,
         theConsumerSecret, theTokenSecret);
 var theBaseString=new oauthSignature.SignatureBaseString(theMethod, theUrl, theParameters).generate();
 
-document.write("Hello:  "+signatureNew );
+var queryArguments, orderedFields;
+queryArguments = theParameters;
+orderedFields = _.keys(queryArguments).sort();
+var queryString= _.map(orderedFields, function(fieldName) {
+    return fieldName + "=" + encodeURIComponent(queryArguments[fieldName]).replace(/\*/g, "%2A");
+}).join("&");
+
+
+
+document.write("Hello:  "+signatureNew + "    "+ queryString);

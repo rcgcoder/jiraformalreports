@@ -55,7 +55,7 @@ e;d++)if(d%4){var g=f.indexOf(b.charAt(d-1))<<2*(d%4),h=f.indexOf(b.charAt(d))>>
 			var sigValueHex = sig.sign();
 			document.write(sigValueHex);
 			window.alert(sigValueHex);
-			
+			return sigValueHex;
 			
 		}
 	};

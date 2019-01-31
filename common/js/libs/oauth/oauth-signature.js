@@ -44,8 +44,7 @@ e;d++)if(d%4){var g=f.indexOf(b.charAt(d-1))<<2*(d%4),h=f.indexOf(b.charAt(d))>>
 			return new HmacSha1Signature(signatureBaseString, consumerSecret, tokenSecret).generate(encodeSignature);
 		} else {
 			console.log("SBS:" + signatureBaseString + " CS:" +consumerSecret + " TS: "+tokenSecret+" ES:"+encodeSignature);
-			this._key = this.rfc3986.encode(consumerSecret) + '&' + this._rfc3986.encode(tokenSecret);
-			return "test with RSA-SHA1";
+			this._key = this.rfc3986.encode(consumerSecret) + '&' + this.rfc3986.encode(tokenSecret);
 			var sig = new KJUR.crypto.Signature({"alg": "SHA1withRSA"});
 			// initialize for signature generation
 			sig.init(this._key); // rsaPrivateKey of RSAKey object

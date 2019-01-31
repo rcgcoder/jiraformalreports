@@ -20,7 +20,8 @@ function addNewLines(str) {
 }
 
 function toPEM(privateKey) {
-    var b64 = addNewLines(arrayBufferToBase64(privateKey));
+//    var b64 = addNewLines(arrayBufferToBase64(privateKey));
+    var b64 = addNewLines(privateKey);
     var pem = "-----BEGIN PRIVATE KEY-----\n" + b64 + "-----END PRIVATE KEY-----";
     
     return pem;

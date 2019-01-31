@@ -16,6 +16,9 @@
 			method: function() {
 				return "GET";
 			},
+			hashtype:function(){
+				return "HMAC-SHA1";
+			},
 			timestamp: function() {
 				return Math.floor((new Date).getTime() / 1e3);
 			},

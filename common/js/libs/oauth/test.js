@@ -6,7 +6,7 @@ var theUrl="https://paega2.atlassian.net/secure/attachment/41486/screenshot-1.pn
 var theParameters={
     oauth_consumer_key: "OauthKey"
 	,oauth_nonce: "8302830"
-	,oauth_signature_method: "HMAC-SHA1"
+	,oauth_signature_method: "RSA-SHA1"
 	,oauth_timestamp: 1548825765
 	,oauth_token: "asfFgx4OZZAqAQsLBL4bTnjOq91P1NDE"
 	,oauth_version: "1.0"

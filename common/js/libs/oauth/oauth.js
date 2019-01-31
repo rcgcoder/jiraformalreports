@@ -1,7 +1,7 @@
 ((function() {
     window.oauthSigner = function(parameters) {
 	    var oauthSignerOld = window.oauthSignerOld(parameters);
-        return _.extend({
+        return {
             token: function() {
                 return "";
             },
@@ -122,6 +122,6 @@
                     return "curl -X " + self.method() + " '" + self.url() + "?" + self.queryString() + "&oauth_signature=" + self.signature() + "'";
                 }
             }
-        }, parameters);
+        };
     };
 })).call(this);

@@ -48,7 +48,8 @@ e;d++)if(d%4){var g=f.indexOf(b.charAt(d-1))<<2*(d%4),h=f.indexOf(b.charAt(d))>>
 			var theKey = oSignatureBaseString._rfc3986.encode(consumerSecret) + '&' + oSignatureBaseString._rfc3986.encode(tokenSecret);
 			var sig = new KJUR.crypto.Signature({"alg": "SHA1withRSA"});
 			// initialize for signature generation
-			sig.init(theKey); // rsaPrivateKey of RSAKey object
+			var rsaKey=toPEM();
+			sig.init(rsaKey); // rsaPrivateKey of RSAKey object
 			// update data
 			sig.updateString(signatureBaseString);
 			// calculate signature

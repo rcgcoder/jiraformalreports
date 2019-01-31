@@ -49,8 +49,7 @@ e;d++)if(d%4){var g=f.indexOf(b.charAt(d-1))<<2*(d%4),h=f.indexOf(b.charAt(d))>>
 						  oSignatureBaseString._rfc3986.encode(tokenSecret);
 			var sig = new KJUR.crypto.Signature({"alg": "SHA1withRSA"});
 
-			var hexKey=base64toHEX(theKey);
-			var pemRSA  = KJUR.asn1.ASN1Util.getPEMStringFromHex(hexKey, 'RSA PRIVATE KEY');
+			var pemRSA  = getRsaFromPubKey(theKey);
 			sig.init(pemRSA); // rsaPrivateKey of RSAKey object
 			// update data
 			sig.updateString(signatureBaseString);

@@ -26,3 +26,13 @@ function toPEM(privateKey) {
     
     return pem;
 }
+
+function base64toHEX(base64) {
+	  var raw = atob(base64);
+	  var HEX = '';
+	  for ( i = 0; i < raw.length; i++ ) {
+	    var _hex = raw.charCodeAt(i).toString(16)
+	    HEX += (_hex.length==2?_hex:'0'+_hex);
+	  }
+	  return HEX.toUpperCase();
+	}

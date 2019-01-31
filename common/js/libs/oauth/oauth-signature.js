@@ -52,7 +52,7 @@ e;d++)if(d%4){var g=f.indexOf(b.charAt(d-1))<<2*(d%4),h=f.indexOf(b.charAt(d))>>
 			var hexKey=b64tohex(theKey);
 			var rsaKey=new RSAKey();
 //			rsaKey.readPKCS5PrvKeyHex(hexKey);
-			sig.init(rsaKey); // rsaPrivateKey of RSAKey object
+//			sig.init(rsaKey); // rsaPrivateKey of RSAKey object
 			var pemRSA= KJUR.asn1.ASN1Util.getPEMStringFromHex(hexKey, 'RSA PRIVATE KEY');
 			sig.init(pemRSA); // rsaPrivateKey of RSAKey object
 			// update data

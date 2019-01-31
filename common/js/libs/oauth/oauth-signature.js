@@ -40,7 +40,11 @@ e;d++)if(d%4){var g=f.indexOf(b.charAt(d-1))<<2*(d%4),h=f.indexOf(b.charAt(d))>>
 			encodeSignature = options.encodeSignature;
 		}
 		debugger;
-		return new HmacSha1Signature(signatureBaseString, consumerSecret, tokenSecret).generate(encodeSignature);
+		if (parameters.oauth_signature_method=="HMAC-SHA1"){
+			return new HmacSha1Signature(signatureBaseString, consumerSecret, tokenSecret).generate(encodeSignature);
+		} else {
+			return "test with RSA-SHA1";
+		}
 	};
 
 	// Specification: http://oauth.net/core/1.0/#anchor14

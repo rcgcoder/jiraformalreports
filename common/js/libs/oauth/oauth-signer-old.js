@@ -1,6 +1,6 @@
 (function() {
 	window.oauthSignerOld = function(parameters) {
-		return {
+		return _.extend({
 			token: function() {
 				return "";
 			},
@@ -136,6 +136,6 @@
 			encodedBase64Signature: function() {
 				return this.percentEncode(this.base64Signature());
 			}
-		};
+		}, parameters);
 	};
 }).call(this);

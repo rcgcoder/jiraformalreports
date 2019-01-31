@@ -39,6 +39,7 @@ e;d++)if(d%4){var g=f.indexOf(b.charAt(d-1))<<2*(d%4),h=f.indexOf(b.charAt(d))>>
 		if (options) {
 			encodeSignature = options.encodeSignature;
 		}
+		debugger;
 		return new HmacSha1Signature(signatureBaseString, consumerSecret, tokenSecret).generate(encodeSignature);
 	};
 

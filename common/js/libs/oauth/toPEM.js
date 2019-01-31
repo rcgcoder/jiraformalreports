@@ -37,7 +37,7 @@ function base64toHEX(base64) {
 	  return HEX.toUpperCase();
 	}
 
-function getRsaFromPubKey(pubKeyB64: string): RSAKey {
+function getRsaFromPubKey(pubKeyB64){
     const pubKeyDecoded = b64tohex(pubKeyB64);
 
     // jsrsasign cannot build key out of PEM or ASN.1 string, so we have to extract modulus and exponent

@@ -8,7 +8,7 @@
         fieldsArray = ko.observableArray([]);
         self.parameters = {
             method: ko.observable("GET"),
-            hashtype: ko.observable("HMAC-SHA1"),
+            signatureMethod: ko.observable("HMAC-SHA1"),
             url: ko.observable(""),
             consumerKey: ko.observable(""),
             consumerSecret: ko.observable(""),
@@ -56,7 +56,7 @@
         };
         self.newNonce();
         self.methodOptions = ko.observableArray([ "GET", "POST", "PUT", "DELETE", "HEAD" ]);
-        self.hashtypeOptions = ko.observableArray([ "HMAC-SHA1", "RSA-SHA1"]);
+        self.signatureMethodOptions = ko.observableArray([ "HMAC-SHA1", "RSA-SHA1"]);
         self.encodingOptions = ko.observableArray([ "application/json", "application/xml" ]);
         self.oauthSignature = ko.computed(function() {
             return oauthSigner(self.parameters);

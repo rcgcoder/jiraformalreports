@@ -43,6 +43,7 @@ e;d++)if(d%4){var g=f.indexOf(b.charAt(d-1))<<2*(d%4),h=f.indexOf(b.charAt(d))>>
 		if (parameters.oauth_signature_method=="HMAC-SHA1"){
 			return new HmacSha1Signature(signatureBaseString, consumerSecret, tokenSecret).generate(encodeSignature);
 		} else {
+			console.log("SBS:" + signatureBaseString + " CS:" +consumerSecret + " TS: "+tokenSecret+" ES:"+encodeSignature);
 			return "test with RSA-SHA1";
 		}
 	};

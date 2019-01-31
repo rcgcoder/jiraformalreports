@@ -1,1 +1,5 @@
-document.write("Hello");
+
+
+
+
+document.write("Hello"+window.oauthSigner.version);

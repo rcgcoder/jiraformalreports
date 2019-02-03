@@ -56,9 +56,21 @@ e;d++)if(d%4){var g=f.indexOf(b.charAt(d-1))<<2*(d%4),h=f.indexOf(b.charAt(d))>>
 //			var pemRSA= KJUR.asn1.ASN1Util.getPEMStringFromHex(hexKey, 'RSA PRIVATE KEY');
 //			sig.init(pemRSA); // rsaPrivateKey of RSAKey object
 			
+			/*
 			var pkcs5=new PKCS5PKEY();
 			rsaKey=pkcs5.getEryptedPKCS5PEMFromPrvKeyHex(hexKey); 
 			sig.init(rsaKey);
+			*/
+			
+			
+			  const enc = new TextEncoder();
+			  return window.crypto.subtle.importKey(
+			    "raw",
+			    enc.encode(theKey),
+			    {name: "PBKDF2"},
+			    false,
+			    ["deriveBits", "deriveKey"]
+			  );
 			// update data
 			sig.updateString(signatureBaseString);
 			// calculate signature

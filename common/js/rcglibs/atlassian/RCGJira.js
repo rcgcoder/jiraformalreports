@@ -584,5 +584,81 @@ class RCGJira{
         	return self.taskResultMultiple({issue:reportIssue,attachments:arrFiles});
         });
 	}
+	proxyCallTest(){
+		var jfrCall="https://cantabrana.no-ip.org/jfreports/atlassian/";
+		//var atlUrl="https://paega2.atlassian.net/secure/attachment/43269/form1.PNG";
+		//var atlContentType="image/png";
+		var atlUrl="https://paega2.atlassian.net/rest/api/3/search?jql=updated%20>%3D%20-52w%20order%20by%20lastViewed%20DESC";
+		var atlContentType="application/json";
+		var atlToken=System.webapp.getJira().tokenBase;
+		var atlCallMethod="GET";
+		var proxyCallUrl=jfrCall+"?"
+		        +"oauth_token="+atlToken
+		        +"&callMethod="+atlCallMethod
+		        +"&CallContentType="+ atlContentType
+		        +"&callUrl="+atlUrl;
+		        
+		var oReq = new XMLHttpRequest();
+		oReq.open("GET", proxyCallUrl, true);
+		oReq.responseType = "arraybuffer";
+
+		oReq.onload = function (oEvent) {
+		  debugger;
+		  var arrayBuffer = oReq.response; // Note: not oReq.responseText
+		  if (arrayBuffer) {
+		    var byteArray = new Uint8Array(arrayBuffer);
+		    for (var i = 0; i < byteArray.byteLength; i++) {
+		      // do something with each byte in the array
+		    }
+		  }
+		};
+
+		oReq.send(null);        
+		if (false){
+		       
+		$.ajax({
+		         url: proxyCallUrl,
+		         type: atlCallMethod,
+		         beforeSend: function(xhr){
+		            xhr.setRequestHeader('Content-Type', atlContentType);
+		            xhr.responseType = 'arraybuffer';
+		            },
+		         success: function(data) {
+		            debugger;
+		            alert('Success!' + data.length); }
+		      });
+
+		$.get( proxyCallUrl, 
+		  function( data ) {
+		  log(atlUrl);
+		  debugger;
+		  var headers=JSON.parse(data);
+		  log(headers.curlCommand);
+		  /*
+		  var newUrl=headers["urlProtocol"]+"//"+headers["urlHost"]+headers["urlPath"];
+		  if (!(isNull(headers["urlQuery"]) || isUndefined(headers["urlQuery"]))){
+		     newUrl+="?"+headers["urlQuery"];
+		  }
+		  $.ajax({
+		         url: newUrl,
+		         type: "GET",
+		         beforeSend: function(xhr){
+		            xhr.setRequestHeader('Authorization', headers.headers["Authorization"]);
+		            xhr.setRequestHeader('Accept', headers.headers["Accept"]);
+//		            xhr.setRequestHeader('Connection', headers.headers["Connection"]);
+		            xhr.setRequestHeader('Content-Type', headers.headers["Content-Type"]);
+//		            xhr.setRequestHeader('Content-length', headers.headers["Content-length"]);
+//		            xhr.setRequestHeader('Host', headers.headers["Host"]);
+//		            xhr.setRequestHeader('User-Agent', headers.headers["User-Agent"]);
+		            },
+		         success: function() {
+		            debugger;
+		            alert('Success!' + authHeader); }
+		      });
+		      
+		    */
+		});
+		}
+	}
 
 }

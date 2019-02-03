@@ -146,7 +146,14 @@ export class TabReports {
         var arrValues=auxObj.getSelectedValues();
         return arrValues[0].key;
     }
-
+    doConfluenceOauth(){
+        var self=this;
+        log("Open");
+        var confluence=System.webapp.getConfluence();
+        System.webapp.addStep("Authenticating in Confluence...",function(){
+        	return self.oauthConnect();
+        },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
+    }
     doLoadReport(){
         var self=this;
         log("Open");

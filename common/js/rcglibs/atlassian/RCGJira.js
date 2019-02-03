@@ -223,6 +223,7 @@ class RCGJira{
 	getBaseUrl(){
 		var self=this;
 		var url=self.manager.instance+"/"+self.subPath;
+		return url;
 	}
 
 	getUser(){

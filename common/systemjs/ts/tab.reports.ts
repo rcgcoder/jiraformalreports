@@ -149,9 +149,9 @@ export class TabReports {
     doConfluenceOauth(){
         var self=this;
         log("Open");
-        var confluence=System.webapp.getConfluence();
+        var theConfluence=System.webapp.getConfluence();
         System.webapp.addStep("Authenticating in Confluence...",function(){
-        	return self.oauthConnect();
+        	return theConfluence.oauthConnect();
         },0,1,undefined,undefined,undefined,"GLOBAL_RUN",undefined);
     }
     doLoadReport(){

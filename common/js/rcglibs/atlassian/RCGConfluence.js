@@ -38,4 +38,8 @@ class RCGConfluence{
 			return self.apiCall("/rest/api/content?title="+contentTitle+"&expand=body.storage");
 		});
 	}
+	getBaseUrl(){
+		var self=this;
+		var url=self.manager.instance+"/"+self.subPath;
+	}
 }

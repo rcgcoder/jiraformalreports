@@ -463,4 +463,16 @@ class RCGAtlassian{
 						undefined,
 						true);
 	}
+	getAppOfUrl(fullUrl){
+		var self=this;
+		var auxUrl=self.getConfluence().getBaseUrl();
+		if (fullUrl.substring(0,auxUrl.length)==auxUrl){
+			return self.getConfluence();
+		}
+		
+//		var auxUrl=self.getJira().getBaseUrl();
+//		if (fullUrl.substring(0,auxUrl.length)==auxUrl){
+			return self.getJira();
+//		}
+	}
 }

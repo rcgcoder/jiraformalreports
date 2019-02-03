@@ -220,6 +220,11 @@ class RCGJira{
 	getAllIssueLinkTypes(){
 		
 	}
+	getBaseUrl(){
+		var self=this;
+		var url=self.manager.instance+"/"+self.subPath;
+	}
+
 	getUser(){
 		return this.manager.userId;
 	}
@@ -588,9 +593,15 @@ class RCGJira{
 		var jfrCall="https://cantabrana.no-ip.org/jfreports/atlassian/";
 		//var atlUrl="https://paega2.atlassian.net/secure/attachment/43269/form1.PNG";
 		//var atlContentType="image/png";
-		var atlUrl="https://paega2.atlassian.net/rest/api/3/search?jql=updated%20>%3D%20-52w%20order%20by%20lastViewed%20DESC";
-		var atlContentType="application/json";
-		var atlToken=System.webapp.getJira().tokenBase;
+//		var atlUrl="https://paega2.atlassian.net/rest/api/3/search?jql=updated%20>%3D%20-52w%20order%20by%20lastViewed%20DESC";
+//		var atlContentType="application/json";
+		var atlUrl="https://paega2.atlassian.net/wiki/download/attachments/471400450/under-construction-2408066_960_720.png";
+		var atlContentType="image/png";
+		
+	    var oAtlassian=System.webapp.getAtlassian();
+	    var atlApp=oAtlassian.getAppOfUrl(atlUrl);
+		var atlToken=atlApp.tokenBase;
+
 		var atlCallMethod="GET";
 		var proxyCallUrl=jfrCall+"?"
 		        +"oauth_token="+atlToken

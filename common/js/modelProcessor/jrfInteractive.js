@@ -474,7 +474,6 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
             if (arrImages.length>0){
                 var fncGetDataUri=function (url, callback) {
                     var image = new Image();
-                    image.crossOrigin = "Anonymous";
                     image.onload = function () {
                         var canvas = document.createElement('canvas');
                         canvas.width = this.naturalWidth; // or 'width' if you want a special/scaled size
@@ -506,7 +505,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
                         var theImg=arrImages[i];
                         var jqImgChange=$(theImg);
                         var sImgUrl=jqImgChange.attr("src");
-                        var sTargetUrl=sImgUrl;
+/*                        var sTargetUrl=sImgUrl;
                         var arrParts=sTargetUrl.split("://");
                         if (arrParts.length>1){
                             sTargetUrl=arrParts[1];
@@ -521,6 +520,8 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
                         }
                         sTargetUrl="https://cantabrana.no-ip.org/jfreports/NEWproxy/"+sTargetUrl;
                         replaceWithDataURI(jqImgChange,sTargetUrl);
+                        */
+                        replaceWithDataURI(jqImgChange,sImgUrl);
                     };
                     return webapp.waitForEvent();
                 });

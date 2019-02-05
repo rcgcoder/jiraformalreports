@@ -365,7 +365,7 @@ class RCGAtlassian{
 		}*/
 		
 		
-		var atlUrl=encodeURI(callInfo.url);
+		var atlUrl=callInfo.url;
 		var atlContentType=callInfo.contentType;
 	    var atlApp=self.getAppOfUrl(atlUrl);
 		var atlToken=atlApp.tokenBase;

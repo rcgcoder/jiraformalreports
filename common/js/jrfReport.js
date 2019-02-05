@@ -221,17 +221,17 @@ var jrfReport=class jrfReport {
             	var iPosWidth=sizePart.indexOf("width");
             	if (iPosHeight>=0){
             		iPosHeight+="height".length+2;
-            		var sValue=
-            		sImgHtml+=(" height="+sizePart.substring(
+            		var sValue=sizePart.substring(
         					iPosHeight-1,
         					sizePart.indexOf('"',iPosHeight)+1
-        					));
+        					);
+            		sImgHtml+=(" height="+sValue);
             	}
             	
             	if (iPosWidth>=0){
             		iPosWidth+="width".length+2;
-            		var sWidth=sizePart.substring(iPosWidth-1,sizePart.indexOf('"',iPosWidth)+2);
-            		sImgHtml+=" width="+sWidth;
+            		var sValue=sizePart.substring(iPosWidth-1,sizePart.indexOf('"',iPosWidth)+2);
+            		sImgHtml+=(" width="+sValue);
             	}
             }
             sImgHtml+='>';

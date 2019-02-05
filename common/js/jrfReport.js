@@ -205,8 +205,8 @@ var jrfReport=class jrfReport {
         });
         //debugger;
         var arrImages=sHtml.saToString().split("<ac:image");
-        var result=[];
-        result.push(arrImages.shift());
+        var result=[arrImages.shift()];
+        
         arrImages.forEach(function(sCad){
         	var sizePart=sCad.substring(0,sCad.indexOf(">")).trim();
             var arrParts=sCad.substring(sCad.indexOf(">")+1,sCad.length).split("</ac:image>");
@@ -215,11 +215,31 @@ var jrfReport=class jrfReport {
             arrImgParts=arrImgParts[1].split('"');
             var sFileName=arrImgParts[0];
             var sUrl="https://paega2.atlassian.net/wiki/download/attachments/"+contentId+"/"+sFileName;
-            var sImgHtml='<img src="'+sUrl+'" >';
+            var sImgHtml='<img src="'+sUrl+'" ';
+            if (sizePart.length>0){
+            	var iPosHeight=sizePart.indexOf("height");
+            	var iPosWidth=sizePart.indexOf("width");
+            	if (iPosHeight>=0){
+            		iPosHeight+="height".length+2;
+            		var sValue=
+            		sImgHtml+=(" height="+sizePart.substring(
+        					iPosHeight-1,
+        					sizePart.indexOf('"',iPosHeight)+1
+        					));
+            	}
+            	
+            	if (iPosWidth>=0){
+            		iPosWidth+="width".length+2;
+            		var sWidth=sizePart.substring(iPosWidth-1,sizePart.indexOf('"',iPosWidth)+2);
+            		sImgHtml+=" width="+sWidth;
+            	}
+            }
+            sImgHtml+='>';
+            
             result.push(sImgHtml);
             result.push(arrParts[1]);
         });
-        return result.saToString()
+        return result.saToString();
         
 	}
 	walkAsync(theHashMap,itemFunction,endFunction){

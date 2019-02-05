@@ -464,6 +464,18 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
                                     }) ,oContent.idIframe,oContent.divId);
             return webapp.waitForEvent();
         });
+        webapp.addStep("Removing Issue Status Info",function(){
+        	debugger;
+            var ifr=document.getElementById(oContent.idIframe);
+            var ifrDoc=ifr.contentDocument;
+            var arrStatuses=$(ifrDoc).find(".aui-lozenge");
+            if (arrStatuses.length>0){
+            	for (var i=0;i<arrStatuses.length;i++){
+            		var item=arrStatuses[i];
+            		item.parentNode.removeChild(item);
+            	}
+            }
+        });
         webapp.addStep("Converting image urls to imagedata",function(){
             var ifr=document.getElementById(oContent.idIframe);
             var ifrDoc=ifr.contentDocument;

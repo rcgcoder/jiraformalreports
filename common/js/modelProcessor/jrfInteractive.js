@@ -493,6 +493,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 			      				  security:undefined
 			      		}
                         webapp.addStep("Calling Indirectly to get the image content",function(){
+                        	debugger;
                             oAtlassian.indirectCall(callInfo);
                         });
                         webapp.addStep("Processing Image Result",function(imgData){
@@ -504,7 +505,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
                         	    return base64;
                         	};
                 	        var img64 = converterEngine(imgData); // convert uint8Array to base64
-                	        theImg.attr("src", "data:image/png;base64," + theImg);  // inject data:image in DOM
+                	        jqImgChange.attr("src", "data:image/png;base64," + theImg);  // inject data:image in DOM
                         })                        	
                     });
                 });

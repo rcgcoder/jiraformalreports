@@ -493,7 +493,7 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
 		      				  headers: undefined,
 		      				  success: webapp.createManagedCallback(function(responseData,xhr){
   		                	        var img64 = converterEngine(responseData); // convert uint8Array to base64
-  		                	        jqImgChange.attr("src", "data:image/png;base64," + theImg);  // inject data:image in DOM
+  		                	        jqImgChange.attr("src", "data:image/png;base64," + img64);  // inject data:image in DOM
 		      					    webapp.continueTask();
 		      				  		}),
 		      				  error: webapp.createManagedCallback(function(xhr, statusText, TheError){

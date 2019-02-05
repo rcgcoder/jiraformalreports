@@ -472,58 +472,41 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
             var nLoaded=0;
             //debugger;
             if (arrImages.length>0){
-                var fncGetDataUri=function (url, callback) {
-                    var image = new Image();
-                    image.onload = function () {
-                        var canvas = document.createElement('canvas');
-                        canvas.width = this.naturalWidth; // or 'width' if you want a special/scaled size
-                        canvas.height = this.naturalHeight; // or 'height' if you want a special/scaled size
-
-                        canvas.getContext('2d').drawImage(this, 0, 0);
-
-                        // Get raw image data
-                        // callback(canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg);base64,/, ''));
-                                            
-                        // ... or get as Data URI
-                        callback(canvas.toDataURL('image/png'));
-                    };
-                    image.src = url;
-                }
-                var replaceWithDataURI=function(jqImgChange,url){
-                    fncGetDataUri(url, webapp.createManagedFunction(function(dataUri) {
-                        jqImgChange.attr("src",dataUri);
-                        nLoaded++;
-                        if (nLoaded>=arrImages.length) {
-                            webapp.continueTask();
-                        }
-                    }));
-                }
-
                 webapp.addStep("getting images data url",function(){
-                    for (var i=0;i<arrImages.length;i++){
-                    	debugger;
+                    webapp.sequentialProcess(arrImages.length,function(iImage){
                         var theImg=arrImages[i];
                         var jqImgChange=$(theImg);
                         var sImgUrl=jqImgChange.attr("src");
-/*                        var sTargetUrl=sImgUrl;
-                        var arrParts=sTargetUrl.split("://");
-                        if (arrParts.length>1){
-                            sTargetUrl=arrParts[1];
-                        } else {
-                            sTargetUrl=arrParts[0];
-                        }
-                        if (sTargetUrl.indexOf("?")>=0){
-                            sTargetUrl+="&token"+webapp.getJira().tokenAccess;
-                        } else {
-                            sTargetUrl+="?token"+webapp.getJira().tokenAccess;
-
-                        }
-                        sTargetUrl="https://cantabrana.no-ip.org/jfreports/NEWproxy/"+sTargetUrl;
-                        replaceWithDataURI(jqImgChange,sTargetUrl);
-                        */
-                        replaceWithDataURI(jqImgChange,sImgUrl);
-                    };
-                    return webapp.waitForEvent();
+                        var oAtlassian=webapp.getAtlassian();
+                        var callInfo= {
+			      				  url: sImgUrl,
+			      				  type:"GET",
+			      				  data:undefined,
+			      				  contentType: "image/png",
+			      				  headers: undefined,
+			      				  success: webapp.createManagedCallback(function(responseData,xhr){
+			      					    webapp.continueTask(responseData);
+			      				  		}),
+			      				  error: webapp.createManagedCallback(function(xhr, statusText, TheError){
+			      					    webapp.continueTask();
+		      				  		}),
+			      				  security:undefined
+			      		}
+                        webapp.addStep("Calling Indirectly to get the image content",function(){
+                            oAtlassian.indirectCall(callInfo);
+                        });
+                        webapp.addStep("Processing Image Result",function(imgData){
+                        	var converterEngine = function (input) { // uint8Array => Base64 ?
+                        	    var i = input.length;
+                        	    var biStr = []; //new Array(i);
+                        	    while (i--) { biStr[i] = String.fromCharCode(input[i]);  }
+                        	    var base64 = window.btoa(biStr.join(''));
+                        	    return base64;
+                        	};
+                	        var img64 = converterEngine(imgData); // convert uint8Array to base64
+                	        theImg.attr("src", "data:image/png;base64," + theImg);  // inject data:image in DOM
+                        })                        	
+                    });
                 });
                 webapp.addStep("Finished image processing",function(){
                     log("Replaced all images");

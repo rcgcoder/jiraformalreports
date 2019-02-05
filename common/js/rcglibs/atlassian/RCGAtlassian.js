@@ -377,7 +377,7 @@ class RCGAtlassian{
 		        +"&CallContentType="+ atlContentType
 		        +"&callUrl="+atlUrl;
 		        
-		return self.addStep("Retrieving data from proxy",function(){
+		self.addStep("Retrieving data from proxy",function(){
 			var oReq = new XMLHttpRequest();
 			oReq.open(atlCallMethod, proxyCallUrl, true);
 			oReq.responseType = "arraybuffer";

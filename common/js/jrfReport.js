@@ -466,16 +466,16 @@ var jrfReport=class jrfReport {
 */		self.addStep("Getting Confluence Report Model.... ",function(){
 	        var cfc=System.webapp.getConfluence();
 			//cfc.getAllPages();
+	        var arrValues=self.config.selReportModel.selected;
+			var contentId=arrValues[0].key;
 	        self.addStep("Getting Content from confluence",function(){
-		        var arrValues=self.config.selReportModel.selected;
-				var contentId=arrValues[0].key;
 				return cfc.getContent(contentId);
 	        });
 			self.addStep("Manipulating Content",function(content){
 				log(content);
 				var jsonObj=JSON.parse(content);
 				var sContent=jsonObj.body.storage.value;
-				var sHtml=self.cleanModel(sContent);
+				var sHtml=self.cleanModel(sContent,contentId);
 				self.config.model=sHtml;
 //				var theHtml=$(sHtml);
 			});

@@ -208,9 +208,8 @@ var jrfReport=class jrfReport {
         var result=[];
         result.push(arrImages.shift());
         arrImages.forEach(function(sCad){
-        	var sizePart=sCad.split(">");
-            var arrParts=sizePart[1].split("</ac:image>");
-            sizePart=sizePart[0].trim();
+        	var sizePart=sCad.substring(0,sCad.indexOf(">")).trim();
+            var arrParts=sCad.substring(sCad.indexOf(">")+1,sCad.length).split("</ac:image>");
             var sAttachedImage=arrParts[0];
             var arrImgParts=sAttachedImage.split('filename="');
             arrImgParts=arrImgParts[1].split('"');

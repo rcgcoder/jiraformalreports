@@ -214,7 +214,12 @@ var jrfReport=class jrfReport {
             var arrImgParts=sAttachedImage.split('filename="');
             arrImgParts=arrImgParts[1].split('"');
             var sFileName=arrImgParts[0];
-            var sUrl="https://paega2.atlassian.net/wiki/download/attachments/"+contentId+"/"+sFileName;
+            var oAtlassian=System.webapp.getAtlassian();
+            var cfcSubPath=oAtlassian.getConfluence().subPath;
+            if (cfcSubPath!==""){
+            	cfcSubPath+="/";
+            }
+            var sUrl=oAtlassian.instance+"/"+cfcSubPath+"download/attachments/"+contentId+"/"+sFileName;
             var sImgHtml='<img src="'+sUrl+'" ';
             if (sizePart.length>0){
             	var iPosHeight=sizePart.indexOf("height");

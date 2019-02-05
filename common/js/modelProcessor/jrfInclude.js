@@ -115,6 +115,7 @@ var jrfInclude=class jrfInclude extends jrfToken{//this kind of definition allow
     				return sContentBody;
     			});
                 if (isUndefined(self.subtype)||(self.subtype=="content")||(self.subtype=="")){
+                	debugger;
         			self.addStep("Processing HTML Model of Confluence Content:"+contentId+" from "+srcUrl,function(sContentHtmlBody){
     					auxModel=new jrfModel(self.model.report,sContentHtmlBody,self.reportElem);
     					auxModel.functionCache=self.model.functionCache;

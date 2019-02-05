@@ -364,22 +364,28 @@ class RCGAtlassian{
 				  security:oSecurity
 		}*/
 		
-		
+		log("Url to call:"+callInfo.url);
 		var atlUrl=callInfo.url;
 		var atlContentType=callInfo.contentType;
 	    var atlApp=self.getAppOfUrl(atlUrl);
 		var atlToken=atlApp.tokenBase;
 
 		var atlCallMethod=callInfo.type;
-		var proxyCallUrl=jfrCall+"?"
-		        +"oauth_token="+atlToken
-		        +"&callMethod="+atlCallMethod
-		        +"&CallContentType="+ atlContentType
-		        +"&callUrl="+atlUrl;
 		        
 		self.addStep("Retrieving data from proxy",function(){
-			var oReq = new XMLHttpRequest();
+			var oReq = new XMLHttpRequest();		
+			var proxyCallUrl=jfrCall+"?"
+	        +"oauth_token="+atlToken
+//	        +"&callMethod="+atlCallMethod
+//	        +"&CallContentType="+ atlContentType
+//	        +"&callUrl="+atlUrl
+	        ;
+
 			oReq.open(atlCallMethod, proxyCallUrl, true);
+			oReq.setRequestHeader("tgtUrl",atlUrl);
+			oReq.setRequestHeader("tgtContentType",atlContentType);
+			oReq.setRequestHeader("tgtMethod",atlCallMethod);
+			
 			oReq.responseType = "arraybuffer";
 			oReq.onerror = function (e){
 				callInfo.error(oReq, oReq.statusText, e);

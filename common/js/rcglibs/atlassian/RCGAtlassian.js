@@ -330,17 +330,89 @@ class RCGAtlassian{
 			}
 		});
 	}
-	apiCallBase(sTargetUrl,callType,data,sResponseType,arrHeaders,tokenAccess,oCallSecurity,aditionalOptions){
+	getAppOfUrl(fullUrl){
+		var self=this;
+		var auxUrl=self.getConfluence().getBaseUrl();
+		if (fullUrl.substring(0,auxUrl.length)==auxUrl){
+			return self.getConfluence();
+		}
+		
+//		var auxUrl=self.getJira().getBaseUrl();
+//		if (fullUrl.substring(0,auxUrl.length)==auxUrl){
+			return self.getJira();
+//		}
+	}
+	indirectCall(callInfo){
+		//var jfrCall="https://cantabrana.no-ip.org/jfreports/atlassian/";
+		var jrfCall=self.proxyPath+"/atlassian/";
+		//var atlUrl="https://paega2.atlassian.net/secure/attachment/43269/form1.PNG";
+		//var atlContentType="image/png";
+//		var atlUrl="https://paega2.atlassian.net/rest/api/3/search?jql=updated%20>%3D%20-52w%20order%20by%20lastViewed%20DESC";
+//		var atlContentType="application/json";
+		//var atlUrl="https://paega2.atlassian.net/wiki/download/attachments/471400450/under-construction-2408066_960_720.png";
+		//var atlContentType="image/png";
+
+/*		var options = {
+				  url: sTargetUrl,
+				  type:newType,
+				  data:newData,
+				  contentType: sResponseType,
+				  headers: arrHeaders,
+				  success: newCallback,
+				  error: newErrorCallback,
+				  security:oSecurity
+		}*/
+		
+		
+		var atlUrl=callInfo.url;
+		var atlContentType=callInfo.contentType;
+	    var atlApp=self.getAppOfUrl(atlUrl);
+		var atlToken=atlApp.tokenBase;
+
+		var atlCallMethod=callInfo.type;
+		var proxyCallUrl=jfrCall+"?"
+		        +"oauth_token="+atlToken
+		        +"&callMethod="+atlCallMethod
+		        +"&CallContentType="+ atlContentType
+		        +"&callUrl="+atlUrl;
+		        
+		return self.addStep("Retrieving data from proxy",function(){
+			var oReq = new XMLHttpRequest();
+			oReq.open(atlCallMethod, proxyCallUrl, true);
+			oReq.responseType = "arraybuffer";
+			oReq.onerror = function (e){
+				callInfo.error(oReq, oReq.statusText, e);
+			};
+			oReq.onload = function (oEvent) {
+			  debugger;
+			  var isBinary=XMLHttpRequest.getResponseHeader("isBinary");
+			  var responseData;
+			  if (isBinary){
+				  var arrayBuffer = oReq.response; // Note: not oReq.responseText
+				  var byteArray = new Uint8Array(arrayBuffer);
+				  responseData=byteArray;
+			  } else {
+				  var sResponse = oReq.responseText;
+				  responseData=sResponse;
+			  }
+			  callInfo.success(responseData,oReq);
+			};
+			oReq.send(null);
+			return self.waitForEvent();
+		});
+	}
+	prepareCall(sTargetUrl,callType,data,sResponseType,arrHeaders,tokenAccess,oCallSecurity,aditionalOptions){
 		var self=this;
 		var newType="GET";
 		if (typeof callType!=="undefined"){
 			newType=callType;
 		}
-		var oSecurity={proxy:false,token:false};
+		var oSecurity={proxy:false,token:false,indirect:false};
 		if (isDefined(oCallSecurity)){
 			oSecurity=oCallSecurity;
 			if (isUndefined(oSecurity.token))oSecurity.token=false;
 			if (isUndefined(oSecurity.proxy))oSecurity.proxy=false;
+			if (isUndefined(oSecurity.indirect))oSecurity.indirect=false;
 		}
 		var newData;
 		if (typeof data!=="undefined"){
@@ -353,8 +425,14 @@ class RCGAtlassian{
 		}
 		var newCallback;//=callback;
 		var newErrorCallback;//=callback;
-		newCallback=self.createManagedCallback(function(responseObj){
-		    return self.taskResultMultiple(responseObj,self.JiraAPConnection);
+		newCallback=self.createManagedCallback(function(responseObj,xhr){
+			var theXhr;
+			if (isUndefined(xhr)){
+				theXhr=self.JiraAPConnection;
+			} else {
+				theXhr=xhr;
+			}
+		    return self.taskResultMultiple(responseObj,theXhr);
 		  });
 		newErrorCallback=self.createManagedCallback(function(xhr, statusText, errorThrown){
 		    return self.taskResultMultiple("",xhr, statusText, errorThrown);
@@ -367,17 +445,25 @@ class RCGAtlassian{
 				});
 			}
 		}
-		if (!oSecurity.proxy){
-			var options = {
-					  url: sTargetUrl,
-					  type:newType,
-					  data:newData,
-					  contentType: sResponseType,
-					  headers: arrHeaders,
-					  success: newCallback,
-					  error: newErrorCallback
-			}
-			fncAddAditionalOptions(options);
+		var options = {
+				  url: sTargetUrl,
+				  type:newType,
+				  data:newData,
+				  contentType: sResponseType,
+				  headers: arrHeaders,
+				  success: newCallback,
+				  error: newErrorCallback,
+				  security:oSecurity
+		}
+		fncAddAditionalOptions(options);
+		return options;
+	}
+	apiCallBase(sTargetUrl,callType,data,sResponseType,arrHeaders,tokenAccess,oCallSecurity,aditionalOptions){
+		var self=this;
+		var options=self.prepareCall(sTargetUrl,callType,data,sResponseType,arrHeaders,tokenAccess,oCallSecurity,aditionalOptions);
+		if (options.security.indirect){
+			return self.indirectCall(options);
+		} else if (!options.security.proxy){
 			self.JiraAPConnection.request(options);
 			return self.waitForEvent();
 		} else {
@@ -462,17 +548,5 @@ class RCGAtlassian{
 						undefined,
 						undefined,
 						true);
-	}
-	getAppOfUrl(fullUrl){
-		var self=this;
-		var auxUrl=self.getConfluence().getBaseUrl();
-		if (fullUrl.substring(0,auxUrl.length)==auxUrl){
-			return self.getConfluence();
-		}
-		
-//		var auxUrl=self.getJira().getBaseUrl();
-//		if (fullUrl.substring(0,auxUrl.length)==auxUrl){
-			return self.getJira();
-//		}
 	}
 }

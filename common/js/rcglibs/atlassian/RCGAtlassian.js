@@ -345,7 +345,7 @@ class RCGAtlassian{
 	indirectCall(callInfo){
 		var self=this;
 		//var jfrCall="https://cantabrana.no-ip.org/jfreports/atlassian/";
-		var jrfCall=self.proxyPath+"/atlassian/";
+		var jfrCall=self.proxyPath+"/atlassian/";
 		//var atlUrl="https://paega2.atlassian.net/secure/attachment/43269/form1.PNG";
 		//var atlContentType="image/png";
 //		var atlUrl="https://paega2.atlassian.net/rest/api/3/search?jql=updated%20>%3D%20-52w%20order%20by%20lastViewed%20DESC";

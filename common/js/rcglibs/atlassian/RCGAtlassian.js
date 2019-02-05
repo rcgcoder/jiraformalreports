@@ -343,6 +343,7 @@ class RCGAtlassian{
 //		}
 	}
 	indirectCall(callInfo){
+		var self=this;
 		//var jfrCall="https://cantabrana.no-ip.org/jfreports/atlassian/";
 		var jrfCall=self.proxyPath+"/atlassian/";
 		//var atlUrl="https://paega2.atlassian.net/secure/attachment/43269/form1.PNG";

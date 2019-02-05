@@ -482,31 +482,27 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
             	};
                 webapp.addStep("getting images data url",function(){
                     webapp.sequentialProcess(arrImages.length,function(iImage){
-                        webapp.addStep("Calling Indirectly to get the image content",function(){
-                            var theImg=arrImages[iImage];
-                            var jqImgChange=$(theImg);
-                            var sImgUrl=jqImgChange.attr("src");
-	                            var callInfo= {
-	  			      				  url: sImgUrl,
-	  			      				  type:"GET",
-	  			      				  data:undefined,
-	  			      				  contentType: "image/png",
-	  			      				  headers: undefined,
-	  			      				  success: webapp.createManagedCallback(function(responseData,xhr){
-	  			      					    webapp.continueTask(responseData);
-	  			      				  		}),
-	  			      				  error: webapp.createManagedCallback(function(xhr, statusText, TheError){
-	  			      					    webapp.continueTask();
-	  		      				  		}),
-	  			      				  security:undefined
-	  			      		}
-                        	debugger;
-                            oAtlassian.indirectCall(callInfo);
-                        });
-                        webapp.addStep("Processing Image Result",function(imgData){
-                	        var img64 = converterEngine(imgData); // convert uint8Array to base64
-                	        jqImgChange.attr("src", "data:image/png;base64," + theImg);  // inject data:image in DOM
-                        })                        	
+                        var theImg=arrImages[iImage];
+                        var jqImgChange=$(theImg);
+                        var sImgUrl=jqImgChange.attr("src");
+                        var callInfo= {
+		      				  url: sImgUrl,
+		      				  type:"GET",
+		      				  data:undefined,
+		      				  contentType: "image/png",
+		      				  headers: undefined,
+		      				  success: webapp.createManagedCallback(function(responseData,xhr){
+  		                	        var img64 = converterEngine(responseData); // convert uint8Array to base64
+  		                	        jqImgChange.attr("src", "data:image/png;base64," + theImg);  // inject data:image in DOM
+		      					    webapp.continueTask();
+		      				  		}),
+		      				  error: webapp.createManagedCallback(function(xhr, statusText, TheError){
+		      					    webapp.continueTask();
+	      				  		}),
+		      				  security:undefined
+  			      		}
+                    	debugger;
+                        oAtlassian.indirectCall(callInfo);
                     });
                 });
                 webapp.addStep("Finished image processing",function(){

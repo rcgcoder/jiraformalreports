@@ -204,11 +204,13 @@ var jrfReport=class jrfReport {
 			}*/
         });
         //debugger;
-        var arrImages=sHtml.saToString().split("<ac:image>");
+        var arrImages=sHtml.saToString().split("<ac:image");
         var result=[];
-        result.push(arrParts.shift());
+        result.push(arrImages.shift());
         arrImages.forEach(function(sCad){
-            var arrParts=sCad.split("</ac:image>");
+        	var sizePart=sCad.split(">");
+            var arrParts=sizePart[1].split("</ac:image>");
+            sizePart=sizePart[0].trim();
             var sAttachedImage=arrParts[0];
             var arrImgParts=sAttachedImage.split('filename="');
             arrImgParts=arrImgParts[1].split('"');

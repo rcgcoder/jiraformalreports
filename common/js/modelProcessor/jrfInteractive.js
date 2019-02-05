@@ -485,15 +485,24 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
                         var theImg=arrImages[iImage];
                         var jqImgChange=$(theImg);
                         var sImgUrl=jqImgChange.attr("src");
+                        var arrImgUrlParts=sImgUrl.split(".");
+                        var sExtension=arrImgUrlParts[arrImgUrlParts.length-1].toLowerCase();
+                        var sContentType="image/png";
+                        if ((sExtension=="jpg")||(sExtension=="jpeg")){
+                        	sContentType="image/jpeg";
+                        } else if (sExtension=="png"){
+                        	sContentType="image/png";
+                        }
+
                         var callInfo= {
 		      				  url: sImgUrl,
 		      				  type:"GET",
 		      				  data:undefined,
-		      				  contentType: "image/png",
+		      				  contentType: sContentType,
 		      				  headers: undefined,
 		      				  success: webapp.createManagedCallback(function(responseData,xhr){
   		                	        var img64 = converterEngine(responseData); // convert uint8Array to base64
-  		                	        jqImgChange.attr("src", "data:image/png;base64," + img64);  // inject data:image in DOM
+  		                	        jqImgChange.attr("src", "data:"+sContentType+";base64," + img64);  // inject data:image in DOM
 		      					    webapp.continueTask();
 		      				  		}),
 		      				  error: webapp.createManagedCallback(function(xhr, statusText, TheError){

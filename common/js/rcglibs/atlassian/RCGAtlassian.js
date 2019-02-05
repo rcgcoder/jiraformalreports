@@ -386,7 +386,7 @@ class RCGAtlassian{
 			};
 			oReq.onload = function (oEvent) {
 			  debugger;
-			  var isBinary=XMLHttpRequest.getResponseHeader("isBinary");
+			  var isBinary=oReq.getResponseHeader("isBinary");
 			  var responseData;
 			  if (isBinary){
 				  var arrayBuffer = oReq.response; // Note: not oReq.responseText

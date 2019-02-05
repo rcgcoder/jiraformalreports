@@ -472,38 +472,38 @@ var jrfInteractive=class jrfInteractive{//this kind of definition allows to hot-
             var nLoaded=0;
             //debugger;
             if (arrImages.length>0){
+                var oAtlassian=webapp.getAtlassian();
+            	var converterEngine = function (input) { // uint8Array => Base64 ?
+            	    var i = input.length;
+            	    var biStr = []; //new Array(i);
+            	    while (i--) { biStr[i] = String.fromCharCode(input[i]);  }
+            	    var base64 = window.btoa(biStr.join(''));
+            	    return base64;
+            	};
                 webapp.addStep("getting images data url",function(){
                     webapp.sequentialProcess(arrImages.length,function(iImage){
-                        var theImg=arrImages[i];
-                        var jqImgChange=$(theImg);
-                        var sImgUrl=jqImgChange.attr("src");
-                        var oAtlassian=webapp.getAtlassian();
-                        var callInfo= {
-			      				  url: sImgUrl,
-			      				  type:"GET",
-			      				  data:undefined,
-			      				  contentType: "image/png",
-			      				  headers: undefined,
-			      				  success: webapp.createManagedCallback(function(responseData,xhr){
-			      					    webapp.continueTask(responseData);
-			      				  		}),
-			      				  error: webapp.createManagedCallback(function(xhr, statusText, TheError){
-			      					    webapp.continueTask();
-		      				  		}),
-			      				  security:undefined
-			      		}
                         webapp.addStep("Calling Indirectly to get the image content",function(){
+                            var theImg=arrImages[iImage];
+                            var jqImgChange=$(theImg);
+                            var sImgUrl=jqImgChange.attr("src");
+	                            var callInfo= {
+	  			      				  url: sImgUrl,
+	  			      				  type:"GET",
+	  			      				  data:undefined,
+	  			      				  contentType: "image/png",
+	  			      				  headers: undefined,
+	  			      				  success: webapp.createManagedCallback(function(responseData,xhr){
+	  			      					    webapp.continueTask(responseData);
+	  			      				  		}),
+	  			      				  error: webapp.createManagedCallback(function(xhr, statusText, TheError){
+	  			      					    webapp.continueTask();
+	  		      				  		}),
+	  			      				  security:undefined
+	  			      		}
                         	debugger;
                             oAtlassian.indirectCall(callInfo);
                         });
                         webapp.addStep("Processing Image Result",function(imgData){
-                        	var converterEngine = function (input) { // uint8Array => Base64 ?
-                        	    var i = input.length;
-                        	    var biStr = []; //new Array(i);
-                        	    while (i--) { biStr[i] = String.fromCharCode(input[i]);  }
-                        	    var base64 = window.btoa(biStr.join(''));
-                        	    return base64;
-                        	};
                 	        var img64 = converterEngine(imgData); // convert uint8Array to base64
                 	        jqImgChange.attr("src", "data:image/png;base64," + theImg);  // inject data:image in DOM
                         })                        	

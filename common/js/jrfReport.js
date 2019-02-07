@@ -715,9 +715,31 @@ var jrfReport=class jrfReport {
 					});
 					var sJql="project not in ("+sExclPrjs+")";
 					if (sExclPrjs!==""){
+						sJql="";
+					}
+					var bReused=false;
+/*					if (self.config.reuseIssues){
+						storerJson
+						
+						
+					} 
+*/					if (!bReused) {
 						return self.jira.processJQLIssues(sJql,
 								function(jsonIssue){
-									return self.createNewIssueFromJsonSteps(jsonIssue);
+									self.addStep("Parsing JSON",function(){
+										return self.createNewIssueFromJsonSteps(jsonIssue);
+									});
+									if (self.config.reuseIssues){
+										var resultIssue="";
+										self.addStep("Storing JSON for later use",function(oIssue){
+											resultIssue=oIssue;
+											self.allIssues.storerJson.save(oIssue.id,jsonIssue);
+											
+										});
+										self.addStep("Returning Issue Object",function(){
+											return resultIssue;
+										});
+									}
 								},
 								undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
 					}

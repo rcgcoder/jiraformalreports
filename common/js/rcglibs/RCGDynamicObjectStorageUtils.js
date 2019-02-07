@@ -10,6 +10,7 @@ var RCGDynamicObjectStorage=class RCGDynamicObjectStorage{
 		self.peakMax=0.10;
 		self.factory=theFactory;
 		self.storer=new RCGObjectStorageManager(self.factory.name,System.webapp.getTaskManager());
+		self.storerJson=new RCGObjectStorageManager(self.factory.name+"_json",System.webapp.getTaskManager());
 		self.activeObjects=newHashMap();
 		self.inactiveObjects=newHashMap();
 		self.inactiveUnchangedObjects=newHashMap();

@@ -733,7 +733,7 @@ var jrfReport=class jrfReport {
 										var resultIssue="";
 										self.addStep("Storing JSON for later use",function(oIssue){
 											resultIssue=oIssue;
-											self.allIssues.storerJson.save(oIssue.id,jsonIssue);
+											self.allIssues.storeManager.storerJson.save(oIssue.id,jsonIssue);
 											
 										});
 										self.addStep("Returning Issue Object",function(){

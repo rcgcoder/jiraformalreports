@@ -757,7 +757,7 @@ var jrfReport=class jrfReport {
 											debugger;
 											return oIssue;
 										});
-									});
+									},100);
 								});
 								self.addStep("Load from JSON finished",function(){
 									bReused=true;

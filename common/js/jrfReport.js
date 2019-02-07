@@ -385,6 +385,8 @@ var jrfReport=class jrfReport {
 								"js/jrfProjectFactory.js",
 								"js/jrfBoardFactory.js",
 								"js/jrfSprintFactory.js",
+								"js/jrfVersionFactory.js",
+								"js/jrfDeploymentFactory.js",
 								"js/libs/sha256.js",
 								"js/libs/showdown.js",
 								"js/libs/wiki2html.js",
@@ -623,6 +625,8 @@ var jrfReport=class jrfReport {
 			self.projects=newProjectFactory(self);
 			self.boards=newBoardFactory(self);
 			self.sprints=newSprintFactory(self);
+			self.versions=newVersionFactory(self);
+			self.deployments=newDeploymentFactory(self);
 			self.allIssues=newIssueFactory(self);
 			self.allIssues.setTaskManager(self.getTaskManager());
 			self.workOnIssueSteps=function(theObjectOrKey,fncWork,bMaintainLocked,fncNotExists){

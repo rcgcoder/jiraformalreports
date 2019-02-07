@@ -741,9 +741,10 @@ var jrfReport=class jrfReport {
 						self.addStep("If exists...Load list of keys stored",function(bExists){
 							if (bExists){
 								self.addStep("Load List",function(jsonIndexList){
-									self.allIssues.storeManager.storerJson.load(storedJSONIndex);
+									return self.allIssues.storeManager.storerJson.load(storedJSONIndex);
 								});
 								self.addStep("Processing List",function(jsonIndexList){
+									var oIndexList=jsonIndexList;
 									debugger;
 								});
 							}
@@ -754,7 +755,7 @@ var jrfReport=class jrfReport {
 							return self.jira.processJQLIssues(sJql,
 									function(jsonIssue){
 										self.addStep("Parsing JSON",function(){
-											self.createNewIssueFromJsonSteps(jsonIssue);
+											return self.createNewIssueFromJsonSteps(jsonIssue);
 										});
 										self.addStep("Saving or not the JSON data",function(oIssue){
 											return fncStoreJSON(oIssue,jsonIssue);

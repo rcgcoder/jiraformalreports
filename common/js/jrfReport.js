@@ -706,7 +706,7 @@ var jrfReport=class jrfReport {
 				debugger;
 				if (self.config.withSprints){ // preload all issues of projects that are not excluded
 					var sExclPrjs="";
-					hsPrjExcl=self.allIssues.getExcludedProjectList();
+					var hsPrjExcl=self.allIssues.getExcludedProjectList();
 					hsPrjExcl.walk(function(oPrj,iProf,prjKey){
 						if (sExclPrjs!==""){
 							sExclPrjs+=",";

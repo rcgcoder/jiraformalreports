@@ -736,7 +736,7 @@ var jrfReport=class jrfReport {
 					if (self.isReusingIssueList()&&!self.config.resetCachedIssues){
 						self.addStep("Exists list of keys stored?",function(){
 							debugger;
-							self.allIssues.storeManager.storerJson.exists(storedJSONIndex);
+							return self.allIssues.storeManager.storerJson.exists(storedJSONIndex);
 						});
 						self.addStep("If exists...Load list of keys stored",function(bExists){
 							if (bExists){

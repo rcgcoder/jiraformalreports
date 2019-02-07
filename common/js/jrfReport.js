@@ -717,6 +717,13 @@ var jrfReport=class jrfReport {
 					if (sExclPrjs===""){
 						sJql="";
 					}
+					if (self.config.jqlScope.jql!==""){
+						if (sJql!==""){
+							sJql+=" and (" + self.config.jqlScope.jql +")";
+						} else {
+							sJql=self.config.jqlScope.jql;							
+						}
+					}
 					var fncStoreJSON=function(oIssue,jsonIssue){
 						if (self.isReusingIssueList()){
 							var resultIssue="";

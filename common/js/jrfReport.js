@@ -382,6 +382,9 @@ var jrfReport=class jrfReport {
 			if (bDontReloadFiles==false) {
 				var arrFiles=[	//"ts/demo.ts",
 								"js/jrfIssueFactory.js",
+								"js/jrfProjectFactory.js",
+								"js/jrfBoardFactory.js",
+								"js/jrfSprintFactory.js",
 								"js/libs/sha256.js",
 								"js/libs/showdown.js",
 								"js/libs/wiki2html.js",
@@ -617,6 +620,9 @@ var jrfReport=class jrfReport {
 		});
 
 		self.addStep("Construct Issue Dynamic Object.... ",function(){
+			self.projects=newProjectFactory(self);
+			self.boards=newBoardFactory(self);
+			self.sprints=newSprintFactory(self);
 			self.allIssues=newIssueFactory(self);
 			self.allIssues.setTaskManager(self.getTaskManager());
 			self.workOnIssueSteps=function(theObjectOrKey,fncWork,bMaintainLocked,fncNotExists){

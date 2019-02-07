@@ -745,36 +745,49 @@ var jrfReport=class jrfReport {
 								});
 								self.addStep("Processing List",function(jsonIndexList){
 									var oIndexList=jsonIndexList;
-									debugger;
+									return self.parallelizeProcess(oIndexList.issueList.length,function(issueIndex){
+										var issueId=oIndexList.issueList[issueIndex];
+										self.addStep("Loading Issue JSON",function(){
+											return self.allIssues.storeManager.storerJson.load(storedJSONIndex,oListIndex);
+										});
+										self.addStep("Processing Issue JSON",function(jsonIssue){
+											return self.createNewIssueFromJsonSteps(jsonIssue);
+										});
+									});
+								});
+								self.addStep("Load from JSON finished",function(){
+									bReused=true;
 								});
 							}
 						});
 					} 
-					if (!bReused) {
-						self.addStep("Loading Issues from Network and Save them to json storage",function(){
-							return self.jira.processJQLIssues(sJql,
-									function(jsonIssue){
-										self.addStep("Parsing JSON",function(){
-											return self.createNewIssueFromJsonSteps(jsonIssue);
-										});
-										self.addStep("Saving or not the JSON data",function(oIssue){
-											return fncStoreJSON(oIssue,jsonIssue);
-										});
-									},
-									undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
-						});
-						if (self.isReusingIssueList()){
-							self.addStep("Save list of keys stored",function(){
-								debugger;
-								var issueKeys=[];
-								self.allIssues.list.walk(function(oIssue,iProf,issueKey){
-									issueKeys.push(issueKey);
-								});
-								var oListIndex={key:storedJSONIndex,issueList:issueKeys,atDateTime:self.reportDateTime};
-								self.allIssues.storeManager.storerJson.save(storedJSONIndex,oListIndex);
+					self.addStep("Download if not reused",function(){
+						if (!bReused) {
+							self.addStep("Loading Issues from Network and Save them to json storage",function(){
+								return self.jira.processJQLIssues(sJql,
+										function(jsonIssue){
+											self.addStep("Parsing JSON",function(){
+												return self.createNewIssueFromJsonSteps(jsonIssue);
+											});
+											self.addStep("Saving or not the JSON data",function(oIssue){
+												return fncStoreJSON(oIssue,jsonIssue);
+											});
+										},
+										undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
 							});
+							if (self.isReusingIssueList()){
+								self.addStep("Save list of keys stored",function(){
+									debugger;
+									var issueKeys=[];
+									self.allIssues.list.walk(function(oIssue,iProf,issueKey){
+										issueKeys.push(issueKey);
+									});
+									var oListIndex={key:storedJSONIndex,issueList:issueKeys,atDateTime:self.reportDateTime};
+									self.allIssues.storeManager.storerJson.save(storedJSONIndex,oListIndex);
+								});
+							}
 						}
-					}
+					});
 				} else if (self.isReusingReport()&&(self.config.jqlScope.jql!="")){
 					return self.jira.processJQLIssues(self.config.jqlScope.jql,
 								function(jsonIssue){

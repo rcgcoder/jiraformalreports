@@ -154,6 +154,14 @@ export class TabConfig {
         auxObj=$('#toggle_ForceSaveLeafPrecomputations');
         dfReport["ForceSaveLeafPrecomputations"]=(auxObj.attr("checked")=="checked");
         
+        
+        auxObj=$('#toggle_WithSprints');
+        dfReport["withSprints"]=(auxObj.attr("checked")=="checked");
+    	dfReport["preloadAllIssues"]=false;
+        if (dfReport["withSprints"]){
+        	dfReport["preloadAllIssues"]=true;
+        }
+        
         auxObj=$('#toggle_ExcludeProjects');
         dfReport["excludeProjects"]=(auxObj.attr("checked")=="checked");
         auxObj=System.getAngularObject('selExcludedProjects',true);
@@ -316,6 +324,9 @@ export class TabConfig {
 
         auxObj=$('#toggle_AlertErrors');
         if(isDefined(config.AlertErrors)&&config.AlertErrors)auxObj.attr("checked","checked");
+        
+        auxObj=$('#toggle_WithSprints');
+        if(isDefined(config.withSprints)&&config.withSprints)auxObj.attr("checked","checked");
         
         
         auxObj=System.getAngularObject('linkTypesConfiguration',true);

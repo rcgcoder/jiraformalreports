@@ -703,7 +703,25 @@ var jrfReport=class jrfReport {
 				})
 			} 
 			self.addStep("Loading the Scope",function(){
-				if (self.isReusingReport()&&(self.config.jqlScope.jql!="")){
+				debugger;
+				if (self.config.withSprints){ // preload all issues of projects that are not excluded
+					var sExclPrjs="";
+					hsPrjExcl=self.allIssues.getExcludedProjectList();
+					hsPrjExcl.walk(function(oPrj,iProf,prjKey){
+						if (sExclPrjs!==""){
+							sExclPrjs+=",";
+						}
+						sExclPrjs+=prjKey;
+					});
+					var sJql="project not in ("+sExclPrjs+")";
+					if (sExclPrjs!==""){
+						return self.jira.processJQLIssues(sJql,
+								function(jsonIssue){
+									return self.createNewIssueFromJsonSteps(jsonIssue);
+								},
+								undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
+					}
+				} else if (self.isReusingReport()&&(self.config.jqlScope.jql!="")){
 					return self.jira.processJQLIssues(self.config.jqlScope.jql,
 								function(jsonIssue){
 									return self.createNewIssueFromJsonSteps(jsonIssue);

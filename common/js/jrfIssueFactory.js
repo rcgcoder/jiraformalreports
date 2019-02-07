@@ -57,6 +57,10 @@ function newIssueFactory(report){
 			self.hsExcludedProjects.add(prjKey,prjKey);
 		}
 	}
+	dynObj.getExcludedProjectList=function(){
+		var self=this;
+		return (self.hsExcludedProjects);
+	}
 	dynObj.isExcludedProject=function(prjKey){
 		var self=this;
 		return (self.hsExcludedProjects.exists(prjKey));

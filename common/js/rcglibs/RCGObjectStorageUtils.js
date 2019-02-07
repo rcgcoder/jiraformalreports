@@ -303,6 +303,7 @@ var RCGObjectStorageManager=class RCGObjectStorageManager{
 			});
 	    });
 		var innerOnError=self.createManagedCallback(function(e){
+			debugger;
 			logError("Error Loading Key:"+key+"."+e);
 			if (isDefined(self.onError)){
 				self.onError(key,e);

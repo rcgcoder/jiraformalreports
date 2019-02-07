@@ -717,7 +717,6 @@ var jrfReport=class jrfReport {
 					if (sExclPrjs===""){
 						sJql="";
 					}
-					var bReused=false;
 					var fncStoreJSON=function(oIssue,jsonIssue){
 						if (self.isReusingIssueList()){
 							var resultIssue="";
@@ -733,7 +732,8 @@ var jrfReport=class jrfReport {
 						}
 					}
 					var storedJSONIndex="StoredJSONIndex";
-					if (self.isReusingIssueList()){
+					var bReused=false;
+					if (self.isReusingIssueList()&&!self.config.resetCachedIssues){
 						self.addStep("Exists list of keys stored?",function(){
 							debugger;
 							self.allIssues.storeManager.storerJson.exists(storedJSONIndex);

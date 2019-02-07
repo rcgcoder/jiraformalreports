@@ -161,6 +161,8 @@ export class TabConfig {
         if (dfReport["withSprints"]){
         	dfReport["preloadAllIssues"]=true;
         }
+        auxObj=$('#toggle_ResetCachedIssues');
+        dfReport["resetCachedIssues"]=(auxObj.attr("checked")=="checked");
         
         auxObj=$('#toggle_ExcludeProjects');
         dfReport["excludeProjects"]=(auxObj.attr("checked")=="checked");
@@ -328,7 +330,10 @@ export class TabConfig {
         auxObj=$('#toggle_WithSprints');
         if(isDefined(config.withSprints)&&config.withSprints)auxObj.attr("checked","checked");
         
+        auxObj=$('#toggle_ResetCachedIssues');
+        if(isDefined(config.resetCachedIssues)&&config.resetCachedIssues)auxObj.attr("checked","checked");
         
+
         auxObj=System.getAngularObject('linkTypesConfiguration',true);
         if (isDefined(config.allIssueLinkTypes)){
             auxObj.setElements(config.allIssueLinkTypes);

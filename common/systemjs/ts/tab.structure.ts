@@ -33,6 +33,7 @@ export class TabStructure {
                     self.report.config.reuseIssues=bReuseIssues;
                 }
             });
+            
             flatpickr("#ReportInitDate", {
                 enableTime: true,
                 dateFormat: "d/m/Y H:i",

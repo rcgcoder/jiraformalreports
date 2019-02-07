@@ -734,11 +734,19 @@ var jrfReport=class jrfReport {
 					}
 					var storedJSONIndex="StoredJSONIndex";
 					if (self.isReusingIssueList()){
-						self.addStep("Load list of keys stored",function(){
-							self.allIssues.storeManager.storerJson.load(storedJSONIndex);
-						});
-						self.addStep("Processing List",function(jsonIndexList){
+						self.addStep("Exists list of keys stored?",function(){
 							debugger;
+							self.allIssues.storeManager.storerJson.exists(storedJSONIndex);
+						});
+						self.addStep("If exists...Load list of keys stored",function(bExists){
+							if (bExists){
+								self.addStep("Load List",function(jsonIndexList){
+									self.allIssues.storeManager.storerJson.load(storedJSONIndex);
+								});
+								self.addStep("Processing List",function(jsonIndexList){
+									debugger;
+								});
+							}
 						});
 					} 
 					if (!bReused) {

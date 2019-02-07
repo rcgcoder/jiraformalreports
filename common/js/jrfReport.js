@@ -766,7 +766,7 @@ var jrfReport=class jrfReport {
 							self.addStep("Save list of keys stored",function(){
 								debugger;
 								var issueKeys=[];
-								self.allIssues.walk(function(oIssue,iProf,issueKey){
+								self.allIssues.list.walk(function(oIssue,iProf,issueKey){
 									issueKeys.push(issueKey);
 								});
 								var oListIndex={key:storedJSONIndex,issueList:issueKeys,atDateTime:self.reportDateTime};

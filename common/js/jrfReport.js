@@ -687,7 +687,7 @@ var jrfReport=class jrfReport {
 			//debugger;
 			var vMaxIssuesInMemory=self.objModel.variables.getVar("MaxIssuesInMemory");
 			if (vMaxIssuesInMemory===""){
-				vMaxIssuesInMemory=2000;
+				vMaxIssuesInMemory=4000;
 			} else {
 				vMaxIssuesInMemory=parseInt(vMaxIssuesInMemory);
 			}

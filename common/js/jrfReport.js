@@ -751,7 +751,9 @@ var jrfReport=class jrfReport {
 											return self.allIssues.storeManager.storerJson.load(issueId);
 										});
 										self.addStep("Processing Issue JSON",function(jsonIssue){
-											var oIssue=self.createNewIssueFromJsonSteps(jsonIssue);
+											return self.createNewIssueFromJsonSteps(jsonIssue);
+										});
+										self.addStep("Doing some checks",function(oIssue){
 											debugger;
 											return oIssue;
 										});

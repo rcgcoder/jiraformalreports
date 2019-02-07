@@ -751,7 +751,9 @@ var jrfReport=class jrfReport {
 											return self.allIssues.storeManager.storerJson.load(issueId);
 										});
 										self.addStep("Processing Issue JSON",function(jsonIssue){
-											return self.createNewIssueFromJsonSteps(jsonIssue);
+											var oIssue=self.createNewIssueFromJsonSteps(jsonIssue);
+											debugger;
+											return oIssue;
 										});
 									});
 								});

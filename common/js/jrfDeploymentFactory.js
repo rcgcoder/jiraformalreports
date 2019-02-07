@@ -1,4 +1,4 @@
-function newSprintFactory(report){
+function newDeploymentFactory(report){
 	var theReport=report;
 	var dynObj=newDynamicObjectFactory( 
 		[{name:"Issue",description:"List of Issues in Deployment",type:"object"},

@@ -306,18 +306,18 @@ var jrfReport=class jrfReport {
 		var self=this;
 		//debugger;
 		var oIssue=self.allIssues.new(jsonIssue.fields.summary,jsonIssue.key);
-		if (!self.isReusingIssueList()){
+//		if (!self.isReusingIssueList()){
 			oIssue.setJiraObject(jsonIssue);
 			oIssue.updateInfo();
 			oIssue.setJiraObject("");
 			oIssue.setKey(jsonIssue.key);
-		} else {
+/*		} else {
 			//debugger;
 			oIssue.loaded=false;
 			oIssue.numLocks=0;
 			oIssue.fullLoad();
 		}
-		if (self.xlsIssues.exists(oIssue.id)){
+*/		if (self.xlsIssues.exists(oIssue.id)){
 			self.xlsIssues.getValue(oIssue.id).loaded=true;
 		}
 		//oIssue.unlock(); // dont Unlock.... loaded for use
@@ -821,13 +821,13 @@ var jrfReport=class jrfReport {
 			self.allIssues.logStats();
 			if (self.isReusingReport()) return;
 			if (self.bFinishReport) return;
-			if (self.isReusingIssueList()){
+/*			if (self.isReusingIssueList()){
 				self.rootIssues.walk(function(issue){
 					self.childs.add(issue.getId(),issue);
 				});
 				return;
 			}
-			//self.treeIssues=newHashMap();
+*/			//self.treeIssues=newHashMap();
 			var bAlerted=false;
 			var arrLinkTypes=self.config.useIssueLinkTypes;
 			var arrKeyGroups=[];
@@ -1116,7 +1116,7 @@ var jrfReport=class jrfReport {
 		// load comments of issues
 		self.addStep("Loading comments of "+ issuesAdded.length()+"issues",function(){
 			self.allIssues.logStats();
-			if (self.isReusingIssueList()||self.isReusingReport()) return;
+//			if (self.isReusingIssueList()||self.isReusingReport()) return;
 			var arrKeyGroups=[];
 			var keyGroup=[];
 			arrKeyGroups.push(keyGroup);
@@ -1279,7 +1279,7 @@ var jrfReport=class jrfReport {
 			});
 			log("Assing Childs and Advance");
 			//debugger;
-			if (self.isReusingIssueList()||self.isReusingReport()) return;
+//			if (self.isReusingIssueList()||self.isReusingReport()) return;
 			var tm=self.getTaskManager();
 			tm.asyncTimeWasted=0;
 			tm.asyncTaskCallsBlock=auxAsyncTaskCallsBlock;
@@ -1460,7 +1460,7 @@ var jrfReport=class jrfReport {
 		self.addStep("Final Adjusts to retrieved list of issues",function(){
 			//debugger;
 			self.allIssues.logStats();
-			if (self.isReusingIssueList()||self.isReusingReport()) return;
+//			if (self.isReusingIssueList()||self.isReusingReport()) return;
 			self.addStep("Analizing child/parent billing cycles and multiple parents",function(){
 				var fncAdjustParents=function(issue,hsIssuePath){
 					var issueKey=issue.getKey();
@@ -1688,7 +1688,7 @@ var jrfReport=class jrfReport {
 		self.addStep("Processing Directives",function(){
 			//debugger;
 			self.allIssues.logStats();
-			if (self.isReusingIssueList()||self.isReusingReport()) return;
+//			if (self.isReusingIssueList()||self.isReusingReport()) return;
 			var hsVersions=newHashMap();
 			var hsAccumulators=newHashMap();
 			log("Analizing directives");
@@ -1800,7 +1800,7 @@ var jrfReport=class jrfReport {
 		self.addStep("Saving Report to reuse",function(){
 			//debugger;
 			self.allIssues.logStats();
-			if (self.isReusingIssueList()||self.isReusingReport()) return;
+//			if (self.isReusingIssueList()||self.isReusingReport()) return;
 			if (self.allIssues.isStorable()){
 				self.addStep("Storing remaining issues in memory...",function(){
 					return self.allIssues.saveAllNotStored();

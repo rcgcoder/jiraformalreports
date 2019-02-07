@@ -748,7 +748,7 @@ var jrfReport=class jrfReport {
 									return self.parallelizeProcess(oIndexList.issueList.length,function(issueIndex){
 										var issueId=oIndexList.issueList[issueIndex];
 										self.addStep("Loading Issue JSON",function(){
-											return self.allIssues.storeManager.storerJson.load(storedJSONIndex,oListIndex);
+											return self.allIssues.storeManager.storerJson.load(issueId);
 										});
 										self.addStep("Processing Issue JSON",function(jsonIssue){
 											return self.createNewIssueFromJsonSteps(jsonIssue);

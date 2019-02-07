@@ -1277,6 +1277,7 @@ var factoryObjects=class factoryObjects{
 						}
 					});
 				} else {
+					debugger;
 					logError("Calling for a innexistent key "+key);
 					bExists=false;
 				}

@@ -754,9 +754,9 @@ var jrfReport=class jrfReport {
 							return self.jira.processJQLIssues(sJql,
 									function(jsonIssue){
 										self.addStep("Parsing JSON",function(){
-											return self.taskResultMultiple(self.createNewIssueFromJsonSteps(jsonIssue),jsonIssue);
+											self.createNewIssueFromJsonSteps(jsonIssue);
 										});
-										self.addStep("Saving or not the JSON data",function(oIssue,jsonIssue){
+										self.addStep("Saving or not the JSON data",function(oIssue){
 											return fncStoreJSON(oIssue,jsonIssue);
 										});
 									},
@@ -764,6 +764,7 @@ var jrfReport=class jrfReport {
 						});
 						if (self.isReusingIssueList()){
 							self.addStep("Save list of keys stored",function(){
+								debugger;
 								var issueKeys=[];
 								self.allIssues.walk(function(oIssue,iProf,issueKey){
 									issueKeys.push(issueKey);

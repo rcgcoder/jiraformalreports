@@ -728,8 +728,7 @@ var jrfReport=class jrfReport {
 						if (self.isReusingIssueList()){
 							var resultIssue="";
 							self.addStep("Storing JSON for later use",function(){
-								self.allIssues.storeManager.storerJson.save(oIssue.id,jsonIssue);
-								
+								self.allIssues.storeManager.storerJson.save(oIssue.id,jsonIssue);								
 							});
 							self.addStep("Returning Issue Object",function(){
 								return oIssue;
@@ -738,8 +737,9 @@ var jrfReport=class jrfReport {
 							return oIssue; 
 						}
 					}
-					var storedJSONIndex="StoredJSONIndex";
+					var storedJSONIndex="StoredJSONIndex("+sJql+")";
 					var bReused=false;
+					var storedIndexDateTime="";
 					if (self.isReusingIssueList()&&!self.config.resetCachedIssues){
 						self.addStep("Exists list of keys stored?",function(){
 							debugger;
@@ -752,6 +752,7 @@ var jrfReport=class jrfReport {
 								});
 								self.addStep("Processing List",function(jsonIndexList){
 									var oIndexList=jsonIndexList;
+									storedIndexDateTime=oIndexList.atDateTime;
 									return self.parallelizeProcess(oIndexList.issueList.length,function(issueIndex){
 										var issueId=oIndexList.issueList[issueIndex];
 										self.addStep("Loading Issue JSON",function(){
@@ -760,10 +761,10 @@ var jrfReport=class jrfReport {
 										self.addStep("Processing Issue JSON",function(jsonIssue){
 											return self.createNewIssueFromJsonSteps(jsonIssue);
 										});
-										self.addStep("Doing some checks",function(oIssue){
+/*										self.addStep("Doing some checks",function(oIssue){
 											debugger;
 											return oIssue;
-										});
+										});*/
 									},100);
 								});
 								self.addStep("Load from JSON finished",function(){
@@ -773,30 +774,36 @@ var jrfReport=class jrfReport {
 						});
 					} 
 					self.addStep("Download if not reused",function(){
-						if (!bReused) {
-							self.addStep("Loading Issues from Network and Save them to json storage",function(){
-								return self.jira.processJQLIssues(sJql,
-										function(jsonIssue){
-											self.addStep("Parsing JSON",function(){
-												return self.createNewIssueFromJsonSteps(jsonIssue);
-											});
-											self.addStep("Saving or not the JSON data",function(oIssue){
-												return fncStoreJSON(oIssue,jsonIssue);
-											});
-										},
-										undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
-							});
-							if (self.isReusingIssueList()){
-								self.addStep("Save list of keys stored",function(){
-									debugger;
-									var issueKeys=[];
-									self.allIssues.list.walk(function(oIssue,iProf,issueKey){
-										issueKeys.push(issueKey);
-									});
-									var oListIndex={key:storedJSONIndex,issueList:issueKeys,atDateTime:self.reportDateTime};
-									self.allIssues.storeManager.storerJson.save(storedJSONIndex,oListIndex);
-								});
+						if (bReused) {
+							if (storedIndexDateTime!==""){
+								var indexDate=new Date(storedIndexDateTime);
+								var sUpdatedAfter=formatDate(indexDate,6);
+								sJql+=(sJql!==""?"&":"")+"updated>='"+sUpdatedAfter+"'";
 							}
+						}
+						self.addStep("Loading Issues from Network and Save them to json storage",function(){
+							return self.jira.processJQLIssues(sJql,
+									function(jsonIssue){
+										self.addStep("Parsing JSON",function(){
+											debugger;
+											return self.createNewIssueFromJsonSteps(jsonIssue);
+										});
+										self.addStep("Saving or not the JSON data",function(oIssue){
+											return fncStoreJSON(oIssue,jsonIssue);
+										});
+									},
+									undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
+						});
+						if (self.isReusingIssueList()){
+							self.addStep("Save list of keys stored",function(){
+								debugger;
+								var issueKeys=[];
+								self.allIssues.list.walk(function(oIssue,iProf,issueKey){
+									issueKeys.push(issueKey);
+								});
+								var oListIndex={key:storedJSONIndex,issueList:issueKeys,atDateTime:self.reportDateTime};
+								self.allIssues.storeManager.storerJson.save(storedJSONIndex,oListIndex);
+							});
 						}
 					});
 				} else if (self.isReusingReport()&&(self.config.jqlScope.jql!="")){

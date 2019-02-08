@@ -127,7 +127,7 @@ class RCGAtlassian{
 		self.addStep("Calling for "+sTarget,function(){
 			self.addStep("Calling to api "+sTarget,function(){
 				log("Calling API "+sTarget);
-				return self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,undefined,undefined,arrHeaders);
+				return self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,"application/json",undefined,arrHeaders);
 			});	
 			if (isDefined(callback)){
 				var vResult=[];

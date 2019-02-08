@@ -778,7 +778,7 @@ var jrfReport=class jrfReport {
 							if (storedIndexDateTime!==""){
 								var indexDate=new Date(storedIndexDateTime);
 								var sUpdatedAfter=formatDate(indexDate,6);
-								sJql+=(sJql!==""?"&":"")+"updated>='"+sUpdatedAfter+"'";
+								sJql+=(sJql!==""?" and ":"")+"updated>='"+sUpdatedAfter+"'";
 							}
 						}
 						self.addStep("Loading Issues from Network and Save them to json storage",function(){

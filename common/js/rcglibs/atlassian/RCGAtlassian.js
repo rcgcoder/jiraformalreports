@@ -401,7 +401,11 @@ class RCGAtlassian{
 			  debugger;
 			  var isBinary=oReq.getResponseHeader("isBinary");
 			  var responseData;
-			  if (isBinary){
+			  if (
+			       (isString(isBinary)&&(isBinary=="true"))
+			      ||
+			       (isBoolean(isBinary)&&isBinary)
+			       ){
 				  var arrayBuffer = oReq.response; // Note: not oReq.responseText
 				  var byteArray = new Uint8Array(arrayBuffer);
 				  responseData=byteArray;

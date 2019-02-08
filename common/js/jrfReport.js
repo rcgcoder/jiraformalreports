@@ -1195,7 +1195,7 @@ var jrfReport=class jrfReport {
 		});
 		
 		// load comments of issues
-		self.addStep("Loading comments of "+ issuesAdded.length()+"issues",function(){
+		self.addStep("Loading comments of "+ self.allIssues.list.length()+"issues",function(){
 			self.allIssues.logStats();
 //			if (self.isReusingIssueList()||self.isReusingReport()) return;
 			var arrKeyGroups=[];
@@ -1206,7 +1206,7 @@ var jrfReport=class jrfReport {
 			var grpLength=0;
 			var sKeyAux;
 			var hsListComments=newHashMap();
-			self.addStep("Preparing ("+issuesAdded.length()+"/"+self.rootIssues.length()+") issues groups to get comments", function(){
+			self.addStep("Preparing ("+self.allIssues.list.length()+"/"+issuesAdded.length()+"/"+self.rootIssues.length()+") issues groups to get comments", function(){
 				return self.walkAsync(self.allIssues.list
 											,function (jsonIssue,iDeep,issueKey){
 												if ((keyGroup.length>=maxItemsInGroup)||(grpLength>=maxLettersInGroup)){
@@ -1763,6 +1763,7 @@ var jrfReport=class jrfReport {
 					log("The number of keys to remove is different of the effective removed issue count");
 				}
 //				loggerFactory.getLogger().enabled=false;
+				
 			});
 		});
 		
@@ -1832,6 +1833,8 @@ var jrfReport=class jrfReport {
 				}
 			});
 			self.addStep("Processing versions",function(){
+				debugger;
+				log("All Issues:"+self.allIssues.list.length()+" Issues Added:"+issuesAdded.length()+" Roots:"+self.rootIssues.length());
 				if (false &&(hsVersions.length()>0)){
 					log("Versions in report:"+hsVersions.length());
 					self.addStep("Version Directive Active. Getting "+hsVersions.length()+" Versions ....",function(){

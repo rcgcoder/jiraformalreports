@@ -39,7 +39,7 @@ class RCGJira{
     getAllBoards(){
         var self=this;
         self.addStep("Getting all boards",function(){
-            return self.getFullList("/rest/agile/latest/board","values");
+            return self.getFullList("/rest/agile/1.0/board","values");
         });
     }
     getBoardIssues(idBoard){

@@ -1195,7 +1195,7 @@ var jrfReport=class jrfReport {
 		});
 		
 		// load comments of issues
-		self.addStep("Loading comments of "+ self.allIssues.list.length()+"issues",function(){
+		self.addStep("Loading comments of all issues",function(){
 			self.allIssues.logStats();
 //			if (self.isReusingIssueList()||self.isReusingReport()) return;
 			var arrKeyGroups=[];

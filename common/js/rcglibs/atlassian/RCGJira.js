@@ -45,19 +45,19 @@ class RCGJira{
     getBoardIssues(idBoard){
         var self=this;
         self.addStep("Getting all Issues of Board "+ idBoard,function(){
-            return self.getFullList("/rest/agile/latest/board/"+idBoard+"/issue","issues");
+            return self.getFullList("/rest/agile/1.0/board/"+idBoard+"/issue","issues");
         });
     }
     getBoardSprints(idBoard){
         var self=this;
         self.addStep("Getting all Sprints of Board "+idBoard,function(){
-            return self.getFullList("/rest/agile/latest/board/"+idBoard+"/sprint","values");
+            return self.getFullList("/rest/agile/1.0/board/"+idBoard+"/sprint","values");
         });
     }
     getSprintIssues(idSprint,idBoard){
         var self=this;
         self.addStep("Getting all Issues of Sprint "+idSprint+" (Board "+idBoard+")",function(){
-            return self.getFullList("/rest/agile/latest/board/"+idBoard+"/sprint/"+idSprint+"/issue","issues");
+            return self.getFullList("/rest/agile/1.0/board/"+idBoard+"/sprint/"+idSprint+"/issue","issues");
         });
     }
 	getFields(){

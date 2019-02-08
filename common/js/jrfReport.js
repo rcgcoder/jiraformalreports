@@ -1848,7 +1848,7 @@ var jrfReport=class jrfReport {
 					});
 				});
 				self.addStep("Retrieving Sprints of projects",function(){
-					var oJira=Sistem.webapp.getJira();
+					var oJira=System.webapp.getJira();
 					self.addStep("Getting all Boards",function(){
 						return oJira.getAllBoards();
 					});

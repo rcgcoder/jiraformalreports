@@ -1844,7 +1844,7 @@ var jrfReport=class jrfReport {
 						} else {
 							oPrj=self.projects.getById(prjKey);
 						}
-						oPrj.addIssue(issue);
+						oPrj.addIssue(issue,issue.getKey());
 					});
 				});
 				self.addStep("Retrieving Sprints of projects",function(){
@@ -1881,6 +1881,8 @@ var jrfReport=class jrfReport {
 										oSprint.setBoard(board.getKey());
 										oSprint.setKey(srcSprintKey);
 										oSprint.setStatus(srcSprint.state);
+										board.addSprint(oSprint,srcSprintKey);
+										project.addSprint(oSprint,srcSprintKey);
 										if (isDefined(srcSprint.startDate)){
 											oSprint.setStartDate(new Date(srcSprint.startDate));
 										}
@@ -1890,8 +1892,6 @@ var jrfReport=class jrfReport {
 										if (isDefined(srcSprint.completeDate)){
 											oSprint.setCompleteDate(new Date(srcSprint.completeDate));
 										}
-										board.addSprint(srcSprint.name,srcSprintKey);
-										project.addSprint(srcSprint.name,srcSprintKey);
 									});
 								});
 								self.addStep("Retrieving Issues for all Sprints in project "+ project.getKey(),function(){

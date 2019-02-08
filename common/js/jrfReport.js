@@ -851,6 +851,7 @@ var jrfReport=class jrfReport {
 				}
 				if (!self.bFinishReport){
 					var fncProcessRootIssue=function(jsonIssue){
+						debugger;
 						var issue=self.allIssues.getById(jsonIssue.key);
 						if (issue==""){
 							self.createNewIssueFromJsonSteps(jsonIssue);
@@ -863,6 +864,7 @@ var jrfReport=class jrfReport {
 						});
 					}
 					self.addStep("Processing jql to get root issues:"+theJQL,function(){
+						debugger;
 						return self.jira.processJQLIssues(
 										theJQL,
 										fncProcessRootIssue,

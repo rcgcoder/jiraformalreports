@@ -1832,9 +1832,21 @@ var jrfReport=class jrfReport {
 					});
 				}
 			});
-			self.addStep("Processing versions",function(){
+			self.addStep("Processing Projects, Versions and Sprints",function(){
 				debugger;
 				log("All Issues:"+self.allIssues.list.length()+" Issues Added:"+issuesAdded.length()+" Roots:"+self.rootIssues.length());
+				self.addStep("Creating Projects",function() {
+					return self.workOnListOfIssueSteps(self.allIssues.list,function(issue){
+						var prjKey=issue.getproject().key;
+						var oPrj="";
+						if (!self.projects.exists(prjKey)){
+							oPrj=self.projects.new(issue.getproject().name,prjKey);
+						} else {
+							oPrj=self.projects.getById(prjKey);
+						}
+						oPrj.addIssue(issue);
+					});
+				});
 				if (false &&(hsVersions.length()>0)){
 					log("Versions in report:"+hsVersions.length());
 					self.addStep("Version Directive Active. Getting "+hsVersions.length()+" Versions ....",function(){

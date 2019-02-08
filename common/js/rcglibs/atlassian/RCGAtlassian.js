@@ -238,11 +238,12 @@ class RCGAtlassian{
 		if (sTarget.indexOf("?")<0){
 			bHasParams=false;
 		}
-		var oSecurity={proxy:false,token:false};
+		var oSecurity={proxy:false,token:false,indirect:false};
 		if (isDefined(oCallSecurity)){
 			oSecurity=oCallSecurity;
 			if (isUndefined(oSecurity.token))oSecurity.token=false;
 			if (isUndefined(oSecurity.proxy))oSecurity.proxy=false;
+			if (isUndefined(oSecurity.indirect))oSecurity.indirect=false;
 		} 
 		if ((oSecurity.token)&&(appInfo.tokenAccess=="")){
 			//needs to get a Token
@@ -313,8 +314,13 @@ class RCGAtlassian{
 						if (appInfo.tokenAccess==""){
 							return self.authenticate(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders);
 						} else {
-							log(xhr.responseText);
-							return self.taskResultMultiple("",xhr,sUrl,headers);
+							if (!(isDefined(oSecurity)&&(oSecurity.indirect))){
+								logError(xhr.responseText);
+								return self.taskResultMultiple("",xhr,sUrl,headers);
+							} else {
+								oSecurity.indirect=true;
+								return self.apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders,oSecurity,aditionalOptions);
+							}
 						}
 					} else if (xhr.status==500){
 						logError("Error 500 in atlassian server calling to "+sTarget);

@@ -41,15 +41,23 @@ class RCGJira{
         self.addStep("Getting all boards",function(){
             return self.getFullList("/rest/agile/latest/board","values");
         });
-        self.addStep("Processing all boards",function(hsBoards){
-        	return hsBoards;
-         //   alert(hsBoards);
-        });
     }
     getBoardIssues(idBoard){
         var self=this;
-        self.addStep("Getting all Issues of Board",function(){
+        self.addStep("Getting all Issues of Board "+ idBoard,function(){
             return self.getFullList("/rest/agile/latest/board/"+idBoard+"/issue","issues");
+        });
+    }
+    getBoardSprints(idBoard){
+        var self=this;
+        self.addStep("Getting all Sprints of Board "+idBoard,function(){
+            return self.getFullList("/rest/agile/latest/board/"+idBoard+"/sprint","values");
+        });
+    }
+    getSprintIssues(idSprint,idBoard){
+        var self=this;
+        self.addStep("Getting all Issues of Sprint "+idSprint+" (Board "+idBoard+")",function(){
+            return self.getFullList("/rest/agile/latest/board/"+idBoard+"/sprint/"+idSprint+"/issue","issues");
         });
     }
 	getFields(){

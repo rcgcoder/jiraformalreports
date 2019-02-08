@@ -5,7 +5,7 @@ function newSprintFactory(report){
 		 {name:"Version",description:"List of Versions in Board",type:"object"}
 		]
 		,
-		["Key","Name","Status","StartDate","EndDate","CompleteDate"]
+		["Key","Name","Status","StartDate","EndDate","CompleteDate","Board"]
 		,
 		[]
 		,

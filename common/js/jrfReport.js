@@ -1866,18 +1866,44 @@ var jrfReport=class jrfReport {
 							}
 						});
 					});
-					self.addStep("Getting Issues in each board",function(){
+					self.addStep("Getting Sprints in each board",function(){
 						self.parallelizeProcess(self.projects.list,function(project){
-							self.parallelizeProcess(project.getBoards,function(board){
-								self.addStep("Getting Board Issues",function(){
-									oJira.getBoardIssues(board.getKey());
+							self.parallelizeProcess(project.getBoards(),function(board){
+								self.addStep("Getting Board Sprints",function(){
+									oJira.getBoardSprints(board.getKey());
 								});
-								self.addStep("Processing Board Issue List",function(hsIssues){
-									hsIssues.walk(function(srcIssue,iProf,srcIssueKey){
-										if (self.allIssues.exists(srcIssueKey)){
-											var oIssue=self.allIssues.getById(srcIssueKey);
-											board.addIssue(oIssue,srcIssueKey);
+								self.addStep("Processing Board Sprint List",function(hsIssues){
+									hsIssues.walk(function(srcSprint,iProf,srcSprintKey){
+										var oSprint=self.sprints.new(srcSprint.name,srcSprintKey);
+										oSprint.setBoard(board.getKey());
+										oSprint.setKey(srcSprintKey);
+										oSprint.setStatus(srcSprint.state);
+										if (isDefined(srcSprint.startDate)){
+											oSprint.setStartDate(new Date(scrSprint.startDate));
 										}
+										if (isDefined(srcSprint.endDate)){
+											oSprint.setEndDate(new Date(scrSprint.endDate));
+										}
+										if (isDefined(srcSprint.completeDate)){
+											oSprint.setCompleteDate(new Date(scrSprint.completeDate));
+										}
+										board.addSprint(scrSprint.name,srcSprintKey);
+										project.addSprint(scrSprint.name,srcSprintKey);
+									});
+								});
+								self.addStep("Retrieving Issues for all Sprints in project "+ project.getKey(),function(){
+									self.parallelizeProcess(project.getSprints(),function(sprint){
+										self.addStep("Getting Issues for Sprint "+sprint.getKey()+","+sprint.getBoard().getKey(),function(){
+											oJira.getSprintIssues(sprint.getKey(),sprint.getBoard().getKey());
+										});
+										self.addStep("Processing Issues for Sprint "+sprint.getKey()+","+sprint.getBoard().getKey(),function(hsIssues){
+											hsIssues.walk(function(srcIssue,iProf,srcIssueKey){
+												if (self.allIssues.exists(srcIssueKey)){
+													var oIssue=self.allIssues.getById(srcIssueKey);
+													sprint.addIssue(oIssue,srcIssueKey);
+												}
+											});
+										});
 									});
 								});
 							});

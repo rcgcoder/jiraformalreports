@@ -1858,6 +1858,7 @@ var jrfReport=class jrfReport {
 							var lct=srcBoard.location;
 							var prjId="";
 							if (isDefined(lct)&&(isDefined(lct.prjKey))){
+								var prjKey=lct.prjKey;
 								if (self.projects.exists(prjKey)){
 									var oPrj=self.projects.getById(prjKey);
 									var oBoard=self.boards.new(srcBoard.name,brdKey);

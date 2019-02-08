@@ -1876,22 +1876,22 @@ var jrfReport=class jrfReport {
 								});
 								self.addStep("Processing Board Sprint List",function(arrSprints){
 									arrSprints.forEach(function(srcSprint){
-										var srcSprintKey=srcSprint+"";
+										var srcSprintKey=srcSprint.id+"";
 										var oSprint=self.sprints.new(srcSprint.name,srcSprintKey);
 										oSprint.setBoard(board.getKey());
 										oSprint.setKey(srcSprintKey);
 										oSprint.setStatus(srcSprint.state);
 										if (isDefined(srcSprint.startDate)){
-											oSprint.setStartDate(new Date(scrSprint.startDate));
+											oSprint.setStartDate(new Date(srcSprint.startDate));
 										}
 										if (isDefined(srcSprint.endDate)){
-											oSprint.setEndDate(new Date(scrSprint.endDate));
+											oSprint.setEndDate(new Date(srcSprint.endDate));
 										}
 										if (isDefined(srcSprint.completeDate)){
-											oSprint.setCompleteDate(new Date(scrSprint.completeDate));
+											oSprint.setCompleteDate(new Date(srcSprint.completeDate));
 										}
-										board.addSprint(scrSprint.name,srcSprintKey);
-										project.addSprint(scrSprint.name,srcSprintKey);
+										board.addSprint(srcSprint.name,srcSprintKey);
+										project.addSprint(srcSprint.name,srcSprintKey);
 									});
 								});
 								self.addStep("Retrieving Issues for all Sprints in project "+ project.getKey(),function(){

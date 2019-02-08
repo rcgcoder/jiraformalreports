@@ -319,7 +319,8 @@ class RCGAtlassian{
 								return self.taskResultMultiple("",xhr,sUrl,headers);
 							} else {
 								oSecurity.indirect=true;
-								return self.apiCallApp(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders,oSecurity,aditionalOptions);
+								var newTarget=self.instance+sTarget;
+								return self.apiCallApp(appInfo,newTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders,oSecurity,aditionalOptions);
 							}
 						}
 					} else if (xhr.status==500){

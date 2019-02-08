@@ -1852,8 +1852,9 @@ var jrfReport=class jrfReport {
 					self.addStep("Getting all Boards",function(){
 						return oJira.getAllBoards();
 					});
-					self.addStep("Creating Boards",function(hsBoards){
-						hsBoards.walk(function(srcBoard,iProf,brdKey){
+					self.addStep("Creating Boards",function(arrBoards){
+						arrBoards.forEach(function(srcBoard){
+							var brdKey=srcBoard.id+"";
 							var lct=srcBoard.location;
 							var prjId="";
 							if (isDefined(lct)&&(isDefined(lct.prjKey))){
@@ -1872,8 +1873,9 @@ var jrfReport=class jrfReport {
 								self.addStep("Getting Board Sprints",function(){
 									oJira.getBoardSprints(board.getKey());
 								});
-								self.addStep("Processing Board Sprint List",function(hsIssues){
-									hsIssues.walk(function(srcSprint,iProf,srcSprintKey){
+								self.addStep("Processing Board Sprint List",function(arrSprints){
+									arrSprints.forEach(function(srcSprint){
+										var srcSprintKey=srcSprint+"";
 										var oSprint=self.sprints.new(srcSprint.name,srcSprintKey);
 										oSprint.setBoard(board.getKey());
 										oSprint.setKey(srcSprintKey);
@@ -1896,8 +1898,9 @@ var jrfReport=class jrfReport {
 										self.addStep("Getting Issues for Sprint "+sprint.getKey()+","+sprint.getBoard().getKey(),function(){
 											oJira.getSprintIssues(sprint.getKey(),sprint.getBoard().getKey());
 										});
-										self.addStep("Processing Issues for Sprint "+sprint.getKey()+","+sprint.getBoard().getKey(),function(hsIssues){
-											hsIssues.walk(function(srcIssue,iProf,srcIssueKey){
+										self.addStep("Processing Issues for Sprint "+sprint.getKey()+","+sprint.getBoard().getKey(),function(arrIssues){
+											arrIssues.forEach(function(srcIssue){
+												var srcIssueKey=srcIssue.id;
 												if (self.allIssues.exists(srcIssueKey)){
 													var oIssue=self.allIssues.getById(srcIssueKey);
 													sprint.addIssue(oIssue,srcIssueKey);

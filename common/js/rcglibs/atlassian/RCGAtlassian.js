@@ -314,7 +314,7 @@ class RCGAtlassian{
 						if (appInfo.tokenAccess==""){
 							return self.authenticate(appInfo,sTarget,callType,data,startItem,maxResults,sResponseType,callback,arrHeaders);
 						} else {
-							if (isDefined(oSecurity)&&(!oSecurity.indirect)){
+							if (isDefined(oSecurity)&&(oSecurity.indirect)){
 								logError(xhr.responseText);
 								return self.taskResultMultiple("",xhr,sUrl,headers);
 							} else {

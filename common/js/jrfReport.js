@@ -835,6 +835,16 @@ var jrfReport=class jrfReport {
 */			//debugger;
 			if (self.config.rootsByJQL){
 				var theJQL="";
+				var sExclPrjs="";
+				var hsPrjExcl=self.allIssues.getExcludedProjectList();
+				hsPrjExcl.walk(function(oPrj,iProf,prjKey){
+					if (sExclPrjs!==""){
+						sExclPrjs+=",";
+					}
+					sExclPrjs+=prjKey;
+				});
+				var sJqlExcludeProjects="project not in ("+sExclPrjs+")";
+				
 				if (self.config.rootIssues.values.length>0){
 					self.config.rootIssues.values.forEach(function(selIssue) {
 						if (theJQL!=""){
@@ -845,32 +855,38 @@ var jrfReport=class jrfReport {
 					theJQL="id in ("+theJQL+")";
 				} else if (self.config.rootIssues.jql==""){
 					log("there is not root issues nor jql to do a report");
-					self.bFinishReport=true;
+					if (self.config.jqlScope.jql!==""){
+						theJQL=self.config.jqlScope.jql;							
+					}
 				} else {
 					theJQL=self.config.rootIssues.jql;
 				}
-				if (!self.bFinishReport){
-					var fncProcessRootIssue=function(jsonIssue){
-						debugger;
-						var issue=self.allIssues.getById(jsonIssue.key);
+
+				if (theJQL!=""){
+					theJQL+=" and (" + sJqlExcludeProjects +")";
+				} else {
+					theJQL=sJqlExcludeProjects;
+				}
+				var fncProcessRootIssue=function(jsonIssue){
+					debugger;
+					var issue=self.allIssues.getById(jsonIssue.key);
+					if (issue==""){
+						self.createNewIssueFromJsonSteps(jsonIssue);
+					} 
+					self.addStep("Adding issue to root list",function(newIssue){
 						if (issue==""){
-							self.createNewIssueFromJsonSteps(jsonIssue);
-						} 
-						self.addStep("Adding issue to root list",function(newIssue){
-							if (issue==""){
-								issue=newIssue;
-							}
-							self.rootIssues.add(jsonIssue.key,issue);
-						});
-					}
-					self.addStep("Processing jql to get root issues:"+theJQL,function(){
-						debugger;
-						return self.jira.processJQLIssues(
-										theJQL,
-										fncProcessRootIssue,
-										undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
+							issue=newIssue;
+						}
+						self.rootIssues.add(jsonIssue.key,issue);
 					});
 				}
+				self.addStep("Processing jql to get root issues:"+theJQL,function(){
+					debugger;
+					return self.jira.processJQLIssues(
+									theJQL,
+									fncProcessRootIssue,
+									undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
+				});
 			}
 		});
 		var hsKeyWaiting=newHashMap();

@@ -39,12 +39,18 @@ class RCGJira{
     getAllBoards(){
         var self=this;
         self.addStep("Getting all boards",function(){
-            self.getFullList("/rest/agile/1.0/board","values");
+            return self.getFullList("/rest/agile/latest/board","values");
         });
         self.addStep("Processing all boards",function(hsBoards){
+        	return hsBoards;
          //   alert(hsBoards);
-        })
-
+        });
+    }
+    getBoardIssues(idBoard){
+        var self=this;
+        self.addStep("Getting all Issues of Board",function(){
+            return self.getFullList("/rest/agile/latest/board/"+idBoard+"/issue","issues");
+        });
     }
 	getFields(){
 		log("Getting fields");

@@ -1847,6 +1847,43 @@ var jrfReport=class jrfReport {
 						oPrj.addIssue(issue);
 					});
 				});
+				self.addStep("Retrieving Sprints of projects",function(){
+					var oJira=Sistem.webapp.getJira();
+					self.addStep("Getting all Boards",function(){
+						return oJira.getAllBoards();
+					});
+					self.addStep("Creating Boards",function(hsBoards){
+						hsBoards.walk(function(srcBoard,iProf,brdKey){
+							var lct=srcBoard.location;
+							var prjId="";
+							if (isDefined(lct)&&(isDefined(lct.prjKey))){
+								if (self.projects.exists(prjKey)){
+									var oPrj=self.projects.getById(prjKey);
+									var oBoard=self.boards.new(srcBoard.name,brdKey);
+									oBoard.setKey(brdKey);
+									oPrj.addBoard(oBoard,brdKey);
+								}
+							}
+						});
+					});
+					self.addStep("Getting Issues in each board",function(){
+						self.parallelizeProcess(self.projects.list,function(project){
+							self.parallelizeProcess(project.getBoards,function(board){
+								self.addStep("Getting Board Issues",function(){
+									oJira.getBoardIssues(board.getKey());
+								});
+								self.addStep("Processing Board Issue List",function(hsIssues){
+									hsIssues.walk(function(srcIssue,iProf,srcIssueKey){
+										if (self.allIssues.exists(srcIssueKey)){
+											var oIssue=self.allIssues.getById(srcIssueKey);
+											board.addIssue(oIssue,srcIssueKey);
+										}
+									});
+								});
+							});
+						})
+					});
+				});
 				if (false &&(hsVersions.length()>0)){
 					log("Versions in report:"+hsVersions.length());
 					self.addStep("Version Directive Active. Getting "+hsVersions.length()+" Versions ....",function(){

@@ -1850,6 +1850,9 @@ var jrfReport=class jrfReport {
 						}
 						oPrj.addIssue(issue,issue.getKey());
 						var arrVersions=issue.getfixVersions();
+						if (arrVersions==""){
+							arrVersions=[];
+						}
 						arrVersions.forEach(function(version){
 							var oVersion="";
 							if (!oPrj.getVersions().exists(version.name)){

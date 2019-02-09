@@ -532,6 +532,7 @@ class RCGTask{
 				var defWeight=1;
 				var nRunning=0;
 				var nDone=0;
+				var nWaiting=0;
 				var nTotal=0;
 				var maxDeep=0;
 				var auxList=[];
@@ -557,8 +558,11 @@ class RCGTask{
 						if (auxElem.running){
 							nRunning++;
 							allDone=false;
-						} else {
+						} else if (auxElem.done){
 							nDone++;
+						} else {
+							nWaiting++;
+							allDone=false;
 						}
 					}
 				}
@@ -571,16 +575,27 @@ class RCGTask{
 				} else {
 					TotalWeight=acumWeight;
 				}
-					
+				var resultStatus=[];
 				if (allDone){
 					TotalAdvance=1;
 				} else {
-					theStatus.forEach(function(elemStatus){
-						var auxWeight=elemStatus.weight;
+					TotalAdvance=0;
+					theStatus.forEach(function(auxElem){
+						var auxWeight=auxElem.weight;
 						if (auxWeight<0){
 							auxWeight=defWeight;
 						}
-						TotalAdvance+=elemStatus.perc*(auxWeight/TotalWeight);
+						var auxPorc=(auxWeight/TotalWeight);
+						var auxAdvance=0;
+						if (auxElem.running){
+							auxAdvance+=auxElem.perc*auxPorc;
+							resultStatus.push(auxElem);
+						} else if (auxElem.done){
+							auxAdvance+=1*auxPorc;
+						} else {
+							auxAdvance+=0;
+						}
+						TotalAdvance+=auxAdvance;
 					});
 				}
 				oResult={
@@ -592,6 +607,7 @@ class RCGTask{
 						,nDone:nDone
 						,nTotal:nTotal
 						,arrStatus:theStatus
+						,nWaiting:nWaiting
 				};
 			}
 			return oResult;

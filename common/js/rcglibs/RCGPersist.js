@@ -110,9 +110,9 @@ function InitializeFileSystem(initCallBack,quota){
 					return iValAux.toFixed(2) + " " + sizes[iSize];
 				}
 				var iValue
-				var sLog="Persistence. Chars readed ("+filesystem.stats.reads+"):"
-								+fncToSize(filesystem.stats.readedChars)
-								+ " Chars writed("+filesystem.stats.writes+"):"
+				var sLog="Persistence. Readed Elements ("+filesystem.stats.reads+"):"
+								+ fncToSize(filesystem.stats.readedChars)
+								+ " Writed Elements ("+filesystem.stats.writes+"):"
 								+fncToSize(filesystem.stats.writedChars);
 				if (typeof logError==="undefined"){
 					console.log(sLog);

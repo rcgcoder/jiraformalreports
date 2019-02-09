@@ -161,7 +161,13 @@ class RCGAtlassian{
 				var nInit=objResp.startAt;
 				nLast=nInit+nResults;
 				if (isUndefined(bNotReturnAll)||(!bNotReturnAll)){
-					arrResults=arrResults.concat(objResp[resultName]);
+					if (isDefined(resultName)){
+						arrResults=arrResults.concat(objResp[resultName]);
+					} else if (isArray(objResp)){
+						arrResults=arrResults.concat(objResp);
+					} else {
+						arrResults.push(objResp);
+					}
 				}
 				if (nLast>=nTotal){
 					return arrResults;					

@@ -606,7 +606,7 @@ class RCGTask{
 						,maxDeep:maxDeep
 						,nDone:nDone
 						,nTotal:nTotal
-						,arrStatus:theStatus
+						,arrStatus:resultStatus
 						,nWaiting:nWaiting
 				};
 			}

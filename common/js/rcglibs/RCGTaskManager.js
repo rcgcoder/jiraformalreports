@@ -535,7 +535,7 @@ class RCGTask{
 				var nTotal=0;
 				var maxDeep=0;
 				var auxList=[];
-				var nAutoWeiht=0;
+				var nAutoWeight=0;
 				var acumWeight=0;
 				for (var i=0;i<listElements.length;i++){
 					var auxElem=listElements[i];

@@ -6,7 +6,7 @@ function newVersionFactory(report){
 		]
 		,
 		["Key","Name","Description",
-		"PlanStart","PlanEnd","Status","ReleaseDate"]
+		"StartDate","ReleaseDate","Status"]
 		,
 		[]
 		,

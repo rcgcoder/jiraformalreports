@@ -60,6 +60,13 @@ class RCGJira{
             return self.getFullList("/rest/agile/1.0/board/"+idBoard+"/sprint/"+idSprint+"/issue","issues");
         });
     }
+    getProjectVersions(idProject){
+        var self=this;
+        self.addStep("Getting all versions of project "+idProject,function(){
+            return self.getFullList("/rest/api/3/project/{projectIdOrKey}/versions");
+        });
+    }
+    
 	getFields(){
 		log("Getting fields");
 		return this.fields;

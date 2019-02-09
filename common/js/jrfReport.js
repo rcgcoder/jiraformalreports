@@ -161,8 +161,9 @@ var jrfReport=class jrfReport {
 		var self=this;
 		return self.config.reuseReport;
 	}
-	cleanModel(sContent,contentId){
+	cleanModel(sContentInput,contentId){
 		//debugger;
+		var sContent=sContentInput;
 		sContent=replaceAll(sContent,"&lt;jRf","&lt;JRF",true);
 		sContent=replaceAll(sContent,"jrF&gt;","JRF&gt;",true);
 		sContent=replaceAll(sContent,"&lt;jRf_formula","&lt;JRF_FORMULA",true);
@@ -196,13 +197,14 @@ var jrfReport=class jrfReport {
 		arrStringsToRemove.push('</div>');
 		arrStringsToRemove.forEach(function(strTgt){
 			sHtml=sHtml.saReplaceAll(strTgt,"",true);
-/*			var iPos=0;
-			iPos=sHtml.saFindPos(strTgt,false,iPos);
-			while (iPos>=0){
-				sHtml=sHtml.saReplace(iPos,strTgt.length,"");
+	/*			var iPos=0;
 				iPos=sHtml.saFindPos(strTgt,false,iPos);
-			}*/
-        });
+				while (iPos>=0){
+					sHtml=sHtml.saReplace(iPos,strTgt.length,"");
+					iPos=sHtml.saFindPos(strTgt,false,iPos);
+				}*/
+	    });
+		
         //debugger;
         var arrImages=sHtml.saToString().split("<ac:image");
         var result=[arrImages.shift()];
@@ -224,9 +226,10 @@ var jrfReport=class jrfReport {
             if (sizePart.length>0){
             	var iPosHeight=sizePart.indexOf("height");
             	var iPosWidth=sizePart.indexOf("width");
+            	var sValue="";
             	if (iPosHeight>=0){
             		iPosHeight+="height".length+2;
-            		var sValue=sizePart.substring(
+            		sValue=sizePart.substring(
         					iPosHeight-1,
         					sizePart.indexOf('"',iPosHeight)+1
         					);
@@ -235,7 +238,7 @@ var jrfReport=class jrfReport {
             	
             	if (iPosWidth>=0){
             		iPosWidth+="width".length+2;
-            		var sValue=sizePart.substring(iPosWidth-1,sizePart.indexOf('"',iPosWidth)+2);
+            		sValue=sizePart.substring(iPosWidth-1,sizePart.indexOf('"',iPosWidth)+2);
             		sImgHtml+=(" width="+sValue);
             	}
             }
@@ -1834,6 +1837,7 @@ var jrfReport=class jrfReport {
 			});
 			self.addStep("Processing Projects, Versions and Sprints",function(){
 				debugger;
+				var hsAuxVersions=newHashMap();
 				log("All Issues:"+self.allIssues.list.length()+" Issues Added:"+issuesAdded.length()+" Roots:"+self.rootIssues.length());
 				self.addStep("Creating Projects",function() {
 					return self.workOnListOfIssueSteps(self.allIssues.list,function(issue){
@@ -1845,6 +1849,36 @@ var jrfReport=class jrfReport {
 							oPrj=self.projects.getById(prjKey);
 						}
 						oPrj.addIssue(issue,issue.getKey());
+						var arrVersions=issue.getfixVersions();
+						arrVersions.forEach(function(version){
+							var oVersion="";
+							if (!project.getVersions().exists(version.name)){
+								oVersion=self.versions.new(version.name,version.name);
+								if (isDefined(version.description)){
+									oVersion.setDescription(version.description);
+								} else {
+									oVersion.setDescription(version.name);
+								}
+								if (isDefined(version.startDate)) oVersion.setStartDate(version.startDate);
+								if (isDefined(version.releaseDate)) oVersion.setReleaseDate(version.releaseDate);
+								if (version.released){
+									oVersion.setStatus("Deployed");
+								} else if (version.archived){
+									oVersion.setStatus("Canceled");
+								} else if (oVersion.getReleaseDate()!==""){
+									if (isDefined(version.overdue)&&version.overdue){
+										oVersion.setStatus("Delayed");
+									} else {
+										oVersion.setStatus("Planned");
+									}
+								} else {
+									oVersion.setStatus("Development");
+								}
+								project.addVersion(oVersion,version.name);
+							}
+							var oVersion=project.getVersion(version.name);
+							oVersion.addIssue(issue,issue.getKey());
+						});
 					});
 				});
 				self.addStep("Retrieving Sprints of projects",function(){
@@ -1868,13 +1902,14 @@ var jrfReport=class jrfReport {
 							}
 						});
 					});
-					self.addStep("Getting Sprints in each board",function(){
+					self.addStep("Getting Issues of Sprints of each project",function(){
 						self.parallelizeProcess(self.projects.list,function(project){
+							
 							self.parallelizeProcess(project.getBoards(),function(board){
-								self.addStep("Getting Board Sprints",function(){
+								self.addStep("Getting Board Sprints of project "+project.getKey(),function(){
 									oJira.getBoardSprints(board.getKey());
 								});
-								self.addStep("Processing Board Sprint List",function(arrSprints){
+								self.addStep("Processing Board ("+board.getKey()+") Sprint List for project "+project.getKey(),function(arrSprints){
 									arrSprints.forEach(function(srcSprint){
 										var srcSprintKey=srcSprint.id+"";
 										var oSprint=self.sprints.new(srcSprint.name,srcSprintKey);
@@ -1894,19 +1929,54 @@ var jrfReport=class jrfReport {
 										}
 									});
 								});
-								self.addStep("Retrieving Issues for all Sprints in project "+ project.getKey(),function(){
-									self.parallelizeProcess(project.getSprints(),function(sprint){
-										self.addStep("Getting Issues for Sprint "+sprint.getKey()+","+sprint.getBoard().getKey(),function(){
-											oJira.getSprintIssues(sprint.getKey(),sprint.getBoard().getKey());
-										});
-										self.addStep("Processing Issues for Sprint "+sprint.getKey()+","+sprint.getBoard().getKey(),function(arrIssues){
-											arrIssues.forEach(function(srcIssue){
-												var srcIssueKey=srcIssue.key;
-												if (self.allIssues.exists(srcIssueKey)){
-													var oIssue=self.allIssues.getById(srcIssueKey);
-													sprint.addIssue(oIssue,srcIssueKey);
+							});
+							self.addStep("Filling Versions of project "+project.getKey(),function(){
+								self.addStep("Getting Version List of Project"+project.getKey(),function(){
+									oJira.getProjectVersions(project.getKey());
+								});
+								self.addStep("adding Versions to Project "+project.getKey(),function(arrVersions){
+									arrVersions.forEach(function(version){
+										if (!project.getVersions().exists(version.name)){
+											oVersion=self.versions.new(version.name,version.name);
+											if (isDefined(version.description)){
+												oVersion.setDescription(version.description);
+											} else {
+												oVersion.setDescription(version.name);
+											}
+											if (isDefined(version.startDate)) oVersion.setStartDate(version.startDate);
+											if (isDefined(version.releaseDate)) oVersion.setReleaseDate(version.releaseDate);
+											if (version.released){
+												oVersion.setStatus("Deployed");
+											} else if (version.archived){
+												oVersion.setStatus("Canceled");
+											} else if (oVersion.getReleaseDate()!==""){
+												if (isDefined(version.overdue)&&version.overdue){
+													oVersion.setStatus("Delayed");
+												} else {
+													oVersion.setStatus("Planned");
 												}
-											});
+											} else {
+												oVersion.setStatus("Development");
+											}
+											project.addVersion(oVersion,version.name);
+										}
+									});
+								});
+								
+							});
+							
+							self.addStep("Retrieving Issues for all Sprints in project "+ project.getKey(),function(){
+								self.parallelizeProcess(project.getSprints(),function(sprint){
+									self.addStep("Getting Issues for Sprint "+sprint.getKey()+","+sprint.getBoard().getKey(),function(){
+										oJira.getSprintIssues(sprint.getKey(),sprint.getBoard().getKey());
+									});
+									self.addStep("Processing Issues for Sprint "+sprint.getKey()+","+sprint.getBoard().getKey(),function(arrIssues){
+										arrIssues.forEach(function(srcIssue){
+											var srcIssueKey=srcIssue.key;
+											if (self.allIssues.exists(srcIssueKey)){
+												var oIssue=self.allIssues.getById(srcIssueKey);
+												sprint.addIssue(oIssue,srcIssueKey);
+											}
 										});
 									});
 								});
@@ -1914,50 +1984,6 @@ var jrfReport=class jrfReport {
 						})
 					});
 				});
-				if (false &&(hsVersions.length()>0)){
-					log("Versions in report:"+hsVersions.length());
-					self.addStep("Version Directive Active. Getting "+hsVersions.length()+" Versions ....",function(){
-						var verCounter=0;
-						var sVersions="";
-						var fncGetVersionsIssues=function(sVersions){
-							self.addStep("Getting versions ("+sVersions+") issues",function(){
-								var fncProcessIssue=function(issue){
-									//debugger;
-									var oIssue;
-									if (!self.allIssues.list.exists(issue.key)){
-										oIssue=self.allIssues.new(issue.fields.summary,issue.key);
-										oIssue.setJiraObject(issue);
-										oIssue.updateInfo();
-										oIssue.setKey(issue.key);
-									} else {
-										oIssue=self.allIssues.list.getValue(issue.key);
-									}
-									if (!self.treeIssues.exists(issue.key)){
-										self.treeIssues.add(issue.key,oIssue);
-									}
-								}
-								return self.jira.processJQLIssues("fixVersion in ("+sVersions+")",
-														  fncProcessIssue
-														  ,undefined,undefined,undefined,undefined,dontReturnAllIssuesRetrieved);
-							});
-						}
-						hsVersions.walk(function(versionName){
-							if (verCounter>=10){
-								fncGetVersionsIssues(sVersions);
-								verCounter=0;
-								sVersions="";
-							}
-							if (verCounter>0){
-								sVersions+=",";
-							}
-							sVersions+=versionName;
-							verCounter++;
-						});
-						if ((verCounter>0)&&(verCounter<10)){
-							fncGetVersionsIssues(sVersions);
-						}
-					});
-				}
 			});
 		});
 		self.addStep("Saving Report to reuse",function(){

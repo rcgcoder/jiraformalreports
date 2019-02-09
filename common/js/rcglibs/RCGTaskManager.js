@@ -566,7 +566,7 @@ class RCGTask{
 				});
 			}
 			return {totalWeight:TotalWeight
-					,percAdv:totalAdvance/TotalWeight
+					,percAdv:TotalAdvance/TotalWeight
 					,allDone:allDone
 					,nRunning:nRunning
 					,maxDeep:maxDeep

@@ -619,7 +619,7 @@ class RCGTask{
 			if (totalWeight<=0){
 				totalWeight=innerForksStatus.nTotal+stepsStatus.nTotal+1;
 			} 
-			var percAdv=((innerForkStatus.percAdv*innerForksStatus.nTotal)
+			var percAdv=((innerForksStatus.percAdv*innerForksStatus.nTotal)
 						+(stepsStatus.percAdv*stepsStatus.nTotal)
 						+(percMethodAdv*methodWeight))/totalWeight;
 			progressPercent=percAdv;

@@ -687,7 +687,7 @@ var jrfReport=class jrfReport {
 			//debugger;
 			var vMaxIssuesInMemory=self.objModel.variables.getVar("MaxIssuesInMemory");
 			if (vMaxIssuesInMemory===""){
-				vMaxIssuesInMemory=1000;
+				vMaxIssuesInMemory=10000;
 			} else {
 				vMaxIssuesInMemory=parseInt(vMaxIssuesInMemory);
 			}
@@ -1901,7 +1901,7 @@ var jrfReport=class jrfReport {
 										});
 										self.addStep("Processing Issues for Sprint "+sprint.getKey()+","+sprint.getBoard().getKey(),function(arrIssues){
 											arrIssues.forEach(function(srcIssue){
-												var srcIssueKey=srcIssue.id;
+												var srcIssueKey=srcIssue.key;
 												if (self.allIssues.exists(srcIssueKey)){
 													var oIssue=self.allIssues.getById(srcIssueKey);
 													sprint.addIssue(oIssue,srcIssueKey);

@@ -186,6 +186,7 @@ class RCGTask{
 		self.progressMin=0;
 		self.progressMax=1;
 		self.progress=0;
+		self.progressAuto=true;
 		self.weight=-1;
 		self.methodWeight=-1;
 		self.steps=[]; // list of tasks to execute in sequence (callbacks are setted at position 0, next are pushed)
@@ -332,7 +333,6 @@ class RCGTask{
 		self.getTaskManager().next(aArgs,iJumps);
 		self.setRunningTask(prevTask);
 	}
-
 	getTaskManager(){
 		var self=this; 
 		return self.taskManager;
@@ -510,173 +510,139 @@ class RCGTask{
 	getStatus(){
 		var self=this;
 		debugger;
-		if ((!self.isSomethingRunning())){
-			return {
-					desc:self.description,
-					min:self.progressMin,
-					max:self.progressMax,
-					perc:1,
-					adv:self.progressMax,
-					weight:self.weight,
-					done:self.isDone,
-					timeSpent:self.finishTime-self.initTime,
-					running:self.running,
-					isCallback:self.isCallback,
-					nSubTasks:0,
-					nSubTasksRunning:0,
-					nSubDeep:0,
-					detail:[]  // there is not detail..... 
-					};
-		}
-		var progressPercent=0;
 //		if (self.steps.length==0){
-		// call status
-		var bRunningMethod=false;
 		
 		// checking if all inner forks are finished
-		var allInnerForksDone=true;
-		for (var i=0;(allInnerForksDone)&&(i<self.innerForks.length);i++){
-			var auxFork=self.innerForks[i];
-			if (auxFork.running){
-				allInnerForksDone=false;
+		var fncAnalizeElements=function(listElements,dontProcessForks){
+			var allDone=true;
+			var status=[];
+			var TotalWeight=0;
+			var TotalAdvance=0;
+			var defWeight=1;
+			if (listElements.length>0){
+				defWeight=1/listElements.length;
+			} else {
+				TotalWeight=1;
+				TotalAdvance=1;
 			}
+			var nRunning=0;
+			var nDone=0;
+			var nTotal=0;
+			var maxDeep=0;
+			for (var i=0;i<listElements.length;i++){
+				var auxElem=listElements[i];
+				if (! (  (auxElem.isFork)
+						&&
+						(isDefined(dontProcessForks)&&(dontProcessForks))
+					  )	){ // the forks will be processed in next for
+					var elemStatus=auxFork.getStatus();
+					if (elemStatus.weigth==0){
+						TotalWeight+=defWeight;
+					} else {
+						TotalWeight+=elemStatus.weigth;
+					}
+					if (elemStatus.nSubDeep>maxDeep){
+						maxDeep=elemStatus.nSubDeep;
+					}
+					status.push(elemStatus);
+					nTotal++;
+					if (auxElem.running){
+						nRunning++;
+						allDone=false;
+					} else {
+						nDone++;
+					}
+				}
+			}
+			if (allDone){
+				TotalAdvance=1;
+			} else {
+				status.forEach(function(elemStatus){
+					var auxWeight=elemStatus.weight;
+					if (auxWeight==0){
+						auxWeight=defWeight;
+					}
+					TotalAdvance+=elemStatus.perc*(auxWeight/TotalWeight);
+				});
+			}
+			return {totalWeight:TotalWeight
+					,percAdv:totalAdvance/TotalWeight
+					,allDone:allDone
+					,nRunning:nRunning
+					,maxDeep:maxDeep
+					,nDone:nDone
+					,nTotal:nTotal
+					,arrStatus:status};
 		}
+		var innerForksStatus=fncAnalizeElements(self.innerForks);
+		var stepsStatus=fncAnalizeElements(self.steps,true);
+		var maxDeep=innerForksStatus.maxDeep;
+		if (maxDeep<stepsStatus.maxDeep){
+			maxDeep=stepsStatus.maxDeep;
+		}
+		maxDeep++;
 		
-		
+		// compute method status
+		var bRunningMethod=false;
 		var progressMax=self.progressMax;
 		var progressMin=self.progressMin;
 		var progressItems=progressMax-progressMin;
-		var progressAdv=progressPercent*progressItems;
+		var progressAdv=self.progress;
 		var progressPercent=0;
-		if ((self.actStep>=0)&&(allInnerForksDone)){ // the method was executed
-			progressPercent=1;
-		} else if (self.method!=""){
-			bRunningMethod=true;
-			if (progressItems>0){
-				progressPercent=self.progress/progressItems;
+		if (progressItems>1){
+			var auxValue=progressAdv-self.progressMin;
+			if (auxValue<0){
+				auxValue=progressAdv;
 			}
+			progressPercent=(auxValue)/progressItems;
+		} else {
+			progressPercent=self.progress;
 		}
-		var progressAdv=(progressPercent*progressItems)+progressMin;
+		var bMethodDone=false;
+		var percMethodAdv=0;
+		
+		if (self.progressAuto){
+			if (self.actStep>=0){ // the method was executed
+				bMethodDone=true;
+				percMethodAdv=1;
+			} else if (self.method!=""){ //there is a method on the step
+				bRunningMethod=true; // and it is running
+				percMethodAdv=progressPercent;
+			} else {
+				bMethodDone=true;
+				percMethodAdv=1;
+			}
+			var methodWeight=self.methodWeight;
+			var totalWeight=innerForksStatus.totalWeight+
+							stepsStatus.totalWeight+
+							methodWeight;
+			if (totalWeight<=0){
+				totalWeight=innerForksStatus.nTotal+stepsStatus.nTotal+1;
+			} 
+			var percAdv=((innerForkStatus.percAdv*innerForksStatus.nTotal)
+						+(stepsStatus.percAdv*stepsStatus.nTotal)
+						+(percMethodAdv*methodWeight))/totalWeight;
+			progressPercent=percAdv;
+			progressAdv=(progressItems*progressPercent)+progressMin;
+		}
 		
 		var status={
 				desc:self.description,
 				min:Math.round(progressMin),
 				max:Math.round(progressMax),
 				perc:progressPercent,
-				adv:Math.round(progressAdv),
-				weight:self.methodWeight,
-				done:false,
-				nSubTasks:0,
-				nSubTasksRunning:0,
-				nSubDeep:0,
+				adv:progressAdv,
+				weight:self.weight,
+				done:innerForksStatus.allDone && stepsStatus.allDone && bMethodDone,
+				nSubTasks:innerForksStatus.nTotal+stepsStatus.nTotal,
+				nSubTasksRunning:innerForksStatus.nRunning+stepsStatus.nRunning,
+				nSubDeep:maxDeep,
 				timeSpent:(bRunningMethod?(new Date()).getTime()-self.initTime:""),
 				running:bRunningMethod,
 				isCallback:self.isCallback
-				,detail:[]  // there is not more detail???..... 
+				,detail: stepsStatus.arrStatus.concat(innerForksStatus.arrStatus)
 				};
-		if ((self.steps.length==0)&&(allInnerForksDone)){
-			status.weight=self.weight;
-			status.nSubTasks=self.innerForks.length+self.steps.length;
-			status.detail=[];  // No, there is not more detail..... 
-			return status;
-		}
-		var arrStatus=[];
-		arrStatus.push(status);
-		var nSubTasks=0;
-		var nSubTasksRunning=0;
-		var auxStatus;
-		var nSubDeep=0;
-		var auxDeep=0;
-		for (var i=0;i<self.steps.length;i++){
-			var auxStep=self.steps[i];
-			if (!auxStep.isFork){ // the forks will be processed in next for
-				auxStatus=auxStep.getStatus();
-				nSubTasks+=auxStatus.nSubTasks;
-				auxDeep=(auxStatus.nSubDeep+1);
-				if (auxDeep>nSubDeep){
-					nSubDeep=auxDeep;
-				}
-				nSubTasks++;
-				if (auxStatus.running){
-					nSubTasksRunning++;
-				}
-				arrStatus.push(auxStatus);
-			}
-		}
-		for (var i=0;i<self.innerForks.length;i++){
-			var auxStep=self.innerForks[i];
-			auxStatus=auxStep.getStatus();
-			nSubTasks+=auxStatus.nSubTasks;
-			nSubTasks++;
-			if (auxStatus.running){
-				nSubTasksRunning++;
-			}
-			auxDeep=(auxStatus.nSubDeep+1);
-			if (auxDeep>nSubDeep){
-				nSubDeep=auxDeep;
-			}
-			arrStatus.push(auxStatus);
-		}
-		//arrStatus has the estatus of all the steps and Forks in the list.
-		var totalWeight=0;
-		var medWeight=0;
-		var totalWeightSetted=0;
-		var itemsWithoutWeight=0;
-		var itemsWithWeight=0;
-		var arrRunningTasks=[];
-		// getting the totalweight.... and the items without weight
-		for (var i=0;i<arrStatus.length;i++){
-			var auxStatus=arrStatus[i];
-			if (auxStatus.weight>=0){
-				totalWeightSetted+=auxStatus.weight;
-				itemsWithWeight++;
-			} else {
-				itemsWithoutWeight++;
-			}
-			if (auxStatus.running){
-				arrRunningTasks.push(auxStatus);
-			}
-		}
-		// Calculating the medium weight to use it with the items without weight
-		if (totalWeightSetted>0){
-			medWeight=totalWeightSetted/itemsWithWeight;
-			totalWeight=totalWeightSetted+(medWeight*itemsWithoutWeight);
-		} else {
-			totalWeight=1;
-			medWeight=totalWeight/itemsWithoutWeight;
-		}
-		// identifying the processed steps.... and acumulated weight
-		var acumProcessed=0;		
-		for (var i=0;i<arrStatus.length;i++){
-			var auxStatus=arrStatus[i];
-			if (auxStatus.perc>0){
-				var auxWeight=auxStatus.weight;
-				if (auxWeight<0){
-					auxWeight=medWeight*auxStatus.perc;
-				} else {
-					auxWeight=auxWeight*auxStatus.perc;
-				}
-				acumProcessed+=auxWeight;
-			}
-		}
-		var totalPerc=acumProcessed/totalWeight;
-		var returnStatus={
-				desc:self.description,
-				weight:self.weight,
-				min:Math.round(progressMin),
-				max:Math.round(progressMax),
-				perc:totalPerc,
-				adv:Math.round((progressItems*totalPerc)+progressMin),
-				done:false,
-				running:true,
-				nSubTasks:nSubTasks,
-				nSubTasksRunning:nSubTasksRunning,
-				nSubDeep:nSubDeep,
-				timeSpent:(new Date()).getTime()-self.initTime,
-				child:arrRunningTasks,
-				detail:arrStatus  // there is detail..... useful info!
-				};
-		return returnStatus;
+		return status;
 	}
 
 }
@@ -793,8 +759,6 @@ class RCGTaskManager{
 			}
 		}
 	}
-	
-	
 	getRunningForkId(){
 		var self=this;
 		var rTask=self.getRunningTask();
@@ -928,7 +892,6 @@ class RCGTaskManager{
 		}
 		return fork;
 	}
-	
 	searchForFork(forkId){
 		var self=this;
 		//debugger;
@@ -966,9 +929,6 @@ class RCGTaskManager{
 		} 
 		return task;
 	}
-	
-	
-	
 	pushCallback(method,obj,sForkType,barrier,description,progressMin,progressMax,totalWeight,methodWeight){
 		var self=this;
 		if (typeof method==="undefined"){
@@ -1176,7 +1136,6 @@ class RCGTaskManager{
 			self.bCallsCycleActive=false;
 		}
 	}
-
 	popCallback(aArgs,iJumps){
 		var self=this;
 		return self.next(aArgs,iJumps);
@@ -1189,7 +1148,6 @@ class RCGTaskManager{
 		} 
 		return tm;
 	}
-		
 	extended_getTaskManagerStatus(){
 		var self=this;
 		var tm=self.RCGTaskManager;
@@ -1264,7 +1222,6 @@ class RCGTaskManager{
 		}
 		return tm.addStep(method,theObj,sForkType,barrier,description,progressMin,progressMax,totalWeight,methodWeight);
 	}
-
 	extended_pushCallBack(method,newObj,sForkType,barrier,description,progressMin,progressMax,totalWeight,methodWeight){
 		var self=this;
 		var tm=self.getTaskManager();
@@ -1423,7 +1380,6 @@ class RCGTaskManager{
 			}
 		});
 	}
-	
 	extended_loopProcess(fncWhileCondition,fncProcess){
 		var self=this;
 		var condResult=true;
@@ -1564,8 +1520,7 @@ class RCGTaskManager{
         }
         return fncRetryFunction();
      }
-
-    extended_executeAsStep(bAsStep,fncCall){
+	extended_executeAsStep(bAsStep,fncCall){
         var self=this;
         if (isDefined(bAsStep)&&(!bAsStep)){
             return fncCall();
@@ -1574,14 +1529,12 @@ class RCGTaskManager{
             return self.taskResultNeedsStep();
         }
     }
-	
-    extended_executeAsStepMayRetry(bAsStep,exceptionName,fncCall){
+	extended_executeAsStepMayRetry(bAsStep,exceptionName,fncCall){
         var self=this;
         return self.executeAsStep(bAsStep,function(){
            return self.callWithRetry(exceptionName,fncCall);
         });
     }
-	
 	extended_addStepMayRetry(sDescription,exceptionName,fncCall){
         var self=this;
         return self.addStep(sDescription,function(){
@@ -1592,7 +1545,6 @@ class RCGTaskManager{
 		var self=this;
 		return self.parallelizeCalls(hsListItemsToProcess,undefined,fncProcess,1);
 	}
-	
 	extended_treeProcess(hsInitialList,hierarchyType,fncProcess,fncProcessShell,fncGetItem,fncAddItem){
 	    var self=this;
 	    var hsWorkList=newHashMap();
@@ -1646,8 +1598,6 @@ class RCGTaskManager{
             }
         });
 	};
-	
-	
 	extended_parallelizeProcess(hsListItemsToProcess,fncProcess,maxParallelThreads){
 		var self=this;
 		return self.parallelizeCalls(hsListItemsToProcess,undefined,fncProcess,maxParallelThreads);
@@ -1723,7 +1673,6 @@ class RCGTaskManager{
 			});
 		}
 	}
-	
 	extendObject(obj){
 		var self=this;
 		self.object=obj;

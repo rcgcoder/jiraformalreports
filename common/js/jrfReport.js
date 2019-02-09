@@ -1876,7 +1876,7 @@ var jrfReport=class jrfReport {
 								}
 								oPrj.addVersion(oVersion,version.name);
 							}
-							var oVersion=oPrj.getVersion(version.name);
+							var oVersion=oPrj.getVersionById(version.name);
 							oVersion.addIssue(issue,issue.getKey());
 						});
 					});

@@ -529,11 +529,14 @@ class RCGTask{
 				var theStatus=[];
 				var TotalWeight=0;
 				var TotalAdvance=0;
-				var defWeight=1/listElements.length;
+				var defWeight=1;
 				var nRunning=0;
 				var nDone=0;
 				var nTotal=0;
 				var maxDeep=0;
+				var auxList=[];
+				var nAutoWeiht=0;
+				var acumWeight=0;
 				for (var i=0;i<listElements.length;i++){
 					var auxElem=listElements[i];
 					if (! (  (auxElem.isFork)
@@ -541,15 +544,15 @@ class RCGTask{
 							(isDefined(dontProcessForks)&&(dontProcessForks))
 						  )	){ // the forks will be processed in next for
 						var elemStatus=auxElem.getStatus();
-						if (elemStatus.weight<=0){
-							TotalWeight+=defWeight;
+						theStatus.push(elemStatus);
+						if (elemStatus.weight<0){
+							nAutoWeight++;
 						} else {
-							TotalWeight+=elemStatus.weight;
+							acumWeight+=elemStatus.weight;
 						}
 						if (elemStatus.nSubDeep>maxDeep){
 							maxDeep=elemStatus.nSubDeep;
 						}
-						theStatus.push(elemStatus);
 						nTotal++;
 						if (auxElem.running){
 							nRunning++;
@@ -559,12 +562,22 @@ class RCGTask{
 						}
 					}
 				}
+				if (nTotal==0) return oResult;
+				if (nAutoWeight==nTotal){
+					TotalWeight=nTotal;
+				} else if (nAutoWeight>0){
+					defWeight=acumWeight/(nTotal-nAutoWeight);
+					TotalWeight=acumWeight+(defWeight*nAutoWeight);
+				} else {
+					TotalWeight=acumWeight;
+				}
+					
 				if (allDone){
 					TotalAdvance=1;
 				} else {
 					theStatus.forEach(function(elemStatus){
 						var auxWeight=elemStatus.weight;
-						if (auxWeight<=0){
+						if (auxWeight<0){
 							auxWeight=defWeight;
 						}
 						TotalAdvance+=elemStatus.perc*(auxWeight/TotalWeight);

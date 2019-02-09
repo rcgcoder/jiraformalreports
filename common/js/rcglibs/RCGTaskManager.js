@@ -612,13 +612,14 @@ class RCGTask{
 				bMethodDone=true;
 				percMethodAdv=1;
 			}
+			var totalElems=innerForksStatus.nTotal+stepsStatus.nTotal+1;
 			var methodWeight=self.methodWeight;
+			if (methodWeight<=0){
+				methodWeight=1/totalElems;
+			}
 			var totalWeight=innerForksStatus.totalWeight+
 							stepsStatus.totalWeight+
 							methodWeight;
-			if (totalWeight<=0){
-				totalWeight=innerForksStatus.nTotal+stepsStatus.nTotal+1;
-			} 
 			var percAdv=((innerForksStatus.percAdv*innerForksStatus.nTotal)
 						+(stepsStatus.percAdv*stepsStatus.nTotal)
 						+(percMethodAdv*methodWeight))/totalWeight;

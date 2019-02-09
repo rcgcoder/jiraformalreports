@@ -600,7 +600,7 @@ class RCGTask{
 				}
 				oResult={
 						totalWeight:TotalWeight
-						,percAdv:TotalAdvance/TotalWeight
+						,percAdv:TotalAdvance
 						,allDone:allDone
 						,nRunning:nRunning
 						,maxDeep:maxDeep

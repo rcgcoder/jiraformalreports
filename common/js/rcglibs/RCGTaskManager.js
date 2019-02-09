@@ -639,7 +639,7 @@ class RCGTask{
 				nSubTasksRunning:innerForksStatus.nRunning+stepsStatus.nRunning,
 				nSubDeep:maxDeep,
 				timeSpent:(bRunningMethod?(new Date()).getTime()-self.initTime:""),
-				running:bRunningMethod,
+				running:bRunningMethod||((innerForksStatus.nRunning+stepsStatus.nRunning)>0),
 				isCallback:self.isCallback
 				,detail: stepsStatus.arrStatus.concat(innerForksStatus.arrStatus)
 				};

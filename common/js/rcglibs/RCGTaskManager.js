@@ -514,65 +514,74 @@ class RCGTask{
 		
 		// checking if all inner forks are finished
 		var fncAnalizeElements=function(listElements,dontProcessForks){
-			var allDone=true;
-			var theStatus=[];
-			var TotalWeight=0;
-			var TotalAdvance=0;
-			var defWeight=1;
+			var oResult={
+					totalWeight:0
+					,percAdv:0
+					,allDone:true
+					,nRunning:0
+					,maxDeep:0
+					,nDone:0
+					,nTotal:0
+					,arrStatus:[]
+			};
 			if (listElements.length>0){
-				defWeight=1/listElements.length;
-			} else {
-				TotalWeight=1;
-				TotalAdvance=1;
-			}
-			var nRunning=0;
-			var nDone=0;
-			var nTotal=0;
-			var maxDeep=0;
-			for (var i=0;i<listElements.length;i++){
-				var auxElem=listElements[i];
-				if (! (  (auxElem.isFork)
-						&&
-						(isDefined(dontProcessForks)&&(dontProcessForks))
-					  )	){ // the forks will be processed in next for
-					var elemStatus=auxElem.getStatus();
-					if (elemStatus.weight<=0){
-						TotalWeight+=defWeight;
-					} else {
-						TotalWeight+=elemStatus.weight;
-					}
-					if (elemStatus.nSubDeep>maxDeep){
-						maxDeep=elemStatus.nSubDeep;
-					}
-					theStatus.push(elemStatus);
-					nTotal++;
-					if (auxElem.running){
-						nRunning++;
-						allDone=false;
-					} else {
-						nDone++;
+				var allDone=true;
+				var theStatus=[];
+				var TotalWeight=0;
+				var TotalAdvance=0;
+				var defWeight=1/listElements.length;
+				var nRunning=0;
+				var nDone=0;
+				var nTotal=0;
+				var maxDeep=0;
+				for (var i=0;i<listElements.length;i++){
+					var auxElem=listElements[i];
+					if (! (  (auxElem.isFork)
+							&&
+							(isDefined(dontProcessForks)&&(dontProcessForks))
+						  )	){ // the forks will be processed in next for
+						var elemStatus=auxElem.getStatus();
+						if (elemStatus.weight<=0){
+							TotalWeight+=defWeight;
+						} else {
+							TotalWeight+=elemStatus.weight;
+						}
+						if (elemStatus.nSubDeep>maxDeep){
+							maxDeep=elemStatus.nSubDeep;
+						}
+						theStatus.push(elemStatus);
+						nTotal++;
+						if (auxElem.running){
+							nRunning++;
+							allDone=false;
+						} else {
+							nDone++;
+						}
 					}
 				}
+				if (allDone){
+					TotalAdvance=1;
+				} else {
+					theStatus.forEach(function(elemStatus){
+						var auxWeight=elemStatus.weight;
+						if (auxWeight==0){
+							auxWeight=defWeight;
+						}
+						TotalAdvance+=elemStatus.perc*(auxWeight/TotalWeight);
+					});
+				}
+				oResult={
+						totalWeight:TotalWeight
+						,percAdv:TotalAdvance/TotalWeight
+						,allDone:allDone
+						,nRunning:nRunning
+						,maxDeep:maxDeep
+						,nDone:nDone
+						,nTotal:nTotal
+						,arrStatus:theStatus
+				};
 			}
-			if (allDone){
-				TotalAdvance=1;
-			} else {
-				theStatus.forEach(function(elemStatus){
-					var auxWeight=elemStatus.weight;
-					if (auxWeight==0){
-						auxWeight=defWeight;
-					}
-					TotalAdvance+=elemStatus.perc*(auxWeight/TotalWeight);
-				});
-			}
-			return {totalWeight:TotalWeight
-					,percAdv:TotalAdvance/TotalWeight
-					,allDone:allDone
-					,nRunning:nRunning
-					,maxDeep:maxDeep
-					,nDone:nDone
-					,nTotal:nTotal
-					,arrStatus:theStatus};
+			return oResult;
 		}
 		var innerForksStatus=fncAnalizeElements(self.innerForks);
 		var stepsStatus=fncAnalizeElements(self.steps,true);

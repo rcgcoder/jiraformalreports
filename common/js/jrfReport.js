@@ -1845,6 +1845,7 @@ var jrfReport=class jrfReport {
 						var oPrj="";
 						if (!self.projects.exists(prjKey)){
 							oPrj=self.projects.new(issue.getproject().name,prjKey);
+							oPrj.setKey(prjKey)
 						} else {
 							oPrj=self.projects.getById(prjKey);
 						}

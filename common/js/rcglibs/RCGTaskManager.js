@@ -515,7 +515,7 @@ class RCGTask{
 		// checking if all inner forks are finished
 		var fncAnalizeElements=function(listElements,dontProcessForks){
 			var allDone=true;
-			var status=[];
+			var theStatus=[];
 			var TotalWeight=0;
 			var TotalAdvance=0;
 			var defWeight=1;
@@ -544,7 +544,7 @@ class RCGTask{
 					if (elemStatus.nSubDeep>maxDeep){
 						maxDeep=elemStatus.nSubDeep;
 					}
-					status.push(elemStatus);
+					theStatus.push(elemStatus);
 					nTotal++;
 					if (auxElem.running){
 						nRunning++;
@@ -557,7 +557,7 @@ class RCGTask{
 			if (allDone){
 				TotalAdvance=1;
 			} else {
-				status.forEach(function(elemStatus){
+				theStatus.forEach(function(elemStatus){
 					var auxWeight=elemStatus.weight;
 					if (auxWeight==0){
 						auxWeight=defWeight;
@@ -572,7 +572,7 @@ class RCGTask{
 					,maxDeep:maxDeep
 					,nDone:nDone
 					,nTotal:nTotal
-					,arrStatus:status};
+					,arrStatus:theStatus};
 		}
 		var innerForksStatus=fncAnalizeElements(self.innerForks);
 		var stepsStatus=fncAnalizeElements(self.steps,true);

@@ -63,7 +63,7 @@ class RCGJira{
     getProjectVersions(idProject){
         var self=this;
         self.addStep("Getting all versions of project "+idProject,function(){
-            return self.getFullList("/rest/api/3/project/{projectIdOrKey}/versions");
+            return self.getFullList("/rest/api/3/project/"+idProject+"/versions");
         });
     }
     

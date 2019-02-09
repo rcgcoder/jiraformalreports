@@ -1852,7 +1852,7 @@ var jrfReport=class jrfReport {
 						var arrVersions=issue.getfixVersions();
 						arrVersions.forEach(function(version){
 							var oVersion="";
-							if (!project.getVersions().exists(version.name)){
+							if (!oPrj.getVersions().exists(version.name)){
 								oVersion=self.versions.new(version.name,version.name);
 								if (isDefined(version.description)){
 									oVersion.setDescription(version.description);
@@ -1874,9 +1874,9 @@ var jrfReport=class jrfReport {
 								} else {
 									oVersion.setStatus("Development");
 								}
-								project.addVersion(oVersion,version.name);
+								oPrj.addVersion(oVersion,version.name);
 							}
-							var oVersion=project.getVersion(version.name);
+							var oVersion=oPrj.getVersion(version.name);
 							oVersion.addIssue(issue,issue.getKey());
 						});
 					});

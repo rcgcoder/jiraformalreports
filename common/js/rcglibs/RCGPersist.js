@@ -83,7 +83,7 @@ function InitializeFileSystem(initCallBack,quota){
 		var newName=replaceAll(filename,"/","_DIR_");
 		this.fs.root.getFile(newName, {create: false}, cbExists,cbNotExists);
 	}
-	filesystem.stats={reads:0,writes:0,readedChars:0,writedChars:0,lastLogAccum:0};
+	filesystem.stats={reads:0,writes:0,readedChars:0,writedChars:0,lastLogAccum:{elements:0,chars:0}};
 	filesystem.updateStats=function(charsReaded,charsWrited){
 		if (charsReaded>0){
 			filesystem.stats.readedChars+=charsReaded;
@@ -93,10 +93,16 @@ function InitializeFileSystem(initCallBack,quota){
 			filesystem.stats.writedChars+=charsWrited;
 			filesystem.stats.writes++;
 		}
-		var accum=filesystem.stats.readedChars+filesystem.stats.writedChars;
+		var accumChars=filesystem.stats.readedChars+filesystem.stats.writedChars;
+		var accumElements=filesystem.stats.reades+filesystem.stats.writes;
 		var lastLogAccum=filesystem.stats.lastLogAccum;
-		if (lastLogAccum>0){
-			var percChange=accum/lastLogAccum;
+		if ((lastLogAccum.chars>0)||(lastLogAccum.elements>0)){
+			var percChangeChars=accumChars/lastLogAccum.chars;
+			var percChangeElems=accumElements/lastLogAccum.elements;
+			var percChange=percChangeChars;
+			if (percChangeElems>percChangeChars){
+				percChange=percChangeElems;
+			}
 			if (percChange>1.1){
 				var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB','PB'];
 				var fncToSize=function(iValue){
@@ -119,10 +125,12 @@ function InitializeFileSystem(initCallBack,quota){
 				} else {
 					logError(sLog);
 				}
-				filesystem.stats.lastLogAccum=accum;
+				filesystem.stats.lastLogAccum.chars=accumChars;
+				filesystem.stats.lastLogAccum.elements=accumElements;
 			}
 		} else {
-			filesystem.stats.lastLogAccum=accum;
+			filesystem.stats.lastLogAccum.chars=accumChars;
+			filesystem.stats.lastLogAccum.elements=accumElements;
 		}
 	}
 	filesystem.ReadFile=function(filename,cbExistsAndLoaded,cbNotExists){

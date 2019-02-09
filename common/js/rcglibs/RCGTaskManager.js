@@ -545,7 +545,7 @@ class RCGTask{
 						  )	){ // the forks will be processed in next for
 						var elemStatus=auxElem.getStatus();
 						theStatus.push(elemStatus);
-						if (elemStatus.weight<0){
+						if (elemStatus.weight<=0){
 							nAutoWeight++;
 						} else {
 							acumWeight+=elemStatus.weight;
@@ -636,14 +636,23 @@ class RCGTask{
 			}
 			var totalElems=innerForksStatus.nTotal+stepsStatus.nTotal+1;
 			var methodWeight=self.methodWeight;
-			if (methodWeight<=0){
-				methodWeight=1/totalElems;
-			}
-			var totalWeight=innerForksStatus.totalWeight+
+			var totalWeight=0;
+			if (methodWeight>0){
+				totalWeight=innerForksStatus.totalWeight+
 							stepsStatus.totalWeight+
 							methodWeight;
-			var percAdv=((innerForksStatus.percAdv*innerForksStatus.nTotal)
-						+(stepsStatus.percAdv*stepsStatus.nTotal)
+			} else {
+				totalWeight=innerForksStatus.totalWeight+stepsStatus.totalWeight;
+				if (totalElems==1){
+					methodWeight=1;
+					totalWeight=1;
+				} else {
+					methodWeight=totalWeight/(totalElems-1);
+					totalWeight=totalWeight+methodWeight;
+				}
+			}
+			var percAdv=((innerForksStatus.percAdv*innerForksStatus.totalWeight)
+						+(stepsStatus.percAdv*stepsStatus.totalWeight)
 						+(percMethodAdv*methodWeight))/totalWeight;
 			progressPercent=percAdv;
 			progressAdv=(progressItems*progressPercent)+progressMin;

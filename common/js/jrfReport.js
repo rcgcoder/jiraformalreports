@@ -1941,7 +1941,7 @@ var jrfReport=class jrfReport {
 								self.addStep("adding Versions to Project "+project.getKey(),function(arrVersions){
 									arrVersions.forEach(function(version){
 										if (!project.getVersions().exists(version.name)){
-											oVersion=self.versions.new(version.name,version.name);
+											var oVersion=self.versions.new(version.name,version.name);
 											if (isDefined(version.description)){
 												oVersion.setDescription(version.description);
 											} else {

@@ -536,10 +536,10 @@ class RCGTask{
 						(isDefined(dontProcessForks)&&(dontProcessForks))
 					  )	){ // the forks will be processed in next for
 					var elemStatus=auxElem.getStatus();
-					if (elemStatus.weigth==0){
+					if (elemStatus.weight==0){
 						TotalWeight+=defWeight;
 					} else {
-						TotalWeight+=elemStatus.weigth;
+						TotalWeight+=elemStatus.weight;
 					}
 					if (elemStatus.nSubDeep>maxDeep){
 						maxDeep=elemStatus.nSubDeep;

@@ -1878,9 +1878,9 @@ var jrfReport=class jrfReport {
 									arrSprints.forEach(function(srcSprint){
 										var srcSprintKey=srcSprint.id+"";
 										var oSprint=self.sprints.new(srcSprint.name,srcSprintKey);
-										oSprint.setBoard(board.getKey());
 										oSprint.setKey(srcSprintKey);
 										oSprint.setStatus(srcSprint.state);
+										oSprint.setBoard(board);
 										board.addSprint(oSprint,srcSprintKey);
 										project.addSprint(oSprint,srcSprintKey);
 										if (isDefined(srcSprint.startDate)){

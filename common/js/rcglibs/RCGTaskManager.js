@@ -677,7 +677,7 @@ class RCGTask{
 			progressPercent=percAdv;
 			progressAdv=(progressItems*progressPercent)+progressMin;
 		}
-		
+		var bIsRunning=bRunningMethod||((innerForksStatus.nRunning+stepsStatus.nRunning)>0);
 		var status={
 				desc:self.description,
 				min:Math.round(progressMin),
@@ -689,8 +689,8 @@ class RCGTask{
 				nSubTasks:innerForksStatus.nTotal+stepsStatus.nTotal,
 				nSubTasksRunning:innerForksStatus.nRunning+stepsStatus.nRunning,
 				nSubDeep:maxDeep,
-				timeSpent:(bRunningMethod?(new Date()).getTime()-self.initTime:""),
-				running:bRunningMethod||((innerForksStatus.nRunning+stepsStatus.nRunning)>0),
+				timeSpent:(bIsRunning?(new Date()).getTime()-self.initTime:""),
+				running:bIsRunning,
 				isCallback:self.isCallback
 				,detail: stepsStatus.arrStatus.concat(innerForksStatus.arrStatus)
 				};

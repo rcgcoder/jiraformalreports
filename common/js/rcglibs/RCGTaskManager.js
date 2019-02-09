@@ -544,26 +544,31 @@ class RCGTask{
 							&&
 							(isDefined(dontProcessForks)&&(dontProcessForks))
 						  )	){ // the forks will be processed in next for
-						var elemStatus=auxElem.getStatus();
-						theStatus.push(elemStatus);
-						if (elemStatus.weight<=0){
+						nTotal++;
+						if (auxElem.weight<=0){
 							nAutoWeight++;
 						} else {
-							acumWeight+=elemStatus.weight;
+							acumWeight+=auxElem.weight;
 						}
-						if (elemStatus.nSubDeep>maxDeep){
-							maxDeep=elemStatus.nSubDeep;
-						}
-						nTotal++;
 						if (auxElem.running){
 							nRunning++;
 							allDone=false;
-						} else if (auxElem.done){
-							nDone++;
+							var elemStatus=auxElem.getStatus();
+							auxList.push(elemStatus);
+							theStatus.push(elemStatus);
+							if (elemStatus.nSubDeep>maxDeep){
+								maxDeep=elemStatus.nSubDeep;
+							}
 						} else {
-							nWaiting++;
-							allDone=false;
+							auxList.push(auxElem);
+							if (auxElem.isDone){
+								nDone++;
+							} else {
+								nWaiting++;
+								allDone=false;
+							}
 						}
+
 					}
 				}
 				if (nTotal==0) return oResult;
@@ -580,18 +585,17 @@ class RCGTask{
 					TotalAdvance=1;
 				} else {
 					TotalAdvance=0;
-					theStatus.forEach(function(auxElem){
+					auxList.forEach(function(auxElem){
 						var auxWeight=auxElem.weight;
 						if (auxWeight<0){
 							auxWeight=defWeight;
 						}
 						var auxPorc=(auxWeight/TotalWeight);
 						var auxAdvance=0;
-						if (auxElem.running){
-							auxAdvance+=auxElem.perc*auxPorc;
-							resultStatus.push(auxElem);
-						} else if (auxElem.done){
-							auxAdvance+=1*auxPorc;
+						if (isDefined(auxElem.percAdv)){
+							auxAdvance=auxElem.percAdv*auxPorc;
+						} else if (auxElem.isDone){
+							auxAdvance=1*auxPorc;
 						} else {
 							auxAdvance+=0;
 						}
@@ -606,7 +610,7 @@ class RCGTask{
 						,maxDeep:maxDeep
 						,nDone:nDone
 						,nTotal:nTotal
-						,arrStatus:resultStatus
+						,arrStatus:theStatus
 						,nWaiting:nWaiting
 				};
 			}

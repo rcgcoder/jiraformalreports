@@ -564,7 +564,7 @@ class RCGTask{
 				} else {
 					theStatus.forEach(function(elemStatus){
 						var auxWeight=elemStatus.weight;
-						if (auxWeight==0){
+						if (auxWeight<=0){
 							auxWeight=defWeight;
 						}
 						TotalAdvance+=elemStatus.perc*(auxWeight/TotalWeight);

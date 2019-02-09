@@ -509,6 +509,7 @@ class RCGTask{
 	}
 	getStatus(){
 		var self=this;
+		debugger;
 		if ((!self.isSomethingRunning())){
 			return {
 					desc:self.description,

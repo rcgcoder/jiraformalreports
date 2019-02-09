@@ -1151,6 +1151,7 @@ class RCGTaskManager{
 	}
 	extended_getTaskManagerStatus(){
 		var self=this;
+		debugger;
 		var tm=self.RCGTaskManager;
 		if ((typeof tm === "undefined") || (tm=="")){
 			return "";

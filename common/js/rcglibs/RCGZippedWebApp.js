@@ -977,7 +977,7 @@ class RCGZippedApp{
 			}
 			pDiv.empty();
 			var allTasksInfo=self.getTaskManagerStatus();
-			var maxDeep=5;
+			var maxDeep=10;
 			var fncAddProgressItem=function(item,currentDeep){
 				if (item.done) return "";
 				if (!item.running) return "";

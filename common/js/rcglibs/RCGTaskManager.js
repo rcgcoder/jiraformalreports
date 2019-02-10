@@ -1440,7 +1440,7 @@ class RCGTaskManager{
 	//				log(theWorkerThread);
 				}
 			}
-		},0,nTotalCalls);
+		},0,nTotalCalls,undefined,100,1);
 		parallelControllingStep.progressAuto=false;
 	}
 	extended_loopProcess(fncWhileCondition,fncProcess){

@@ -981,7 +981,8 @@ class RCGZippedApp{
 			var fncAddProgressItem=function(item,currentDeep){
 				if (item.done) return "";
 				if (!item.running) return "";
-				var perc100=(Math.round(item.perc*1000))/10;
+				var perc100=item.perc*100;
+				perc100=(Math.round(perc100*1000))/1000;
 				var nChildsDone=0;
 				var nChildsTotal=item.detail.length;
 				var nInnerMin=0;

@@ -1344,13 +1344,14 @@ var jrfReport=class jrfReport {
 		// Process Model with The Report
 		self.addStep("Parsing Model",function(){
 			self.allIssues.logStats();
+			debugger;
 			return self.objModel.process("parse"); // parse....
 		});
 			
 		// assing childs and advance childs to root elements
 		self.addStep("Assign Childs and Advance",function(){
 			self.allIssues.logStats();
-			//debugger;
+			debugger;
 			log("Verifying excel issues");
 			self.xlsIssues.walk(function(auxIssue,deep,key){
 				if (!auxIssue.loaded){

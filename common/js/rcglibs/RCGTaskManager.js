@@ -550,7 +550,14 @@ class RCGTask{
 						} else {
 							acumWeight+=auxElem.weight;
 						}
-						if (auxElem.running){
+						var bIsRunning=auxElem.running;
+						if ((!bIsRunning)&&(auxElem.innerForks.length>0)){
+							for (var j=0;(j<auxElem.innerForks.length)&&(!bIsRunning);j++){
+								var innerFork=auxElem.innerFork[j];
+								bIsRunning=innerFork.running;
+							}
+						}
+						if (bIsRunning){
 							nRunning++;
 							allDone=false;
 							var elemStatus=auxElem.getStatus();

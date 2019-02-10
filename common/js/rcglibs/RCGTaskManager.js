@@ -1400,26 +1400,26 @@ class RCGTaskManager{
 							fncParallelCall(iThread,fncParallelCall);
 						}
 					});
-				});
+				},0,1,undefined,100,1);
 			};
 			var fncAddThreadSubSteps=function(iThread,fncParallelCallSubSteps){
 				blockCounter[iThread]=0;
 				self.addStep("Parallel thread call subset",function(){
 					var fncParallelCall=self.createManagedFunction(fncParallelCallBase);
 					fncParallelCall(iThread,fncParallelCall);
-				});
+				},0,1,undefined,100,1);
 				self.addStep("If remaining.... launch a new block",function(){
 					if (isRemaining()){
 						fncParallelCallSubSteps(iThread,fncParallelCallSubSteps);
 					}
-				});
+				},0,1,undefined,1,1);
 			}
 			var fncAddThread=function(iThread){
 				return self.addStep("Parallel call Thread "+iThread,function(){
 //					log("Parallel Step "+iThread);
 					var fncParallelCallSubSteps=self.createManagedFunction(fncAddThreadSubSteps);
 					fncParallelCallSubSteps(iThread,fncParallelCallSubSteps);
-				},0,1,undefined,undefined,undefined,"INNER",undefined
+				},0,1,undefined,100,1,"INNER",undefined
 				);
 			}
 			if (maxThreads>nTotalCalls){

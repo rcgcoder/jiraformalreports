@@ -1208,12 +1208,9 @@ class RCGTaskManager{
 			return "";
 		} 
 		var arrStatus=[];
-		var initTime=new Date().getTime();
 		for (var i=0;i<tm.globalForks.length;i++){
 			arrStatus.push(tm.globalForks[i].getStatus());
 		}
-		var endTime=new Date().getTime();
-		console.log("getStatus wasted time:"+((endTime-initTime)));
 		return arrStatus;
 	}
 	extended_createManagedFunction(fncTraditionalFunction){

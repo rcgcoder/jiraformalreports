@@ -240,6 +240,9 @@ class RCGZippedApp{
 		self.storage="";
 		self.loadedFiles={"rcglibs/RCGZippedWebApp.js":true};
 		var fncShowStatus=function(){
+			var showStatusInitTime=(new Date()).getTime();
+			console.log("getStatus wasted time:"+((endTime-initTime)));
+
 			var status=self.getTaskManagerStatus();
 			log("Total Advance:"+status.desc+":"+Math.round(status.perc*100)+"%");
 			var child=status.child;
@@ -247,6 +250,7 @@ class RCGZippedApp{
 				log("   child Advance:"+child.desc+":"+Math.round(child.perc*100)+"%" + "["+child.min+"--> "+child.adv +" -->"+child.max+"]");
 				child=child.child;
 			}
+			console.log("Show Status wasted time:"+(((new Date()).getTime()-showStatusInitTime)));
 			if (status.perc<1){
 				setTimeout(fncShowStatus,500);
 			}

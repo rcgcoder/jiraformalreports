@@ -1723,17 +1723,17 @@ class RCGTaskManager{
 	//			tm.autoFree=false;
 				tm.asyncTaskCallsBlock=0;
 				tm.asyncTaskCallsMaxDeep=0;
-			});
+			},0,1,undefined,1,5);
 			self.addStep("Call parallelized pseudoThreaded",function(){
 				log("Call internal parallelized..");
 				return self.internal_parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,maxParallelThreads);
-			});
+			},0,1,undefined,100,5);
 			self.addStep("Restore AutoFree and CallsBlock params",function(){
 				log("Restore autofree and callsblock..");
 	//			tm.autoFree=bckAutoFree;
 				tm.asyncTaskCallsBlock=bckTaskCallsBlock;
 				tm.asyncTaskCallsMaxDeep=bckTaskCallsMaxDeep;
-			});
+			},0,1,undefined,1,5);
 		}
 	}
 	extendObject(obj){

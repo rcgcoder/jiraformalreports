@@ -240,7 +240,6 @@ class RCGZippedApp{
 		self.storage="";
 		self.loadedFiles={"rcglibs/RCGZippedWebApp.js":true};
 		var fncShowStatus=function(){
-			var showStatusInitTime=(new Date()).getTime();
 
 			var status=self.getTaskManagerStatus();
 			log("Total Advance:"+status.desc+":"+Math.round(status.perc*100)+"%");
@@ -249,7 +248,6 @@ class RCGZippedApp{
 				log("   child Advance:"+child.desc+":"+Math.round(child.perc*100)+"%" + "["+child.min+"--> "+child.adv +" -->"+child.max+"]");
 				child=child.child;
 			}
-			console.log("Show Status wasted time:"+(((new Date()).getTime()-showStatusInitTime)));
 			if (status.perc<1){
 				setTimeout(fncShowStatus,500);
 			}
@@ -963,6 +961,8 @@ class RCGZippedApp{
 	updateStatus(){
 		var self=this;
 		if (window.jQuery){
+			var showStatusInitTime=(new Date()).getTime();
+
 			var tm=self.getTaskManager();
 			var progressDiv=$("#JFR_Progress_DIV");
 			var pDiv; 
@@ -1062,6 +1062,7 @@ class RCGZippedApp{
 			} else {
 				$(pDiv).hide();
 			}
+			console.log("Show Status wasted time:"+(((new Date()).getTime()-showStatusInitTime)));
 		}
 	}
 	run(){

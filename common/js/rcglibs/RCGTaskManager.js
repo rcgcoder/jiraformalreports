@@ -553,7 +553,7 @@ class RCGTask{
 						var bIsRunning=auxElem.running;
 						if ((!bIsRunning)&&(auxElem.innerForks.length>0)){
 							for (var j=0;(j<auxElem.innerForks.length)&&(!bIsRunning);j++){
-								var innerFork=auxElem.innerFork[j];
+								var innerFork=auxElem.innerForks[j];
 								bIsRunning=innerFork.running;
 							}
 						}

@@ -175,7 +175,7 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 			if (self.model.report.config.htmlDebug) self.addHtml("<!-- END PREVIOUSHTML IN JRF TOKEN ["+self.tokenName+"] -->");
 			self.indInnerContentHtmlBuffer=self.pushHtmlBuffer();
 			self.startApplyToken();
-		},0,1,undefined,10,1);
+		},0,1,undefined,1,1);
 		self.addStep("Encode part... "+self.tokenName+" with params:"+self.tag.getTagText(),function(){
 			if (self.ifConditionResult){
 				//log(self.topHtmlBuffer(self.indHtmlBuffer-2));
@@ -183,16 +183,16 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				self.apply(); // the apply function not returns anything... only writes text to buffer
 				//log(self.topHtmlBuffer(self.indHtmlBuffer-2));
 			}
-		},0,1,undefined,70,1);
+		},0,1,undefined,200,1);
 		self.addStep("Post-Encode part...",function(){
 			//log(self.topHtmlBuffer(self.indHtmlBuffer-2));
 			//debugger;
 			self.endApplyToken();
-		},0,1,undefined,10,1);
+		},0,1,undefined,1,1);
 		self.addStep("PostProcess all token and return...",function(){
 			self.popClosureLevel();
 			self.variables.popVarEnv();
-		},0,1,undefined,10,1);
+		},0,1,undefined,1,1);
 	}
 	initVariables(sVarsInit,sVarsReuse,defaultValue){
 		var self=this;

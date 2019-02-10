@@ -392,7 +392,7 @@ class RCGJira{
 			return self.getFullList("/rest/api/2/search?jql="+jql+"&expand=renderedFields,changelog"
 							,"issues",undefined,undefined,cbBlock
 							,undefined,bNotReturnAll);
-		});
+		},0,1,undefined,1000,1);
 /*		if (isUndefined(bNotReturnAll)||(!bNotReturnAll)){
 			self.addStep("Returning all Issues from JQL", function(response,xhr,sUrl,headers){
 				//debugger;

@@ -24,13 +24,13 @@ var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition al
 		var iLoopElemsCount;  
 		self.addStep("Initializing loop base",function(){
 			return self.innerApply();
-		});
+		},0,1,undefined,1,1);
 		self.addStep("Start processing the Loop",function(loopElems){
 			self.stackLoopElements.push(self.loopElements);
 			self.loopElements=loopElems;
 			iLoopElemsCount=self.loopElements.length();
 			self.loopStart(iLoopElemsCount);
-		});
+		},0,1,undefined,1,1);
 		// processing total elements
 		self.addStep("Processing the Loop",function(){
 			var iLoopIndex=0;
@@ -77,11 +77,11 @@ var jrfLoopBase=class jrfLoopBase extends jrfSubset{//this kind of definition al
 					});
 				});
 			},1);
-		});
+		},0,1,undefined,100,1);
 		self.addStep("Ending processing the Loop",function(){
 			self.loopEnd(iLoopElemsCount);
 			self.loopElements=self.stackLoopElements.pop();
-		});
+		},0,1,undefined,1,1);
 	}
 
 }

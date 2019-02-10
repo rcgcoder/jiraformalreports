@@ -375,7 +375,8 @@ class RCGJira{
 */
 		self.addStep("Getting All Issues from JQL:["+sJQL+"]", function(){
 			return self.getFullList("/rest/api/2/search?fields=comment&expand=renderedFields&jql="+sJQL,"issues",undefined,undefined,cbBlock);
-		});
+		},0,1,undefined,1000,1);
+
 /*		self.addStep("Returning all Issues from JQL:["+sJQL+"]", function(response,xhr,sUrl,headers){
 			//self.addToCache(sCacheKey,response);
 			log("Comments getted");

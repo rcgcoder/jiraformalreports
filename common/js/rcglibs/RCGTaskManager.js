@@ -1213,7 +1213,7 @@ class RCGTaskManager{
 			arrStatus.push(tm.globalForks[i].getStatus());
 		}
 		var endTime=new Date().getTime();
-		logError("getStatus wasted time:"+((endTime-initTime)));
+		console.log("getStatus wasted time:"+((endTime-initTime)));
 		return arrStatus;
 	}
 	extended_createManagedFunction(fncTraditionalFunction){

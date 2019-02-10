@@ -113,12 +113,12 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				self.addStep("Post Processing Child....."+sKey,function(){
 					var postHtmlBufferIndex=self.pushHtmlBuffer();
 					stackLastProcess.push({tagApplier:tagApplier,htmlBufferIndex:postHtmlBufferIndex});
-				});
+				},0,1,undefined,10,1);
 			} else {
 				self.addStep("Processing Child..."+sKey,function(){
 					tagApplier.encode();
 //					self.model.applyTag(childTag,auxRptElem);
-				});
+				},0,1,undefined,100,1);
 			}
 			nChildWalker++;
 		});
@@ -133,11 +133,11 @@ var jrfToken=class jrfToken{ //this kind of definition allows to hot-reload
 				self.addStep("Processing Child..."+sKey,function(){
 					tagApplier.encode();
 //					self.model.applyTag(childTag,auxRptElem);
-				});
+				},0,1,undefined,100,1);
 				self.addStep("Pusshing the saved rest of html buffer ..."+sKey,function(){
 					var htmlBufferIndex=self.pushHtmlBuffer();
 					self.addHtml(htmlBufferBackup);
-				});
+				},0,1,undefined,1,1);
 			}
 		});
 	}

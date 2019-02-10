@@ -213,7 +213,7 @@ class RCGAtlassian{
 					}
 					//debugger;
 					log("Parallelize");
-					processResultStep.weight=100;
+					processResultStep.weight=100*hsListItemsToProcess.length();
 					return self.parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,10);
 				}
 			},0,1,undefined,20,1);

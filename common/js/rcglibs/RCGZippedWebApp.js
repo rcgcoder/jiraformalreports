@@ -1053,6 +1053,7 @@ class RCGZippedApp{
 			for (var i=0;i<allTasksInfo.length;i++){
 				sHtml+=fncAddProgressItem(allTasksInfo[i],0);
 			}
+			var updateHtmlInitTime=(new Date()).getTime();
 			if (sHtml!=""){
 				var list= $("<ul id='ProgressList' class='tm-ProgressList'>"+
 							sHtml+
@@ -1062,7 +1063,10 @@ class RCGZippedApp{
 			} else {
 				$(pDiv).hide();
 			}
-			console.log("Show Status wasted time:"+(((new Date()).getTime()-showStatusInitTime)));
+			var showStatusEndTime=(new Date()).getTime();
+			console.log("Show Status wasted time:"+(showStatusEndTime-showStatusInitTime) +" --- "
+					+ (updateHtmlInitTime-showStatusInitTime)
+						);
 		}
 	}
 	run(){

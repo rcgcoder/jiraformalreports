@@ -128,7 +128,7 @@ class RCGAtlassian{
 			self.addStep("Calling to api "+sTarget,function(){
 				log("Calling API "+sTarget);
 				return self.apiCallApp(appInfo,sTarget,callType,data,nLast,1000,"application/json",undefined,arrHeaders);
-			});	
+			},0,1,undefined,100,60);	
 			if (isDefined(callback)){
 				var vResult=[];
 				self.addStep("Calling the user callback",function(response,xhr,sUrl,headers){
@@ -136,13 +136,13 @@ class RCGAtlassian{
 					vResult=[response,xhr,sUrl,headers];
 					var fncManagedCallback=self.createManagedFunction(callback);
 					return fncManagedCallback(response,xhr,sUrl,headers);
-				});
+				},0,1,undefined,100,5);
 				self.addStep("Returning Result",function(){
 					log("Returning API "+sTarget+" result");
 					return self.taskResultMultiple(vResult[0],vResult[1],vResult[2],vResult[3]);
-				});
+				},0,1,undefined,100,5);
 			}
-			self.addStep("Processing result of call "+sTarget,function(response,xhr,sUrl,headers){
+			var processResultStep=self.addStep("Processing result of call "+sTarget,function(response,xhr,sUrl,headers){
 				log("continue processing API "+sTarget+" result");
 				var objResp;
 				if (typeof response==="string"){
@@ -212,11 +212,13 @@ class RCGAtlassian{
 						}
 					}
 					//debugger;
-					log("Parallelize")
+					log("Parallelize");
+					processResultStep.weight=70;
 					return self.parallelizeCalls(hsListItemsToProcess,fncCall,fncProcess,10);
 				}
-			});
-		});
+			},0,1,undefined,100,5);
+		},0,1,undefined,100,5);
+		
 		if (isUndefined(bNotReturnAll)||(!bNotReturnAll)){
 			self.addStep("Returnig results for "+sTarget,function(){
 				return arrResults;

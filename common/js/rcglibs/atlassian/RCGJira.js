@@ -450,7 +450,7 @@ class RCGJira{
 				//debugger;  
 			});
 			*/
-		});
+		},0,1,undefined,1000,1);
 		self.addStep("Returning Variable"+" of JQL ["+jqlAux+"]",function(){
 			var fncEnd;
 			if (isDefined(cbEndProcess)){
@@ -461,7 +461,7 @@ class RCGJira{
 				};
 			}
 			return fncEnd(returnVariable);
-		});
+		},0,1,undefined,10,1);
 	}
 	getIssueDetails(issueId){
 		var self=this;

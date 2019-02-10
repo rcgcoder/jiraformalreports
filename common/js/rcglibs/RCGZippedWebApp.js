@@ -241,7 +241,6 @@ class RCGZippedApp{
 		self.loadedFiles={"rcglibs/RCGZippedWebApp.js":true};
 		var fncShowStatus=function(){
 			var showStatusInitTime=(new Date()).getTime();
-			console.log("getStatus wasted time:"+((endTime-initTime)));
 
 			var status=self.getTaskManagerStatus();
 			log("Total Advance:"+status.desc+":"+Math.round(status.perc*100)+"%");

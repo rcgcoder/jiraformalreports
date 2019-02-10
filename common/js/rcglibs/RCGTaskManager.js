@@ -599,8 +599,8 @@ class RCGTask{
 						}
 						var auxPorc=(auxWeight/TotalWeight);
 						var auxAdvance=0;
-						if (isDefined(auxElem.percAdv)){
-							auxAdvance=auxElem.percAdv*auxPorc;
+						if (isDefined(auxElem.perc)){
+							auxAdvance=auxElem.perc*auxPorc;
 						} else if (auxElem.isDone){
 							auxAdvance=1*auxPorc;
 						} else {

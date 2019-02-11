@@ -1099,7 +1099,6 @@ var plgBillingSystem=class plgBillingSystem{//this kind of definition allows to 
     
     execute(){
          var selfPlg=this;
-         debugger;
          selfPlg.report.allIssues.list.walk(function(issue){
         	 	 issue.billingParams=billingParams;
                  issue.getFieldFaseBillingName=selfPlg.getFieldFaseBillingName;

@@ -1846,7 +1846,8 @@ var jrfReport=class jrfReport {
 						var oPrj="";
 						if (!self.projects.exists(prjKey)){
 							oPrj=self.projects.new(issue.getproject().name,prjKey);
-							oPrj.setKey(prjKey)
+							oPrj.setKey(prjKey);
+							oPrj.setReport(self);
 						} else {
 							oPrj=self.projects.getById(prjKey);
 						}
@@ -1909,83 +1910,7 @@ var jrfReport=class jrfReport {
 					});
 					self.addStep("Getting Issues of Sprints of each project",function(){
 						self.parallelizeProcess(self.projects.list,function(project){
-							
-							self.parallelizeProcess(project.getBoards(),function(board){
-								self.addStep("Getting Board Sprints of project "+project.getKey(),function(){
-									oJira.getBoardSprints(board.getKey());
-								});
-								self.addStep("Processing Board ("+board.getKey()+") Sprint List for project "+project.getKey(),function(arrSprints){
-									arrSprints.forEach(function(srcSprint){
-										var srcSprintKey=srcSprint.id+"";
-										var oSprint=self.sprints.new(srcSprint.name,srcSprintKey);
-										oSprint.setKey(srcSprintKey);
-										oSprint.setStatus(srcSprint.state);
-										oSprint.setBoard(board);
-										board.addSprint(oSprint,srcSprintKey);
-										project.addSprint(oSprint,srcSprintKey);
-										if (isDefined(srcSprint.startDate)){
-											oSprint.setStartDate(new Date(srcSprint.startDate));
-										}
-										if (isDefined(srcSprint.endDate)){
-											oSprint.setEndDate(new Date(srcSprint.endDate));
-										}
-										if (isDefined(srcSprint.completeDate)){
-											oSprint.setCompleteDate(new Date(srcSprint.completeDate));
-										}
-									});
-								});
-							});
-							self.addStep("Filling Versions of project "+project.getKey(),function(){
-								self.addStep("Getting Version List of Project"+project.getKey(),function(){
-									oJira.getProjectVersions(project.getKey());
-								});
-								self.addStep("adding Versions to Project "+project.getKey(),function(arrVersions){
-									arrVersions.forEach(function(version){
-										if (!project.getVersions().exists(version.name)){
-											var oVersion=self.versions.new(version.name,version.name);
-											if (isDefined(version.description)){
-												oVersion.setDescription(version.description);
-											} else {
-												oVersion.setDescription(version.name);
-											}
-											if (isDefined(version.startDate)) oVersion.setStartDate(version.startDate);
-											if (isDefined(version.releaseDate)) oVersion.setReleaseDate(version.releaseDate);
-											if (version.released){
-												oVersion.setStatus("Deployed");
-											} else if (version.archived){
-												oVersion.setStatus("Canceled");
-											} else if (oVersion.getReleaseDate()!==""){
-												if (isDefined(version.overdue)&&version.overdue){
-													oVersion.setStatus("Delayed");
-												} else {
-													oVersion.setStatus("Planned");
-												}
-											} else {
-												oVersion.setStatus("Development");
-											}
-											project.addVersion(oVersion,version.name);
-										}
-									});
-								});
-								
-							});
-							
-							self.addStep("Retrieving Issues for all Sprints in project "+ project.getKey(),function(){
-								self.parallelizeProcess(project.getSprints(),function(sprint){
-									self.addStep("Getting Issues for Sprint "+sprint.getKey()+","+sprint.getBoard().getKey(),function(){
-										oJira.getSprintIssues(sprint.getKey(),sprint.getBoard().getKey());
-									});
-									self.addStep("Processing Issues for Sprint "+sprint.getKey()+","+sprint.getBoard().getKey(),function(arrIssues){
-										arrIssues.forEach(function(srcIssue){
-											var srcIssueKey=srcIssue.key;
-											if (self.allIssues.exists(srcIssueKey)){
-												var oIssue=self.allIssues.getById(srcIssueKey);
-												sprint.addIssue(oIssue,srcIssueKey);
-											}
-										});
-									});
-								});
-							});
+							project.loadSprints();
 						})
 					});
 				});

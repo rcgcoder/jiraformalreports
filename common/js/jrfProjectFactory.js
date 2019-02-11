@@ -78,10 +78,10 @@ function newProjectFactory(report){
 		});
 		report.addStep("Retrieving Issues for all Sprints in project "+ self.getKey(),function(){
 			report.parallelizeProcess(self.getSprints(),function(sprint){
-				self.addStep("Getting Issues for Sprint "+sprint.getKey()+","+sprint.getBoard().getKey(),function(){
+				report.addStep("Getting Issues for Sprint "+sprint.getKey()+","+sprint.getBoard().getKey(),function(){
 					oJira.getSprintIssues(sprint.getKey(),sprint.getBoard().getKey());
 				});
-				self.addStep("Processing Issues for Sprint "+sprint.getKey()+","+sprint.getBoard().getKey(),function(arrIssues){
+				report.addStep("Processing Issues for Sprint "+sprint.getKey()+","+sprint.getBoard().getKey(),function(arrIssues){
 					arrIssues.forEach(function(srcIssue){
 						var srcIssueKey=srcIssue.key;
 						if (report.allIssues.exists(srcIssueKey)){

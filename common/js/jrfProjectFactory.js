@@ -25,7 +25,7 @@ function newProjectFactory(report){
 			report.addStep("Processing Board ("+board.getKey()+") Sprint List for project "+self.getKey(),function(arrSprints){
 				arrSprints.forEach(function(srcSprint){
 					var srcSprintKey=srcSprint.id+"";
-					var oSprint=self.sprints.new(srcSprint.name,srcSprintKey);
+					var oSprint=report.sprints.new(srcSprint.name,srcSprintKey);
 					oSprint.setKey(srcSprintKey);
 					oSprint.setStatus(srcSprint.state);
 					oSprint.setBoard(board);
